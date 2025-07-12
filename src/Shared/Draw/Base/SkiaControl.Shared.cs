@@ -2855,7 +2855,10 @@ namespace DrawnUi.Draw
 
                 return value;
             }
-            set { SetValue(RenderingScaleProperty, value); }
+            set
+            {
+                SetValue(RenderingScaleProperty, value);
+            }
         }
 
         //public double RenderingScaleSafe
