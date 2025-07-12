@@ -1280,42 +1280,7 @@ namespace DrawnUi.Draw
             }
         }
 
-        protected float MeasurePartialTextWidth(SKPaint paint, ReadOnlySpan<char> textSpan,
-            bool needsShaping, float scale)
-        {
-            // Use optimized span-based measurement to avoid string allocation
-            return MeasurePartialTextWidthOptimized(paint, textSpan, needsShaping, scale);
-        }
-
-        /// <summary>
-        /// Optimized version of MeasurePartialTextWidth that uses span-based operations
-        /// </summary>
-        public float MeasurePartialTextWidthOptimized(SKPaint paint, ReadOnlySpan<char> textSpan,
-            bool needsShaping, float scale)
-        {
-            var paintTypeface = paint.Typeface ?? SkiaFontManager.DefaultTypeface;
-
-            // For simple cases, measure directly with span
-            if (!needsShaping && textSpan.Length <= 32) // Small text threshold
-            {
-                return SpanMeasurement.MeasureTextWidthWithAdvanceSpan(paint, textSpan);
-            }
-
-            // For complex cases or cache lookup, we need string conversion
-            // This is the controlled fallback to maintain cache compatibility
-            string text = SpanMeasurement.SpanToStringForCache(textSpan);
-
-            // Check cache first
-            if (GlyphMeasurementCache.TryGetValue(paintTypeface, needsShaping, text, out var cachedResult))
-            {
-                return cachedResult.Width;
-            }
-
-            // Measure using instance method and cache result
-            var (width, _) = MeasureLineGlyphs(paint, text, needsShaping, scale);
-            return width;
-        }
-
+ 
         /// <summary>
         /// Optimized version of LastNonSpaceIndex that works with spans
         /// </summary>
@@ -1429,6 +1394,8 @@ namespace DrawnUi.Draw
                     value += thisWidth + spacingModifier;
                     pos++;
                 }
+
+
 
                 var finalWidth = value - spacingModifier;
                 var arr2 = positions.ToArray();
@@ -1592,6 +1559,27 @@ namespace DrawnUi.Draw
 
                         var widthBlock = (float)Math.Round(smartMeasure.Width);
                         var heightBlock = LineHeightPixels;
+
+                        if (paint.TextSkewX != 0)
+                        {
+                            float additionalWidth = Math.Abs(paint.TextSkewX) * paint.TextSize;
+                            widthBlock += additionalWidth; //notice passed by ref struct will be modified
+                        }
+
+                        if (StrokeWidth > 0 && StrokeColor != TransparentColor)
+                        {
+                            float additionalWidth = (float)(StrokeWidth * 2 * RenderingScale);
+                            widthBlock += additionalWidth*2;
+                            heightBlock += additionalWidth * 2;
+                        }
+
+                        if (DropShadowSize > 0 && DropShadowColor != TransparentColor)
+                        {
+                            float additionalWidth = (float)(DropShadowSize * RenderingScale + DropShadowOffsetX * RenderingScale);
+                            widthBlock += additionalWidth;
+                            float additionalHeight = (float)(DropShadowSize * RenderingScale + DropShadowOffsetY * RenderingScale);
+                            heightBlock += additionalHeight;
+                        }
 
                         var chunk = new LineSpan()
                         {
@@ -2118,6 +2106,7 @@ namespace DrawnUi.Draw
         public static float MeasureTextWidthWithAdvance(SKPaint paint, ReadOnlySpan<char> textSpan)
         {
             var bounds = paint.MeasureText(textSpan);
+
             return bounds;
         }
 
@@ -2138,24 +2127,21 @@ namespace DrawnUi.Draw
                 bounds.Right += additionalWidth; //notice passed by ref struct will be modified
             }
 
+            if (StrokeWidth > 0 && StrokeColor != TransparentColor)
+            {
+                float additionalWidth = (float)(StrokeWidth * 2 * RenderingScale);
+                bounds.Right += additionalWidth;
+                bounds.Left -= additionalWidth;
+                bounds.Bottom += additionalWidth * 2;
+            }
 
-
-            //if (StrokeWidth > 0 && StrokeColor != TransparentColor)
-            //{
-            //    float additionalWidth = (float)(StrokeWidth * 2 * RenderingScale);
-            //    bounds.Right += additionalWidth;
-            //    bounds.Left -= additionalWidth;
-            //    bounds.Bottom += additionalWidth * 2;
-            //}
-
-            //if (DropShadowSize > 0 && DropShadowColor != TransparentColor)
-            //{
-            //    float additionalWidth = (float)(DropShadowSize * RenderingScale + DropShadowOffsetX * RenderingScale);
-            //    bounds.Right += additionalWidth;
-            //    float additionalHeight = (float)(DropShadowSize * RenderingScale + DropShadowOffsetY * RenderingScale);
-            //    bounds.Bottom += additionalHeight;
-            //}
-
+            if (DropShadowSize > 0 && DropShadowColor != TransparentColor)
+            {
+                float additionalWidth = (float)(DropShadowSize * RenderingScale + DropShadowOffsetX * RenderingScale);
+                bounds.Right += additionalWidth;
+                float additionalHeight = (float)(DropShadowSize * RenderingScale + DropShadowOffsetY * RenderingScale);
+                bounds.Bottom += additionalHeight;
+            }
 
             bounds = new SKRect(
                 (float)Math.Floor(bounds.Left),
