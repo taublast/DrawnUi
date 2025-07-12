@@ -1645,6 +1645,15 @@ namespace DrawnUi.Draw
                 {
                     var word = stackWords.Pop();
 
+                    if (string.IsNullOrEmpty(word))
+                    {
+                        if (!string.IsNullOrEmpty(lineResult))
+                        {
+                            lineResult += " "; // Add one space for each empty string
+                        }
+                        continue;
+                    }
+
                     if (KeepSpacesOnLineBreaks && lineIndex > 0)
                     {
                         word += space;
