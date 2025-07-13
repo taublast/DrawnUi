@@ -35,12 +35,13 @@ jobs:
         run: dotnet tool install -g docfx
         
       - name: Build Documentation
+        working-directory: ./docs
         run: docfx docfx.json
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: ./docs/_site
 
   deploy:
     environment:
