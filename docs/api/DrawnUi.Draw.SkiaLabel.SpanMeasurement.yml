@@ -1,0 +1,838 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  commentId: T:DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  id: SkiaLabel.SpanMeasurement
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar(System.Text.StringBuilder,System.Char)
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan(System.Text.StringBuilder,System.ReadOnlySpan{System.Char})
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan(System.ReadOnlySpan{System.Char})
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan(System.ReadOnlySpan{System.Char},System.Char)
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan(System.ReadOnlySpan{System.Char})
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char},System.Boolean,System.Single,SkiaSharp.SKTypeface)
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char})
+  - DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache(System.ReadOnlySpan{System.Char})
+  langs:
+  - csharp
+  - vb
+  name: SkiaLabel.SpanMeasurement
+  nameWithType: SkiaLabel.SpanMeasurement
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SpanMeasurement
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Span-based measurement methods to avoid string allocations
+  example: []
+  syntax:
+    content: public static class SkiaLabel.SpanMeasurement
+    content.vb: Public Module SkiaLabel.SpanMeasurement
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char})
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char})
+  id: MeasureTextWidthWithAdvanceSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char})
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: MeasureTextWidthWithAdvanceSpan(SKPaint, ReadOnlySpan<char>)
+  nameWithType: SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan(SKPaint, ReadOnlySpan<char>)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan(SkiaSharp.SKPaint, System.ReadOnlySpan<char>)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasureTextWidthWithAdvanceSpan
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Measures text width using ReadOnlySpan without converting to string
+  example: []
+  syntax:
+    content: public static float MeasureTextWidthWithAdvanceSpan(SKPaint paint, ReadOnlySpan<char> textSpan)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: textSpan
+      type: System.ReadOnlySpan{System.Char}
+    return:
+      type: System.Single
+    content.vb: Public Shared Function MeasureTextWidthWithAdvanceSpan(paint As SKPaint, textSpan As ReadOnlySpan(Of Char)) As Single
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan(SKPaint, ReadOnlySpan(Of Char))
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan(SkiaSharp.SKPaint, System.ReadOnlySpan(Of Char))
+  name.vb: MeasureTextWidthWithAdvanceSpan(SKPaint, ReadOnlySpan(Of Char))
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan(System.ReadOnlySpan{System.Char},System.Char)
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan(System.ReadOnlySpan{System.Char},System.Char)
+  id: IsSpaceSpan(System.ReadOnlySpan{System.Char},System.Char)
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: IsSpaceSpan(ReadOnlySpan<char>, char)
+  nameWithType: SkiaLabel.SpanMeasurement.IsSpaceSpan(ReadOnlySpan<char>, char)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan(System.ReadOnlySpan<char>, char)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsSpaceSpan
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Checks if a span represents a single space character
+  example: []
+  syntax:
+    content: public static bool IsSpaceSpan(ReadOnlySpan<char> span, char spaceChar)
+    parameters:
+    - id: span
+      type: System.ReadOnlySpan{System.Char}
+    - id: spaceChar
+      type: System.Char
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsSpaceSpan(span As ReadOnlySpan(Of Char), spaceChar As Char) As Boolean
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.IsSpaceSpan(ReadOnlySpan(Of Char), Char)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan(System.ReadOnlySpan(Of Char), Char)
+  name.vb: IsSpaceSpan(ReadOnlySpan(Of Char), Char)
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan(System.ReadOnlySpan{System.Char})
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan(System.ReadOnlySpan{System.Char})
+  id: LastNonSpaceIndexSpan(System.ReadOnlySpan{System.Char})
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: LastNonSpaceIndexSpan(ReadOnlySpan<char>)
+  nameWithType: SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan(ReadOnlySpan<char>)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan(System.ReadOnlySpan<char>)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LastNonSpaceIndexSpan
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 32
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Finds the last non-space character index in a span
+  example: []
+  syntax:
+    content: public static int LastNonSpaceIndexSpan(ReadOnlySpan<char> textSpan)
+    parameters:
+    - id: textSpan
+      type: System.ReadOnlySpan{System.Char}
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function LastNonSpaceIndexSpan(textSpan As ReadOnlySpan(Of Char)) As Integer
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan(ReadOnlySpan(Of Char))
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan(System.ReadOnlySpan(Of Char))
+  name.vb: LastNonSpaceIndexSpan(ReadOnlySpan(Of Char))
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan(System.ReadOnlySpan{System.Char})
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan(System.ReadOnlySpan{System.Char})
+  id: IsGlyphAlwaysAvailableSpan(System.ReadOnlySpan{System.Char})
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: IsGlyphAlwaysAvailableSpan(ReadOnlySpan<char>)
+  nameWithType: SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan(ReadOnlySpan<char>)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan(System.ReadOnlySpan<char>)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsGlyphAlwaysAvailableSpan
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 47
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Checks if glyph is always available without string conversion
+  example: []
+  syntax:
+    content: public static bool IsGlyphAlwaysAvailableSpan(ReadOnlySpan<char> glyphSpan)
+    parameters:
+    - id: glyphSpan
+      type: System.ReadOnlySpan{System.Char}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsGlyphAlwaysAvailableSpan(glyphSpan As ReadOnlySpan(Of Char)) As Boolean
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan(ReadOnlySpan(Of Char))
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan(System.ReadOnlySpan(Of Char))
+  name.vb: IsGlyphAlwaysAvailableSpan(ReadOnlySpan(Of Char))
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache(System.ReadOnlySpan{System.Char})
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache(System.ReadOnlySpan{System.Char})
+  id: SpanToStringForCache(System.ReadOnlySpan{System.Char})
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: SpanToStringForCache(ReadOnlySpan<char>)
+  nameWithType: SkiaLabel.SpanMeasurement.SpanToStringForCache(ReadOnlySpan<char>)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache(System.ReadOnlySpan<char>)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SpanToStringForCache
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 57
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Converts ReadOnlySpan to string only when absolutely necessary for cache keys
+
+    This is the only place where we allow span-to-string conversion for caching
+  example: []
+  syntax:
+    content: public static string SpanToStringForCache(ReadOnlySpan<char> span)
+    parameters:
+    - id: span
+      type: System.ReadOnlySpan{System.Char}
+    return:
+      type: System.String
+    content.vb: Public Shared Function SpanToStringForCache(span As ReadOnlySpan(Of Char)) As String
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.SpanToStringForCache(ReadOnlySpan(Of Char))
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache(System.ReadOnlySpan(Of Char))
+  name.vb: SpanToStringForCache(ReadOnlySpan(Of Char))
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char},System.Boolean,System.Single,SkiaSharp.SKTypeface)
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char},System.Boolean,System.Single,SkiaSharp.SKTypeface)
+  id: MeasurePartialTextWidthSpan(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char},System.Boolean,System.Single,SkiaSharp.SKTypeface)
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: MeasurePartialTextWidthSpan(SKPaint, ReadOnlySpan<char>, bool, float, SKTypeface)
+  nameWithType: SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan(SKPaint, ReadOnlySpan<char>, bool, float, SKTypeface)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan(SkiaSharp.SKPaint, System.ReadOnlySpan<char>, bool, float, SkiaSharp.SKTypeface)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasurePartialTextWidthSpan
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 68
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Measures partial text width using span-based operations where possible
+
+    Falls back to string conversion only for cache compatibility
+  example: []
+  syntax:
+    content: public static float MeasurePartialTextWidthSpan(SKPaint paint, ReadOnlySpan<char> textSpan, bool needsShaping, float scale, SKTypeface paintTypeface)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: textSpan
+      type: System.ReadOnlySpan{System.Char}
+    - id: needsShaping
+      type: System.Boolean
+    - id: scale
+      type: System.Single
+    - id: paintTypeface
+      type: SkiaSharp.SKTypeface
+    return:
+      type: System.Single
+    content.vb: Public Shared Function MeasurePartialTextWidthSpan(paint As SKPaint, textSpan As ReadOnlySpan(Of Char), needsShaping As Boolean, scale As Single, paintTypeface As SKTypeface) As Single
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan(SKPaint, ReadOnlySpan(Of Char), Boolean, Single, SKTypeface)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan(SkiaSharp.SKPaint, System.ReadOnlySpan(Of Char), Boolean, Single, SkiaSharp.SKTypeface)
+  name.vb: MeasurePartialTextWidthSpan(SKPaint, ReadOnlySpan(Of Char), Boolean, Single, SKTypeface)
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan(System.Text.StringBuilder,System.ReadOnlySpan{System.Char})
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan(System.Text.StringBuilder,System.ReadOnlySpan{System.Char})
+  id: AppendSpan(System.Text.StringBuilder,System.ReadOnlySpan{System.Char})
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: AppendSpan(StringBuilder, ReadOnlySpan<char>)
+  nameWithType: SkiaLabel.SpanMeasurement.AppendSpan(StringBuilder, ReadOnlySpan<char>)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan(System.Text.StringBuilder, System.ReadOnlySpan<char>)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AppendSpan
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 95
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Appends a ReadOnlySpan to StringBuilder without intermediate string allocation
+  example: []
+  syntax:
+    content: public static void AppendSpan(StringBuilder sb, ReadOnlySpan<char> span)
+    parameters:
+    - id: sb
+      type: System.Text.StringBuilder
+    - id: span
+      type: System.ReadOnlySpan{System.Char}
+    content.vb: Public Shared Sub AppendSpan(sb As StringBuilder, span As ReadOnlySpan(Of Char))
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.AppendSpan(StringBuilder, ReadOnlySpan(Of Char))
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan(System.Text.StringBuilder, System.ReadOnlySpan(Of Char))
+  name.vb: AppendSpan(StringBuilder, ReadOnlySpan(Of Char))
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar(System.Text.StringBuilder,System.Char)
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar(System.Text.StringBuilder,System.Char)
+  id: AppendChar(System.Text.StringBuilder,System.Char)
+  parent: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+  langs:
+  - csharp
+  - vb
+  name: AppendChar(StringBuilder, char)
+  nameWithType: SkiaLabel.SpanMeasurement.AppendChar(StringBuilder, char)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar(System.Text.StringBuilder, char)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AppendChar
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
+    startLine: 105
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Appends a single character to StringBuilder
+  example: []
+  syntax:
+    content: public static void AppendChar(StringBuilder sb, char c)
+    parameters:
+    - id: sb
+      type: System.Text.StringBuilder
+    - id: c
+      type: System.Char
+    content.vb: Public Shared Sub AppendChar(sb As StringBuilder, c As Char)
+  overload: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar*
+  nameWithType.vb: SkiaLabel.SpanMeasurement.AppendChar(StringBuilder, Char)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar(System.Text.StringBuilder, Char)
+  name.vb: AppendChar(StringBuilder, Char)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_MeasureTextWidthWithAdvanceSpan_SkiaSharp_SKPaint_System_ReadOnlySpan_System_Char__
+  name: MeasureTextWidthWithAdvanceSpan
+  nameWithType: SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasureTextWidthWithAdvanceSpan
+- uid: SkiaSharp.SKPaint
+  commentId: T:SkiaSharp.SKPaint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  name: SKPaint
+  nameWithType: SKPaint
+  fullName: SkiaSharp.SKPaint
+- uid: System.ReadOnlySpan{System.Char}
+  commentId: T:System.ReadOnlySpan{System.Char}
+  parent: System
+  definition: System.ReadOnlySpan`1
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<char>
+  nameWithType: ReadOnlySpan<char>
+  fullName: System.ReadOnlySpan<char>
+  nameWithType.vb: ReadOnlySpan(Of Char)
+  fullName.vb: System.ReadOnlySpan(Of Char)
+  name.vb: ReadOnlySpan(Of Char)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Char
+    name: char
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.char
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Char
+    name: Char
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.char
+  - name: )
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: System.ReadOnlySpan`1
+  commentId: T:System.ReadOnlySpan`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<T>
+  nameWithType: ReadOnlySpan<T>
+  fullName: System.ReadOnlySpan<T>
+  nameWithType.vb: ReadOnlySpan(Of T)
+  fullName.vb: System.ReadOnlySpan(Of T)
+  name.vb: ReadOnlySpan(Of T)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_IsSpaceSpan_System_ReadOnlySpan_System_Char__System_Char_
+  name: IsSpaceSpan
+  nameWithType: SkiaLabel.SpanMeasurement.IsSpaceSpan
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsSpaceSpan
+- uid: System.Char
+  commentId: T:System.Char
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.char
+  name: char
+  nameWithType: char
+  fullName: char
+  nameWithType.vb: Char
+  fullName.vb: Char
+  name.vb: Char
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_LastNonSpaceIndexSpan_System_ReadOnlySpan_System_Char__
+  name: LastNonSpaceIndexSpan
+  nameWithType: SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.LastNonSpaceIndexSpan
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_IsGlyphAlwaysAvailableSpan_System_ReadOnlySpan_System_Char__
+  name: IsGlyphAlwaysAvailableSpan
+  nameWithType: SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.IsGlyphAlwaysAvailableSpan
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_SpanToStringForCache_System_ReadOnlySpan_System_Char__
+  name: SpanToStringForCache
+  nameWithType: SkiaLabel.SpanMeasurement.SpanToStringForCache
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.SpanToStringForCache
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_MeasurePartialTextWidthSpan_SkiaSharp_SKPaint_System_ReadOnlySpan_System_Char__System_Boolean_System_Single_SkiaSharp_SKTypeface_
+  name: MeasurePartialTextWidthSpan
+  nameWithType: SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.MeasurePartialTextWidthSpan
+- uid: SkiaSharp.SKTypeface
+  commentId: T:SkiaSharp.SKTypeface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  name: SKTypeface
+  nameWithType: SKTypeface
+  fullName: SkiaSharp.SKTypeface
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_AppendSpan_System_Text_StringBuilder_System_ReadOnlySpan_System_Char__
+  name: AppendSpan
+  nameWithType: SkiaLabel.SpanMeasurement.AppendSpan
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendSpan
+- uid: System.Text.StringBuilder
+  commentId: T:System.Text.StringBuilder
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.stringbuilder
+  name: StringBuilder
+  nameWithType: StringBuilder
+  fullName: System.Text.StringBuilder
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar
+  href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html#DrawnUi_Draw_SkiaLabel_SpanMeasurement_AppendChar_System_Text_StringBuilder_System_Char_
+  name: AppendChar
+  nameWithType: SkiaLabel.SpanMeasurement.AppendChar
+  fullName: DrawnUi.Draw.SkiaLabel.SpanMeasurement.AppendChar

@@ -1,0 +1,393 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ContextArguments
+  commentId: T:DrawnUi.Draw.ContextArguments
+  id: ContextArguments
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ContextArguments.Custom
+  - DrawnUi.Draw.ContextArguments.Offset
+  - DrawnUi.Draw.ContextArguments.Paint
+  - DrawnUi.Draw.ContextArguments.Plane
+  - DrawnUi.Draw.ContextArguments.PlaneViewport
+  - DrawnUi.Draw.ContextArguments.Rect
+  - DrawnUi.Draw.ContextArguments.Scale
+  - DrawnUi.Draw.ContextArguments.ShapePaint
+  - DrawnUi.Draw.ContextArguments.Viewport
+  langs:
+  - csharp
+  - vb
+  name: ContextArguments
+  nameWithType: ContextArguments
+  fullName: DrawnUi.Draw.ContextArguments
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ContextArguments
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 160
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum ContextArguments
+    content.vb: Public Enum ContextArguments
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ContextArguments.Paint
+  commentId: F:DrawnUi.Draw.ContextArguments.Paint
+  id: Paint
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: Paint
+  nameWithType: ContextArguments.Paint
+  fullName: DrawnUi.Draw.ContextArguments.Paint
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Paint
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 162
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Paint = 0
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.Scale
+  commentId: F:DrawnUi.Draw.ContextArguments.Scale
+  id: Scale
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: Scale
+  nameWithType: ContextArguments.Scale
+  fullName: DrawnUi.Draw.ContextArguments.Scale
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Scale
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 163
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Scale = 1
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.Rect
+  commentId: F:DrawnUi.Draw.ContextArguments.Rect
+  id: Rect
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: Rect
+  nameWithType: ContextArguments.Rect
+  fullName: DrawnUi.Draw.ContextArguments.Rect
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Rect
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 164
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Rect = 2
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.Viewport
+  commentId: F:DrawnUi.Draw.ContextArguments.Viewport
+  id: Viewport
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: Viewport
+  nameWithType: ContextArguments.Viewport
+  fullName: DrawnUi.Draw.ContextArguments.Viewport
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Viewport
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 165
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Viewport = 3
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.Plane
+  commentId: F:DrawnUi.Draw.ContextArguments.Plane
+  id: Plane
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: Plane
+  nameWithType: ContextArguments.Plane
+  fullName: DrawnUi.Draw.ContextArguments.Plane
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Plane
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 166
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Plane = 4
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.PlaneViewport
+  commentId: F:DrawnUi.Draw.ContextArguments.PlaneViewport
+  id: PlaneViewport
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: PlaneViewport
+  nameWithType: ContextArguments.PlaneViewport
+  fullName: DrawnUi.Draw.ContextArguments.PlaneViewport
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaneViewport
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 167
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: PlaneViewport = 5
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.ShapePaint
+  commentId: F:DrawnUi.Draw.ContextArguments.ShapePaint
+  id: ShapePaint
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: ShapePaint
+  nameWithType: ContextArguments.ShapePaint
+  fullName: DrawnUi.Draw.ContextArguments.ShapePaint
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ShapePaint
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 168
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ShapePaint = 6
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.Offset
+  commentId: F:DrawnUi.Draw.ContextArguments.Offset
+  id: Offset
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: Offset
+  nameWithType: ContextArguments.Offset
+  fullName: DrawnUi.Draw.ContextArguments.Offset
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Offset
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 169
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Offset = 7
+    return:
+      type: DrawnUi.Draw.ContextArguments
+- uid: DrawnUi.Draw.ContextArguments.Custom
+  commentId: F:DrawnUi.Draw.ContextArguments.Custom
+  id: Custom
+  parent: DrawnUi.Draw.ContextArguments
+  langs:
+  - csharp
+  - vb
+  name: Custom
+  nameWithType: ContextArguments.Custom
+  fullName: DrawnUi.Draw.ContextArguments.Custom
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Custom
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 170
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Custom = 8
+    return:
+      type: DrawnUi.Draw.ContextArguments
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ContextArguments
+  commentId: T:DrawnUi.Draw.ContextArguments
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ContextArguments.html
+  name: ContextArguments
+  nameWithType: ContextArguments
+  fullName: DrawnUi.Draw.ContextArguments

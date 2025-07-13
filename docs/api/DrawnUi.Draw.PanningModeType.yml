@@ -1,0 +1,260 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.PanningModeType
+  commentId: T:DrawnUi.Draw.PanningModeType
+  id: PanningModeType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.PanningModeType.Disabled
+  - DrawnUi.Draw.PanningModeType.Enabled
+  - DrawnUi.Draw.PanningModeType.OneFinger
+  - DrawnUi.Draw.PanningModeType.TwoFingers
+  langs:
+  - csharp
+  - vb
+  name: PanningModeType
+  nameWithType: PanningModeType
+  fullName: DrawnUi.Draw.PanningModeType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PanningModeType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PanningModeType
+    path: ../src/Shared/Draw/Internals/Enums/PanningModeType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum PanningModeType
+    content.vb: Public Enum PanningModeType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.PanningModeType.Disabled
+  commentId: F:DrawnUi.Draw.PanningModeType.Disabled
+  id: Disabled
+  parent: DrawnUi.Draw.PanningModeType
+  langs:
+  - csharp
+  - vb
+  name: Disabled
+  nameWithType: PanningModeType.Disabled
+  fullName: DrawnUi.Draw.PanningModeType.Disabled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PanningModeType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Disabled
+    path: ../src/Shared/Draw/Internals/Enums/PanningModeType.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Disabled = 0
+    return:
+      type: DrawnUi.Draw.PanningModeType
+- uid: DrawnUi.Draw.PanningModeType.Enabled
+  commentId: F:DrawnUi.Draw.PanningModeType.Enabled
+  id: Enabled
+  parent: DrawnUi.Draw.PanningModeType
+  langs:
+  - csharp
+  - vb
+  name: Enabled
+  nameWithType: PanningModeType.Enabled
+  fullName: DrawnUi.Draw.PanningModeType.Enabled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PanningModeType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Enabled
+    path: ../src/Shared/Draw/Internals/Enums/PanningModeType.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 1 and 2 fingers
+  example: []
+  syntax:
+    content: Enabled = 1
+    return:
+      type: DrawnUi.Draw.PanningModeType
+- uid: DrawnUi.Draw.PanningModeType.OneFinger
+  commentId: F:DrawnUi.Draw.PanningModeType.OneFinger
+  id: OneFinger
+  parent: DrawnUi.Draw.PanningModeType
+  langs:
+  - csharp
+  - vb
+  name: OneFinger
+  nameWithType: PanningModeType.OneFinger
+  fullName: DrawnUi.Draw.PanningModeType.OneFinger
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PanningModeType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OneFinger
+    path: ../src/Shared/Draw/Internals/Enums/PanningModeType.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: OneFinger = 2
+    return:
+      type: DrawnUi.Draw.PanningModeType
+- uid: DrawnUi.Draw.PanningModeType.TwoFingers
+  commentId: F:DrawnUi.Draw.PanningModeType.TwoFingers
+  id: TwoFingers
+  parent: DrawnUi.Draw.PanningModeType
+  langs:
+  - csharp
+  - vb
+  name: TwoFingers
+  nameWithType: PanningModeType.TwoFingers
+  fullName: DrawnUi.Draw.PanningModeType.TwoFingers
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PanningModeType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TwoFingers
+    path: ../src/Shared/Draw/Internals/Enums/PanningModeType.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: TwoFingers = 3
+    return:
+      type: DrawnUi.Draw.PanningModeType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.PanningModeType
+  commentId: T:DrawnUi.Draw.PanningModeType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.PanningModeType.html
+  name: PanningModeType
+  nameWithType: PanningModeType
+  fullName: DrawnUi.Draw.PanningModeType

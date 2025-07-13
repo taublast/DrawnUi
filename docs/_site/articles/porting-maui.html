@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Porting Native to Drawn with DrawnUI | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Porting Native to Drawn with DrawnUI | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/porting-maui.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="porting-native-to-drawn-with-drawnui">Porting Native to Drawn with DrawnUI</h1>
+
+<p>There may come a time when you feel that some complex parts of your app are not rendering the way you wish, or you cannot implement certain UI elements with out-of-the-box native controls. At the same time, you want to stay with MAUI and not rewrite the app in something else.
+In such cases, you can replace chunks of your UI with drawn controls, or even convert the whole app.</p>
+<p>Why even bother?</p>
+<ul>
+<li><p><strong>You want complex layouts not to affect your app performance</strong>
+In some scenarios, native layouts can be slower than drawn ones. Think of it like 5 horses vs a car with a 5 horsepower engine: your app has to handle 5 native views instead of just 1 - the Canvas. Rasterized caching ensures that shadows and other heavy-duty elements never affect your performance.</p>
+</li>
+<li><p><strong>Your designer gave you something to implement that pre-built controls can't handle</strong>
+DrawnUI is designed with freedom in mind, allowing you to draw just about anything you can imagine. With direct access to the canvas, you can achieve exactly the unique result you're looking for.</p>
+</li>
+<li><p><strong>You want consistency across platforms</strong>
+On all platforms, the rendering is done with the same logic, ensuring that fonts, controls, and layouts will render identically across different devices.</p>
+</li>
+<li><p><strong>You want to be in control</strong>
+DrawnUI is a lightweight open-source project that can be directly referenced and customized to meet your app's specific needs. When you encounter a bug, you can hotfix it directly in the engine source code, and if you need additional properties or controls, you can easily add them.</p>
+</li>
+</ul>
+<p>This guide will help you port your existing native MAUI controls to DrawnUI.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>First, please follow the <a href="getting-started.html">Getting Started guide</a> to set up your project for DrawnUI.</p>
+<h2 id="the-theory">The theory</h2>
+<p>Replacing native controls with DrawnUI ones involves several steps:</p>
+<ol>
+<li><p>Move used images to the <code>Resources/Raw</code> folder.</p>
+</li>
+<li><p>Create copies of your existing views.</p>
+</li>
+<li><p>Replace native view names with DrawnUI equivalents.</p>
+</li>
+<li><p>Fix property and event handler mismatches.</p>
+</li>
+<li><p>Optimize by adding caching and other performance enhancements.</p>
+</li>
+</ol>
+<h2 id="native-vs-drawn-names-table">Native vs Drawn names table</h2>
+<p>There are direct alternatives to native controls that you can use. At the same time, now that you can &quot;draw&quot; your controls, you can create your own controls from scratch.
+You can also place MAUI controls over the canvas if you need to stick with native controls - use <code>SkiaMauiElement</code> as a wrapper for them.</p>
+<table>
+<thead>
+<tr>
+<th>Native MAUI Control</th>
+<th>DrawnUI Equivalent</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Layout Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Frame</code></td>
+<td><code>SkiaFrame</code></td>
+<td>Alias for SkiaShape with Rectangle type</td>
+</tr>
+<tr>
+<td><code>VerticalStackLayout</code></td>
+<td><code>SkiaStack</code></td>
+<td>Alias for SkiaLayout type Column with horizontal Fill</td>
+</tr>
+<tr>
+<td><code>HorizontalStackLayout</code></td>
+<td><code>SkiaRow</code></td>
+<td>Alias for SkiaLayout type Row</td>
+</tr>
+<tr>
+<td><code>AbsoluteLayout</code></td>
+<td>❌ Do not use</td>
+<td>See &quot;Grid (single cell)&quot; instead</td>
+</tr>
+<tr>
+<td><code>Grid</code> (single row/col)</td>
+<td><code>SkiaLayer</code></td>
+<td>Layering controls one over another with alignements</td>
+</tr>
+<tr>
+<td><code>Grid</code></td>
+<td><code>SkiaGrid</code></td>
+<td>Grid supporting children alignements</td>
+</tr>
+<tr>
+<td><code>StackLayout</code></td>
+<td><code>SkiaLayout</code></td>
+<td>Use Type=&quot;Column&quot; or Type=&quot;Row&quot;</td>
+</tr>
+<tr>
+<td><code>FlexLayout</code></td>
+<td><code>SkiaLayout</code></td>
+<td>Use Type=&quot;Wrap&quot;</td>
+</tr>
+<tr>
+<td><code>ScrollView</code></td>
+<td><code>SkiaScroll</code></td>
+<td>Scrolling container with virtualization</td>
+</tr>
+<tr>
+<td><strong>Text Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Label</code></td>
+<td><code>SkiaLabel</code></td>
+<td>Renders unicode, spans support</td>
+</tr>
+<tr>
+<td><code>Label</code> (with markdown)</td>
+<td><code>SkiaRichLabel</code></td>
+<td>For complex formatting, emojis, different languages, auto-finds fonts</td>
+</tr>
+<tr>
+<td><strong>Input Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Entry</code></td>
+<td><code>SkiaMauiEntry</code></td>
+<td>Native entry wrapped for DrawnUI</td>
+</tr>
+<tr>
+<td><code>Editor</code></td>
+<td><code>SkiaMauiEditor</code></td>
+<td>Native editor wrapped for DrawnUI</td>
+</tr>
+<tr>
+<td><strong>Button Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Button</code></td>
+<td><code>SkiaButton</code></td>
+<td>Platform-specific styling via ControlStyle</td>
+</tr>
+<tr>
+<td><strong>Toggle Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Switch</code></td>
+<td><code>SkiaSwitch</code></td>
+<td>Platform-styled toggle switch</td>
+</tr>
+<tr>
+<td><code>CheckBox</code></td>
+<td><code>SkiaCheckbox</code></td>
+<td>Platform-styled checkbox</td>
+</tr>
+<tr>
+<td><code>RadioButton</code></td>
+<td><code>SkiaRadioButton</code></td>
+<td>Subclassed from SkiaToggle</td>
+</tr>
+<tr>
+<td><strong>Image Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Image</code></td>
+<td><code>SkiaImage</code></td>
+<td>High-performance image rendering</td>
+</tr>
+<tr>
+<td><strong>Media Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Image</code> (media)</td>
+<td><code>SkiaMediaImage</code></td>
+<td>Subclassed SkiaImage for media</td>
+</tr>
+<tr>
+<td><strong>Graphics Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>N/A</td>
+<td><code>SkiaSvg</code></td>
+<td>SVG rendering support</td>
+</tr>
+<tr>
+<td>N/A</td>
+<td><code>SkiaGif</code></td>
+<td>Animated GIF support</td>
+</tr>
+<tr>
+<td>N/A</td>
+<td><code>SkiaLottie</code></td>
+<td>Lottie animation support</td>
+</tr>
+<tr>
+<td><strong>Shapes Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Frame</code></td>
+<td><code>SkiaShape</code></td>
+<td>Container with border</td>
+</tr>
+<tr>
+<td><code>Border</code></td>
+<td><code>SkiaShape</code></td>
+<td>Border decoration</td>
+</tr>
+<tr>
+<td><code>Ellipse</code></td>
+<td><code>SkiaShape</code></td>
+<td>Ellipse shape</td>
+</tr>
+<tr>
+<td><code>Line</code></td>
+<td><code>SkiaShape</code></td>
+<td>Line shape</td>
+</tr>
+<tr>
+<td><code>Path</code></td>
+<td><code>SkiaShape</code></td>
+<td>Vector path shape</td>
+</tr>
+<tr>
+<td><code>Polygon</code></td>
+<td><code>SkiaShape</code></td>
+<td>Polygon shape</td>
+</tr>
+<tr>
+<td><code>Polyline</code></td>
+<td><code>SkiaShape</code></td>
+<td>Polyline shape</td>
+</tr>
+<tr>
+<td><code>Rectangle</code></td>
+<td><code>SkiaShape</code></td>
+<td>Rectangle shape</td>
+</tr>
+<tr>
+<td><code>RoundRectangle</code></td>
+<td><code>SkiaShape</code></td>
+<td>Rounded rectangle</td>
+</tr>
+<tr>
+<td><strong>Navigation Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Shell</code></td>
+<td><code>SkiaShell</code></td>
+<td>Navigation framework</td>
+</tr>
+<tr>
+<td><code>TabbedPage</code></td>
+<td><code>SkiaViewSwitcher</code></td>
+<td>View switching functionality</td>
+</tr>
+<tr>
+<td><strong>Scroll recycled cells</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CollectionView</code></td>
+<td><code>SkiaScroll</code>+<code>SkiaLayout</code></td>
+<td>Virtualized item collection</td>
+</tr>
+<tr>
+<td><code>ListView</code></td>
+<td><code>SkiaScroll</code>+<code>SkiaLayout</code></td>
+<td>Simple item list</td>
+</tr>
+<tr>
+<td><strong>Specialized Controls</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>N/A</td>
+<td><code>SkiaDecoratedGrid</code></td>
+<td>Grid with shape drawing between cells</td>
+</tr>
+<tr>
+<td><code>CarouselView</code></td>
+<td><code>SkiaCarousel</code></td>
+<td>Swipeable carousel with snap points</td>
+</tr>
+<tr>
+<td><code>SwipeView</code></td>
+<td><code>SkiaDrawer</code></td>
+<td>Swipe actions on items</td>
+</tr>
+<tr>
+<td><code>RefreshView</code></td>
+<td><code>LottieRefreshIndicator</code>/anything</td>
+<td>Pull-to-refresh functionality</td>
+</tr>
+<tr>
+<td><code>ActivityIndicator</code></td>
+<td><code>LottieRefreshIndicator</code>/anything</td>
+<td>Loading/busy indicator</td>
+</tr>
+<tr>
+<td><code>Map</code></td>
+<td><code>SkiaMapsUi</code></td>
+<td>Map control, SkiaMapsUi addon</td>
+</tr>
+<tr>
+<td>N/A</td>
+<td><code>SkiaDrawer</code></td>
+<td>Swipe-in/out panel</td>
+</tr>
+<tr>
+<td>N/A</td>
+<td><code>SkiaCamera</code></td>
+<td>Multi-platform camera, SkiaCamera addon</td>
+</tr>
+<tr>
+<td><strong>Use native (wrap over canvas)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>WebView</code></td>
+<td><code>SkiaMauiElement</code>+<code>WebView</code></td>
+<td>wrap native over the canvas</td>
+</tr>
+<tr>
+<td><code>MediaElement</code></td>
+<td><code>SkiaMauiElement</code>+<code>MediaElement</code></td>
+<td>Video/audio playback</td>
+</tr>
+<tr>
+<td><code>Picker</code></td>
+<td><code>SkiaMauiElement</code>+<code>Picker</code></td>
+<td>Dropdown selection, create custom</td>
+</tr>
+<tr>
+<td><code>DatePicker</code></td>
+<td><code>SkiaMauiElement</code>+<code>DatePicker</code></td>
+<td>Date selection control, create custom</td>
+</tr>
+<tr>
+<td><code>TimePicker</code></td>
+<td><code>SkiaMauiElement</code>+<code>TimePicker</code></td>
+<td>Time selection control, create custom</td>
+</tr>
+<tr>
+<td><code>Slider</code></td>
+<td><code>SkiaMauiElement</code>+<code>Slider</code></td>
+<td>Range input control, create custom</td>
+</tr>
+<tr>
+<td><code>Stepper</code></td>
+<td><code>SkiaMauiElement</code>+<code>Slider</code></td>
+<td>Increment/decrement numeric input, create custom</td>
+</tr>
+<tr>
+<td><code>ProgressBar</code></td>
+<td><code>SkiaMauiElement</code>+<code>Slider</code></td>
+<td>Progress indication, create custom</td>
+</tr>
+<tr>
+<td><code>TableView</code></td>
+<td><code>SkiaMauiElement</code>+<code>TableView</code></td>
+<td>Grouped table display, create custom</td>
+</tr>
+<tr>
+<td><code>SearchBar</code></td>
+<td>❌ Do not use, create custom</td>
+<td>Search input with built-in styling</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-practice">The practice</h2>
+<p>Let's look at a simple example of porting a native MAUI page to DrawnUI.</p>
+<h3 id="before-native-maui">Before: Native MAUI</h3>
+<p>Here's a typical MAUI page with native controls:</p>
+<pre><code class="lang-xml">&lt;ContentPage xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             x:Class=&quot;MyApp.MainPage&quot;&gt;
+
+    &lt;ScrollView&gt;
+        &lt;VerticalStackLayout Spacing=&quot;25&quot; Padding=&quot;30,0&quot;&gt;
+
+            &lt;Frame BackgroundColor=&quot;LightBlue&quot;
+                   Padding=&quot;20&quot;
+                   CornerRadius=&quot;10&quot;&gt;
+                &lt;Label Text=&quot;Welcome to MAUI!&quot;
+                       FontSize=&quot;18&quot;
+                       HorizontalOptions=&quot;Center&quot; /&gt;
+            &lt;/Frame&gt;
+
+            &lt;HorizontalStackLayout Spacing=&quot;10&quot;&gt;
+                &lt;Image Source=&quot;icon.png&quot;
+                       WidthRequest=&quot;50&quot;
+                       HeightRequest=&quot;50&quot; /&gt;
+                &lt;Label Text=&quot;Hello World&quot;
+                       FontSize=&quot;16&quot;
+                       VerticalOptions=&quot;Center&quot; /&gt;
+            &lt;/HorizontalStackLayout&gt;
+
+            &lt;Button Text=&quot;Click me&quot;
+                    BackgroundColor=&quot;Blue&quot;
+                    TextColor=&quot;White&quot;
+                    CornerRadius=&quot;8&quot;
+                    Clicked=&quot;OnButtonClicked&quot; /&gt;
+
+        &lt;/VerticalStackLayout&gt;
+    &lt;/ScrollView&gt;
+
+&lt;/ContentPage&gt;
+</code></pre>
+<h3 id="after-drawnui">After: DrawnUI</h3>
+<p>Here's the same page converted to DrawnUI:</p>
+<pre><code class="lang-xml">&lt;draw:DrawnUiBasePage xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+                      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+                      xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
+                      x:Class=&quot;MyApp.MainPage&quot;&gt;
+
+    &lt;draw:Canvas RenderingMode=&quot;Accelerated&quot;
+                 Gestures=&quot;Enabled&quot;
+                 HorizontalOptions=&quot;Fill&quot;
+                 VerticalOptions=&quot;Fill&quot;&gt;
+
+        &lt;draw:SkiaScroll&gt;
+            &lt;draw:SkiaStack Spacing=&quot;25&quot; Padding=&quot;30,0&quot;&gt;
+
+                &lt;draw:SkiaFrame BackgroundColor=&quot;LightBlue&quot;
+                                Padding=&quot;20&quot;
+                                CornerRadius=&quot;10&quot;&gt;
+                    &lt;draw:SkiaLabel Text=&quot;Welcome to DrawnUI!&quot;
+                                    FontSize=&quot;18&quot;
+                                    HorizontalOptions=&quot;Center&quot; /&gt;
+                &lt;/draw:SkiaFrame&gt;
+
+                &lt;draw:SkiaRow Spacing=&quot;10&quot;&gt;
+                    &lt;draw:SkiaImage Source=&quot;icon.png&quot;
+                                    WidthRequest=&quot;50&quot;
+                                    HeightRequest=&quot;50&quot; /&gt;
+                    &lt;draw:SkiaLabel Text=&quot;Hello World&quot;
+                                    FontSize=&quot;16&quot;
+                                    VerticalOptions=&quot;Center&quot; /&gt;
+                &lt;/draw:SkiaRow&gt;
+
+                &lt;draw:SkiaButton Text=&quot;Click me&quot;
+                                 BackgroundColor=&quot;Blue&quot;
+                                 TextColor=&quot;White&quot;
+                                 CornerRadius=&quot;8&quot;
+                                 WidthRequest=&quot;120&quot;
+                                 HeightRequest=&quot;44&quot;
+                                 Clicked=&quot;OnButtonClicked&quot; /&gt;
+
+            &lt;/draw:SkiaStack&gt;
+        &lt;/draw:SkiaScroll&gt;
+
+    &lt;/draw:Canvas&gt;
+
+&lt;/draw:DrawnUiBasePage&gt;
+</code></pre>
+<h3 id="key-changes-made">Key Changes Made</h3>
+<ol>
+<li><strong>Root Container</strong>: Changed from <code>ContentPage</code> to <code>draw:DrawnUiBasePage</code> for keyboard support. If you don't need keyboard support, you can leave <code>ContentPage</code> as it is.</li>
+<li><strong>Canvas</strong>: Added <code>draw:Canvas</code> as the root drawing surface</li>
+<li><strong>Layout Controls</strong>:
+<ul>
+<li><code>ScrollView</code> → <code>draw:SkiaScroll</code></li>
+<li><code>VerticalStackLayout</code> → <code>draw:SkiaStack</code></li>
+<li><code>HorizontalStackLayout</code> → <code>draw:SkiaRow</code></li>
+<li><code>Frame</code> → <code>draw:SkiaFrame</code></li>
+</ul>
+</li>
+<li><strong>Content Controls</strong>:
+<ul>
+<li><code>Label</code> → <code>draw:SkiaLabel</code></li>
+<li><code>Image</code> → <code>draw:SkiaImage</code></li>
+<li><code>Button</code> → <code>draw:SkiaButton</code></li>
+</ul>
+</li>
+<li><strong>Button Sizing</strong>: Added explicit <code>WidthRequest</code> and <code>HeightRequest</code> to button (DrawnUI buttons need explicit sizing)</li>
+</ol>
+<h3 id="code-behind-changes">Code-Behind Changes</h3>
+<p>The code-behind remains mostly the same, but the event signature is slightly different:</p>
+<pre><code class="lang-csharp">// Before (MAUI)
+private void OnButtonClicked(object sender, EventArgs e)
+{
+    // Handle click
+}
+
+// After (DrawnUI)
+private void OnButtonClicked(SkiaButton button, SkiaGesturesParameters args)
+{
+    // Handle click - note the different parameters
+}
+</code></pre>
+<h3 id="optimize-add-caching">Optimize: add caching</h3>
+<p>Imagine your page redrawing. What could stay the same if you redraw one element?</p>
+<pre><code class="lang-xml">        &lt;draw:SkiaScroll&gt;
+            &lt;!--this is a small stack, just cache it as a whole --&gt;
+            &lt;!--&quot;composite&quot; will redraw only changed areas, for instance the clicked button,
+            leaving other raster areas unchanged --&gt;
+            &lt;draw:SkiaStack Spacing=&quot;25&quot; Padding=&quot;30,0&quot; UseCache=&quot;ImageComposite&quot;&gt;
+
+            &lt;!-- unchaged code --&gt;
+
+            &lt;/draw:SkiaStack&gt;
+
+            &lt;/draw:SkiaStack&gt;
+        &lt;/draw:SkiaScroll&gt;
+</code></pre>
+<h3 id="performance-benefits">Performance Benefits</h3>
+<p>After conversion, you'll get:</p>
+<ul>
+<li><strong>Better Performance</strong>: Single canvas instead of multiple native views</li>
+<li><strong>Consistent Rendering</strong>: Same appearance across all platforms</li>
+<li><strong>Advanced Caching</strong>: Built-in rasterization and caching capabilities</li>
+<li><strong>Custom Drawing</strong>: Ability to add custom graphics and effects</li>
+</ul>
+<h3 id="further-reading">Further Reading</h3>
+<p>Please see <a href="samples.html">sample apps</a> and <a href="controls/index.html">controls documentation</a> for more examples and details.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/porting-maui.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

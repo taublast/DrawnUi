@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Your First DrawnUI App | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Your First DrawnUI App | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/first-app.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="your-first-drawnui-app">Your First DrawnUI App</h1>
+
+<p>This quickstart guide will help you create your first DrawnUi.Maui application from scratch in just a few minutes.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><strong>.NET 9</strong> or later</li>
+<li><strong>MAUI 9.0.70</strong> minimum</li>
+<li><strong>Visual Studio 2022</strong> or <strong>VS Code</strong> with MAUI extension</li>
+</ul>
+<h2 id="step-1-create-a-new-maui-project">Step 1: Create a New MAUI Project</h2>
+<pre><code class="lang-bash">dotnet new maui -n MyFirstDrawnApp
+cd MyFirstDrawnApp
+</code></pre>
+<h2 id="step-2-add-drawnui-package">Step 2: Add DrawnUi Package</h2>
+<pre><code class="lang-bash">dotnet add package DrawnUi.Maui
+</code></pre>
+<h2 id="step-3-initialize-drawnui">Step 3: Initialize DrawnUI</h2>
+<p>Open <code>MauiProgram.cs</code> and add DrawnUi initialization:</p>
+<pre><code class="lang-csharp">public static class MauiProgram
+{
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp&lt;App&gt;()
+            .UseDrawnUi() // &lt;-- Add this line
+            .ConfigureFonts(fonts =&gt;
+            {
+                fonts.AddFont(&quot;OpenSans-Regular.ttf&quot;, &quot;FontText&quot;);
+            });
+
+        return builder.Build();
+    }
+}
+</code></pre>
+<h2 id="step-4-set-up-default-styles-optional">Step 4: Set Up Default Styles (Optional)</h2>
+<p>You can set default properties for drawn controls all like you would do it for native.
+Add this to <code>Resources/Styles.xaml</code> to set default fonts for all SkiaLabel and SkiaRichLabel controls:</p>
+<pre><code class="lang-xml"> ...
+
+ &lt;ResourceDictionary
+    xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+    xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;&gt;
+
+    &lt;Style ApplyToDerivedTypes=&quot;True&quot; TargetType=&quot;draw:SkiaLabel&quot;&gt;
+        &lt;Setter Property=&quot;TextColor&quot; Value=&quot;Black&quot; /&gt;
+        &lt;Setter Property=&quot;FontSize&quot; Value=&quot;14&quot; /&gt;
+        &lt;Setter Property=&quot;FontFamily&quot; Value=&quot;FontText&quot; /&gt;
+    &lt;/Style&gt;
+
+...
+</code></pre>
+<p><strong>Why set default styles?</strong> This lets you define consistent fonts, colors, and sizes across your entire app. Instead of setting <code>FontFamily=&quot;FontText&quot;</code> on every SkiaLabel, it's applied automatically!</p>
+<h2 id="step-5-create-your-first-drawn-ui">Step 5: Create Your First Drawn UI</h2>
+<p>Replace the content of <code>MainPage.xaml</code>:</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage x:Class=&quot;MyFirstDrawnApp.MainPage&quot;
+             xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;&gt;
+
+    &lt;draw:Canvas 
+        Gestures=&quot;Enabled&quot;
+        BackgroundColor=&quot;White&quot;&gt;
+
+        &lt;draw:SkiaLayout 
+        Type=&quot;Column&quot; 
+        Padding=&quot;40&quot; Spacing=&quot;20&quot; 
+        UseCache=&quot;ImageComposite&quot;
+        VerticalOptions=&quot;Center&quot;&gt;
+            
+            &lt;draw:SkiaLabel 
+                UseCache=&quot;Operations&quot;
+                Text=&quot;Welcome to DrawnUI!&quot; 
+                FontSize=&quot;28&quot; 
+                FontWeight=&quot;Bold&quot;
+                TextColor=&quot;DarkBlue&quot; 
+                HorizontalOptions=&quot;Center&quot; /&gt;
+                
+            &lt;draw:SkiaRichLabel 
+                UseCache=&quot;Operations&quot;
+                Text=&quot;This text is drawn with SkiaSharp ✨&quot; 
+                FontSize=&quot;16&quot; 
+                TextColor=&quot;Gray&quot; 
+                HorizontalOptions=&quot;Center&quot; /&gt;
+                
+            &lt;draw:SkiaButton 
+                UseCache=&quot;Image&quot;
+                x:Name=&quot;MyButton&quot;
+                Text=&quot;Click Me!&quot; 
+                BackgroundColor=&quot;CornflowerBlue&quot;
+                TextColor=&quot;White&quot;
+                CornerRadius=&quot;8&quot;
+                Padding=&quot;20,12&quot;
+                HorizontalOptions=&quot;Center&quot;
+                Clicked=&quot;OnButtonClicked&quot; /&gt;
+                
+            &lt;draw:SkiaRichLabel 
+                UseCache=&quot;Operations&quot;
+                x:Name=&quot;ClickLabel&quot;
+                Text=&quot;👆 Try clicking the button&quot; 
+                FontSize=&quot;14&quot; 
+                TextColor=&quot;Green&quot; 
+                HorizontalOptions=&quot;Center&quot; /&gt;
+
+        &lt;/draw:SkiaLayout&gt;
+    &lt;/draw:Canvas&gt;
+
+&lt;/ContentPage&gt;
+</code></pre>
+<h2 id="technical-notes-about-this-implementation">Technical Notes About This Implementation</h2>
+<h3 id="why-skiarichlabel-for-emojis">Why SkiaRichLabel for Emojis?</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaRichLabel Text=&quot;This text is drawn with SkiaSharp ✨&quot; /&gt;
+&lt;draw:SkiaRichLabel Text=&quot;👆 Try clicking the button&quot; /&gt;
+</code></pre>
+<p><strong>SkiaRichLabel vs SkiaLabel:</strong> For text containing emojis (✨👆), we use <code>SkiaRichLabel</code> because it automatically find an installed font to render all unicode characters. Regular <code>SkiaLabel</code> will not render emojis if your selected font doesn't include emoji glyphs.</p>
+<h3 id="canvas-configuration">Canvas Configuration</h3>
+<pre><code class="lang-xml">&lt;draw:Canvas Gestures=&quot;Enabled&quot; BackgroundColor=&quot;White&quot;&gt;
+</code></pre>
+<p><strong>Key decisions:</strong></p>
+<ul>
+<li><strong><code>Gestures = &quot;Enabled&quot;</code></strong> - Essential! Without this, your SkiaButton won't receive touch events</li>
+<li><strong>No hardware acceleration</strong> - For simple UIs like this, software rendering is enough and uses less resources than GPU acceleration.</li>
+</ul>
+<h3 id="smart-caching-strategy">Smart Caching Strategy</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout UseCache=&quot;ImageComposite&quot; ... &gt;
+    &lt;draw:SkiaLabel UseCache=&quot;Operations&quot; ... /&gt;
+    &lt;draw:SkiaButton UseCache=&quot;Image&quot; ... /&gt;
+    &lt;draw:SkiaRichLabel UseCache=&quot;Operations&quot; ... /&gt;
+</code></pre>
+<p><strong>Cache types explained:</strong></p>
+<ul>
+<li><strong><code>UseCache=&quot;Operations&quot;</code></strong> - For text and simple shapes (very memory efficient)</li>
+<li><strong><code>UseCache=&quot;Image&quot;</code></strong> - For the button (handles rounded corners and background efficiently)</li>
+<li><strong><code>UseCache=&quot;ImageComposite&quot;</code></strong> - The whole area will be cached as bitmap and only changed areas (button when clicked) will be redrawn.</li>
+</ul>
+<p>This caching setup ensures smooth performance and avoids unnecessary redraws and calculations.</p>
+<h2 id="step-6-add-button-click-handler">Step 6: Add Button Click Handler</h2>
+<p>In <code>MainPage.xaml.cs</code>, add the button click handler:</p>
+<pre><code class="lang-csharp">using DrawnUi.Maui.Draw;
+
+namespace MyFirstDrawnApp;
+
+public partial class MainPage : ContentPage
+{
+    private int clickCount = 0;
+
+    public MainPage()
+    {
+        InitializeComponent();
+    }
+
+    private void OnButtonClicked(SkiaButton sender, SkiaGesturesParameters args)
+    {
+        clickCount++;
+        ClickLabel.Text = $&quot;Button clicked {clickCount} times! 🎉&quot;;
+        
+        // Simple animation
+        MyButton.AnimateScaleTo(1.2, 100);
+        MyButton.AnimateScaleTo(1.0, 100);
+    }
+}
+</code></pre>
+<h2 id="step-7-run-your-app">Step 7: Run Your App</h2>
+<p>Build and run your first DrawnUI app:</p>
+<pre><code class="lang-bash">dotnet build
+dotnet run
+</code></pre>
+<h2 id="what-youve-learned">What You've Learned</h2>
+<p>Congratulations! You've just created your first DrawnUI app that demonstrates:</p>
+<ul>
+<li>✅ <strong>Canvas</strong>: The container that hosts drawn controls</li>
+<li>✅ <strong>SkiaLayout</strong>: Layout container for organizing controls</li>
+<li>✅ <strong>SkiaLabel</strong>: High-performance text rendering</li>
+<li>✅ <strong>SkiaButton</strong>: Interactive button with animations</li>
+<li>✅ <strong>Gestures</strong>: Touch handling with smooth animations</li>
+</ul>
+<h2 id="key-differences-from-regular-maui">Key Differences from Regular MAUI</h2>
+<p><strong>DrawnUI controls are virtual</strong> - they're not native platform controls, but drawn directly on a Skia canvas. This gives you:</p>
+<ul>
+<li><strong>Consistent appearance</strong> across all platforms</li>
+<li><strong>Better performance</strong> for complex UIs</li>
+<li><strong>Pixel-perfect control</strong> over every detail</li>
+<li><strong>Smooth 60fps animations</strong> out of the box</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>Now that you've mastered the basics, you're ready for more exciting projects:</p>
+<h3 id="-ready-for-more">🚀 <strong>Ready for More?</strong></h3>
+<ul>
+<li><strong><a href="interactive-cards.html">Interactive Card Gallery</a></strong> - Build something impressive with animations and effects!</li>
+<li><strong><a href="controls/index.html">Controls Gallery</a></strong> - Explore all available controls</li>
+<li><strong><a href="getting-started.html">Getting Started Guide</a></strong> - Deep dive into DrawnUI concepts</li>
+</ul>
+<h3 id="-learn-more">📚 <strong>Learn More:</strong></h3>
+<ul>
+<li><strong><a href="fluent-extensions.html">Fluent Extensions</a></strong> - Code-behind UI creation</li>
+<li><strong><a href="advanced/index.html">Advanced Features</a></strong> - Performance and platform-specific topics</li>
+</ul>
+<hr>
+<p><strong>Great job!</strong> You've taken your first step into the world of high-performance, pixel-perfect mobile UIs with DrawnUI! 🎉</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/first-app.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

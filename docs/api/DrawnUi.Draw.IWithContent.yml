@@ -1,0 +1,286 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IWithContent
+  commentId: T:DrawnUi.Draw.IWithContent
+  id: IWithContent
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IWithContent.Content
+  langs:
+  - csharp
+  - vb
+  name: IWithContent
+  nameWithType: IWithContent
+  fullName: DrawnUi.Draw.IWithContent
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IWithContent
+    path: ../src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public interface IWithContent
+    content.vb: Public Interface IWithContent
+  extensionMethods:
+  - DrawnUi.Draw.IWithContent.DrawnUi.Draw.FluentExtensions.WithContent``1(DrawnUi.Draw.SkiaControl)
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IWithContent.Content
+  commentId: P:DrawnUi.Draw.IWithContent.Content
+  id: Content
+  parent: DrawnUi.Draw.IWithContent
+  langs:
+  - csharp
+  - vb
+  name: Content
+  nameWithType: IWithContent.Content
+  fullName: DrawnUi.Draw.IWithContent.Content
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Content
+    path: ../src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SkiaControl Content { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Property Content As SkiaControl
+  overload: DrawnUi.Draw.IWithContent.Content*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.IWithContent.DrawnUi.Draw.FluentExtensions.WithContent``1(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.FluentExtensions.WithContent``1(``0,DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WithContent``1(``0,DrawnUi.Draw.SkiaControl)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithContent__1___0_DrawnUi_Draw_SkiaControl_
+  name: WithContent<IWithContent>(IWithContent, SkiaControl)
+  nameWithType: FluentExtensions.WithContent<IWithContent>(IWithContent, SkiaControl)
+  fullName: DrawnUi.Draw.FluentExtensions.WithContent<DrawnUi.Draw.IWithContent>(DrawnUi.Draw.IWithContent, DrawnUi.Draw.SkiaControl)
+  nameWithType.vb: FluentExtensions.WithContent(Of IWithContent)(IWithContent, SkiaControl)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WithContent(Of DrawnUi.Draw.IWithContent)(DrawnUi.Draw.IWithContent, DrawnUi.Draw.SkiaControl)
+  name.vb: WithContent(Of IWithContent)(IWithContent, SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WithContent``1(DrawnUi.Draw.IWithContent,DrawnUi.Draw.SkiaControl)
+    name: WithContent
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithContent__1___0_DrawnUi_Draw_SkiaControl_
+  - name: <
+  - uid: DrawnUi.Draw.IWithContent
+    name: IWithContent
+    href: DrawnUi.Draw.IWithContent.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.IWithContent
+    name: IWithContent
+    href: DrawnUi.Draw.IWithContent.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WithContent``1(DrawnUi.Draw.IWithContent,DrawnUi.Draw.SkiaControl)
+    name: WithContent
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithContent__1___0_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.IWithContent
+    name: IWithContent
+    href: DrawnUi.Draw.IWithContent.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.IWithContent
+    name: IWithContent
+    href: DrawnUi.Draw.IWithContent.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WithContent``1(``0,DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.FluentExtensions.WithContent``1(``0,DrawnUi.Draw.SkiaControl)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithContent__1___0_DrawnUi_Draw_SkiaControl_
+  name: WithContent<T>(T, SkiaControl)
+  nameWithType: FluentExtensions.WithContent<T>(T, SkiaControl)
+  fullName: DrawnUi.Draw.FluentExtensions.WithContent<T>(T, DrawnUi.Draw.SkiaControl)
+  nameWithType.vb: FluentExtensions.WithContent(Of T)(T, SkiaControl)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WithContent(Of T)(T, DrawnUi.Draw.SkiaControl)
+  name.vb: WithContent(Of T)(T, SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WithContent``1(``0,DrawnUi.Draw.SkiaControl)
+    name: WithContent
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithContent__1___0_DrawnUi_Draw_SkiaControl_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WithContent``1(``0,DrawnUi.Draw.SkiaControl)
+    name: WithContent
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithContent__1___0_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions
+  commentId: T:DrawnUi.Draw.FluentExtensions
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.FluentExtensions.html
+  name: FluentExtensions
+  nameWithType: FluentExtensions
+  fullName: DrawnUi.Draw.FluentExtensions
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IWithContent.Content*
+  commentId: Overload:DrawnUi.Draw.IWithContent.Content
+  href: DrawnUi.Draw.IWithContent.html#DrawnUi_Draw_IWithContent_Content
+  name: Content
+  nameWithType: IWithContent.Content
+  fullName: DrawnUi.Draw.IWithContent.Content
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl

@@ -1,0 +1,1259 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.Plane
+  commentId: T:DrawnUi.Draw.Plane
+  id: Plane
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.Plane.BackgroundColor
+  - DrawnUi.Draw.Plane.CachedObject
+  - DrawnUi.Draw.Plane.CaptureRenderTree(System.Collections.Generic.List{DrawnUi.Draw.SkiaControlWithRect},SkiaSharp.SKPoint,System.Single)
+  - DrawnUi.Draw.Plane.Destination
+  - DrawnUi.Draw.Plane.Id
+  - DrawnUi.Draw.Plane.Invalidate
+  - DrawnUi.Draw.Plane.IsReady
+  - DrawnUi.Draw.Plane.LastDrawnAt
+  - DrawnUi.Draw.Plane.OffsetX
+  - DrawnUi.Draw.Plane.OffsetY
+  - DrawnUi.Draw.Plane.RenderObject
+  - DrawnUi.Draw.Plane.RenderTree
+  - DrawnUi.Draw.Plane.RenderTreeCaptureOffset
+  - DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY
+  - DrawnUi.Draw.Plane.Reset(SkiaSharp.SKSurface,SkiaSharp.SKRect)
+  - DrawnUi.Draw.Plane.Surface
+  - DrawnUi.Draw.Plane.ToString
+  langs:
+  - csharp
+  - vb
+  name: Plane
+  nameWithType: Plane
+  fullName: DrawnUi.Draw.Plane
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Plane
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class Plane
+    content.vb: Public Class Plane
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.Plane.ToString
+  commentId: M:DrawnUi.Draw.Plane.ToString
+  id: ToString
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: Plane.ToString()
+  fullName: DrawnUi.Draw.Plane.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToString
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Returns a string that represents the current object.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: A string that represents the current object.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: DrawnUi.Draw.Plane.ToString*
+- uid: DrawnUi.Draw.Plane.OffsetY
+  commentId: F:DrawnUi.Draw.Plane.OffsetY
+  id: OffsetY
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: OffsetY
+  nameWithType: Plane.OffsetY
+  fullName: DrawnUi.Draw.Plane.OffsetY
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OffsetY
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float OffsetY
+    return:
+      type: System.Single
+    content.vb: Public OffsetY As Single
+- uid: DrawnUi.Draw.Plane.OffsetX
+  commentId: F:DrawnUi.Draw.Plane.OffsetX
+  id: OffsetX
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: OffsetX
+  nameWithType: Plane.OffsetX
+  fullName: DrawnUi.Draw.Plane.OffsetX
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OffsetX
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float OffsetX
+    return:
+      type: System.Single
+    content.vb: Public OffsetX As Single
+- uid: DrawnUi.Draw.Plane.BackgroundColor
+  commentId: P:DrawnUi.Draw.Plane.BackgroundColor
+  id: BackgroundColor
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: BackgroundColor
+  nameWithType: Plane.BackgroundColor
+  fullName: DrawnUi.Draw.Plane.BackgroundColor
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BackgroundColor
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKColor BackgroundColor { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKColor
+    content.vb: Public Property BackgroundColor As SKColor
+  overload: DrawnUi.Draw.Plane.BackgroundColor*
+- uid: DrawnUi.Draw.Plane.RenderObject
+  commentId: P:DrawnUi.Draw.Plane.RenderObject
+  id: RenderObject
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: RenderObject
+  nameWithType: Plane.RenderObject
+  fullName: DrawnUi.Draw.Plane.RenderObject
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderObject
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public RenderObject RenderObject { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.RenderObject
+    content.vb: Public Property RenderObject As RenderObject
+  overload: DrawnUi.Draw.Plane.RenderObject*
+- uid: DrawnUi.Draw.Plane.Destination
+  commentId: P:DrawnUi.Draw.Plane.Destination
+  id: Destination
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: Destination
+  nameWithType: Plane.Destination
+  fullName: DrawnUi.Draw.Plane.Destination
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Destination
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKRect Destination { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Property Destination As SKRect
+  overload: DrawnUi.Draw.Plane.Destination*
+- uid: DrawnUi.Draw.Plane.LastDrawnAt
+  commentId: P:DrawnUi.Draw.Plane.LastDrawnAt
+  id: LastDrawnAt
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: LastDrawnAt
+  nameWithType: Plane.LastDrawnAt
+  fullName: DrawnUi.Draw.Plane.LastDrawnAt
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LastDrawnAt
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKRect LastDrawnAt { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Property LastDrawnAt As SKRect
+  overload: DrawnUi.Draw.Plane.LastDrawnAt*
+- uid: DrawnUi.Draw.Plane.CachedObject
+  commentId: P:DrawnUi.Draw.Plane.CachedObject
+  id: CachedObject
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: CachedObject
+  nameWithType: Plane.CachedObject
+  fullName: DrawnUi.Draw.Plane.CachedObject
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CachedObject
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public CachedObject CachedObject { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.CachedObject
+    content.vb: Public Property CachedObject As CachedObject
+  overload: DrawnUi.Draw.Plane.CachedObject*
+- uid: DrawnUi.Draw.Plane.Surface
+  commentId: P:DrawnUi.Draw.Plane.Surface
+  id: Surface
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: Surface
+  nameWithType: Plane.Surface
+  fullName: DrawnUi.Draw.Plane.Surface
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Surface
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKSurface Surface { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKSurface
+    content.vb: Public Property Surface As SKSurface
+  overload: DrawnUi.Draw.Plane.Surface*
+- uid: DrawnUi.Draw.Plane.IsReady
+  commentId: P:DrawnUi.Draw.Plane.IsReady
+  id: IsReady
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: IsReady
+  nameWithType: Plane.IsReady
+  fullName: DrawnUi.Draw.Plane.IsReady
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsReady
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsReady { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsReady As Boolean
+  overload: DrawnUi.Draw.Plane.IsReady*
+- uid: DrawnUi.Draw.Plane.Id
+  commentId: P:DrawnUi.Draw.Plane.Id
+  id: Id
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: Plane.Id
+  fullName: DrawnUi.Draw.Plane.Id
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Id
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string Id { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Id As String
+  overload: DrawnUi.Draw.Plane.Id*
+- uid: DrawnUi.Draw.Plane.RenderTree
+  commentId: P:DrawnUi.Draw.Plane.RenderTree
+  id: RenderTree
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: RenderTree
+  nameWithType: Plane.RenderTree
+  fullName: DrawnUi.Draw.Plane.RenderTree
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderTree
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Rendering tree specific to this plane's content, captured during plane preparation.
+
+    Immutable snapshot to prevent race conditions during gesture processing.
+  example: []
+  syntax:
+    content: public IReadOnlyList<SkiaControlWithRect> RenderTree { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{DrawnUi.Draw.SkiaControlWithRect}
+    content.vb: Public Property RenderTree As IReadOnlyList(Of SkiaControlWithRect)
+  overload: DrawnUi.Draw.Plane.RenderTree*
+- uid: DrawnUi.Draw.Plane.RenderTreeCaptureOffset
+  commentId: P:DrawnUi.Draw.Plane.RenderTreeCaptureOffset
+  id: RenderTreeCaptureOffset
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: RenderTreeCaptureOffset
+  nameWithType: Plane.RenderTreeCaptureOffset
+  fullName: DrawnUi.Draw.Plane.RenderTreeCaptureOffset
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderTreeCaptureOffset
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 33
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    The scroll position when this plane's render tree was captured.
+
+    Used for coordinate transformation during gesture processing.
+  example: []
+  syntax:
+    content: public SKPoint RenderTreeCaptureOffset { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property RenderTreeCaptureOffset As SKPoint
+  overload: DrawnUi.Draw.Plane.RenderTreeCaptureOffset*
+- uid: DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY
+  commentId: P:DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY
+  id: RenderTreeCapturePlaneOffsetY
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: RenderTreeCapturePlaneOffsetY
+  nameWithType: Plane.RenderTreeCapturePlaneOffsetY
+  fullName: DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderTreeCapturePlaneOffsetY
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 39
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    The plane's OffsetY when this plane's render tree was captured.
+
+    Used for coordinate transformation during gesture processing.
+  example: []
+  syntax:
+    content: public float RenderTreeCapturePlaneOffsetY { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property RenderTreeCapturePlaneOffsetY As Single
+  overload: DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY*
+- uid: DrawnUi.Draw.Plane.CaptureRenderTree(System.Collections.Generic.List{DrawnUi.Draw.SkiaControlWithRect},SkiaSharp.SKPoint,System.Single)
+  commentId: M:DrawnUi.Draw.Plane.CaptureRenderTree(System.Collections.Generic.List{DrawnUi.Draw.SkiaControlWithRect},SkiaSharp.SKPoint,System.Single)
+  id: CaptureRenderTree(System.Collections.Generic.List{DrawnUi.Draw.SkiaControlWithRect},SkiaSharp.SKPoint,System.Single)
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: CaptureRenderTree(List<SkiaControlWithRect>, SKPoint, float)
+  nameWithType: Plane.CaptureRenderTree(List<SkiaControlWithRect>, SKPoint, float)
+  fullName: DrawnUi.Draw.Plane.CaptureRenderTree(System.Collections.Generic.List<DrawnUi.Draw.SkiaControlWithRect>, SkiaSharp.SKPoint, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CaptureRenderTree
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 47
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Captures rendering tree when plane content is prepared
+  example: []
+  syntax:
+    content: public void CaptureRenderTree(List<SkiaControlWithRect> tree, SKPoint captureOffset, float planeOffsetY)
+    parameters:
+    - id: tree
+      type: System.Collections.Generic.List{DrawnUi.Draw.SkiaControlWithRect}
+      description: The rendering tree to capture
+    - id: captureOffset
+      type: SkiaSharp.SKPoint
+      description: The scroll offset when this tree was captured
+    - id: planeOffsetY
+      type: System.Single
+      description: The plane's OffsetY when this tree was captured
+    content.vb: Public Sub CaptureRenderTree(tree As List(Of SkiaControlWithRect), captureOffset As SKPoint, planeOffsetY As Single)
+  overload: DrawnUi.Draw.Plane.CaptureRenderTree*
+  nameWithType.vb: Plane.CaptureRenderTree(List(Of SkiaControlWithRect), SKPoint, Single)
+  fullName.vb: DrawnUi.Draw.Plane.CaptureRenderTree(System.Collections.Generic.List(Of DrawnUi.Draw.SkiaControlWithRect), SkiaSharp.SKPoint, Single)
+  name.vb: CaptureRenderTree(List(Of SkiaControlWithRect), SKPoint, Single)
+- uid: DrawnUi.Draw.Plane.Reset(SkiaSharp.SKSurface,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.Plane.Reset(SkiaSharp.SKSurface,SkiaSharp.SKRect)
+  id: Reset(SkiaSharp.SKSurface,SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: Reset(SKSurface, SKRect)
+  nameWithType: Plane.Reset(SKSurface, SKRect)
+  fullName: DrawnUi.Draw.Plane.Reset(SkiaSharp.SKSurface, SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Reset
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 79
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Reset(SKSurface surface, SKRect source)
+    parameters:
+    - id: surface
+      type: SkiaSharp.SKSurface
+    - id: source
+      type: SkiaSharp.SKRect
+    content.vb: Public Sub Reset(surface As SKSurface, source As SKRect)
+  overload: DrawnUi.Draw.Plane.Reset*
+- uid: DrawnUi.Draw.Plane.Invalidate
+  commentId: M:DrawnUi.Draw.Plane.Invalidate
+  id: Invalidate
+  parent: DrawnUi.Draw.Plane
+  langs:
+  - csharp
+  - vb
+  name: Invalidate()
+  nameWithType: Plane.Invalidate()
+  fullName: DrawnUi.Draw.Plane.Invalidate()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Invalidate
+    path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
+    startLine: 87
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Invalidate()
+    content.vb: Public Sub Invalidate()
+  overload: DrawnUi.Draw.Plane.Invalidate*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.Plane.ToString*
+  commentId: Overload:DrawnUi.Draw.Plane.ToString
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_ToString
+  name: ToString
+  nameWithType: Plane.ToString
+  fullName: DrawnUi.Draw.Plane.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.Plane.BackgroundColor*
+  commentId: Overload:DrawnUi.Draw.Plane.BackgroundColor
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_BackgroundColor
+  name: BackgroundColor
+  nameWithType: Plane.BackgroundColor
+  fullName: DrawnUi.Draw.Plane.BackgroundColor
+- uid: SkiaSharp.SKColor
+  commentId: T:SkiaSharp.SKColor
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skcolor
+  name: SKColor
+  nameWithType: SKColor
+  fullName: SkiaSharp.SKColor
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.Plane.RenderObject*
+  commentId: Overload:DrawnUi.Draw.Plane.RenderObject
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_RenderObject
+  name: RenderObject
+  nameWithType: Plane.RenderObject
+  fullName: DrawnUi.Draw.Plane.RenderObject
+- uid: DrawnUi.Draw.RenderObject
+  commentId: T:DrawnUi.Draw.RenderObject
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.RenderObject.html
+  name: RenderObject
+  nameWithType: RenderObject
+  fullName: DrawnUi.Draw.RenderObject
+- uid: DrawnUi.Draw.Plane.Destination*
+  commentId: Overload:DrawnUi.Draw.Plane.Destination
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_Destination
+  name: Destination
+  nameWithType: Plane.Destination
+  fullName: DrawnUi.Draw.Plane.Destination
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: DrawnUi.Draw.Plane.LastDrawnAt*
+  commentId: Overload:DrawnUi.Draw.Plane.LastDrawnAt
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_LastDrawnAt
+  name: LastDrawnAt
+  nameWithType: Plane.LastDrawnAt
+  fullName: DrawnUi.Draw.Plane.LastDrawnAt
+- uid: DrawnUi.Draw.Plane.CachedObject*
+  commentId: Overload:DrawnUi.Draw.Plane.CachedObject
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_CachedObject
+  name: CachedObject
+  nameWithType: Plane.CachedObject
+  fullName: DrawnUi.Draw.Plane.CachedObject
+- uid: DrawnUi.Draw.CachedObject
+  commentId: T:DrawnUi.Draw.CachedObject
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.CachedObject.html
+  name: CachedObject
+  nameWithType: CachedObject
+  fullName: DrawnUi.Draw.CachedObject
+- uid: DrawnUi.Draw.Plane.Surface*
+  commentId: Overload:DrawnUi.Draw.Plane.Surface
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_Surface
+  name: Surface
+  nameWithType: Plane.Surface
+  fullName: DrawnUi.Draw.Plane.Surface
+- uid: SkiaSharp.SKSurface
+  commentId: T:SkiaSharp.SKSurface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  name: SKSurface
+  nameWithType: SKSurface
+  fullName: SkiaSharp.SKSurface
+- uid: DrawnUi.Draw.Plane.IsReady*
+  commentId: Overload:DrawnUi.Draw.Plane.IsReady
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_IsReady
+  name: IsReady
+  nameWithType: Plane.IsReady
+  fullName: DrawnUi.Draw.Plane.IsReady
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.Plane.Id*
+  commentId: Overload:DrawnUi.Draw.Plane.Id
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_Id
+  name: Id
+  nameWithType: Plane.Id
+  fullName: DrawnUi.Draw.Plane.Id
+- uid: DrawnUi.Draw.Plane.RenderTree*
+  commentId: Overload:DrawnUi.Draw.Plane.RenderTree
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_RenderTree
+  name: RenderTree
+  nameWithType: Plane.RenderTree
+  fullName: DrawnUi.Draw.Plane.RenderTree
+- uid: System.Collections.Generic.IReadOnlyList{DrawnUi.Draw.SkiaControlWithRect}
+  commentId: T:System.Collections.Generic.IReadOnlyList{DrawnUi.Draw.SkiaControlWithRect}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<SkiaControlWithRect>
+  nameWithType: IReadOnlyList<SkiaControlWithRect>
+  fullName: System.Collections.Generic.IReadOnlyList<DrawnUi.Draw.SkiaControlWithRect>
+  nameWithType.vb: IReadOnlyList(Of SkiaControlWithRect)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of DrawnUi.Draw.SkiaControlWithRect)
+  name.vb: IReadOnlyList(Of SkiaControlWithRect)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControlWithRect
+    name: SkiaControlWithRect
+    href: DrawnUi.Draw.SkiaControlWithRect.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControlWithRect
+    name: SkiaControlWithRect
+    href: DrawnUi.Draw.SkiaControlWithRect.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.Plane.RenderTreeCaptureOffset*
+  commentId: Overload:DrawnUi.Draw.Plane.RenderTreeCaptureOffset
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_RenderTreeCaptureOffset
+  name: RenderTreeCaptureOffset
+  nameWithType: Plane.RenderTreeCaptureOffset
+  fullName: DrawnUi.Draw.Plane.RenderTreeCaptureOffset
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY*
+  commentId: Overload:DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_RenderTreeCapturePlaneOffsetY
+  name: RenderTreeCapturePlaneOffsetY
+  nameWithType: Plane.RenderTreeCapturePlaneOffsetY
+  fullName: DrawnUi.Draw.Plane.RenderTreeCapturePlaneOffsetY
+- uid: DrawnUi.Draw.Plane.CaptureRenderTree*
+  commentId: Overload:DrawnUi.Draw.Plane.CaptureRenderTree
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_CaptureRenderTree_System_Collections_Generic_List_DrawnUi_Draw_SkiaControlWithRect__SkiaSharp_SKPoint_System_Single_
+  name: CaptureRenderTree
+  nameWithType: Plane.CaptureRenderTree
+  fullName: DrawnUi.Draw.Plane.CaptureRenderTree
+- uid: System.Collections.Generic.List{DrawnUi.Draw.SkiaControlWithRect}
+  commentId: T:System.Collections.Generic.List{DrawnUi.Draw.SkiaControlWithRect}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<SkiaControlWithRect>
+  nameWithType: List<SkiaControlWithRect>
+  fullName: System.Collections.Generic.List<DrawnUi.Draw.SkiaControlWithRect>
+  nameWithType.vb: List(Of SkiaControlWithRect)
+  fullName.vb: System.Collections.Generic.List(Of DrawnUi.Draw.SkiaControlWithRect)
+  name.vb: List(Of SkiaControlWithRect)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControlWithRect
+    name: SkiaControlWithRect
+    href: DrawnUi.Draw.SkiaControlWithRect.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControlWithRect
+    name: SkiaControlWithRect
+    href: DrawnUi.Draw.SkiaControlWithRect.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.Plane.Reset*
+  commentId: Overload:DrawnUi.Draw.Plane.Reset
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_Reset_SkiaSharp_SKSurface_SkiaSharp_SKRect_
+  name: Reset
+  nameWithType: Plane.Reset
+  fullName: DrawnUi.Draw.Plane.Reset
+- uid: DrawnUi.Draw.Plane.Invalidate*
+  commentId: Overload:DrawnUi.Draw.Plane.Invalidate
+  href: DrawnUi.Draw.Plane.html#DrawnUi_Draw_Plane_Invalidate
+  name: Invalidate
+  nameWithType: Plane.Invalidate
+  fullName: DrawnUi.Draw.Plane.Invalidate

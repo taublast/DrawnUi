@@ -1,0 +1,641 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.GestureEventProcessingInfo
+  commentId: T:DrawnUi.Draw.GestureEventProcessingInfo
+  id: GestureEventProcessingInfo
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.GestureEventProcessingInfo.#ctor(SkiaSharp.SKPoint,SkiaSharp.SKPoint,SkiaSharp.SKPoint,DrawnUi.Draw.ISkiaGestureListener)
+  - DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed
+  - DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset
+  - DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect
+  - DrawnUi.Draw.GestureEventProcessingInfo.Empty
+  - DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation
+  langs:
+  - csharp
+  - vb
+  name: GestureEventProcessingInfo
+  nameWithType: GestureEventProcessingInfo
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo
+  type: Struct
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GestureEventProcessingInfo
+    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public struct GestureEventProcessingInfo
+    content.vb: Public Structure GestureEventProcessingInfo
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation
+  commentId: P:DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation
+  id: MappedLocation
+  parent: DrawnUi.Draw.GestureEventProcessingInfo
+  langs:
+  - csharp
+  - vb
+  name: MappedLocation
+  nameWithType: GestureEventProcessingInfo.MappedLocation
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MappedLocation
+    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    startLine: 47
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Location of the gesture accounting for transforms. Might include all transforms from parents upper th rendering tree.
+  example: []
+  syntax:
+    content: public SKPoint MappedLocation { readonly get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property MappedLocation As SKPoint
+  overload: DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation*
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset
+  commentId: P:DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset
+  id: ChildOffset
+  parent: DrawnUi.Draw.GestureEventProcessingInfo
+  langs:
+  - csharp
+  - vb
+  name: ChildOffset
+  nameWithType: GestureEventProcessingInfo.ChildOffset
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ChildOffset
+    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    startLine: 53
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Coordinate offset used to transform touch coordinates from parent's 
+
+    coordinate space to this control's local space.
+  example: []
+  syntax:
+    content: public SKPoint ChildOffset { readonly get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property ChildOffset As SKPoint
+  overload: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset*
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect
+  commentId: P:DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect
+  id: ChildOffsetDirect
+  parent: DrawnUi.Draw.GestureEventProcessingInfo
+  langs:
+  - csharp
+  - vb
+  name: ChildOffsetDirect
+  nameWithType: GestureEventProcessingInfo.ChildOffsetDirect
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ChildOffsetDirect
+    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Direct coordinate offset used for gesture processing without considering 
+
+    cached transformations; useful for direct position calculations.
+  example: []
+  syntax:
+    content: public SKPoint ChildOffsetDirect { readonly get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property ChildOffsetDirect As SKPoint
+  overload: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect*
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed
+  commentId: P:DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed
+  id: AlreadyConsumed
+  parent: DrawnUi.Draw.GestureEventProcessingInfo
+  langs:
+  - csharp
+  - vb
+  name: AlreadyConsumed
+  nameWithType: GestureEventProcessingInfo.AlreadyConsumed
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AlreadyConsumed
+    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    startLine: 65
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Reference to a gesture listener that has already consumed this gesture.
+
+    Used to track gesture ownership through the control hierarchy.
+  example: []
+  syntax:
+    content: public ISkiaGestureListener AlreadyConsumed { readonly get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ISkiaGestureListener
+    content.vb: Public Property AlreadyConsumed As ISkiaGestureListener
+  overload: DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed*
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.#ctor(SkiaSharp.SKPoint,SkiaSharp.SKPoint,SkiaSharp.SKPoint,DrawnUi.Draw.ISkiaGestureListener)
+  commentId: M:DrawnUi.Draw.GestureEventProcessingInfo.#ctor(SkiaSharp.SKPoint,SkiaSharp.SKPoint,SkiaSharp.SKPoint,DrawnUi.Draw.ISkiaGestureListener)
+  id: '#ctor(SkiaSharp.SKPoint,SkiaSharp.SKPoint,SkiaSharp.SKPoint,DrawnUi.Draw.ISkiaGestureListener)'
+  parent: DrawnUi.Draw.GestureEventProcessingInfo
+  langs:
+  - csharp
+  - vb
+  name: GestureEventProcessingInfo(SKPoint, SKPoint, SKPoint, ISkiaGestureListener)
+  nameWithType: GestureEventProcessingInfo.GestureEventProcessingInfo(SKPoint, SKPoint, SKPoint, ISkiaGestureListener)
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.GestureEventProcessingInfo(SkiaSharp.SKPoint, SkiaSharp.SKPoint, SkiaSharp.SKPoint, DrawnUi.Draw.ISkiaGestureListener)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    startLine: 68
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public GestureEventProcessingInfo(SKPoint mappedLocation, SKPoint childOffset1, SKPoint childOffsetDirect, ISkiaGestureListener wasConsumed)
+    parameters:
+    - id: mappedLocation
+      type: SkiaSharp.SKPoint
+    - id: childOffset1
+      type: SkiaSharp.SKPoint
+    - id: childOffsetDirect
+      type: SkiaSharp.SKPoint
+    - id: wasConsumed
+      type: DrawnUi.Draw.ISkiaGestureListener
+    content.vb: Public Sub New(mappedLocation As SKPoint, childOffset1 As SKPoint, childOffsetDirect As SKPoint, wasConsumed As ISkiaGestureListener)
+  overload: DrawnUi.Draw.GestureEventProcessingInfo.#ctor*
+  nameWithType.vb: GestureEventProcessingInfo.New(SKPoint, SKPoint, SKPoint, ISkiaGestureListener)
+  fullName.vb: DrawnUi.Draw.GestureEventProcessingInfo.New(SkiaSharp.SKPoint, SkiaSharp.SKPoint, SkiaSharp.SKPoint, DrawnUi.Draw.ISkiaGestureListener)
+  name.vb: New(SKPoint, SKPoint, SKPoint, ISkiaGestureListener)
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.Empty
+  commentId: P:DrawnUi.Draw.GestureEventProcessingInfo.Empty
+  id: Empty
+  parent: DrawnUi.Draw.GestureEventProcessingInfo
+  langs:
+  - csharp
+  - vb
+  name: Empty
+  nameWithType: GestureEventProcessingInfo.Empty
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.Empty
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Empty
+    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    startLine: 81
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static GestureEventProcessingInfo Empty { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.GestureEventProcessingInfo
+    content.vb: Public Shared ReadOnly Property Empty As GestureEventProcessingInfo
+  overload: DrawnUi.Draw.GestureEventProcessingInfo.Empty*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation*
+  commentId: Overload:DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html#DrawnUi_Draw_GestureEventProcessingInfo_MappedLocation
+  name: MappedLocation
+  nameWithType: GestureEventProcessingInfo.MappedLocation
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.MappedLocation
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset*
+  commentId: Overload:DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html#DrawnUi_Draw_GestureEventProcessingInfo_ChildOffset
+  name: ChildOffset
+  nameWithType: GestureEventProcessingInfo.ChildOffset
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffset
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect*
+  commentId: Overload:DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html#DrawnUi_Draw_GestureEventProcessingInfo_ChildOffsetDirect
+  name: ChildOffsetDirect
+  nameWithType: GestureEventProcessingInfo.ChildOffsetDirect
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.ChildOffsetDirect
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed*
+  commentId: Overload:DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html#DrawnUi_Draw_GestureEventProcessingInfo_AlreadyConsumed
+  name: AlreadyConsumed
+  nameWithType: GestureEventProcessingInfo.AlreadyConsumed
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.AlreadyConsumed
+- uid: DrawnUi.Draw.ISkiaGestureListener
+  commentId: T:DrawnUi.Draw.ISkiaGestureListener
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaGestureListener.html
+  name: ISkiaGestureListener
+  nameWithType: ISkiaGestureListener
+  fullName: DrawnUi.Draw.ISkiaGestureListener
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.#ctor*
+  commentId: Overload:DrawnUi.Draw.GestureEventProcessingInfo.#ctor
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html#DrawnUi_Draw_GestureEventProcessingInfo__ctor_SkiaSharp_SKPoint_SkiaSharp_SKPoint_SkiaSharp_SKPoint_DrawnUi_Draw_ISkiaGestureListener_
+  name: GestureEventProcessingInfo
+  nameWithType: GestureEventProcessingInfo.GestureEventProcessingInfo
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.GestureEventProcessingInfo
+  nameWithType.vb: GestureEventProcessingInfo.New
+  fullName.vb: DrawnUi.Draw.GestureEventProcessingInfo.New
+  name.vb: New
+- uid: DrawnUi.Draw.GestureEventProcessingInfo.Empty*
+  commentId: Overload:DrawnUi.Draw.GestureEventProcessingInfo.Empty
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html#DrawnUi_Draw_GestureEventProcessingInfo_Empty
+  name: Empty
+  nameWithType: GestureEventProcessingInfo.Empty
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo.Empty
+- uid: DrawnUi.Draw.GestureEventProcessingInfo
+  commentId: T:DrawnUi.Draw.GestureEventProcessingInfo
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  name: GestureEventProcessingInfo
+  nameWithType: GestureEventProcessingInfo
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo

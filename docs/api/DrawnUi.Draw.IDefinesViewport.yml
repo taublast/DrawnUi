@@ -1,0 +1,368 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IDefinesViewport
+  commentId: T:DrawnUi.Draw.IDefinesViewport
+  id: IDefinesViewport
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IDefinesViewport.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.IDefinesViewport.TrackIndexPosition
+  - DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex
+  - DrawnUi.Draw.IDefinesViewport.Viewport
+  langs:
+  - csharp
+  - vb
+  name: IDefinesViewport
+  nameWithType: IDefinesViewport
+  fullName: DrawnUi.Draw.IDefinesViewport
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IDefinesViewport
+    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public interface IDefinesViewport
+    content.vb: Public Interface IDefinesViewport
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IDefinesViewport.Viewport
+  commentId: P:DrawnUi.Draw.IDefinesViewport.Viewport
+  id: Viewport
+  parent: DrawnUi.Draw.IDefinesViewport
+  langs:
+  - csharp
+  - vb
+  name: Viewport
+  nameWithType: IDefinesViewport.Viewport
+  fullName: DrawnUi.Draw.IDefinesViewport.Viewport
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Viewport
+    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ScaledRect Viewport { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ScaledRect
+    content.vb: ReadOnly Property Viewport As ScaledRect
+  overload: DrawnUi.Draw.IDefinesViewport.Viewport*
+- uid: DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex
+  commentId: M:DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex
+  id: UpdateVisibleIndex
+  parent: DrawnUi.Draw.IDefinesViewport
+  langs:
+  - csharp
+  - vb
+  name: UpdateVisibleIndex()
+  nameWithType: IDefinesViewport.UpdateVisibleIndex()
+  fullName: DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateVisibleIndex
+    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void UpdateVisibleIndex()
+    content.vb: Sub UpdateVisibleIndex()
+  overload: DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex*
+- uid: DrawnUi.Draw.IDefinesViewport.TrackIndexPosition
+  commentId: P:DrawnUi.Draw.IDefinesViewport.TrackIndexPosition
+  id: TrackIndexPosition
+  parent: DrawnUi.Draw.IDefinesViewport
+  langs:
+  - csharp
+  - vb
+  name: TrackIndexPosition
+  nameWithType: IDefinesViewport.TrackIndexPosition
+  fullName: DrawnUi.Draw.IDefinesViewport.TrackIndexPosition
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TrackIndexPosition
+    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: RelativePositionType TrackIndexPosition { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.RelativePositionType
+    content.vb: ReadOnly Property TrackIndexPosition As RelativePositionType
+  overload: DrawnUi.Draw.IDefinesViewport.TrackIndexPosition*
+- uid: DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
+  id: ScrollTo(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.IDefinesViewport
+  langs:
+  - csharp
+  - vb
+  name: ScrollTo(float, float, float)
+  nameWithType: IDefinesViewport.ScrollTo(float, float, float)
+  fullName: DrawnUi.Draw.IDefinesViewport.ScrollTo(float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ScrollTo
+    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void ScrollTo(float x, float y, float maxTimeSecs)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    - id: maxTimeSecs
+      type: System.Single
+    content.vb: Sub ScrollTo(x As Single, y As Single, maxTimeSecs As Single)
+  overload: DrawnUi.Draw.IDefinesViewport.ScrollTo*
+  nameWithType.vb: IDefinesViewport.ScrollTo(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.IDefinesViewport.ScrollTo(Single, Single, Single)
+  name.vb: ScrollTo(Single, Single, Single)
+- uid: DrawnUi.Draw.IDefinesViewport.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDefinesViewport.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  id: InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDefinesViewport
+  langs:
+  - csharp
+  - vb
+  name: InvalidateByChild(SkiaControl)
+  nameWithType: IDefinesViewport.InvalidateByChild(SkiaControl)
+  fullName: DrawnUi.Draw.IDefinesViewport.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvalidateByChild
+    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: So child can call parent to invalidate scrolling offset etc if child size changes
+  example: []
+  syntax:
+    content: void InvalidateByChild(SkiaControl child)
+    parameters:
+    - id: child
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Sub InvalidateByChild(child As SkiaControl)
+  overload: DrawnUi.Draw.IDefinesViewport.InvalidateByChild*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IDefinesViewport.Viewport*
+  commentId: Overload:DrawnUi.Draw.IDefinesViewport.Viewport
+  href: DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_Viewport
+  name: Viewport
+  nameWithType: IDefinesViewport.Viewport
+  fullName: DrawnUi.Draw.IDefinesViewport.Viewport
+- uid: DrawnUi.Draw.ScaledRect
+  commentId: T:DrawnUi.Draw.ScaledRect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScaledRect.html
+  name: ScaledRect
+  nameWithType: ScaledRect
+  fullName: DrawnUi.Draw.ScaledRect
+- uid: DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex*
+  commentId: Overload:DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex
+  href: DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_UpdateVisibleIndex
+  name: UpdateVisibleIndex
+  nameWithType: IDefinesViewport.UpdateVisibleIndex
+  fullName: DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex
+- uid: DrawnUi.Draw.IDefinesViewport.TrackIndexPosition*
+  commentId: Overload:DrawnUi.Draw.IDefinesViewport.TrackIndexPosition
+  href: DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_TrackIndexPosition
+  name: TrackIndexPosition
+  nameWithType: IDefinesViewport.TrackIndexPosition
+  fullName: DrawnUi.Draw.IDefinesViewport.TrackIndexPosition
+- uid: DrawnUi.Draw.RelativePositionType
+  commentId: T:DrawnUi.Draw.RelativePositionType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.RelativePositionType.html
+  name: RelativePositionType
+  nameWithType: RelativePositionType
+  fullName: DrawnUi.Draw.RelativePositionType
+- uid: DrawnUi.Draw.IDefinesViewport.ScrollTo*
+  commentId: Overload:DrawnUi.Draw.IDefinesViewport.ScrollTo
+  href: DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_ScrollTo_System_Single_System_Single_System_Single_
+  name: ScrollTo
+  nameWithType: IDefinesViewport.ScrollTo
+  fullName: DrawnUi.Draw.IDefinesViewport.ScrollTo
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.IDefinesViewport.InvalidateByChild*
+  commentId: Overload:DrawnUi.Draw.IDefinesViewport.InvalidateByChild
+  href: DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_InvalidateByChild_DrawnUi_Draw_SkiaControl_
+  name: InvalidateByChild
+  nameWithType: IDefinesViewport.InvalidateByChild
+  fullName: DrawnUi.Draw.IDefinesViewport.InvalidateByChild
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl

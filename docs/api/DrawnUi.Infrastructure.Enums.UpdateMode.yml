@@ -1,0 +1,245 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Enums.UpdateMode
+  commentId: T:DrawnUi.Infrastructure.Enums.UpdateMode
+  id: UpdateMode
+  parent: DrawnUi.Infrastructure.Enums
+  children:
+  - DrawnUi.Infrastructure.Enums.UpdateMode.Constant
+  - DrawnUi.Infrastructure.Enums.UpdateMode.Dynamic
+  - DrawnUi.Infrastructure.Enums.UpdateMode.Manual
+  langs:
+  - csharp
+  - vb
+  name: UpdateMode
+  nameWithType: UpdateMode
+  fullName: DrawnUi.Infrastructure.Enums.UpdateMode
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/UpdateMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateMode
+    path: ../src/Shared/Draw/Internals/Enums/UpdateMode.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  syntax:
+    content: public enum UpdateMode
+    content.vb: Public Enum UpdateMode
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.Enums.UpdateMode.Dynamic
+  commentId: F:DrawnUi.Infrastructure.Enums.UpdateMode.Dynamic
+  id: Dynamic
+  parent: DrawnUi.Infrastructure.Enums.UpdateMode
+  langs:
+  - csharp
+  - vb
+  name: Dynamic
+  nameWithType: UpdateMode.Dynamic
+  fullName: DrawnUi.Infrastructure.Enums.UpdateMode.Dynamic
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/UpdateMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dynamic
+    path: ../src/Shared/Draw/Internals/Enums/UpdateMode.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  summary: Will update when needed.
+  example: []
+  syntax:
+    content: Dynamic = 0
+    return:
+      type: DrawnUi.Infrastructure.Enums.UpdateMode
+- uid: DrawnUi.Infrastructure.Enums.UpdateMode.Constant
+  commentId: F:DrawnUi.Infrastructure.Enums.UpdateMode.Constant
+  id: Constant
+  parent: DrawnUi.Infrastructure.Enums.UpdateMode
+  langs:
+  - csharp
+  - vb
+  name: Constant
+  nameWithType: UpdateMode.Constant
+  fullName: DrawnUi.Infrastructure.Enums.UpdateMode.Constant
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/UpdateMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Constant
+    path: ../src/Shared/Draw/Internals/Enums/UpdateMode.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  summary: Constantly invalidating the canvas after every frame
+  example: []
+  syntax:
+    content: Constant = 1
+    return:
+      type: DrawnUi.Infrastructure.Enums.UpdateMode
+- uid: DrawnUi.Infrastructure.Enums.UpdateMode.Manual
+  commentId: F:DrawnUi.Infrastructure.Enums.UpdateMode.Manual
+  id: Manual
+  parent: DrawnUi.Infrastructure.Enums.UpdateMode
+  langs:
+  - csharp
+  - vb
+  name: Manual
+  nameWithType: UpdateMode.Manual
+  fullName: DrawnUi.Infrastructure.Enums.UpdateMode.Manual
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/UpdateMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Manual
+    path: ../src/Shared/Draw/Internals/Enums/UpdateMode.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  summary: Will not update until manually invalidated.
+  example: []
+  syntax:
+    content: Manual = 2
+    return:
+      type: DrawnUi.Infrastructure.Enums.UpdateMode
+references:
+- uid: DrawnUi.Infrastructure.Enums
+  commentId: N:DrawnUi.Infrastructure.Enums
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure.Enums
+  nameWithType: DrawnUi.Infrastructure.Enums
+  fullName: DrawnUi.Infrastructure.Enums
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Enums
+    name: Enums
+    href: DrawnUi.Infrastructure.Enums.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Enums
+    name: Enums
+    href: DrawnUi.Infrastructure.Enums.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Infrastructure.Enums.UpdateMode
+  commentId: T:DrawnUi.Infrastructure.Enums.UpdateMode
+  parent: DrawnUi.Infrastructure.Enums
+  href: DrawnUi.Infrastructure.Enums.UpdateMode.html
+  name: UpdateMode
+  nameWithType: UpdateMode
+  fullName: DrawnUi.Infrastructure.Enums.UpdateMode

@@ -1,0 +1,2256 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IDrawnBase
+  commentId: T:DrawnUi.Draw.IDrawnBase
+  id: IDrawnBase
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.ClipEffects
+  - DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  - DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  - DrawnUi.Draw.IDrawnBase.Destination
+  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - DrawnUi.Draw.IDrawnBase.DrawingRect
+  - DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+  - DrawnUi.Draw.IDrawnBase.Height
+  - DrawnUi.Draw.IDrawnBase.HeightRequest
+  - DrawnUi.Draw.IDrawnBase.InputTransparent
+  - DrawnUi.Draw.IDrawnBase.Invalidate
+  - DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.InvalidateParents
+  - DrawnUi.Draw.IDrawnBase.InvalidateViewport
+  - DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+  - DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  - DrawnUi.Draw.IDrawnBase.IsDisposed
+  - DrawnUi.Draw.IDrawnBase.IsDisposing
+  - DrawnUi.Draw.IDrawnBase.IsVisible
+  - DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+  - DrawnUi.Draw.IDrawnBase.MeasuredSize
+  - DrawnUi.Draw.IDrawnBase.PostAnimators
+  - DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  - DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  - DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.RenderingScale
+  - DrawnUi.Draw.IDrawnBase.Repaint
+  - DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  - DrawnUi.Draw.IDrawnBase.Tag
+  - DrawnUi.Draw.IDrawnBase.TranslationX
+  - DrawnUi.Draw.IDrawnBase.TranslationY
+  - DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  - DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  - DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  - DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.UpdateLocks
+  - DrawnUi.Draw.IDrawnBase.Views
+  - DrawnUi.Draw.IDrawnBase.Width
+  - DrawnUi.Draw.IDrawnBase.WidthRequest
+  - DrawnUi.Draw.IDrawnBase.X
+  - DrawnUi.Draw.IDrawnBase.Y
+  langs:
+  - csharp
+  - vb
+  name: IDrawnBase
+  nameWithType: IDrawnBase
+  fullName: DrawnUi.Draw.IDrawnBase
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IDrawnBase
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface IDrawnBase : IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated'
+    content.vb: Public Interface IDrawnBase Inherits IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated
+  inheritedMembers:
+  - System.IDisposable.Dispose
+  - DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  - DrawnUi.Draw.ICanBeUpdated.Update
+  extensionMethods:
+  - DrawnUi.Draw.IDrawnBase.DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.ISkiaControl)
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IDrawnBase.DrawingRect
+  commentId: P:DrawnUi.Draw.IDrawnBase.DrawingRect
+  id: DrawingRect
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: DrawingRect
+  nameWithType: IDrawnBase.DrawingRect
+  fullName: DrawnUi.Draw.IDrawnBase.DrawingRect
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawingRect
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SKRect DrawingRect { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: ReadOnly Property DrawingRect As SKRect
+  overload: DrawnUi.Draw.IDrawnBase.DrawingRect*
+- uid: DrawnUi.Draw.IDrawnBase.Tag
+  commentId: P:DrawnUi.Draw.IDrawnBase.Tag
+  id: Tag
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Tag
+  nameWithType: IDrawnBase.Tag
+  fullName: DrawnUi.Draw.IDrawnBase.Tag
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tag
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: string Tag { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Tag As String
+  overload: DrawnUi.Draw.IDrawnBase.Tag*
+- uid: DrawnUi.Draw.IDrawnBase.IsVisible
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsVisible
+  id: IsVisible
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: IsVisible
+  nameWithType: IDrawnBase.IsVisible
+  fullName: DrawnUi.Draw.IDrawnBase.IsVisible
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsVisible
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsVisible { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property IsVisible As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.IsVisible*
+- uid: DrawnUi.Draw.IDrawnBase.IsDisposed
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsDisposed
+  id: IsDisposed
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: IsDisposed
+  nameWithType: IDrawnBase.IsDisposed
+  fullName: DrawnUi.Draw.IDrawnBase.IsDisposed
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDisposed
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsDisposed { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsDisposed As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.IsDisposed*
+- uid: DrawnUi.Draw.IDrawnBase.IsDisposing
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsDisposing
+  id: IsDisposing
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: IsDisposing
+  nameWithType: IDrawnBase.IsDisposing
+  fullName: DrawnUi.Draw.IDrawnBase.IsDisposing
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDisposing
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsDisposing { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsDisposing As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.IsDisposing*
+- uid: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+  commentId: M:DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+  id: IsVisibleInViewTree
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: IsVisibleInViewTree()
+  nameWithType: IDrawnBase.IsVisibleInViewTree()
+  fullName: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsVisibleInViewTree
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsVisibleInViewTree()
+    return:
+      type: System.Boolean
+    content.vb: Function IsVisibleInViewTree() As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree*
+- uid: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+  commentId: M:DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+  id: GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: GetOnScreenVisibleArea(DrawingContext, Vector2)
+  nameWithType: IDrawnBase.GetOnScreenVisibleArea(DrawingContext, Vector2)
+  fullName: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext, System.Numerics.Vector2)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetOnScreenVisibleArea
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 28
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    For virtualization. For this method to be conditional we introduced the `pixelsDestination`
+
+    parameter so that the Parent could return different visible areas upon context.
+
+    Normally pass your current destination you are drawing into as this parameter.
+  example: []
+  syntax:
+    content: ScaledRect GetOnScreenVisibleArea(DrawingContext context, Vector2 inflateByPixels = default)
+    parameters:
+    - id: context
+      type: DrawnUi.Draw.DrawingContext
+    - id: inflateByPixels
+      type: System.Numerics.Vector2
+      description: ''
+    return:
+      type: DrawnUi.Draw.ScaledRect
+      description: ''
+    content.vb: Function GetOnScreenVisibleArea(context As DrawingContext, inflateByPixels As Vector2 = Nothing) As ScaledRect
+  overload: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea*
+- uid: DrawnUi.Draw.IDrawnBase.Invalidate
+  commentId: M:DrawnUi.Draw.IDrawnBase.Invalidate
+  id: Invalidate
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Invalidate()
+  nameWithType: IDrawnBase.Invalidate()
+  fullName: DrawnUi.Draw.IDrawnBase.Invalidate()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Invalidate
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 33
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Invalidates the measured size. May or may not call Update() inside, depends on control
+  example: []
+  syntax:
+    content: void Invalidate()
+    content.vb: Sub Invalidate()
+  overload: DrawnUi.Draw.IDrawnBase.Invalidate*
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateParents
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateParents
+  id: InvalidateParents
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: InvalidateParents()
+  nameWithType: IDrawnBase.InvalidateParents()
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateParents()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvalidateParents
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: If need the re-measure all parents because child-auto-size has changed
+  example: []
+  syntax:
+    content: void InvalidateParents()
+    content.vb: Sub InvalidateParents()
+  overload: DrawnUi.Draw.IDrawnBase.InvalidateParents*
+- uid: DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  commentId: M:DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  id: ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: ClipSmart(SKCanvas, SKPath, SKClipOperation)
+  nameWithType: IDrawnBase.ClipSmart(SKCanvas, SKPath, SKClipOperation)
+  fullName: DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas, SkiaSharp.SKPath, SkiaSharp.SKClipOperation)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ClipSmart
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 46
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Clip using internal custom settings of the control
+  example: []
+  syntax:
+    content: void ClipSmart(SKCanvas canvas, SKPath path, SKClipOperation operation = SKClipOperation.Intersect)
+    parameters:
+    - id: canvas
+      type: SkiaSharp.SKCanvas
+      description: ''
+    - id: path
+      type: SkiaSharp.SKPath
+      description: ''
+    - id: operation
+      type: SkiaSharp.SKClipOperation
+      description: ''
+    content.vb: Sub ClipSmart(canvas As SKCanvas, path As SKPath, operation As SKClipOperation = SKClipOperation.Intersect)
+  overload: DrawnUi.Draw.IDrawnBase.ClipSmart*
+- uid: DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  commentId: M:DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  id: CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: CreateClip(object, bool, SKPath)
+  nameWithType: IDrawnBase.CreateClip(object, bool, SKPath)
+  fullName: DrawnUi.Draw.IDrawnBase.CreateClip(object, bool, SkiaSharp.SKPath)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateClip
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 56
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Creates a new disposable SKPath for clipping content according to the control shape and size.
+
+    Create this control clip for painting content.
+
+    Pass arguments if you want to use some time-frozen data for painting at any time from any thread..
+
+    If applyPosition is false will create clip without using drawing posiition, like if was drawing at 0,0.
+  example: []
+  syntax:
+    content: SKPath CreateClip(object arguments, bool usePosition, SKPath path = null)
+    parameters:
+    - id: arguments
+      type: System.Object
+    - id: usePosition
+      type: System.Boolean
+    - id: path
+      type: SkiaSharp.SKPath
+    return:
+      type: SkiaSharp.SKPath
+      description: ''
+    content.vb: Function CreateClip(arguments As Object, usePosition As Boolean, path As SKPath = Nothing) As SKPath
+  overload: DrawnUi.Draw.IDrawnBase.CreateClip*
+  nameWithType.vb: IDrawnBase.CreateClip(Object, Boolean, SKPath)
+  fullName.vb: DrawnUi.Draw.IDrawnBase.CreateClip(Object, Boolean, SkiaSharp.SKPath)
+  name.vb: CreateClip(Object, Boolean, SKPath)
+- uid: DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  commentId: M:DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  id: RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: RegisterAnimator(ISkiaAnimator)
+  nameWithType: IDrawnBase.RegisterAnimator(ISkiaAnimator)
+  fullName: DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RegisterAnimator
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 58
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool RegisterAnimator(ISkiaAnimator animator)
+    parameters:
+    - id: animator
+      type: DrawnUi.Draw.ISkiaAnimator
+    return:
+      type: System.Boolean
+    content.vb: Function RegisterAnimator(animator As ISkiaAnimator) As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.RegisterAnimator*
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  id: UnregisterAnimator(System.Guid)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: UnregisterAnimator(Guid)
+  nameWithType: IDrawnBase.UnregisterAnimator(Guid)
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UnregisterAnimator
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 60
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void UnregisterAnimator(Guid uid)
+    parameters:
+    - id: uid
+      type: System.Guid
+    content.vb: Sub UnregisterAnimator(uid As Guid)
+  overload: DrawnUi.Draw.IDrawnBase.UnregisterAnimator*
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  id: UnregisterAllAnimatorsByType(System.Type)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: UnregisterAllAnimatorsByType(Type)
+  nameWithType: IDrawnBase.UnregisterAllAnimatorsByType(Type)
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UnregisterAllAnimatorsByType
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 62
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: IEnumerable<ISkiaAnimator> UnregisterAllAnimatorsByType(Type type)
+    parameters:
+    - id: type
+      type: System.Type
+    return:
+      type: System.Collections.Generic.IEnumerable{DrawnUi.Draw.ISkiaAnimator}
+    content.vb: Function UnregisterAllAnimatorsByType(type As Type) As IEnumerable(Of ISkiaAnimator)
+  overload: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType*
+- uid: DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  commentId: M:DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  id: RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: RegisterGestureListener(ISkiaGestureListener)
+  nameWithType: IDrawnBase.RegisterGestureListener(ISkiaGestureListener)
+  fullName: DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RegisterGestureListener
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 64
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void RegisterGestureListener(ISkiaGestureListener gestureListener)
+    parameters:
+    - id: gestureListener
+      type: DrawnUi.Draw.ISkiaGestureListener
+    content.vb: Sub RegisterGestureListener(gestureListener As ISkiaGestureListener)
+  overload: DrawnUi.Draw.IDrawnBase.RegisterGestureListener*
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  id: UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: UnregisterGestureListener(ISkiaGestureListener)
+  nameWithType: IDrawnBase.UnregisterGestureListener(ISkiaGestureListener)
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UnregisterGestureListener
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 66
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void UnregisterGestureListener(ISkiaGestureListener gestureListener)
+    parameters:
+    - id: gestureListener
+      type: DrawnUi.Draw.ISkiaGestureListener
+    content.vb: Sub UnregisterGestureListener(gestureListener As ISkiaGestureListener)
+  overload: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener*
+- uid: DrawnUi.Draw.IDrawnBase.PostAnimators
+  commentId: P:DrawnUi.Draw.IDrawnBase.PostAnimators
+  id: PostAnimators
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: PostAnimators
+  nameWithType: IDrawnBase.PostAnimators
+  fullName: DrawnUi.Draw.IDrawnBase.PostAnimators
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PostAnimators
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 71
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Executed after the rendering
+  example: []
+  syntax:
+    content: List<IOverlayEffect> PostAnimators { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Draw.IOverlayEffect}
+    content.vb: ReadOnly Property PostAnimators As List(Of IOverlayEffect)
+  overload: DrawnUi.Draw.IDrawnBase.PostAnimators*
+- uid: DrawnUi.Draw.IDrawnBase.Views
+  commentId: P:DrawnUi.Draw.IDrawnBase.Views
+  id: Views
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Views
+  nameWithType: IDrawnBase.Views
+  fullName: DrawnUi.Draw.IDrawnBase.Views
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Views
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 77
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: For code-behind access of children, XAML is using Children property
+  example: []
+  syntax:
+    content: List<SkiaControl> Views { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Draw.SkiaControl}
+    content.vb: ReadOnly Property Views As List(Of SkiaControl)
+  overload: DrawnUi.Draw.IDrawnBase.Views*
+- uid: DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  id: AddSubView(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: AddSubView(SkiaControl)
+  nameWithType: IDrawnBase.AddSubView(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddSubView
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 83
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Directly adds a view to the control, without any layouting. Use this instead of Views.Add() to avoid memory leaks etc
+  example: []
+  syntax:
+    content: void AddSubView(SkiaControl view)
+    parameters:
+    - id: view
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    content.vb: Sub AddSubView(view As SkiaControl)
+  overload: DrawnUi.Draw.IDrawnBase.AddSubView*
+- uid: DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  id: RemoveSubView(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: RemoveSubView(SkiaControl)
+  nameWithType: IDrawnBase.RemoveSubView(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RemoveSubView
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Directly removes a view from the control, without any layouting.
+
+    Use this instead of Views.Remove() to avoid memory leaks etc
+  example: []
+  syntax:
+    content: void RemoveSubView(SkiaControl view)
+    parameters:
+    - id: view
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    content.vb: Sub RemoveSubView(view As SkiaControl)
+  overload: DrawnUi.Draw.IDrawnBase.RemoveSubView*
+- uid: DrawnUi.Draw.IDrawnBase.MeasuredSize
+  commentId: P:DrawnUi.Draw.IDrawnBase.MeasuredSize
+  id: MeasuredSize
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: MeasuredSize
+  nameWithType: IDrawnBase.MeasuredSize
+  fullName: DrawnUi.Draw.IDrawnBase.MeasuredSize
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasuredSize
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 92
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ScaledSize MeasuredSize { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: ReadOnly Property MeasuredSize As ScaledSize
+  overload: DrawnUi.Draw.IDrawnBase.MeasuredSize*
+- uid: DrawnUi.Draw.IDrawnBase.Destination
+  commentId: P:DrawnUi.Draw.IDrawnBase.Destination
+  id: Destination
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Destination
+  nameWithType: IDrawnBase.Destination
+  fullName: DrawnUi.Draw.IDrawnBase.Destination
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Destination
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 94
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SKRect Destination { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: ReadOnly Property Destination As SKRect
+  overload: DrawnUi.Draw.IDrawnBase.Destination*
+- uid: DrawnUi.Draw.IDrawnBase.HeightRequest
+  commentId: P:DrawnUi.Draw.IDrawnBase.HeightRequest
+  id: HeightRequest
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: HeightRequest
+  nameWithType: IDrawnBase.HeightRequest
+  fullName: DrawnUi.Draw.IDrawnBase.HeightRequest
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HeightRequest
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 96
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double HeightRequest { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Property HeightRequest As Double
+  overload: DrawnUi.Draw.IDrawnBase.HeightRequest*
+- uid: DrawnUi.Draw.IDrawnBase.WidthRequest
+  commentId: P:DrawnUi.Draw.IDrawnBase.WidthRequest
+  id: WidthRequest
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: WidthRequest
+  nameWithType: IDrawnBase.WidthRequest
+  fullName: DrawnUi.Draw.IDrawnBase.WidthRequest
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WidthRequest
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 98
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double WidthRequest { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Property WidthRequest As Double
+  overload: DrawnUi.Draw.IDrawnBase.WidthRequest*
+- uid: DrawnUi.Draw.IDrawnBase.Height
+  commentId: P:DrawnUi.Draw.IDrawnBase.Height
+  id: Height
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: IDrawnBase.Height
+  fullName: DrawnUi.Draw.IDrawnBase.Height
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Height
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 100
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double Height { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property Height As Double
+  overload: DrawnUi.Draw.IDrawnBase.Height*
+- uid: DrawnUi.Draw.IDrawnBase.Width
+  commentId: P:DrawnUi.Draw.IDrawnBase.Width
+  id: Width
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: IDrawnBase.Width
+  fullName: DrawnUi.Draw.IDrawnBase.Width
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Width
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 102
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double Width { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property Width As Double
+  overload: DrawnUi.Draw.IDrawnBase.Width*
+- uid: DrawnUi.Draw.IDrawnBase.TranslationX
+  commentId: P:DrawnUi.Draw.IDrawnBase.TranslationX
+  id: TranslationX
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: TranslationX
+  nameWithType: IDrawnBase.TranslationX
+  fullName: DrawnUi.Draw.IDrawnBase.TranslationX
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TranslationX
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 104
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double TranslationX { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property TranslationX As Double
+  overload: DrawnUi.Draw.IDrawnBase.TranslationX*
+- uid: DrawnUi.Draw.IDrawnBase.TranslationY
+  commentId: P:DrawnUi.Draw.IDrawnBase.TranslationY
+  id: TranslationY
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: TranslationY
+  nameWithType: IDrawnBase.TranslationY
+  fullName: DrawnUi.Draw.IDrawnBase.TranslationY
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TranslationY
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 106
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double TranslationY { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property TranslationY As Double
+  overload: DrawnUi.Draw.IDrawnBase.TranslationY*
+- uid: DrawnUi.Draw.IDrawnBase.InputTransparent
+  commentId: P:DrawnUi.Draw.IDrawnBase.InputTransparent
+  id: InputTransparent
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: InputTransparent
+  nameWithType: IDrawnBase.InputTransparent
+  fullName: DrawnUi.Draw.IDrawnBase.InputTransparent
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InputTransparent
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 108
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool InputTransparent { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property InputTransparent As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.InputTransparent*
+- uid: DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  id: IsClippedToBounds
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: IsClippedToBounds
+  nameWithType: IDrawnBase.IsClippedToBounds
+  fullName: DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsClippedToBounds
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 110
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsClippedToBounds { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property IsClippedToBounds As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.IsClippedToBounds*
+- uid: DrawnUi.Draw.IDrawnBase.ClipEffects
+  commentId: P:DrawnUi.Draw.IDrawnBase.ClipEffects
+  id: ClipEffects
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: ClipEffects
+  nameWithType: IDrawnBase.ClipEffects
+  fullName: DrawnUi.Draw.IDrawnBase.ClipEffects
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ClipEffects
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 112
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool ClipEffects { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property ClipEffects As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.ClipEffects*
+- uid: DrawnUi.Draw.IDrawnBase.UpdateLocks
+  commentId: P:DrawnUi.Draw.IDrawnBase.UpdateLocks
+  id: UpdateLocks
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: UpdateLocks
+  nameWithType: IDrawnBase.UpdateLocks
+  fullName: DrawnUi.Draw.IDrawnBase.UpdateLocks
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateLocks
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 114
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: int UpdateLocks { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property UpdateLocks As Integer
+  overload: DrawnUi.Draw.IDrawnBase.UpdateLocks*
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  id: InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: InvalidateByChild(SkiaControl)
+  nameWithType: IDrawnBase.InvalidateByChild(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvalidateByChild
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 120
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This is needed by layout to track which child changed to sometimes avoid recalculating other children
+  example: []
+  syntax:
+    content: void InvalidateByChild(SkiaControl skiaControl)
+    parameters:
+    - id: skiaControl
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    content.vb: Sub InvalidateByChild(skiaControl As SkiaControl)
+  overload: DrawnUi.Draw.IDrawnBase.InvalidateByChild*
+- uid: DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  id: UpdateByChild(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: UpdateByChild(SkiaControl)
+  nameWithType: IDrawnBase.UpdateByChild(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateByChild
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 126
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: To track dirty area when Updating parent
+  example: []
+  syntax:
+    content: void UpdateByChild(SkiaControl skiaControl)
+    parameters:
+    - id: skiaControl
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    content.vb: Sub UpdateByChild(skiaControl As SkiaControl)
+  overload: DrawnUi.Draw.IDrawnBase.UpdateByChild*
+- uid: DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  commentId: P:DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  id: ShouldInvalidateByChildren
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: ShouldInvalidateByChildren
+  nameWithType: IDrawnBase.ShouldInvalidateByChildren
+  fullName: DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ShouldInvalidateByChildren
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 128
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool ShouldInvalidateByChildren { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property ShouldInvalidateByChildren As Boolean
+  overload: DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren*
+- uid: DrawnUi.Draw.IDrawnBase.RenderingScale
+  commentId: P:DrawnUi.Draw.IDrawnBase.RenderingScale
+  id: RenderingScale
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: RenderingScale
+  nameWithType: IDrawnBase.RenderingScale
+  fullName: DrawnUi.Draw.IDrawnBase.RenderingScale
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderingScale
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 130
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: float RenderingScale { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: ReadOnly Property RenderingScale As Single
+  overload: DrawnUi.Draw.IDrawnBase.RenderingScale*
+- uid: DrawnUi.Draw.IDrawnBase.X
+  commentId: P:DrawnUi.Draw.IDrawnBase.X
+  id: X
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: X
+  nameWithType: IDrawnBase.X
+  fullName: DrawnUi.Draw.IDrawnBase.X
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: X
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 132
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double X { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property X As Double
+  overload: DrawnUi.Draw.IDrawnBase.X*
+- uid: DrawnUi.Draw.IDrawnBase.Y
+  commentId: P:DrawnUi.Draw.IDrawnBase.Y
+  id: Y
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Y
+  nameWithType: IDrawnBase.Y
+  fullName: DrawnUi.Draw.IDrawnBase.Y
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Y
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 134
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double Y { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property Y As Double
+  overload: DrawnUi.Draw.IDrawnBase.Y*
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateViewport
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateViewport
+  id: InvalidateViewport
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: InvalidateViewport()
+  nameWithType: IDrawnBase.InvalidateViewport()
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateViewport()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvalidateViewport
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 136
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void InvalidateViewport()
+    content.vb: Sub InvalidateViewport()
+  overload: DrawnUi.Draw.IDrawnBase.InvalidateViewport*
+- uid: DrawnUi.Draw.IDrawnBase.Repaint
+  commentId: M:DrawnUi.Draw.IDrawnBase.Repaint
+  id: Repaint
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: Repaint()
+  nameWithType: IDrawnBase.Repaint()
+  fullName: DrawnUi.Draw.IDrawnBase.Repaint()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Repaint
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 138
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void Repaint()
+    content.vb: Sub Repaint()
+  overload: DrawnUi.Draw.IDrawnBase.Repaint*
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+  id: InvalidateViewsList
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: InvalidateViewsList()
+  nameWithType: IDrawnBase.InvalidateViewsList()
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateViewsList()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvalidateViewsList
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 140
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void InvalidateViewsList()
+    content.vb: Sub InvalidateViewsList()
+  overload: DrawnUi.Draw.IDrawnBase.InvalidateViewsList*
+- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  id: DisposeObject(System.IDisposable)
+  parent: DrawnUi.Draw.IDrawnBase
+  langs:
+  - csharp
+  - vb
+  name: DisposeObject(IDisposable)
+  nameWithType: IDrawnBase.DisposeObject(IDisposable)
+  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DisposeObject
+    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    startLine: 142
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void DisposeObject(IDisposable value)
+    parameters:
+    - id: value
+      type: System.IDisposable
+    content.vb: Sub DisposeObject(value As IDisposable)
+  overload: DrawnUi.Draw.IDrawnBase.DisposeObject*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  commentId: P:DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  parent: DrawnUi.Draw.ICanBeUpdatedWithContext
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html#DrawnUi_Draw_ICanBeUpdatedWithContext_BindingContext
+  name: BindingContext
+  nameWithType: ICanBeUpdatedWithContext.BindingContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+- uid: DrawnUi.Draw.ICanBeUpdated.Update
+  commentId: M:DrawnUi.Draw.ICanBeUpdated.Update
+  parent: DrawnUi.Draw.ICanBeUpdated
+  href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  name: Update()
+  nameWithType: ICanBeUpdated.Update()
+  fullName: DrawnUi.Draw.ICanBeUpdated.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.ISkiaControl)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  parent: DrawnUi.Draw.DrawnExtensions
+  definition: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  name: GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  nameWithType: DrawnExtensions.GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  fullName: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase, DrawnUi.Draw.ISkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext
+  commentId: T:DrawnUi.Draw.ICanBeUpdatedWithContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html
+  name: ICanBeUpdatedWithContext
+  nameWithType: ICanBeUpdatedWithContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext
+- uid: DrawnUi.Draw.ICanBeUpdated
+  commentId: T:DrawnUi.Draw.ICanBeUpdated
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdated.html
+  name: ICanBeUpdated
+  nameWithType: ICanBeUpdated
+  fullName: DrawnUi.Draw.ICanBeUpdated
+- uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  name: GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  nameWithType: DrawnExtensions.GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  fullName: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase, DrawnUi.Draw.ISkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.DrawnExtensions
+  commentId: T:DrawnUi.Draw.DrawnExtensions
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawnExtensions.html
+  name: DrawnExtensions
+  nameWithType: DrawnExtensions
+  fullName: DrawnUi.Draw.DrawnExtensions
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IDrawnBase.DrawingRect*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.DrawingRect
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DrawingRect
+  name: DrawingRect
+  nameWithType: IDrawnBase.DrawingRect
+  fullName: DrawnUi.Draw.IDrawnBase.DrawingRect
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.IDrawnBase.Tag*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Tag
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Tag
+  name: Tag
+  nameWithType: IDrawnBase.Tag
+  fullName: DrawnUi.Draw.IDrawnBase.Tag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.IDrawnBase.IsVisible*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.IsVisible
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsVisible
+  name: IsVisible
+  nameWithType: IDrawnBase.IsVisible
+  fullName: DrawnUi.Draw.IDrawnBase.IsVisible
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.IDrawnBase.IsDisposed*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.IsDisposed
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsDisposed
+  name: IsDisposed
+  nameWithType: IDrawnBase.IsDisposed
+  fullName: DrawnUi.Draw.IDrawnBase.IsDisposed
+- uid: DrawnUi.Draw.IDrawnBase.IsDisposing*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.IsDisposing
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsDisposing
+  name: IsDisposing
+  nameWithType: IDrawnBase.IsDisposing
+  fullName: DrawnUi.Draw.IDrawnBase.IsDisposing
+- uid: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsVisibleInViewTree
+  name: IsVisibleInViewTree
+  nameWithType: IDrawnBase.IsVisibleInViewTree
+  fullName: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+- uid: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_GetOnScreenVisibleArea_DrawnUi_Draw_DrawingContext_System_Numerics_Vector2_
+  name: GetOnScreenVisibleArea
+  nameWithType: IDrawnBase.GetOnScreenVisibleArea
+  fullName: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea
+- uid: DrawnUi.Draw.DrawingContext
+  commentId: T:DrawnUi.Draw.DrawingContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawingContext.html
+  name: DrawingContext
+  nameWithType: DrawingContext
+  fullName: DrawnUi.Draw.DrawingContext
+- uid: System.Numerics.Vector2
+  commentId: T:System.Numerics.Vector2
+  parent: System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  name: Vector2
+  nameWithType: Vector2
+  fullName: System.Numerics.Vector2
+- uid: DrawnUi.Draw.ScaledRect
+  commentId: T:DrawnUi.Draw.ScaledRect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScaledRect.html
+  name: ScaledRect
+  nameWithType: ScaledRect
+  fullName: DrawnUi.Draw.ScaledRect
+- uid: System.Numerics
+  commentId: N:System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Numerics
+  nameWithType: System.Numerics
+  fullName: System.Numerics
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+- uid: DrawnUi.Draw.IDrawnBase.Invalidate*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Invalidate
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Invalidate
+  name: Invalidate
+  nameWithType: IDrawnBase.Invalidate
+  fullName: DrawnUi.Draw.IDrawnBase.Invalidate
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateParents*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.InvalidateParents
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateParents
+  name: InvalidateParents
+  nameWithType: IDrawnBase.InvalidateParents
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateParents
+- uid: DrawnUi.Draw.IDrawnBase.ClipSmart*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.ClipSmart
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ClipSmart_SkiaSharp_SKCanvas_SkiaSharp_SKPath_SkiaSharp_SKClipOperation_
+  name: ClipSmart
+  nameWithType: IDrawnBase.ClipSmart
+  fullName: DrawnUi.Draw.IDrawnBase.ClipSmart
+- uid: SkiaSharp.SKCanvas
+  commentId: T:SkiaSharp.SKCanvas
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas
+  name: SKCanvas
+  nameWithType: SKCanvas
+  fullName: SkiaSharp.SKCanvas
+- uid: SkiaSharp.SKPath
+  commentId: T:SkiaSharp.SKPath
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  name: SKPath
+  nameWithType: SKPath
+  fullName: SkiaSharp.SKPath
+- uid: SkiaSharp.SKClipOperation
+  commentId: T:SkiaSharp.SKClipOperation
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skclipoperation
+  name: SKClipOperation
+  nameWithType: SKClipOperation
+  fullName: SkiaSharp.SKClipOperation
+- uid: DrawnUi.Draw.IDrawnBase.CreateClip*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.CreateClip
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_
+  name: CreateClip
+  nameWithType: IDrawnBase.CreateClip
+  fullName: DrawnUi.Draw.IDrawnBase.CreateClip
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Draw.IDrawnBase.RegisterAnimator*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.RegisterAnimator
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_
+  name: RegisterAnimator
+  nameWithType: IDrawnBase.RegisterAnimator
+  fullName: DrawnUi.Draw.IDrawnBase.RegisterAnimator
+- uid: DrawnUi.Draw.ISkiaAnimator
+  commentId: T:DrawnUi.Draw.ISkiaAnimator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaAnimator.html
+  name: ISkiaAnimator
+  nameWithType: ISkiaAnimator
+  fullName: DrawnUi.Draw.ISkiaAnimator
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterAnimator*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.UnregisterAnimator
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAnimator_System_Guid_
+  name: UnregisterAnimator
+  nameWithType: IDrawnBase.UnregisterAnimator
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterAnimator
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAllAnimatorsByType_System_Type_
+  name: UnregisterAllAnimatorsByType
+  nameWithType: IDrawnBase.UnregisterAllAnimatorsByType
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.type
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Collections.Generic.IEnumerable{DrawnUi.Draw.ISkiaAnimator}
+  commentId: T:System.Collections.Generic.IEnumerable{DrawnUi.Draw.ISkiaAnimator}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<ISkiaAnimator>
+  nameWithType: IEnumerable<ISkiaAnimator>
+  fullName: System.Collections.Generic.IEnumerable<DrawnUi.Draw.ISkiaAnimator>
+  nameWithType.vb: IEnumerable(Of ISkiaAnimator)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.ISkiaAnimator)
+  name.vb: IEnumerable(Of ISkiaAnimator)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.IDrawnBase.RegisterGestureListener*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.RegisterGestureListener
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  name: RegisterGestureListener
+  nameWithType: IDrawnBase.RegisterGestureListener
+  fullName: DrawnUi.Draw.IDrawnBase.RegisterGestureListener
+- uid: DrawnUi.Draw.ISkiaGestureListener
+  commentId: T:DrawnUi.Draw.ISkiaGestureListener
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaGestureListener.html
+  name: ISkiaGestureListener
+  nameWithType: ISkiaGestureListener
+  fullName: DrawnUi.Draw.ISkiaGestureListener
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.UnregisterGestureListener
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  name: UnregisterGestureListener
+  nameWithType: IDrawnBase.UnregisterGestureListener
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener
+- uid: DrawnUi.Draw.IDrawnBase.PostAnimators*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.PostAnimators
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_PostAnimators
+  name: PostAnimators
+  nameWithType: IDrawnBase.PostAnimators
+  fullName: DrawnUi.Draw.IDrawnBase.PostAnimators
+- uid: System.Collections.Generic.List{DrawnUi.Draw.IOverlayEffect}
+  commentId: T:System.Collections.Generic.List{DrawnUi.Draw.IOverlayEffect}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<IOverlayEffect>
+  nameWithType: List<IOverlayEffect>
+  fullName: System.Collections.Generic.List<DrawnUi.Draw.IOverlayEffect>
+  nameWithType.vb: List(Of IOverlayEffect)
+  fullName.vb: System.Collections.Generic.List(Of DrawnUi.Draw.IOverlayEffect)
+  name.vb: List(Of IOverlayEffect)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Draw.IOverlayEffect
+    name: IOverlayEffect
+    href: DrawnUi.Draw.IOverlayEffect.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.IOverlayEffect
+    name: IOverlayEffect
+    href: DrawnUi.Draw.IOverlayEffect.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.Views*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Views
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Views
+  name: Views
+  nameWithType: IDrawnBase.Views
+  fullName: DrawnUi.Draw.IDrawnBase.Views
+- uid: System.Collections.Generic.List{DrawnUi.Draw.SkiaControl}
+  commentId: T:System.Collections.Generic.List{DrawnUi.Draw.SkiaControl}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<SkiaControl>
+  nameWithType: List<SkiaControl>
+  fullName: System.Collections.Generic.List<DrawnUi.Draw.SkiaControl>
+  nameWithType.vb: List(Of SkiaControl)
+  fullName.vb: System.Collections.Generic.List(Of DrawnUi.Draw.SkiaControl)
+  name.vb: List(Of SkiaControl)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.AddSubView*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.AddSubView
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_AddSubView_DrawnUi_Draw_SkiaControl_
+  name: AddSubView
+  nameWithType: IDrawnBase.AddSubView
+  fullName: DrawnUi.Draw.IDrawnBase.AddSubView
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.IDrawnBase.RemoveSubView*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.RemoveSubView
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RemoveSubView_DrawnUi_Draw_SkiaControl_
+  name: RemoveSubView
+  nameWithType: IDrawnBase.RemoveSubView
+  fullName: DrawnUi.Draw.IDrawnBase.RemoveSubView
+- uid: DrawnUi.Draw.IDrawnBase.MeasuredSize*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.MeasuredSize
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_MeasuredSize
+  name: MeasuredSize
+  nameWithType: IDrawnBase.MeasuredSize
+  fullName: DrawnUi.Draw.IDrawnBase.MeasuredSize
+- uid: DrawnUi.Draw.ScaledSize
+  commentId: T:DrawnUi.Draw.ScaledSize
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScaledSize.html
+  name: ScaledSize
+  nameWithType: ScaledSize
+  fullName: DrawnUi.Draw.ScaledSize
+- uid: DrawnUi.Draw.IDrawnBase.Destination*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Destination
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Destination
+  name: Destination
+  nameWithType: IDrawnBase.Destination
+  fullName: DrawnUi.Draw.IDrawnBase.Destination
+- uid: DrawnUi.Draw.IDrawnBase.HeightRequest*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.HeightRequest
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_HeightRequest
+  name: HeightRequest
+  nameWithType: IDrawnBase.HeightRequest
+  fullName: DrawnUi.Draw.IDrawnBase.HeightRequest
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.IDrawnBase.WidthRequest*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.WidthRequest
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_WidthRequest
+  name: WidthRequest
+  nameWithType: IDrawnBase.WidthRequest
+  fullName: DrawnUi.Draw.IDrawnBase.WidthRequest
+- uid: DrawnUi.Draw.IDrawnBase.Height*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Height
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Height
+  name: Height
+  nameWithType: IDrawnBase.Height
+  fullName: DrawnUi.Draw.IDrawnBase.Height
+- uid: DrawnUi.Draw.IDrawnBase.Width*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Width
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Width
+  name: Width
+  nameWithType: IDrawnBase.Width
+  fullName: DrawnUi.Draw.IDrawnBase.Width
+- uid: DrawnUi.Draw.IDrawnBase.TranslationX*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.TranslationX
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_TranslationX
+  name: TranslationX
+  nameWithType: IDrawnBase.TranslationX
+  fullName: DrawnUi.Draw.IDrawnBase.TranslationX
+- uid: DrawnUi.Draw.IDrawnBase.TranslationY*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.TranslationY
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_TranslationY
+  name: TranslationY
+  nameWithType: IDrawnBase.TranslationY
+  fullName: DrawnUi.Draw.IDrawnBase.TranslationY
+- uid: DrawnUi.Draw.IDrawnBase.InputTransparent*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.InputTransparent
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InputTransparent
+  name: InputTransparent
+  nameWithType: IDrawnBase.InputTransparent
+  fullName: DrawnUi.Draw.IDrawnBase.InputTransparent
+- uid: DrawnUi.Draw.IDrawnBase.IsClippedToBounds*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsClippedToBounds
+  name: IsClippedToBounds
+  nameWithType: IDrawnBase.IsClippedToBounds
+  fullName: DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+- uid: DrawnUi.Draw.IDrawnBase.ClipEffects*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.ClipEffects
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ClipEffects
+  name: ClipEffects
+  nameWithType: IDrawnBase.ClipEffects
+  fullName: DrawnUi.Draw.IDrawnBase.ClipEffects
+- uid: DrawnUi.Draw.IDrawnBase.UpdateLocks*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.UpdateLocks
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UpdateLocks
+  name: UpdateLocks
+  nameWithType: IDrawnBase.UpdateLocks
+  fullName: DrawnUi.Draw.IDrawnBase.UpdateLocks
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateByChild*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.InvalidateByChild
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateByChild_DrawnUi_Draw_SkiaControl_
+  name: InvalidateByChild
+  nameWithType: IDrawnBase.InvalidateByChild
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateByChild
+- uid: DrawnUi.Draw.IDrawnBase.UpdateByChild*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.UpdateByChild
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UpdateByChild_DrawnUi_Draw_SkiaControl_
+  name: UpdateByChild
+  nameWithType: IDrawnBase.UpdateByChild
+  fullName: DrawnUi.Draw.IDrawnBase.UpdateByChild
+- uid: DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ShouldInvalidateByChildren
+  name: ShouldInvalidateByChildren
+  nameWithType: IDrawnBase.ShouldInvalidateByChildren
+  fullName: DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+- uid: DrawnUi.Draw.IDrawnBase.RenderingScale*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.RenderingScale
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RenderingScale
+  name: RenderingScale
+  nameWithType: IDrawnBase.RenderingScale
+  fullName: DrawnUi.Draw.IDrawnBase.RenderingScale
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.IDrawnBase.X*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.X
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_X
+  name: X
+  nameWithType: IDrawnBase.X
+  fullName: DrawnUi.Draw.IDrawnBase.X
+- uid: DrawnUi.Draw.IDrawnBase.Y*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Y
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Y
+  name: Y
+  nameWithType: IDrawnBase.Y
+  fullName: DrawnUi.Draw.IDrawnBase.Y
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateViewport*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.InvalidateViewport
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewport
+  name: InvalidateViewport
+  nameWithType: IDrawnBase.InvalidateViewport
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateViewport
+- uid: DrawnUi.Draw.IDrawnBase.Repaint*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.Repaint
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Repaint
+  name: Repaint
+  nameWithType: IDrawnBase.Repaint
+  fullName: DrawnUi.Draw.IDrawnBase.Repaint
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateViewsList*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewsList
+  name: InvalidateViewsList
+  nameWithType: IDrawnBase.InvalidateViewsList
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+- uid: DrawnUi.Draw.IDrawnBase.DisposeObject*
+  commentId: Overload:DrawnUi.Draw.IDrawnBase.DisposeObject
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+  name: DisposeObject
+  nameWithType: IDrawnBase.DisposeObject
+  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject

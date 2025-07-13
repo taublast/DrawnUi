@@ -1,0 +1,126 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Animate.Animators
+  commentId: N:DrawnUi.Animate.Animators
+  id: DrawnUi.Animate.Animators
+  children:
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Animate.Animators
+  nameWithType: DrawnUi.Animate.Animators
+  fullName: DrawnUi.Animate.Animators
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+  commentId: T:DrawnUi.Animate.Animators.VelocitySkiaAnimator
+  parent: DrawnUi.Animate.Animators
+  href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  name: VelocitySkiaAnimator
+  nameWithType: VelocitySkiaAnimator
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState
+  commentId: T:DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState
+  parent: DrawnUi.Animate.Animators
+  href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  name: VelocitySkiaAnimator.MassState
+  nameWithType: VelocitySkiaAnimator.MassState
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState
+  spec.csharp:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState
+    name: MassState
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState.html
+  spec.vb:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState
+    name: MassState
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState.html
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce
+  commentId: T:DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce
+  parent: DrawnUi.Animate.Animators
+  href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  name: VelocitySkiaAnimator.DragForce
+  nameWithType: VelocitySkiaAnimator.DragForce
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce
+  spec.csharp:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce
+    name: DragForce
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce.html
+  spec.vb:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce
+    name: DragForce
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce.html
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  commentId: T:DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  parent: DrawnUi.Animate.Animators
+  href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  name: VelocitySkiaAnimator.PresetType
+  nameWithType: VelocitySkiaAnimator.PresetType
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  spec.csharp:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+    name: PresetType
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.html
+  spec.vb:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+    name: PresetType
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.html
+- uid: DrawnUi.Animate.Animators
+  commentId: N:DrawnUi.Animate.Animators
+  href: DrawnUi.html
+  name: DrawnUi.Animate.Animators
+  nameWithType: DrawnUi.Animate.Animators
+  fullName: DrawnUi.Animate.Animators
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Animate
+    name: Animate
+    href: DrawnUi.Animate.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators
+    name: Animators
+    href: DrawnUi.Animate.Animators.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Animate
+    name: Animate
+    href: DrawnUi.Animate.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators
+    name: Animators
+    href: DrawnUi.Animate.Animators.html

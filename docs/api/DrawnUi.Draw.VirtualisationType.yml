@@ -1,0 +1,269 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.VirtualisationType
+  commentId: T:DrawnUi.Draw.VirtualisationType
+  id: VirtualisationType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.VirtualisationType.Disabled
+  - DrawnUi.Draw.VirtualisationType.Enabled
+  - DrawnUi.Draw.VirtualisationType.Managed
+  - DrawnUi.Draw.VirtualisationType.Smart
+  langs:
+  - csharp
+  - vb
+  name: VirtualisationType
+  nameWithType: VirtualisationType
+  fullName: DrawnUi.Draw.VirtualisationType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VirtualisationType
+    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum VirtualisationType
+    content.vb: Public Enum VirtualisationType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.VirtualisationType.Disabled
+  commentId: F:DrawnUi.Draw.VirtualisationType.Disabled
+  id: Disabled
+  parent: DrawnUi.Draw.VirtualisationType
+  langs:
+  - csharp
+  - vb
+  name: Disabled
+  nameWithType: VirtualisationType.Disabled
+  fullName: DrawnUi.Draw.VirtualisationType.Disabled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Disabled
+    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Visible parent bounds are not accounted for, children are rendred as usual.
+  example: []
+  syntax:
+    content: Disabled = 0
+    return:
+      type: DrawnUi.Draw.VirtualisationType
+- uid: DrawnUi.Draw.VirtualisationType.Enabled
+  commentId: F:DrawnUi.Draw.VirtualisationType.Enabled
+  id: Enabled
+  parent: DrawnUi.Draw.VirtualisationType
+  langs:
+  - csharp
+  - vb
+  name: Enabled
+  nameWithType: VirtualisationType.Enabled
+  fullName: DrawnUi.Draw.VirtualisationType.Enabled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Enabled
+    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Children not withing visible parent bounds are not rendered
+  example: []
+  syntax:
+    content: Enabled = 1
+    return:
+      type: DrawnUi.Draw.VirtualisationType
+- uid: DrawnUi.Draw.VirtualisationType.Smart
+  commentId: F:DrawnUi.Draw.VirtualisationType.Smart
+  id: Smart
+  parent: DrawnUi.Draw.VirtualisationType
+  langs:
+  - csharp
+  - vb
+  name: Smart
+  nameWithType: VirtualisationType.Smart
+  fullName: DrawnUi.Draw.VirtualisationType.Smart
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Smart
+    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Only the creation of a cached object is permitted for children not within visible parent bounds
+  example: []
+  syntax:
+    content: Smart = 2
+    return:
+      type: DrawnUi.Draw.VirtualisationType
+- uid: DrawnUi.Draw.VirtualisationType.Managed
+  commentId: F:DrawnUi.Draw.VirtualisationType.Managed
+  id: Managed
+  parent: DrawnUi.Draw.VirtualisationType
+  langs:
+  - csharp
+  - vb
+  name: Managed
+  nameWithType: VirtualisationType.Managed
+  fullName: DrawnUi.Draw.VirtualisationType.Managed
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Managed
+    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Parent is responsible for providing visible viewport for this control via GetVisibleViewport,
+
+    will not check intersection with this control DrawingRect.
+  example: []
+  syntax:
+    content: Managed = 3
+    return:
+      type: DrawnUi.Draw.VirtualisationType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.VirtualisationType
+  commentId: T:DrawnUi.Draw.VirtualisationType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.VirtualisationType.html
+  name: VirtualisationType
+  nameWithType: VirtualisationType
+  fullName: DrawnUi.Draw.VirtualisationType

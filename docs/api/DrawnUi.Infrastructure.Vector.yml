@@ -1,0 +1,1131 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Vector
+  commentId: T:DrawnUi.Infrastructure.Vector
+  id: Vector
+  parent: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.Vector.#ctor
+  - DrawnUi.Infrastructure.Vector.#ctor(System.Double,System.Double)
+  - DrawnUi.Infrastructure.Vector.#ctor(System.Double,System.Double,System.Double,System.Double)
+  - DrawnUi.Infrastructure.Vector.Cross(DrawnUi.Infrastructure.Vector)
+  - DrawnUi.Infrastructure.Vector.CrossProduct(DrawnUi.Infrastructure.Vector,DrawnUi.Infrastructure.Vector)
+  - DrawnUi.Infrastructure.Vector.Radians(System.Double)
+  - DrawnUi.Infrastructure.Vector.add(DrawnUi.Infrastructure.Vector)
+  - DrawnUi.Infrastructure.Vector.getAngle
+  - DrawnUi.Infrastructure.Vector.getMagnitude
+  - DrawnUi.Infrastructure.Vector.getXComp
+  - DrawnUi.Infrastructure.Vector.getYComp
+  - DrawnUi.Infrastructure.Vector.mAdd(DrawnUi.Infrastructure.Vector)
+  - DrawnUi.Infrastructure.Vector.mScale(System.Double)
+  - DrawnUi.Infrastructure.Vector.scale(System.Double)
+  - DrawnUi.Infrastructure.Vector.setAngle(System.Double)
+  - DrawnUi.Infrastructure.Vector.setComponents(System.Double,System.Double)
+  - DrawnUi.Infrastructure.Vector.setMagnitude(System.Double)
+  - DrawnUi.Infrastructure.Vector.setXComp(System.Double)
+  - DrawnUi.Infrastructure.Vector.setYComp(System.Double)
+  langs:
+  - csharp
+  - vb
+  name: Vector
+  nameWithType: Vector
+  fullName: DrawnUi.Infrastructure.Vector
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Vector
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public class Vector
+    content.vb: Public Class Vector
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.Vector.Radians(System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.Radians(System.Double)
+  id: Radians(System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: Radians(double)
+  nameWithType: Vector.Radians(double)
+  fullName: DrawnUi.Infrastructure.Vector.Radians(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Radians
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public static double Radians(double degrees)
+    parameters:
+    - id: degrees
+      type: System.Double
+    return:
+      type: System.Double
+    content.vb: Public Shared Function Radians(degrees As Double) As Double
+  overload: DrawnUi.Infrastructure.Vector.Radians*
+  nameWithType.vb: Vector.Radians(Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.Radians(Double)
+  name.vb: Radians(Double)
+- uid: DrawnUi.Infrastructure.Vector.#ctor
+  commentId: M:DrawnUi.Infrastructure.Vector.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: Vector()
+  nameWithType: Vector.Vector()
+  fullName: DrawnUi.Infrastructure.Vector.Vector()
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public Vector()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Infrastructure.Vector.#ctor*
+  nameWithType.vb: Vector.New()
+  fullName.vb: DrawnUi.Infrastructure.Vector.New()
+  name.vb: New()
+- uid: DrawnUi.Infrastructure.Vector.#ctor(System.Double,System.Double,System.Double,System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.#ctor(System.Double,System.Double,System.Double,System.Double)
+  id: '#ctor(System.Double,System.Double,System.Double,System.Double)'
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: Vector(double, double, double, double)
+  nameWithType: Vector.Vector(double, double, double, double)
+  fullName: DrawnUi.Infrastructure.Vector.Vector(double, double, double, double)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public Vector(double x1, double y1, double x2, double y2)
+    parameters:
+    - id: x1
+      type: System.Double
+    - id: y1
+      type: System.Double
+    - id: x2
+      type: System.Double
+    - id: y2
+      type: System.Double
+    content.vb: Public Sub New(x1 As Double, y1 As Double, x2 As Double, y2 As Double)
+  overload: DrawnUi.Infrastructure.Vector.#ctor*
+  nameWithType.vb: Vector.New(Double, Double, Double, Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.New(Double, Double, Double, Double)
+  name.vb: New(Double, Double, Double, Double)
+- uid: DrawnUi.Infrastructure.Vector.#ctor(System.Double,System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.#ctor(System.Double,System.Double)
+  id: '#ctor(System.Double,System.Double)'
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: Vector(double, double)
+  nameWithType: Vector.Vector(double, double)
+  fullName: DrawnUi.Infrastructure.Vector.Vector(double, double)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public Vector(double xComp, double yComp)
+    parameters:
+    - id: xComp
+      type: System.Double
+    - id: yComp
+      type: System.Double
+    content.vb: Public Sub New(xComp As Double, yComp As Double)
+  overload: DrawnUi.Infrastructure.Vector.#ctor*
+  nameWithType.vb: Vector.New(Double, Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.New(Double, Double)
+  name.vb: New(Double, Double)
+- uid: DrawnUi.Infrastructure.Vector.setComponents(System.Double,System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.setComponents(System.Double,System.Double)
+  id: setComponents(System.Double,System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: setComponents(double, double)
+  nameWithType: Vector.setComponents(double, double)
+  fullName: DrawnUi.Infrastructure.Vector.setComponents(double, double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: setComponents
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 40
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void setComponents(double xComp, double yComp)
+    parameters:
+    - id: xComp
+      type: System.Double
+    - id: yComp
+      type: System.Double
+    content.vb: Public Sub setComponents(xComp As Double, yComp As Double)
+  overload: DrawnUi.Infrastructure.Vector.setComponents*
+  nameWithType.vb: Vector.setComponents(Double, Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.setComponents(Double, Double)
+  name.vb: setComponents(Double, Double)
+- uid: DrawnUi.Infrastructure.Vector.CrossProduct(DrawnUi.Infrastructure.Vector,DrawnUi.Infrastructure.Vector)
+  commentId: M:DrawnUi.Infrastructure.Vector.CrossProduct(DrawnUi.Infrastructure.Vector,DrawnUi.Infrastructure.Vector)
+  id: CrossProduct(DrawnUi.Infrastructure.Vector,DrawnUi.Infrastructure.Vector)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: CrossProduct(Vector, Vector)
+  nameWithType: Vector.CrossProduct(Vector, Vector)
+  fullName: DrawnUi.Infrastructure.Vector.CrossProduct(DrawnUi.Infrastructure.Vector, DrawnUi.Infrastructure.Vector)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CrossProduct
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 49
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public static double CrossProduct(Vector a, Vector b)
+    parameters:
+    - id: a
+      type: DrawnUi.Infrastructure.Vector
+    - id: b
+      type: DrawnUi.Infrastructure.Vector
+    return:
+      type: System.Double
+    content.vb: Public Shared Function CrossProduct(a As Vector, b As Vector) As Double
+  overload: DrawnUi.Infrastructure.Vector.CrossProduct*
+- uid: DrawnUi.Infrastructure.Vector.Cross(DrawnUi.Infrastructure.Vector)
+  commentId: M:DrawnUi.Infrastructure.Vector.Cross(DrawnUi.Infrastructure.Vector)
+  id: Cross(DrawnUi.Infrastructure.Vector)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: Cross(Vector)
+  nameWithType: Vector.Cross(Vector)
+  fullName: DrawnUi.Infrastructure.Vector.Cross(DrawnUi.Infrastructure.Vector)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Cross
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public double Cross(Vector b)
+    parameters:
+    - id: b
+      type: DrawnUi.Infrastructure.Vector
+    return:
+      type: System.Double
+    content.vb: Public Function Cross(b As Vector) As Double
+  overload: DrawnUi.Infrastructure.Vector.Cross*
+- uid: DrawnUi.Infrastructure.Vector.getXComp
+  commentId: M:DrawnUi.Infrastructure.Vector.getXComp
+  id: getXComp
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: getXComp()
+  nameWithType: Vector.getXComp()
+  fullName: DrawnUi.Infrastructure.Vector.getXComp()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: getXComp
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public double getXComp()
+    return:
+      type: System.Double
+    content.vb: Public Function getXComp() As Double
+  overload: DrawnUi.Infrastructure.Vector.getXComp*
+- uid: DrawnUi.Infrastructure.Vector.setXComp(System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.setXComp(System.Double)
+  id: setXComp(System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: setXComp(double)
+  nameWithType: Vector.setXComp(double)
+  fullName: DrawnUi.Infrastructure.Vector.setXComp(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: setXComp
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 64
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void setXComp(double xComp)
+    parameters:
+    - id: xComp
+      type: System.Double
+    content.vb: Public Sub setXComp(xComp As Double)
+  overload: DrawnUi.Infrastructure.Vector.setXComp*
+  nameWithType.vb: Vector.setXComp(Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.setXComp(Double)
+  name.vb: setXComp(Double)
+- uid: DrawnUi.Infrastructure.Vector.getYComp
+  commentId: M:DrawnUi.Infrastructure.Vector.getYComp
+  id: getYComp
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: getYComp()
+  nameWithType: Vector.getYComp()
+  fullName: DrawnUi.Infrastructure.Vector.getYComp()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: getYComp
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 72
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public double getYComp()
+    return:
+      type: System.Double
+    content.vb: Public Function getYComp() As Double
+  overload: DrawnUi.Infrastructure.Vector.getYComp*
+- uid: DrawnUi.Infrastructure.Vector.setYComp(System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.setYComp(System.Double)
+  id: setYComp(System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: setYComp(double)
+  nameWithType: Vector.setYComp(double)
+  fullName: DrawnUi.Infrastructure.Vector.setYComp(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: setYComp
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 77
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void setYComp(double yComp)
+    parameters:
+    - id: yComp
+      type: System.Double
+    content.vb: Public Sub setYComp(yComp As Double)
+  overload: DrawnUi.Infrastructure.Vector.setYComp*
+  nameWithType.vb: Vector.setYComp(Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.setYComp(Double)
+  name.vb: setYComp(Double)
+- uid: DrawnUi.Infrastructure.Vector.add(DrawnUi.Infrastructure.Vector)
+  commentId: M:DrawnUi.Infrastructure.Vector.add(DrawnUi.Infrastructure.Vector)
+  id: add(DrawnUi.Infrastructure.Vector)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: add(Vector)
+  nameWithType: Vector.add(Vector)
+  fullName: DrawnUi.Infrastructure.Vector.add(DrawnUi.Infrastructure.Vector)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: add
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 85
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public Vector add(Vector other)
+    parameters:
+    - id: other
+      type: DrawnUi.Infrastructure.Vector
+    return:
+      type: DrawnUi.Infrastructure.Vector
+    content.vb: Public Function add(other As Vector) As Vector
+  overload: DrawnUi.Infrastructure.Vector.add*
+- uid: DrawnUi.Infrastructure.Vector.mAdd(DrawnUi.Infrastructure.Vector)
+  commentId: M:DrawnUi.Infrastructure.Vector.mAdd(DrawnUi.Infrastructure.Vector)
+  id: mAdd(DrawnUi.Infrastructure.Vector)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: mAdd(Vector)
+  nameWithType: Vector.mAdd(Vector)
+  fullName: DrawnUi.Infrastructure.Vector.mAdd(DrawnUi.Infrastructure.Vector)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: mAdd
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 91
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void mAdd(Vector other)
+    parameters:
+    - id: other
+      type: DrawnUi.Infrastructure.Vector
+    content.vb: Public Sub mAdd(other As Vector)
+  overload: DrawnUi.Infrastructure.Vector.mAdd*
+- uid: DrawnUi.Infrastructure.Vector.setAngle(System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.setAngle(System.Double)
+  id: setAngle(System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: setAngle(double)
+  nameWithType: Vector.setAngle(double)
+  fullName: DrawnUi.Infrastructure.Vector.setAngle(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: setAngle
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 96
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void setAngle(double angle)
+    parameters:
+    - id: angle
+      type: System.Double
+    content.vb: Public Sub setAngle(angle As Double)
+  overload: DrawnUi.Infrastructure.Vector.setAngle*
+  nameWithType.vb: Vector.setAngle(Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.setAngle(Double)
+  name.vb: setAngle(Double)
+- uid: DrawnUi.Infrastructure.Vector.setMagnitude(System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.setMagnitude(System.Double)
+  id: setMagnitude(System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: setMagnitude(double)
+  nameWithType: Vector.setMagnitude(double)
+  fullName: DrawnUi.Infrastructure.Vector.setMagnitude(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: setMagnitude
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 109
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void setMagnitude(double magnitude)
+    parameters:
+    - id: magnitude
+      type: System.Double
+    content.vb: Public Sub setMagnitude(magnitude As Double)
+  overload: DrawnUi.Infrastructure.Vector.setMagnitude*
+  nameWithType.vb: Vector.setMagnitude(Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.setMagnitude(Double)
+  name.vb: setMagnitude(Double)
+- uid: DrawnUi.Infrastructure.Vector.getMagnitude
+  commentId: M:DrawnUi.Infrastructure.Vector.getMagnitude
+  id: getMagnitude
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: getMagnitude()
+  nameWithType: Vector.getMagnitude()
+  fullName: DrawnUi.Infrastructure.Vector.getMagnitude()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: getMagnitude
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 119
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public double getMagnitude()
+    return:
+      type: System.Double
+    content.vb: Public Function getMagnitude() As Double
+  overload: DrawnUi.Infrastructure.Vector.getMagnitude*
+- uid: DrawnUi.Infrastructure.Vector.mScale(System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.mScale(System.Double)
+  id: mScale(System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: mScale(double)
+  nameWithType: Vector.mScale(double)
+  fullName: DrawnUi.Infrastructure.Vector.mScale(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: mScale
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 129
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void mScale(double scalar)
+    parameters:
+    - id: scalar
+      type: System.Double
+    content.vb: Public Sub mScale(scalar As Double)
+  overload: DrawnUi.Infrastructure.Vector.mScale*
+  nameWithType.vb: Vector.mScale(Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.mScale(Double)
+  name.vb: mScale(Double)
+- uid: DrawnUi.Infrastructure.Vector.scale(System.Double)
+  commentId: M:DrawnUi.Infrastructure.Vector.scale(System.Double)
+  id: scale(System.Double)
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: scale(double)
+  nameWithType: Vector.scale(double)
+  fullName: DrawnUi.Infrastructure.Vector.scale(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: scale
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 134
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public Vector scale(double scalar)
+    parameters:
+    - id: scalar
+      type: System.Double
+    return:
+      type: DrawnUi.Infrastructure.Vector
+    content.vb: Public Function scale(scalar As Double) As Vector
+  overload: DrawnUi.Infrastructure.Vector.scale*
+  nameWithType.vb: Vector.scale(Double)
+  fullName.vb: DrawnUi.Infrastructure.Vector.scale(Double)
+  name.vb: scale(Double)
+- uid: DrawnUi.Infrastructure.Vector.getAngle
+  commentId: M:DrawnUi.Infrastructure.Vector.getAngle
+  id: getAngle
+  parent: DrawnUi.Infrastructure.Vector
+  langs:
+  - csharp
+  - vb
+  name: getAngle()
+  nameWithType: Vector.getAngle()
+  fullName: DrawnUi.Infrastructure.Vector.getAngle()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Vector.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: getAngle
+    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    startLine: 139
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public double getAngle()
+    return:
+      type: System.Double
+    content.vb: Public Function getAngle() As Double
+  overload: DrawnUi.Infrastructure.Vector.getAngle*
+references:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Infrastructure.Vector.Radians*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.Radians
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_Radians_System_Double_
+  name: Radians
+  nameWithType: Vector.Radians
+  fullName: DrawnUi.Infrastructure.Vector.Radians
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Infrastructure.Vector.#ctor*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.#ctor
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector__ctor
+  name: Vector
+  nameWithType: Vector.Vector
+  fullName: DrawnUi.Infrastructure.Vector.Vector
+  nameWithType.vb: Vector.New
+  fullName.vb: DrawnUi.Infrastructure.Vector.New
+  name.vb: New
+- uid: DrawnUi.Infrastructure.Vector.setComponents*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.setComponents
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_setComponents_System_Double_System_Double_
+  name: setComponents
+  nameWithType: Vector.setComponents
+  fullName: DrawnUi.Infrastructure.Vector.setComponents
+- uid: DrawnUi.Infrastructure.Vector.CrossProduct*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.CrossProduct
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_CrossProduct_DrawnUi_Infrastructure_Vector_DrawnUi_Infrastructure_Vector_
+  name: CrossProduct
+  nameWithType: Vector.CrossProduct
+  fullName: DrawnUi.Infrastructure.Vector.CrossProduct
+- uid: DrawnUi.Infrastructure.Vector
+  commentId: T:DrawnUi.Infrastructure.Vector
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.Vector.html
+  name: Vector
+  nameWithType: Vector
+  fullName: DrawnUi.Infrastructure.Vector
+- uid: DrawnUi.Infrastructure.Vector.Cross*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.Cross
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_Cross_DrawnUi_Infrastructure_Vector_
+  name: Cross
+  nameWithType: Vector.Cross
+  fullName: DrawnUi.Infrastructure.Vector.Cross
+- uid: DrawnUi.Infrastructure.Vector.getXComp*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.getXComp
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_getXComp
+  name: getXComp
+  nameWithType: Vector.getXComp
+  fullName: DrawnUi.Infrastructure.Vector.getXComp
+- uid: DrawnUi.Infrastructure.Vector.setXComp*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.setXComp
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_setXComp_System_Double_
+  name: setXComp
+  nameWithType: Vector.setXComp
+  fullName: DrawnUi.Infrastructure.Vector.setXComp
+- uid: DrawnUi.Infrastructure.Vector.getYComp*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.getYComp
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_getYComp
+  name: getYComp
+  nameWithType: Vector.getYComp
+  fullName: DrawnUi.Infrastructure.Vector.getYComp
+- uid: DrawnUi.Infrastructure.Vector.setYComp*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.setYComp
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_setYComp_System_Double_
+  name: setYComp
+  nameWithType: Vector.setYComp
+  fullName: DrawnUi.Infrastructure.Vector.setYComp
+- uid: DrawnUi.Infrastructure.Vector.add*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.add
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_add_DrawnUi_Infrastructure_Vector_
+  name: add
+  nameWithType: Vector.add
+  fullName: DrawnUi.Infrastructure.Vector.add
+- uid: DrawnUi.Infrastructure.Vector.mAdd*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.mAdd
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_mAdd_DrawnUi_Infrastructure_Vector_
+  name: mAdd
+  nameWithType: Vector.mAdd
+  fullName: DrawnUi.Infrastructure.Vector.mAdd
+- uid: DrawnUi.Infrastructure.Vector.setAngle*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.setAngle
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_setAngle_System_Double_
+  name: setAngle
+  nameWithType: Vector.setAngle
+  fullName: DrawnUi.Infrastructure.Vector.setAngle
+- uid: DrawnUi.Infrastructure.Vector.setMagnitude*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.setMagnitude
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_setMagnitude_System_Double_
+  name: setMagnitude
+  nameWithType: Vector.setMagnitude
+  fullName: DrawnUi.Infrastructure.Vector.setMagnitude
+- uid: DrawnUi.Infrastructure.Vector.getMagnitude*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.getMagnitude
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_getMagnitude
+  name: getMagnitude
+  nameWithType: Vector.getMagnitude
+  fullName: DrawnUi.Infrastructure.Vector.getMagnitude
+- uid: DrawnUi.Infrastructure.Vector.mScale*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.mScale
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_mScale_System_Double_
+  name: mScale
+  nameWithType: Vector.mScale
+  fullName: DrawnUi.Infrastructure.Vector.mScale
+- uid: DrawnUi.Infrastructure.Vector.scale*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.scale
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_scale_System_Double_
+  name: scale
+  nameWithType: Vector.scale
+  fullName: DrawnUi.Infrastructure.Vector.scale
+- uid: DrawnUi.Infrastructure.Vector.getAngle*
+  commentId: Overload:DrawnUi.Infrastructure.Vector.getAngle
+  href: DrawnUi.Infrastructure.Vector.html#DrawnUi_Infrastructure_Vector_getAngle
+  name: getAngle
+  nameWithType: Vector.getAngle
+  fullName: DrawnUi.Infrastructure.Vector.getAngle

@@ -1,0 +1,185 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Views
+  commentId: N:DrawnUi.Views
+  id: DrawnUi.Views
+  children:
+  - DrawnUi.Views.BasePageReloadable
+  - DrawnUi.Views.Canvas
+  - DrawnUi.Views.DisposableManager
+  - DrawnUi.Views.DrawnUiBasePage
+  - DrawnUi.Views.DrawnView
+  - DrawnUi.Views.DrawnView.DiagnosticData
+  - DrawnUi.Views.DrawnView.FocusedItemChangedArgs
+  - DrawnUi.Views.DrawnView.OffscreenCommand
+  - DrawnUi.Views.DrawnView.TimedDisposable
+  - DrawnUi.Views.SkiaView
+  - DrawnUi.Views.SkiaViewAccelerated
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Views
+  nameWithType: DrawnUi.Views
+  fullName: DrawnUi.Views
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Views.BasePageReloadable
+  commentId: T:DrawnUi.Views.BasePageReloadable
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.BasePageReloadable.html
+  name: BasePageReloadable
+  nameWithType: BasePageReloadable
+  fullName: DrawnUi.Views.BasePageReloadable
+- uid: DrawnUi.Views.Canvas
+  commentId: T:DrawnUi.Views.Canvas
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.Canvas.html
+  name: Canvas
+  nameWithType: Canvas
+  fullName: DrawnUi.Views.Canvas
+- uid: DrawnUi.Views.DisposableManager
+  commentId: T:DrawnUi.Views.DisposableManager
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.DisposableManager.html
+  name: DisposableManager
+  nameWithType: DisposableManager
+  fullName: DrawnUi.Views.DisposableManager
+- uid: DrawnUi.Views.DrawnUiBasePage
+  commentId: T:DrawnUi.Views.DrawnUiBasePage
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.DrawnUiBasePage.html
+  name: DrawnUiBasePage
+  nameWithType: DrawnUiBasePage
+  fullName: DrawnUi.Views.DrawnUiBasePage
+- uid: DrawnUi.Views.DrawnView
+  commentId: T:DrawnUi.Views.DrawnView
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.DrawnView.html
+  name: DrawnView
+  nameWithType: DrawnView
+  fullName: DrawnUi.Views.DrawnView
+- uid: DrawnUi.Views.DrawnView.DiagnosticData
+  commentId: T:DrawnUi.Views.DrawnView.DiagnosticData
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.DrawnView.html
+  name: DrawnView.DiagnosticData
+  nameWithType: DrawnView.DiagnosticData
+  fullName: DrawnUi.Views.DrawnView.DiagnosticData
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.DiagnosticData
+    name: DiagnosticData
+    href: DrawnUi.Views.DrawnView.DiagnosticData.html
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.DiagnosticData
+    name: DiagnosticData
+    href: DrawnUi.Views.DrawnView.DiagnosticData.html
+- uid: DrawnUi.Views.DrawnView.TimedDisposable
+  commentId: T:DrawnUi.Views.DrawnView.TimedDisposable
+  href: DrawnUi.Views.DrawnView.html
+  name: DrawnView.TimedDisposable
+  nameWithType: DrawnView.TimedDisposable
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.TimedDisposable
+    name: TimedDisposable
+    href: DrawnUi.Views.DrawnView.TimedDisposable.html
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.TimedDisposable
+    name: TimedDisposable
+    href: DrawnUi.Views.DrawnView.TimedDisposable.html
+- uid: DrawnUi.Views.DrawnView.OffscreenCommand
+  commentId: T:DrawnUi.Views.DrawnView.OffscreenCommand
+  href: DrawnUi.Views.DrawnView.html
+  name: DrawnView.OffscreenCommand
+  nameWithType: DrawnView.OffscreenCommand
+  fullName: DrawnUi.Views.DrawnView.OffscreenCommand
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.OffscreenCommand
+    name: OffscreenCommand
+    href: DrawnUi.Views.DrawnView.OffscreenCommand.html
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.OffscreenCommand
+    name: OffscreenCommand
+    href: DrawnUi.Views.DrawnView.OffscreenCommand.html
+- uid: DrawnUi.Views.DrawnView.FocusedItemChangedArgs
+  commentId: T:DrawnUi.Views.DrawnView.FocusedItemChangedArgs
+  href: DrawnUi.Views.DrawnView.html
+  name: DrawnView.FocusedItemChangedArgs
+  nameWithType: DrawnView.FocusedItemChangedArgs
+  fullName: DrawnUi.Views.DrawnView.FocusedItemChangedArgs
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.FocusedItemChangedArgs
+    name: FocusedItemChangedArgs
+    href: DrawnUi.Views.DrawnView.FocusedItemChangedArgs.html
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: .
+  - uid: DrawnUi.Views.DrawnView.FocusedItemChangedArgs
+    name: FocusedItemChangedArgs
+    href: DrawnUi.Views.DrawnView.FocusedItemChangedArgs.html
+- uid: DrawnUi.Views.SkiaView
+  commentId: T:DrawnUi.Views.SkiaView
+  href: DrawnUi.Views.SkiaView.html
+  name: SkiaView
+  nameWithType: SkiaView
+  fullName: DrawnUi.Views.SkiaView
+- uid: DrawnUi.Views.SkiaViewAccelerated
+  commentId: T:DrawnUi.Views.SkiaViewAccelerated
+  href: DrawnUi.Views.SkiaViewAccelerated.html
+  name: SkiaViewAccelerated
+  nameWithType: SkiaViewAccelerated
+  fullName: DrawnUi.Views.SkiaViewAccelerated
+- uid: DrawnUi.Views
+  commentId: N:DrawnUi.Views
+  href: DrawnUi.html
+  name: DrawnUi.Views
+  nameWithType: DrawnUi.Views
+  fullName: DrawnUi.Views
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Views
+    name: Views
+    href: DrawnUi.Views.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Views
+    name: Views
+    href: DrawnUi.Views.html

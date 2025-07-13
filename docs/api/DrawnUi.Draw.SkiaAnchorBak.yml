@@ -1,0 +1,393 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaAnchorBak
+  commentId: T:DrawnUi.Draw.SkiaAnchorBak
+  id: SkiaAnchorBak
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaAnchorBak.BottomLeft
+  - DrawnUi.Draw.SkiaAnchorBak.BottomMiddle
+  - DrawnUi.Draw.SkiaAnchorBak.BottomRight
+  - DrawnUi.Draw.SkiaAnchorBak.LeftMiddle
+  - DrawnUi.Draw.SkiaAnchorBak.Middle
+  - DrawnUi.Draw.SkiaAnchorBak.RightMiddle
+  - DrawnUi.Draw.SkiaAnchorBak.TopLeft
+  - DrawnUi.Draw.SkiaAnchorBak.TopMiddle
+  - DrawnUi.Draw.SkiaAnchorBak.TopRight
+  langs:
+  - csharp
+  - vb
+  name: SkiaAnchorBak
+  nameWithType: SkiaAnchorBak
+  fullName: DrawnUi.Draw.SkiaAnchorBak
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaAnchorBak
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum SkiaAnchorBak
+    content.vb: Public Enum SkiaAnchorBak
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaAnchorBak.TopLeft
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.TopLeft
+  id: TopLeft
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: TopLeft
+  nameWithType: SkiaAnchorBak.TopLeft
+  fullName: DrawnUi.Draw.SkiaAnchorBak.TopLeft
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TopLeft
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: TopLeft = 0
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.TopRight
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.TopRight
+  id: TopRight
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: TopRight
+  nameWithType: SkiaAnchorBak.TopRight
+  fullName: DrawnUi.Draw.SkiaAnchorBak.TopRight
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TopRight
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: TopRight = 1
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.TopMiddle
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.TopMiddle
+  id: TopMiddle
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: TopMiddle
+  nameWithType: SkiaAnchorBak.TopMiddle
+  fullName: DrawnUi.Draw.SkiaAnchorBak.TopMiddle
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TopMiddle
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: TopMiddle = 2
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.BottomLeft
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.BottomLeft
+  id: BottomLeft
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: BottomLeft
+  nameWithType: SkiaAnchorBak.BottomLeft
+  fullName: DrawnUi.Draw.SkiaAnchorBak.BottomLeft
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BottomLeft
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BottomLeft = 3
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.BottomRight
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.BottomRight
+  id: BottomRight
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: BottomRight
+  nameWithType: SkiaAnchorBak.BottomRight
+  fullName: DrawnUi.Draw.SkiaAnchorBak.BottomRight
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BottomRight
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BottomRight = 4
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.BottomMiddle
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.BottomMiddle
+  id: BottomMiddle
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: BottomMiddle
+  nameWithType: SkiaAnchorBak.BottomMiddle
+  fullName: DrawnUi.Draw.SkiaAnchorBak.BottomMiddle
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BottomMiddle
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BottomMiddle = 5
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.LeftMiddle
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.LeftMiddle
+  id: LeftMiddle
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: LeftMiddle
+  nameWithType: SkiaAnchorBak.LeftMiddle
+  fullName: DrawnUi.Draw.SkiaAnchorBak.LeftMiddle
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LeftMiddle
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LeftMiddle = 6
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.RightMiddle
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.RightMiddle
+  id: RightMiddle
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: RightMiddle
+  nameWithType: SkiaAnchorBak.RightMiddle
+  fullName: DrawnUi.Draw.SkiaAnchorBak.RightMiddle
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RightMiddle
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: RightMiddle = 7
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+- uid: DrawnUi.Draw.SkiaAnchorBak.Middle
+  commentId: F:DrawnUi.Draw.SkiaAnchorBak.Middle
+  id: Middle
+  parent: DrawnUi.Draw.SkiaAnchorBak
+  langs:
+  - csharp
+  - vb
+  name: Middle
+  nameWithType: SkiaAnchorBak.Middle
+  fullName: DrawnUi.Draw.SkiaAnchorBak.Middle
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Middle
+    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Middle = 8
+    return:
+      type: DrawnUi.Draw.SkiaAnchorBak
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaAnchorBak
+  commentId: T:DrawnUi.Draw.SkiaAnchorBak
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaAnchorBak.html
+  name: SkiaAnchorBak
+  nameWithType: SkiaAnchorBak
+  fullName: DrawnUi.Draw.SkiaAnchorBak

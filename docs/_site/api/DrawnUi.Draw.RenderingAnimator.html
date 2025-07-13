@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class RenderingAnimator | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class RenderingAnimator | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Draw_RenderingAnimator.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.RenderingAnimator%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="DrawnUi.Draw.RenderingAnimator">
+
+
+
+  <h1 id="DrawnUi_Draw_RenderingAnimator" data-uid="DrawnUi.Draw.RenderingAnimator" class="text-break">
+Class RenderingAnimator  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L6"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Draw.html">Draw</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>This animator renders on canvas instead of just updating a value</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RenderingAnimator : SkiaValueAnimator, IOverlayEffect, ICanRenderOnCanvas, ISkiaAnimator, IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.AnimatorBase.html">AnimatorBase</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html">SkiaValueAnimator</a></div>
+      <div><span class="xref">RenderingAnimator</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="DrawnUi.Draw.IOverlayEffect.html">IOverlayEffect</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ICanRenderOnCanvas.html">ICanRenderOnCanvas</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaAnimator.html">ISkiaAnimator</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="DrawnUi.Draw.EdgeGlowAnimator.html">EdgeGlowAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.RippleAnimator.html">RippleAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ShimmerAnimator.html">ShimmerAnimator</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Dispose">SkiaValueAnimator.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_RunAsync_System_Action_System_Threading_CancellationToken_">SkiaValueAnimator.RunAsync(Action, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_OnRunningStateChanged_System_Boolean_">SkiaValueAnimator.OnRunningStateChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Seek_System_Single_">SkiaValueAnimator.Seek(float)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_CycleFInished">SkiaValueAnimator.CycleFInished</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Finished">SkiaValueAnimator.Finished</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_FinishedRunning">SkiaValueAnimator.FinishedRunning()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_FrameTimeInterpolator">SkiaValueAnimator.FrameTimeInterpolator</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_TickFrame_System_Int64_">SkiaValueAnimator.TickFrame(long)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Repeat">SkiaValueAnimator.Repeat</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mValue">SkiaValueAnimator.mValue</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mStartValueIsSet">SkiaValueAnimator.mStartValueIsSet</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mMaxValue">SkiaValueAnimator.mMaxValue</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mMinValue">SkiaValueAnimator.mMinValue</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Easing">SkiaValueAnimator.Easing</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Speed">SkiaValueAnimator.Speed</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_TransformReportedValue_System_Int64_">SkiaValueAnimator.TransformReportedValue(long)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Debug">SkiaValueAnimator.Debug</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_GetNanoseconds">SkiaValueAnimator.GetNanoseconds()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_UpdateValue_System_Int64_System_Int64_">SkiaValueAnimator.UpdateValue(long, long)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_ElapsedMs">SkiaValueAnimator.ElapsedMs</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Progress">SkiaValueAnimator.Progress</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_OnUpdated">SkiaValueAnimator.OnUpdated</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_ClampOnStart">SkiaValueAnimator.ClampOnStart()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Start_System_Double_">SkiaValueAnimator.Start(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_SetValue_System_Double_">SkiaValueAnimator.SetValue(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_SetSpeed_System_Double_">SkiaValueAnimator.SetSpeed(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPostAnimator">AnimatorBase.IsPostAnimator</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsHiddenInViewTree">AnimatorBase.IsHiddenInViewTree</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_">AnimatorBase.Radians(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_runDelayMs">AnimatorBase.runDelayMs</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register">AnimatorBase.Register()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister">AnimatorBase.Unregister()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel">AnimatorBase.Cancel()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause">AnimatorBase.Pause()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume">AnimatorBase.Resume()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPaused">AnimatorBase.IsPaused</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStop">AnimatorBase.OnStop</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStart">AnimatorBase.OnStart</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Parent">AnimatorBase.Parent</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsDeactivated">AnimatorBase.IsDeactivated</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_LastFrameTimeNanos">AnimatorBase.LastFrameTimeNanos</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_StartFrameTimeNanos">AnimatorBase.StartFrameTimeNanos</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Uid">AnimatorBase.Uid</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsRunning">AnimatorBase.IsRunning</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_WasStarted">AnimatorBase.WasStarted</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_">InternalExtensions.FromPlatform(object)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="DrawnUi_Draw_RenderingAnimator__ctor_" data-uid="DrawnUi.Draw.RenderingAnimator.#ctor*"></a>
+
+  <h3 id="DrawnUi_Draw_RenderingAnimator__ctor_DrawnUi_Draw_IDrawnBase_" data-uid="DrawnUi.Draw.RenderingAnimator.#ctor(DrawnUi.Draw.IDrawnBase)">
+  RenderingAnimator(IDrawnBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RenderingAnimator(IDrawnBase parent)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>parent</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="DrawnUi_Draw_RenderingAnimator_ApplyControlClipping_" data-uid="DrawnUi.Draw.RenderingAnimator.ApplyControlClipping*"></a>
+
+  <h3 id="DrawnUi_Draw_RenderingAnimator_ApplyControlClipping_DrawnUi_Draw_IDrawnBase_SkiaSharp_SKPath_SkiaSharp_SKPoint_" data-uid="DrawnUi.Draw.RenderingAnimator.ApplyControlClipping(DrawnUi.Draw.IDrawnBase,SkiaSharp.SKPath,SkiaSharp.SKPoint)">
+  ApplyControlClipping(IDrawnBase, SKPath, SKPoint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static void ApplyControlClipping(IDrawnBase control, SKPath clipInsideParent, SKPoint selfDrawingLocation)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd></dd>
+    <dt><code>clipInsideParent</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpath">SKPath</a></dt>
+    <dd></dd>
+    <dt><code>selfDrawingLocation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_RenderingAnimator_DrawWithClipping_" data-uid="DrawnUi.Draw.RenderingAnimator.DrawWithClipping*"></a>
+
+  <h3 id="DrawnUi_Draw_RenderingAnimator_DrawWithClipping_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_IDrawnBase_SkiaSharp_SKPoint_System_Action_" data-uid="DrawnUi.Draw.RenderingAnimator.DrawWithClipping(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.IDrawnBase,SkiaSharp.SKPoint,System.Action)">
+  DrawWithClipping(DrawingContext, IDrawnBase, SKPoint, Action)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static void DrawWithClipping(DrawingContext context, IDrawnBase control, SKPoint selfDrawingLocation, Action draw)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>context</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd></dd>
+    <dt><code>selfDrawingLocation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dd></dd>
+    <dt><code>draw</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_RenderingAnimator_GetSelfDrawingLocation_" data-uid="DrawnUi.Draw.RenderingAnimator.GetSelfDrawingLocation*"></a>
+
+  <h3 id="DrawnUi_Draw_RenderingAnimator_GetSelfDrawingLocation_DrawnUi_Draw_IDrawnBase_" data-uid="DrawnUi.Draw.RenderingAnimator.GetSelfDrawingLocation(DrawnUi.Draw.IDrawnBase)">
+  GetSelfDrawingLocation(IDrawnBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static SKPoint GetSelfDrawingLocation(IDrawnBase control)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_RenderingAnimator_OnRendering_" data-uid="DrawnUi.Draw.RenderingAnimator.OnRendering*"></a>
+
+  <h3 id="DrawnUi_Draw_RenderingAnimator_OnRendering_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_IDrawnBase_" data-uid="DrawnUi.Draw.RenderingAnimator.OnRendering(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.IDrawnBase)">
+  OnRendering(DrawingContext, IDrawnBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>return true if has drawn something and rendering needs to be applied</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual bool OnRendering(DrawingContext context, IDrawnBase control)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>context</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_RenderingAnimator_Render_" data-uid="DrawnUi.Draw.RenderingAnimator.Render*"></a>
+
+  <h3 id="DrawnUi_Draw_RenderingAnimator_Render_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_IDrawnBase_" data-uid="DrawnUi.Draw.RenderingAnimator.Render(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.IDrawnBase)">
+  Render(DrawingContext, IDrawnBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Renders effect overlay to canvas, return true if has drawn something and rendering needs to be applied.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Render(DrawingContext context, IDrawnBase control)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>context</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_RenderingAnimator_Stop_" data-uid="DrawnUi.Draw.RenderingAnimator.Stop*"></a>
+
+  <h3 id="DrawnUi_Draw_RenderingAnimator_Stop" data-uid="DrawnUi.Draw.RenderingAnimator.Stop">
+  Stop()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Stop()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/RenderingAnimator.cs/#L6" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

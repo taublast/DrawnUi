@@ -1,0 +1,626 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.LinearInterpolationTimingParameters
+  commentId: T:DrawnUi.Draw.LinearInterpolationTimingParameters
+  id: LinearInterpolationTimingParameters
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.LinearInterpolationTimingParameters.#ctor(System.Numerics.Vector2,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing)
+  - DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs
+  - DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt(System.Single)
+  langs:
+  - csharp
+  - vb
+  name: LinearInterpolationTimingParameters
+  nameWithType: LinearInterpolationTimingParameters
+  fullName: DrawnUi.Draw.LinearInterpolationTimingParameters
+  type: Struct
+  source:
+    remote:
+      path: src/Shared/Features/Animators/RangeVectorAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LinearInterpolationTimingParameters
+    path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public struct LinearInterpolationTimingParameters : ITimingVectorParameters'
+    content.vb: Public Structure LinearInterpolationTimingParameters Implements ITimingVectorParameters
+  implements:
+  - DrawnUi.Draw.ITimingVectorParameters
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.LinearInterpolationTimingParameters.#ctor(System.Numerics.Vector2,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing)
+  commentId: M:DrawnUi.Draw.LinearInterpolationTimingParameters.#ctor(System.Numerics.Vector2,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing)
+  id: '#ctor(System.Numerics.Vector2,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing)'
+  parent: DrawnUi.Draw.LinearInterpolationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: LinearInterpolationTimingParameters(Vector2, Vector2, float, Easing)
+  nameWithType: LinearInterpolationTimingParameters.LinearInterpolationTimingParameters(Vector2, Vector2, float, Easing)
+  fullName: DrawnUi.Draw.LinearInterpolationTimingParameters.LinearInterpolationTimingParameters(System.Numerics.Vector2, System.Numerics.Vector2, float, Microsoft.Maui.Easing)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Features/Animators/RangeVectorAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public LinearInterpolationTimingParameters(Vector2 start, Vector2 end, float duration, Easing easing)
+    parameters:
+    - id: start
+      type: System.Numerics.Vector2
+    - id: end
+      type: System.Numerics.Vector2
+    - id: duration
+      type: System.Single
+    - id: easing
+      type: Microsoft.Maui.Easing
+    content.vb: Public Sub New(start As Vector2, [end] As Vector2, duration As Single, easing As Easing)
+  overload: DrawnUi.Draw.LinearInterpolationTimingParameters.#ctor*
+  nameWithType.vb: LinearInterpolationTimingParameters.New(Vector2, Vector2, Single, Easing)
+  fullName.vb: DrawnUi.Draw.LinearInterpolationTimingParameters.New(System.Numerics.Vector2, System.Numerics.Vector2, Single, Microsoft.Maui.Easing)
+  name.vb: New(Vector2, Vector2, Single, Easing)
+- uid: DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs
+  commentId: P:DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs
+  id: DurationSecs
+  parent: DrawnUi.Draw.LinearInterpolationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: DurationSecs
+  nameWithType: LinearInterpolationTimingParameters.DurationSecs
+  fullName: DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/RangeVectorAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DurationSecs
+    path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public float DurationSecs { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property DurationSecs As Single
+  overload: DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs*
+  implements:
+  - DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+- uid: DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt(System.Single)
+  commentId: M:DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt(System.Single)
+  id: ValueAt(System.Single)
+  parent: DrawnUi.Draw.LinearInterpolationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: ValueAt(float)
+  nameWithType: LinearInterpolationTimingParameters.ValueAt(float)
+  fullName: DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/RangeVectorAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ValueAt
+    path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public Vector2 ValueAt(float offsetSecs)
+    parameters:
+    - id: offsetSecs
+      type: System.Single
+    return:
+      type: System.Numerics.Vector2
+    content.vb: Public Function ValueAt(offsetSecs As Single) As Vector2
+  overload: DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt*
+  implements:
+  - DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+  nameWithType.vb: LinearInterpolationTimingParameters.ValueAt(Single)
+  fullName.vb: DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt(Single)
+  name.vb: ValueAt(Single)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.ITimingVectorParameters
+  commentId: T:DrawnUi.Draw.ITimingVectorParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ITimingVectorParameters.html
+  name: ITimingVectorParameters
+  nameWithType: ITimingVectorParameters
+  fullName: DrawnUi.Draw.ITimingVectorParameters
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.LinearInterpolationTimingParameters.#ctor*
+  commentId: Overload:DrawnUi.Draw.LinearInterpolationTimingParameters.#ctor
+  href: DrawnUi.Draw.LinearInterpolationTimingParameters.html#DrawnUi_Draw_LinearInterpolationTimingParameters__ctor_System_Numerics_Vector2_System_Numerics_Vector2_System_Single_Microsoft_Maui_Easing_
+  name: LinearInterpolationTimingParameters
+  nameWithType: LinearInterpolationTimingParameters.LinearInterpolationTimingParameters
+  fullName: DrawnUi.Draw.LinearInterpolationTimingParameters.LinearInterpolationTimingParameters
+  nameWithType.vb: LinearInterpolationTimingParameters.New
+  fullName.vb: DrawnUi.Draw.LinearInterpolationTimingParameters.New
+  name.vb: New
+- uid: System.Numerics.Vector2
+  commentId: T:System.Numerics.Vector2
+  parent: System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  name: Vector2
+  nameWithType: Vector2
+  fullName: System.Numerics.Vector2
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Microsoft.Maui.Easing
+  commentId: T:Microsoft.Maui.Easing
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  name: Easing
+  nameWithType: Easing
+  fullName: Microsoft.Maui.Easing
+- uid: System.Numerics
+  commentId: N:System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Numerics
+  nameWithType: System.Numerics
+  fullName: System.Numerics
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs*
+  commentId: Overload:DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs
+  href: DrawnUi.Draw.LinearInterpolationTimingParameters.html#DrawnUi_Draw_LinearInterpolationTimingParameters_DurationSecs
+  name: DurationSecs
+  nameWithType: LinearInterpolationTimingParameters.DurationSecs
+  fullName: DrawnUi.Draw.LinearInterpolationTimingParameters.DurationSecs
+- uid: DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+  commentId: P:DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+  parent: DrawnUi.Draw.ITimingVectorParameters
+  href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_DurationSecs
+  name: DurationSecs
+  nameWithType: ITimingVectorParameters.DurationSecs
+  fullName: DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+- uid: DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt*
+  commentId: Overload:DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt
+  href: DrawnUi.Draw.LinearInterpolationTimingParameters.html#DrawnUi_Draw_LinearInterpolationTimingParameters_ValueAt_System_Single_
+  name: ValueAt
+  nameWithType: LinearInterpolationTimingParameters.ValueAt
+  fullName: DrawnUi.Draw.LinearInterpolationTimingParameters.ValueAt
+- uid: DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+  commentId: M:DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+  parent: DrawnUi.Draw.ITimingVectorParameters
+  isExternal: true
+  href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_ValueAt_System_Single_
+  name: ValueAt(float)
+  nameWithType: ITimingVectorParameters.ValueAt(float)
+  fullName: DrawnUi.Draw.ITimingVectorParameters.ValueAt(float)
+  nameWithType.vb: ITimingVectorParameters.ValueAt(Single)
+  fullName.vb: DrawnUi.Draw.ITimingVectorParameters.ValueAt(Single)
+  name.vb: ValueAt(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )

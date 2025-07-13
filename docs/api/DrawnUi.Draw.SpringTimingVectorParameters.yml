@@ -1,0 +1,870 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SpringTimingVectorParameters
+  commentId: T:DrawnUi.Draw.SpringTimingVectorParameters
+  id: SpringTimingVectorParameters
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SpringTimingVectorParameters.#ctor(DrawnUi.Infrastructure.Spring,System.Numerics.Vector2,System.Numerics.Vector2,System.Single)
+  - DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt(System.Single)
+  - DrawnUi.Draw.SpringTimingVectorParameters.Displacement
+  - DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs
+  - DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity
+  - DrawnUi.Draw.SpringTimingVectorParameters.Spring
+  - DrawnUi.Draw.SpringTimingVectorParameters.Threshold
+  - DrawnUi.Draw.SpringTimingVectorParameters.ValueAt(System.Single)
+  langs:
+  - csharp
+  - vb
+  name: SpringTimingVectorParameters
+  nameWithType: SpringTimingVectorParameters
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SpringTimingVectorParameters
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class SpringTimingVectorParameters : IDampingTimingVectorParameters, ITimingVectorParameters'
+    content.vb: Public Class SpringTimingVectorParameters Implements IDampingTimingVectorParameters, ITimingVectorParameters
+  inheritance:
+  - System.Object
+  implements:
+  - DrawnUi.Draw.IDampingTimingVectorParameters
+  - DrawnUi.Draw.ITimingVectorParameters
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.Spring
+  commentId: P:DrawnUi.Draw.SpringTimingVectorParameters.Spring
+  id: Spring
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: Spring
+  nameWithType: SpringTimingVectorParameters.Spring
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.Spring
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Spring
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Spring Spring { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Infrastructure.Spring
+    content.vb: Public ReadOnly Property Spring As Spring
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.Spring*
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.Displacement
+  commentId: P:DrawnUi.Draw.SpringTimingVectorParameters.Displacement
+  id: Displacement
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: Displacement
+  nameWithType: SpringTimingVectorParameters.Displacement
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.Displacement
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Displacement
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Vector2 Displacement { get; }
+    parameters: []
+    return:
+      type: System.Numerics.Vector2
+    content.vb: Public ReadOnly Property Displacement As Vector2
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.Displacement*
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity
+  commentId: P:DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity
+  id: InitialVelocity
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: InitialVelocity
+  nameWithType: SpringTimingVectorParameters.InitialVelocity
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InitialVelocity
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Vector2 InitialVelocity { get; }
+    parameters: []
+    return:
+      type: System.Numerics.Vector2
+    content.vb: Public ReadOnly Property InitialVelocity As Vector2
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity*
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.Threshold
+  commentId: P:DrawnUi.Draw.SpringTimingVectorParameters.Threshold
+  id: Threshold
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: Threshold
+  nameWithType: SpringTimingVectorParameters.Threshold
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.Threshold
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Threshold
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Threshold { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property Threshold As Single
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.Threshold*
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.#ctor(DrawnUi.Infrastructure.Spring,System.Numerics.Vector2,System.Numerics.Vector2,System.Single)
+  commentId: M:DrawnUi.Draw.SpringTimingVectorParameters.#ctor(DrawnUi.Infrastructure.Spring,System.Numerics.Vector2,System.Numerics.Vector2,System.Single)
+  id: '#ctor(DrawnUi.Infrastructure.Spring,System.Numerics.Vector2,System.Numerics.Vector2,System.Single)'
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: SpringTimingVectorParameters(Spring, Vector2, Vector2, float)
+  nameWithType: SpringTimingVectorParameters.SpringTimingVectorParameters(Spring, Vector2, Vector2, float)
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.SpringTimingVectorParameters(DrawnUi.Infrastructure.Spring, System.Numerics.Vector2, System.Numerics.Vector2, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SpringTimingVectorParameters(Spring spring, Vector2 displacement, Vector2 initialVelocity, float threshold)
+    parameters:
+    - id: spring
+      type: DrawnUi.Infrastructure.Spring
+    - id: displacement
+      type: System.Numerics.Vector2
+    - id: initialVelocity
+      type: System.Numerics.Vector2
+    - id: threshold
+      type: System.Single
+    content.vb: Public Sub New(spring As Spring, displacement As Vector2, initialVelocity As Vector2, threshold As Single)
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.#ctor*
+  nameWithType.vb: SpringTimingVectorParameters.New(Spring, Vector2, Vector2, Single)
+  fullName.vb: DrawnUi.Draw.SpringTimingVectorParameters.New(DrawnUi.Infrastructure.Spring, System.Numerics.Vector2, System.Numerics.Vector2, Single)
+  name.vb: New(Spring, Vector2, Vector2, Single)
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs
+  commentId: P:DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs
+  id: DurationSecs
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: DurationSecs
+  nameWithType: SpringTimingVectorParameters.DurationSecs
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DurationSecs
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 35
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public float DurationSecs { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property DurationSecs As Single
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs*
+  implements:
+  - DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.ValueAt(System.Single)
+  commentId: M:DrawnUi.Draw.SpringTimingVectorParameters.ValueAt(System.Single)
+  id: ValueAt(System.Single)
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: ValueAt(float)
+  nameWithType: SpringTimingVectorParameters.ValueAt(float)
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.ValueAt(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ValueAt
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 37
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public Vector2 ValueAt(float offsetSecs)
+    parameters:
+    - id: offsetSecs
+      type: System.Single
+    return:
+      type: System.Numerics.Vector2
+    content.vb: Public Function ValueAt(offsetSecs As Single) As Vector2
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.ValueAt*
+  implements:
+  - DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+  nameWithType.vb: SpringTimingVectorParameters.ValueAt(Single)
+  fullName.vb: DrawnUi.Draw.SpringTimingVectorParameters.ValueAt(Single)
+  name.vb: ValueAt(Single)
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt(System.Single)
+  commentId: M:DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt(System.Single)
+  id: AmplitudeAt(System.Single)
+  parent: DrawnUi.Draw.SpringTimingVectorParameters
+  langs:
+  - csharp
+  - vb
+  name: AmplitudeAt(float)
+  nameWithType: SpringTimingVectorParameters.AmplitudeAt(float)
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AmplitudeAt
+    path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public Vector2 AmplitudeAt(float offsetSecs)
+    parameters:
+    - id: offsetSecs
+      type: System.Single
+    return:
+      type: System.Numerics.Vector2
+    content.vb: Public Function AmplitudeAt(offsetSecs As Single) As Vector2
+  overload: DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt*
+  implements:
+  - DrawnUi.Draw.IDampingTimingVectorParameters.AmplitudeAt(System.Single)
+  nameWithType.vb: SpringTimingVectorParameters.AmplitudeAt(Single)
+  fullName.vb: DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt(Single)
+  name.vb: AmplitudeAt(Single)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Draw.IDampingTimingVectorParameters
+  commentId: T:DrawnUi.Draw.IDampingTimingVectorParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IDampingTimingVectorParameters.html
+  name: IDampingTimingVectorParameters
+  nameWithType: IDampingTimingVectorParameters
+  fullName: DrawnUi.Draw.IDampingTimingVectorParameters
+- uid: DrawnUi.Draw.ITimingVectorParameters
+  commentId: T:DrawnUi.Draw.ITimingVectorParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ITimingVectorParameters.html
+  name: ITimingVectorParameters
+  nameWithType: ITimingVectorParameters
+  fullName: DrawnUi.Draw.ITimingVectorParameters
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.Spring*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.Spring
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters_Spring
+  name: Spring
+  nameWithType: SpringTimingVectorParameters.Spring
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.Spring
+- uid: DrawnUi.Infrastructure.Spring
+  commentId: T:DrawnUi.Infrastructure.Spring
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.Spring.html
+  name: Spring
+  nameWithType: Spring
+  fullName: DrawnUi.Infrastructure.Spring
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.Displacement*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.Displacement
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters_Displacement
+  name: Displacement
+  nameWithType: SpringTimingVectorParameters.Displacement
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.Displacement
+- uid: System.Numerics.Vector2
+  commentId: T:System.Numerics.Vector2
+  parent: System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  name: Vector2
+  nameWithType: Vector2
+  fullName: System.Numerics.Vector2
+- uid: System.Numerics
+  commentId: N:System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Numerics
+  nameWithType: System.Numerics
+  fullName: System.Numerics
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters_InitialVelocity
+  name: InitialVelocity
+  nameWithType: SpringTimingVectorParameters.InitialVelocity
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.InitialVelocity
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.Threshold*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.Threshold
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters_Threshold
+  name: Threshold
+  nameWithType: SpringTimingVectorParameters.Threshold
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.Threshold
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.#ctor*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.#ctor
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters__ctor_DrawnUi_Infrastructure_Spring_System_Numerics_Vector2_System_Numerics_Vector2_System_Single_
+  name: SpringTimingVectorParameters
+  nameWithType: SpringTimingVectorParameters.SpringTimingVectorParameters
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.SpringTimingVectorParameters
+  nameWithType.vb: SpringTimingVectorParameters.New
+  fullName.vb: DrawnUi.Draw.SpringTimingVectorParameters.New
+  name.vb: New
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters_DurationSecs
+  name: DurationSecs
+  nameWithType: SpringTimingVectorParameters.DurationSecs
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.DurationSecs
+- uid: DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+  commentId: P:DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+  parent: DrawnUi.Draw.ITimingVectorParameters
+  href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_DurationSecs
+  name: DurationSecs
+  nameWithType: ITimingVectorParameters.DurationSecs
+  fullName: DrawnUi.Draw.ITimingVectorParameters.DurationSecs
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.ValueAt*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.ValueAt
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters_ValueAt_System_Single_
+  name: ValueAt
+  nameWithType: SpringTimingVectorParameters.ValueAt
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.ValueAt
+- uid: DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+  commentId: M:DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+  parent: DrawnUi.Draw.ITimingVectorParameters
+  isExternal: true
+  href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_ValueAt_System_Single_
+  name: ValueAt(float)
+  nameWithType: ITimingVectorParameters.ValueAt(float)
+  fullName: DrawnUi.Draw.ITimingVectorParameters.ValueAt(float)
+  nameWithType.vb: ITimingVectorParameters.ValueAt(Single)
+  fullName.vb: DrawnUi.Draw.ITimingVectorParameters.ValueAt(Single)
+  name.vb: ValueAt(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ITimingVectorParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingVectorParameters.html#DrawnUi_Draw_ITimingVectorParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt*
+  commentId: Overload:DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt
+  href: DrawnUi.Draw.SpringTimingVectorParameters.html#DrawnUi_Draw_SpringTimingVectorParameters_AmplitudeAt_System_Single_
+  name: AmplitudeAt
+  nameWithType: SpringTimingVectorParameters.AmplitudeAt
+  fullName: DrawnUi.Draw.SpringTimingVectorParameters.AmplitudeAt
+- uid: DrawnUi.Draw.IDampingTimingVectorParameters.AmplitudeAt(System.Single)
+  commentId: M:DrawnUi.Draw.IDampingTimingVectorParameters.AmplitudeAt(System.Single)
+  parent: DrawnUi.Draw.IDampingTimingVectorParameters
+  isExternal: true
+  href: DrawnUi.Draw.IDampingTimingVectorParameters.html#DrawnUi_Draw_IDampingTimingVectorParameters_AmplitudeAt_System_Single_
+  name: AmplitudeAt(float)
+  nameWithType: IDampingTimingVectorParameters.AmplitudeAt(float)
+  fullName: DrawnUi.Draw.IDampingTimingVectorParameters.AmplitudeAt(float)
+  nameWithType.vb: IDampingTimingVectorParameters.AmplitudeAt(Single)
+  fullName.vb: DrawnUi.Draw.IDampingTimingVectorParameters.AmplitudeAt(Single)
+  name.vb: AmplitudeAt(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDampingTimingVectorParameters.AmplitudeAt(System.Single)
+    name: AmplitudeAt
+    href: DrawnUi.Draw.IDampingTimingVectorParameters.html#DrawnUi_Draw_IDampingTimingVectorParameters_AmplitudeAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDampingTimingVectorParameters.AmplitudeAt(System.Single)
+    name: AmplitudeAt
+    href: DrawnUi.Draw.IDampingTimingVectorParameters.html#DrawnUi_Draw_IDampingTimingVectorParameters_AmplitudeAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )

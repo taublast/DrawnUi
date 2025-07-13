@@ -1,0 +1,395 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.MauiKeyMapper
+  commentId: T:DrawnUi.Draw.MauiKeyMapper
+  id: MauiKeyMapper
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.MauiKeyMapper.MapToCode(DrawnUi.Draw.MauiKey)
+  - DrawnUi.Draw.MauiKeyMapper.MapToJava(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: MauiKeyMapper
+  nameWithType: MauiKeyMapper
+  fullName: DrawnUi.Draw.MauiKeyMapper
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MauiKeyMapper
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 120
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static class MauiKeyMapper
+    content.vb: Public Module MauiKeyMapper
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.MauiKeyMapper.MapToJava(System.Int32)
+  commentId: M:DrawnUi.Draw.MauiKeyMapper.MapToJava(System.Int32)
+  id: MapToJava(System.Int32)
+  parent: DrawnUi.Draw.MauiKeyMapper
+  langs:
+  - csharp
+  - vb
+  name: MapToJava(int)
+  nameWithType: MauiKeyMapper.MapToJava(int)
+  fullName: DrawnUi.Draw.MauiKeyMapper.MapToJava(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MapToJava
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 122
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static MauiKey MapToJava(int code)
+    parameters:
+    - id: code
+      type: System.Int32
+    return:
+      type: DrawnUi.Draw.MauiKey
+    content.vb: Public Shared Function MapToJava(code As Integer) As MauiKey
+  overload: DrawnUi.Draw.MauiKeyMapper.MapToJava*
+  nameWithType.vb: MauiKeyMapper.MapToJava(Integer)
+  fullName.vb: DrawnUi.Draw.MauiKeyMapper.MapToJava(Integer)
+  name.vb: MapToJava(Integer)
+- uid: DrawnUi.Draw.MauiKeyMapper.MapToCode(DrawnUi.Draw.MauiKey)
+  commentId: M:DrawnUi.Draw.MauiKeyMapper.MapToCode(DrawnUi.Draw.MauiKey)
+  id: MapToCode(DrawnUi.Draw.MauiKey)
+  parent: DrawnUi.Draw.MauiKeyMapper
+  langs:
+  - csharp
+  - vb
+  name: MapToCode(MauiKey)
+  nameWithType: MauiKeyMapper.MapToCode(MauiKey)
+  fullName: DrawnUi.Draw.MauiKeyMapper.MapToCode(DrawnUi.Draw.MauiKey)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MapToCode
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 131
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static int MapToCode(MauiKey key)
+    parameters:
+    - id: key
+      type: DrawnUi.Draw.MauiKey
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function MapToCode(key As MauiKey) As Integer
+  overload: DrawnUi.Draw.MauiKeyMapper.MapToCode*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.MauiKeyMapper.MapToJava*
+  commentId: Overload:DrawnUi.Draw.MauiKeyMapper.MapToJava
+  href: DrawnUi.Draw.MauiKeyMapper.html#DrawnUi_Draw_MauiKeyMapper_MapToJava_System_Int32_
+  name: MapToJava
+  nameWithType: MauiKeyMapper.MapToJava
+  fullName: DrawnUi.Draw.MauiKeyMapper.MapToJava
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.MauiKey
+  commentId: T:DrawnUi.Draw.MauiKey
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.MauiKey.html
+  name: MauiKey
+  nameWithType: MauiKey
+  fullName: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKeyMapper.MapToCode*
+  commentId: Overload:DrawnUi.Draw.MauiKeyMapper.MapToCode
+  href: DrawnUi.Draw.MauiKeyMapper.html#DrawnUi_Draw_MauiKeyMapper_MapToCode_DrawnUi_Draw_MauiKey_
+  name: MapToCode
+  nameWithType: MauiKeyMapper.MapToCode
+  fullName: DrawnUi.Draw.MauiKeyMapper.MapToCode

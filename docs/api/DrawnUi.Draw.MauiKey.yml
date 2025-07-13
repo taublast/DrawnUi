@@ -1,0 +1,3149 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.MauiKey
+  commentId: T:DrawnUi.Draw.MauiKey
+  id: MauiKey
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.MauiKey.AltLeft
+  - DrawnUi.Draw.MauiKey.AltRight
+  - DrawnUi.Draw.MauiKey.ArrowDown
+  - DrawnUi.Draw.MauiKey.ArrowLeft
+  - DrawnUi.Draw.MauiKey.ArrowRight
+  - DrawnUi.Draw.MauiKey.ArrowUp
+  - DrawnUi.Draw.MauiKey.AudioVolumeDown
+  - DrawnUi.Draw.MauiKey.AudioVolumeMute
+  - DrawnUi.Draw.MauiKey.AudioVolumeUp
+  - DrawnUi.Draw.MauiKey.Backquote
+  - DrawnUi.Draw.MauiKey.Backslash
+  - DrawnUi.Draw.MauiKey.Backspace
+  - DrawnUi.Draw.MauiKey.BracketLeft
+  - DrawnUi.Draw.MauiKey.BracketRight
+  - DrawnUi.Draw.MauiKey.CapsLock
+  - DrawnUi.Draw.MauiKey.Comma
+  - DrawnUi.Draw.MauiKey.ContextMenu
+  - DrawnUi.Draw.MauiKey.ControlLeft
+  - DrawnUi.Draw.MauiKey.ControlRight
+  - DrawnUi.Draw.MauiKey.Delete
+  - DrawnUi.Draw.MauiKey.Digit0
+  - DrawnUi.Draw.MauiKey.Digit1
+  - DrawnUi.Draw.MauiKey.Digit2
+  - DrawnUi.Draw.MauiKey.Digit3
+  - DrawnUi.Draw.MauiKey.Digit4
+  - DrawnUi.Draw.MauiKey.Digit5
+  - DrawnUi.Draw.MauiKey.Digit6
+  - DrawnUi.Draw.MauiKey.Digit7
+  - DrawnUi.Draw.MauiKey.Digit8
+  - DrawnUi.Draw.MauiKey.Digit9
+  - DrawnUi.Draw.MauiKey.End
+  - DrawnUi.Draw.MauiKey.Enter
+  - DrawnUi.Draw.MauiKey.Equal
+  - DrawnUi.Draw.MauiKey.Escape
+  - DrawnUi.Draw.MauiKey.F1
+  - DrawnUi.Draw.MauiKey.F10
+  - DrawnUi.Draw.MauiKey.F11
+  - DrawnUi.Draw.MauiKey.F12
+  - DrawnUi.Draw.MauiKey.F2
+  - DrawnUi.Draw.MauiKey.F3
+  - DrawnUi.Draw.MauiKey.F4
+  - DrawnUi.Draw.MauiKey.F5
+  - DrawnUi.Draw.MauiKey.F6
+  - DrawnUi.Draw.MauiKey.F7
+  - DrawnUi.Draw.MauiKey.F8
+  - DrawnUi.Draw.MauiKey.F9
+  - DrawnUi.Draw.MauiKey.Home
+  - DrawnUi.Draw.MauiKey.Insert
+  - DrawnUi.Draw.MauiKey.IntBackslash
+  - DrawnUi.Draw.MauiKey.KeyA
+  - DrawnUi.Draw.MauiKey.KeyB
+  - DrawnUi.Draw.MauiKey.KeyC
+  - DrawnUi.Draw.MauiKey.KeyD
+  - DrawnUi.Draw.MauiKey.KeyE
+  - DrawnUi.Draw.MauiKey.KeyF
+  - DrawnUi.Draw.MauiKey.KeyG
+  - DrawnUi.Draw.MauiKey.KeyH
+  - DrawnUi.Draw.MauiKey.KeyI
+  - DrawnUi.Draw.MauiKey.KeyJ
+  - DrawnUi.Draw.MauiKey.KeyK
+  - DrawnUi.Draw.MauiKey.KeyL
+  - DrawnUi.Draw.MauiKey.KeyM
+  - DrawnUi.Draw.MauiKey.KeyN
+  - DrawnUi.Draw.MauiKey.KeyO
+  - DrawnUi.Draw.MauiKey.KeyP
+  - DrawnUi.Draw.MauiKey.KeyQ
+  - DrawnUi.Draw.MauiKey.KeyR
+  - DrawnUi.Draw.MauiKey.KeyS
+  - DrawnUi.Draw.MauiKey.KeyT
+  - DrawnUi.Draw.MauiKey.KeyU
+  - DrawnUi.Draw.MauiKey.KeyV
+  - DrawnUi.Draw.MauiKey.KeyW
+  - DrawnUi.Draw.MauiKey.KeyX
+  - DrawnUi.Draw.MauiKey.KeyY
+  - DrawnUi.Draw.MauiKey.KeyZ
+  - DrawnUi.Draw.MauiKey.LaunchApplication1
+  - DrawnUi.Draw.MauiKey.LaunchApplication2
+  - DrawnUi.Draw.MauiKey.LaunchMediaPlayer
+  - DrawnUi.Draw.MauiKey.MetaLeft
+  - DrawnUi.Draw.MauiKey.MetaRight
+  - DrawnUi.Draw.MauiKey.Minus
+  - DrawnUi.Draw.MauiKey.NumLock
+  - DrawnUi.Draw.MauiKey.Numpad0
+  - DrawnUi.Draw.MauiKey.Numpad1
+  - DrawnUi.Draw.MauiKey.Numpad2
+  - DrawnUi.Draw.MauiKey.Numpad3
+  - DrawnUi.Draw.MauiKey.Numpad4
+  - DrawnUi.Draw.MauiKey.Numpad5
+  - DrawnUi.Draw.MauiKey.Numpad6
+  - DrawnUi.Draw.MauiKey.Numpad7
+  - DrawnUi.Draw.MauiKey.Numpad8
+  - DrawnUi.Draw.MauiKey.Numpad9
+  - DrawnUi.Draw.MauiKey.NumpadAdd
+  - DrawnUi.Draw.MauiKey.NumpadDecimal
+  - DrawnUi.Draw.MauiKey.NumpadDivide
+  - DrawnUi.Draw.MauiKey.NumpadMultiply
+  - DrawnUi.Draw.MauiKey.NumpadSubtract
+  - DrawnUi.Draw.MauiKey.PageDown
+  - DrawnUi.Draw.MauiKey.PageUp
+  - DrawnUi.Draw.MauiKey.Pause
+  - DrawnUi.Draw.MauiKey.Period
+  - DrawnUi.Draw.MauiKey.PrintScreen
+  - DrawnUi.Draw.MauiKey.Quote
+  - DrawnUi.Draw.MauiKey.ScrollLock
+  - DrawnUi.Draw.MauiKey.Semicolon
+  - DrawnUi.Draw.MauiKey.ShiftLeft
+  - DrawnUi.Draw.MauiKey.ShiftRight
+  - DrawnUi.Draw.MauiKey.Slash
+  - DrawnUi.Draw.MauiKey.Space
+  - DrawnUi.Draw.MauiKey.Tab
+  - DrawnUi.Draw.MauiKey.Unknown
+  langs:
+  - csharp
+  - vb
+  name: MauiKey
+  nameWithType: MauiKey
+  fullName: DrawnUi.Draw.MauiKey
+  type: Enum
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MauiKey
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: These are platform-independent. They correspond to JavaScript keys.
+  example: []
+  syntax:
+    content: public enum MauiKey
+    content.vb: Public Enum MauiKey
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.MauiKey.Unknown
+  commentId: F:DrawnUi.Draw.MauiKey.Unknown
+  id: Unknown
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: MauiKey.Unknown
+  fullName: DrawnUi.Draw.MauiKey.Unknown
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Unknown
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Unknown = 0
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Backspace
+  commentId: F:DrawnUi.Draw.MauiKey.Backspace
+  id: Backspace
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Backspace
+  nameWithType: MauiKey.Backspace
+  fullName: DrawnUi.Draw.MauiKey.Backspace
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Backspace
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Backspace = 1
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Tab
+  commentId: F:DrawnUi.Draw.MauiKey.Tab
+  id: Tab
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Tab
+  nameWithType: MauiKey.Tab
+  fullName: DrawnUi.Draw.MauiKey.Tab
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tab
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Tab = 2
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Enter
+  commentId: F:DrawnUi.Draw.MauiKey.Enter
+  id: Enter
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Enter
+  nameWithType: MauiKey.Enter
+  fullName: DrawnUi.Draw.MauiKey.Enter
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Enter
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Enter = 3
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ShiftLeft
+  commentId: F:DrawnUi.Draw.MauiKey.ShiftLeft
+  id: ShiftLeft
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ShiftLeft
+  nameWithType: MauiKey.ShiftLeft
+  fullName: DrawnUi.Draw.MauiKey.ShiftLeft
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ShiftLeft
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ShiftLeft = 4
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ShiftRight
+  commentId: F:DrawnUi.Draw.MauiKey.ShiftRight
+  id: ShiftRight
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ShiftRight
+  nameWithType: MauiKey.ShiftRight
+  fullName: DrawnUi.Draw.MauiKey.ShiftRight
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ShiftRight
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ShiftRight = 5
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ControlLeft
+  commentId: F:DrawnUi.Draw.MauiKey.ControlLeft
+  id: ControlLeft
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ControlLeft
+  nameWithType: MauiKey.ControlLeft
+  fullName: DrawnUi.Draw.MauiKey.ControlLeft
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ControlLeft
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ControlLeft = 6
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ControlRight
+  commentId: F:DrawnUi.Draw.MauiKey.ControlRight
+  id: ControlRight
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ControlRight
+  nameWithType: MauiKey.ControlRight
+  fullName: DrawnUi.Draw.MauiKey.ControlRight
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ControlRight
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ControlRight = 7
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.AltLeft
+  commentId: F:DrawnUi.Draw.MauiKey.AltLeft
+  id: AltLeft
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: AltLeft
+  nameWithType: MauiKey.AltLeft
+  fullName: DrawnUi.Draw.MauiKey.AltLeft
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AltLeft
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: AltLeft = 8
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.AltRight
+  commentId: F:DrawnUi.Draw.MauiKey.AltRight
+  id: AltRight
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: AltRight
+  nameWithType: MauiKey.AltRight
+  fullName: DrawnUi.Draw.MauiKey.AltRight
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AltRight
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: AltRight = 9
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Pause
+  commentId: F:DrawnUi.Draw.MauiKey.Pause
+  id: Pause
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Pause
+  nameWithType: MauiKey.Pause
+  fullName: DrawnUi.Draw.MauiKey.Pause
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Pause
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Pause = 10
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.CapsLock
+  commentId: F:DrawnUi.Draw.MauiKey.CapsLock
+  id: CapsLock
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: CapsLock
+  nameWithType: MauiKey.CapsLock
+  fullName: DrawnUi.Draw.MauiKey.CapsLock
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CapsLock
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: CapsLock = 11
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Escape
+  commentId: F:DrawnUi.Draw.MauiKey.Escape
+  id: Escape
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Escape
+  nameWithType: MauiKey.Escape
+  fullName: DrawnUi.Draw.MauiKey.Escape
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Escape
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Escape = 12
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Space
+  commentId: F:DrawnUi.Draw.MauiKey.Space
+  id: Space
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Space
+  nameWithType: MauiKey.Space
+  fullName: DrawnUi.Draw.MauiKey.Space
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Space
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Space = 13
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.PageUp
+  commentId: F:DrawnUi.Draw.MauiKey.PageUp
+  id: PageUp
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: PageUp
+  nameWithType: MauiKey.PageUp
+  fullName: DrawnUi.Draw.MauiKey.PageUp
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PageUp
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: PageUp = 14
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.PageDown
+  commentId: F:DrawnUi.Draw.MauiKey.PageDown
+  id: PageDown
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: PageDown
+  nameWithType: MauiKey.PageDown
+  fullName: DrawnUi.Draw.MauiKey.PageDown
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PageDown
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: PageDown = 15
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.End
+  commentId: F:DrawnUi.Draw.MauiKey.End
+  id: End
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: End
+  nameWithType: MauiKey.End
+  fullName: DrawnUi.Draw.MauiKey.End
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: End
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: End = 16
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Home
+  commentId: F:DrawnUi.Draw.MauiKey.Home
+  id: Home
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Home
+  nameWithType: MauiKey.Home
+  fullName: DrawnUi.Draw.MauiKey.Home
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Home
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 24
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Home = 17
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.IntBackslash
+  commentId: F:DrawnUi.Draw.MauiKey.IntBackslash
+  id: IntBackslash
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: IntBackslash
+  nameWithType: MauiKey.IntBackslash
+  fullName: DrawnUi.Draw.MauiKey.IntBackslash
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IntBackslash
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 25
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: IntBackslash = 18
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ArrowLeft
+  commentId: F:DrawnUi.Draw.MauiKey.ArrowLeft
+  id: ArrowLeft
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ArrowLeft
+  nameWithType: MauiKey.ArrowLeft
+  fullName: DrawnUi.Draw.MauiKey.ArrowLeft
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ArrowLeft
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 26
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ArrowLeft = 19
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ArrowUp
+  commentId: F:DrawnUi.Draw.MauiKey.ArrowUp
+  id: ArrowUp
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ArrowUp
+  nameWithType: MauiKey.ArrowUp
+  fullName: DrawnUi.Draw.MauiKey.ArrowUp
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ArrowUp
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ArrowUp = 20
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ArrowRight
+  commentId: F:DrawnUi.Draw.MauiKey.ArrowRight
+  id: ArrowRight
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ArrowRight
+  nameWithType: MauiKey.ArrowRight
+  fullName: DrawnUi.Draw.MauiKey.ArrowRight
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ArrowRight
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 28
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ArrowRight = 21
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ArrowDown
+  commentId: F:DrawnUi.Draw.MauiKey.ArrowDown
+  id: ArrowDown
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ArrowDown
+  nameWithType: MauiKey.ArrowDown
+  fullName: DrawnUi.Draw.MauiKey.ArrowDown
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ArrowDown
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ArrowDown = 22
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.PrintScreen
+  commentId: F:DrawnUi.Draw.MauiKey.PrintScreen
+  id: PrintScreen
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: PrintScreen
+  nameWithType: MauiKey.PrintScreen
+  fullName: DrawnUi.Draw.MauiKey.PrintScreen
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PrintScreen
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 30
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: PrintScreen = 23
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Insert
+  commentId: F:DrawnUi.Draw.MauiKey.Insert
+  id: Insert
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Insert
+  nameWithType: MauiKey.Insert
+  fullName: DrawnUi.Draw.MauiKey.Insert
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Insert
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Insert = 24
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Delete
+  commentId: F:DrawnUi.Draw.MauiKey.Delete
+  id: Delete
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Delete
+  nameWithType: MauiKey.Delete
+  fullName: DrawnUi.Draw.MauiKey.Delete
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Delete
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 32
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Delete = 25
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit0
+  commentId: F:DrawnUi.Draw.MauiKey.Digit0
+  id: Digit0
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit0
+  nameWithType: MauiKey.Digit0
+  fullName: DrawnUi.Draw.MauiKey.Digit0
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit0
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 33
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit0 = 26
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit1
+  commentId: F:DrawnUi.Draw.MauiKey.Digit1
+  id: Digit1
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit1
+  nameWithType: MauiKey.Digit1
+  fullName: DrawnUi.Draw.MauiKey.Digit1
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit1
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit1 = 27
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit2
+  commentId: F:DrawnUi.Draw.MauiKey.Digit2
+  id: Digit2
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit2
+  nameWithType: MauiKey.Digit2
+  fullName: DrawnUi.Draw.MauiKey.Digit2
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit2
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 35
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit2 = 28
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit3
+  commentId: F:DrawnUi.Draw.MauiKey.Digit3
+  id: Digit3
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit3
+  nameWithType: MauiKey.Digit3
+  fullName: DrawnUi.Draw.MauiKey.Digit3
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit3
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 36
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit3 = 29
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit4
+  commentId: F:DrawnUi.Draw.MauiKey.Digit4
+  id: Digit4
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit4
+  nameWithType: MauiKey.Digit4
+  fullName: DrawnUi.Draw.MauiKey.Digit4
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit4
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 37
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit4 = 30
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit5
+  commentId: F:DrawnUi.Draw.MauiKey.Digit5
+  id: Digit5
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit5
+  nameWithType: MauiKey.Digit5
+  fullName: DrawnUi.Draw.MauiKey.Digit5
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit5
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit5 = 31
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit6
+  commentId: F:DrawnUi.Draw.MauiKey.Digit6
+  id: Digit6
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit6
+  nameWithType: MauiKey.Digit6
+  fullName: DrawnUi.Draw.MauiKey.Digit6
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit6
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 39
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit6 = 32
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit7
+  commentId: F:DrawnUi.Draw.MauiKey.Digit7
+  id: Digit7
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit7
+  nameWithType: MauiKey.Digit7
+  fullName: DrawnUi.Draw.MauiKey.Digit7
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit7
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 40
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit7 = 33
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit8
+  commentId: F:DrawnUi.Draw.MauiKey.Digit8
+  id: Digit8
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit8
+  nameWithType: MauiKey.Digit8
+  fullName: DrawnUi.Draw.MauiKey.Digit8
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit8
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 41
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit8 = 34
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Digit9
+  commentId: F:DrawnUi.Draw.MauiKey.Digit9
+  id: Digit9
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Digit9
+  nameWithType: MauiKey.Digit9
+  fullName: DrawnUi.Draw.MauiKey.Digit9
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Digit9
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Digit9 = 35
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyA
+  commentId: F:DrawnUi.Draw.MauiKey.KeyA
+  id: KeyA
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyA
+  nameWithType: MauiKey.KeyA
+  fullName: DrawnUi.Draw.MauiKey.KeyA
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyA
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 43
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyA = 36
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyB
+  commentId: F:DrawnUi.Draw.MauiKey.KeyB
+  id: KeyB
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyB
+  nameWithType: MauiKey.KeyB
+  fullName: DrawnUi.Draw.MauiKey.KeyB
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyB
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyB = 37
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyC
+  commentId: F:DrawnUi.Draw.MauiKey.KeyC
+  id: KeyC
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyC
+  nameWithType: MauiKey.KeyC
+  fullName: DrawnUi.Draw.MauiKey.KeyC
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyC
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 45
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyC = 38
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyD
+  commentId: F:DrawnUi.Draw.MauiKey.KeyD
+  id: KeyD
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyD
+  nameWithType: MauiKey.KeyD
+  fullName: DrawnUi.Draw.MauiKey.KeyD
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyD
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 46
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyD = 39
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyE
+  commentId: F:DrawnUi.Draw.MauiKey.KeyE
+  id: KeyE
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyE
+  nameWithType: MauiKey.KeyE
+  fullName: DrawnUi.Draw.MauiKey.KeyE
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyE
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 47
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyE = 40
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyF
+  commentId: F:DrawnUi.Draw.MauiKey.KeyF
+  id: KeyF
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyF
+  nameWithType: MauiKey.KeyF
+  fullName: DrawnUi.Draw.MauiKey.KeyF
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyF
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 48
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyF = 41
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyG
+  commentId: F:DrawnUi.Draw.MauiKey.KeyG
+  id: KeyG
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyG
+  nameWithType: MauiKey.KeyG
+  fullName: DrawnUi.Draw.MauiKey.KeyG
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyG
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 49
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyG = 42
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyH
+  commentId: F:DrawnUi.Draw.MauiKey.KeyH
+  id: KeyH
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyH
+  nameWithType: MauiKey.KeyH
+  fullName: DrawnUi.Draw.MauiKey.KeyH
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyH
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 50
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyH = 43
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyI
+  commentId: F:DrawnUi.Draw.MauiKey.KeyI
+  id: KeyI
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyI
+  nameWithType: MauiKey.KeyI
+  fullName: DrawnUi.Draw.MauiKey.KeyI
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyI
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 51
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyI = 44
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyJ
+  commentId: F:DrawnUi.Draw.MauiKey.KeyJ
+  id: KeyJ
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyJ
+  nameWithType: MauiKey.KeyJ
+  fullName: DrawnUi.Draw.MauiKey.KeyJ
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyJ
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 52
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyJ = 45
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyK
+  commentId: F:DrawnUi.Draw.MauiKey.KeyK
+  id: KeyK
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyK
+  nameWithType: MauiKey.KeyK
+  fullName: DrawnUi.Draw.MauiKey.KeyK
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyK
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 53
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyK = 46
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyL
+  commentId: F:DrawnUi.Draw.MauiKey.KeyL
+  id: KeyL
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyL
+  nameWithType: MauiKey.KeyL
+  fullName: DrawnUi.Draw.MauiKey.KeyL
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyL
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyL = 47
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyM
+  commentId: F:DrawnUi.Draw.MauiKey.KeyM
+  id: KeyM
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyM
+  nameWithType: MauiKey.KeyM
+  fullName: DrawnUi.Draw.MauiKey.KeyM
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyM
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 55
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyM = 48
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyN
+  commentId: F:DrawnUi.Draw.MauiKey.KeyN
+  id: KeyN
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyN
+  nameWithType: MauiKey.KeyN
+  fullName: DrawnUi.Draw.MauiKey.KeyN
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyN
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 56
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyN = 49
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyO
+  commentId: F:DrawnUi.Draw.MauiKey.KeyO
+  id: KeyO
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyO
+  nameWithType: MauiKey.KeyO
+  fullName: DrawnUi.Draw.MauiKey.KeyO
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyO
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 57
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyO = 50
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyP
+  commentId: F:DrawnUi.Draw.MauiKey.KeyP
+  id: KeyP
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyP
+  nameWithType: MauiKey.KeyP
+  fullName: DrawnUi.Draw.MauiKey.KeyP
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyP
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 58
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyP = 51
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyQ
+  commentId: F:DrawnUi.Draw.MauiKey.KeyQ
+  id: KeyQ
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyQ
+  nameWithType: MauiKey.KeyQ
+  fullName: DrawnUi.Draw.MauiKey.KeyQ
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyQ
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyQ = 52
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyR
+  commentId: F:DrawnUi.Draw.MauiKey.KeyR
+  id: KeyR
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyR
+  nameWithType: MauiKey.KeyR
+  fullName: DrawnUi.Draw.MauiKey.KeyR
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyR
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 60
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyR = 53
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyS
+  commentId: F:DrawnUi.Draw.MauiKey.KeyS
+  id: KeyS
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyS
+  nameWithType: MauiKey.KeyS
+  fullName: DrawnUi.Draw.MauiKey.KeyS
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyS
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 61
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyS = 54
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyT
+  commentId: F:DrawnUi.Draw.MauiKey.KeyT
+  id: KeyT
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyT
+  nameWithType: MauiKey.KeyT
+  fullName: DrawnUi.Draw.MauiKey.KeyT
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyT
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 62
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyT = 55
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyU
+  commentId: F:DrawnUi.Draw.MauiKey.KeyU
+  id: KeyU
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyU
+  nameWithType: MauiKey.KeyU
+  fullName: DrawnUi.Draw.MauiKey.KeyU
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyU
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 63
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyU = 56
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyV
+  commentId: F:DrawnUi.Draw.MauiKey.KeyV
+  id: KeyV
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyV
+  nameWithType: MauiKey.KeyV
+  fullName: DrawnUi.Draw.MauiKey.KeyV
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyV
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 64
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyV = 57
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyW
+  commentId: F:DrawnUi.Draw.MauiKey.KeyW
+  id: KeyW
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyW
+  nameWithType: MauiKey.KeyW
+  fullName: DrawnUi.Draw.MauiKey.KeyW
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyW
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 65
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyW = 58
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyX
+  commentId: F:DrawnUi.Draw.MauiKey.KeyX
+  id: KeyX
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyX
+  nameWithType: MauiKey.KeyX
+  fullName: DrawnUi.Draw.MauiKey.KeyX
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyX
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 66
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyX = 59
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyY
+  commentId: F:DrawnUi.Draw.MauiKey.KeyY
+  id: KeyY
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyY
+  nameWithType: MauiKey.KeyY
+  fullName: DrawnUi.Draw.MauiKey.KeyY
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyY
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 67
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyY = 60
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.KeyZ
+  commentId: F:DrawnUi.Draw.MauiKey.KeyZ
+  id: KeyZ
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: KeyZ
+  nameWithType: MauiKey.KeyZ
+  fullName: DrawnUi.Draw.MauiKey.KeyZ
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyZ
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 68
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: KeyZ = 61
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.MetaLeft
+  commentId: F:DrawnUi.Draw.MauiKey.MetaLeft
+  id: MetaLeft
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: MetaLeft
+  nameWithType: MauiKey.MetaLeft
+  fullName: DrawnUi.Draw.MauiKey.MetaLeft
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MetaLeft
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 69
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: MetaLeft = 62
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.MetaRight
+  commentId: F:DrawnUi.Draw.MauiKey.MetaRight
+  id: MetaRight
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: MetaRight
+  nameWithType: MauiKey.MetaRight
+  fullName: DrawnUi.Draw.MauiKey.MetaRight
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MetaRight
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 70
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: MetaRight = 63
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ContextMenu
+  commentId: F:DrawnUi.Draw.MauiKey.ContextMenu
+  id: ContextMenu
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ContextMenu
+  nameWithType: MauiKey.ContextMenu
+  fullName: DrawnUi.Draw.MauiKey.ContextMenu
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ContextMenu
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 71
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ContextMenu = 64
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad0
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad0
+  id: Numpad0
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad0
+  nameWithType: MauiKey.Numpad0
+  fullName: DrawnUi.Draw.MauiKey.Numpad0
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad0
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 72
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad0 = 65
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad1
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad1
+  id: Numpad1
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad1
+  nameWithType: MauiKey.Numpad1
+  fullName: DrawnUi.Draw.MauiKey.Numpad1
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad1
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 73
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad1 = 66
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad2
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad2
+  id: Numpad2
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad2
+  nameWithType: MauiKey.Numpad2
+  fullName: DrawnUi.Draw.MauiKey.Numpad2
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad2
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 74
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad2 = 67
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad3
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad3
+  id: Numpad3
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad3
+  nameWithType: MauiKey.Numpad3
+  fullName: DrawnUi.Draw.MauiKey.Numpad3
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad3
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 75
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad3 = 68
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad4
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad4
+  id: Numpad4
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad4
+  nameWithType: MauiKey.Numpad4
+  fullName: DrawnUi.Draw.MauiKey.Numpad4
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad4
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 76
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad4 = 69
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad5
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad5
+  id: Numpad5
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad5
+  nameWithType: MauiKey.Numpad5
+  fullName: DrawnUi.Draw.MauiKey.Numpad5
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad5
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 77
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad5 = 70
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad6
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad6
+  id: Numpad6
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad6
+  nameWithType: MauiKey.Numpad6
+  fullName: DrawnUi.Draw.MauiKey.Numpad6
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad6
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 78
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad6 = 71
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad7
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad7
+  id: Numpad7
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad7
+  nameWithType: MauiKey.Numpad7
+  fullName: DrawnUi.Draw.MauiKey.Numpad7
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad7
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 79
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad7 = 72
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad8
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad8
+  id: Numpad8
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad8
+  nameWithType: MauiKey.Numpad8
+  fullName: DrawnUi.Draw.MauiKey.Numpad8
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad8
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 80
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad8 = 73
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Numpad9
+  commentId: F:DrawnUi.Draw.MauiKey.Numpad9
+  id: Numpad9
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Numpad9
+  nameWithType: MauiKey.Numpad9
+  fullName: DrawnUi.Draw.MauiKey.Numpad9
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Numpad9
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 81
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Numpad9 = 74
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.NumpadMultiply
+  commentId: F:DrawnUi.Draw.MauiKey.NumpadMultiply
+  id: NumpadMultiply
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: NumpadMultiply
+  nameWithType: MauiKey.NumpadMultiply
+  fullName: DrawnUi.Draw.MauiKey.NumpadMultiply
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NumpadMultiply
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 82
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: NumpadMultiply = 75
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.NumpadAdd
+  commentId: F:DrawnUi.Draw.MauiKey.NumpadAdd
+  id: NumpadAdd
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: NumpadAdd
+  nameWithType: MauiKey.NumpadAdd
+  fullName: DrawnUi.Draw.MauiKey.NumpadAdd
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NumpadAdd
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 83
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: NumpadAdd = 76
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.NumpadSubtract
+  commentId: F:DrawnUi.Draw.MauiKey.NumpadSubtract
+  id: NumpadSubtract
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: NumpadSubtract
+  nameWithType: MauiKey.NumpadSubtract
+  fullName: DrawnUi.Draw.MauiKey.NumpadSubtract
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NumpadSubtract
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 84
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: NumpadSubtract = 77
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.NumpadDecimal
+  commentId: F:DrawnUi.Draw.MauiKey.NumpadDecimal
+  id: NumpadDecimal
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: NumpadDecimal
+  nameWithType: MauiKey.NumpadDecimal
+  fullName: DrawnUi.Draw.MauiKey.NumpadDecimal
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NumpadDecimal
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 85
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: NumpadDecimal = 78
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.NumpadDivide
+  commentId: F:DrawnUi.Draw.MauiKey.NumpadDivide
+  id: NumpadDivide
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: NumpadDivide
+  nameWithType: MauiKey.NumpadDivide
+  fullName: DrawnUi.Draw.MauiKey.NumpadDivide
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NumpadDivide
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 86
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: NumpadDivide = 79
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F1
+  commentId: F:DrawnUi.Draw.MauiKey.F1
+  id: F1
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F1
+  nameWithType: MauiKey.F1
+  fullName: DrawnUi.Draw.MauiKey.F1
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F1
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 87
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F1 = 80
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F2
+  commentId: F:DrawnUi.Draw.MauiKey.F2
+  id: F2
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F2
+  nameWithType: MauiKey.F2
+  fullName: DrawnUi.Draw.MauiKey.F2
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F2
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 88
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F2 = 81
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F3
+  commentId: F:DrawnUi.Draw.MauiKey.F3
+  id: F3
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F3
+  nameWithType: MauiKey.F3
+  fullName: DrawnUi.Draw.MauiKey.F3
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F3
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 89
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F3 = 82
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F4
+  commentId: F:DrawnUi.Draw.MauiKey.F4
+  id: F4
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F4
+  nameWithType: MauiKey.F4
+  fullName: DrawnUi.Draw.MauiKey.F4
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F4
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F4 = 83
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F5
+  commentId: F:DrawnUi.Draw.MauiKey.F5
+  id: F5
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F5
+  nameWithType: MauiKey.F5
+  fullName: DrawnUi.Draw.MauiKey.F5
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F5
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 91
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F5 = 84
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F6
+  commentId: F:DrawnUi.Draw.MauiKey.F6
+  id: F6
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F6
+  nameWithType: MauiKey.F6
+  fullName: DrawnUi.Draw.MauiKey.F6
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F6
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 92
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F6 = 85
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F7
+  commentId: F:DrawnUi.Draw.MauiKey.F7
+  id: F7
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F7
+  nameWithType: MauiKey.F7
+  fullName: DrawnUi.Draw.MauiKey.F7
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F7
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 93
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F7 = 86
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F8
+  commentId: F:DrawnUi.Draw.MauiKey.F8
+  id: F8
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F8
+  nameWithType: MauiKey.F8
+  fullName: DrawnUi.Draw.MauiKey.F8
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F8
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 94
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F8 = 87
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F9
+  commentId: F:DrawnUi.Draw.MauiKey.F9
+  id: F9
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F9
+  nameWithType: MauiKey.F9
+  fullName: DrawnUi.Draw.MauiKey.F9
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F9
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 95
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F9 = 88
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F10
+  commentId: F:DrawnUi.Draw.MauiKey.F10
+  id: F10
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F10
+  nameWithType: MauiKey.F10
+  fullName: DrawnUi.Draw.MauiKey.F10
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F10
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 96
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F10 = 89
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F11
+  commentId: F:DrawnUi.Draw.MauiKey.F11
+  id: F11
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F11
+  nameWithType: MauiKey.F11
+  fullName: DrawnUi.Draw.MauiKey.F11
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F11
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 97
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F11 = 90
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.F12
+  commentId: F:DrawnUi.Draw.MauiKey.F12
+  id: F12
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: F12
+  nameWithType: MauiKey.F12
+  fullName: DrawnUi.Draw.MauiKey.F12
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: F12
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 98
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: F12 = 91
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.NumLock
+  commentId: F:DrawnUi.Draw.MauiKey.NumLock
+  id: NumLock
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: NumLock
+  nameWithType: MauiKey.NumLock
+  fullName: DrawnUi.Draw.MauiKey.NumLock
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NumLock
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 99
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: NumLock = 92
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.ScrollLock
+  commentId: F:DrawnUi.Draw.MauiKey.ScrollLock
+  id: ScrollLock
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: ScrollLock
+  nameWithType: MauiKey.ScrollLock
+  fullName: DrawnUi.Draw.MauiKey.ScrollLock
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ScrollLock
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 100
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ScrollLock = 93
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.AudioVolumeMute
+  commentId: F:DrawnUi.Draw.MauiKey.AudioVolumeMute
+  id: AudioVolumeMute
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: AudioVolumeMute
+  nameWithType: MauiKey.AudioVolumeMute
+  fullName: DrawnUi.Draw.MauiKey.AudioVolumeMute
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AudioVolumeMute
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 101
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: AudioVolumeMute = 94
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.AudioVolumeDown
+  commentId: F:DrawnUi.Draw.MauiKey.AudioVolumeDown
+  id: AudioVolumeDown
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: AudioVolumeDown
+  nameWithType: MauiKey.AudioVolumeDown
+  fullName: DrawnUi.Draw.MauiKey.AudioVolumeDown
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AudioVolumeDown
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 102
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: AudioVolumeDown = 95
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.AudioVolumeUp
+  commentId: F:DrawnUi.Draw.MauiKey.AudioVolumeUp
+  id: AudioVolumeUp
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: AudioVolumeUp
+  nameWithType: MauiKey.AudioVolumeUp
+  fullName: DrawnUi.Draw.MauiKey.AudioVolumeUp
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AudioVolumeUp
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 103
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: AudioVolumeUp = 96
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.LaunchMediaPlayer
+  commentId: F:DrawnUi.Draw.MauiKey.LaunchMediaPlayer
+  id: LaunchMediaPlayer
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: LaunchMediaPlayer
+  nameWithType: MauiKey.LaunchMediaPlayer
+  fullName: DrawnUi.Draw.MauiKey.LaunchMediaPlayer
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LaunchMediaPlayer
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 104
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LaunchMediaPlayer = 97
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.LaunchApplication1
+  commentId: F:DrawnUi.Draw.MauiKey.LaunchApplication1
+  id: LaunchApplication1
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: LaunchApplication1
+  nameWithType: MauiKey.LaunchApplication1
+  fullName: DrawnUi.Draw.MauiKey.LaunchApplication1
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LaunchApplication1
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 105
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LaunchApplication1 = 98
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.LaunchApplication2
+  commentId: F:DrawnUi.Draw.MauiKey.LaunchApplication2
+  id: LaunchApplication2
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: LaunchApplication2
+  nameWithType: MauiKey.LaunchApplication2
+  fullName: DrawnUi.Draw.MauiKey.LaunchApplication2
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LaunchApplication2
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 106
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LaunchApplication2 = 99
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Semicolon
+  commentId: F:DrawnUi.Draw.MauiKey.Semicolon
+  id: Semicolon
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Semicolon
+  nameWithType: MauiKey.Semicolon
+  fullName: DrawnUi.Draw.MauiKey.Semicolon
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Semicolon
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 107
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Semicolon = 100
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Equal
+  commentId: F:DrawnUi.Draw.MauiKey.Equal
+  id: Equal
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Equal
+  nameWithType: MauiKey.Equal
+  fullName: DrawnUi.Draw.MauiKey.Equal
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Equal
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 108
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Equal = 101
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Comma
+  commentId: F:DrawnUi.Draw.MauiKey.Comma
+  id: Comma
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Comma
+  nameWithType: MauiKey.Comma
+  fullName: DrawnUi.Draw.MauiKey.Comma
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Comma
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 109
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Comma = 102
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Minus
+  commentId: F:DrawnUi.Draw.MauiKey.Minus
+  id: Minus
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Minus
+  nameWithType: MauiKey.Minus
+  fullName: DrawnUi.Draw.MauiKey.Minus
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Minus
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 110
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Minus = 103
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Period
+  commentId: F:DrawnUi.Draw.MauiKey.Period
+  id: Period
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Period
+  nameWithType: MauiKey.Period
+  fullName: DrawnUi.Draw.MauiKey.Period
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Period
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 111
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Period = 104
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Slash
+  commentId: F:DrawnUi.Draw.MauiKey.Slash
+  id: Slash
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Slash
+  nameWithType: MauiKey.Slash
+  fullName: DrawnUi.Draw.MauiKey.Slash
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Slash
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 112
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Slash = 105
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Backquote
+  commentId: F:DrawnUi.Draw.MauiKey.Backquote
+  id: Backquote
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Backquote
+  nameWithType: MauiKey.Backquote
+  fullName: DrawnUi.Draw.MauiKey.Backquote
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Backquote
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 113
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Backquote = 106
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.BracketLeft
+  commentId: F:DrawnUi.Draw.MauiKey.BracketLeft
+  id: BracketLeft
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: BracketLeft
+  nameWithType: MauiKey.BracketLeft
+  fullName: DrawnUi.Draw.MauiKey.BracketLeft
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BracketLeft
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 114
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BracketLeft = 107
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Backslash
+  commentId: F:DrawnUi.Draw.MauiKey.Backslash
+  id: Backslash
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Backslash
+  nameWithType: MauiKey.Backslash
+  fullName: DrawnUi.Draw.MauiKey.Backslash
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Backslash
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 115
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Backslash = 108
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.BracketRight
+  commentId: F:DrawnUi.Draw.MauiKey.BracketRight
+  id: BracketRight
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: BracketRight
+  nameWithType: MauiKey.BracketRight
+  fullName: DrawnUi.Draw.MauiKey.BracketRight
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BracketRight
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 116
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BracketRight = 109
+    return:
+      type: DrawnUi.Draw.MauiKey
+- uid: DrawnUi.Draw.MauiKey.Quote
+  commentId: F:DrawnUi.Draw.MauiKey.Quote
+  id: Quote
+  parent: DrawnUi.Draw.MauiKey
+  langs:
+  - csharp
+  - vb
+  name: Quote
+  nameWithType: MauiKey.Quote
+  fullName: DrawnUi.Draw.MauiKey.Quote
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Quote
+    path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
+    startLine: 117
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Quote = 110
+    return:
+      type: DrawnUi.Draw.MauiKey
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.MauiKey
+  commentId: T:DrawnUi.Draw.MauiKey
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.MauiKey.html
+  name: MauiKey
+  nameWithType: MauiKey
+  fullName: DrawnUi.Draw.MauiKey

@@ -1,0 +1,2058 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ViewsAdapter
+  commentId: T:DrawnUi.Draw.ViewsAdapter
+  id: ViewsAdapter
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ViewsAdapter.#ctor(DrawnUi.Draw.SkiaLayout)
+  - DrawnUi.Draw.ViewsAdapter.AddMoreToPool(System.Int32)
+  - DrawnUi.Draw.ViewsAdapter.AddedMore
+  - DrawnUi.Draw.ViewsAdapter.AttachView(DrawnUi.Draw.SkiaControl,System.Int32,System.Boolean)
+  - DrawnUi.Draw.ViewsAdapter.Dispose
+  - DrawnUi.Draw.ViewsAdapter.DisposeViews
+  - DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews
+  - DrawnUi.Draw.ViewsAdapter.DisposeWrapper
+  - DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32)
+  - DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Collections.IList)
+  - DrawnUi.Draw.ViewsAdapter.GetChildrenCount
+  - DrawnUi.Draw.ViewsAdapter.GetDebugInfo
+  - DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal(System.Int32,System.Single,DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.ViewsAdapter.GetTemplateInstance
+  - DrawnUi.Draw.ViewsAdapter.GetViewForIndex(System.Int32,DrawnUi.Draw.SkiaControl,System.Single,System.Boolean)
+  - DrawnUi.Draw.ViewsAdapter.GetViewsIterator
+  - DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
+  - DrawnUi.Draw.ViewsAdapter.IsDisposed
+  - DrawnUi.Draw.ViewsAdapter.LogEnabled
+  - DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden
+  - DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden(System.Int32)
+  - DrawnUi.Draw.ViewsAdapter.PoolMaxSize
+  - DrawnUi.Draw.ViewsAdapter.PoolSize
+  - DrawnUi.Draw.ViewsAdapter.PrintDebugVisible
+  - DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance(DrawnUi.Draw.SkiaControl,System.Boolean)
+  - DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse(System.Int32,DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool(DrawnUi.Draw.SkiaControl,System.Boolean)
+  - DrawnUi.Draw.ViewsAdapter.TemplatesAvailable
+  - DrawnUi.Draw.ViewsAdapter.TemplatesBusy
+  - DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated
+  - DrawnUi.Draw.ViewsAdapter.TemplesInvalidating
+  - DrawnUi.Draw.ViewsAdapter.UpdateViews(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  - DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews
+  - DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Collections.IList,System.Int32,System.Int32)
+  - DrawnUi.Draw.ViewsAdapter._lockTemplates
+  langs:
+  - csharp
+  - vb
+  name: ViewsAdapter
+  nameWithType: ViewsAdapter
+  fullName: DrawnUi.Draw.ViewsAdapter
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ViewsAdapter
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Top level class for working with ItemTemplates. Holds visible views.
+  example: []
+  syntax:
+    content: 'public class ViewsAdapter : IDisposable'
+    content.vb: Public Class ViewsAdapter Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ViewsAdapter.LogEnabled
+  commentId: F:DrawnUi.Draw.ViewsAdapter.LogEnabled
+  id: LogEnabled
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: LogEnabled
+  nameWithType: ViewsAdapter.LogEnabled
+  fullName: DrawnUi.Draw.ViewsAdapter.LogEnabled
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LogEnabled
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool LogEnabled
+    return:
+      type: System.Boolean
+    content.vb: Public Shared LogEnabled As Boolean
+- uid: DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
+  id: InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: InitializeTemplates(NotifyCollectionChangedEventArgs, Func<object>, IList, int, int)
+  nameWithType: ViewsAdapter.InitializeTemplates(NotifyCollectionChangedEventArgs, Func<object>, IList, int, int)
+  fullName: DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs, System.Func<object>, System.Collections.IList, int, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InitializeTemplates
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Main method to initialize templates, can use InitializeTemplatesInBackground as an option.
+  example: []
+  syntax:
+    content: public void InitializeTemplates(NotifyCollectionChangedEventArgs args, Func<object> template, IList dataContexts, int poolSize, int reserve = 0)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    - id: template
+      type: System.Func{System.Object}
+      description: ''
+    - id: dataContexts
+      type: System.Collections.IList
+      description: ''
+    - id: poolSize
+      type: System.Int32
+      description: ''
+    - id: reserve
+      type: System.Int32
+      description: Pre-create number of views to avoid lag spikes later, useful to do in backgound.
+    content.vb: Public Sub InitializeTemplates(args As NotifyCollectionChangedEventArgs, template As Func(Of Object), dataContexts As IList, poolSize As Integer, reserve As Integer = 0)
+  overload: DrawnUi.Draw.ViewsAdapter.InitializeTemplates*
+  nameWithType.vb: ViewsAdapter.InitializeTemplates(NotifyCollectionChangedEventArgs, Func(Of Object), IList, Integer, Integer)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs, System.Func(Of Object), System.Collections.IList, Integer, Integer)
+  name.vb: InitializeTemplates(NotifyCollectionChangedEventArgs, Func(Of Object), IList, Integer, Integer)
+- uid: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Collections.IList,System.Int32,System.Int32)
+  commentId: M:DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Collections.IList,System.Int32,System.Int32)
+  id: _HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Collections.IList,System.Int32,System.Int32)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: _HandleSmartCollectionChange(NotifyCollectionChangedEventArgs, IList, int, int)
+  nameWithType: ViewsAdapter._HandleSmartCollectionChange(NotifyCollectionChangedEventArgs, IList, int, int)
+  fullName: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs, System.Collections.IList, int, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _HandleSmartCollectionChange
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 275
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Enhanced collection change handling with validation and better error handling
+  example: []
+  syntax:
+    content: public bool _HandleSmartCollectionChange(NotifyCollectionChangedEventArgs args, IList newDataContexts, int poolSize, int reserve = 0)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    - id: newDataContexts
+      type: System.Collections.IList
+    - id: poolSize
+      type: System.Int32
+    - id: reserve
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function _HandleSmartCollectionChange(args As NotifyCollectionChangedEventArgs, newDataContexts As IList, poolSize As Integer, reserve As Integer = 0) As Boolean
+  overload: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange*
+  nameWithType.vb: ViewsAdapter._HandleSmartCollectionChange(NotifyCollectionChangedEventArgs, IList, Integer, Integer)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs, System.Collections.IList, Integer, Integer)
+  name.vb: _HandleSmartCollectionChange(NotifyCollectionChangedEventArgs, IList, Integer, Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse(System.Int32,DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse(System.Int32,DrawnUi.Draw.SkiaControl)
+  id: ReleaseViewInUse(System.Int32,DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: ReleaseViewInUse(int, SkiaControl)
+  nameWithType: ViewsAdapter.ReleaseViewInUse(int, SkiaControl)
+  fullName: DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse(int, DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReleaseViewInUse
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 587
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void ReleaseViewInUse(int index, SkiaControl view)
+    parameters:
+    - id: index
+      type: System.Int32
+    - id: view
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Sub ReleaseViewInUse(index As Integer, view As SkiaControl)
+  overload: DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse*
+  nameWithType.vb: ViewsAdapter.ReleaseViewInUse(Integer, SkiaControl)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse(Integer, DrawnUi.Draw.SkiaControl)
+  name.vb: ReleaseViewInUse(Integer, SkiaControl)
+- uid: DrawnUi.Draw.ViewsAdapter.GetViewForIndex(System.Int32,DrawnUi.Draw.SkiaControl,System.Single,System.Boolean)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.GetViewForIndex(System.Int32,DrawnUi.Draw.SkiaControl,System.Single,System.Boolean)
+  id: GetViewForIndex(System.Int32,DrawnUi.Draw.SkiaControl,System.Single,System.Boolean)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: GetViewForIndex(int, SkiaControl, float, bool)
+  nameWithType: ViewsAdapter.GetViewForIndex(int, SkiaControl, float, bool)
+  fullName: DrawnUi.Draw.ViewsAdapter.GetViewForIndex(int, DrawnUi.Draw.SkiaControl, float, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetViewForIndex
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 608
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Creates view from template and returns already existing view for a specific index.
+
+    This uses cached views and tends to return same views matching index they already used.
+
+    When cell recycling is off this will be a perfect match at all times.
+  example: []
+  syntax:
+    content: public SkiaControl GetViewForIndex(int index, SkiaControl template = null, float height = 0, bool isMeasuring = false)
+    parameters:
+    - id: index
+      type: System.Int32
+      description: ''
+    - id: template
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: height
+      type: System.Single
+      description: ''
+    - id: isMeasuring
+      type: System.Boolean
+      description: ''
+    return:
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    content.vb: Public Function GetViewForIndex(index As Integer, template As SkiaControl = Nothing, height As Single = 0, isMeasuring As Boolean = False) As SkiaControl
+  overload: DrawnUi.Draw.ViewsAdapter.GetViewForIndex*
+  nameWithType.vb: ViewsAdapter.GetViewForIndex(Integer, SkiaControl, Single, Boolean)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.GetViewForIndex(Integer, DrawnUi.Draw.SkiaControl, Single, Boolean)
+  name.vb: GetViewForIndex(Integer, SkiaControl, Single, Boolean)
+- uid: DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal(System.Int32,System.Single,DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal(System.Int32,System.Single,DrawnUi.Draw.SkiaControl)
+  id: GetOrCreateViewForIndexInternal(System.Int32,System.Single,DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: GetOrCreateViewForIndexInternal(int, float, SkiaControl)
+  nameWithType: ViewsAdapter.GetOrCreateViewForIndexInternal(int, float, SkiaControl)
+  fullName: DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal(int, float, DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetOrCreateViewForIndexInternal
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 689
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaControl GetOrCreateViewForIndexInternal(int index, float height = 0, SkiaControl template = null)
+    parameters:
+    - id: index
+      type: System.Int32
+    - id: height
+      type: System.Single
+    - id: template
+      type: DrawnUi.Draw.SkiaControl
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Function GetOrCreateViewForIndexInternal(index As Integer, height As Single = 0, template As SkiaControl = Nothing) As SkiaControl
+  overload: DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal*
+  nameWithType.vb: ViewsAdapter.GetOrCreateViewForIndexInternal(Integer, Single, SkiaControl)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal(Integer, Single, DrawnUi.Draw.SkiaControl)
+  name.vb: GetOrCreateViewForIndexInternal(Integer, Single, SkiaControl)
+- uid: DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool(DrawnUi.Draw.SkiaControl,System.Boolean)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool(DrawnUi.Draw.SkiaControl,System.Boolean)
+  id: ReleaseViewToPool(DrawnUi.Draw.SkiaControl,System.Boolean)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: ReleaseViewToPool(SkiaControl, bool)
+  nameWithType: ViewsAdapter.ReleaseViewToPool(SkiaControl, bool)
+  fullName: DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool(DrawnUi.Draw.SkiaControl, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReleaseViewToPool
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 727
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Retuns view to the POOL and set parent to null. Doesn't set BindingContext to null !
+  example: []
+  syntax:
+    content: public void ReleaseViewToPool(SkiaControl view, bool reset = false)
+    parameters:
+    - id: view
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: reset
+      type: System.Boolean
+      description: ''
+    content.vb: Public Sub ReleaseViewToPool(view As SkiaControl, reset As Boolean = False)
+  overload: DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool*
+  nameWithType.vb: ViewsAdapter.ReleaseViewToPool(SkiaControl, Boolean)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool(DrawnUi.Draw.SkiaControl, Boolean)
+  name.vb: ReleaseViewToPool(SkiaControl, Boolean)
+- uid: DrawnUi.Draw.ViewsAdapter.IsDisposed
+  commentId: F:DrawnUi.Draw.ViewsAdapter.IsDisposed
+  id: IsDisposed
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: IsDisposed
+  nameWithType: ViewsAdapter.IsDisposed
+  fullName: DrawnUi.Draw.ViewsAdapter.IsDisposed
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDisposed
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 782
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsDisposed
+    return:
+      type: System.Boolean
+    content.vb: Public IsDisposed As Boolean
+- uid: DrawnUi.Draw.ViewsAdapter.#ctor(DrawnUi.Draw.SkiaLayout)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.#ctor(DrawnUi.Draw.SkiaLayout)
+  id: '#ctor(DrawnUi.Draw.SkiaLayout)'
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: ViewsAdapter(SkiaLayout)
+  nameWithType: ViewsAdapter.ViewsAdapter(SkiaLayout)
+  fullName: DrawnUi.Draw.ViewsAdapter.ViewsAdapter(DrawnUi.Draw.SkiaLayout)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 785
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ViewsAdapter(SkiaLayout parent)
+    parameters:
+    - id: parent
+      type: DrawnUi.Draw.SkiaLayout
+    content.vb: Public Sub New(parent As SkiaLayout)
+  overload: DrawnUi.Draw.ViewsAdapter.#ctor*
+  nameWithType.vb: ViewsAdapter.New(SkiaLayout)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.New(DrawnUi.Draw.SkiaLayout)
+  name.vb: New(SkiaLayout)
+- uid: DrawnUi.Draw.ViewsAdapter.Dispose
+  commentId: M:DrawnUi.Draw.ViewsAdapter.Dispose
+  id: Dispose
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ViewsAdapter.Dispose()
+  fullName: DrawnUi.Draw.ViewsAdapter.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 790
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Draw.ViewsAdapter.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews
+  commentId: M:DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews
+  id: UpdateVisibleViews
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: UpdateVisibleViews()
+  nameWithType: ViewsAdapter.UpdateVisibleViews()
+  fullName: DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateVisibleViews
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 799
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected void UpdateVisibleViews()
+    content.vb: Protected Sub UpdateVisibleViews()
+  overload: DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews*
+- uid: DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews
+  commentId: M:DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews
+  id: DisposeVisibleViews
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: DisposeVisibleViews()
+  nameWithType: ViewsAdapter.DisposeVisibleViews()
+  fullName: DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DisposeVisibleViews
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 813
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected void DisposeVisibleViews()
+    content.vb: Protected Sub DisposeVisibleViews()
+  overload: DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews*
+- uid: DrawnUi.Draw.ViewsAdapter.DisposeViews
+  commentId: M:DrawnUi.Draw.ViewsAdapter.DisposeViews
+  id: DisposeViews
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: DisposeViews()
+  nameWithType: ViewsAdapter.DisposeViews()
+  fullName: DrawnUi.Draw.ViewsAdapter.DisposeViews()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DisposeViews
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 829
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected void DisposeViews()
+    content.vb: Protected Sub DisposeViews()
+  overload: DrawnUi.Draw.ViewsAdapter.DisposeViews*
+- uid: DrawnUi.Draw.ViewsAdapter.AttachView(DrawnUi.Draw.SkiaControl,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.AttachView(DrawnUi.Draw.SkiaControl,System.Int32,System.Boolean)
+  id: AttachView(DrawnUi.Draw.SkiaControl,System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: AttachView(SkiaControl, int, bool)
+  nameWithType: ViewsAdapter.AttachView(SkiaControl, int, bool)
+  fullName: DrawnUi.Draw.ViewsAdapter.AttachView(DrawnUi.Draw.SkiaControl, int, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AttachView
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 838
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected virtual void AttachView(SkiaControl view, int index, bool isMeasuring)
+    parameters:
+    - id: view
+      type: DrawnUi.Draw.SkiaControl
+    - id: index
+      type: System.Int32
+    - id: isMeasuring
+      type: System.Boolean
+    content.vb: Protected Overridable Sub AttachView(view As SkiaControl, index As Integer, isMeasuring As Boolean)
+  overload: DrawnUi.Draw.ViewsAdapter.AttachView*
+  nameWithType.vb: ViewsAdapter.AttachView(SkiaControl, Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.AttachView(DrawnUi.Draw.SkiaControl, Integer, Boolean)
+  name.vb: AttachView(SkiaControl, Integer, Boolean)
+- uid: DrawnUi.Draw.ViewsAdapter.PoolMaxSize
+  commentId: P:DrawnUi.Draw.ViewsAdapter.PoolMaxSize
+  id: PoolMaxSize
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: PoolMaxSize
+  nameWithType: ViewsAdapter.PoolMaxSize
+  fullName: DrawnUi.Draw.ViewsAdapter.PoolMaxSize
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PoolMaxSize
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 908
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int PoolMaxSize { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property PoolMaxSize As Integer
+  overload: DrawnUi.Draw.ViewsAdapter.PoolMaxSize*
+- uid: DrawnUi.Draw.ViewsAdapter.PoolSize
+  commentId: P:DrawnUi.Draw.ViewsAdapter.PoolSize
+  id: PoolSize
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: PoolSize
+  nameWithType: ViewsAdapter.PoolSize
+  fullName: DrawnUi.Draw.ViewsAdapter.PoolSize
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PoolSize
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 921
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int PoolSize { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property PoolSize As Integer
+  overload: DrawnUi.Draw.ViewsAdapter.PoolSize*
+- uid: DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden
+  commentId: M:DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden
+  id: MarkAllViewsAsHidden
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: MarkAllViewsAsHidden()
+  nameWithType: ViewsAdapter.MarkAllViewsAsHidden()
+  fullName: DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MarkAllViewsAsHidden
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 940
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void MarkAllViewsAsHidden()
+    content.vb: Public Sub MarkAllViewsAsHidden()
+  overload: DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden*
+- uid: DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden(System.Int32)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden(System.Int32)
+  id: MarkViewAsHidden(System.Int32)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: MarkViewAsHidden(int)
+  nameWithType: ViewsAdapter.MarkViewAsHidden(int)
+  fullName: DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MarkViewAsHidden
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 952
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void MarkViewAsHidden(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+    content.vb: Public Sub MarkViewAsHidden(index As Integer)
+  overload: DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden*
+  nameWithType.vb: ViewsAdapter.MarkViewAsHidden(Integer)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden(Integer)
+  name.vb: MarkViewAsHidden(Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.AddedMore
+  commentId: P:DrawnUi.Draw.ViewsAdapter.AddedMore
+  id: AddedMore
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: AddedMore
+  nameWithType: ViewsAdapter.AddedMore
+  fullName: DrawnUi.Draw.ViewsAdapter.AddedMore
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddedMore
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 980
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int AddedMore { get; protected set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property AddedMore As Integer
+  overload: DrawnUi.Draw.ViewsAdapter.AddedMore*
+- uid: DrawnUi.Draw.ViewsAdapter.AddMoreToPool(System.Int32)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.AddMoreToPool(System.Int32)
+  id: AddMoreToPool(System.Int32)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: AddMoreToPool(int)
+  nameWithType: ViewsAdapter.AddMoreToPool(int)
+  fullName: DrawnUi.Draw.ViewsAdapter.AddMoreToPool(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddMoreToPool
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 987
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Keep pool size with `n` templated more oversized, so when we suddenly need more templates they would already be ready, avoiding lag spike,
+
+    This method is likely to reserve templated views once on layout size changed.
+  example: []
+  syntax:
+    content: public void AddMoreToPool(int oversize)
+    parameters:
+    - id: oversize
+      type: System.Int32
+      description: ''
+    content.vb: Public Sub AddMoreToPool(oversize As Integer)
+  overload: DrawnUi.Draw.ViewsAdapter.AddMoreToPool*
+  nameWithType.vb: ViewsAdapter.AddMoreToPool(Integer)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.AddMoreToPool(Integer)
+  name.vb: AddMoreToPool(Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Collections.IList)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Collections.IList)
+  id: FillPool(System.Int32,System.Collections.IList)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: FillPool(int, IList)
+  nameWithType: ViewsAdapter.FillPool(int, IList)
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPool(int, System.Collections.IList)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillPool
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1011
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Use to manually pre-create views from item templates so when we suddenly need more templates they would already be ready, avoiding lag spike,
+
+    This will respect pool MaxSize in order not to overpass it.
+  example: []
+  syntax:
+    content: public void FillPool(int size, IList context)
+    parameters:
+    - id: size
+      type: System.Int32
+      description: ''
+    - id: context
+      type: System.Collections.IList
+    content.vb: Public Sub FillPool(size As Integer, context As IList)
+  overload: DrawnUi.Draw.ViewsAdapter.FillPool*
+  nameWithType.vb: ViewsAdapter.FillPool(Integer, IList)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPool(Integer, System.Collections.IList)
+  name.vb: FillPool(Integer, IList)
+- uid: DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32)
+  id: FillPool(System.Int32)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: FillPool(int)
+  nameWithType: ViewsAdapter.FillPool(int)
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPool(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillPool
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1031
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Use to manually pre-create views from item templates so when we suddenly need more templates they would already be ready, avoiding lag spike,
+
+    This will respect pool MaxSize in order not to overpass it.
+  example: []
+  syntax:
+    content: public void FillPool(int size)
+    parameters:
+    - id: size
+      type: System.Int32
+      description: ''
+    content.vb: Public Sub FillPool(size As Integer)
+  overload: DrawnUi.Draw.ViewsAdapter.FillPool*
+  nameWithType.vb: ViewsAdapter.FillPool(Integer)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPool(Integer)
+  name.vb: FillPool(Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.GetDebugInfo
+  commentId: M:DrawnUi.Draw.ViewsAdapter.GetDebugInfo
+  id: GetDebugInfo
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: GetDebugInfo()
+  nameWithType: ViewsAdapter.GetDebugInfo()
+  fullName: DrawnUi.Draw.ViewsAdapter.GetDebugInfo()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetDebugInfo
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1047
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string GetDebugInfo()
+    return:
+      type: System.String
+    content.vb: Public Function GetDebugInfo() As String
+  overload: DrawnUi.Draw.ViewsAdapter.GetDebugInfo*
+- uid: DrawnUi.Draw.ViewsAdapter.GetChildrenCount
+  commentId: M:DrawnUi.Draw.ViewsAdapter.GetChildrenCount
+  id: GetChildrenCount
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: GetChildrenCount()
+  nameWithType: ViewsAdapter.GetChildrenCount()
+  fullName: DrawnUi.Draw.ViewsAdapter.GetChildrenCount()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetChildrenCount
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1058
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int GetChildrenCount()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetChildrenCount() As Integer
+  overload: DrawnUi.Draw.ViewsAdapter.GetChildrenCount*
+- uid: DrawnUi.Draw.ViewsAdapter._lockTemplates
+  commentId: F:DrawnUi.Draw.ViewsAdapter._lockTemplates
+  id: _lockTemplates
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: _lockTemplates
+  nameWithType: ViewsAdapter._lockTemplates
+  fullName: DrawnUi.Draw.ViewsAdapter._lockTemplates
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _lockTemplates
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1082
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected readonly object _lockTemplates
+    return:
+      type: System.Object
+    content.vb: Protected ReadOnly _lockTemplates As Object
+- uid: DrawnUi.Draw.ViewsAdapter.TemplesInvalidating
+  commentId: F:DrawnUi.Draw.ViewsAdapter.TemplesInvalidating
+  id: TemplesInvalidating
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: TemplesInvalidating
+  nameWithType: ViewsAdapter.TemplesInvalidating
+  fullName: DrawnUi.Draw.ViewsAdapter.TemplesInvalidating
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TemplesInvalidating
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1087
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool TemplesInvalidating
+    return:
+      type: System.Boolean
+    content.vb: Public TemplesInvalidating As Boolean
+- uid: DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated
+  commentId: P:DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated
+  id: TemplatesInvalidated
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: TemplatesInvalidated
+  nameWithType: ViewsAdapter.TemplatesInvalidated
+  fullName: DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TemplatesInvalidated
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1091
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool TemplatesInvalidated { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property TemplatesInvalidated As Boolean
+  overload: DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated*
+- uid: DrawnUi.Draw.ViewsAdapter.TemplatesBusy
+  commentId: F:DrawnUi.Draw.ViewsAdapter.TemplatesBusy
+  id: TemplatesBusy
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: TemplatesBusy
+  nameWithType: ViewsAdapter.TemplatesBusy
+  fullName: DrawnUi.Draw.ViewsAdapter.TemplatesBusy
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TemplatesBusy
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1104
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool TemplatesBusy
+    return:
+      type: System.Boolean
+    content.vb: Public TemplatesBusy As Boolean
+- uid: DrawnUi.Draw.ViewsAdapter.UpdateViews(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  commentId: M:DrawnUi.Draw.ViewsAdapter.UpdateViews(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  id: UpdateViews(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: UpdateViews(IEnumerable<SkiaControl>)
+  nameWithType: ViewsAdapter.UpdateViews(IEnumerable<SkiaControl>)
+  fullName: DrawnUi.Draw.ViewsAdapter.UpdateViews(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateViews
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1110
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void UpdateViews(IEnumerable<SkiaControl> views = null)
+    parameters:
+    - id: views
+      type: System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl}
+    content.vb: Public Sub UpdateViews(views As IEnumerable(Of SkiaControl) = Nothing)
+  overload: DrawnUi.Draw.ViewsAdapter.UpdateViews*
+  nameWithType.vb: ViewsAdapter.UpdateViews(IEnumerable(Of SkiaControl))
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.UpdateViews(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl))
+  name.vb: UpdateViews(IEnumerable(Of SkiaControl))
+- uid: DrawnUi.Draw.ViewsAdapter.TemplatesAvailable
+  commentId: P:DrawnUi.Draw.ViewsAdapter.TemplatesAvailable
+  id: TemplatesAvailable
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: TemplatesAvailable
+  nameWithType: ViewsAdapter.TemplatesAvailable
+  fullName: DrawnUi.Draw.ViewsAdapter.TemplatesAvailable
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TemplatesAvailable
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1122
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: An important check to consider before consuming templates especially if you initialize templates in background
+  example: []
+  syntax:
+    content: public bool TemplatesAvailable { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property TemplatesAvailable As Boolean
+  overload: DrawnUi.Draw.ViewsAdapter.TemplatesAvailable*
+- uid: DrawnUi.Draw.ViewsAdapter.GetViewsIterator
+  commentId: M:DrawnUi.Draw.ViewsAdapter.GetViewsIterator
+  id: GetViewsIterator
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: GetViewsIterator()
+  nameWithType: ViewsAdapter.GetViewsIterator()
+  fullName: DrawnUi.Draw.ViewsAdapter.GetViewsIterator()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetViewsIterator
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1132
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ViewsIterator GetViewsIterator()
+    return:
+      type: DrawnUi.Draw.ViewsIterator
+    content.vb: Public Function GetViewsIterator() As ViewsIterator
+  overload: DrawnUi.Draw.ViewsAdapter.GetViewsIterator*
+- uid: DrawnUi.Draw.ViewsAdapter.DisposeWrapper
+  commentId: M:DrawnUi.Draw.ViewsAdapter.DisposeWrapper
+  id: DisposeWrapper
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: DisposeWrapper()
+  nameWithType: ViewsAdapter.DisposeWrapper()
+  fullName: DrawnUi.Draw.ViewsAdapter.DisposeWrapper()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DisposeWrapper
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1179
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void DisposeWrapper()
+    content.vb: Public Sub DisposeWrapper()
+  overload: DrawnUi.Draw.ViewsAdapter.DisposeWrapper*
+- uid: DrawnUi.Draw.ViewsAdapter.PrintDebugVisible
+  commentId: M:DrawnUi.Draw.ViewsAdapter.PrintDebugVisible
+  id: PrintDebugVisible
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: PrintDebugVisible()
+  nameWithType: ViewsAdapter.PrintDebugVisible()
+  fullName: DrawnUi.Draw.ViewsAdapter.PrintDebugVisible()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PrintDebugVisible
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1191
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void PrintDebugVisible()
+    content.vb: Public Sub PrintDebugVisible()
+  overload: DrawnUi.Draw.ViewsAdapter.PrintDebugVisible*
+- uid: DrawnUi.Draw.ViewsAdapter.GetTemplateInstance
+  commentId: M:DrawnUi.Draw.ViewsAdapter.GetTemplateInstance
+  id: GetTemplateInstance
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: GetTemplateInstance()
+  nameWithType: ViewsAdapter.GetTemplateInstance()
+  fullName: DrawnUi.Draw.ViewsAdapter.GetTemplateInstance()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetTemplateInstance
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1205
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaControl GetTemplateInstance()
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Function GetTemplateInstance() As SkiaControl
+  overload: DrawnUi.Draw.ViewsAdapter.GetTemplateInstance*
+- uid: DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance(DrawnUi.Draw.SkiaControl,System.Boolean)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance(DrawnUi.Draw.SkiaControl,System.Boolean)
+  id: ReleaseTemplateInstance(DrawnUi.Draw.SkiaControl,System.Boolean)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: ReleaseTemplateInstance(SkiaControl, bool)
+  nameWithType: ViewsAdapter.ReleaseTemplateInstance(SkiaControl, bool)
+  fullName: DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance(DrawnUi.Draw.SkiaControl, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReleaseTemplateInstance
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1225
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Returns standalone view, used for measuring to its own separate pool.
+  example: []
+  syntax:
+    content: public void ReleaseTemplateInstance(SkiaControl viewModel, bool reset = false)
+    parameters:
+    - id: viewModel
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: reset
+      type: System.Boolean
+      description: ''
+    content.vb: Public Sub ReleaseTemplateInstance(viewModel As SkiaControl, reset As Boolean = False)
+  overload: DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance*
+  nameWithType.vb: ViewsAdapter.ReleaseTemplateInstance(SkiaControl, Boolean)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance(DrawnUi.Draw.SkiaControl, Boolean)
+  name.vb: ReleaseTemplateInstance(SkiaControl, Boolean)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.ViewsAdapter.InitializeTemplates*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.InitializeTemplates
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_InitializeTemplates_System_Collections_Specialized_NotifyCollectionChangedEventArgs_System_Func_System_Object__System_Collections_IList_System_Int32_System_Int32_
+  name: InitializeTemplates
+  nameWithType: ViewsAdapter.InitializeTemplates
+  fullName: DrawnUi.Draw.ViewsAdapter.InitializeTemplates
+- uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+  commentId: T:System.Collections.Specialized.NotifyCollectionChangedEventArgs
+  parent: System.Collections.Specialized
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  name: NotifyCollectionChangedEventArgs
+  nameWithType: NotifyCollectionChangedEventArgs
+  fullName: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+- uid: System.Func{System.Object}
+  commentId: T:System.Func{System.Object}
+  parent: System
+  definition: System.Func`1
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<object>
+  nameWithType: Func<object>
+  fullName: System.Func<object>
+  nameWithType.vb: Func(Of Object)
+  fullName.vb: System.Func(Of Object)
+  name.vb: Func(Of Object)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Collections.IList
+  commentId: T:System.Collections.IList
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ilist
+  name: IList
+  nameWithType: IList
+  fullName: System.Collections.IList
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Collections.Specialized
+  commentId: N:System.Collections.Specialized
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Specialized
+  nameWithType: System.Collections.Specialized
+  fullName: System.Collections.Specialized
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Specialized
+    name: Specialized
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Specialized
+    name: Specialized
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter__HandleSmartCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_System_Collections_IList_System_Int32_System_Int32_
+  name: _HandleSmartCollectionChange
+  nameWithType: ViewsAdapter._HandleSmartCollectionChange
+  fullName: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange
+- uid: DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_ReleaseViewInUse_System_Int32_DrawnUi_Draw_SkiaControl_
+  name: ReleaseViewInUse
+  nameWithType: ViewsAdapter.ReleaseViewInUse
+  fullName: DrawnUi.Draw.ViewsAdapter.ReleaseViewInUse
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.ViewsAdapter.GetViewForIndex*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetViewForIndex
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetViewForIndex_System_Int32_DrawnUi_Draw_SkiaControl_System_Single_System_Boolean_
+  name: GetViewForIndex
+  nameWithType: ViewsAdapter.GetViewForIndex
+  fullName: DrawnUi.Draw.ViewsAdapter.GetViewForIndex
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetOrCreateViewForIndexInternal_System_Int32_System_Single_DrawnUi_Draw_SkiaControl_
+  name: GetOrCreateViewForIndexInternal
+  nameWithType: ViewsAdapter.GetOrCreateViewForIndexInternal
+  fullName: DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal
+- uid: DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_ReleaseViewToPool_DrawnUi_Draw_SkiaControl_System_Boolean_
+  name: ReleaseViewToPool
+  nameWithType: ViewsAdapter.ReleaseViewToPool
+  fullName: DrawnUi.Draw.ViewsAdapter.ReleaseViewToPool
+- uid: DrawnUi.Draw.ViewsAdapter.#ctor*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.#ctor
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter__ctor_DrawnUi_Draw_SkiaLayout_
+  name: ViewsAdapter
+  nameWithType: ViewsAdapter.ViewsAdapter
+  fullName: DrawnUi.Draw.ViewsAdapter.ViewsAdapter
+  nameWithType.vb: ViewsAdapter.New
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.New
+  name.vb: New
+- uid: DrawnUi.Draw.SkiaLayout
+  commentId: T:DrawnUi.Draw.SkiaLayout
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout
+  nameWithType: SkiaLayout
+  fullName: DrawnUi.Draw.SkiaLayout
+- uid: DrawnUi.Draw.ViewsAdapter.Dispose*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.Dispose
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_Dispose
+  name: Dispose
+  nameWithType: ViewsAdapter.Dispose
+  fullName: DrawnUi.Draw.ViewsAdapter.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_UpdateVisibleViews
+  name: UpdateVisibleViews
+  nameWithType: ViewsAdapter.UpdateVisibleViews
+  fullName: DrawnUi.Draw.ViewsAdapter.UpdateVisibleViews
+- uid: DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_DisposeVisibleViews
+  name: DisposeVisibleViews
+  nameWithType: ViewsAdapter.DisposeVisibleViews
+  fullName: DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews
+- uid: DrawnUi.Draw.ViewsAdapter.DisposeViews*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.DisposeViews
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_DisposeViews
+  name: DisposeViews
+  nameWithType: ViewsAdapter.DisposeViews
+  fullName: DrawnUi.Draw.ViewsAdapter.DisposeViews
+- uid: DrawnUi.Draw.ViewsAdapter.AttachView*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.AttachView
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_AttachView_DrawnUi_Draw_SkiaControl_System_Int32_System_Boolean_
+  name: AttachView
+  nameWithType: ViewsAdapter.AttachView
+  fullName: DrawnUi.Draw.ViewsAdapter.AttachView
+- uid: DrawnUi.Draw.ViewsAdapter.PoolMaxSize*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.PoolMaxSize
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_PoolMaxSize
+  name: PoolMaxSize
+  nameWithType: ViewsAdapter.PoolMaxSize
+  fullName: DrawnUi.Draw.ViewsAdapter.PoolMaxSize
+- uid: DrawnUi.Draw.ViewsAdapter.PoolSize*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.PoolSize
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_PoolSize
+  name: PoolSize
+  nameWithType: ViewsAdapter.PoolSize
+  fullName: DrawnUi.Draw.ViewsAdapter.PoolSize
+- uid: DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_MarkAllViewsAsHidden
+  name: MarkAllViewsAsHidden
+  nameWithType: ViewsAdapter.MarkAllViewsAsHidden
+  fullName: DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden
+- uid: DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_MarkViewAsHidden_System_Int32_
+  name: MarkViewAsHidden
+  nameWithType: ViewsAdapter.MarkViewAsHidden
+  fullName: DrawnUi.Draw.ViewsAdapter.MarkViewAsHidden
+- uid: DrawnUi.Draw.ViewsAdapter.AddedMore*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.AddedMore
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_AddedMore
+  name: AddedMore
+  nameWithType: ViewsAdapter.AddedMore
+  fullName: DrawnUi.Draw.ViewsAdapter.AddedMore
+- uid: DrawnUi.Draw.ViewsAdapter.AddMoreToPool*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.AddMoreToPool
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_AddMoreToPool_System_Int32_
+  name: AddMoreToPool
+  nameWithType: ViewsAdapter.AddMoreToPool
+  fullName: DrawnUi.Draw.ViewsAdapter.AddMoreToPool
+- uid: DrawnUi.Draw.ViewsAdapter.FillPool*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.FillPool
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPool_System_Int32_System_Collections_IList_
+  name: FillPool
+  nameWithType: ViewsAdapter.FillPool
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPool
+- uid: DrawnUi.Draw.ViewsAdapter.GetDebugInfo*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetDebugInfo
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetDebugInfo
+  name: GetDebugInfo
+  nameWithType: ViewsAdapter.GetDebugInfo
+  fullName: DrawnUi.Draw.ViewsAdapter.GetDebugInfo
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.ViewsAdapter.GetChildrenCount*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetChildrenCount
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetChildrenCount
+  name: GetChildrenCount
+  nameWithType: ViewsAdapter.GetChildrenCount
+  fullName: DrawnUi.Draw.ViewsAdapter.GetChildrenCount
+- uid: DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_TemplatesInvalidated
+  name: TemplatesInvalidated
+  nameWithType: ViewsAdapter.TemplatesInvalidated
+  fullName: DrawnUi.Draw.ViewsAdapter.TemplatesInvalidated
+- uid: DrawnUi.Draw.ViewsAdapter.UpdateViews*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.UpdateViews
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_UpdateViews_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__
+  name: UpdateViews
+  nameWithType: ViewsAdapter.UpdateViews
+  fullName: DrawnUi.Draw.ViewsAdapter.UpdateViews
+- uid: System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl}
+  commentId: T:System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<SkiaControl>
+  nameWithType: IEnumerable<SkiaControl>
+  fullName: System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>
+  nameWithType.vb: IEnumerable(Of SkiaControl)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl)
+  name.vb: IEnumerable(Of SkiaControl)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.ViewsAdapter.TemplatesAvailable*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.TemplatesAvailable
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_TemplatesAvailable
+  name: TemplatesAvailable
+  nameWithType: ViewsAdapter.TemplatesAvailable
+  fullName: DrawnUi.Draw.ViewsAdapter.TemplatesAvailable
+- uid: DrawnUi.Draw.ViewsAdapter.GetViewsIterator*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetViewsIterator
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetViewsIterator
+  name: GetViewsIterator
+  nameWithType: ViewsAdapter.GetViewsIterator
+  fullName: DrawnUi.Draw.ViewsAdapter.GetViewsIterator
+- uid: DrawnUi.Draw.ViewsIterator
+  commentId: T:DrawnUi.Draw.ViewsIterator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ViewsIterator.html
+  name: ViewsIterator
+  nameWithType: ViewsIterator
+  fullName: DrawnUi.Draw.ViewsIterator
+- uid: DrawnUi.Draw.ViewsAdapter.DisposeWrapper*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.DisposeWrapper
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_DisposeWrapper
+  name: DisposeWrapper
+  nameWithType: ViewsAdapter.DisposeWrapper
+  fullName: DrawnUi.Draw.ViewsAdapter.DisposeWrapper
+- uid: DrawnUi.Draw.ViewsAdapter.PrintDebugVisible*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.PrintDebugVisible
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_PrintDebugVisible
+  name: PrintDebugVisible
+  nameWithType: ViewsAdapter.PrintDebugVisible
+  fullName: DrawnUi.Draw.ViewsAdapter.PrintDebugVisible
+- uid: DrawnUi.Draw.ViewsAdapter.GetTemplateInstance*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetTemplateInstance
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetTemplateInstance
+  name: GetTemplateInstance
+  nameWithType: ViewsAdapter.GetTemplateInstance
+  fullName: DrawnUi.Draw.ViewsAdapter.GetTemplateInstance
+- uid: DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_ReleaseTemplateInstance_DrawnUi_Draw_SkiaControl_System_Boolean_
+  name: ReleaseTemplateInstance
+  nameWithType: ViewsAdapter.ReleaseTemplateInstance
+  fullName: DrawnUi.Draw.ViewsAdapter.ReleaseTemplateInstance

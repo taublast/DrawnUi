@@ -1,0 +1,1293 @@
+### YamlMime:TableOfContent
+items:
+- uid: DrawnUi
+  name: DrawnUi
+  type: Namespace
+  items:
+  - uid: DrawnUi.HotReloadService
+    name: HotReloadService
+    type: Class
+- uid: DrawnUi.Animate.Animators
+  name: DrawnUi.Animate.Animators
+  type: Namespace
+  items:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    type: Class
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce
+    name: VelocitySkiaAnimator.DragForce
+    type: Class
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState
+    name: VelocitySkiaAnimator.MassState
+    type: Class
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+    name: VelocitySkiaAnimator.PresetType
+    type: Enum
+- uid: DrawnUi.Controls
+  name: DrawnUi.Controls
+  type: Namespace
+  items:
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    type: Class
+  - uid: DrawnUi.Controls.ContentWithBackdrop
+    name: ContentWithBackdrop
+    type: Class
+  - uid: DrawnUi.Controls.DrawerDirection
+    name: DrawerDirection
+    type: Enum
+  - uid: DrawnUi.Controls.GifAnimation
+    name: GifAnimation
+    type: Class
+  - uid: DrawnUi.Controls.GridLayout
+    name: GridLayout
+    type: Class
+  - uid: DrawnUi.Controls.ISkiaRadioButton
+    name: ISkiaRadioButton
+    type: Interface
+  - uid: DrawnUi.Controls.ISmartNative
+    name: ISmartNative
+    type: Interface
+  - uid: DrawnUi.Controls.IWheelPickerCell
+    name: IWheelPickerCell
+    type: Interface
+  - uid: DrawnUi.Controls.MauiEditor
+    name: MauiEditor
+    type: Class
+  - uid: DrawnUi.Controls.MauiEditorHandler
+    name: MauiEditorHandler
+    type: Class
+  - uid: DrawnUi.Controls.MauiEntry
+    name: MauiEntry
+    type: Class
+  - uid: DrawnUi.Controls.MauiEntryHandler
+    name: MauiEntryHandler
+    type: Class
+  - uid: DrawnUi.Controls.NavigationSource
+    name: NavigationSource
+    type: Enum
+  - uid: DrawnUi.Controls.RadioButtons
+    name: RadioButtons
+    type: Class
+  - uid: DrawnUi.Controls.ScrollPickerLabelContainer
+    name: ScrollPickerLabelContainer
+    type: Class
+  - uid: DrawnUi.Controls.ScrollPickerWheel
+    name: ScrollPickerWheel
+    type: Class
+  - uid: DrawnUi.Controls.SkiaCarousel
+    name: SkiaCarousel
+    type: Class
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    type: Class
+  - uid: DrawnUi.Controls.SkiaDrawer
+    name: SkiaDrawer
+    type: Class
+  - uid: DrawnUi.Controls.SkiaDrawnCell
+    name: SkiaDrawnCell
+    type: Class
+  - uid: DrawnUi.Controls.SkiaDynamicDrawnCell
+    name: SkiaDynamicDrawnCell
+    type: Class
+  - uid: DrawnUi.Controls.SkiaGif
+    name: SkiaGif
+    type: Class
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    type: Class
+  - uid: DrawnUi.Controls.SkiaLottie.ColorEqualityComparer
+    name: SkiaLottie.ColorEqualityComparer
+    type: Class
+  - uid: DrawnUi.Controls.SkiaMauiEditor
+    name: SkiaMauiEditor
+    type: Class
+  - uid: DrawnUi.Controls.SkiaMauiEntry
+    name: SkiaMauiEntry
+    type: Class
+  - uid: DrawnUi.Controls.SkiaMediaImage
+    name: SkiaMediaImage
+    type: Class
+  - uid: DrawnUi.Controls.SkiaRadioButton
+    name: SkiaRadioButton
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell
+    name: SkiaShell
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.IHandleGoBack
+    name: SkiaShell.IHandleGoBack
+    type: Interface
+  - uid: DrawnUi.Controls.SkiaShell.ModalWrapper
+    name: SkiaShell.ModalWrapper
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.NavigationLayer`1
+    name: SkiaShell.NavigationLayer<T>
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.PageInStack
+    name: SkiaShell.PageInStack
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.ParsedRoute
+    name: SkiaShell.ParsedRoute
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.PopupWrapper
+    name: SkiaShell.PopupWrapper
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.ShellCurrentRoute
+    name: SkiaShell.ShellCurrentRoute
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.ShellStackChild
+    name: SkiaShell.ShellStackChild
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+    name: SkiaShell.TypeRouteFactory
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShellNavigatedArgs
+    name: SkiaShellNavigatedArgs
+    type: Class
+  - uid: DrawnUi.Controls.SkiaShellNavigatingArgs
+    name: SkiaShellNavigatingArgs
+    type: Class
+  - uid: DrawnUi.Controls.SkiaSpinner
+    name: SkiaSpinner
+    type: Class
+  - uid: DrawnUi.Controls.SkiaSprite
+    name: SkiaSprite
+    type: Class
+  - uid: DrawnUi.Controls.SkiaTabsSelector
+    name: SkiaTabsSelector
+    type: Class
+  - uid: DrawnUi.Controls.SkiaTabsSelector.TabEntry
+    name: SkiaTabsSelector.TabEntry
+    type: Class
+  - uid: DrawnUi.Controls.SkiaViewSwitcher
+    name: SkiaViewSwitcher
+    type: Class
+  - uid: DrawnUi.Controls.SkiaViewSwitcher.NavigationStackEntry
+    name: SkiaViewSwitcher.NavigationStackEntry
+    type: Class
+  - uid: DrawnUi.Controls.SkiaWheelPicker
+    name: SkiaWheelPicker
+    type: Class
+  - uid: DrawnUi.Controls.SkiaWheelPickerCell
+    name: SkiaWheelPickerCell
+    type: Class
+  - uid: DrawnUi.Controls.SkiaWheelScroll
+    name: SkiaWheelScroll
+    type: Class
+  - uid: DrawnUi.Controls.SkiaWheelShape
+    name: SkiaWheelShape
+    type: Class
+  - uid: DrawnUi.Controls.SkiaWheelStack
+    name: SkiaWheelStack
+    type: Class
+  - uid: DrawnUi.Controls.WheelCellInfo
+    name: WheelCellInfo
+    type: Class
+- uid: DrawnUi.Draw
+  name: DrawnUi.Draw
+  type: Namespace
+  items:
+  - uid: DrawnUi.Draw.ActionOnTickAnimator
+    name: ActionOnTickAnimator
+    type: Class
+  - uid: DrawnUi.Draw.AddGestures
+    name: AddGestures
+    type: Class
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: AddGestures.GestureListener
+    type: Class
+  - uid: DrawnUi.Draw.AdjustBrightnessEffect
+    name: AdjustBrightnessEffect
+    type: Class
+  - uid: DrawnUi.Draw.AdjustRGBEffect
+    name: AdjustRGBEffect
+    type: Class
+  - uid: DrawnUi.Draw.AnimateExtensions
+    name: AnimateExtensions
+    type: Class
+  - uid: DrawnUi.Draw.AnimatorBase
+    name: AnimatorBase
+    type: Class
+  - uid: DrawnUi.Draw.ApplySpan
+    name: ApplySpan
+    type: Struct
+  - uid: DrawnUi.Draw.AutoSizeType
+    name: AutoSizeType
+    type: Enum
+  - uid: DrawnUi.Draw.BaseChainedEffect
+    name: BaseChainedEffect
+    type: Class
+  - uid: DrawnUi.Draw.BaseColorFilterEffect
+    name: BaseColorFilterEffect
+    type: Class
+  - uid: DrawnUi.Draw.BaseImageFilterEffect
+    name: BaseImageFilterEffect
+    type: Class
+  - uid: DrawnUi.Draw.BevelType
+    name: BevelType
+    type: Enum
+  - uid: DrawnUi.Draw.BindToParentContextExtension
+    name: BindToParentContextExtension
+    type: Class
+  - uid: DrawnUi.Draw.BindablePropertyExtension
+    name: BindablePropertyExtension
+    type: Class
+  - uid: DrawnUi.Draw.BlinkAnimator
+    name: BlinkAnimator
+    type: Class
+  - uid: DrawnUi.Draw.BlurEffect
+    name: BlurEffect
+    type: Class
+  - uid: DrawnUi.Draw.CachedGradient
+    name: CachedGradient
+    type: Class
+  - uid: DrawnUi.Draw.CachedObject
+    name: CachedObject
+    type: Class
+  - uid: DrawnUi.Draw.CachedShader
+    name: CachedShader
+    type: Class
+  - uid: DrawnUi.Draw.CachedShadow
+    name: CachedShadow
+    type: Class
+  - uid: DrawnUi.Draw.CellWIthHeight
+    name: CellWIthHeight
+    type: Class
+  - uid: DrawnUi.Draw.ChainAdjustBrightnessEffect
+    name: ChainAdjustBrightnessEffect
+    type: Class
+  - uid: DrawnUi.Draw.ChainAdjustContrastEffect
+    name: ChainAdjustContrastEffect
+    type: Class
+  - uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+    name: ChainAdjustLightnessEffect
+    type: Class
+  - uid: DrawnUi.Draw.ChainAdjustRGBEffect
+    name: ChainAdjustRGBEffect
+    type: Class
+  - uid: DrawnUi.Draw.ChainColorPresetEffect
+    name: ChainColorPresetEffect
+    type: Class
+  - uid: DrawnUi.Draw.ChainDropShadowsEffect
+    name: ChainDropShadowsEffect
+    type: Class
+  - uid: DrawnUi.Draw.ChainEffectResult
+    name: ChainEffectResult
+    type: Struct
+  - uid: DrawnUi.Draw.ChainSaturationEffect
+    name: ChainSaturationEffect
+    type: Class
+  - uid: DrawnUi.Draw.ChainTintWithAlphaEffect
+    name: ChainTintWithAlphaEffect
+    type: Class
+  - uid: DrawnUi.Draw.ColorBlendAnimator
+    name: ColorBlendAnimator
+    type: Class
+  - uid: DrawnUi.Draw.ColorExtensions
+    name: ColorExtensions
+    type: Class
+  - uid: DrawnUi.Draw.ColorPresetEffect
+    name: ColorPresetEffect
+    type: Class
+  - uid: DrawnUi.Draw.ContainsPointResult
+    name: ContainsPointResult
+    type: Class
+  - uid: DrawnUi.Draw.ContentLayout
+    name: ContentLayout
+    type: Class
+  - uid: DrawnUi.Draw.ContextArguments
+    name: ContextArguments
+    type: Enum
+  - uid: DrawnUi.Draw.ContrastEffect
+    name: ContrastEffect
+    type: Class
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    type: Class
+  - uid: DrawnUi.Draw.ControlsTracker
+    name: ControlsTracker
+    type: Class
+  - uid: DrawnUi.Draw.CriticallyDampedSpringTimingParameters
+    name: CriticallyDampedSpringTimingParameters
+    type: Class
+  - uid: DrawnUi.Draw.CriticallyDampedSpringTimingVectorParameters
+    name: CriticallyDampedSpringTimingVectorParameters
+    type: Struct
+  - uid: DrawnUi.Draw.DataContextIterator
+    name: DataContextIterator
+    type: Class
+  - uid: DrawnUi.Draw.DebugImage
+    name: DebugImage
+    type: Class
+  - uid: DrawnUi.Draw.DecelerationTimingParameters
+    name: DecelerationTimingParameters
+    type: Class
+  - uid: DrawnUi.Draw.DecelerationTimingVectorParameters
+    name: DecelerationTimingVectorParameters
+    type: Class
+  - uid: DrawnUi.Draw.DescendingZIndexGestureListenerComparer
+    name: DescendingZIndexGestureListenerComparer
+    type: Class
+  - uid: DrawnUi.Draw.DirectionType
+    name: DirectionType
+    type: Enum
+  - uid: DrawnUi.Draw.DrawImageAlignment
+    name: DrawImageAlignment
+    type: Enum
+  - uid: DrawnUi.Draw.DrawTextAlignment
+    name: DrawTextAlignment
+    type: Enum
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    type: Struct
+  - uid: DrawnUi.Draw.DrawingRect
+    name: DrawingRect
+    type: Class
+  - uid: DrawnUi.Draw.DrawnExtensions
+    name: DrawnExtensions
+    type: Class
+  - uid: DrawnUi.Draw.DrawnFontAttributesConverter
+    name: DrawnFontAttributesConverter
+    type: Class
+  - uid: DrawnUi.Draw.DrawnUiStartupSettings
+    name: DrawnUiStartupSettings
+    type: Class
+  - uid: DrawnUi.Draw.DropShadowEffect
+    name: DropShadowEffect
+    type: Class
+  - uid: DrawnUi.Draw.DynamicGrid`1
+    name: DynamicGrid<T>
+    type: Class
+  - uid: DrawnUi.Draw.EdgeGlowAnimator
+    name: EdgeGlowAnimator
+    type: Class
+  - uid: DrawnUi.Draw.ElementRenderer
+    name: ElementRenderer
+    type: Class
+  - uid: DrawnUi.Draw.FindTagExtension
+    name: FindTagExtension
+    type: Class
+  - uid: DrawnUi.Draw.FluentExtensions
+    name: FluentExtensions
+    type: Class
+  - uid: DrawnUi.Draw.FontWeight
+    name: FontWeight
+    type: Enum
+  - uid: DrawnUi.Draw.FrameTimeInterpolator
+    name: FrameTimeInterpolator
+    type: Class
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    type: Struct
+  - uid: DrawnUi.Draw.GesturesMode
+    name: GesturesMode
+    type: Enum
+  - uid: DrawnUi.Draw.GlowPosition
+    name: GlowPosition
+    type: Enum
+  - uid: DrawnUi.Draw.GradientType
+    name: GradientType
+    type: Enum
+  - uid: DrawnUi.Draw.IAfterEffectDelete
+    name: IAfterEffectDelete
+    type: Interface
+  - uid: DrawnUi.Draw.IAnimatorsManager
+    name: IAnimatorsManager
+    type: Interface
+  - uid: DrawnUi.Draw.IBindingContextDebuggable
+    name: IBindingContextDebuggable
+    type: Interface
+  - uid: DrawnUi.Draw.ICanBeUpdated
+    name: ICanBeUpdated
+    type: Interface
+  - uid: DrawnUi.Draw.ICanBeUpdatedWithContext
+    name: ICanBeUpdatedWithContext
+    type: Interface
+  - uid: DrawnUi.Draw.ICanRenderOnCanvas
+    name: ICanRenderOnCanvas
+    type: Interface
+  - uid: DrawnUi.Draw.IColorEffect
+    name: IColorEffect
+    type: Interface
+  - uid: DrawnUi.Draw.IDampingTimingParameters
+    name: IDampingTimingParameters
+    type: Interface
+  - uid: DrawnUi.Draw.IDampingTimingVectorParameters
+    name: IDampingTimingVectorParameters
+    type: Interface
+  - uid: DrawnUi.Draw.IDefinesViewport
+    name: IDefinesViewport
+    type: Interface
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    type: Interface
+  - uid: DrawnUi.Draw.IDrawnTextSpan
+    name: IDrawnTextSpan
+    type: Interface
+  - uid: DrawnUi.Draw.IHasAfterEffects
+    name: IHasAfterEffects
+    type: Interface
+  - uid: DrawnUi.Draw.IHasBanner
+    name: IHasBanner
+    type: Interface
+  - uid: DrawnUi.Draw.IImageEffect
+    name: IImageEffect
+    type: Interface
+  - uid: DrawnUi.Draw.IInsideViewport
+    name: IInsideViewport
+    type: Interface
+  - uid: DrawnUi.Draw.IInsideWheelStack
+    name: IInsideWheelStack
+    type: Interface
+  - uid: DrawnUi.Draw.IInterpolator
+    name: IInterpolator
+    type: Interface
+  - uid: DrawnUi.Draw.ILayoutInsideViewport
+    name: ILayoutInsideViewport
+    type: Interface
+  - uid: DrawnUi.Draw.IOverlayEffect
+    name: IOverlayEffect
+    type: Interface
+  - uid: DrawnUi.Draw.IPostRendererEffect
+    name: IPostRendererEffect
+    type: Interface
+  - uid: DrawnUi.Draw.IRefreshIndicator
+    name: IRefreshIndicator
+    type: Interface
+  - uid: DrawnUi.Draw.IRenderEffect
+    name: IRenderEffect
+    type: Interface
+  - uid: DrawnUi.Draw.IRenderObject
+    name: IRenderObject
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaCell
+    name: ISkiaCell
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaDrawable
+    name: ISkiaDrawable
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaEffect
+    name: ISkiaEffect
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaGestureListener
+    name: ISkiaGestureListener
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaGestureProcessor
+    name: ISkiaGestureProcessor
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaGridLayout
+    name: ISkiaGridLayout
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaLayer
+    name: ISkiaLayer
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaLayout
+    name: ISkiaLayout
+    type: Interface
+  - uid: DrawnUi.Draw.ISkiaSharpView
+    name: ISkiaSharpView
+    type: Interface
+  - uid: DrawnUi.Draw.IStateEffect
+    name: IStateEffect
+    type: Interface
+  - uid: DrawnUi.Draw.ITimingParameters
+    name: ITimingParameters
+    type: Interface
+  - uid: DrawnUi.Draw.ITimingVectorParameters
+    name: ITimingVectorParameters
+    type: Interface
+  - uid: DrawnUi.Draw.IVisibilityAware
+    name: IVisibilityAware
+    type: Interface
+  - uid: DrawnUi.Draw.IWithContent
+    name: IWithContent
+    type: Interface
+  - uid: DrawnUi.Draw.InfiniteLayout
+    name: InfiniteLayout
+    type: Class
+  - uid: DrawnUi.Draw.KeyboardManager
+    name: KeyboardManager
+    type: Class
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    type: Class
+  - uid: DrawnUi.Draw.LayoutType
+    name: LayoutType
+    type: Enum
+  - uid: DrawnUi.Draw.LineGlyph
+    name: LineGlyph
+    type: Struct
+  - uid: DrawnUi.Draw.LineSpan
+    name: LineSpan
+    type: Struct
+  - uid: DrawnUi.Draw.LinearDirectionType
+    name: LinearDirectionType
+    type: Enum
+  - uid: DrawnUi.Draw.LinearInterpolationTimingParameters
+    name: LinearInterpolationTimingParameters
+    type: Struct
+  - uid: DrawnUi.Draw.LoadPriority
+    name: LoadPriority
+    type: Enum
+  - uid: DrawnUi.Draw.LoadedImageSource
+    name: LoadedImageSource
+    type: Class
+  - uid: DrawnUi.Draw.LockTouch
+    name: LockTouch
+    type: Enum
+  - uid: DrawnUi.Draw.Looper
+    name: Looper
+    type: Class
+  - uid: DrawnUi.Draw.LottieRefreshIndicator
+    name: LottieRefreshIndicator
+    type: Class
+  - uid: DrawnUi.Draw.MauiKey
+    name: MauiKey
+    type: Enum
+  - uid: DrawnUi.Draw.MauiKeyMapper
+    name: MauiKeyMapper
+    type: Class
+  - uid: DrawnUi.Draw.MeasureRequest
+    name: MeasureRequest
+    type: Struct
+  - uid: DrawnUi.Draw.MeasuredListCell
+    name: MeasuredListCell
+    type: Class
+  - uid: DrawnUi.Draw.MeasuredListCells
+    name: MeasuredListCells
+    type: Class
+  - uid: DrawnUi.Draw.MeasuringStrategy
+    name: MeasuringStrategy
+    type: Enum
+  - uid: DrawnUi.Draw.ObjectAliveType
+    name: ObjectAliveType
+    type: Enum
+  - uid: DrawnUi.Draw.ObservableAttachedItemsCollection`1
+    name: ObservableAttachedItemsCollection<T>
+    type: Class
+  - uid: DrawnUi.Draw.OrientationType
+    name: OrientationType
+    type: Enum
+  - uid: DrawnUi.Draw.PanningModeType
+    name: PanningModeType
+    type: Enum
+  - uid: DrawnUi.Draw.PendulumAnimator
+    name: PendulumAnimator
+    type: Class
+  - uid: DrawnUi.Draw.PerpetualPendulumAnimator
+    name: PerpetualPendulumAnimator
+    type: Class
+  - uid: DrawnUi.Draw.PingPongAnimator
+    name: PingPongAnimator
+    type: Class
+  - uid: DrawnUi.Draw.Plane
+    name: Plane
+    type: Class
+  - uid: DrawnUi.Draw.PlanesScroll
+    name: PlanesScroll
+    type: Class
+  - uid: DrawnUi.Draw.PlanesScroll.ViewLayoutInfo
+    name: PlanesScroll.ViewLayoutInfo
+    type: Struct
+  - uid: DrawnUi.Draw.PointIsInsideResult
+    name: PointIsInsideResult
+    type: Class
+  - uid: DrawnUi.Draw.PointedDirectionType
+    name: PointedDirectionType
+    type: Enum
+  - uid: DrawnUi.Draw.PrebuiltControlStyle
+    name: PrebuiltControlStyle
+    type: Enum
+  - uid: DrawnUi.Draw.ProgressAnimator
+    name: ProgressAnimator
+    type: Class
+  - uid: DrawnUi.Draw.ProgressTrail
+    name: ProgressTrail
+    type: Class
+  - uid: DrawnUi.Draw.RangeAnimator
+    name: RangeAnimator
+    type: Class
+  - uid: DrawnUi.Draw.RangeF
+    name: RangeF
+    type: Struct
+  - uid: DrawnUi.Draw.RangeVectorAnimator
+    name: RangeVectorAnimator
+    type: Class
+  - uid: DrawnUi.Draw.RangeZone
+    name: RangeZone
+    type: Enum
+  - uid: DrawnUi.Draw.RecycleTemplateType
+    name: RecycleTemplateType
+    type: Enum
+  - uid: DrawnUi.Draw.RecyclingTemplate
+    name: RecyclingTemplate
+    type: Enum
+  - uid: DrawnUi.Draw.RefreshIndicator
+    name: RefreshIndicator
+    type: Class
+  - uid: DrawnUi.Draw.RelativePositionType
+    name: RelativePositionType
+    type: Enum
+  - uid: DrawnUi.Draw.RenderDrawingContext
+    name: RenderDrawingContext
+    type: Class
+  - uid: DrawnUi.Draw.RenderLabel
+    name: RenderLabel
+    type: Class
+  - uid: DrawnUi.Draw.RenderObject
+    name: RenderObject
+    type: Class
+  - uid: DrawnUi.Draw.RenderTreeRenderer
+    name: RenderTreeRenderer
+    type: Class
+  - uid: DrawnUi.Draw.RenderingAnimator
+    name: RenderingAnimator
+    type: Class
+  - uid: DrawnUi.Draw.RenderingModeType
+    name: RenderingModeType
+    type: Enum
+  - uid: DrawnUi.Draw.RippleAnimator
+    name: RippleAnimator
+    type: Class
+  - uid: DrawnUi.Draw.SaturationEffect
+    name: SaturationEffect
+    type: Class
+  - uid: DrawnUi.Draw.ScaledPoint
+    name: ScaledPoint
+    type: Struct
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    type: Struct
+  - uid: DrawnUi.Draw.ScaledSize
+    name: ScaledSize
+    type: Class
+  - uid: DrawnUi.Draw.ScrollFlingAnimator
+    name: ScrollFlingAnimator
+    type: Class
+  - uid: DrawnUi.Draw.ScrollFlingVectorAnimator
+    name: ScrollFlingVectorAnimator
+    type: Class
+  - uid: DrawnUi.Draw.ScrollInteractionState
+    name: ScrollInteractionState
+    type: Enum
+  - uid: DrawnUi.Draw.ScrollToIndexOrder
+    name: ScrollToIndexOrder
+    type: Struct
+  - uid: DrawnUi.Draw.ScrollToPointOrder
+    name: ScrollToPointOrder
+    type: Struct
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
+    name: ShaderDoubleTexturesEffect
+    type: Class
+  - uid: DrawnUi.Draw.ShapeType
+    name: ShapeType
+    type: Enum
+  - uid: DrawnUi.Draw.ShimmerAnimator
+    name: ShimmerAnimator
+    type: Class
+  - uid: DrawnUi.Draw.SidePosition
+    name: SidePosition
+    type: Enum
+  - uid: DrawnUi.Draw.Sk3dView
+    name: Sk3dView
+    type: Class
+  - uid: DrawnUi.Draw.SkCamera3D
+    name: SkCamera3D
+    type: Class
+  - uid: DrawnUi.Draw.SkCamera3D2
+    name: SkCamera3D2
+    type: Class
+  - uid: DrawnUi.Draw.SkPatch3D
+    name: SkPatch3D
+    type: Class
+  - uid: DrawnUi.Draw.SkiaAnchorBak
+    name: SkiaAnchorBak
+    type: Enum
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    type: Class
+  - uid: DrawnUi.Draw.SkiaBevel
+    name: SkiaBevel
+    type: Class
+  - uid: DrawnUi.Draw.SkiaButton
+    name: SkiaButton
+    type: Class
+  - uid: DrawnUi.Draw.SkiaButton.ButtonLabel
+    name: SkiaButton.ButtonLabel
+    type: Class
+  - uid: DrawnUi.Draw.SkiaButton.ButtonStyleType
+    name: SkiaButton.ButtonStyleType
+    type: Enum
+  - uid: DrawnUi.Draw.SkiaButton.IconPositionType
+    name: SkiaButton.IconPositionType
+    type: Enum
+  - uid: DrawnUi.Draw.SkiaCacheType
+    name: SkiaCacheType
+    type: Enum
+  - uid: DrawnUi.Draw.SkiaCheckbox
+    name: SkiaCheckbox
+    type: Class
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    type: Class
+  - uid: DrawnUi.Draw.SkiaControl.CacheValidityType
+    name: SkiaControl.CacheValidityType
+    type: Enum
+  - uid: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
+    name: SkiaControl.ControlTappedEventArgs
+    type: Class
+  - uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
+    name: SkiaControl.ParentMeasureRequest
+    type: Struct
+  - uid: DrawnUi.Draw.SkiaControlWithRect
+    name: SkiaControlWithRect
+    type: Class
+  - uid: DrawnUi.Draw.SkiaControlsObservable
+    name: SkiaControlsObservable
+    type: Class
+  - uid: DrawnUi.Draw.SkiaCursor
+    name: SkiaCursor
+    type: Class
+  - uid: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
+    name: SkiaDoubleAttachedTexturesEffect
+    type: Class
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    type: Class
+  - uid: DrawnUi.Draw.SkiaEditor
+    name: SkiaEditor
+    type: Class
+  - uid: DrawnUi.Draw.SkiaEffect
+    name: SkiaEffect
+    type: Class
+  - uid: DrawnUi.Draw.SkiaFontManager
+    name: SkiaFontManager
+    type: Class
+  - uid: DrawnUi.Draw.SkiaFrame
+    name: SkiaFrame
+    type: Class
+  - uid: DrawnUi.Draw.SkiaGesturesInfo
+    name: SkiaGesturesInfo
+    type: Class
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    type: Class
+  - uid: DrawnUi.Draw.SkiaGradient
+    name: SkiaGradient
+    type: Class
+  - uid: DrawnUi.Draw.SkiaGrid
+    name: SkiaGrid
+    type: Class
+  - uid: DrawnUi.Draw.SkiaHotspot
+    name: SkiaHotspot
+    type: Class
+  - uid: DrawnUi.Draw.SkiaHotspotZoom
+    name: SkiaHotspotZoom
+    type: Class
+  - uid: DrawnUi.Draw.SkiaHoverMask
+    name: SkiaHoverMask
+    type: Class
+  - uid: DrawnUi.Draw.SkiaImage
+    name: SkiaImage
+    type: Class
+  - uid: DrawnUi.Draw.SkiaImage.RescaledBitmap
+    name: SkiaImage.RescaledBitmap
+    type: Class
+  - uid: DrawnUi.Draw.SkiaImageEffect
+    name: SkiaImageEffect
+    type: Enum
+  - uid: DrawnUi.Draw.SkiaImageEffects
+    name: SkiaImageEffects
+    type: Class
+  - uid: DrawnUi.Draw.SkiaImageManager
+    name: SkiaImageManager
+    type: Class
+  - uid: DrawnUi.Draw.SkiaImageManager.QueueItem
+    name: SkiaImageManager.QueueItem
+    type: Class
+  - uid: DrawnUi.Draw.SkiaImageTiles
+    name: SkiaImageTiles
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabel
+    name: SkiaLabel
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabel.DecomposedText
+    name: SkiaLabel.DecomposedText
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabel.EmojiData
+    name: SkiaLabel.EmojiData
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabel.ObjectPools
+    name: SkiaLabel.ObjectPools
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+    name: SkiaLabel.PooledStringBuilder
+    type: Struct
+  - uid: DrawnUi.Draw.SkiaLabel.SpanCollection
+    name: SkiaLabel.SpanCollection
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement
+    name: SkiaLabel.SpanMeasurement
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabel.TextMetrics
+    name: SkiaLabel.TextMetrics
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLabelFps
+    name: SkiaLabelFps
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayer
+    name: SkiaLayer
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.BuildWrapLayout
+    name: SkiaLayout.BuildWrapLayout
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.Cell
+    name: SkiaLayout.Cell
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.SecondPassArrange
+    name: SkiaLayout.SecondPassArrange
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+    name: SkiaLayout.SkiaGridStructure
+    type: Class
+  - uid: DrawnUi.Draw.SkiaMarkdownLabel
+    name: SkiaMarkdownLabel
+    type: Class
+  - uid: DrawnUi.Draw.SkiaMauiElement
+    name: SkiaMauiElement
+    type: Class
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    type: Class
+  - uid: DrawnUi.Draw.SkiaProgress
+    name: SkiaProgress
+    type: Class
+  - uid: DrawnUi.Draw.SkiaRangeBase
+    name: SkiaRangeBase
+    type: Class
+  - uid: DrawnUi.Draw.SkiaRichLabel
+    name: SkiaRichLabel
+    type: Class
+  - uid: DrawnUi.Draw.SkiaRow
+    name: SkiaRow
+    type: Class
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    type: Class
+  - uid: DrawnUi.Draw.SkiaScrollLooped
+    name: SkiaScrollLooped
+    type: Class
+  - uid: DrawnUi.Draw.SkiaSetter
+    name: SkiaSetter
+    type: Class
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    type: Class
+  - uid: DrawnUi.Draw.SkiaShadow
+    name: SkiaShadow
+    type: Class
+  - uid: DrawnUi.Draw.SkiaShape
+    name: SkiaShape
+    type: Class
+  - uid: DrawnUi.Draw.SkiaShape.ShapePaintArguments
+    name: SkiaShape.ShapePaintArguments
+    type: Struct
+  - uid: DrawnUi.Draw.SkiaSlider
+    name: SkiaSlider
+    type: Class
+  - uid: DrawnUi.Draw.SkiaStack
+    name: SkiaStack
+    type: Class
+  - uid: DrawnUi.Draw.SkiaSvg
+    name: SkiaSvg
+    type: Class
+  - uid: DrawnUi.Draw.SkiaSwitch
+    name: SkiaSwitch
+    type: Class
+  - uid: DrawnUi.Draw.SkiaToggle
+    name: SkiaToggle
+    type: Class
+  - uid: DrawnUi.Draw.SkiaTouchAnimation
+    name: SkiaTouchAnimation
+    type: Enum
+  - uid: DrawnUi.Draw.SkiaValueAnimator
+    name: SkiaValueAnimator
+    type: Class
+  - uid: DrawnUi.Draw.SkiaVectorAnimator
+    name: SkiaVectorAnimator
+    type: Class
+  - uid: DrawnUi.Draw.SkiaWrap
+    name: SkiaWrap
+    type: Class
+  - uid: DrawnUi.Draw.SliderThumb
+    name: SliderThumb
+    type: Class
+  - uid: DrawnUi.Draw.SliderTrail
+    name: SliderTrail
+    type: Class
+  - uid: DrawnUi.Draw.SliderValueDesc
+    name: SliderValueDesc
+    type: Class
+  - uid: DrawnUi.Draw.SnapToChildrenType
+    name: SnapToChildrenType
+    type: Enum
+  - uid: DrawnUi.Draw.Snapping
+    name: Snapping
+    type: Class
+  - uid: DrawnUi.Draw.SnappingLayout
+    name: SnappingLayout
+    type: Class
+  - uid: DrawnUi.Draw.SortedGestureListeners
+    name: SortedGestureListeners
+    type: Class
+  - uid: DrawnUi.Draw.SourceType
+    name: SourceType
+    type: Enum
+  - uid: DrawnUi.Draw.SpaceDistribution
+    name: SpaceDistribution
+    type: Enum
+  - uid: DrawnUi.Draw.SpringExtensions
+    name: SpringExtensions
+    type: Class
+  - uid: DrawnUi.Draw.SpringTimingParameters
+    name: SpringTimingParameters
+    type: Class
+  - uid: DrawnUi.Draw.SpringTimingVectorParameters
+    name: SpringTimingVectorParameters
+    type: Class
+  - uid: DrawnUi.Draw.SpringWithVelocityAnimator
+    name: SpringWithVelocityAnimator
+    type: Class
+  - uid: DrawnUi.Draw.SpringWithVelocityVectorAnimator
+    name: SpringWithVelocityVectorAnimator
+    type: Class
+  - uid: DrawnUi.Draw.StackLayoutStructure
+    name: StackLayoutStructure
+    type: Class
+  - uid: DrawnUi.Draw.StateEffect
+    name: StateEffect
+    type: Class
+  - uid: DrawnUi.Draw.StaticResourcesExtensions
+    name: StaticResourcesExtensions
+    type: Class
+  - uid: DrawnUi.Draw.StringReference
+    name: StringReference
+    type: Struct
+  - uid: DrawnUi.Draw.Super
+    name: Super
+    type: Class
+  - uid: DrawnUi.Draw.SvgSpan
+    name: SvgSpan
+    type: Class
+  - uid: DrawnUi.Draw.TemplatedViewsPool
+    name: TemplatedViewsPool
+    type: Class
+  - uid: DrawnUi.Draw.TextLine
+    name: TextLine
+    type: Class
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    type: Class
+  - uid: DrawnUi.Draw.TextTransform
+    name: TextTransform
+    type: Enum
+  - uid: DrawnUi.Draw.TintEffect
+    name: TintEffect
+    type: Class
+  - uid: DrawnUi.Draw.TintWithAlphaEffect
+    name: TintWithAlphaEffect
+    type: Class
+  - uid: DrawnUi.Draw.ToggleAnimator
+    name: ToggleAnimator
+    type: Class
+  - uid: DrawnUi.Draw.TrackedObject`1
+    name: TrackedObject<T>
+    type: Class
+  - uid: DrawnUi.Draw.TransformAspect
+    name: TransformAspect
+    type: Enum
+  - uid: DrawnUi.Draw.UnderdampedSpringTimingParameters
+    name: UnderdampedSpringTimingParameters
+    type: Class
+  - uid: DrawnUi.Draw.UnderdampedSpringTimingVectorParameters
+    name: UnderdampedSpringTimingVectorParameters
+    type: Struct
+  - uid: DrawnUi.Draw.UsedGlyph
+    name: UsedGlyph
+    type: Struct
+  - uid: DrawnUi.Draw.VelocityAccumulator
+    name: VelocityAccumulator
+    type: Class
+  - uid: DrawnUi.Draw.ViewportScrollType
+    name: ViewportScrollType
+    type: Enum
+  - uid: DrawnUi.Draw.ViewsAdapter
+    name: ViewsAdapter
+    type: Class
+  - uid: DrawnUi.Draw.ViewsIterator
+    name: ViewsIterator
+    type: Class
+  - uid: DrawnUi.Draw.VirtualScroll
+    name: VirtualScroll
+    type: Class
+  - uid: DrawnUi.Draw.VirtualisationType
+    name: VirtualisationType
+    type: Enum
+  - uid: DrawnUi.Draw.ViscousFluidInterpolator
+    name: ViscousFluidInterpolator
+    type: Class
+  - uid: DrawnUi.Draw.VisualLayer
+    name: VisualLayer
+    type: Class
+  - uid: DrawnUi.Draw.VisualTreeHandler
+    name: VisualTreeHandler
+    type: Class
+  - uid: DrawnUi.Draw.WindowParameters
+    name: WindowParameters
+    type: Struct
+  - uid: DrawnUi.Draw.ZoomContent
+    name: ZoomContent
+    type: Class
+  - uid: DrawnUi.Draw.ZoomEventArgs
+    name: ZoomEventArgs
+    type: Class
+- uid: DrawnUi.Extensions
+  name: DrawnUi.Extensions
+  type: Namespace
+  items:
+  - uid: DrawnUi.Extensions.FloatingPointExtensions
+    name: FloatingPointExtensions
+    type: Class
+  - uid: DrawnUi.Extensions.InternalExtensions
+    name: InternalExtensions
+    type: Class
+  - uid: DrawnUi.Extensions.PointExtensions
+    name: PointExtensions
+    type: Class
+- uid: DrawnUi.Features.Images
+  name: DrawnUi.Features.Images
+  type: Namespace
+  items:
+  - uid: DrawnUi.Features.Images.ImagesExtensions
+    name: ImagesExtensions
+    type: Class
+- uid: DrawnUi.Infrastructure
+  name: DrawnUi.Infrastructure
+  type: Namespace
+  items:
+  - uid: DrawnUi.Infrastructure.ClosedRange`1
+    name: ClosedRange<T>
+    type: Struct
+  - uid: DrawnUi.Infrastructure.FileDescriptor
+    name: FileDescriptor
+    type: Class
+  - uid: DrawnUi.Infrastructure.Files
+    name: Files
+    type: Class
+  - uid: DrawnUi.Infrastructure.MeasuringConstraints
+    name: MeasuringConstraints
+    type: Struct
+  - uid: DrawnUi.Infrastructure.PaperFormat
+    name: PaperFormat
+    type: Enum
+  - uid: DrawnUi.Infrastructure.Pdf
+    name: Pdf
+    type: Class
+  - uid: DrawnUi.Infrastructure.PdfPagePosition
+    name: PdfPagePosition
+    type: Struct
+  - uid: DrawnUi.Infrastructure.Pendulum
+    name: Pendulum
+    type: Class
+  - uid: DrawnUi.Infrastructure.PerpetualPendulum
+    name: PerpetualPendulum
+    type: Class
+  - uid: DrawnUi.Infrastructure.RenderOnTimer
+    name: RenderOnTimer
+    type: Class
+  - uid: DrawnUi.Infrastructure.SkSl
+    name: SkSl
+    type: Class
+  - uid: DrawnUi.Infrastructure.SkiaTouchResultContext
+    name: SkiaTouchResultContext
+    type: Struct
+  - uid: DrawnUi.Infrastructure.Spring
+    name: Spring
+    type: Struct
+  - uid: DrawnUi.Infrastructure.StorageType
+    name: StorageType
+    type: Enum
+  - uid: DrawnUi.Infrastructure.Vector
+    name: Vector
+    type: Class
+  - uid: DrawnUi.Infrastructure.VisualTransform
+    name: VisualTransform
+    type: Class
+  - uid: DrawnUi.Infrastructure.VisualTransformNative
+    name: VisualTransformNative
+    type: Struct
+  - uid: DrawnUi.Infrastructure.VisualTreeChain
+    name: VisualTreeChain
+    type: Class
+- uid: DrawnUi.Infrastructure.Enums
+  name: DrawnUi.Infrastructure.Enums
+  type: Namespace
+  items:
+  - uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+    name: DoubleViewTransitionType
+    type: Enum
+  - uid: DrawnUi.Infrastructure.Enums.UpdateMode
+    name: UpdateMode
+    type: Enum
+- uid: DrawnUi.Infrastructure.Helpers
+  name: DrawnUi.Infrastructure.Helpers
+  type: Namespace
+  items:
+  - uid: DrawnUi.Infrastructure.Helpers.IntersectionUtils
+    name: IntersectionUtils
+    type: Class
+  - uid: DrawnUi.Infrastructure.Helpers.RubberBandUtils
+    name: RubberBandUtils
+    type: Class
+  - uid: DrawnUi.Infrastructure.Helpers.VelocityTracker
+    name: VelocityTracker
+    type: Class
+- uid: DrawnUi.Infrastructure.Models
+  name: DrawnUi.Infrastructure.Models
+  type: Namespace
+  items:
+  - uid: DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs
+    name: BitmapLoadedEventArgs
+    type: Class
+  - uid: DrawnUi.Infrastructure.Models.ContentLoadedEventArgs
+    name: ContentLoadedEventArgs
+    type: Class
+  - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+    name: ImageSourceResourceStream
+    type: Class
+  - uid: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue`1
+    name: LimitedConcurrentQueue<T>
+    type: Class
+  - uid: DrawnUi.Infrastructure.Models.LimitedQueue`1
+    name: LimitedQueue<T>
+    type: Class
+  - uid: DrawnUi.Infrastructure.Models.LimitedStack`1
+    name: LimitedStack<T>
+    type: Class
+  - uid: DrawnUi.Infrastructure.Models.OrderedIndex
+    name: OrderedIndex
+    type: Class
+- uid: DrawnUi.Infrastructure.Xaml
+  name: DrawnUi.Infrastructure.Xaml
+  type: Namespace
+  items:
+  - uid: DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter
+    name: ColumnDefinitionTypeConverter
+    type: Class
+  - uid: DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter
+    name: FrameworkImageSourceConverter
+    type: Class
+  - uid: DrawnUi.Infrastructure.Xaml.NotConverter
+    name: NotConverter
+    type: Class
+  - uid: DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter
+    name: RowDefinitionTypeConverter
+    type: Class
+  - uid: DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter
+    name: SkiaPointCollectionConverter
+    type: Class
+  - uid: DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection
+    name: SkiaShadowsCollection
+    type: Class
+  - uid: DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter
+    name: StringToDoubleArrayTypeConverter
+    type: Class
+- uid: DrawnUi.Internals
+  name: DrawnUi.Internals
+  type: Namespace
+  items:
+  - uid: DrawnUi.Internals.SelectableAction
+    name: SelectableAction
+    type: Class
+  - uid: DrawnUi.Internals.TitleWithStringId
+    name: TitleWithStringId
+    type: Class
+- uid: DrawnUi.Internals.Markup
+  name: DrawnUi.Internals.Markup
+  type: Namespace
+  items:
+  - uid: DrawnUi.Internals.Markup.MarkupExtensions
+    name: MarkupExtensions
+    type: Class
+- uid: DrawnUi.Models
+  name: DrawnUi.Models
+  type: Namespace
+  items:
+  - uid: DrawnUi.Models.DefinitionInfo
+    name: DefinitionInfo
+    type: Class
+  - uid: DrawnUi.Models.GridLengthType
+    name: GridLengthType
+    type: Enum
+  - uid: DrawnUi.Models.GridSpan
+    name: GridSpan
+    type: Class
+  - uid: DrawnUi.Models.RestartingTimer
+    name: RestartingTimer
+    type: Class
+  - uid: DrawnUi.Models.RestartingTimer`1
+    name: RestartingTimer<T>
+    type: Class
+  - uid: DrawnUi.Models.Screen
+    name: Screen
+    type: Class
+  - uid: DrawnUi.Models.SpanKey
+    name: SpanKey
+    type: Class
+- uid: DrawnUi.Views
+  name: DrawnUi.Views
+  type: Namespace
+  items:
+  - uid: DrawnUi.Views.BasePageReloadable
+    name: BasePageReloadable
+    type: Class
+  - uid: DrawnUi.Views.Canvas
+    name: Canvas
+    type: Class
+  - uid: DrawnUi.Views.DisposableManager
+    name: DisposableManager
+    type: Class
+  - uid: DrawnUi.Views.DrawnUiBasePage
+    name: DrawnUiBasePage
+    type: Class
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    type: Class
+  - uid: DrawnUi.Views.DrawnView.DiagnosticData
+    name: DrawnView.DiagnosticData
+    type: Class
+  - uid: DrawnUi.Views.DrawnView.FocusedItemChangedArgs
+    name: DrawnView.FocusedItemChangedArgs
+    type: Class
+  - uid: DrawnUi.Views.DrawnView.OffscreenCommand
+    name: DrawnView.OffscreenCommand
+    type: Class
+  - uid: DrawnUi.Views.DrawnView.TimedDisposable
+    name: DrawnView.TimedDisposable
+    type: Struct
+  - uid: DrawnUi.Views.SkiaView
+    name: SkiaView
+    type: Class
+  - uid: DrawnUi.Views.SkiaViewAccelerated
+    name: SkiaViewAccelerated
+    type: Class
+memberLayout: SamePage

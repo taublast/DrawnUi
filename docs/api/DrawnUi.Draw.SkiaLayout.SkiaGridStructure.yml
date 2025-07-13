@@ -1,0 +1,1354 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  commentId: T:DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  id: SkiaLayout.SkiaGridStructure
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.#ctor(DrawnUi.Draw.ISkiaGridLayout,System.Double,System.Double)
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnDefinitions
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnSpacing
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars(SkiaSharp.SKSize)
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal(Microsoft.Maui.Graphics.Size)
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor(DrawnUi.Draw.ISkiaControl,System.Double,System.Double)
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(System.Int32)
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Padding
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowDefinitions
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowSpacing
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow(System.Int32)
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint
+  langs:
+  - csharp
+  - vb
+  name: SkiaLayout.SkiaGridStructure
+  nameWithType: SkiaLayout.SkiaGridStructure
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaGridStructure
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class SkiaLayout.SkiaGridStructure
+    content.vb: Public Class SkiaLayout.SkiaGridStructure
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint
+  commentId: P:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint
+  id: HeightConstraint
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: HeightConstraint
+  nameWithType: SkiaLayout.SkiaGridStructure.HeightConstraint
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HeightConstraint
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double HeightConstraint { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property HeightConstraint As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint
+  commentId: P:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint
+  id: WidthConstraint
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: WidthConstraint
+  nameWithType: SkiaLayout.SkiaGridStructure.WidthConstraint
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WidthConstraint
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double WidthConstraint { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property WidthConstraint As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows
+  commentId: P:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows
+  id: Rows
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: Rows
+  nameWithType: SkiaLayout.SkiaGridStructure.Rows
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Rows
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 33
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DefinitionInfo[] Rows { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Models.DefinitionInfo[]
+    content.vb: Public ReadOnly Property Rows As DefinitionInfo()
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns
+  commentId: P:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns
+  id: Columns
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: Columns
+  nameWithType: SkiaLayout.SkiaGridStructure.Columns
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Columns
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 35
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DefinitionInfo[] Columns { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Models.DefinitionInfo[]
+    content.vb: Public ReadOnly Property Columns As DefinitionInfo()
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Padding
+  commentId: F:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Padding
+  id: Padding
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: Padding
+  nameWithType: SkiaLayout.SkiaGridStructure.Padding
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Padding
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Padding
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 40
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public readonly Thickness Padding
+    return:
+      type: Microsoft.Maui.Thickness
+    content.vb: Public ReadOnly Padding As Thickness
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowSpacing
+  commentId: F:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowSpacing
+  id: RowSpacing
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: RowSpacing
+  nameWithType: SkiaLayout.SkiaGridStructure.RowSpacing
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowSpacing
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RowSpacing
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 41
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public readonly double RowSpacing
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly RowSpacing As Double
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnSpacing
+  commentId: F:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnSpacing
+  id: ColumnSpacing
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: ColumnSpacing
+  nameWithType: SkiaLayout.SkiaGridStructure.ColumnSpacing
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnSpacing
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColumnSpacing
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public readonly double ColumnSpacing
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly ColumnSpacing As Double
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowDefinitions
+  commentId: F:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowDefinitions
+  id: RowDefinitions
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: RowDefinitions
+  nameWithType: SkiaLayout.SkiaGridStructure.RowDefinitions
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowDefinitions
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RowDefinitions
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 43
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public readonly IReadOnlyList<IGridRowDefinition> RowDefinitions
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridRowDefinition}
+    content.vb: Public ReadOnly RowDefinitions As IReadOnlyList(Of IGridRowDefinition)
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnDefinitions
+  commentId: F:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnDefinitions
+  id: ColumnDefinitions
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: ColumnDefinitions
+  nameWithType: SkiaLayout.SkiaGridStructure.ColumnDefinitions
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.ColumnDefinitions
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColumnDefinitions
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public readonly IReadOnlyList<IGridColumnDefinition> ColumnDefinitions
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridColumnDefinition}
+    content.vb: Public ReadOnly ColumnDefinitions As IReadOnlyList(Of IGridColumnDefinition)
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.#ctor(DrawnUi.Draw.ISkiaGridLayout,System.Double,System.Double)
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.#ctor(DrawnUi.Draw.ISkiaGridLayout,System.Double,System.Double)
+  id: '#ctor(DrawnUi.Draw.ISkiaGridLayout,System.Double,System.Double)'
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: SkiaGridStructure(ISkiaGridLayout, double, double)
+  nameWithType: SkiaLayout.SkiaGridStructure.SkiaGridStructure(ISkiaGridLayout, double, double)
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.SkiaGridStructure(DrawnUi.Draw.ISkiaGridLayout, double, double)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 51
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaGridStructure(ISkiaGridLayout parentGrid, double widthConstraint, double heightConstraint)
+    parameters:
+    - id: parentGrid
+      type: DrawnUi.Draw.ISkiaGridLayout
+    - id: widthConstraint
+      type: System.Double
+    - id: heightConstraint
+      type: System.Double
+    content.vb: Public Sub New(parentGrid As ISkiaGridLayout, widthConstraint As Double, heightConstraint As Double)
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.#ctor*
+  nameWithType.vb: SkiaLayout.SkiaGridStructure.New(ISkiaGridLayout, Double, Double)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.New(DrawnUi.Draw.ISkiaGridLayout, Double, Double)
+  name.vb: New(ISkiaGridLayout, Double, Double)
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor(DrawnUi.Draw.ISkiaControl,System.Double,System.Double)
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor(DrawnUi.Draw.ISkiaControl,System.Double,System.Double)
+  id: GetCellBoundsFor(DrawnUi.Draw.ISkiaControl,System.Double,System.Double)
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: GetCellBoundsFor(ISkiaControl, double, double)
+  nameWithType: SkiaLayout.SkiaGridStructure.GetCellBoundsFor(ISkiaControl, double, double)
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor(DrawnUi.Draw.ISkiaControl, double, double)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCellBoundsFor
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 260
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Rect GetCellBoundsFor(ISkiaControl view, double xOffset, double yOffset)
+    parameters:
+    - id: view
+      type: DrawnUi.Draw.ISkiaControl
+    - id: xOffset
+      type: System.Double
+    - id: yOffset
+      type: System.Double
+    return:
+      type: Microsoft.Maui.Graphics.Rect
+    content.vb: Public Function GetCellBoundsFor(view As ISkiaControl, xOffset As Double, yOffset As Double) As Rect
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor*
+  nameWithType.vb: SkiaLayout.SkiaGridStructure.GetCellBoundsFor(ISkiaControl, Double, Double)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor(DrawnUi.Draw.ISkiaControl, Double, Double)
+  name.vb: GetCellBoundsFor(ISkiaControl, Double, Double)
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight
+  id: GridHeight
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: GridHeight()
+  nameWithType: SkiaLayout.SkiaGridStructure.GridHeight()
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GridHeight
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 297
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double GridHeight()
+    return:
+      type: System.Double
+    content.vb: Public Function GridHeight() As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth
+  id: GridWidth
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: GridWidth()
+  nameWithType: SkiaLayout.SkiaGridStructure.GridWidth()
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GridWidth
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 302
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double GridWidth()
+    return:
+      type: System.Double
+    content.vb: Public Function GridWidth() As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight
+  id: MeasuredGridHeight
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: MeasuredGridHeight()
+  nameWithType: SkiaLayout.SkiaGridStructure.MeasuredGridHeight()
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasuredGridHeight
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 307
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double MeasuredGridHeight()
+    return:
+      type: System.Double
+    content.vb: Public Function MeasuredGridHeight() As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth
+  id: MeasuredGridWidth
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: MeasuredGridWidth()
+  nameWithType: SkiaLayout.SkiaGridStructure.MeasuredGridWidth()
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasuredGridWidth
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 324
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double MeasuredGridWidth()
+    return:
+      type: System.Double
+    content.vb: Public Function MeasuredGridWidth() As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(System.Int32)
+  id: LeftEdgeOfColumn(System.Int32)
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: LeftEdgeOfColumn(int)
+  nameWithType: SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(int)
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LeftEdgeOfColumn
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 541
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double LeftEdgeOfColumn(int column)
+    parameters:
+    - id: column
+      type: System.Int32
+    return:
+      type: System.Double
+    content.vb: Public Function LeftEdgeOfColumn(column As Integer) As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn*
+  nameWithType.vb: SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(Integer)
+  name.vb: LeftEdgeOfColumn(Integer)
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow(System.Int32)
+  id: TopEdgeOfRow(System.Int32)
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: TopEdgeOfRow(int)
+  nameWithType: SkiaLayout.SkiaGridStructure.TopEdgeOfRow(int)
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TopEdgeOfRow
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 554
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double TopEdgeOfRow(int row)
+    parameters:
+    - id: row
+      type: System.Int32
+    return:
+      type: System.Double
+    content.vb: Public Function TopEdgeOfRow(row As Integer) As Double
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow*
+  nameWithType.vb: SkiaLayout.SkiaGridStructure.TopEdgeOfRow(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow(Integer)
+  name.vb: TopEdgeOfRow(Integer)
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal(Microsoft.Maui.Graphics.Size)
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal(Microsoft.Maui.Graphics.Size)
+  id: DecompressStarsInternal(Microsoft.Maui.Graphics.Size)
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: DecompressStarsInternal(Size)
+  nameWithType: SkiaLayout.SkiaGridStructure.DecompressStarsInternal(Size)
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal(Microsoft.Maui.Graphics.Size)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DecompressStarsInternal
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 764
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void DecompressStarsInternal(Size targetSize)
+    parameters:
+    - id: targetSize
+      type: Microsoft.Maui.Graphics.Size
+    content.vb: Public Sub DecompressStarsInternal(targetSize As Size)
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars(SkiaSharp.SKSize)
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars(SkiaSharp.SKSize)
+  id: DecompressStars(SkiaSharp.SKSize)
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: DecompressStars(SKSize)
+  nameWithType: SkiaLayout.SkiaGridStructure.DecompressStars(SKSize)
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars(SkiaSharp.SKSize)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DecompressStars
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 793
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void DecompressStars(SKSize targetSize)
+    parameters:
+    - id: targetSize
+      type: SkiaSharp.SKSize
+    content.vb: Public Sub DecompressStars(targetSize As SKSize)
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_HeightConstraint
+  name: HeightConstraint
+  nameWithType: SkiaLayout.SkiaGridStructure.HeightConstraint
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.HeightConstraint
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_WidthConstraint
+  name: WidthConstraint
+  nameWithType: SkiaLayout.SkiaGridStructure.WidthConstraint
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.WidthConstraint
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_Rows
+  name: Rows
+  nameWithType: SkiaLayout.SkiaGridStructure.Rows
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows
+- uid: DrawnUi.Models.DefinitionInfo[]
+  isExternal: true
+  href: DrawnUi.Models.DefinitionInfo.html
+  name: DefinitionInfo[]
+  nameWithType: DefinitionInfo[]
+  fullName: DrawnUi.Models.DefinitionInfo[]
+  nameWithType.vb: DefinitionInfo()
+  fullName.vb: DrawnUi.Models.DefinitionInfo()
+  name.vb: DefinitionInfo()
+  spec.csharp:
+  - uid: DrawnUi.Models.DefinitionInfo
+    name: DefinitionInfo
+    href: DrawnUi.Models.DefinitionInfo.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: DrawnUi.Models.DefinitionInfo
+    name: DefinitionInfo
+    href: DrawnUi.Models.DefinitionInfo.html
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_Columns
+  name: Columns
+  nameWithType: SkiaLayout.SkiaGridStructure.Columns
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Columns
+- uid: Microsoft.Maui.Thickness
+  commentId: T:Microsoft.Maui.Thickness
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  name: Thickness
+  nameWithType: Thickness
+  fullName: Microsoft.Maui.Thickness
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridRowDefinition}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridRowDefinition}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<IGridRowDefinition>
+  nameWithType: IReadOnlyList<IGridRowDefinition>
+  fullName: System.Collections.Generic.IReadOnlyList<Microsoft.Maui.IGridRowDefinition>
+  nameWithType.vb: IReadOnlyList(Of IGridRowDefinition)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Microsoft.Maui.IGridRowDefinition)
+  name.vb: IReadOnlyList(Of IGridRowDefinition)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Microsoft.Maui.IGridRowDefinition
+    name: IGridRowDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridrowdefinition
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IGridRowDefinition
+    name: IGridRowDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridrowdefinition
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridColumnDefinition}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridColumnDefinition}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<IGridColumnDefinition>
+  nameWithType: IReadOnlyList<IGridColumnDefinition>
+  fullName: System.Collections.Generic.IReadOnlyList<Microsoft.Maui.IGridColumnDefinition>
+  nameWithType.vb: IReadOnlyList(Of IGridColumnDefinition)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Microsoft.Maui.IGridColumnDefinition)
+  name.vb: IReadOnlyList(Of IGridColumnDefinition)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Microsoft.Maui.IGridColumnDefinition
+    name: IGridColumnDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridcolumndefinition
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IGridColumnDefinition
+    name: IGridColumnDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridcolumndefinition
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.#ctor*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.#ctor
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure__ctor_DrawnUi_Draw_ISkiaGridLayout_System_Double_System_Double_
+  name: SkiaGridStructure
+  nameWithType: SkiaLayout.SkiaGridStructure.SkiaGridStructure
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.SkiaGridStructure
+  nameWithType.vb: SkiaLayout.SkiaGridStructure.New
+  fullName.vb: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.New
+  name.vb: New
+- uid: DrawnUi.Draw.ISkiaGridLayout
+  commentId: T:DrawnUi.Draw.ISkiaGridLayout
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaGridLayout.html
+  name: ISkiaGridLayout
+  nameWithType: ISkiaGridLayout
+  fullName: DrawnUi.Draw.ISkiaGridLayout
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_GetCellBoundsFor_DrawnUi_Draw_ISkiaControl_System_Double_System_Double_
+  name: GetCellBoundsFor
+  nameWithType: SkiaLayout.SkiaGridStructure.GetCellBoundsFor
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GetCellBoundsFor
+- uid: DrawnUi.Draw.ISkiaControl
+  commentId: T:DrawnUi.Draw.ISkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaControl.html
+  name: ISkiaControl
+  nameWithType: ISkiaControl
+  fullName: DrawnUi.Draw.ISkiaControl
+- uid: Microsoft.Maui.Graphics.Rect
+  commentId: T:Microsoft.Maui.Graphics.Rect
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  name: Rect
+  nameWithType: Rect
+  fullName: Microsoft.Maui.Graphics.Rect
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_GridHeight
+  name: GridHeight
+  nameWithType: SkiaLayout.SkiaGridStructure.GridHeight
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridHeight
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_GridWidth
+  name: GridWidth
+  nameWithType: SkiaLayout.SkiaGridStructure.GridWidth
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.GridWidth
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_MeasuredGridHeight
+  name: MeasuredGridHeight
+  nameWithType: SkiaLayout.SkiaGridStructure.MeasuredGridHeight
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_MeasuredGridWidth
+  name: MeasuredGridWidth
+  nameWithType: SkiaLayout.SkiaGridStructure.MeasuredGridWidth
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_LeftEdgeOfColumn_System_Int32_
+  name: LeftEdgeOfColumn
+  nameWithType: SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_TopEdgeOfRow_System_Int32_
+  name: TopEdgeOfRow
+  nameWithType: SkiaLayout.SkiaGridStructure.TopEdgeOfRow
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.TopEdgeOfRow
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_DecompressStarsInternal_Microsoft_Maui_Graphics_Size_
+  name: DecompressStarsInternal
+  nameWithType: SkiaLayout.SkiaGridStructure.DecompressStarsInternal
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStarsInternal
+- uid: Microsoft.Maui.Graphics.Size
+  commentId: T:Microsoft.Maui.Graphics.Size
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.size
+  name: Size
+  nameWithType: Size
+  fullName: Microsoft.Maui.Graphics.Size
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_DecompressStars_SkiaSharp_SKSize_
+  name: DecompressStars
+  nameWithType: SkiaLayout.SkiaGridStructure.DecompressStars
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.DecompressStars
+- uid: SkiaSharp.SKSize
+  commentId: T:SkiaSharp.SKSize
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksize
+  name: SKSize
+  nameWithType: SKSize
+  fullName: SkiaSharp.SKSize
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp

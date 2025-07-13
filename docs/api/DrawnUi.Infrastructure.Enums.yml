@@ -1,0 +1,62 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Enums
+  commentId: N:DrawnUi.Infrastructure.Enums
+  id: DrawnUi.Infrastructure.Enums
+  children:
+  - DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  - DrawnUi.Infrastructure.Enums.UpdateMode
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Infrastructure.Enums
+  nameWithType: DrawnUi.Infrastructure.Enums
+  fullName: DrawnUi.Infrastructure.Enums
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  commentId: T:DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  parent: DrawnUi.Infrastructure.Enums
+  href: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.html
+  name: DoubleViewTransitionType
+  nameWithType: DoubleViewTransitionType
+  fullName: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+- uid: DrawnUi.Infrastructure.Enums.UpdateMode
+  commentId: T:DrawnUi.Infrastructure.Enums.UpdateMode
+  parent: DrawnUi.Infrastructure.Enums
+  href: DrawnUi.Infrastructure.Enums.UpdateMode.html
+  name: UpdateMode
+  nameWithType: UpdateMode
+  fullName: DrawnUi.Infrastructure.Enums.UpdateMode
+- uid: DrawnUi.Infrastructure.Enums
+  commentId: N:DrawnUi.Infrastructure.Enums
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure.Enums
+  nameWithType: DrawnUi.Infrastructure.Enums
+  fullName: DrawnUi.Infrastructure.Enums
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Enums
+    name: Enums
+    href: DrawnUi.Infrastructure.Enums.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Enums
+    name: Enums
+    href: DrawnUi.Infrastructure.Enums.html

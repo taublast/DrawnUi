@@ -1,0 +1,266 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  commentId: T:DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  id: DoubleViewTransitionType
+  parent: DrawnUi.Infrastructure.Enums
+  children:
+  - DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Pop
+  - DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Push
+  - DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectLeftTab
+  - DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectRightTab
+  langs:
+  - csharp
+  - vb
+  name: DoubleViewTransitionType
+  nameWithType: DoubleViewTransitionType
+  fullName: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DoubleViewTransitionType
+    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  syntax:
+    content: public enum DoubleViewTransitionType
+    content.vb: Public Enum DoubleViewTransitionType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectLeftTab
+  commentId: F:DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectLeftTab
+  id: SelectLeftTab
+  parent: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  langs:
+  - csharp
+  - vb
+  name: SelectLeftTab
+  nameWithType: DoubleViewTransitionType.SelectLeftTab
+  fullName: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectLeftTab
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SelectLeftTab
+    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  syntax:
+    content: SelectLeftTab = 0
+    return:
+      type: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+- uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectRightTab
+  commentId: F:DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectRightTab
+  id: SelectRightTab
+  parent: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  langs:
+  - csharp
+  - vb
+  name: SelectRightTab
+  nameWithType: DoubleViewTransitionType.SelectRightTab
+  fullName: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.SelectRightTab
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SelectRightTab
+    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  syntax:
+    content: SelectRightTab = 1
+    return:
+      type: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+- uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Push
+  commentId: F:DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Push
+  id: Push
+  parent: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  langs:
+  - csharp
+  - vb
+  name: Push
+  nameWithType: DoubleViewTransitionType.Push
+  fullName: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Push
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Push
+    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  syntax:
+    content: Push = 2
+    return:
+      type: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+- uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Pop
+  commentId: F:DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Pop
+  id: Pop
+  parent: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  langs:
+  - csharp
+  - vb
+  name: Pop
+  nameWithType: DoubleViewTransitionType.Pop
+  fullName: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.Pop
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Pop
+    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure.Enums
+  syntax:
+    content: Pop = 3
+    return:
+      type: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+references:
+- uid: DrawnUi.Infrastructure.Enums
+  commentId: N:DrawnUi.Infrastructure.Enums
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure.Enums
+  nameWithType: DrawnUi.Infrastructure.Enums
+  fullName: DrawnUi.Infrastructure.Enums
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Enums
+    name: Enums
+    href: DrawnUi.Infrastructure.Enums.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Enums
+    name: Enums
+    href: DrawnUi.Infrastructure.Enums.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  commentId: T:DrawnUi.Infrastructure.Enums.DoubleViewTransitionType
+  parent: DrawnUi.Infrastructure.Enums
+  href: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.html
+  name: DoubleViewTransitionType
+  nameWithType: DoubleViewTransitionType
+  fullName: DrawnUi.Infrastructure.Enums.DoubleViewTransitionType

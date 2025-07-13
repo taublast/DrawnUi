@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Input Controls | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Input Controls | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/input.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="input-controls">Input Controls</h1>
+
+<p>DrawnUi.Maui provides various input controls for user interaction, including sliders, progress indicators, and specialized picker controls.</p>
+<h2 id="skiaslider">SkiaSlider</h2>
+<p><code>SkiaSlider</code> is a versatile slider control that supports both single value selection and range selection capabilities.</p>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaSlider
+    Minimum=&quot;0&quot;
+    Maximum=&quot;100&quot;
+    Value=&quot;50&quot;
+    WidthRequest=&quot;300&quot;
+    HeightRequest=&quot;40&quot;
+    TrackColor=&quot;LightGray&quot;
+    ThumbColor=&quot;Blue&quot;
+    ValueChanged=&quot;OnSliderValueChanged&quot; /&gt;
+</code></pre>
+<h3 id="range-selection">Range Selection</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaSlider
+    Minimum=&quot;0&quot;
+    Maximum=&quot;100&quot;
+    Value=&quot;25&quot;
+    ValueTo=&quot;75&quot;
+    IsRange=&quot;true&quot;
+    WidthRequest=&quot;300&quot;
+    HeightRequest=&quot;40&quot;
+    TrackColor=&quot;LightGray&quot;
+    ThumbColor=&quot;Blue&quot; /&gt;
+</code></pre>
+<h3 id="key-properties">Key Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Minimum</code></td>
+<td>double</td>
+<td>Minimum value of the slider</td>
+</tr>
+<tr>
+<td><code>Maximum</code></td>
+<td>double</td>
+<td>Maximum value of the slider</td>
+</tr>
+<tr>
+<td><code>Value</code></td>
+<td>double</td>
+<td>Current value (or start value for range)</td>
+</tr>
+<tr>
+<td><code>ValueTo</code></td>
+<td>double</td>
+<td>End value for range selection</td>
+</tr>
+<tr>
+<td><code>IsRange</code></td>
+<td>bool</td>
+<td>Whether the slider supports range selection</td>
+</tr>
+<tr>
+<td><code>TrackColor</code></td>
+<td>Color</td>
+<td>Color of the slider track</td>
+</tr>
+<tr>
+<td><code>ThumbColor</code></td>
+<td>Color</td>
+<td>Color of the slider thumb</td>
+</tr>
+<tr>
+<td><code>Step</code></td>
+<td>double</td>
+<td>Step increment for value changes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events">Events</h3>
+<ul>
+<li><code>ValueChanged</code>: Raised when the slider value changes
+<ul>
+<li>Event signature: <code>EventHandler&lt;double&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="skiaprogress">SkiaProgress</h2>
+<p><code>SkiaProgress</code> is a progress indicator control to show that you are actually doing something, with support for determinate and indeterminate progress.</p>
+<h3 id="basic-usage-1">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaProgress
+    Progress=&quot;0.5&quot;
+    WidthRequest=&quot;200&quot;
+    HeightRequest=&quot;20&quot;
+    ProgressColor=&quot;Green&quot;
+    BackgroundColor=&quot;LightGray&quot;
+    CornerRadius=&quot;10&quot; /&gt;
+</code></pre>
+<h3 id="indeterminate-progress">Indeterminate Progress</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaProgress
+    IsIndeterminate=&quot;true&quot;
+    WidthRequest=&quot;200&quot;
+    HeightRequest=&quot;20&quot;
+    ProgressColor=&quot;Blue&quot;
+    BackgroundColor=&quot;LightGray&quot; /&gt;
+</code></pre>
+<h3 id="key-properties-1">Key Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Progress</code></td>
+<td>double</td>
+<td>Progress value (0.0 to 1.0)</td>
+</tr>
+<tr>
+<td><code>IsIndeterminate</code></td>
+<td>bool</td>
+<td>Whether to show indeterminate progress</td>
+</tr>
+<tr>
+<td><code>ProgressColor</code></td>
+<td>Color</td>
+<td>Color of the progress bar</td>
+</tr>
+<tr>
+<td><code>BackgroundColor</code></td>
+<td>Color</td>
+<td>Background color of the progress track</td>
+</tr>
+<tr>
+<td><code>CornerRadius</code></td>
+<td>double</td>
+<td>Corner radius for rounded progress bar</td>
+</tr>
+</tbody>
+</table>
+<h2 id="skiawheelpicker">SkiaWheelPicker</h2>
+<p><code>SkiaWheelPicker</code> provides an iOS-style picker wheel for selecting items from a list.</p>
+<h3 id="basic-usage-2">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaWheelPicker
+    ItemsSource=&quot;{Binding Items}&quot;
+    SelectedItem=&quot;{Binding SelectedItem}&quot;
+    WidthRequest=&quot;200&quot;
+    HeightRequest=&quot;150&quot;
+    ItemHeight=&quot;40&quot;
+    VisibleItemsCount=&quot;5&quot; /&gt;
+</code></pre>
+<h3 id="key-properties-2">Key Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ItemsSource</code></td>
+<td>IEnumerable</td>
+<td>Collection of items to display</td>
+</tr>
+<tr>
+<td><code>SelectedItem</code></td>
+<td>object</td>
+<td>Currently selected item</td>
+</tr>
+<tr>
+<td><code>SelectedIndex</code></td>
+<td>int</td>
+<td>Index of the selected item</td>
+</tr>
+<tr>
+<td><code>ItemHeight</code></td>
+<td>double</td>
+<td>Height of each item in the picker</td>
+</tr>
+<tr>
+<td><code>VisibleItemsCount</code></td>
+<td>int</td>
+<td>Number of visible items</td>
+</tr>
+<tr>
+<td><code>IsLooped</code></td>
+<td>bool</td>
+<td>Whether the picker loops infinitely</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events-1">Events</h3>
+<ul>
+<li><code>SelectionChanged</code>: Raised when the selected item changes</li>
+</ul>
+<h2 id="skiaspinner">SkiaSpinner</h2>
+<p><code>SkiaSpinner</code> is a spinner control to test your luck, providing a rotating wheel with customizable segments.</p>
+<h3 id="basic-usage-3">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaSpinner
+    Segments=&quot;{Binding SpinnerSegments}&quot;
+    WidthRequest=&quot;200&quot;
+    HeightRequest=&quot;200&quot;
+    SpinDuration=&quot;3000&quot;
+    SpinCompleted=&quot;OnSpinCompleted&quot; /&gt;
+</code></pre>
+<h3 id="key-properties-3">Key Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Segments</code></td>
+<td>IEnumerable</td>
+<td>Collection of spinner segments</td>
+</tr>
+<tr>
+<td><code>SelectedSegment</code></td>
+<td>object</td>
+<td>Currently selected segment</td>
+</tr>
+<tr>
+<td><code>SpinDuration</code></td>
+<td>int</td>
+<td>Duration of spin animation in milliseconds</td>
+</tr>
+<tr>
+<td><code>IsSpinning</code></td>
+<td>bool</td>
+<td>Whether the spinner is currently spinning</td>
+</tr>
+<tr>
+<td><code>SpinVelocity</code></td>
+<td>double</td>
+<td>Initial velocity for the spin</td>
+</tr>
+</tbody>
+</table>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><code>Spin()</code>: Start spinning the wheel</li>
+<li><code>Stop()</code>: Stop the spinning animation</li>
+</ul>
+<h3 id="events-2">Events</h3>
+<ul>
+<li><code>SpinCompleted</code>: Raised when the spin animation completes
+<ul>
+<li>Event signature: <code>EventHandler&lt;object&gt;</code> where object is the selected segment</li>
+</ul>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/input.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

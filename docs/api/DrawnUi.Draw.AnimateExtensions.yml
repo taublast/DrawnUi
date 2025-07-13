@@ -1,0 +1,757 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.AnimateExtensions
+  commentId: T:DrawnUi.Draw.AnimateExtensions
+  id: AnimateExtensions
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.AnimateExtensions.AnimateWith(DrawnUi.Draw.SkiaControl,System.Func{DrawnUi.Draw.SkiaControl,System.Threading.Tasks.Task}[])
+  - DrawnUi.Draw.AnimateExtensions.FadeIn(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.AnimateExtensions.FadeOut(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.AnimateExtensions.Translate(DrawnUi.Draw.SkiaControl,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.AnimateExtensions.WhenCompleted(System.Threading.Tasks.Task,System.Action)
+  langs:
+  - csharp
+  - vb
+  name: AnimateExtensions
+  nameWithType: AnimateExtensions
+  fullName: DrawnUi.Draw.AnimateExtensions
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AnimateExtensions
+    path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static class AnimateExtensions
+    content.vb: Public Module AnimateExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.AnimateExtensions.Translate(DrawnUi.Draw.SkiaControl,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.AnimateExtensions.Translate(DrawnUi.Draw.SkiaControl,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  id: Translate(DrawnUi.Draw.SkiaControl,System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.AnimateExtensions
+  langs:
+  - csharp
+  - vb
+  name: Translate(SkiaControl, Vector2, float, Easing, CancellationTokenSource)
+  nameWithType: AnimateExtensions.Translate(SkiaControl, Vector2, float, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.AnimateExtensions.Translate(DrawnUi.Draw.SkiaControl, System.Numerics.Vector2, float, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Translate
+    path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task Translate(this SkiaControl control, Vector2 translation, float seconds = 0.4, Easing easing = null, CancellationTokenSource cancel = null)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.SkiaControl
+    - id: translation
+      type: System.Numerics.Vector2
+    - id: seconds
+      type: System.Single
+    - id: easing
+      type: Microsoft.Maui.Easing
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function Translate(control As SkiaControl, translation As Vector2, seconds As Single = 0.4, easing As Easing = Nothing, cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.AnimateExtensions.Translate*
+  nameWithType.vb: AnimateExtensions.Translate(SkiaControl, Vector2, Single, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.AnimateExtensions.Translate(DrawnUi.Draw.SkiaControl, System.Numerics.Vector2, Single, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: Translate(SkiaControl, Vector2, Single, Easing, CancellationTokenSource)
+- uid: DrawnUi.Draw.AnimateExtensions.FadeIn(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.AnimateExtensions.FadeIn(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  id: FadeIn(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.AnimateExtensions
+  langs:
+  - csharp
+  - vb
+  name: FadeIn(SkiaControl, float, Easing, CancellationTokenSource)
+  nameWithType: AnimateExtensions.FadeIn(SkiaControl, float, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.AnimateExtensions.FadeIn(DrawnUi.Draw.SkiaControl, float, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FadeIn
+    path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task FadeIn(this SkiaControl control, float seconds = 0.4, Easing easing = null, CancellationTokenSource cancel = null)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.SkiaControl
+    - id: seconds
+      type: System.Single
+    - id: easing
+      type: Microsoft.Maui.Easing
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function FadeIn(control As SkiaControl, seconds As Single = 0.4, easing As Easing = Nothing, cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.AnimateExtensions.FadeIn*
+  nameWithType.vb: AnimateExtensions.FadeIn(SkiaControl, Single, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.AnimateExtensions.FadeIn(DrawnUi.Draw.SkiaControl, Single, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: FadeIn(SkiaControl, Single, Easing, CancellationTokenSource)
+- uid: DrawnUi.Draw.AnimateExtensions.FadeOut(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.AnimateExtensions.FadeOut(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  id: FadeOut(DrawnUi.Draw.SkiaControl,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.AnimateExtensions
+  langs:
+  - csharp
+  - vb
+  name: FadeOut(SkiaControl, float, Easing, CancellationTokenSource)
+  nameWithType: AnimateExtensions.FadeOut(SkiaControl, float, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.AnimateExtensions.FadeOut(DrawnUi.Draw.SkiaControl, float, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FadeOut
+    path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task FadeOut(this SkiaControl control, float seconds = 0.4, Easing easing = null, CancellationTokenSource cancel = null)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.SkiaControl
+    - id: seconds
+      type: System.Single
+    - id: easing
+      type: Microsoft.Maui.Easing
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function FadeOut(control As SkiaControl, seconds As Single = 0.4, easing As Easing = Nothing, cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.AnimateExtensions.FadeOut*
+  nameWithType.vb: AnimateExtensions.FadeOut(SkiaControl, Single, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.AnimateExtensions.FadeOut(DrawnUi.Draw.SkiaControl, Single, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: FadeOut(SkiaControl, Single, Easing, CancellationTokenSource)
+- uid: DrawnUi.Draw.AnimateExtensions.AnimateWith(DrawnUi.Draw.SkiaControl,System.Func{DrawnUi.Draw.SkiaControl,System.Threading.Tasks.Task}[])
+  commentId: M:DrawnUi.Draw.AnimateExtensions.AnimateWith(DrawnUi.Draw.SkiaControl,System.Func{DrawnUi.Draw.SkiaControl,System.Threading.Tasks.Task}[])
+  id: AnimateWith(DrawnUi.Draw.SkiaControl,System.Func{DrawnUi.Draw.SkiaControl,System.Threading.Tasks.Task}[])
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.AnimateExtensions
+  langs:
+  - csharp
+  - vb
+  name: AnimateWith(SkiaControl, params Func<SkiaControl, Task>[])
+  nameWithType: AnimateExtensions.AnimateWith(SkiaControl, params Func<SkiaControl, Task>[])
+  fullName: DrawnUi.Draw.AnimateExtensions.AnimateWith(DrawnUi.Draw.SkiaControl, params System.Func<DrawnUi.Draw.SkiaControl, System.Threading.Tasks.Task>[])
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AnimateWith
+    path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+    startLine: 30
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Animate several tasks at the same time with WhenAll
+  example: []
+  syntax:
+    content: public static Task AnimateWith(this SkiaControl control, params Func<SkiaControl, Task>[] animations)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: animations
+      type: System.Func{DrawnUi.Draw.SkiaControl,System.Threading.Tasks.Task}[]
+      description: ''
+    return:
+      type: System.Threading.Tasks.Task
+      description: ''
+    content.vb: Public Shared Function AnimateWith(control As SkiaControl, ParamArray animations As Func(Of SkiaControl, Task)()) As Task
+  overload: DrawnUi.Draw.AnimateExtensions.AnimateWith*
+  nameWithType.vb: AnimateExtensions.AnimateWith(SkiaControl, ParamArray Func(Of SkiaControl, Task)())
+  fullName.vb: DrawnUi.Draw.AnimateExtensions.AnimateWith(DrawnUi.Draw.SkiaControl, ParamArray System.Func(Of DrawnUi.Draw.SkiaControl, System.Threading.Tasks.Task)())
+  name.vb: AnimateWith(SkiaControl, ParamArray Func(Of SkiaControl, Task)())
+- uid: DrawnUi.Draw.AnimateExtensions.WhenCompleted(System.Threading.Tasks.Task,System.Action)
+  commentId: M:DrawnUi.Draw.AnimateExtensions.WhenCompleted(System.Threading.Tasks.Task,System.Action)
+  id: WhenCompleted(System.Threading.Tasks.Task,System.Action)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.AnimateExtensions
+  langs:
+  - csharp
+  - vb
+  name: WhenCompleted(Task, Action)
+  nameWithType: AnimateExtensions.WhenCompleted(Task, Action)
+  fullName: DrawnUi.Draw.AnimateExtensions.WhenCompleted(System.Threading.Tasks.Task, System.Action)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WhenCompleted
+    path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
+    startLine: 36
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task WhenCompleted(this Task task, Action continuationAction)
+    parameters:
+    - id: task
+      type: System.Threading.Tasks.Task
+    - id: continuationAction
+      type: System.Action
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function WhenCompleted(task As Task, continuationAction As Action) As Task
+  overload: DrawnUi.Draw.AnimateExtensions.WhenCompleted*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.AnimateExtensions.Translate*
+  commentId: Overload:DrawnUi.Draw.AnimateExtensions.Translate
+  href: DrawnUi.Draw.AnimateExtensions.html#DrawnUi_Draw_AnimateExtensions_Translate_DrawnUi_Draw_SkiaControl_System_Numerics_Vector2_System_Single_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: Translate
+  nameWithType: AnimateExtensions.Translate
+  fullName: DrawnUi.Draw.AnimateExtensions.Translate
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: System.Numerics.Vector2
+  commentId: T:System.Numerics.Vector2
+  parent: System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  name: Vector2
+  nameWithType: Vector2
+  fullName: System.Numerics.Vector2
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Microsoft.Maui.Easing
+  commentId: T:Microsoft.Maui.Easing
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  name: Easing
+  nameWithType: Easing
+  fullName: Microsoft.Maui.Easing
+- uid: System.Threading.CancellationTokenSource
+  commentId: T:System.Threading.CancellationTokenSource
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  name: CancellationTokenSource
+  nameWithType: CancellationTokenSource
+  fullName: System.Threading.CancellationTokenSource
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Numerics
+  commentId: N:System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Numerics
+  nameWithType: System.Numerics
+  fullName: System.Numerics
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: DrawnUi.Draw.AnimateExtensions.FadeIn*
+  commentId: Overload:DrawnUi.Draw.AnimateExtensions.FadeIn
+  href: DrawnUi.Draw.AnimateExtensions.html#DrawnUi_Draw_AnimateExtensions_FadeIn_DrawnUi_Draw_SkiaControl_System_Single_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: FadeIn
+  nameWithType: AnimateExtensions.FadeIn
+  fullName: DrawnUi.Draw.AnimateExtensions.FadeIn
+- uid: DrawnUi.Draw.AnimateExtensions.FadeOut*
+  commentId: Overload:DrawnUi.Draw.AnimateExtensions.FadeOut
+  href: DrawnUi.Draw.AnimateExtensions.html#DrawnUi_Draw_AnimateExtensions_FadeOut_DrawnUi_Draw_SkiaControl_System_Single_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: FadeOut
+  nameWithType: AnimateExtensions.FadeOut
+  fullName: DrawnUi.Draw.AnimateExtensions.FadeOut
+- uid: DrawnUi.Draw.AnimateExtensions.AnimateWith*
+  commentId: Overload:DrawnUi.Draw.AnimateExtensions.AnimateWith
+  href: DrawnUi.Draw.AnimateExtensions.html#DrawnUi_Draw_AnimateExtensions_AnimateWith_DrawnUi_Draw_SkiaControl_System_Func_DrawnUi_Draw_SkiaControl_System_Threading_Tasks_Task____
+  name: AnimateWith
+  nameWithType: AnimateExtensions.AnimateWith
+  fullName: DrawnUi.Draw.AnimateExtensions.AnimateWith
+- uid: System.Func{DrawnUi.Draw.SkiaControl,System.Threading.Tasks.Task}[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<SkiaControl, Task>[]
+  nameWithType: Func<SkiaControl, Task>[]
+  fullName: System.Func<DrawnUi.Draw.SkiaControl, System.Threading.Tasks.Task>[]
+  nameWithType.vb: Func(Of SkiaControl, Task)()
+  fullName.vb: System.Func(Of DrawnUi.Draw.SkiaControl, System.Threading.Tasks.Task)()
+  name.vb: Func(Of SkiaControl, Task)()
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: System.Threading.Tasks.Task
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  - name: '>'
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: System.Threading.Tasks.Task
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  - name: )
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimateExtensions.WhenCompleted*
+  commentId: Overload:DrawnUi.Draw.AnimateExtensions.WhenCompleted
+  href: DrawnUi.Draw.AnimateExtensions.html#DrawnUi_Draw_AnimateExtensions_WhenCompleted_System_Threading_Tasks_Task_System_Action_
+  name: WhenCompleted
+  nameWithType: AnimateExtensions.WhenCompleted
+  fullName: DrawnUi.Draw.AnimateExtensions.WhenCompleted
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action
+  name: Action
+  nameWithType: Action
+  fullName: System.Action

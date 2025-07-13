@@ -1,0 +1,827 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.VisualTreeHandler
+  commentId: T:DrawnUi.Draw.VisualTreeHandler
+  id: VisualTreeHandler
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.VisualTreeHandler.ActiveTree
+  - DrawnUi.Draw.VisualTreeHandler.DumpActiveTree
+  - DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree
+  - DrawnUi.Draw.VisualTreeHandler.DumpTree(DrawnUi.Draw.VisualLayer,System.String,System.Boolean,System.Int32)
+  - DrawnUi.Draw.VisualTreeHandler.IsReady
+  - DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree(DrawnUi.Draw.DrawingContext,System.Single,System.Single,DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.VisualTreeHandler.PreparedTree
+  - DrawnUi.Draw.VisualTreeHandler.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.VisualLayer)
+  - DrawnUi.Draw.VisualTreeHandler.WasRendered
+  langs:
+  - csharp
+  - vb
+  name: VisualTreeHandler
+  nameWithType: VisualTreeHandler
+  fullName: DrawnUi.Draw.VisualTreeHandler
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VisualTreeHandler
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class VisualTreeHandler
+    content.vb: Public Class VisualTreeHandler
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree
+  commentId: M:DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree
+  id: DumpPreparedTree
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: DumpPreparedTree()
+  nameWithType: VisualTreeHandler.DumpPreparedTree()
+  fullName: DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DumpPreparedTree
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void DumpPreparedTree()
+    content.vb: Public Sub DumpPreparedTree()
+  overload: DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree*
+- uid: DrawnUi.Draw.VisualTreeHandler.DumpActiveTree
+  commentId: M:DrawnUi.Draw.VisualTreeHandler.DumpActiveTree
+  id: DumpActiveTree
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: DumpActiveTree()
+  nameWithType: VisualTreeHandler.DumpActiveTree()
+  fullName: DrawnUi.Draw.VisualTreeHandler.DumpActiveTree()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DumpActiveTree
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void DumpActiveTree()
+    content.vb: Public Sub DumpActiveTree()
+  overload: DrawnUi.Draw.VisualTreeHandler.DumpActiveTree*
+- uid: DrawnUi.Draw.VisualTreeHandler.DumpTree(DrawnUi.Draw.VisualLayer,System.String,System.Boolean,System.Int32)
+  commentId: M:DrawnUi.Draw.VisualTreeHandler.DumpTree(DrawnUi.Draw.VisualLayer,System.String,System.Boolean,System.Int32)
+  id: DumpTree(DrawnUi.Draw.VisualLayer,System.String,System.Boolean,System.Int32)
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: DumpTree(VisualLayer, string, bool, int)
+  nameWithType: VisualTreeHandler.DumpTree(VisualLayer, string, bool, int)
+  fullName: DrawnUi.Draw.VisualTreeHandler.DumpTree(DrawnUi.Draw.VisualLayer, string, bool, int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DumpTree
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void DumpTree(VisualLayer node, string prefix = "", bool isLast = true, int level = 0)
+    parameters:
+    - id: node
+      type: DrawnUi.Draw.VisualLayer
+    - id: prefix
+      type: System.String
+    - id: isLast
+      type: System.Boolean
+    - id: level
+      type: System.Int32
+    content.vb: Public Sub DumpTree(node As VisualLayer, prefix As String = "", isLast As Boolean = True, level As Integer = 0)
+  overload: DrawnUi.Draw.VisualTreeHandler.DumpTree*
+  nameWithType.vb: VisualTreeHandler.DumpTree(VisualLayer, String, Boolean, Integer)
+  fullName.vb: DrawnUi.Draw.VisualTreeHandler.DumpTree(DrawnUi.Draw.VisualLayer, String, Boolean, Integer)
+  name.vb: DumpTree(VisualLayer, String, Boolean, Integer)
+- uid: DrawnUi.Draw.VisualTreeHandler.IsReady
+  commentId: P:DrawnUi.Draw.VisualTreeHandler.IsReady
+  id: IsReady
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: IsReady
+  nameWithType: VisualTreeHandler.IsReady
+  fullName: DrawnUi.Draw.VisualTreeHandler.IsReady
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsReady
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 66
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsReady { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsReady As Boolean
+  overload: DrawnUi.Draw.VisualTreeHandler.IsReady*
+- uid: DrawnUi.Draw.VisualTreeHandler.WasRendered
+  commentId: P:DrawnUi.Draw.VisualTreeHandler.WasRendered
+  id: WasRendered
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: WasRendered
+  nameWithType: VisualTreeHandler.WasRendered
+  fullName: DrawnUi.Draw.VisualTreeHandler.WasRendered
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WasRendered
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 74
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool WasRendered { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property WasRendered As Boolean
+  overload: DrawnUi.Draw.VisualTreeHandler.WasRendered*
+- uid: DrawnUi.Draw.VisualTreeHandler.ActiveTree
+  commentId: F:DrawnUi.Draw.VisualTreeHandler.ActiveTree
+  id: ActiveTree
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: ActiveTree
+  nameWithType: VisualTreeHandler.ActiveTree
+  fullName: DrawnUi.Draw.VisualTreeHandler.ActiveTree
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ActiveTree
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 85
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This is used for rendering
+  example: []
+  syntax:
+    content: protected VisualLayer ActiveTree
+    return:
+      type: DrawnUi.Draw.VisualLayer
+    content.vb: Protected ActiveTree As VisualLayer
+- uid: DrawnUi.Draw.VisualTreeHandler.PreparedTree
+  commentId: F:DrawnUi.Draw.VisualTreeHandler.PreparedTree
+  id: PreparedTree
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: PreparedTree
+  nameWithType: VisualTreeHandler.PreparedTree
+  fullName: DrawnUi.Draw.VisualTreeHandler.PreparedTree
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PreparedTree
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This is prepared and can be used to replace ActiveTree
+  example: []
+  syntax:
+    content: protected VisualLayer PreparedTree
+    return:
+      type: DrawnUi.Draw.VisualLayer
+    content.vb: Protected PreparedTree As VisualLayer
+- uid: DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree(DrawnUi.Draw.DrawingContext,System.Single,System.Single,DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree(DrawnUi.Draw.DrawingContext,System.Single,System.Single,DrawnUi.Draw.SkiaControl)
+  id: PrepareRenderingTree(DrawnUi.Draw.DrawingContext,System.Single,System.Single,DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: PrepareRenderingTree(DrawingContext, float, float, SkiaControl)
+  nameWithType: VisualTreeHandler.PrepareRenderingTree(DrawingContext, float, float, SkiaControl)
+  fullName: DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree(DrawnUi.Draw.DrawingContext, float, float, DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PrepareRenderingTree
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 97
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: STEP 1 (or Background thread) prepare rendering tree that will be used for rendering later.
+  example: []
+  syntax:
+    content: public void PrepareRenderingTree(DrawingContext context, float widthRequest, float heightRequest, SkiaControl root)
+    parameters:
+    - id: context
+      type: DrawnUi.Draw.DrawingContext
+      description: ''
+    - id: widthRequest
+      type: System.Single
+    - id: heightRequest
+      type: System.Single
+    - id: root
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Sub PrepareRenderingTree(context As DrawingContext, widthRequest As Single, heightRequest As Single, root As SkiaControl)
+  overload: DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree*
+  nameWithType.vb: VisualTreeHandler.PrepareRenderingTree(DrawingContext, Single, Single, SkiaControl)
+  fullName.vb: DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree(DrawnUi.Draw.DrawingContext, Single, Single, DrawnUi.Draw.SkiaControl)
+  name.vb: PrepareRenderingTree(DrawingContext, Single, Single, SkiaControl)
+- uid: DrawnUi.Draw.VisualTreeHandler.Render(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.VisualTreeHandler.Render(DrawnUi.Draw.DrawingContext)
+  id: Render(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: Render(DrawingContext)
+  nameWithType: VisualTreeHandler.Render(DrawingContext)
+  fullName: DrawnUi.Draw.VisualTreeHandler.Render(DrawnUi.Draw.DrawingContext)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Render
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 111
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: STEP 2 (or Main thread) use prepared rendering tree to draw its nodes
+  example: []
+  syntax:
+    content: public void Render(DrawingContext context)
+    parameters:
+    - id: context
+      type: DrawnUi.Draw.DrawingContext
+      description: ''
+    content.vb: Public Sub Render(context As DrawingContext)
+  overload: DrawnUi.Draw.VisualTreeHandler.Render*
+- uid: DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.VisualLayer)
+  commentId: M:DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.VisualLayer)
+  id: RenderTreeInternal(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.VisualLayer)
+  parent: DrawnUi.Draw.VisualTreeHandler
+  langs:
+  - csharp
+  - vb
+  name: RenderTreeInternal(DrawingContext, VisualLayer)
+  nameWithType: VisualTreeHandler.RenderTreeInternal(DrawingContext, VisualLayer)
+  fullName: DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.VisualLayer)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualTreeHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderTreeInternal
+    path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
+    startLine: 127
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Used by STEP 2 RenderTree method
+  example: []
+  syntax:
+    content: protected void RenderTreeInternal(DrawingContext context, VisualLayer node)
+    parameters:
+    - id: context
+      type: DrawnUi.Draw.DrawingContext
+      description: ''
+    - id: node
+      type: DrawnUi.Draw.VisualLayer
+      description: ''
+    content.vb: Protected Sub RenderTreeInternal(context As DrawingContext, node As VisualLayer)
+  overload: DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_DumpPreparedTree
+  name: DumpPreparedTree
+  nameWithType: VisualTreeHandler.DumpPreparedTree
+  fullName: DrawnUi.Draw.VisualTreeHandler.DumpPreparedTree
+- uid: DrawnUi.Draw.VisualTreeHandler.DumpActiveTree*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.DumpActiveTree
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_DumpActiveTree
+  name: DumpActiveTree
+  nameWithType: VisualTreeHandler.DumpActiveTree
+  fullName: DrawnUi.Draw.VisualTreeHandler.DumpActiveTree
+- uid: DrawnUi.Draw.VisualTreeHandler.DumpTree*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.DumpTree
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_DumpTree_DrawnUi_Draw_VisualLayer_System_String_System_Boolean_System_Int32_
+  name: DumpTree
+  nameWithType: VisualTreeHandler.DumpTree
+  fullName: DrawnUi.Draw.VisualTreeHandler.DumpTree
+- uid: DrawnUi.Draw.VisualLayer
+  commentId: T:DrawnUi.Draw.VisualLayer
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.VisualLayer.html
+  name: VisualLayer
+  nameWithType: VisualLayer
+  fullName: DrawnUi.Draw.VisualLayer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.VisualTreeHandler.IsReady*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.IsReady
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_IsReady
+  name: IsReady
+  nameWithType: VisualTreeHandler.IsReady
+  fullName: DrawnUi.Draw.VisualTreeHandler.IsReady
+- uid: DrawnUi.Draw.VisualTreeHandler.WasRendered*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.WasRendered
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_WasRendered
+  name: WasRendered
+  nameWithType: VisualTreeHandler.WasRendered
+  fullName: DrawnUi.Draw.VisualTreeHandler.WasRendered
+- uid: DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_PrepareRenderingTree_DrawnUi_Draw_DrawingContext_System_Single_System_Single_DrawnUi_Draw_SkiaControl_
+  name: PrepareRenderingTree
+  nameWithType: VisualTreeHandler.PrepareRenderingTree
+  fullName: DrawnUi.Draw.VisualTreeHandler.PrepareRenderingTree
+- uid: DrawnUi.Draw.DrawingContext
+  commentId: T:DrawnUi.Draw.DrawingContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawingContext.html
+  name: DrawingContext
+  nameWithType: DrawingContext
+  fullName: DrawnUi.Draw.DrawingContext
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.VisualTreeHandler.Render*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.Render
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_Render_DrawnUi_Draw_DrawingContext_
+  name: Render
+  nameWithType: VisualTreeHandler.Render
+  fullName: DrawnUi.Draw.VisualTreeHandler.Render
+- uid: DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal*
+  commentId: Overload:DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal
+  href: DrawnUi.Draw.VisualTreeHandler.html#DrawnUi_Draw_VisualTreeHandler_RenderTreeInternal_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_VisualLayer_
+  name: RenderTreeInternal
+  nameWithType: VisualTreeHandler.RenderTreeInternal
+  fullName: DrawnUi.Draw.VisualTreeHandler.RenderTreeInternal

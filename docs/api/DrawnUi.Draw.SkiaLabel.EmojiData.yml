@@ -1,0 +1,634 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData
+  commentId: T:DrawnUi.Draw.SkiaLabel.EmojiData
+  id: SkiaLabel.EmojiData
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaLabel.EmojiData.EmojiModifiers
+  - DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji(System.Int32)
+  - DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence(System.String,System.Int32)
+  - DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier(System.String,System.Int32)
+  - DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner(System.String,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: SkiaLabel.EmojiData
+  nameWithType: SkiaLabel.EmojiData
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: EmojiData
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static class SkiaLabel.EmojiData
+    content.vb: Public Module SkiaLabel.EmojiData
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence(System.String,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence(System.String,System.Int32)
+  id: IsEmojiModifierSequence(System.String,System.Int32)
+  parent: DrawnUi.Draw.SkiaLabel.EmojiData
+  langs:
+  - csharp
+  - vb
+  name: IsEmojiModifierSequence(string, int)
+  nameWithType: SkiaLabel.EmojiData.IsEmojiModifierSequence(string, int)
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence(string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsEmojiModifierSequence
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Returns the length of EmojiModifierSequence if found at index ins
+  example: []
+  syntax:
+    content: public static int IsEmojiModifierSequence(string text, int index)
+    parameters:
+    - id: text
+      type: System.String
+      description: ''
+    - id: index
+      type: System.Int32
+      description: ''
+    return:
+      type: System.Int32
+      description: ''
+    content.vb: Public Shared Function IsEmojiModifierSequence(text As String, index As Integer) As Integer
+  overload: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence*
+  nameWithType.vb: SkiaLabel.EmojiData.IsEmojiModifierSequence(String, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence(String, Integer)
+  name.vb: IsEmojiModifierSequence(String, Integer)
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier(System.String,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier(System.String,System.Int32)
+  id: IsModifier(System.String,System.Int32)
+  parent: DrawnUi.Draw.SkiaLabel.EmojiData
+  langs:
+  - csharp
+  - vb
+  name: IsModifier(string, int)
+  nameWithType: SkiaLabel.EmojiData.IsModifier(string, int)
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier(string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsModifier
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    startLine: 47
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool IsModifier(string text, int index)
+    parameters:
+    - id: text
+      type: System.String
+    - id: index
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsModifier(text As String, index As Integer) As Boolean
+  overload: DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier*
+  nameWithType.vb: SkiaLabel.EmojiData.IsModifier(String, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier(String, Integer)
+  name.vb: IsModifier(String, Integer)
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner(System.String,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner(System.String,System.Int32)
+  id: IsZeroWidthJoiner(System.String,System.Int32)
+  parent: DrawnUi.Draw.SkiaLabel.EmojiData
+  langs:
+  - csharp
+  - vb
+  name: IsZeroWidthJoiner(string, int)
+  nameWithType: SkiaLabel.EmojiData.IsZeroWidthJoiner(string, int)
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner(string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsZeroWidthJoiner
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    startLine: 72
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool IsZeroWidthJoiner(string text, int index)
+    parameters:
+    - id: text
+      type: System.String
+    - id: index
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsZeroWidthJoiner(text As String, index As Integer) As Boolean
+  overload: DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner*
+  nameWithType.vb: SkiaLabel.EmojiData.IsZeroWidthJoiner(String, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner(String, Integer)
+  name.vb: IsZeroWidthJoiner(String, Integer)
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.EmojiModifiers
+  commentId: F:DrawnUi.Draw.SkiaLabel.EmojiData.EmojiModifiers
+  id: EmojiModifiers
+  parent: DrawnUi.Draw.SkiaLabel.EmojiData
+  langs:
+  - csharp
+  - vb
+  name: EmojiModifiers
+  nameWithType: SkiaLabel.EmojiData.EmojiModifiers
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.EmojiModifiers
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: EmojiModifiers
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    startLine: 81
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static HashSet<int> EmojiModifiers
+    return:
+      type: System.Collections.Generic.HashSet{System.Int32}
+    content.vb: Public Shared EmojiModifiers As HashSet(Of Integer)
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji(System.Int32)
+  id: IsEmoji(System.Int32)
+  parent: DrawnUi.Draw.SkiaLabel.EmojiData
+  langs:
+  - csharp
+  - vb
+  name: IsEmoji(int)
+  nameWithType: SkiaLabel.EmojiData.IsEmoji(int)
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsEmoji
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    startLine: 132
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool IsEmoji(int codePoint)
+    parameters:
+    - id: codePoint
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsEmoji(codePoint As Integer) As Boolean
+  overload: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji*
+  nameWithType.vb: SkiaLabel.EmojiData.IsEmoji(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji(Integer)
+  name.vb: IsEmoji(Integer)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence
+  href: DrawnUi.Draw.SkiaLabel.EmojiData.html#DrawnUi_Draw_SkiaLabel_EmojiData_IsEmojiModifierSequence_System_String_System_Int32_
+  name: IsEmojiModifierSequence
+  nameWithType: SkiaLabel.EmojiData.IsEmojiModifierSequence
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmojiModifierSequence
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier
+  href: DrawnUi.Draw.SkiaLabel.EmojiData.html#DrawnUi_Draw_SkiaLabel_EmojiData_IsModifier_System_String_System_Int32_
+  name: IsModifier
+  nameWithType: SkiaLabel.EmojiData.IsModifier
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsModifier
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner
+  href: DrawnUi.Draw.SkiaLabel.EmojiData.html#DrawnUi_Draw_SkiaLabel_EmojiData_IsZeroWidthJoiner_System_String_System_Int32_
+  name: IsZeroWidthJoiner
+  nameWithType: SkiaLabel.EmojiData.IsZeroWidthJoiner
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsZeroWidthJoiner
+- uid: System.Collections.Generic.HashSet{System.Int32}
+  commentId: T:System.Collections.Generic.HashSet{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  name: HashSet<int>
+  nameWithType: HashSet<int>
+  fullName: System.Collections.Generic.HashSet<int>
+  nameWithType.vb: HashSet(Of Integer)
+  fullName.vb: System.Collections.Generic.HashSet(Of Integer)
+  name.vb: HashSet(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.Generic.HashSet`1
+  commentId: T:System.Collections.Generic.HashSet`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  name: HashSet<T>
+  nameWithType: HashSet<T>
+  fullName: System.Collections.Generic.HashSet<T>
+  nameWithType.vb: HashSet(Of T)
+  fullName.vb: System.Collections.Generic.HashSet(Of T)
+  name.vb: HashSet(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji
+  href: DrawnUi.Draw.SkiaLabel.EmojiData.html#DrawnUi_Draw_SkiaLabel_EmojiData_IsEmoji_System_Int32_
+  name: IsEmoji
+  nameWithType: SkiaLabel.EmojiData.IsEmoji
+  fullName: DrawnUi.Draw.SkiaLabel.EmojiData.IsEmoji

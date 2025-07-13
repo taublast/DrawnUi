@@ -1,0 +1,664 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IAfterEffectDelete
+  commentId: T:DrawnUi.Draw.IAfterEffectDelete
+  id: IAfterEffectDelete
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IAfterEffectDelete.IsRunning
+  - DrawnUi.Draw.IAfterEffectDelete.OnFinished
+  - DrawnUi.Draw.IAfterEffectDelete.OnUpdated
+  - DrawnUi.Draw.IAfterEffectDelete.Render(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.SkiaDrawingContext,System.Double)
+  - DrawnUi.Draw.IAfterEffectDelete.Repeat
+  - DrawnUi.Draw.IAfterEffectDelete.Start(System.UInt32,Microsoft.Maui.Easing)
+  - DrawnUi.Draw.IAfterEffectDelete.Stop
+  - DrawnUi.Draw.IAfterEffectDelete.TypeId
+  - DrawnUi.Draw.IAfterEffectDelete.WasStopped
+  langs:
+  - csharp
+  - vb
+  name: IAfterEffectDelete
+  nameWithType: IAfterEffectDelete
+  fullName: DrawnUi.Draw.IAfterEffectDelete
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IAfterEffectDelete
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface IAfterEffectDelete : IDisposable'
+    content.vb: Public Interface IAfterEffectDelete Inherits IDisposable
+  inheritedMembers:
+  - System.IDisposable.Dispose
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IAfterEffectDelete.TypeId
+  commentId: P:DrawnUi.Draw.IAfterEffectDelete.TypeId
+  id: TypeId
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: TypeId
+  nameWithType: IAfterEffectDelete.TypeId
+  fullName: DrawnUi.Draw.IAfterEffectDelete.TypeId
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TypeId
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: For faster scanning of anims of same type
+  example: []
+  syntax:
+    content: string TypeId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property TypeId As String
+  overload: DrawnUi.Draw.IAfterEffectDelete.TypeId*
+- uid: DrawnUi.Draw.IAfterEffectDelete.Render(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.SkiaDrawingContext,System.Double)
+  commentId: M:DrawnUi.Draw.IAfterEffectDelete.Render(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.SkiaDrawingContext,System.Double)
+  id: Render(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.SkiaDrawingContext,System.Double)
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: Render(IDrawnBase, SkiaDrawingContext, double)
+  nameWithType: IAfterEffectDelete.Render(IDrawnBase, SkiaDrawingContext, double)
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Render(DrawnUi.Draw.IDrawnBase, DrawnUi.Draw.SkiaDrawingContext, double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Render
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Called when drawing parent control frame
+  example: []
+  syntax:
+    content: void Render(IDrawnBase control, SkiaDrawingContext context, double scale)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.IDrawnBase
+      description: ''
+    - id: context
+      type: DrawnUi.Draw.SkiaDrawingContext
+    - id: scale
+      type: System.Double
+      description: ''
+    content.vb: Sub Render(control As IDrawnBase, context As SkiaDrawingContext, scale As Double)
+  overload: DrawnUi.Draw.IAfterEffectDelete.Render*
+  nameWithType.vb: IAfterEffectDelete.Render(IDrawnBase, SkiaDrawingContext, Double)
+  fullName.vb: DrawnUi.Draw.IAfterEffectDelete.Render(DrawnUi.Draw.IDrawnBase, DrawnUi.Draw.SkiaDrawingContext, Double)
+  name.vb: Render(IDrawnBase, SkiaDrawingContext, Double)
+- uid: DrawnUi.Draw.IAfterEffectDelete.Start(System.UInt32,Microsoft.Maui.Easing)
+  commentId: M:DrawnUi.Draw.IAfterEffectDelete.Start(System.UInt32,Microsoft.Maui.Easing)
+  id: Start(System.UInt32,Microsoft.Maui.Easing)
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: Start(uint, Easing)
+  nameWithType: IAfterEffectDelete.Start(uint, Easing)
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Start(uint, Microsoft.Maui.Easing)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Start
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Task Start(uint length, Easing easing)
+    parameters:
+    - id: length
+      type: System.UInt32
+    - id: easing
+      type: Microsoft.Maui.Easing
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Function Start(length As UInteger, easing As Easing) As Task
+  overload: DrawnUi.Draw.IAfterEffectDelete.Start*
+  nameWithType.vb: IAfterEffectDelete.Start(UInteger, Easing)
+  fullName.vb: DrawnUi.Draw.IAfterEffectDelete.Start(UInteger, Microsoft.Maui.Easing)
+  name.vb: Start(UInteger, Easing)
+- uid: DrawnUi.Draw.IAfterEffectDelete.Stop
+  commentId: M:DrawnUi.Draw.IAfterEffectDelete.Stop
+  id: Stop
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: Stop()
+  nameWithType: IAfterEffectDelete.Stop()
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Stop()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Stop
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void Stop()
+    content.vb: Sub [Stop]()
+  overload: DrawnUi.Draw.IAfterEffectDelete.Stop*
+- uid: DrawnUi.Draw.IAfterEffectDelete.IsRunning
+  commentId: P:DrawnUi.Draw.IAfterEffectDelete.IsRunning
+  id: IsRunning
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: IsRunning
+  nameWithType: IAfterEffectDelete.IsRunning
+  fullName: DrawnUi.Draw.IAfterEffectDelete.IsRunning
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsRunning
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsRunning { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property IsRunning As Boolean
+  overload: DrawnUi.Draw.IAfterEffectDelete.IsRunning*
+- uid: DrawnUi.Draw.IAfterEffectDelete.WasStopped
+  commentId: P:DrawnUi.Draw.IAfterEffectDelete.WasStopped
+  id: WasStopped
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: WasStopped
+  nameWithType: IAfterEffectDelete.WasStopped
+  fullName: DrawnUi.Draw.IAfterEffectDelete.WasStopped
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WasStopped
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool WasStopped { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property WasStopped As Boolean
+  overload: DrawnUi.Draw.IAfterEffectDelete.WasStopped*
+- uid: DrawnUi.Draw.IAfterEffectDelete.Repeat
+  commentId: P:DrawnUi.Draw.IAfterEffectDelete.Repeat
+  id: Repeat
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: Repeat
+  nameWithType: IAfterEffectDelete.Repeat
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Repeat
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Repeat
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: int Repeat { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Property Repeat As Integer
+  overload: DrawnUi.Draw.IAfterEffectDelete.Repeat*
+- uid: DrawnUi.Draw.IAfterEffectDelete.OnUpdated
+  commentId: E:DrawnUi.Draw.IAfterEffectDelete.OnUpdated
+  id: OnUpdated
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: OnUpdated
+  nameWithType: IAfterEffectDelete.OnUpdated
+  fullName: DrawnUi.Draw.IAfterEffectDelete.OnUpdated
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnUpdated
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: event EventHandler OnUpdated
+    return:
+      type: System.EventHandler
+    content.vb: Event OnUpdated As EventHandler
+- uid: DrawnUi.Draw.IAfterEffectDelete.OnFinished
+  commentId: E:DrawnUi.Draw.IAfterEffectDelete.OnFinished
+  id: OnFinished
+  parent: DrawnUi.Draw.IAfterEffectDelete
+  langs:
+  - csharp
+  - vb
+  name: OnFinished
+  nameWithType: IAfterEffectDelete.OnFinished
+  fullName: DrawnUi.Draw.IAfterEffectDelete.OnFinished
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnFinished
+    path: ../src/Shared/Features/Animations/Interfaces/IAfterEffect.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: event EventHandler OnFinished
+    return:
+      type: System.EventHandler
+    content.vb: Event OnFinished As EventHandler
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IAfterEffectDelete.TypeId*
+  commentId: Overload:DrawnUi.Draw.IAfterEffectDelete.TypeId
+  href: DrawnUi.Draw.IAfterEffectDelete.html#DrawnUi_Draw_IAfterEffectDelete_TypeId
+  name: TypeId
+  nameWithType: IAfterEffectDelete.TypeId
+  fullName: DrawnUi.Draw.IAfterEffectDelete.TypeId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.IAfterEffectDelete.Render*
+  commentId: Overload:DrawnUi.Draw.IAfterEffectDelete.Render
+  href: DrawnUi.Draw.IAfterEffectDelete.html#DrawnUi_Draw_IAfterEffectDelete_Render_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_SkiaDrawingContext_System_Double_
+  name: Render
+  nameWithType: IAfterEffectDelete.Render
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Render
+- uid: DrawnUi.Draw.IDrawnBase
+  commentId: T:DrawnUi.Draw.IDrawnBase
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IDrawnBase.html
+  name: IDrawnBase
+  nameWithType: IDrawnBase
+  fullName: DrawnUi.Draw.IDrawnBase
+- uid: DrawnUi.Draw.SkiaDrawingContext
+  commentId: T:DrawnUi.Draw.SkiaDrawingContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaDrawingContext.html
+  name: SkiaDrawingContext
+  nameWithType: SkiaDrawingContext
+  fullName: DrawnUi.Draw.SkiaDrawingContext
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.IAfterEffectDelete.Start*
+  commentId: Overload:DrawnUi.Draw.IAfterEffectDelete.Start
+  href: DrawnUi.Draw.IAfterEffectDelete.html#DrawnUi_Draw_IAfterEffectDelete_Start_System_UInt32_Microsoft_Maui_Easing_
+  name: Start
+  nameWithType: IAfterEffectDelete.Start
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Start
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Microsoft.Maui.Easing
+  commentId: T:Microsoft.Maui.Easing
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  name: Easing
+  nameWithType: Easing
+  fullName: Microsoft.Maui.Easing
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: DrawnUi.Draw.IAfterEffectDelete.Stop*
+  commentId: Overload:DrawnUi.Draw.IAfterEffectDelete.Stop
+  href: DrawnUi.Draw.IAfterEffectDelete.html#DrawnUi_Draw_IAfterEffectDelete_Stop
+  name: Stop
+  nameWithType: IAfterEffectDelete.Stop
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Stop
+- uid: DrawnUi.Draw.IAfterEffectDelete.IsRunning*
+  commentId: Overload:DrawnUi.Draw.IAfterEffectDelete.IsRunning
+  href: DrawnUi.Draw.IAfterEffectDelete.html#DrawnUi_Draw_IAfterEffectDelete_IsRunning
+  name: IsRunning
+  nameWithType: IAfterEffectDelete.IsRunning
+  fullName: DrawnUi.Draw.IAfterEffectDelete.IsRunning
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.IAfterEffectDelete.WasStopped*
+  commentId: Overload:DrawnUi.Draw.IAfterEffectDelete.WasStopped
+  href: DrawnUi.Draw.IAfterEffectDelete.html#DrawnUi_Draw_IAfterEffectDelete_WasStopped
+  name: WasStopped
+  nameWithType: IAfterEffectDelete.WasStopped
+  fullName: DrawnUi.Draw.IAfterEffectDelete.WasStopped
+- uid: DrawnUi.Draw.IAfterEffectDelete.Repeat*
+  commentId: Overload:DrawnUi.Draw.IAfterEffectDelete.Repeat
+  href: DrawnUi.Draw.IAfterEffectDelete.html#DrawnUi_Draw_IAfterEffectDelete_Repeat
+  name: Repeat
+  nameWithType: IAfterEffectDelete.Repeat
+  fullName: DrawnUi.Draw.IAfterEffectDelete.Repeat
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler

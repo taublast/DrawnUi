@@ -1,0 +1,268 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Models.GridLengthType
+  commentId: T:DrawnUi.Models.GridLengthType
+  id: GridLengthType
+  parent: DrawnUi.Models
+  children:
+  - DrawnUi.Models.GridLengthType.Absolute
+  - DrawnUi.Models.GridLengthType.Auto
+  - DrawnUi.Models.GridLengthType.None
+  - DrawnUi.Models.GridLengthType.Star
+  langs:
+  - csharp
+  - vb
+  name: GridLengthType
+  nameWithType: GridLengthType
+  fullName: DrawnUi.Models.GridLengthType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GridLengthType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GridLengthType
+    path: ../src/Shared/Draw/Internals/Enums/GridLengthType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Models
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum GridLengthType
+    content.vb: >-
+      <Flags>
+
+      Public Enum GridLengthType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: DrawnUi.Models.GridLengthType.None
+  commentId: F:DrawnUi.Models.GridLengthType.None
+  id: None
+  parent: DrawnUi.Models.GridLengthType
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: GridLengthType.None
+  fullName: DrawnUi.Models.GridLengthType.None
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GridLengthType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: None
+    path: ../src/Shared/Draw/Internals/Enums/GridLengthType.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Models
+  syntax:
+    content: None = 0
+    return:
+      type: DrawnUi.Models.GridLengthType
+- uid: DrawnUi.Models.GridLengthType.Absolute
+  commentId: F:DrawnUi.Models.GridLengthType.Absolute
+  id: Absolute
+  parent: DrawnUi.Models.GridLengthType
+  langs:
+  - csharp
+  - vb
+  name: Absolute
+  nameWithType: GridLengthType.Absolute
+  fullName: DrawnUi.Models.GridLengthType.Absolute
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GridLengthType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Absolute
+    path: ../src/Shared/Draw/Internals/Enums/GridLengthType.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Models
+  syntax:
+    content: Absolute = 1
+    return:
+      type: DrawnUi.Models.GridLengthType
+- uid: DrawnUi.Models.GridLengthType.Auto
+  commentId: F:DrawnUi.Models.GridLengthType.Auto
+  id: Auto
+  parent: DrawnUi.Models.GridLengthType
+  langs:
+  - csharp
+  - vb
+  name: Auto
+  nameWithType: GridLengthType.Auto
+  fullName: DrawnUi.Models.GridLengthType.Auto
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GridLengthType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Auto
+    path: ../src/Shared/Draw/Internals/Enums/GridLengthType.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Models
+  syntax:
+    content: Auto = 2
+    return:
+      type: DrawnUi.Models.GridLengthType
+- uid: DrawnUi.Models.GridLengthType.Star
+  commentId: F:DrawnUi.Models.GridLengthType.Star
+  id: Star
+  parent: DrawnUi.Models.GridLengthType
+  langs:
+  - csharp
+  - vb
+  name: Star
+  nameWithType: GridLengthType.Star
+  fullName: DrawnUi.Models.GridLengthType.Star
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GridLengthType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Star
+    path: ../src/Shared/Draw/Internals/Enums/GridLengthType.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Models
+  syntax:
+    content: Star = 4
+    return:
+      type: DrawnUi.Models.GridLengthType
+references:
+- uid: DrawnUi.Models
+  commentId: N:DrawnUi.Models
+  href: DrawnUi.html
+  name: DrawnUi.Models
+  nameWithType: DrawnUi.Models
+  fullName: DrawnUi.Models
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Models
+    name: Models
+    href: DrawnUi.Models.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Models
+    name: Models
+    href: DrawnUi.Models.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Models.GridLengthType
+  commentId: T:DrawnUi.Models.GridLengthType
+  parent: DrawnUi.Models
+  href: DrawnUi.Models.GridLengthType.html
+  name: GridLengthType
+  nameWithType: GridLengthType
+  fullName: DrawnUi.Models.GridLengthType

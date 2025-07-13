@@ -1,0 +1,648 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkPatch3D
+  commentId: T:DrawnUi.Draw.SkPatch3D
+  id: SkPatch3D
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkPatch3D.#ctor
+  - DrawnUi.Draw.SkPatch3D.DotWith(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.SkPatch3D.Transform(System.Numerics.Matrix4x4)
+  - DrawnUi.Draw.SkPatch3D.fOrigin
+  - DrawnUi.Draw.SkPatch3D.fU
+  - DrawnUi.Draw.SkPatch3D.fV
+  langs:
+  - csharp
+  - vb
+  name: SkPatch3D
+  nameWithType: SkPatch3D
+  fullName: DrawnUi.Draw.SkPatch3D
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkPatch3D
+    path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class SkPatch3D
+    content.vb: Public Class SkPatch3D
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkPatch3D.fU
+  commentId: F:DrawnUi.Draw.SkPatch3D.fU
+  id: fU
+  parent: DrawnUi.Draw.SkPatch3D
+  langs:
+  - csharp
+  - vb
+  name: fU
+  nameWithType: SkPatch3D.fU
+  fullName: DrawnUi.Draw.SkPatch3D.fU
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: fU
+    path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Vector3 fU
+    return:
+      type: System.Numerics.Vector3
+    content.vb: Public fU As Vector3
+- uid: DrawnUi.Draw.SkPatch3D.fV
+  commentId: F:DrawnUi.Draw.SkPatch3D.fV
+  id: fV
+  parent: DrawnUi.Draw.SkPatch3D
+  langs:
+  - csharp
+  - vb
+  name: fV
+  nameWithType: SkPatch3D.fV
+  fullName: DrawnUi.Draw.SkPatch3D.fV
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: fV
+    path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Vector3 fV
+    return:
+      type: System.Numerics.Vector3
+    content.vb: Public fV As Vector3
+- uid: DrawnUi.Draw.SkPatch3D.fOrigin
+  commentId: F:DrawnUi.Draw.SkPatch3D.fOrigin
+  id: fOrigin
+  parent: DrawnUi.Draw.SkPatch3D
+  langs:
+  - csharp
+  - vb
+  name: fOrigin
+  nameWithType: SkPatch3D.fOrigin
+  fullName: DrawnUi.Draw.SkPatch3D.fOrigin
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: fOrigin
+    path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Vector3 fOrigin
+    return:
+      type: System.Numerics.Vector3
+    content.vb: Public fOrigin As Vector3
+- uid: DrawnUi.Draw.SkPatch3D.#ctor
+  commentId: M:DrawnUi.Draw.SkPatch3D.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Draw.SkPatch3D
+  langs:
+  - csharp
+  - vb
+  name: SkPatch3D()
+  nameWithType: SkPatch3D.SkPatch3D()
+  fullName: DrawnUi.Draw.SkPatch3D.SkPatch3D()
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkPatch3D()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Draw.SkPatch3D.#ctor*
+  nameWithType.vb: SkPatch3D.New()
+  fullName.vb: DrawnUi.Draw.SkPatch3D.New()
+  name.vb: New()
+- uid: DrawnUi.Draw.SkPatch3D.DotWith(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkPatch3D.DotWith(System.Single,System.Single,System.Single)
+  id: DotWith(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkPatch3D
+  langs:
+  - csharp
+  - vb
+  name: DotWith(float, float, float)
+  nameWithType: SkPatch3D.DotWith(float, float, float)
+  fullName: DrawnUi.Draw.SkPatch3D.DotWith(float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DotWith
+    path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float DotWith(float dx, float dy, float dz)
+    parameters:
+    - id: dx
+      type: System.Single
+    - id: dy
+      type: System.Single
+    - id: dz
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Public Function DotWith(dx As Single, dy As Single, dz As Single) As Single
+  overload: DrawnUi.Draw.SkPatch3D.DotWith*
+  nameWithType.vb: SkPatch3D.DotWith(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkPatch3D.DotWith(Single, Single, Single)
+  name.vb: DotWith(Single, Single, Single)
+- uid: DrawnUi.Draw.SkPatch3D.Transform(System.Numerics.Matrix4x4)
+  commentId: M:DrawnUi.Draw.SkPatch3D.Transform(System.Numerics.Matrix4x4)
+  id: Transform(System.Numerics.Matrix4x4)
+  parent: DrawnUi.Draw.SkPatch3D
+  langs:
+  - csharp
+  - vb
+  name: Transform(Matrix4x4)
+  nameWithType: SkPatch3D.Transform(Matrix4x4)
+  fullName: DrawnUi.Draw.SkPatch3D.Transform(System.Numerics.Matrix4x4)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Transform
+    path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Transform(Matrix4x4 m)
+    parameters:
+    - id: m
+      type: System.Numerics.Matrix4x4
+    content.vb: Public Sub Transform(m As Matrix4x4)
+  overload: DrawnUi.Draw.SkPatch3D.Transform*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Numerics.Vector3
+  commentId: T:System.Numerics.Vector3
+  parent: System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.numerics.vector3
+  name: Vector3
+  nameWithType: Vector3
+  fullName: System.Numerics.Vector3
+- uid: System.Numerics
+  commentId: N:System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Numerics
+  nameWithType: System.Numerics
+  fullName: System.Numerics
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Numerics
+    name: Numerics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics
+- uid: DrawnUi.Draw.SkPatch3D.#ctor*
+  commentId: Overload:DrawnUi.Draw.SkPatch3D.#ctor
+  href: DrawnUi.Draw.SkPatch3D.html#DrawnUi_Draw_SkPatch3D__ctor
+  name: SkPatch3D
+  nameWithType: SkPatch3D.SkPatch3D
+  fullName: DrawnUi.Draw.SkPatch3D.SkPatch3D
+  nameWithType.vb: SkPatch3D.New
+  fullName.vb: DrawnUi.Draw.SkPatch3D.New
+  name.vb: New
+- uid: DrawnUi.Draw.SkPatch3D.DotWith*
+  commentId: Overload:DrawnUi.Draw.SkPatch3D.DotWith
+  href: DrawnUi.Draw.SkPatch3D.html#DrawnUi_Draw_SkPatch3D_DotWith_System_Single_System_Single_System_Single_
+  name: DotWith
+  nameWithType: SkPatch3D.DotWith
+  fullName: DrawnUi.Draw.SkPatch3D.DotWith
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SkPatch3D.Transform*
+  commentId: Overload:DrawnUi.Draw.SkPatch3D.Transform
+  href: DrawnUi.Draw.SkPatch3D.html#DrawnUi_Draw_SkPatch3D_Transform_System_Numerics_Matrix4x4_
+  name: Transform
+  nameWithType: SkPatch3D.Transform
+  fullName: DrawnUi.Draw.SkPatch3D.Transform
+- uid: System.Numerics.Matrix4x4
+  commentId: T:System.Numerics.Matrix4x4
+  parent: System.Numerics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.numerics.matrix4x4
+  name: Matrix4x4
+  nameWithType: Matrix4x4
+  fullName: System.Numerics.Matrix4x4

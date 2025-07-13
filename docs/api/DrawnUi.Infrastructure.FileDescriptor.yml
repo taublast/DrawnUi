@@ -1,0 +1,613 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.FileDescriptor
+  commentId: T:DrawnUi.Infrastructure.FileDescriptor
+  id: FileDescriptor
+  parent: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.FileDescriptor.Dispose
+  - DrawnUi.Infrastructure.FileDescriptor.Filename
+  - DrawnUi.Infrastructure.FileDescriptor.FullFilename
+  - DrawnUi.Infrastructure.FileDescriptor.Handler
+  - DrawnUi.Infrastructure.FileDescriptor.Path
+  langs:
+  - csharp
+  - vb
+  name: FileDescriptor
+  nameWithType: FileDescriptor
+  fullName: DrawnUi.Infrastructure.FileDescriptor
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FileDescriptor
+    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public class FileDescriptor
+    content.vb: Public Class FileDescriptor
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.FileDescriptor.Filename
+  commentId: P:DrawnUi.Infrastructure.FileDescriptor.Filename
+  id: Filename
+  parent: DrawnUi.Infrastructure.FileDescriptor
+  langs:
+  - csharp
+  - vb
+  name: Filename
+  nameWithType: FileDescriptor.Filename
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Filename
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Filename
+    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public string Filename { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Filename As String
+  overload: DrawnUi.Infrastructure.FileDescriptor.Filename*
+- uid: DrawnUi.Infrastructure.FileDescriptor.Path
+  commentId: P:DrawnUi.Infrastructure.FileDescriptor.Path
+  id: Path
+  parent: DrawnUi.Infrastructure.FileDescriptor
+  langs:
+  - csharp
+  - vb
+  name: Path
+  nameWithType: FileDescriptor.Path
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Path
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Path
+    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public string Path { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Path As String
+  overload: DrawnUi.Infrastructure.FileDescriptor.Path*
+- uid: DrawnUi.Infrastructure.FileDescriptor.FullFilename
+  commentId: P:DrawnUi.Infrastructure.FileDescriptor.FullFilename
+  id: FullFilename
+  parent: DrawnUi.Infrastructure.FileDescriptor
+  langs:
+  - csharp
+  - vb
+  name: FullFilename
+  nameWithType: FileDescriptor.FullFilename
+  fullName: DrawnUi.Infrastructure.FileDescriptor.FullFilename
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FullFilename
+    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public string FullFilename { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FullFilename As String
+  overload: DrawnUi.Infrastructure.FileDescriptor.FullFilename*
+- uid: DrawnUi.Infrastructure.FileDescriptor.Handler
+  commentId: P:DrawnUi.Infrastructure.FileDescriptor.Handler
+  id: Handler
+  parent: DrawnUi.Infrastructure.FileDescriptor
+  langs:
+  - csharp
+  - vb
+  name: Handler
+  nameWithType: FileDescriptor.Handler
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Handler
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Handler
+    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public FileStream Handler { get; set; }
+    parameters: []
+    return:
+      type: System.IO.FileStream
+    content.vb: Public Property Handler As FileStream
+  overload: DrawnUi.Infrastructure.FileDescriptor.Handler*
+- uid: DrawnUi.Infrastructure.FileDescriptor.Dispose
+  commentId: M:DrawnUi.Infrastructure.FileDescriptor.Dispose
+  id: Dispose
+  parent: DrawnUi.Infrastructure.FileDescriptor
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: FileDescriptor.Dispose()
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Infrastructure.FileDescriptor.Dispose*
+references:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Infrastructure.FileDescriptor.Filename*
+  commentId: Overload:DrawnUi.Infrastructure.FileDescriptor.Filename
+  href: DrawnUi.Infrastructure.FileDescriptor.html#DrawnUi_Infrastructure_FileDescriptor_Filename
+  name: Filename
+  nameWithType: FileDescriptor.Filename
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Filename
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Infrastructure.FileDescriptor.Path*
+  commentId: Overload:DrawnUi.Infrastructure.FileDescriptor.Path
+  href: DrawnUi.Infrastructure.FileDescriptor.html#DrawnUi_Infrastructure_FileDescriptor_Path
+  name: Path
+  nameWithType: FileDescriptor.Path
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Path
+- uid: DrawnUi.Infrastructure.FileDescriptor.FullFilename*
+  commentId: Overload:DrawnUi.Infrastructure.FileDescriptor.FullFilename
+  href: DrawnUi.Infrastructure.FileDescriptor.html#DrawnUi_Infrastructure_FileDescriptor_FullFilename
+  name: FullFilename
+  nameWithType: FileDescriptor.FullFilename
+  fullName: DrawnUi.Infrastructure.FileDescriptor.FullFilename
+- uid: DrawnUi.Infrastructure.FileDescriptor.Handler*
+  commentId: Overload:DrawnUi.Infrastructure.FileDescriptor.Handler
+  href: DrawnUi.Infrastructure.FileDescriptor.html#DrawnUi_Infrastructure_FileDescriptor_Handler
+  name: Handler
+  nameWithType: FileDescriptor.Handler
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Handler
+- uid: System.IO.FileStream
+  commentId: T:System.IO.FileStream
+  parent: System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.filestream
+  name: FileStream
+  nameWithType: FileStream
+  fullName: System.IO.FileStream
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+- uid: DrawnUi.Infrastructure.FileDescriptor.Dispose*
+  commentId: Overload:DrawnUi.Infrastructure.FileDescriptor.Dispose
+  href: DrawnUi.Infrastructure.FileDescriptor.html#DrawnUi_Infrastructure_FileDescriptor_Dispose
+  name: Dispose
+  nameWithType: FileDescriptor.Dispose
+  fullName: DrawnUi.Infrastructure.FileDescriptor.Dispose

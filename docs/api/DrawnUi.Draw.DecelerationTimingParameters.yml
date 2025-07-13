@@ -1,0 +1,1028 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.DecelerationTimingParameters
+  commentId: T:DrawnUi.Draw.DecelerationTimingParameters
+  id: DecelerationTimingParameters
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.DecelerationTimingParameters.#ctor(System.Single,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.DecelerationTimingParameters.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.DecelerationTimingParameters.DecelerationK
+  - DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate
+  - DrawnUi.Draw.DecelerationTimingParameters.Destination
+  - DrawnUi.Draw.DecelerationTimingParameters.DurationSecs
+  - DrawnUi.Draw.DecelerationTimingParameters.DurationToValue(System.Single)
+  - DrawnUi.Draw.DecelerationTimingParameters.InitialValue
+  - DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity
+  - DrawnUi.Draw.DecelerationTimingParameters.Threshold
+  - DrawnUi.Draw.DecelerationTimingParameters.ValueAt(System.Single)
+  - DrawnUi.Draw.DecelerationTimingParameters.VelocityAt(System.Double)
+  - DrawnUi.Draw.DecelerationTimingParameters.VelocityTo(System.Single,System.Single,System.Double)
+  - DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero(System.Single,System.Single,System.Single,System.Single)
+  langs:
+  - csharp
+  - vb
+  name: DecelerationTimingParameters
+  nameWithType: DecelerationTimingParameters
+  fullName: DrawnUi.Draw.DecelerationTimingParameters
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DecelerationTimingParameters
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class DecelerationTimingParameters : ITimingParameters'
+    content.vb: Public Class DecelerationTimingParameters Implements ITimingParameters
+  inheritance:
+  - System.Object
+  implements:
+  - DrawnUi.Draw.ITimingParameters
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.DecelerationTimingParameters.InitialValue
+  commentId: P:DrawnUi.Draw.DecelerationTimingParameters.InitialValue
+  id: InitialValue
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: InitialValue
+  nameWithType: DecelerationTimingParameters.InitialValue
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.InitialValue
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InitialValue
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float InitialValue { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property InitialValue As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.InitialValue*
+- uid: DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity
+  commentId: P:DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity
+  id: InitialVelocity
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: InitialVelocity
+  nameWithType: DecelerationTimingParameters.InitialVelocity
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InitialVelocity
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float InitialVelocity { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property InitialVelocity As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity*
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate
+  commentId: P:DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate
+  id: DecelerationRate
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: DecelerationRate
+  nameWithType: DecelerationTimingParameters.DecelerationRate
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DecelerationRate
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float DecelerationRate { get; protected set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property DecelerationRate As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate*
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DecelerationK
+  commentId: P:DrawnUi.Draw.DecelerationTimingParameters.DecelerationK
+  id: DecelerationK
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: DecelerationK
+  nameWithType: DecelerationTimingParameters.DecelerationK
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DecelerationK
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DecelerationK
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float DecelerationK { get; protected set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property DecelerationK As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.DecelerationK*
+- uid: DrawnUi.Draw.DecelerationTimingParameters.Threshold
+  commentId: P:DrawnUi.Draw.DecelerationTimingParameters.Threshold
+  id: Threshold
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: Threshold
+  nameWithType: DecelerationTimingParameters.Threshold
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.Threshold
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Threshold
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Threshold { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Threshold As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.Threshold*
+- uid: DrawnUi.Draw.DecelerationTimingParameters.#ctor(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DecelerationTimingParameters.#ctor(System.Single,System.Single,System.Single,System.Single)
+  id: '#ctor(System.Single,System.Single,System.Single,System.Single)'
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: DecelerationTimingParameters(float, float, float, float)
+  nameWithType: DecelerationTimingParameters.DecelerationTimingParameters(float, float, float, float)
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DecelerationTimingParameters(float, float, float, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DecelerationTimingParameters(float initialValue, float initialVelocity, float decelerationRate, float threshold)
+    parameters:
+    - id: initialValue
+      type: System.Single
+    - id: initialVelocity
+      type: System.Single
+    - id: decelerationRate
+      type: System.Single
+    - id: threshold
+      type: System.Single
+    content.vb: Public Sub New(initialValue As Single, initialVelocity As Single, decelerationRate As Single, threshold As Single)
+  overload: DrawnUi.Draw.DecelerationTimingParameters.#ctor*
+  nameWithType.vb: DecelerationTimingParameters.New(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.New(Single, Single, Single, Single)
+  name.vb: New(Single, Single, Single, Single)
+- uid: DrawnUi.Draw.DecelerationTimingParameters.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DecelerationTimingParameters.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single)
+  id: '#ctor(System.Single,System.Single,System.Single,System.Single,System.Single)'
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: DecelerationTimingParameters(float, float, float, float, float)
+  nameWithType: DecelerationTimingParameters.DecelerationTimingParameters(float, float, float, float, float)
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DecelerationTimingParameters(float, float, float, float, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Creates timing parameters specifically for scrolling to a target position in a specified time
+  example: []
+  syntax:
+    content: public DecelerationTimingParameters(float currentValue, float targetValue, float durationSecs, float decelerationRate, float threshold = 0.1)
+    parameters:
+    - id: currentValue
+      type: System.Single
+      description: The current position/value
+    - id: targetValue
+      type: System.Single
+      description: The target position/value to scroll to
+    - id: durationSecs
+      type: System.Single
+      description: The desired duration in seconds
+    - id: decelerationRate
+      type: System.Single
+      description: The deceleration rate (between 0 and 1)
+    - id: threshold
+      type: System.Single
+      description: The threshold for considering motion stopped
+    content.vb: Public Sub New(currentValue As Single, targetValue As Single, durationSecs As Single, decelerationRate As Single, threshold As Single = 0.1)
+  overload: DrawnUi.Draw.DecelerationTimingParameters.#ctor*
+  nameWithType.vb: DecelerationTimingParameters.New(Single, Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.New(Single, Single, Single, Single, Single)
+  name.vb: New(Single, Single, Single, Single, Single)
+- uid: DrawnUi.Draw.DecelerationTimingParameters.Destination
+  commentId: P:DrawnUi.Draw.DecelerationTimingParameters.Destination
+  id: Destination
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: Destination
+  nameWithType: DecelerationTimingParameters.Destination
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.Destination
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Destination
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 82
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Destination { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property Destination As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.Destination*
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DurationSecs
+  commentId: P:DrawnUi.Draw.DecelerationTimingParameters.DurationSecs
+  id: DurationSecs
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: DurationSecs
+  nameWithType: DecelerationTimingParameters.DurationSecs
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DurationSecs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DurationSecs
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public float DurationSecs { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property DurationSecs As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.DurationSecs*
+  implements:
+  - DrawnUi.Draw.ITimingParameters.DurationSecs
+- uid: DrawnUi.Draw.DecelerationTimingParameters.ValueAt(System.Single)
+  commentId: M:DrawnUi.Draw.DecelerationTimingParameters.ValueAt(System.Single)
+  id: ValueAt(System.Single)
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: ValueAt(float)
+  nameWithType: DecelerationTimingParameters.ValueAt(float)
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.ValueAt(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ValueAt
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 102
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public float ValueAt(float offsetSecs)
+    parameters:
+    - id: offsetSecs
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Public Function ValueAt(offsetSecs As Single) As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.ValueAt*
+  implements:
+  - DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+  nameWithType.vb: DecelerationTimingParameters.ValueAt(Single)
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.ValueAt(Single)
+  name.vb: ValueAt(Single)
+- uid: DrawnUi.Draw.DecelerationTimingParameters.VelocityAt(System.Double)
+  commentId: M:DrawnUi.Draw.DecelerationTimingParameters.VelocityAt(System.Double)
+  id: VelocityAt(System.Double)
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: VelocityAt(double)
+  nameWithType: DecelerationTimingParameters.VelocityAt(double)
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.VelocityAt(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VelocityAt
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 112
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float VelocityAt(double time)
+    parameters:
+    - id: time
+      type: System.Double
+    return:
+      type: System.Single
+    content.vb: Public Function VelocityAt(time As Double) As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.VelocityAt*
+  nameWithType.vb: DecelerationTimingParameters.VelocityAt(Double)
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.VelocityAt(Double)
+  name.vb: VelocityAt(Double)
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DurationToValue(System.Single)
+  commentId: M:DrawnUi.Draw.DecelerationTimingParameters.DurationToValue(System.Single)
+  id: DurationToValue(System.Single)
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: DurationToValue(float)
+  nameWithType: DecelerationTimingParameters.DurationToValue(float)
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DurationToValue(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DurationToValue
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 118
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double DurationToValue(float value)
+    parameters:
+    - id: value
+      type: System.Single
+    return:
+      type: System.Double
+    content.vb: Public Function DurationToValue(value As Single) As Double
+  overload: DrawnUi.Draw.DecelerationTimingParameters.DurationToValue*
+  nameWithType.vb: DecelerationTimingParameters.DurationToValue(Single)
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.DurationToValue(Single)
+  name.vb: DurationToValue(Single)
+- uid: DrawnUi.Draw.DecelerationTimingParameters.VelocityTo(System.Single,System.Single,System.Double)
+  commentId: M:DrawnUi.Draw.DecelerationTimingParameters.VelocityTo(System.Single,System.Single,System.Double)
+  id: VelocityTo(System.Single,System.Single,System.Double)
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: VelocityTo(float, float, double)
+  nameWithType: DecelerationTimingParameters.VelocityTo(float, float, double)
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.VelocityTo(float, float, double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VelocityTo
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 127
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float VelocityTo(float startingPoint, float targetPoint, double time)
+    parameters:
+    - id: startingPoint
+      type: System.Single
+    - id: targetPoint
+      type: System.Single
+    - id: time
+      type: System.Double
+    return:
+      type: System.Single
+    content.vb: Public Function VelocityTo(startingPoint As Single, targetPoint As Single, time As Double) As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.VelocityTo*
+  nameWithType.vb: DecelerationTimingParameters.VelocityTo(Single, Single, Double)
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.VelocityTo(Single, Single, Double)
+  name.vb: VelocityTo(Single, Single, Double)
+- uid: DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero(System.Single,System.Single,System.Single,System.Single)
+  id: VelocityToZero(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.DecelerationTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: VelocityToZero(float, float, float, float)
+  nameWithType: DecelerationTimingParameters.VelocityToZero(float, float, float, float)
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero(float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VelocityToZero
+    path: ../src/Shared/Features/Animations/Parameters/DecelerationTimingParameters.cs
+    startLine: 134
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float VelocityToZero(float startingPoint, float targetPoint, float maxTimeSecs = 0, float epsilon = 1E-06)
+    parameters:
+    - id: startingPoint
+      type: System.Single
+    - id: targetPoint
+      type: System.Single
+    - id: maxTimeSecs
+      type: System.Single
+    - id: epsilon
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Public Function VelocityToZero(startingPoint As Single, targetPoint As Single, maxTimeSecs As Single = 0, epsilon As Single = 1E-06) As Single
+  overload: DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero*
+  nameWithType.vb: DecelerationTimingParameters.VelocityToZero(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero(Single, Single, Single, Single)
+  name.vb: VelocityToZero(Single, Single, Single, Single)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Draw.ITimingParameters
+  commentId: T:DrawnUi.Draw.ITimingParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ITimingParameters.html
+  name: ITimingParameters
+  nameWithType: ITimingParameters
+  fullName: DrawnUi.Draw.ITimingParameters
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.DecelerationTimingParameters.InitialValue*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.InitialValue
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_InitialValue
+  name: InitialValue
+  nameWithType: DecelerationTimingParameters.InitialValue
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.InitialValue
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_InitialVelocity
+  name: InitialVelocity
+  nameWithType: DecelerationTimingParameters.InitialVelocity
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.InitialVelocity
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_DecelerationRate
+  name: DecelerationRate
+  nameWithType: DecelerationTimingParameters.DecelerationRate
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DecelerationRate
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DecelerationK*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.DecelerationK
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_DecelerationK
+  name: DecelerationK
+  nameWithType: DecelerationTimingParameters.DecelerationK
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DecelerationK
+- uid: DrawnUi.Draw.DecelerationTimingParameters.Threshold*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.Threshold
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_Threshold
+  name: Threshold
+  nameWithType: DecelerationTimingParameters.Threshold
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.Threshold
+- uid: DrawnUi.Draw.DecelerationTimingParameters.#ctor*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.#ctor
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters__ctor_System_Single_System_Single_System_Single_System_Single_
+  name: DecelerationTimingParameters
+  nameWithType: DecelerationTimingParameters.DecelerationTimingParameters
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DecelerationTimingParameters
+  nameWithType.vb: DecelerationTimingParameters.New
+  fullName.vb: DrawnUi.Draw.DecelerationTimingParameters.New
+  name.vb: New
+- uid: DrawnUi.Draw.DecelerationTimingParameters.Destination*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.Destination
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_Destination
+  name: Destination
+  nameWithType: DecelerationTimingParameters.Destination
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.Destination
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DurationSecs*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.DurationSecs
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_DurationSecs
+  name: DurationSecs
+  nameWithType: DecelerationTimingParameters.DurationSecs
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DurationSecs
+- uid: DrawnUi.Draw.ITimingParameters.DurationSecs
+  commentId: P:DrawnUi.Draw.ITimingParameters.DurationSecs
+  parent: DrawnUi.Draw.ITimingParameters
+  href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_DurationSecs
+  name: DurationSecs
+  nameWithType: ITimingParameters.DurationSecs
+  fullName: DrawnUi.Draw.ITimingParameters.DurationSecs
+- uid: DrawnUi.Draw.DecelerationTimingParameters.ValueAt*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.ValueAt
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_ValueAt_System_Single_
+  name: ValueAt
+  nameWithType: DecelerationTimingParameters.ValueAt
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.ValueAt
+- uid: DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+  commentId: M:DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+  parent: DrawnUi.Draw.ITimingParameters
+  isExternal: true
+  href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_ValueAt_System_Single_
+  name: ValueAt(float)
+  nameWithType: ITimingParameters.ValueAt(float)
+  fullName: DrawnUi.Draw.ITimingParameters.ValueAt(float)
+  nameWithType.vb: ITimingParameters.ValueAt(Single)
+  fullName.vb: DrawnUi.Draw.ITimingParameters.ValueAt(Single)
+  name.vb: ValueAt(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.DecelerationTimingParameters.VelocityAt*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.VelocityAt
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_VelocityAt_System_Double_
+  name: VelocityAt
+  nameWithType: DecelerationTimingParameters.VelocityAt
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.VelocityAt
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.DecelerationTimingParameters.DurationToValue*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.DurationToValue
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_DurationToValue_System_Single_
+  name: DurationToValue
+  nameWithType: DecelerationTimingParameters.DurationToValue
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.DurationToValue
+- uid: DrawnUi.Draw.DecelerationTimingParameters.VelocityTo*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.VelocityTo
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_VelocityTo_System_Single_System_Single_System_Double_
+  name: VelocityTo
+  nameWithType: DecelerationTimingParameters.VelocityTo
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.VelocityTo
+- uid: DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero*
+  commentId: Overload:DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero
+  href: DrawnUi.Draw.DecelerationTimingParameters.html#DrawnUi_Draw_DecelerationTimingParameters_VelocityToZero_System_Single_System_Single_System_Single_System_Single_
+  name: VelocityToZero
+  nameWithType: DecelerationTimingParameters.VelocityToZero
+  fullName: DrawnUi.Draw.DecelerationTimingParameters.VelocityToZero

@@ -1,0 +1,785 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  commentId: T:DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  id: SkiaShell.TypeRouteFactory
+  parent: DrawnUi.Controls
+  children:
+  - DrawnUi.Controls.SkiaShell.TypeRouteFactory.#ctor(DrawnUi.Controls.SkiaShell,System.Type)
+  - DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals(System.Object)
+  - DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode
+  - DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate
+  - DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate(System.IServiceProvider)
+  - DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject(System.IServiceProvider)
+  langs:
+  - csharp
+  - vb
+  name: SkiaShell.TypeRouteFactory
+  nameWithType: SkiaShell.TypeRouteFactory
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TypeRouteFactory
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+    startLine: 2008
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: 'public class SkiaShell.TypeRouteFactory : RouteFactory'
+    content.vb: Public Class SkiaShell.TypeRouteFactory Inherits RouteFactory
+  inheritance:
+  - System.Object
+  - Microsoft.Maui.Controls.RouteFactory
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.#ctor(DrawnUi.Controls.SkiaShell,System.Type)
+  commentId: M:DrawnUi.Controls.SkiaShell.TypeRouteFactory.#ctor(DrawnUi.Controls.SkiaShell,System.Type)
+  id: '#ctor(DrawnUi.Controls.SkiaShell,System.Type)'
+  parent: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  langs:
+  - csharp
+  - vb
+  name: TypeRouteFactory(SkiaShell, Type)
+  nameWithType: SkiaShell.TypeRouteFactory.TypeRouteFactory(SkiaShell, Type)
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.TypeRouteFactory(DrawnUi.Controls.SkiaShell, System.Type)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+    startLine: 2013
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public TypeRouteFactory(SkiaShell shell, Type type)
+    parameters:
+    - id: shell
+      type: DrawnUi.Controls.SkiaShell
+    - id: type
+      type: System.Type
+    content.vb: Public Sub New(shell As SkiaShell, type As Type)
+  overload: DrawnUi.Controls.SkiaShell.TypeRouteFactory.#ctor*
+  nameWithType.vb: SkiaShell.TypeRouteFactory.New(SkiaShell, Type)
+  fullName.vb: DrawnUi.Controls.SkiaShell.TypeRouteFactory.New(DrawnUi.Controls.SkiaShell, System.Type)
+  name.vb: New(SkiaShell, Type)
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate
+  commentId: M:DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate
+  id: GetOrCreate
+  parent: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  langs:
+  - csharp
+  - vb
+  name: GetOrCreate()
+  nameWithType: SkiaShell.TypeRouteFactory.GetOrCreate()
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetOrCreate
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+    startLine: 2019
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  example: []
+  syntax:
+    content: public override Element GetOrCreate()
+    return:
+      type: Microsoft.Maui.Controls.Element
+    content.vb: Public Overrides Function GetOrCreate() As Element
+  overridden: Microsoft.Maui.Controls.RouteFactory.GetOrCreate
+  overload: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate*
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject(System.IServiceProvider)
+  commentId: M:DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject(System.IServiceProvider)
+  id: GetOrCreateObject(System.IServiceProvider)
+  parent: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  langs:
+  - csharp
+  - vb
+  name: GetOrCreateObject(IServiceProvider)
+  nameWithType: SkiaShell.TypeRouteFactory.GetOrCreateObject(IServiceProvider)
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject(System.IServiceProvider)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetOrCreateObject
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+    startLine: 2024
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public BindableObject GetOrCreateObject(IServiceProvider services)
+    parameters:
+    - id: services
+      type: System.IServiceProvider
+    return:
+      type: Microsoft.Maui.Controls.BindableObject
+    content.vb: Public Function GetOrCreateObject(services As IServiceProvider) As BindableObject
+  overload: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject*
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate(System.IServiceProvider)
+  commentId: M:DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate(System.IServiceProvider)
+  id: GetOrCreate(System.IServiceProvider)
+  parent: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  langs:
+  - csharp
+  - vb
+  name: GetOrCreate(IServiceProvider)
+  nameWithType: SkiaShell.TypeRouteFactory.GetOrCreate(IServiceProvider)
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate(System.IServiceProvider)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetOrCreate
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+    startLine: 2050
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  example: []
+  syntax:
+    content: public override Element GetOrCreate(IServiceProvider services)
+    parameters:
+    - id: services
+      type: System.IServiceProvider
+    return:
+      type: Microsoft.Maui.Controls.Element
+    content.vb: Public Overrides Function GetOrCreate(services As IServiceProvider) As Element
+  overridden: Microsoft.Maui.Controls.RouteFactory.GetOrCreate(System.IServiceProvider)
+  overload: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate*
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals(System.Object)
+  commentId: M:DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: SkiaShell.TypeRouteFactory.Equals(object)
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Equals
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+    startLine: 2066
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals*
+  nameWithType.vb: SkiaShell.TypeRouteFactory.Equals(Object)
+  fullName.vb: DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals(Object)
+  name.vb: Equals(Object)
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode
+  commentId: M:DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode
+  id: GetHashCode
+  parent: DrawnUi.Controls.SkiaShell.TypeRouteFactory
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: SkiaShell.TypeRouteFactory.GetHashCode()
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetHashCode
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
+    startLine: 2074
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode*
+references:
+- uid: DrawnUi.Controls
+  commentId: N:DrawnUi.Controls
+  href: DrawnUi.html
+  name: DrawnUi.Controls
+  nameWithType: DrawnUi.Controls
+  fullName: DrawnUi.Controls
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Microsoft.Maui.Controls.RouteFactory
+  commentId: T:Microsoft.Maui.Controls.RouteFactory
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.routefactory
+  name: RouteFactory
+  nameWithType: RouteFactory
+  fullName: Microsoft.Maui.Controls.RouteFactory
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.#ctor*
+  commentId: Overload:DrawnUi.Controls.SkiaShell.TypeRouteFactory.#ctor
+  href: DrawnUi.Controls.SkiaShell.TypeRouteFactory.html#DrawnUi_Controls_SkiaShell_TypeRouteFactory__ctor_DrawnUi_Controls_SkiaShell_System_Type_
+  name: TypeRouteFactory
+  nameWithType: SkiaShell.TypeRouteFactory.TypeRouteFactory
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.TypeRouteFactory
+  nameWithType.vb: SkiaShell.TypeRouteFactory.New
+  fullName.vb: DrawnUi.Controls.SkiaShell.TypeRouteFactory.New
+  name.vb: New
+- uid: DrawnUi.Controls.SkiaShell
+  commentId: T:DrawnUi.Controls.SkiaShell
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.SkiaShell.html
+  name: SkiaShell
+  nameWithType: SkiaShell
+  fullName: DrawnUi.Controls.SkiaShell
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.type
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: Microsoft.Maui.Controls.RouteFactory.GetOrCreate
+  commentId: M:Microsoft.Maui.Controls.RouteFactory.GetOrCreate
+  parent: Microsoft.Maui.Controls.RouteFactory
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.routefactory.getorcreate#microsoft-maui-controls-routefactory-getorcreate
+  name: GetOrCreate()
+  nameWithType: RouteFactory.GetOrCreate()
+  fullName: Microsoft.Maui.Controls.RouteFactory.GetOrCreate()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.RouteFactory.GetOrCreate
+    name: GetOrCreate
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.routefactory.getorcreate#microsoft-maui-controls-routefactory-getorcreate
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.RouteFactory.GetOrCreate
+    name: GetOrCreate
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.routefactory.getorcreate#microsoft-maui-controls-routefactory-getorcreate
+  - name: (
+  - name: )
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate*
+  commentId: Overload:DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate
+  href: DrawnUi.Controls.SkiaShell.TypeRouteFactory.html#DrawnUi_Controls_SkiaShell_TypeRouteFactory_GetOrCreate
+  name: GetOrCreate
+  nameWithType: SkiaShell.TypeRouteFactory.GetOrCreate
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreate
+- uid: Microsoft.Maui.Controls.Element
+  commentId: T:Microsoft.Maui.Controls.Element
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element
+  name: Element
+  nameWithType: Element
+  fullName: Microsoft.Maui.Controls.Element
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject*
+  commentId: Overload:DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject
+  href: DrawnUi.Controls.SkiaShell.TypeRouteFactory.html#DrawnUi_Controls_SkiaShell_TypeRouteFactory_GetOrCreateObject_System_IServiceProvider_
+  name: GetOrCreateObject
+  nameWithType: SkiaShell.TypeRouteFactory.GetOrCreateObject
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetOrCreateObject
+- uid: System.IServiceProvider
+  commentId: T:System.IServiceProvider
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  name: IServiceProvider
+  nameWithType: IServiceProvider
+  fullName: System.IServiceProvider
+- uid: Microsoft.Maui.Controls.BindableObject
+  commentId: T:Microsoft.Maui.Controls.BindableObject
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  name: BindableObject
+  nameWithType: BindableObject
+  fullName: Microsoft.Maui.Controls.BindableObject
+- uid: Microsoft.Maui.Controls.RouteFactory.GetOrCreate(System.IServiceProvider)
+  commentId: M:Microsoft.Maui.Controls.RouteFactory.GetOrCreate(System.IServiceProvider)
+  parent: Microsoft.Maui.Controls.RouteFactory
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.routefactory.getorcreate#microsoft-maui-controls-routefactory-getorcreate(system-iserviceprovider)
+  name: GetOrCreate(IServiceProvider)
+  nameWithType: RouteFactory.GetOrCreate(IServiceProvider)
+  fullName: Microsoft.Maui.Controls.RouteFactory.GetOrCreate(System.IServiceProvider)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.RouteFactory.GetOrCreate(System.IServiceProvider)
+    name: GetOrCreate
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.routefactory.getorcreate#microsoft-maui-controls-routefactory-getorcreate(system-iserviceprovider)
+  - name: (
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.RouteFactory.GetOrCreate(System.IServiceProvider)
+    name: GetOrCreate
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.routefactory.getorcreate#microsoft-maui-controls-routefactory-getorcreate(system-iserviceprovider)
+  - name: (
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals*
+  commentId: Overload:DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals
+  href: DrawnUi.Controls.SkiaShell.TypeRouteFactory.html#DrawnUi_Controls_SkiaShell_TypeRouteFactory_Equals_System_Object_
+  name: Equals
+  nameWithType: SkiaShell.TypeRouteFactory.Equals
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.Equals
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode*
+  commentId: Overload:DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode
+  href: DrawnUi.Controls.SkiaShell.TypeRouteFactory.html#DrawnUi_Controls_SkiaShell_TypeRouteFactory_GetHashCode
+  name: GetHashCode
+  nameWithType: SkiaShell.TypeRouteFactory.GetHashCode
+  fullName: DrawnUi.Controls.SkiaShell.TypeRouteFactory.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

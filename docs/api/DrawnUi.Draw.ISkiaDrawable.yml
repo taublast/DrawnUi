@@ -1,0 +1,750 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ISkiaDrawable
+  commentId: T:DrawnUi.Draw.ISkiaDrawable
+  id: ISkiaDrawable
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ISkiaDrawable.FPS
+  - DrawnUi.Draw.ISkiaDrawable.FrameTime
+  - DrawnUi.Draw.ISkiaDrawable.HasDrawn
+  - DrawnUi.Draw.ISkiaDrawable.IsDrawing
+  - DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated
+  - DrawnUi.Draw.ISkiaDrawable.OnDraw
+  - DrawnUi.Draw.ISkiaDrawable.Surface
+  - DrawnUi.Draw.ISkiaDrawable.Uid
+  langs:
+  - csharp
+  - vb
+  name: ISkiaDrawable
+  nameWithType: ISkiaDrawable
+  fullName: DrawnUi.Draw.ISkiaDrawable
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ISkiaDrawable
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface ISkiaDrawable : ISkiaSharpView, IDisposable'
+    content.vb: Public Interface ISkiaDrawable Inherits ISkiaSharpView, IDisposable
+  inheritedMembers:
+  - DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)
+  - DrawnUi.Draw.ISkiaSharpView.SignalFrame(System.Int64)
+  - DrawnUi.Draw.ISkiaSharpView.CanvasSize
+  - DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
+  - System.IDisposable.Dispose
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ISkiaDrawable.OnDraw
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.OnDraw
+  id: OnDraw
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: OnDraw
+  nameWithType: ISkiaDrawable.OnDraw
+  fullName: DrawnUi.Draw.ISkiaDrawable.OnDraw
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnDraw
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Return true if need force invalidation on next frame
+  example: []
+  syntax:
+    content: Func<SKSurface, SKRect, bool> OnDraw { get; set; }
+    parameters: []
+    return:
+      type: System.Func{SkiaSharp.SKSurface,SkiaSharp.SKRect,System.Boolean}
+    content.vb: Property OnDraw As Func(Of SKSurface, SKRect, Boolean)
+  overload: DrawnUi.Draw.ISkiaDrawable.OnDraw*
+- uid: DrawnUi.Draw.ISkiaDrawable.Surface
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.Surface
+  id: Surface
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: Surface
+  nameWithType: ISkiaDrawable.Surface
+  fullName: DrawnUi.Draw.ISkiaDrawable.Surface
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Surface
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SKSurface Surface { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKSurface
+    content.vb: ReadOnly Property Surface As SKSurface
+  overload: DrawnUi.Draw.ISkiaDrawable.Surface*
+- uid: DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated
+  id: IsHardwareAccelerated
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: IsHardwareAccelerated
+  nameWithType: ISkiaDrawable.IsHardwareAccelerated
+  fullName: DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsHardwareAccelerated
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsHardwareAccelerated { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsHardwareAccelerated As Boolean
+  overload: DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated*
+- uid: DrawnUi.Draw.ISkiaDrawable.FPS
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.FPS
+  id: FPS
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: FPS
+  nameWithType: ISkiaDrawable.FPS
+  fullName: DrawnUi.Draw.ISkiaDrawable.FPS
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FPS
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: double FPS { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property FPS As Double
+  overload: DrawnUi.Draw.ISkiaDrawable.FPS*
+- uid: DrawnUi.Draw.ISkiaDrawable.IsDrawing
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.IsDrawing
+  id: IsDrawing
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: IsDrawing
+  nameWithType: ISkiaDrawable.IsDrawing
+  fullName: DrawnUi.Draw.ISkiaDrawable.IsDrawing
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDrawing
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsDrawing { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsDrawing As Boolean
+  overload: DrawnUi.Draw.ISkiaDrawable.IsDrawing*
+- uid: DrawnUi.Draw.ISkiaDrawable.HasDrawn
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.HasDrawn
+  id: HasDrawn
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: HasDrawn
+  nameWithType: ISkiaDrawable.HasDrawn
+  fullName: DrawnUi.Draw.ISkiaDrawable.HasDrawn
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HasDrawn
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool HasDrawn { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property HasDrawn As Boolean
+  overload: DrawnUi.Draw.ISkiaDrawable.HasDrawn*
+- uid: DrawnUi.Draw.ISkiaDrawable.FrameTime
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.FrameTime
+  id: FrameTime
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: FrameTime
+  nameWithType: ISkiaDrawable.FrameTime
+  fullName: DrawnUi.Draw.ISkiaDrawable.FrameTime
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FrameTime
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: long FrameTime { get; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: ReadOnly Property FrameTime As Long
+  overload: DrawnUi.Draw.ISkiaDrawable.FrameTime*
+- uid: DrawnUi.Draw.ISkiaDrawable.Uid
+  commentId: P:DrawnUi.Draw.ISkiaDrawable.Uid
+  id: Uid
+  parent: DrawnUi.Draw.ISkiaDrawable
+  langs:
+  - csharp
+  - vb
+  name: Uid
+  nameWithType: ISkiaDrawable.Uid
+  fullName: DrawnUi.Draw.ISkiaDrawable.Uid
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Uid
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Guid Uid { get; }
+    parameters: []
+    return:
+      type: System.Guid
+    content.vb: ReadOnly Property Uid As Guid
+  overload: DrawnUi.Draw.ISkiaDrawable.Uid*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)
+  commentId: M:DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)
+  parent: DrawnUi.Draw.ISkiaSharpView
+  isExternal: true
+  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_Update_System_Int64_
+  name: Update(long)
+  nameWithType: ISkiaSharpView.Update(long)
+  fullName: DrawnUi.Draw.ISkiaSharpView.Update(long)
+  nameWithType.vb: ISkiaSharpView.Update(Long)
+  fullName.vb: DrawnUi.Draw.ISkiaSharpView.Update(Long)
+  name.vb: Update(Long)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)
+    name: Update
+    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_Update_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)
+    name: Update
+    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_Update_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: DrawnUi.Draw.ISkiaSharpView.SignalFrame(System.Int64)
+  commentId: M:DrawnUi.Draw.ISkiaSharpView.SignalFrame(System.Int64)
+  parent: DrawnUi.Draw.ISkiaSharpView
+  isExternal: true
+  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_SignalFrame_System_Int64_
+  name: SignalFrame(long)
+  nameWithType: ISkiaSharpView.SignalFrame(long)
+  fullName: DrawnUi.Draw.ISkiaSharpView.SignalFrame(long)
+  nameWithType.vb: ISkiaSharpView.SignalFrame(Long)
+  fullName.vb: DrawnUi.Draw.ISkiaSharpView.SignalFrame(Long)
+  name.vb: SignalFrame(Long)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaSharpView.SignalFrame(System.Int64)
+    name: SignalFrame
+    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_SignalFrame_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaSharpView.SignalFrame(System.Int64)
+    name: SignalFrame
+    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_SignalFrame_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: DrawnUi.Draw.ISkiaSharpView.CanvasSize
+  commentId: P:DrawnUi.Draw.ISkiaSharpView.CanvasSize
+  parent: DrawnUi.Draw.ISkiaSharpView
+  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CanvasSize
+  name: CanvasSize
+  nameWithType: ISkiaSharpView.CanvasSize
+  fullName: DrawnUi.Draw.ISkiaSharpView.CanvasSize
+- uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
+  commentId: M:DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
+  parent: DrawnUi.Draw.ISkiaSharpView
+  isExternal: true
+  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
+  name: CreateStandaloneSurface(int, int)
+  nameWithType: ISkiaSharpView.CreateStandaloneSurface(int, int)
+  fullName: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(int, int)
+  nameWithType.vb: ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
+  fullName.vb: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
+  name.vb: CreateStandaloneSurface(Integer, Integer)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
+    name: CreateStandaloneSurface
+    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
+    name: CreateStandaloneSurface
+    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ISkiaSharpView
+  commentId: T:DrawnUi.Draw.ISkiaSharpView
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaSharpView.html
+  name: ISkiaSharpView
+  nameWithType: ISkiaSharpView
+  fullName: DrawnUi.Draw.ISkiaSharpView
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ISkiaDrawable.OnDraw*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.OnDraw
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_OnDraw
+  name: OnDraw
+  nameWithType: ISkiaDrawable.OnDraw
+  fullName: DrawnUi.Draw.ISkiaDrawable.OnDraw
+- uid: System.Func{SkiaSharp.SKSurface,SkiaSharp.SKRect,System.Boolean}
+  commentId: T:System.Func{SkiaSharp.SKSurface,SkiaSharp.SKRect,System.Boolean}
+  parent: System
+  definition: System.Func`3
+  href: https://learn.microsoft.com/dotnet/api/system.func-3
+  name: Func<SKSurface, SKRect, bool>
+  nameWithType: Func<SKSurface, SKRect, bool>
+  fullName: System.Func<SkiaSharp.SKSurface, SkiaSharp.SKRect, bool>
+  nameWithType.vb: Func(Of SKSurface, SKRect, Boolean)
+  fullName.vb: System.Func(Of SkiaSharp.SKSurface, SkiaSharp.SKRect, Boolean)
+  name.vb: Func(Of SKSurface, SKRect, Boolean)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Func`3
+  commentId: T:System.Func`3
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-3
+  name: Func<T1, T2, TResult>
+  nameWithType: Func<T1, T2, TResult>
+  fullName: System.Func<T1, T2, TResult>
+  nameWithType.vb: Func(Of T1, T2, TResult)
+  fullName.vb: System.Func(Of T1, T2, TResult)
+  name.vb: Func(Of T1, T2, TResult)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: DrawnUi.Draw.ISkiaDrawable.Surface*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.Surface
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_Surface
+  name: Surface
+  nameWithType: ISkiaDrawable.Surface
+  fullName: DrawnUi.Draw.ISkiaDrawable.Surface
+- uid: SkiaSharp.SKSurface
+  commentId: T:SkiaSharp.SKSurface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  name: SKSurface
+  nameWithType: SKSurface
+  fullName: SkiaSharp.SKSurface
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_IsHardwareAccelerated
+  name: IsHardwareAccelerated
+  nameWithType: ISkiaDrawable.IsHardwareAccelerated
+  fullName: DrawnUi.Draw.ISkiaDrawable.IsHardwareAccelerated
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.ISkiaDrawable.FPS*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.FPS
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_FPS
+  name: FPS
+  nameWithType: ISkiaDrawable.FPS
+  fullName: DrawnUi.Draw.ISkiaDrawable.FPS
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.ISkiaDrawable.IsDrawing*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.IsDrawing
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_IsDrawing
+  name: IsDrawing
+  nameWithType: ISkiaDrawable.IsDrawing
+  fullName: DrawnUi.Draw.ISkiaDrawable.IsDrawing
+- uid: DrawnUi.Draw.ISkiaDrawable.HasDrawn*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.HasDrawn
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_HasDrawn
+  name: HasDrawn
+  nameWithType: ISkiaDrawable.HasDrawn
+  fullName: DrawnUi.Draw.ISkiaDrawable.HasDrawn
+- uid: DrawnUi.Draw.ISkiaDrawable.FrameTime*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.FrameTime
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_FrameTime
+  name: FrameTime
+  nameWithType: ISkiaDrawable.FrameTime
+  fullName: DrawnUi.Draw.ISkiaDrawable.FrameTime
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: DrawnUi.Draw.ISkiaDrawable.Uid*
+  commentId: Overload:DrawnUi.Draw.ISkiaDrawable.Uid
+  href: DrawnUi.Draw.ISkiaDrawable.html#DrawnUi_Draw_ISkiaDrawable_Uid
+  name: Uid
+  nameWithType: ISkiaDrawable.Uid
+  fullName: DrawnUi.Draw.ISkiaDrawable.Uid
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid

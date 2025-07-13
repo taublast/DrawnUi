@@ -1,0 +1,559 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.ClosedRange`1
+  commentId: T:DrawnUi.Infrastructure.ClosedRange`1
+  id: ClosedRange`1
+  parent: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.ClosedRange`1.#ctor(`0,`0)
+  - DrawnUi.Infrastructure.ClosedRange`1.Contains(`0)
+  - DrawnUi.Infrastructure.ClosedRange`1.LowerBound
+  - DrawnUi.Infrastructure.ClosedRange`1.UpperBound
+  langs:
+  - csharp
+  - vb
+  name: ClosedRange<T>
+  nameWithType: ClosedRange<T>
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>
+  type: Struct
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ClosedRange.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ClosedRange
+    path: ../src/Shared/Draw/Internals/Models/ClosedRange.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: 'public struct ClosedRange<T> where T : IComparable<T>'
+    typeParameters:
+    - id: T
+    content.vb: Public Structure ClosedRange(Of T As IComparable(Of T))
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  nameWithType.vb: ClosedRange(Of T)
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T)
+  name.vb: ClosedRange(Of T)
+- uid: DrawnUi.Infrastructure.ClosedRange`1.LowerBound
+  commentId: P:DrawnUi.Infrastructure.ClosedRange`1.LowerBound
+  id: LowerBound
+  parent: DrawnUi.Infrastructure.ClosedRange`1
+  langs:
+  - csharp
+  - vb
+  name: LowerBound
+  nameWithType: ClosedRange<T>.LowerBound
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.LowerBound
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ClosedRange.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LowerBound
+    path: ../src/Shared/Draw/Internals/Models/ClosedRange.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public readonly T LowerBound { get; }
+    parameters: []
+    return:
+      type: '{T}'
+    content.vb: Public ReadOnly Property LowerBound As T
+  overload: DrawnUi.Infrastructure.ClosedRange`1.LowerBound*
+  nameWithType.vb: ClosedRange(Of T).LowerBound
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).LowerBound
+- uid: DrawnUi.Infrastructure.ClosedRange`1.UpperBound
+  commentId: P:DrawnUi.Infrastructure.ClosedRange`1.UpperBound
+  id: UpperBound
+  parent: DrawnUi.Infrastructure.ClosedRange`1
+  langs:
+  - csharp
+  - vb
+  name: UpperBound
+  nameWithType: ClosedRange<T>.UpperBound
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.UpperBound
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ClosedRange.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpperBound
+    path: ../src/Shared/Draw/Internals/Models/ClosedRange.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public readonly T UpperBound { get; }
+    parameters: []
+    return:
+      type: '{T}'
+    content.vb: Public ReadOnly Property UpperBound As T
+  overload: DrawnUi.Infrastructure.ClosedRange`1.UpperBound*
+  nameWithType.vb: ClosedRange(Of T).UpperBound
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).UpperBound
+- uid: DrawnUi.Infrastructure.ClosedRange`1.#ctor(`0,`0)
+  commentId: M:DrawnUi.Infrastructure.ClosedRange`1.#ctor(`0,`0)
+  id: '#ctor(`0,`0)'
+  parent: DrawnUi.Infrastructure.ClosedRange`1
+  langs:
+  - csharp
+  - vb
+  name: ClosedRange(T, T)
+  nameWithType: ClosedRange<T>.ClosedRange(T, T)
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.ClosedRange(T, T)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ClosedRange.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/ClosedRange.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public ClosedRange(T lowerBound, T upperBound)
+    parameters:
+    - id: lowerBound
+      type: '{T}'
+    - id: upperBound
+      type: '{T}'
+    content.vb: Public Sub New(lowerBound As T, upperBound As T)
+  overload: DrawnUi.Infrastructure.ClosedRange`1.#ctor*
+  nameWithType.vb: ClosedRange(Of T).New(T, T)
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).New(T, T)
+  name.vb: New(T, T)
+- uid: DrawnUi.Infrastructure.ClosedRange`1.Contains(`0)
+  commentId: M:DrawnUi.Infrastructure.ClosedRange`1.Contains(`0)
+  id: Contains(`0)
+  parent: DrawnUi.Infrastructure.ClosedRange`1
+  langs:
+  - csharp
+  - vb
+  name: Contains(T)
+  nameWithType: ClosedRange<T>.Contains(T)
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.Contains(T)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ClosedRange.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Contains
+    path: ../src/Shared/Draw/Internals/Models/ClosedRange.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public bool Contains(T value)
+    parameters:
+    - id: value
+      type: '{T}'
+    return:
+      type: System.Boolean
+    content.vb: Public Function Contains(value As T) As Boolean
+  overload: DrawnUi.Infrastructure.ClosedRange`1.Contains*
+  nameWithType.vb: ClosedRange(Of T).Contains(T)
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).Contains(T)
+references:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Infrastructure.ClosedRange`1.LowerBound*
+  commentId: Overload:DrawnUi.Infrastructure.ClosedRange`1.LowerBound
+  href: DrawnUi.Infrastructure.ClosedRange-1.html#DrawnUi_Infrastructure_ClosedRange_1_LowerBound
+  name: LowerBound
+  nameWithType: ClosedRange<T>.LowerBound
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.LowerBound
+  nameWithType.vb: ClosedRange(Of T).LowerBound
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).LowerBound
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: DrawnUi.Infrastructure.ClosedRange`1.UpperBound*
+  commentId: Overload:DrawnUi.Infrastructure.ClosedRange`1.UpperBound
+  href: DrawnUi.Infrastructure.ClosedRange-1.html#DrawnUi_Infrastructure_ClosedRange_1_UpperBound
+  name: UpperBound
+  nameWithType: ClosedRange<T>.UpperBound
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.UpperBound
+  nameWithType.vb: ClosedRange(Of T).UpperBound
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).UpperBound
+- uid: DrawnUi.Infrastructure.ClosedRange`1.#ctor*
+  commentId: Overload:DrawnUi.Infrastructure.ClosedRange`1.#ctor
+  href: DrawnUi.Infrastructure.ClosedRange-1.html#DrawnUi_Infrastructure_ClosedRange_1__ctor__0__0_
+  name: ClosedRange
+  nameWithType: ClosedRange<T>.ClosedRange
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.ClosedRange
+  nameWithType.vb: ClosedRange(Of T).New
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).New
+  name.vb: New
+- uid: DrawnUi.Infrastructure.ClosedRange`1.Contains*
+  commentId: Overload:DrawnUi.Infrastructure.ClosedRange`1.Contains
+  href: DrawnUi.Infrastructure.ClosedRange-1.html#DrawnUi_Infrastructure_ClosedRange_1_Contains__0_
+  name: Contains
+  nameWithType: ClosedRange<T>.Contains
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>.Contains
+  nameWithType.vb: ClosedRange(Of T).Contains
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T).Contains
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

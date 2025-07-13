@@ -1,0 +1,204 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.RecyclingTemplate
+  commentId: T:DrawnUi.Draw.RecyclingTemplate
+  id: RecyclingTemplate
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.RecyclingTemplate.Disabled
+  - DrawnUi.Draw.RecyclingTemplate.Enabled
+  langs:
+  - csharp
+  - vb
+  name: RecyclingTemplate
+  nameWithType: RecyclingTemplate
+  fullName: DrawnUi.Draw.RecyclingTemplate
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RecyclingTemplate
+    path: ../src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum RecyclingTemplate
+    content.vb: Public Enum RecyclingTemplate
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.RecyclingTemplate.Enabled
+  commentId: F:DrawnUi.Draw.RecyclingTemplate.Enabled
+  id: Enabled
+  parent: DrawnUi.Draw.RecyclingTemplate
+  langs:
+  - csharp
+  - vb
+  name: Enabled
+  nameWithType: RecyclingTemplate.Enabled
+  fullName: DrawnUi.Draw.RecyclingTemplate.Enabled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Enabled
+    path: ../src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Enabled = 0
+    return:
+      type: DrawnUi.Draw.RecyclingTemplate
+- uid: DrawnUi.Draw.RecyclingTemplate.Disabled
+  commentId: F:DrawnUi.Draw.RecyclingTemplate.Disabled
+  id: Disabled
+  parent: DrawnUi.Draw.RecyclingTemplate
+  langs:
+  - csharp
+  - vb
+  name: Disabled
+  nameWithType: RecyclingTemplate.Disabled
+  fullName: DrawnUi.Draw.RecyclingTemplate.Disabled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Disabled
+    path: ../src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Disabled = 1
+    return:
+      type: DrawnUi.Draw.RecyclingTemplate
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.RecyclingTemplate
+  commentId: T:DrawnUi.Draw.RecyclingTemplate
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.RecyclingTemplate.html
+  name: RecyclingTemplate
+  nameWithType: RecyclingTemplate
+  fullName: DrawnUi.Draw.RecyclingTemplate

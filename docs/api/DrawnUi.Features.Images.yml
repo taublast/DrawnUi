@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Features.Images
+  commentId: N:DrawnUi.Features.Images
+  id: DrawnUi.Features.Images
+  children:
+  - DrawnUi.Features.Images.ImagesExtensions
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Features.Images
+  nameWithType: DrawnUi.Features.Images
+  fullName: DrawnUi.Features.Images
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Features.Images.ImagesExtensions
+  commentId: T:DrawnUi.Features.Images.ImagesExtensions
+  href: DrawnUi.Features.Images.ImagesExtensions.html
+  name: ImagesExtensions
+  nameWithType: ImagesExtensions
+  fullName: DrawnUi.Features.Images.ImagesExtensions

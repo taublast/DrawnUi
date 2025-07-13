@@ -1,0 +1,628 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ApplySpan
+  commentId: T:DrawnUi.Draw.ApplySpan
+  id: ApplySpan
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ApplySpan.Create(DrawnUi.Draw.TextSpan,System.Int32,System.Int32)
+  - DrawnUi.Draw.ApplySpan.DebugString
+  - DrawnUi.Draw.ApplySpan.Empty
+  - DrawnUi.Draw.ApplySpan.End
+  - DrawnUi.Draw.ApplySpan.Span
+  - DrawnUi.Draw.ApplySpan.Start
+  langs:
+  - csharp
+  - vb
+  name: ApplySpan
+  nameWithType: ApplySpan
+  fullName: DrawnUi.Draw.ApplySpan
+  type: Struct
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ApplySpan
+    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public struct ApplySpan
+    content.vb: Public Structure ApplySpan
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ApplySpan.DebugString
+  commentId: P:DrawnUi.Draw.ApplySpan.DebugString
+  id: DebugString
+  parent: DrawnUi.Draw.ApplySpan
+  langs:
+  - csharp
+  - vb
+  name: DebugString
+  nameWithType: ApplySpan.DebugString
+  fullName: DrawnUi.Draw.ApplySpan.DebugString
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DebugString
+    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string DebugString { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property DebugString As String
+  overload: DrawnUi.Draw.ApplySpan.DebugString*
+- uid: DrawnUi.Draw.ApplySpan.Create(DrawnUi.Draw.TextSpan,System.Int32,System.Int32)
+  commentId: M:DrawnUi.Draw.ApplySpan.Create(DrawnUi.Draw.TextSpan,System.Int32,System.Int32)
+  id: Create(DrawnUi.Draw.TextSpan,System.Int32,System.Int32)
+  parent: DrawnUi.Draw.ApplySpan
+  langs:
+  - csharp
+  - vb
+  name: Create(TextSpan, int, int)
+  nameWithType: ApplySpan.Create(TextSpan, int, int)
+  fullName: DrawnUi.Draw.ApplySpan.Create(DrawnUi.Draw.TextSpan, int, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Create
+    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ApplySpan Create(TextSpan span, int start, int end)
+    parameters:
+    - id: span
+      type: DrawnUi.Draw.TextSpan
+    - id: start
+      type: System.Int32
+    - id: end
+      type: System.Int32
+    return:
+      type: DrawnUi.Draw.ApplySpan
+    content.vb: Public Shared Function Create(span As TextSpan, start As Integer, [end] As Integer) As ApplySpan
+  overload: DrawnUi.Draw.ApplySpan.Create*
+  nameWithType.vb: ApplySpan.Create(TextSpan, Integer, Integer)
+  fullName.vb: DrawnUi.Draw.ApplySpan.Create(DrawnUi.Draw.TextSpan, Integer, Integer)
+  name.vb: Create(TextSpan, Integer, Integer)
+- uid: DrawnUi.Draw.ApplySpan.Span
+  commentId: P:DrawnUi.Draw.ApplySpan.Span
+  id: Span
+  parent: DrawnUi.Draw.ApplySpan
+  langs:
+  - csharp
+  - vb
+  name: Span
+  nameWithType: ApplySpan.Span
+  fullName: DrawnUi.Draw.ApplySpan.Span
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Span
+    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    startLine: 26
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public TextSpan Span { readonly get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.TextSpan
+    content.vb: Public Property Span As TextSpan
+  overload: DrawnUi.Draw.ApplySpan.Span*
+- uid: DrawnUi.Draw.ApplySpan.Start
+  commentId: P:DrawnUi.Draw.ApplySpan.Start
+  id: Start
+  parent: DrawnUi.Draw.ApplySpan
+  langs:
+  - csharp
+  - vb
+  name: Start
+  nameWithType: ApplySpan.Start
+  fullName: DrawnUi.Draw.ApplySpan.Start
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Start
+    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int Start { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Start As Integer
+  overload: DrawnUi.Draw.ApplySpan.Start*
+- uid: DrawnUi.Draw.ApplySpan.End
+  commentId: P:DrawnUi.Draw.ApplySpan.End
+  id: End
+  parent: DrawnUi.Draw.ApplySpan
+  langs:
+  - csharp
+  - vb
+  name: End
+  nameWithType: ApplySpan.End
+  fullName: DrawnUi.Draw.ApplySpan.End
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: End
+    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    startLine: 28
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int End { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property [End] As Integer
+  overload: DrawnUi.Draw.ApplySpan.End*
+- uid: DrawnUi.Draw.ApplySpan.Empty
+  commentId: P:DrawnUi.Draw.ApplySpan.Empty
+  id: Empty
+  parent: DrawnUi.Draw.ApplySpan
+  langs:
+  - csharp
+  - vb
+  name: Empty
+  nameWithType: ApplySpan.Empty
+  fullName: DrawnUi.Draw.ApplySpan.Empty
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Empty
+    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    startLine: 30
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ApplySpan Empty { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ApplySpan
+    content.vb: Public Shared ReadOnly Property Empty As ApplySpan
+  overload: DrawnUi.Draw.ApplySpan.Empty*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ApplySpan.DebugString*
+  commentId: Overload:DrawnUi.Draw.ApplySpan.DebugString
+  href: DrawnUi.Draw.ApplySpan.html#DrawnUi_Draw_ApplySpan_DebugString
+  name: DebugString
+  nameWithType: ApplySpan.DebugString
+  fullName: DrawnUi.Draw.ApplySpan.DebugString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.ApplySpan.Create*
+  commentId: Overload:DrawnUi.Draw.ApplySpan.Create
+  href: DrawnUi.Draw.ApplySpan.html#DrawnUi_Draw_ApplySpan_Create_DrawnUi_Draw_TextSpan_System_Int32_System_Int32_
+  name: Create
+  nameWithType: ApplySpan.Create
+  fullName: DrawnUi.Draw.ApplySpan.Create
+- uid: DrawnUi.Draw.TextSpan
+  commentId: T:DrawnUi.Draw.TextSpan
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.TextSpan.html
+  name: TextSpan
+  nameWithType: TextSpan
+  fullName: DrawnUi.Draw.TextSpan
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.ApplySpan
+  commentId: T:DrawnUi.Draw.ApplySpan
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ApplySpan.html
+  name: ApplySpan
+  nameWithType: ApplySpan
+  fullName: DrawnUi.Draw.ApplySpan
+- uid: DrawnUi.Draw.ApplySpan.Span*
+  commentId: Overload:DrawnUi.Draw.ApplySpan.Span
+  href: DrawnUi.Draw.ApplySpan.html#DrawnUi_Draw_ApplySpan_Span
+  name: Span
+  nameWithType: ApplySpan.Span
+  fullName: DrawnUi.Draw.ApplySpan.Span
+- uid: DrawnUi.Draw.ApplySpan.Start*
+  commentId: Overload:DrawnUi.Draw.ApplySpan.Start
+  href: DrawnUi.Draw.ApplySpan.html#DrawnUi_Draw_ApplySpan_Start
+  name: Start
+  nameWithType: ApplySpan.Start
+  fullName: DrawnUi.Draw.ApplySpan.Start
+- uid: DrawnUi.Draw.ApplySpan.End*
+  commentId: Overload:DrawnUi.Draw.ApplySpan.End
+  href: DrawnUi.Draw.ApplySpan.html#DrawnUi_Draw_ApplySpan_End
+  name: End
+  nameWithType: ApplySpan.End
+  fullName: DrawnUi.Draw.ApplySpan.End
+- uid: DrawnUi.Draw.ApplySpan.Empty*
+  commentId: Overload:DrawnUi.Draw.ApplySpan.Empty
+  href: DrawnUi.Draw.ApplySpan.html#DrawnUi_Draw_ApplySpan_Empty
+  name: Empty
+  nameWithType: ApplySpan.Empty
+  fullName: DrawnUi.Draw.ApplySpan.Empty

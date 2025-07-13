@@ -1,0 +1,1095 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.TemplatedViewsPool
+  commentId: T:DrawnUi.Draw.TemplatedViewsPool
+  id: TemplatedViewsPool
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.TemplatedViewsPool.#ctor(System.Func{System.Object},System.Int32,System.Action{System.IDisposable})
+  - DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool
+  - DrawnUi.Draw.TemplatedViewsPool.CreateTemplate
+  - DrawnUi.Draw.TemplatedViewsPool.Dispose
+  - DrawnUi.Draw.TemplatedViewsPool.Dispose(System.Boolean)
+  - DrawnUi.Draw.TemplatedViewsPool.Get(System.Single)
+  - DrawnUi.Draw.TemplatedViewsPool.GetStandalone
+  - DrawnUi.Draw.TemplatedViewsPool.IsDisposing
+  - DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
+  - DrawnUi.Draw.TemplatedViewsPool.MaxSize
+  - DrawnUi.Draw.TemplatedViewsPool.Reserve
+  - DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl,System.Int32)
+  - DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.TemplatedViewsPool.Size
+  langs:
+  - csharp
+  - vb
+  name: TemplatedViewsPool
+  nameWithType: TemplatedViewsPool
+  fullName: DrawnUi.Draw.TemplatedViewsPool
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TemplatedViewsPool
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1416
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class TemplatedViewsPool : IDisposable'
+    content.vb: Public Class TemplatedViewsPool Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.TemplatedViewsPool.CreateTemplate
+  commentId: P:DrawnUi.Draw.TemplatedViewsPool.CreateTemplate
+  id: CreateTemplate
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: CreateTemplate
+  nameWithType: TemplatedViewsPool.CreateTemplate
+  fullName: DrawnUi.Draw.TemplatedViewsPool.CreateTemplate
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateTemplate
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1418
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Func<object> CreateTemplate { get; protected set; }
+    parameters: []
+    return:
+      type: System.Func{System.Object}
+    content.vb: Public Property CreateTemplate As Func(Of Object)
+  overload: DrawnUi.Draw.TemplatedViewsPool.CreateTemplate*
+- uid: DrawnUi.Draw.TemplatedViewsPool.MaxSize
+  commentId: P:DrawnUi.Draw.TemplatedViewsPool.MaxSize
+  id: MaxSize
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: MaxSize
+  nameWithType: TemplatedViewsPool.MaxSize
+  fullName: DrawnUi.Draw.TemplatedViewsPool.MaxSize
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MaxSize
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1419
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int MaxSize { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxSize As Integer
+  overload: DrawnUi.Draw.TemplatedViewsPool.MaxSize*
+- uid: DrawnUi.Draw.TemplatedViewsPool.IsDisposing
+  commentId: F:DrawnUi.Draw.TemplatedViewsPool.IsDisposing
+  id: IsDisposing
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: IsDisposing
+  nameWithType: TemplatedViewsPool.IsDisposing
+  fullName: DrawnUi.Draw.TemplatedViewsPool.IsDisposing
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDisposing
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1420
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsDisposing
+    return:
+      type: System.Boolean
+    content.vb: Public IsDisposing As Boolean
+- uid: DrawnUi.Draw.TemplatedViewsPool.#ctor(System.Func{System.Object},System.Int32,System.Action{System.IDisposable})
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.#ctor(System.Func{System.Object},System.Int32,System.Action{System.IDisposable})
+  id: '#ctor(System.Func{System.Object},System.Int32,System.Action{System.IDisposable})'
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: TemplatedViewsPool(Func<object>, int, Action<IDisposable>)
+  nameWithType: TemplatedViewsPool.TemplatedViewsPool(Func<object>, int, Action<IDisposable>)
+  fullName: DrawnUi.Draw.TemplatedViewsPool.TemplatedViewsPool(System.Func<object>, int, System.Action<System.IDisposable>)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1432
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public TemplatedViewsPool(Func<object> initialViewModel, int maxSize, Action<IDisposable> dispose)
+    parameters:
+    - id: initialViewModel
+      type: System.Func{System.Object}
+    - id: maxSize
+      type: System.Int32
+    - id: dispose
+      type: System.Action{System.IDisposable}
+    content.vb: Public Sub New(initialViewModel As Func(Of Object), maxSize As Integer, dispose As Action(Of IDisposable))
+  overload: DrawnUi.Draw.TemplatedViewsPool.#ctor*
+  nameWithType.vb: TemplatedViewsPool.New(Func(Of Object), Integer, Action(Of IDisposable))
+  fullName.vb: DrawnUi.Draw.TemplatedViewsPool.New(System.Func(Of Object), Integer, System.Action(Of System.IDisposable))
+  name.vb: New(Func(Of Object), Integer, Action(Of IDisposable))
+- uid: DrawnUi.Draw.TemplatedViewsPool.Size
+  commentId: P:DrawnUi.Draw.TemplatedViewsPool.Size
+  id: Size
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: Size
+  nameWithType: TemplatedViewsPool.Size
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Size
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Size
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1440
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int Size { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Size As Integer
+  overload: DrawnUi.Draw.TemplatedViewsPool.Size*
+- uid: DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
+  commentId: P:DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
+  id: MaxDistinctHeights
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: MaxDistinctHeights
+  nameWithType: TemplatedViewsPool.MaxDistinctHeights
+  fullName: DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MaxDistinctHeights
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1455
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int MaxDistinctHeights { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxDistinctHeights As Integer
+  overload: DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights*
+- uid: DrawnUi.Draw.TemplatedViewsPool.Dispose(System.Boolean)
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: Dispose(bool)
+  nameWithType: TemplatedViewsPool.Dispose(bool)
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Dispose(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1467
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected virtual void Dispose(bool disposing)
+    parameters:
+    - id: disposing
+      type: System.Boolean
+    content.vb: Protected Overridable Sub Dispose(disposing As Boolean)
+  overload: DrawnUi.Draw.TemplatedViewsPool.Dispose*
+  nameWithType.vb: TemplatedViewsPool.Dispose(Boolean)
+  fullName.vb: DrawnUi.Draw.TemplatedViewsPool.Dispose(Boolean)
+  name.vb: Dispose(Boolean)
+- uid: DrawnUi.Draw.TemplatedViewsPool.Dispose
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.Dispose
+  id: Dispose
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: TemplatedViewsPool.Dispose()
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1498
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Draw.TemplatedViewsPool.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: DrawnUi.Draw.TemplatedViewsPool.Reserve
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.Reserve
+  id: Reserve
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: Reserve()
+  nameWithType: TemplatedViewsPool.Reserve()
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Reserve()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Reserve
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1523
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Reserve()
+    content.vb: Public Sub Reserve()
+  overload: DrawnUi.Draw.TemplatedViewsPool.Reserve*
+- uid: DrawnUi.Draw.TemplatedViewsPool.GetStandalone
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.GetStandalone
+  id: GetStandalone
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: GetStandalone()
+  nameWithType: TemplatedViewsPool.GetStandalone()
+  fullName: DrawnUi.Draw.TemplatedViewsPool.GetStandalone()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetStandalone
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1545
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaControl GetStandalone()
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Function GetStandalone() As SkiaControl
+  overload: DrawnUi.Draw.TemplatedViewsPool.GetStandalone*
+- uid: DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone(DrawnUi.Draw.SkiaControl)
+  id: ReturnStandalone(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: ReturnStandalone(SkiaControl)
+  nameWithType: TemplatedViewsPool.ReturnStandalone(SkiaControl)
+  fullName: DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReturnStandalone
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1563
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void ReturnStandalone(SkiaControl viewModel)
+    parameters:
+    - id: viewModel
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Sub ReturnStandalone(viewModel As SkiaControl)
+  overload: DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone*
+- uid: DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool
+  id: ClearStandalonePool
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: ClearStandalonePool()
+  nameWithType: TemplatedViewsPool.ClearStandalonePool()
+  fullName: DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ClearStandalonePool
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1574
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void ClearStandalonePool()
+    content.vb: Public Sub ClearStandalonePool()
+  overload: DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool*
+- uid: DrawnUi.Draw.TemplatedViewsPool.Get(System.Single)
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.Get(System.Single)
+  id: Get(System.Single)
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: Get(float)
+  nameWithType: TemplatedViewsPool.Get(float)
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Get(float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Get
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1590
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaControl Get(float height = 0)
+    parameters:
+    - id: height
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Function [Get](height As Single = 0) As SkiaControl
+  overload: DrawnUi.Draw.TemplatedViewsPool.Get*
+  nameWithType.vb: TemplatedViewsPool.Get(Single)
+  fullName.vb: DrawnUi.Draw.TemplatedViewsPool.Get(Single)
+  name.vb: Get(Single)
+- uid: DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl,System.Int32)
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl,System.Int32)
+  id: Return(DrawnUi.Draw.SkiaControl,System.Int32)
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: Return(SkiaControl, int)
+  nameWithType: TemplatedViewsPool.Return(SkiaControl, int)
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Return
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1645
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Return(SkiaControl viewModel, int hKey)
+    parameters:
+    - id: viewModel
+      type: DrawnUi.Draw.SkiaControl
+    - id: hKey
+      type: System.Int32
+    content.vb: Public Sub [Return](viewModel As SkiaControl, hKey As Integer)
+  overload: DrawnUi.Draw.TemplatedViewsPool.Return*
+  nameWithType.vb: TemplatedViewsPool.Return(SkiaControl, Integer)
+  fullName.vb: DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl, Integer)
+  name.vb: Return(SkiaControl, Integer)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.TemplatedViewsPool.CreateTemplate*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.CreateTemplate
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_CreateTemplate
+  name: CreateTemplate
+  nameWithType: TemplatedViewsPool.CreateTemplate
+  fullName: DrawnUi.Draw.TemplatedViewsPool.CreateTemplate
+- uid: System.Func{System.Object}
+  commentId: T:System.Func{System.Object}
+  parent: System
+  definition: System.Func`1
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<object>
+  nameWithType: Func<object>
+  fullName: System.Func<object>
+  nameWithType.vb: Func(Of Object)
+  fullName.vb: System.Func(Of Object)
+  name.vb: Func(Of Object)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: DrawnUi.Draw.TemplatedViewsPool.MaxSize*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.MaxSize
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_MaxSize
+  name: MaxSize
+  nameWithType: TemplatedViewsPool.MaxSize
+  fullName: DrawnUi.Draw.TemplatedViewsPool.MaxSize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.TemplatedViewsPool.#ctor*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.#ctor
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool__ctor_System_Func_System_Object__System_Int32_System_Action_System_IDisposable__
+  name: TemplatedViewsPool
+  nameWithType: TemplatedViewsPool.TemplatedViewsPool
+  fullName: DrawnUi.Draw.TemplatedViewsPool.TemplatedViewsPool
+  nameWithType.vb: TemplatedViewsPool.New
+  fullName.vb: DrawnUi.Draw.TemplatedViewsPool.New
+  name.vb: New
+- uid: System.Action{System.IDisposable}
+  commentId: T:System.Action{System.IDisposable}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<IDisposable>
+  nameWithType: Action<IDisposable>
+  fullName: System.Action<System.IDisposable>
+  nameWithType.vb: Action(Of IDisposable)
+  fullName.vb: System.Action(Of System.IDisposable)
+  name.vb: Action(Of IDisposable)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.IDisposable
+    name: IDisposable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IDisposable
+    name: IDisposable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.TemplatedViewsPool.Size*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.Size
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_Size
+  name: Size
+  nameWithType: TemplatedViewsPool.Size
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Size
+- uid: DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_MaxDistinctHeights
+  name: MaxDistinctHeights
+  nameWithType: TemplatedViewsPool.MaxDistinctHeights
+  fullName: DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
+- uid: DrawnUi.Draw.TemplatedViewsPool.Dispose*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.Dispose
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_Dispose_System_Boolean_
+  name: Dispose
+  nameWithType: TemplatedViewsPool.Dispose
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.TemplatedViewsPool.Reserve*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.Reserve
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_Reserve
+  name: Reserve
+  nameWithType: TemplatedViewsPool.Reserve
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Reserve
+- uid: DrawnUi.Draw.TemplatedViewsPool.GetStandalone*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.GetStandalone
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_GetStandalone
+  name: GetStandalone
+  nameWithType: TemplatedViewsPool.GetStandalone
+  fullName: DrawnUi.Draw.TemplatedViewsPool.GetStandalone
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_ReturnStandalone_DrawnUi_Draw_SkiaControl_
+  name: ReturnStandalone
+  nameWithType: TemplatedViewsPool.ReturnStandalone
+  fullName: DrawnUi.Draw.TemplatedViewsPool.ReturnStandalone
+- uid: DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_ClearStandalonePool
+  name: ClearStandalonePool
+  nameWithType: TemplatedViewsPool.ClearStandalonePool
+  fullName: DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool
+- uid: DrawnUi.Draw.TemplatedViewsPool.Get*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.Get
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_Get_System_Single_
+  name: Get
+  nameWithType: TemplatedViewsPool.Get
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Get
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.TemplatedViewsPool.Return*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.Return
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_Return_DrawnUi_Draw_SkiaControl_System_Int32_
+  name: Return
+  nameWithType: TemplatedViewsPool.Return
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Return

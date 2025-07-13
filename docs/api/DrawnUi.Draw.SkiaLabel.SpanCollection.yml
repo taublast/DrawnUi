@@ -1,0 +1,2982 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaLabel.SpanCollection
+  commentId: T:DrawnUi.Draw.SkiaLabel.SpanCollection
+  id: SkiaLabel.SpanCollection
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems
+  - DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+  - DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+  langs:
+  - csharp
+  - vb
+  name: SkiaLabel.SpanCollection
+  nameWithType: SkiaLabel.SpanCollection
+  fullName: DrawnUi.Draw.SkiaLabel.SpanCollection
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SpanCollection
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+    startLine: 274
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class SkiaLabel.SpanCollection : ObservableRangeCollection<TextSpan>, IList<TextSpan>, ICollection<TextSpan>, IReadOnlyList<TextSpan>, IReadOnlyCollection<TextSpan>, IEnumerable<TextSpan>, IList, ICollection, IEnumerable, INotifyCollectionChanged, INotifyPropertyChanged'
+    content.vb: Public Class SkiaLabel.SpanCollection Inherits ObservableRangeCollection(Of TextSpan) Implements IList(Of TextSpan), ICollection(Of TextSpan), IReadOnlyList(Of TextSpan), IReadOnlyCollection(Of TextSpan), IEnumerable(Of TextSpan), IList, ICollection, IEnumerable, INotifyCollectionChanged, INotifyPropertyChanged
+  inheritance:
+  - System.Object
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  - AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}
+  implements:
+  - System.Collections.Generic.IList{DrawnUi.Draw.TextSpan}
+  - System.Collections.Generic.ICollection{DrawnUi.Draw.TextSpan}
+  - System.Collections.Generic.IReadOnlyList{DrawnUi.Draw.TextSpan}
+  - System.Collections.Generic.IReadOnlyCollection{DrawnUi.Draw.TextSpan}
+  - System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan}
+  - System.Collections.IList
+  - System.Collections.ICollection
+  - System.Collections.IEnumerable
+  - System.Collections.Specialized.INotifyCollectionChanged
+  - System.ComponentModel.INotifyPropertyChanged
+  inheritedMembers:
+  - AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.AddRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+  - AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.RemoveRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+  - AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.Replace(DrawnUi.Draw.TextSpan)
+  - AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.ReplaceRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan})
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.BlockReentrancy
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CheckReentrancy
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.Move(System.Int32,System.Int32)
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.MoveItem(System.Int32,System.Int32)
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.RemoveItem(System.Int32)
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CollectionChanged
+  - System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.PropertyChanged
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Add(DrawnUi.Draw.TextSpan)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Clear
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Contains(DrawnUi.Draw.TextSpan)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.CopyTo(DrawnUi.Draw.TextSpan[],System.Int32)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.GetEnumerator
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.IndexOf(DrawnUi.Draw.TextSpan)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Insert(System.Int32,DrawnUi.Draw.TextSpan)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Remove(DrawnUi.Draw.TextSpan)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.RemoveAt(System.Int32)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Count
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Item(System.Int32)
+  - System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Items
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+  id: InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+  parent: DrawnUi.Draw.SkiaLabel.SpanCollection
+  langs:
+  - csharp
+  - vb
+  name: InsertItem(int, TextSpan)
+  nameWithType: SkiaLabel.SpanCollection.InsertItem(int, TextSpan)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem(int, DrawnUi.Draw.TextSpan)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InsertItem
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+    startLine: 276
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Inserts an item into the collection at the specified index.
+  example: []
+  syntax:
+    content: protected override void InsertItem(int index, TextSpan item)
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index at which <code class="paramref">item</code> should be inserted.
+    - id: item
+      type: DrawnUi.Draw.TextSpan
+      description: The object to insert.
+    content.vb: Protected Overrides Sub InsertItem(index As Integer, item As TextSpan)
+  overridden: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+  overload: DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem*
+  nameWithType.vb: SkiaLabel.SpanCollection.InsertItem(Integer, TextSpan)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem(Integer, DrawnUi.Draw.TextSpan)
+  name.vb: InsertItem(Integer, TextSpan)
+- uid: DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+  id: SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+  parent: DrawnUi.Draw.SkiaLabel.SpanCollection
+  langs:
+  - csharp
+  - vb
+  name: SetItem(int, TextSpan)
+  nameWithType: SkiaLabel.SpanCollection.SetItem(int, TextSpan)
+  fullName: DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem(int, DrawnUi.Draw.TextSpan)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetItem
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+    startLine: 279
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Replaces the element at the specified index.
+  example: []
+  syntax:
+    content: protected override void SetItem(int index, TextSpan item)
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index of the element to replace.
+    - id: item
+      type: DrawnUi.Draw.TextSpan
+      description: The new value for the element at the specified index.
+    content.vb: Protected Overrides Sub SetItem(index As Integer, item As TextSpan)
+  overridden: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+  overload: DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem*
+  nameWithType.vb: SkiaLabel.SpanCollection.SetItem(Integer, TextSpan)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem(Integer, DrawnUi.Draw.TextSpan)
+  name.vb: SetItem(Integer, TextSpan)
+- uid: DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems
+  commentId: M:DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems
+  id: ClearItems
+  parent: DrawnUi.Draw.SkiaLabel.SpanCollection
+  langs:
+  - csharp
+  - vb
+  name: ClearItems()
+  nameWithType: SkiaLabel.SpanCollection.ClearItems()
+  fullName: DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ClearItems
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
+    startLine: 282
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Removes all items from the collection.
+  example: []
+  syntax:
+    content: protected override void ClearItems()
+    content.vb: Protected Overrides Sub ClearItems()
+  overridden: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.ClearItems
+  overload: DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  commentId: T:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  parent: System.Collections.ObjectModel
+  definition: System.Collections.ObjectModel.Collection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1
+  name: Collection<TextSpan>
+  nameWithType: Collection<TextSpan>
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: Collection(Of TextSpan)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan)
+  name.vb: Collection(Of TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  commentId: T:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  parent: System.Collections.ObjectModel
+  definition: System.Collections.ObjectModel.ObservableCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  name: ObservableCollection<TextSpan>
+  nameWithType: ObservableCollection<TextSpan>
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: ObservableCollection(Of TextSpan)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan)
+  name.vb: ObservableCollection(Of TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}
+  commentId: T:AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}
+  parent: AppoMobi.Specials
+  definition: AppoMobi.Specials.ObservableRangeCollection`1
+  href: DrawnUi.Draw.TextSpan.html
+  name: ObservableRangeCollection<TextSpan>
+  nameWithType: ObservableRangeCollection<TextSpan>
+  fullName: AppoMobi.Specials.ObservableRangeCollection<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: ObservableRangeCollection(Of TextSpan)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of DrawnUi.Draw.TextSpan)
+  name.vb: ObservableRangeCollection(Of TextSpan)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1
+    name: ObservableRangeCollection
+    isExternal: true
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1
+    name: ObservableRangeCollection
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.Generic.IList{DrawnUi.Draw.TextSpan}
+  commentId: T:System.Collections.Generic.IList{DrawnUi.Draw.TextSpan}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<TextSpan>
+  nameWithType: IList<TextSpan>
+  fullName: System.Collections.Generic.IList<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: IList(Of TextSpan)
+  fullName.vb: System.Collections.Generic.IList(Of DrawnUi.Draw.TextSpan)
+  name.vb: IList(Of TextSpan)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.Generic.ICollection{DrawnUi.Draw.TextSpan}
+  commentId: T:System.Collections.Generic.ICollection{DrawnUi.Draw.TextSpan}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.ICollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<TextSpan>
+  nameWithType: ICollection<TextSpan>
+  fullName: System.Collections.Generic.ICollection<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: ICollection(Of TextSpan)
+  fullName.vb: System.Collections.Generic.ICollection(Of DrawnUi.Draw.TextSpan)
+  name.vb: ICollection(Of TextSpan)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList{DrawnUi.Draw.TextSpan}
+  commentId: T:System.Collections.Generic.IReadOnlyList{DrawnUi.Draw.TextSpan}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<TextSpan>
+  nameWithType: IReadOnlyList<TextSpan>
+  fullName: System.Collections.Generic.IReadOnlyList<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: IReadOnlyList(Of TextSpan)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of DrawnUi.Draw.TextSpan)
+  name.vb: IReadOnlyList(Of TextSpan)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection{DrawnUi.Draw.TextSpan}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{DrawnUi.Draw.TextSpan}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<TextSpan>
+  nameWithType: IReadOnlyCollection<TextSpan>
+  fullName: System.Collections.Generic.IReadOnlyCollection<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: IReadOnlyCollection(Of TextSpan)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of DrawnUi.Draw.TextSpan)
+  name.vb: IReadOnlyCollection(Of TextSpan)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan}
+  commentId: T:System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<TextSpan>
+  nameWithType: IEnumerable<TextSpan>
+  fullName: System.Collections.Generic.IEnumerable<DrawnUi.Draw.TextSpan>
+  nameWithType.vb: IEnumerable(Of TextSpan)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.TextSpan)
+  name.vb: IEnumerable(Of TextSpan)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.IList
+  commentId: T:System.Collections.IList
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ilist
+  name: IList
+  nameWithType: IList
+  fullName: System.Collections.IList
+- uid: System.Collections.ICollection
+  commentId: T:System.Collections.ICollection
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.icollection
+  name: ICollection
+  nameWithType: ICollection
+  fullName: System.Collections.ICollection
+- uid: System.Collections.IEnumerable
+  commentId: T:System.Collections.IEnumerable
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  name: IEnumerable
+  nameWithType: IEnumerable
+  fullName: System.Collections.IEnumerable
+- uid: System.Collections.Specialized.INotifyCollectionChanged
+  commentId: T:System.Collections.Specialized.INotifyCollectionChanged
+  parent: System.Collections.Specialized
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.inotifycollectionchanged
+  name: INotifyCollectionChanged
+  nameWithType: INotifyCollectionChanged
+  fullName: System.Collections.Specialized.INotifyCollectionChanged
+- uid: System.ComponentModel.INotifyPropertyChanged
+  commentId: T:System.ComponentModel.INotifyPropertyChanged
+  parent: System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged
+  name: INotifyPropertyChanged
+  nameWithType: INotifyPropertyChanged
+  fullName: System.ComponentModel.INotifyPropertyChanged
+- uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.AddRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.AddRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+  parent: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}
+  definition: AppoMobi.Specials.ObservableRangeCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: AddRange(IEnumerable<TextSpan>, NotifyCollectionChangedAction)
+  nameWithType: ObservableRangeCollection<TextSpan>.AddRange(IEnumerable<TextSpan>, NotifyCollectionChangedAction)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<DrawnUi.Draw.TextSpan>.AddRange(System.Collections.Generic.IEnumerable<DrawnUi.Draw.TextSpan>, System.Collections.Specialized.NotifyCollectionChangedAction)
+  nameWithType.vb: ObservableRangeCollection(Of TextSpan).AddRange(IEnumerable(Of TextSpan), NotifyCollectionChangedAction)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of DrawnUi.Draw.TextSpan).AddRange(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.TextSpan), System.Collections.Specialized.NotifyCollectionChangedAction)
+  name.vb: AddRange(IEnumerable(Of TextSpan), NotifyCollectionChangedAction)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.AddRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: AddRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.AddRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: AddRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.RemoveRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.RemoveRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+  parent: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}
+  definition: AppoMobi.Specials.ObservableRangeCollection`1.RemoveRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: RemoveRange(IEnumerable<TextSpan>, NotifyCollectionChangedAction)
+  nameWithType: ObservableRangeCollection<TextSpan>.RemoveRange(IEnumerable<TextSpan>, NotifyCollectionChangedAction)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<DrawnUi.Draw.TextSpan>.RemoveRange(System.Collections.Generic.IEnumerable<DrawnUi.Draw.TextSpan>, System.Collections.Specialized.NotifyCollectionChangedAction)
+  nameWithType.vb: ObservableRangeCollection(Of TextSpan).RemoveRange(IEnumerable(Of TextSpan), NotifyCollectionChangedAction)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of DrawnUi.Draw.TextSpan).RemoveRange(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.TextSpan), System.Collections.Specialized.NotifyCollectionChangedAction)
+  name.vb: RemoveRange(IEnumerable(Of TextSpan), NotifyCollectionChangedAction)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.RemoveRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: RemoveRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.RemoveRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: RemoveRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.Replace(DrawnUi.Draw.TextSpan)
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.Replace(DrawnUi.Draw.TextSpan)
+  parent: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}
+  definition: AppoMobi.Specials.ObservableRangeCollection`1.Replace(`0)
+  href: DrawnUi.Draw.TextSpan.html
+  name: Replace(TextSpan)
+  nameWithType: ObservableRangeCollection<TextSpan>.Replace(TextSpan)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<DrawnUi.Draw.TextSpan>.Replace(DrawnUi.Draw.TextSpan)
+  nameWithType.vb: ObservableRangeCollection(Of TextSpan).Replace(TextSpan)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of DrawnUi.Draw.TextSpan).Replace(DrawnUi.Draw.TextSpan)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.Replace(DrawnUi.Draw.TextSpan)
+    name: Replace
+    isExternal: true
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.Replace(DrawnUi.Draw.TextSpan)
+    name: Replace
+    isExternal: true
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.ReplaceRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan})
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.ReplaceRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan})
+  parent: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}
+  definition: AppoMobi.Specials.ObservableRangeCollection`1.ReplaceRange(System.Collections.Generic.IEnumerable{`0})
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: ReplaceRange(IEnumerable<TextSpan>)
+  nameWithType: ObservableRangeCollection<TextSpan>.ReplaceRange(IEnumerable<TextSpan>)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<DrawnUi.Draw.TextSpan>.ReplaceRange(System.Collections.Generic.IEnumerable<DrawnUi.Draw.TextSpan>)
+  nameWithType.vb: ObservableRangeCollection(Of TextSpan).ReplaceRange(IEnumerable(Of TextSpan))
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of DrawnUi.Draw.TextSpan).ReplaceRange(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.TextSpan))
+  name.vb: ReplaceRange(IEnumerable(Of TextSpan))
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.ReplaceRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan})
+    name: ReplaceRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection{DrawnUi.Draw.TextSpan}.ReplaceRange(System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextSpan})
+    name: ReplaceRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.BlockReentrancy
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.BlockReentrancy
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.BlockReentrancy
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.blockreentrancy
+  name: BlockReentrancy()
+  nameWithType: ObservableCollection<TextSpan>.BlockReentrancy()
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.BlockReentrancy()
+  nameWithType.vb: ObservableCollection(Of TextSpan).BlockReentrancy()
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).BlockReentrancy()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.BlockReentrancy
+    name: BlockReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.blockreentrancy
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.BlockReentrancy
+    name: BlockReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.blockreentrancy
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CheckReentrancy
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CheckReentrancy
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.CheckReentrancy
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.checkreentrancy
+  name: CheckReentrancy()
+  nameWithType: ObservableCollection<TextSpan>.CheckReentrancy()
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.CheckReentrancy()
+  nameWithType.vb: ObservableCollection(Of TextSpan).CheckReentrancy()
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).CheckReentrancy()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CheckReentrancy
+    name: CheckReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.checkreentrancy
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CheckReentrancy
+    name: CheckReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.checkreentrancy
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.Move(System.Int32,System.Int32)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.Move(System.Int32,System.Int32)
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.Move(System.Int32,System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.move
+  name: Move(int, int)
+  nameWithType: ObservableCollection<TextSpan>.Move(int, int)
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.Move(int, int)
+  nameWithType.vb: ObservableCollection(Of TextSpan).Move(Integer, Integer)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).Move(Integer, Integer)
+  name.vb: Move(Integer, Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.Move(System.Int32,System.Int32)
+    name: Move
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.move
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.Move(System.Int32,System.Int32)
+    name: Move
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.move
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.MoveItem(System.Int32,System.Int32)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.MoveItem(System.Int32,System.Int32)
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.MoveItem(System.Int32,System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.moveitem
+  name: MoveItem(int, int)
+  nameWithType: ObservableCollection<TextSpan>.MoveItem(int, int)
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.MoveItem(int, int)
+  nameWithType.vb: ObservableCollection(Of TextSpan).MoveItem(Integer, Integer)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).MoveItem(Integer, Integer)
+  name.vb: MoveItem(Integer, Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.MoveItem(System.Int32,System.Int32)
+    name: MoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.moveitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.MoveItem(System.Int32,System.Int32)
+    name: MoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.moveitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.oncollectionchanged
+  name: OnCollectionChanged(NotifyCollectionChangedEventArgs)
+  nameWithType: ObservableCollection<TextSpan>.OnCollectionChanged(NotifyCollectionChangedEventArgs)
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType.vb: ObservableCollection(Of TextSpan).OnCollectionChanged(NotifyCollectionChangedEventArgs)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: OnCollectionChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.oncollectionchanged
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: OnCollectionChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.oncollectionchanged
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.onpropertychanged
+  name: OnPropertyChanged(PropertyChangedEventArgs)
+  nameWithType: ObservableCollection<TextSpan>.OnPropertyChanged(PropertyChangedEventArgs)
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  nameWithType.vb: ObservableCollection(Of TextSpan).OnPropertyChanged(PropertyChangedEventArgs)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.onpropertychanged
+  - name: (
+  - uid: System.ComponentModel.PropertyChangedEventArgs
+    name: PropertyChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.onpropertychanged
+  - name: (
+  - uid: System.ComponentModel.PropertyChangedEventArgs
+    name: PropertyChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.RemoveItem(System.Int32)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.RemoveItem(System.Int32)
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.RemoveItem(System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.removeitem
+  name: RemoveItem(int)
+  nameWithType: ObservableCollection<TextSpan>.RemoveItem(int)
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.RemoveItem(int)
+  nameWithType.vb: ObservableCollection(Of TextSpan).RemoveItem(Integer)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).RemoveItem(Integer)
+  name.vb: RemoveItem(Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.RemoveItem(System.Int32)
+    name: RemoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.removeitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.RemoveItem(System.Int32)
+    name: RemoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.removeitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CollectionChanged
+  commentId: E:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.CollectionChanged
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.CollectionChanged
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.collectionchanged
+  name: CollectionChanged
+  nameWithType: ObservableCollection<TextSpan>.CollectionChanged
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.CollectionChanged
+  nameWithType.vb: ObservableCollection(Of TextSpan).CollectionChanged
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).CollectionChanged
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.PropertyChanged
+  commentId: E:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.PropertyChanged
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.PropertyChanged
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.propertychanged
+  name: PropertyChanged
+  nameWithType: ObservableCollection<TextSpan>.PropertyChanged
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.PropertyChanged
+  nameWithType.vb: ObservableCollection(Of TextSpan).PropertyChanged
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).PropertyChanged
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Add(DrawnUi.Draw.TextSpan)
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Add(DrawnUi.Draw.TextSpan)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Add(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.add
+  name: Add(TextSpan)
+  nameWithType: Collection<TextSpan>.Add(TextSpan)
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.Add(DrawnUi.Draw.TextSpan)
+  nameWithType.vb: Collection(Of TextSpan).Add(TextSpan)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).Add(DrawnUi.Draw.TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Add(DrawnUi.Draw.TextSpan)
+    name: Add
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.add
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Add(DrawnUi.Draw.TextSpan)
+    name: Add
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.add
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Clear
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Clear
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Clear
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.clear
+  name: Clear()
+  nameWithType: Collection<TextSpan>.Clear()
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.Clear()
+  nameWithType.vb: Collection(Of TextSpan).Clear()
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).Clear()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Clear
+    name: Clear
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.clear
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Clear
+    name: Clear
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.clear
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Contains(DrawnUi.Draw.TextSpan)
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Contains(DrawnUi.Draw.TextSpan)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Contains(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.contains
+  name: Contains(TextSpan)
+  nameWithType: Collection<TextSpan>.Contains(TextSpan)
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.Contains(DrawnUi.Draw.TextSpan)
+  nameWithType.vb: Collection(Of TextSpan).Contains(TextSpan)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).Contains(DrawnUi.Draw.TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Contains(DrawnUi.Draw.TextSpan)
+    name: Contains
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.contains
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Contains(DrawnUi.Draw.TextSpan)
+    name: Contains
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.contains
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.CopyTo(DrawnUi.Draw.TextSpan[],System.Int32)
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.CopyTo(DrawnUi.Draw.TextSpan[],System.Int32)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.CopyTo(`0[],System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.copyto
+  name: CopyTo(TextSpan[], int)
+  nameWithType: Collection<TextSpan>.CopyTo(TextSpan[], int)
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.CopyTo(DrawnUi.Draw.TextSpan[], int)
+  nameWithType.vb: Collection(Of TextSpan).CopyTo(TextSpan(), Integer)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).CopyTo(DrawnUi.Draw.TextSpan(), Integer)
+  name.vb: CopyTo(TextSpan(), Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.CopyTo(DrawnUi.Draw.TextSpan[],System.Int32)
+    name: CopyTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.copyto
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.CopyTo(DrawnUi.Draw.TextSpan[],System.Int32)
+    name: CopyTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.copyto
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.GetEnumerator
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.GetEnumerator
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.GetEnumerator
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: Collection<TextSpan>.GetEnumerator()
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.GetEnumerator()
+  nameWithType.vb: Collection(Of TextSpan).GetEnumerator()
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.IndexOf(DrawnUi.Draw.TextSpan)
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.IndexOf(DrawnUi.Draw.TextSpan)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.IndexOf(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.indexof
+  name: IndexOf(TextSpan)
+  nameWithType: Collection<TextSpan>.IndexOf(TextSpan)
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.IndexOf(DrawnUi.Draw.TextSpan)
+  nameWithType.vb: Collection(Of TextSpan).IndexOf(TextSpan)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).IndexOf(DrawnUi.Draw.TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.IndexOf(DrawnUi.Draw.TextSpan)
+    name: IndexOf
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.indexof
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.IndexOf(DrawnUi.Draw.TextSpan)
+    name: IndexOf
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.indexof
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Insert(System.Int32,DrawnUi.Draw.TextSpan)
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Insert(System.Int32,DrawnUi.Draw.TextSpan)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Insert(System.Int32,`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.insert
+  name: Insert(int, TextSpan)
+  nameWithType: Collection<TextSpan>.Insert(int, TextSpan)
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.Insert(int, DrawnUi.Draw.TextSpan)
+  nameWithType.vb: Collection(Of TextSpan).Insert(Integer, TextSpan)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).Insert(Integer, DrawnUi.Draw.TextSpan)
+  name.vb: Insert(Integer, TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Insert(System.Int32,DrawnUi.Draw.TextSpan)
+    name: Insert
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.insert
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Insert(System.Int32,DrawnUi.Draw.TextSpan)
+    name: Insert
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.insert
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Remove(DrawnUi.Draw.TextSpan)
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Remove(DrawnUi.Draw.TextSpan)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Remove(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.remove
+  name: Remove(TextSpan)
+  nameWithType: Collection<TextSpan>.Remove(TextSpan)
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.Remove(DrawnUi.Draw.TextSpan)
+  nameWithType.vb: Collection(Of TextSpan).Remove(TextSpan)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).Remove(DrawnUi.Draw.TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Remove(DrawnUi.Draw.TextSpan)
+    name: Remove
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.remove
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Remove(DrawnUi.Draw.TextSpan)
+    name: Remove
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.remove
+  - name: (
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.RemoveAt(System.Int32)
+  commentId: M:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.RemoveAt(System.Int32)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.RemoveAt(System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.removeat
+  name: RemoveAt(int)
+  nameWithType: Collection<TextSpan>.RemoveAt(int)
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.RemoveAt(int)
+  nameWithType.vb: Collection(Of TextSpan).RemoveAt(Integer)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).RemoveAt(Integer)
+  name.vb: RemoveAt(Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.RemoveAt(System.Int32)
+    name: RemoveAt
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.removeat
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.RemoveAt(System.Int32)
+    name: RemoveAt
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.removeat
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Count
+  commentId: P:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Count
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Count
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.count
+  name: Count
+  nameWithType: Collection<TextSpan>.Count
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.Count
+  nameWithType.vb: Collection(Of TextSpan).Count
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).Count
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Item(System.Int32)
+  commentId: P:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Item(System.Int32)
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Item(System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: Collection<TextSpan>.this[int]
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.this[int]
+  nameWithType.vb: Collection(Of TextSpan).this[](Integer)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Item(System.Int32)
+    name: this[]
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.item
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Items
+  commentId: P:System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}.Items
+  parent: System.Collections.ObjectModel.Collection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.Collection`1.Items
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.items
+  name: Items
+  nameWithType: Collection<TextSpan>.Items
+  fullName: System.Collections.ObjectModel.Collection<DrawnUi.Draw.TextSpan>.Items
+  nameWithType.vb: Collection(Of TextSpan).Items
+  fullName.vb: System.Collections.ObjectModel.Collection(Of DrawnUi.Draw.TextSpan).Items
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.ObjectModel.Collection`1
+  commentId: T:System.Collections.ObjectModel.Collection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1
+  name: Collection<T>
+  nameWithType: Collection<T>
+  fullName: System.Collections.ObjectModel.Collection<T>
+  nameWithType.vb: Collection(Of T)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T)
+  name.vb: Collection(Of T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel
+  commentId: N:System.Collections.ObjectModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.ObjectModel
+  nameWithType: System.Collections.ObjectModel
+  fullName: System.Collections.ObjectModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.ObjectModel
+    name: ObjectModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.ObjectModel
+    name: ObjectModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel
+- uid: System.Collections.ObjectModel.ObservableCollection`1
+  commentId: T:System.Collections.ObjectModel.ObservableCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  name: ObservableCollection<T>
+  nameWithType: ObservableCollection<T>
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>
+  nameWithType.vb: ObservableCollection(Of T)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T)
+  name.vb: ObservableCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection`1
+  commentId: T:AppoMobi.Specials.ObservableRangeCollection`1
+  isExternal: true
+  name: ObservableRangeCollection<T>
+  nameWithType: ObservableRangeCollection<T>
+  fullName: AppoMobi.Specials.ObservableRangeCollection<T>
+  nameWithType.vb: ObservableRangeCollection(Of T)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of T)
+  name.vb: ObservableRangeCollection(Of T)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1
+    name: ObservableRangeCollection
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1
+    name: ObservableRangeCollection
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: AppoMobi.Specials
+  commentId: N:AppoMobi.Specials
+  isExternal: true
+  name: AppoMobi.Specials
+  nameWithType: AppoMobi.Specials
+  fullName: AppoMobi.Specials
+  spec.csharp:
+  - uid: AppoMobi
+    name: AppoMobi
+    isExternal: true
+  - name: .
+  - uid: AppoMobi.Specials
+    name: Specials
+    isExternal: true
+  spec.vb:
+  - uid: AppoMobi
+    name: AppoMobi
+    isExternal: true
+  - name: .
+  - uid: AppoMobi.Specials
+    name: Specials
+    isExternal: true
+- uid: System.Collections.Generic.IList`1
+  commentId: T:System.Collections.Generic.IList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections.Generic.ICollection`1
+  commentId: T:System.Collections.Generic.ICollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<T>
+  nameWithType: ICollection<T>
+  fullName: System.Collections.Generic.ICollection<T>
+  nameWithType.vb: ICollection(Of T)
+  fullName.vb: System.Collections.Generic.ICollection(Of T)
+  name.vb: ICollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: System.Collections.Specialized
+  commentId: N:System.Collections.Specialized
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Specialized
+  nameWithType: System.Collections.Specialized
+  fullName: System.Collections.Specialized
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Specialized
+    name: Specialized
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Specialized
+    name: Specialized
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized
+- uid: System.ComponentModel
+  commentId: N:System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.ComponentModel
+  nameWithType: System.ComponentModel
+  fullName: System.ComponentModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: AppoMobi.Specials.ObservableRangeCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: AddRange(IEnumerable<T>, NotifyCollectionChangedAction)
+  nameWithType: ObservableRangeCollection<T>.AddRange(IEnumerable<T>, NotifyCollectionChangedAction)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<T>.AddRange(System.Collections.Generic.IEnumerable<T>, System.Collections.Specialized.NotifyCollectionChangedAction)
+  nameWithType.vb: ObservableRangeCollection(Of T).AddRange(IEnumerable(Of T), NotifyCollectionChangedAction)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of T).AddRange(System.Collections.Generic.IEnumerable(Of T), System.Collections.Specialized.NotifyCollectionChangedAction)
+  name.vb: AddRange(IEnumerable(Of T), NotifyCollectionChangedAction)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: AddRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: AddRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection`1.RemoveRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection`1.RemoveRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: RemoveRange(IEnumerable<T>, NotifyCollectionChangedAction)
+  nameWithType: ObservableRangeCollection<T>.RemoveRange(IEnumerable<T>, NotifyCollectionChangedAction)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<T>.RemoveRange(System.Collections.Generic.IEnumerable<T>, System.Collections.Specialized.NotifyCollectionChangedAction)
+  nameWithType.vb: ObservableRangeCollection(Of T).RemoveRange(IEnumerable(Of T), NotifyCollectionChangedAction)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of T).RemoveRange(System.Collections.Generic.IEnumerable(Of T), System.Collections.Specialized.NotifyCollectionChangedAction)
+  name.vb: RemoveRange(IEnumerable(Of T), NotifyCollectionChangedAction)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.RemoveRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: RemoveRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.RemoveRange(System.Collections.Generic.IEnumerable{`0},System.Collections.Specialized.NotifyCollectionChangedAction)
+    name: RemoveRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedAction
+    name: NotifyCollectionChangedAction
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedaction
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection`1.Replace(`0)
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection`1.Replace(`0)
+  isExternal: true
+  name: Replace(T)
+  nameWithType: ObservableRangeCollection<T>.Replace(T)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<T>.Replace(T)
+  nameWithType.vb: ObservableRangeCollection(Of T).Replace(T)
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of T).Replace(T)
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.Replace(`0)
+    name: Replace
+    isExternal: true
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.Replace(`0)
+    name: Replace
+    isExternal: true
+  - name: (
+  - name: T
+  - name: )
+- uid: AppoMobi.Specials.ObservableRangeCollection`1.ReplaceRange(System.Collections.Generic.IEnumerable{`0})
+  commentId: M:AppoMobi.Specials.ObservableRangeCollection`1.ReplaceRange(System.Collections.Generic.IEnumerable{`0})
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: ReplaceRange(IEnumerable<T>)
+  nameWithType: ObservableRangeCollection<T>.ReplaceRange(IEnumerable<T>)
+  fullName: AppoMobi.Specials.ObservableRangeCollection<T>.ReplaceRange(System.Collections.Generic.IEnumerable<T>)
+  nameWithType.vb: ObservableRangeCollection(Of T).ReplaceRange(IEnumerable(Of T))
+  fullName.vb: AppoMobi.Specials.ObservableRangeCollection(Of T).ReplaceRange(System.Collections.Generic.IEnumerable(Of T))
+  name.vb: ReplaceRange(IEnumerable(Of T))
+  spec.csharp:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.ReplaceRange(System.Collections.Generic.IEnumerable{`0})
+    name: ReplaceRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: AppoMobi.Specials.ObservableRangeCollection`1.ReplaceRange(System.Collections.Generic.IEnumerable{`0})
+    name: ReplaceRange
+    isExternal: true
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.BlockReentrancy
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.BlockReentrancy
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.blockreentrancy
+  name: BlockReentrancy()
+  nameWithType: ObservableCollection<T>.BlockReentrancy()
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.BlockReentrancy()
+  nameWithType.vb: ObservableCollection(Of T).BlockReentrancy()
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).BlockReentrancy()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.BlockReentrancy
+    name: BlockReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.blockreentrancy
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.BlockReentrancy
+    name: BlockReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.blockreentrancy
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.CheckReentrancy
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.CheckReentrancy
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.checkreentrancy
+  name: CheckReentrancy()
+  nameWithType: ObservableCollection<T>.CheckReentrancy()
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.CheckReentrancy()
+  nameWithType.vb: ObservableCollection(Of T).CheckReentrancy()
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).CheckReentrancy()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.CheckReentrancy
+    name: CheckReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.checkreentrancy
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.CheckReentrancy
+    name: CheckReentrancy
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.checkreentrancy
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.Move(System.Int32,System.Int32)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.Move(System.Int32,System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.move
+  name: Move(int, int)
+  nameWithType: ObservableCollection<T>.Move(int, int)
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.Move(int, int)
+  nameWithType.vb: ObservableCollection(Of T).Move(Integer, Integer)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).Move(Integer, Integer)
+  name.vb: Move(Integer, Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.Move(System.Int32,System.Int32)
+    name: Move
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.move
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.Move(System.Int32,System.Int32)
+    name: Move
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.move
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.MoveItem(System.Int32,System.Int32)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.MoveItem(System.Int32,System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.moveitem
+  name: MoveItem(int, int)
+  nameWithType: ObservableCollection<T>.MoveItem(int, int)
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.MoveItem(int, int)
+  nameWithType.vb: ObservableCollection(Of T).MoveItem(Integer, Integer)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).MoveItem(Integer, Integer)
+  name.vb: MoveItem(Integer, Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.MoveItem(System.Int32,System.Int32)
+    name: MoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.moveitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.MoveItem(System.Int32,System.Int32)
+    name: MoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.moveitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.oncollectionchanged
+  name: OnCollectionChanged(NotifyCollectionChangedEventArgs)
+  nameWithType: ObservableCollection<T>.OnCollectionChanged(NotifyCollectionChangedEventArgs)
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType.vb: ObservableCollection(Of T).OnCollectionChanged(NotifyCollectionChangedEventArgs)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: OnCollectionChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.oncollectionchanged
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: OnCollectionChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.oncollectionchanged
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.onpropertychanged
+  name: OnPropertyChanged(PropertyChangedEventArgs)
+  nameWithType: ObservableCollection<T>.OnPropertyChanged(PropertyChangedEventArgs)
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  nameWithType.vb: ObservableCollection(Of T).OnPropertyChanged(PropertyChangedEventArgs)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.onpropertychanged
+  - name: (
+  - uid: System.ComponentModel.PropertyChangedEventArgs
+    name: PropertyChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.onpropertychanged
+  - name: (
+  - uid: System.ComponentModel.PropertyChangedEventArgs
+    name: PropertyChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.RemoveItem(System.Int32)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.RemoveItem(System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.removeitem
+  name: RemoveItem(int)
+  nameWithType: ObservableCollection<T>.RemoveItem(int)
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.RemoveItem(int)
+  nameWithType.vb: ObservableCollection(Of T).RemoveItem(Integer)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).RemoveItem(Integer)
+  name.vb: RemoveItem(Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.RemoveItem(System.Int32)
+    name: RemoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.removeitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.RemoveItem(System.Int32)
+    name: RemoveItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.removeitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1.CollectionChanged
+  commentId: E:System.Collections.ObjectModel.ObservableCollection`1.CollectionChanged
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.collectionchanged
+  name: CollectionChanged
+  nameWithType: ObservableCollection<T>.CollectionChanged
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.CollectionChanged
+  nameWithType.vb: ObservableCollection(Of T).CollectionChanged
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).CollectionChanged
+- uid: System.Collections.ObjectModel.ObservableCollection`1.PropertyChanged
+  commentId: E:System.Collections.ObjectModel.ObservableCollection`1.PropertyChanged
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.propertychanged
+  name: PropertyChanged
+  nameWithType: ObservableCollection<T>.PropertyChanged
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.PropertyChanged
+  nameWithType.vb: ObservableCollection(Of T).PropertyChanged
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).PropertyChanged
+- uid: System.Collections.ObjectModel.Collection`1.Add(`0)
+  commentId: M:System.Collections.ObjectModel.Collection`1.Add(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.add
+  name: Add(T)
+  nameWithType: Collection<T>.Add(T)
+  fullName: System.Collections.ObjectModel.Collection<T>.Add(T)
+  nameWithType.vb: Collection(Of T).Add(T)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).Add(T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.Add(`0)
+    name: Add
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.add
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.Add(`0)
+    name: Add
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.add
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.Clear
+  commentId: M:System.Collections.ObjectModel.Collection`1.Clear
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.clear
+  name: Clear()
+  nameWithType: Collection<T>.Clear()
+  fullName: System.Collections.ObjectModel.Collection<T>.Clear()
+  nameWithType.vb: Collection(Of T).Clear()
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).Clear()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.Clear
+    name: Clear
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.clear
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.Clear
+    name: Clear
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.clear
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.Contains(`0)
+  commentId: M:System.Collections.ObjectModel.Collection`1.Contains(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.contains
+  name: Contains(T)
+  nameWithType: Collection<T>.Contains(T)
+  fullName: System.Collections.ObjectModel.Collection<T>.Contains(T)
+  nameWithType.vb: Collection(Of T).Contains(T)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).Contains(T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.Contains(`0)
+    name: Contains
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.contains
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.Contains(`0)
+    name: Contains
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.contains
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.CopyTo(`0[],System.Int32)
+  commentId: M:System.Collections.ObjectModel.Collection`1.CopyTo(`0[],System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.copyto
+  name: CopyTo(T[], int)
+  nameWithType: Collection<T>.CopyTo(T[], int)
+  fullName: System.Collections.ObjectModel.Collection<T>.CopyTo(T[], int)
+  nameWithType.vb: Collection(Of T).CopyTo(T(), Integer)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).CopyTo(T(), Integer)
+  name.vb: CopyTo(T(), Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.CopyTo(`0[],System.Int32)
+    name: CopyTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.copyto
+  - name: (
+  - name: T
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.CopyTo(`0[],System.Int32)
+    name: CopyTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.copyto
+  - name: (
+  - name: T
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.GetEnumerator
+  commentId: M:System.Collections.ObjectModel.Collection`1.GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: Collection<T>.GetEnumerator()
+  fullName: System.Collections.ObjectModel.Collection<T>.GetEnumerator()
+  nameWithType.vb: Collection(Of T).GetEnumerator()
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.IndexOf(`0)
+  commentId: M:System.Collections.ObjectModel.Collection`1.IndexOf(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.indexof
+  name: IndexOf(T)
+  nameWithType: Collection<T>.IndexOf(T)
+  fullName: System.Collections.ObjectModel.Collection<T>.IndexOf(T)
+  nameWithType.vb: Collection(Of T).IndexOf(T)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).IndexOf(T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.IndexOf(`0)
+    name: IndexOf
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.indexof
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.IndexOf(`0)
+    name: IndexOf
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.indexof
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.Insert(System.Int32,`0)
+  commentId: M:System.Collections.ObjectModel.Collection`1.Insert(System.Int32,`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.insert
+  name: Insert(int, T)
+  nameWithType: Collection<T>.Insert(int, T)
+  fullName: System.Collections.ObjectModel.Collection<T>.Insert(int, T)
+  nameWithType.vb: Collection(Of T).Insert(Integer, T)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).Insert(Integer, T)
+  name.vb: Insert(Integer, T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.Insert(System.Int32,`0)
+    name: Insert
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.insert
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.Insert(System.Int32,`0)
+    name: Insert
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.insert
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.Remove(`0)
+  commentId: M:System.Collections.ObjectModel.Collection`1.Remove(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.remove
+  name: Remove(T)
+  nameWithType: Collection<T>.Remove(T)
+  fullName: System.Collections.ObjectModel.Collection<T>.Remove(T)
+  nameWithType.vb: Collection(Of T).Remove(T)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).Remove(T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.Remove(`0)
+    name: Remove
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.remove
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.Remove(`0)
+    name: Remove
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.remove
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.RemoveAt(System.Int32)
+  commentId: M:System.Collections.ObjectModel.Collection`1.RemoveAt(System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.removeat
+  name: RemoveAt(int)
+  nameWithType: Collection<T>.RemoveAt(int)
+  fullName: System.Collections.ObjectModel.Collection<T>.RemoveAt(int)
+  nameWithType.vb: Collection(Of T).RemoveAt(Integer)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).RemoveAt(Integer)
+  name.vb: RemoveAt(Integer)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1.RemoveAt(System.Int32)
+    name: RemoveAt
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.removeat
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.RemoveAt(System.Int32)
+    name: RemoveAt
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.removeat
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.Count
+  commentId: P:System.Collections.ObjectModel.Collection`1.Count
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.count
+  name: Count
+  nameWithType: Collection<T>.Count
+  fullName: System.Collections.ObjectModel.Collection<T>.Count
+  nameWithType.vb: Collection(Of T).Count
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).Count
+- uid: System.Collections.ObjectModel.Collection`1.Item(System.Int32)
+  commentId: P:System.Collections.ObjectModel.Collection`1.Item(System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: Collection<T>.this[int]
+  fullName: System.Collections.ObjectModel.Collection<T>.this[int]
+  nameWithType.vb: Collection(Of T).this[](Integer)
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.Collection`1.Item(System.Int32)
+    name: this[]
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.item
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.ObjectModel.Collection`1.Items
+  commentId: P:System.Collections.ObjectModel.Collection`1.Items
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.items
+  name: Items
+  nameWithType: Collection<T>.Items
+  fullName: System.Collections.ObjectModel.Collection<T>.Items
+  nameWithType.vb: Collection(Of T).Items
+  fullName.vb: System.Collections.ObjectModel.Collection(Of T).Items
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.InsertItem(System.Int32,`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.insertitem
+  name: InsertItem(int, TextSpan)
+  nameWithType: ObservableCollection<TextSpan>.InsertItem(int, TextSpan)
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.InsertItem(int, DrawnUi.Draw.TextSpan)
+  nameWithType.vb: ObservableCollection(Of TextSpan).InsertItem(Integer, TextSpan)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).InsertItem(Integer, DrawnUi.Draw.TextSpan)
+  name.vb: InsertItem(Integer, TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+    name: InsertItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.insertitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.InsertItem(System.Int32,DrawnUi.Draw.TextSpan)
+    name: InsertItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.insertitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem
+  href: DrawnUi.Draw.SkiaLabel.SpanCollection.html#DrawnUi_Draw_SkiaLabel_SpanCollection_InsertItem_System_Int32_DrawnUi_Draw_TextSpan_
+  name: InsertItem
+  nameWithType: SkiaLabel.SpanCollection.InsertItem
+  fullName: DrawnUi.Draw.SkiaLabel.SpanCollection.InsertItem
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.TextSpan
+  commentId: T:DrawnUi.Draw.TextSpan
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.TextSpan.html
+  name: TextSpan
+  nameWithType: TextSpan
+  fullName: DrawnUi.Draw.TextSpan
+- uid: System.Collections.ObjectModel.ObservableCollection`1.InsertItem(System.Int32,`0)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.InsertItem(System.Int32,`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.insertitem
+  name: InsertItem(int, T)
+  nameWithType: ObservableCollection<T>.InsertItem(int, T)
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.InsertItem(int, T)
+  nameWithType.vb: ObservableCollection(Of T).InsertItem(Integer, T)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).InsertItem(Integer, T)
+  name.vb: InsertItem(Integer, T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.InsertItem(System.Int32,`0)
+    name: InsertItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.insertitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.InsertItem(System.Int32,`0)
+    name: InsertItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.insertitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.SetItem(System.Int32,`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.setitem
+  name: SetItem(int, TextSpan)
+  nameWithType: ObservableCollection<TextSpan>.SetItem(int, TextSpan)
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.SetItem(int, DrawnUi.Draw.TextSpan)
+  nameWithType.vb: ObservableCollection(Of TextSpan).SetItem(Integer, TextSpan)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).SetItem(Integer, DrawnUi.Draw.TextSpan)
+  name.vb: SetItem(Integer, TextSpan)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+    name: SetItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.setitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.SetItem(System.Int32,DrawnUi.Draw.TextSpan)
+    name: SetItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.setitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.TextSpan
+    name: TextSpan
+    href: DrawnUi.Draw.TextSpan.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem
+  href: DrawnUi.Draw.SkiaLabel.SpanCollection.html#DrawnUi_Draw_SkiaLabel_SpanCollection_SetItem_System_Int32_DrawnUi_Draw_TextSpan_
+  name: SetItem
+  nameWithType: SkiaLabel.SpanCollection.SetItem
+  fullName: DrawnUi.Draw.SkiaLabel.SpanCollection.SetItem
+- uid: System.Collections.ObjectModel.ObservableCollection`1.SetItem(System.Int32,`0)
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.SetItem(System.Int32,`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.setitem
+  name: SetItem(int, T)
+  nameWithType: ObservableCollection<T>.SetItem(int, T)
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.SetItem(int, T)
+  nameWithType.vb: ObservableCollection(Of T).SetItem(Integer, T)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).SetItem(Integer, T)
+  name.vb: SetItem(Integer, T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.SetItem(System.Int32,`0)
+    name: SetItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.setitem
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.SetItem(System.Int32,`0)
+    name: SetItem
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.setitem
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.ClearItems
+  commentId: M:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.ClearItems
+  parent: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}
+  definition: System.Collections.ObjectModel.ObservableCollection`1.ClearItems
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.clearitems
+  name: ClearItems()
+  nameWithType: ObservableCollection<TextSpan>.ClearItems()
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Draw.TextSpan>.ClearItems()
+  nameWithType.vb: ObservableCollection(Of TextSpan).ClearItems()
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Draw.TextSpan).ClearItems()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.ClearItems
+    name: ClearItems
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.clearitems
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Draw.TextSpan}.ClearItems
+    name: ClearItems
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.clearitems
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems
+  href: DrawnUi.Draw.SkiaLabel.SpanCollection.html#DrawnUi_Draw_SkiaLabel_SpanCollection_ClearItems
+  name: ClearItems
+  nameWithType: SkiaLabel.SpanCollection.ClearItems
+  fullName: DrawnUi.Draw.SkiaLabel.SpanCollection.ClearItems
+- uid: System.Collections.ObjectModel.ObservableCollection`1.ClearItems
+  commentId: M:System.Collections.ObjectModel.ObservableCollection`1.ClearItems
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.clearitems
+  name: ClearItems()
+  nameWithType: ObservableCollection<T>.ClearItems()
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>.ClearItems()
+  nameWithType.vb: ObservableCollection(Of T).ClearItems()
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T).ClearItems()
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.ClearItems
+    name: ClearItems
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.clearitems
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1.ClearItems
+    name: ClearItems
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1.clearitems
+  - name: (
+  - name: )

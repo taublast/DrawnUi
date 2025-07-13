@@ -1,0 +1,675 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ISkiaAnimator
+  commentId: T:DrawnUi.Draw.ISkiaAnimator
+  id: ISkiaAnimator
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ISkiaAnimator.IsDeactivated
+  - DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree
+  - DrawnUi.Draw.ISkiaAnimator.IsPaused
+  - DrawnUi.Draw.ISkiaAnimator.IsRunning
+  - DrawnUi.Draw.ISkiaAnimator.Parent
+  - DrawnUi.Draw.ISkiaAnimator.Pause
+  - DrawnUi.Draw.ISkiaAnimator.Resume
+  - DrawnUi.Draw.ISkiaAnimator.Start(System.Double)
+  - DrawnUi.Draw.ISkiaAnimator.Stop
+  - DrawnUi.Draw.ISkiaAnimator.TickFrame(System.Int64)
+  - DrawnUi.Draw.ISkiaAnimator.Uid
+  - DrawnUi.Draw.ISkiaAnimator.WasStarted
+  langs:
+  - csharp
+  - vb
+  name: ISkiaAnimator
+  nameWithType: ISkiaAnimator
+  fullName: DrawnUi.Draw.ISkiaAnimator
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ISkiaAnimator
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface ISkiaAnimator : IDisposable'
+    content.vb: Public Interface ISkiaAnimator Inherits IDisposable
+  inheritedMembers:
+  - System.IDisposable.Dispose
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ISkiaAnimator.TickFrame(System.Int64)
+  commentId: M:DrawnUi.Draw.ISkiaAnimator.TickFrame(System.Int64)
+  id: TickFrame(System.Int64)
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: TickFrame(long)
+  nameWithType: ISkiaAnimator.TickFrame(long)
+  fullName: DrawnUi.Draw.ISkiaAnimator.TickFrame(long)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TickFrame
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: ''
+  example: []
+  syntax:
+    content: bool TickFrame(long frameTimeNanos)
+    parameters:
+    - id: frameTimeNanos
+      type: System.Int64
+      description: ''
+    return:
+      type: System.Boolean
+      description: Is Finished
+    content.vb: Function TickFrame(frameTimeNanos As Long) As Boolean
+  overload: DrawnUi.Draw.ISkiaAnimator.TickFrame*
+  nameWithType.vb: ISkiaAnimator.TickFrame(Long)
+  fullName.vb: DrawnUi.Draw.ISkiaAnimator.TickFrame(Long)
+  name.vb: TickFrame(Long)
+- uid: DrawnUi.Draw.ISkiaAnimator.IsRunning
+  commentId: P:DrawnUi.Draw.ISkiaAnimator.IsRunning
+  id: IsRunning
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: IsRunning
+  nameWithType: ISkiaAnimator.IsRunning
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsRunning
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsRunning
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool IsRunning { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsRunning As Boolean
+  overload: DrawnUi.Draw.ISkiaAnimator.IsRunning*
+- uid: DrawnUi.Draw.ISkiaAnimator.WasStarted
+  commentId: P:DrawnUi.Draw.ISkiaAnimator.WasStarted
+  id: WasStarted
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: WasStarted
+  nameWithType: ISkiaAnimator.WasStarted
+  fullName: DrawnUi.Draw.ISkiaAnimator.WasStarted
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WasStarted
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool WasStarted { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property WasStarted As Boolean
+  overload: DrawnUi.Draw.ISkiaAnimator.WasStarted*
+- uid: DrawnUi.Draw.ISkiaAnimator.Uid
+  commentId: P:DrawnUi.Draw.ISkiaAnimator.Uid
+  id: Uid
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: Uid
+  nameWithType: ISkiaAnimator.Uid
+  fullName: DrawnUi.Draw.ISkiaAnimator.Uid
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Uid
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Guid Uid { get; }
+    parameters: []
+    return:
+      type: System.Guid
+    content.vb: ReadOnly Property Uid As Guid
+  overload: DrawnUi.Draw.ISkiaAnimator.Uid*
+- uid: DrawnUi.Draw.ISkiaAnimator.Stop
+  commentId: M:DrawnUi.Draw.ISkiaAnimator.Stop
+  id: Stop
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: Stop()
+  nameWithType: ISkiaAnimator.Stop()
+  fullName: DrawnUi.Draw.ISkiaAnimator.Stop()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Stop
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void Stop()
+    content.vb: Sub [Stop]()
+  overload: DrawnUi.Draw.ISkiaAnimator.Stop*
+- uid: DrawnUi.Draw.ISkiaAnimator.Pause
+  commentId: M:DrawnUi.Draw.ISkiaAnimator.Pause
+  id: Pause
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: Pause()
+  nameWithType: ISkiaAnimator.Pause()
+  fullName: DrawnUi.Draw.ISkiaAnimator.Pause()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Pause
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Used by ui, please use play stop for manual control
+  example: []
+  syntax:
+    content: void Pause()
+    content.vb: Sub Pause()
+  overload: DrawnUi.Draw.ISkiaAnimator.Pause*
+- uid: DrawnUi.Draw.ISkiaAnimator.Resume
+  commentId: M:DrawnUi.Draw.ISkiaAnimator.Resume
+  id: Resume
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: Resume()
+  nameWithType: ISkiaAnimator.Resume()
+  fullName: DrawnUi.Draw.ISkiaAnimator.Resume()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Resume
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 28
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Used by ui, please use play stop for manual control
+  example: []
+  syntax:
+    content: void Resume()
+    content.vb: Sub [Resume]()
+  overload: DrawnUi.Draw.ISkiaAnimator.Resume*
+- uid: DrawnUi.Draw.ISkiaAnimator.Start(System.Double)
+  commentId: M:DrawnUi.Draw.ISkiaAnimator.Start(System.Double)
+  id: Start(System.Double)
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: Start(double)
+  nameWithType: ISkiaAnimator.Start(double)
+  fullName: DrawnUi.Draw.ISkiaAnimator.Start(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Start
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 30
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void Start(double delayMs = 0)
+    parameters:
+    - id: delayMs
+      type: System.Double
+    content.vb: Sub Start(delayMs As Double = 0)
+  overload: DrawnUi.Draw.ISkiaAnimator.Start*
+  nameWithType.vb: ISkiaAnimator.Start(Double)
+  fullName.vb: DrawnUi.Draw.ISkiaAnimator.Start(Double)
+  name.vb: Start(Double)
+- uid: DrawnUi.Draw.ISkiaAnimator.Parent
+  commentId: P:DrawnUi.Draw.ISkiaAnimator.Parent
+  id: Parent
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: Parent
+  nameWithType: ISkiaAnimator.Parent
+  fullName: DrawnUi.Draw.ISkiaAnimator.Parent
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Parent
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 32
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: IDrawnBase Parent { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.IDrawnBase
+    content.vb: ReadOnly Property Parent As IDrawnBase
+  overload: DrawnUi.Draw.ISkiaAnimator.Parent*
+- uid: DrawnUi.Draw.ISkiaAnimator.IsDeactivated
+  commentId: P:DrawnUi.Draw.ISkiaAnimator.IsDeactivated
+  id: IsDeactivated
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: IsDeactivated
+  nameWithType: ISkiaAnimator.IsDeactivated
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsDeactivated
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDeactivated
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 37
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Can and will be removed
+  example: []
+  syntax:
+    content: bool IsDeactivated { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property IsDeactivated As Boolean
+  overload: DrawnUi.Draw.ISkiaAnimator.IsDeactivated*
+- uid: DrawnUi.Draw.ISkiaAnimator.IsPaused
+  commentId: P:DrawnUi.Draw.ISkiaAnimator.IsPaused
+  id: IsPaused
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: IsPaused
+  nameWithType: ISkiaAnimator.IsPaused
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsPaused
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsPaused
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Just should not execute on tick
+  example: []
+  syntax:
+    content: bool IsPaused { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property IsPaused As Boolean
+  overload: DrawnUi.Draw.ISkiaAnimator.IsPaused*
+- uid: DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree
+  commentId: P:DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree
+  id: IsHiddenInViewTree
+  parent: DrawnUi.Draw.ISkiaAnimator
+  langs:
+  - csharp
+  - vb
+  name: IsHiddenInViewTree
+  nameWithType: ISkiaAnimator.IsHiddenInViewTree
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsHiddenInViewTree
+    path: ../src/Shared/Features/Animations/Interfaces/ISkiaAnimator.cs
+    startLine: 47
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: For internal use by the engine
+  example: []
+  syntax:
+    content: bool IsHiddenInViewTree { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property IsHiddenInViewTree As Boolean
+  overload: DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ISkiaAnimator.TickFrame*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.TickFrame
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_TickFrame_System_Int64_
+  name: TickFrame
+  nameWithType: ISkiaAnimator.TickFrame
+  fullName: DrawnUi.Draw.ISkiaAnimator.TickFrame
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.ISkiaAnimator.IsRunning*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.IsRunning
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_IsRunning
+  name: IsRunning
+  nameWithType: ISkiaAnimator.IsRunning
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsRunning
+- uid: DrawnUi.Draw.ISkiaAnimator.WasStarted*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.WasStarted
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_WasStarted
+  name: WasStarted
+  nameWithType: ISkiaAnimator.WasStarted
+  fullName: DrawnUi.Draw.ISkiaAnimator.WasStarted
+- uid: DrawnUi.Draw.ISkiaAnimator.Uid*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.Uid
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_Uid
+  name: Uid
+  nameWithType: ISkiaAnimator.Uid
+  fullName: DrawnUi.Draw.ISkiaAnimator.Uid
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: DrawnUi.Draw.ISkiaAnimator.Stop*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.Stop
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_Stop
+  name: Stop
+  nameWithType: ISkiaAnimator.Stop
+  fullName: DrawnUi.Draw.ISkiaAnimator.Stop
+- uid: DrawnUi.Draw.ISkiaAnimator.Pause*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.Pause
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_Pause
+  name: Pause
+  nameWithType: ISkiaAnimator.Pause
+  fullName: DrawnUi.Draw.ISkiaAnimator.Pause
+- uid: DrawnUi.Draw.ISkiaAnimator.Resume*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.Resume
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_Resume
+  name: Resume
+  nameWithType: ISkiaAnimator.Resume
+  fullName: DrawnUi.Draw.ISkiaAnimator.Resume
+- uid: DrawnUi.Draw.ISkiaAnimator.Start*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.Start
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_Start_System_Double_
+  name: Start
+  nameWithType: ISkiaAnimator.Start
+  fullName: DrawnUi.Draw.ISkiaAnimator.Start
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.ISkiaAnimator.Parent*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.Parent
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_Parent
+  name: Parent
+  nameWithType: ISkiaAnimator.Parent
+  fullName: DrawnUi.Draw.ISkiaAnimator.Parent
+- uid: DrawnUi.Draw.IDrawnBase
+  commentId: T:DrawnUi.Draw.IDrawnBase
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IDrawnBase.html
+  name: IDrawnBase
+  nameWithType: IDrawnBase
+  fullName: DrawnUi.Draw.IDrawnBase
+- uid: DrawnUi.Draw.ISkiaAnimator.IsDeactivated*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.IsDeactivated
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_IsDeactivated
+  name: IsDeactivated
+  nameWithType: ISkiaAnimator.IsDeactivated
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsDeactivated
+- uid: DrawnUi.Draw.ISkiaAnimator.IsPaused*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.IsPaused
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_IsPaused
+  name: IsPaused
+  nameWithType: ISkiaAnimator.IsPaused
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsPaused
+- uid: DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree*
+  commentId: Overload:DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree
+  href: DrawnUi.Draw.ISkiaAnimator.html#DrawnUi_Draw_ISkiaAnimator_IsHiddenInViewTree
+  name: IsHiddenInViewTree
+  nameWithType: ISkiaAnimator.IsHiddenInViewTree
+  fullName: DrawnUi.Draw.ISkiaAnimator.IsHiddenInViewTree

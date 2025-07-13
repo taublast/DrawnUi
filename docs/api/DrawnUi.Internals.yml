@@ -1,0 +1,53 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Internals
+  commentId: N:DrawnUi.Internals
+  id: DrawnUi.Internals
+  children:
+  - DrawnUi.Internals.SelectableAction
+  - DrawnUi.Internals.TitleWithStringId
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Internals
+  nameWithType: DrawnUi.Internals
+  fullName: DrawnUi.Internals
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Internals.SelectableAction
+  commentId: T:DrawnUi.Internals.SelectableAction
+  href: DrawnUi.Internals.SelectableAction.html
+  name: SelectableAction
+  nameWithType: SelectableAction
+  fullName: DrawnUi.Internals.SelectableAction
+- uid: DrawnUi.Internals.TitleWithStringId
+  commentId: T:DrawnUi.Internals.TitleWithStringId
+  parent: DrawnUi.Internals
+  href: DrawnUi.Internals.TitleWithStringId.html
+  name: TitleWithStringId
+  nameWithType: TitleWithStringId
+  fullName: DrawnUi.Internals.TitleWithStringId
+- uid: DrawnUi.Internals
+  commentId: N:DrawnUi.Internals
+  href: DrawnUi.html
+  name: DrawnUi.Internals
+  nameWithType: DrawnUi.Internals
+  fullName: DrawnUi.Internals
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Internals
+    name: Internals
+    href: DrawnUi.Internals.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Internals
+    name: Internals
+    href: DrawnUi.Internals.html

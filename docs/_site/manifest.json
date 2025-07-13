@@ -1,0 +1,6380 @@
+{
+  "source_base_path": "C:/Dev/Cases/GitHub/DrawnUi.Maui/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Animate.Animators.VelocitySkiaAnimator.DragForce",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Animate.Animators.VelocitySkiaAnimator.MassState",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Animate.Animators.VelocitySkiaAnimator",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Animate.Animators.VelocitySkiaAnimator.yml\" sourcestartlinenumber=\"1\">Basically a modified port of Android FlingAnimation</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Animate.Animators.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Animate.Animators.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Animate.Animators",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.AnimatedFramesRenderer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.AnimatedFramesRenderer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.AnimatedFramesRenderer",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.AnimatedFramesRenderer.yml\" sourcestartlinenumber=\"1\">Base class for playing frames. Subclass to play spritesheets, gifs, custom animations etc.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.ContentWithBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.ContentWithBackdrop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.ContentWithBackdrop",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.DrawerDirection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.DrawerDirection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.DrawerDirection",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.GifAnimation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.GifAnimation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.GifAnimation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.GridLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.GridLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.GridLayout",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.GridLayout.yml\" sourcestartlinenumber=\"1\">Helper class for SkiaLayout Type = LayoutType.Grid</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.ISkiaRadioButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.ISkiaRadioButton.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.ISkiaRadioButton",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.ISmartNative.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.ISmartNative.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.ISmartNative",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.IWheelPickerCell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.IWheelPickerCell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.IWheelPickerCell",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.MauiEditor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.MauiEditor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.MauiEditor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.MauiEditorHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.MauiEditorHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.MauiEditorHandler",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.MauiEntry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.MauiEntry.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.MauiEntry",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.MauiEntryHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.MauiEntryHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.MauiEntryHandler",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.NavigationSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.NavigationSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.NavigationSource",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.RadioButtons.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.RadioButtons.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.RadioButtons",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.RadioButtons.yml\" sourcestartlinenumber=\"1\">Manages radio button groups, ensuring only one button is selected per group.\nSupports grouping by parent control or by string name.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.ScrollPickerLabelContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.ScrollPickerLabelContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.ScrollPickerLabelContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.ScrollPickerWheel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.ScrollPickerWheel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.ScrollPickerWheel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaCarousel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaCarousel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaCarousel",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaCarousel.yml\" sourcestartlinenumber=\"1\">A specialized scroll control designed for creating swipeable carousels with automatic snapping to items.\nSupports data binding through ItemsSource and ItemTemplate, peek effects with SidesOffset, and smooth transitions.\nIdeal for image galleries, tab interfaces, and any swipeable content display.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaDecoratedGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaDecoratedGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaDecoratedGrid",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaDrawer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaDrawer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaDrawer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaDrawnCell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaDrawnCell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaDrawnCell",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaDrawnCell.yml\" sourcestartlinenumber=\"1\">Base ISkiaCell implementation</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaDynamicDrawnCell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaDynamicDrawnCell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaDynamicDrawnCell",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaDynamicDrawnCell.yml\" sourcestartlinenumber=\"1\">This cell can watch binding context property changing</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaGif.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaGif.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaGif",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaLottie.ColorEqualityComparer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaLottie.ColorEqualityComparer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaLottie.ColorEqualityComparer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaLottie.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaLottie.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaLottie",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaMauiEditor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaMauiEditor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaMauiEditor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaMauiEntry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaMauiEntry.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaMauiEntry",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaMauiEntry.yml\" sourcestartlinenumber=\"1\">Used to draw maui element over a skia canvas.\nPositions elelement using drawnUi layout and sometimes just renders element bitmap snapshot instead of displaying the real element, for example, when scrolling/animating.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaMediaImage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaMediaImage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaMediaImage",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaRadioButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaRadioButton.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaRadioButton",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaRadioButton.yml\" sourcestartlinenumber=\"1\">Switch-like control, can include any content inside. It's aither you use default content (todo templates?..)\nor can include any content inside, and properties will by applied by convention to a SkiaShape with Tag <code sourcefile=\"api/DrawnUi.Controls.SkiaRadioButton.yml\" sourcestartlinenumber=\"2\">Frame</code>, SkiaShape with Tag <code sourcefile=\"api/DrawnUi.Controls.SkiaRadioButton.yml\" sourcestartlinenumber=\"2\">Thumb</code>. At the same time you can override ApplyProperties() and apply them to your content yourself.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.IHandleGoBack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.IHandleGoBack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.IHandleGoBack",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.ModalWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.ModalWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.ModalWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.NavigationLayer-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.NavigationLayer-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.NavigationLayer<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.PageInStack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.PageInStack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.PageInStack",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.ParsedRoute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.ParsedRoute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.ParsedRoute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.PopupWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.PopupWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.PopupWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.ShellCurrentRoute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.ShellCurrentRoute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.ShellCurrentRoute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.ShellStackChild.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.ShellStackChild.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.ShellStackChild",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.TypeRouteFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.TypeRouteFactory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell.TypeRouteFactory",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShell",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaShell.yml\" sourcestartlinenumber=\"1\">A Canvas with Navigation capabilities</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShellNavigatedArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShellNavigatedArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShellNavigatedArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaShellNavigatingArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaShellNavigatingArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaShellNavigatingArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaSpinner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaSpinner.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaSpinner",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaSpinner.yml\" sourcestartlinenumber=\"1\">A wheel-of-names spinner control that displays items in a circular arrangement\nand allows spinning to select an item through gesture interaction.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaSprite.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaSprite.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaSprite",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaSprite.yml\" sourcestartlinenumber=\"1\">Renders animated sprite sheets by subclassing AnimatedFramesRenderer</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaTabsSelector.TabEntry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaTabsSelector.TabEntry.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaTabsSelector.TabEntry",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaTabsSelector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaTabsSelector.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaTabsSelector",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaViewSwitcher.NavigationStackEntry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaViewSwitcher.NavigationStackEntry.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaViewSwitcher.NavigationStackEntry",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaViewSwitcher.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaViewSwitcher.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaViewSwitcher",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaViewSwitcher.yml\" sourcestartlinenumber=\"1\">Display and hide views, eventually animating them</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaWheelPicker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaWheelPicker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaWheelPicker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaWheelPickerCell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaWheelPickerCell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaWheelPickerCell",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaWheelScroll.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaWheelScroll.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaWheelScroll",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaWheelScroll.yml\" sourcestartlinenumber=\"1\">A specialized scroll view that displays items in a 3D wheel-like arrangement</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaWheelShape.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaWheelShape.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaWheelShape",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaWheelShape.yml\" sourcestartlinenumber=\"1\">Custom SkiaShape that positions children in a circular arrangement around the wheel circumference.\nHandles rotation and positioning calculations for the spinner wheel.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaWheelStack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaWheelStack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaWheelStack",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.WheelCellInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.WheelCellInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.WheelCellInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ActionOnTickAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ActionOnTickAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ActionOnTickAnimator",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ActionOnTickAnimator.yml\" sourcestartlinenumber=\"1\">Just register this animator to run custom code on every frame creating a kind of game loop if needed.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AddGestures.GestureListener.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AddGestures.GestureListener.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AddGestures.GestureListener",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AddGestures.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AddGestures.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AddGestures",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.AddGestures.yml\" sourcestartlinenumber=\"1\">For fast and lazy gestures handling to attach to dran controls inside the canvas only</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AdjustBrightnessEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AdjustBrightnessEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AdjustBrightnessEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AdjustRGBEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AdjustRGBEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AdjustRGBEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AnimateExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AnimateExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AnimateExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AnimatorBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AnimatorBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AnimatorBase",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ApplySpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ApplySpan.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ApplySpan",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AutoSizeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AutoSizeType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AutoSizeType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BaseChainedEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BaseChainedEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BaseChainedEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BaseColorFilterEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BaseColorFilterEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BaseColorFilterEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BaseImageFilterEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BaseImageFilterEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BaseImageFilterEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BevelType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BevelType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BevelType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BindToParentContextExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BindToParentContextExtension.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BindToParentContextExtension",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.BindToParentContextExtension.yml\" sourcestartlinenumber=\"1\">Compiled-bindings-friendly implementation for &quot;Source.Parent.BindingContext.Path&quot;</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BindablePropertyExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BindablePropertyExtension.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BindablePropertyExtension",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BlinkAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BlinkAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BlinkAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.BlurEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.BlurEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.BlurEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.CachedGradient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.CachedGradient.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.CachedGradient",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.CachedObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.CachedObject.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.CachedObject",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.CachedShader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.CachedShader.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.CachedShader",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.CachedShadow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.CachedShadow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.CachedShadow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.CellWIthHeight.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.CellWIthHeight.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.CellWIthHeight",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainAdjustBrightnessEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainAdjustBrightnessEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainAdjustBrightnessEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainAdjustContrastEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainAdjustContrastEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainAdjustContrastEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainAdjustLightnessEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainAdjustLightnessEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainAdjustLightnessEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainAdjustRGBEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainAdjustRGBEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainAdjustRGBEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainColorPresetEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainColorPresetEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainColorPresetEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainDropShadowsEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainDropShadowsEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainDropShadowsEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainEffectResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainEffectResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainEffectResult",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainSaturationEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainSaturationEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainSaturationEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ChainTintWithAlphaEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ChainTintWithAlphaEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ChainTintWithAlphaEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ColorBlendAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ColorBlendAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ColorBlendAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ColorExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ColorExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ColorExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ColorPresetEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ColorPresetEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ColorPresetEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ContainsPointResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ContainsPointResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ContainsPointResult",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ContentLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ContentLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ContentLayout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ContextArguments.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ContextArguments.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ContextArguments",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ContrastEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ContrastEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ContrastEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ControlInStack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ControlInStack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ControlInStack",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ControlsTracker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ControlsTracker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ControlsTracker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.CriticallyDampedSpringTimingParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.CriticallyDampedSpringTimingParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.CriticallyDampedSpringTimingParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.CriticallyDampedSpringTimingVectorParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.CriticallyDampedSpringTimingVectorParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.CriticallyDampedSpringTimingVectorParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DataContextIterator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DataContextIterator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DataContextIterator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DebugImage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DebugImage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DebugImage",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.DebugImage.yml\" sourcestartlinenumber=\"1\">Control for displaying used Surface as a preview image, for debugging purposes.\nDo not use this in prod, this will be invalidated every frame, causing non-stop screen update.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DecelerationTimingParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DecelerationTimingParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DecelerationTimingParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DecelerationTimingVectorParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DecelerationTimingVectorParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DecelerationTimingVectorParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DescendingZIndexGestureListenerComparer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DescendingZIndexGestureListenerComparer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DescendingZIndexGestureListenerComparer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DirectionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DirectionType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DirectionType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DrawImageAlignment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DrawImageAlignment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DrawImageAlignment",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DrawTextAlignment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DrawTextAlignment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DrawTextAlignment",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DrawingContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DrawingContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DrawingContext",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DrawingRect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DrawingRect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DrawingRect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DrawnExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DrawnExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DrawnExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DrawnFontAttributesConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DrawnFontAttributesConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DrawnFontAttributesConverter",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.DrawnFontAttributesConverter.yml\" sourcestartlinenumber=\"1\">Forked from Microsoft.Maui.Controls as using original class was breaking XAML HotReload for some unknown reason</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DrawnUiStartupSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DrawnUiStartupSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DrawnUiStartupSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DropShadowEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DropShadowEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DropShadowEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DynamicGrid-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DynamicGrid-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DynamicGrid<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.EdgeGlowAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.EdgeGlowAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.EdgeGlowAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ElementRenderer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ElementRenderer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ElementRenderer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.FindTagExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.FindTagExtension.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.FindTagExtension",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.FluentExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.FluentExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.FluentExtensions",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.FluentExtensions.yml\" sourcestartlinenumber=\"1\">Provides extension methods for fluent API design pattern with DrawnUI controls</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.FontWeight.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.FontWeight.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.FontWeight",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.FrameTimeInterpolator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.FrameTimeInterpolator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.FrameTimeInterpolator",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.FrameTimeInterpolator.yml\" sourcestartlinenumber=\"1\">Interpolated time between frames, works in seconds. See examples..</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.GestureEventProcessingInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.GestureEventProcessingInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.GestureEventProcessingInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.GesturesMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.GesturesMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.GesturesMode",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.GesturesMode.yml\" sourcestartlinenumber=\"1\">Used by the canvas, do not need this for drawn controls</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.GlowPosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.GlowPosition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.GlowPosition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.GradientType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.GradientType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.GradientType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IAfterEffectDelete.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IAfterEffectDelete.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IAfterEffectDelete",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IAnimatorsManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IAnimatorsManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IAnimatorsManager",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.IAnimatorsManager.yml\" sourcestartlinenumber=\"1\">This control is responsible for updating screen for running animators</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IBindingContextDebuggable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IBindingContextDebuggable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IBindingContextDebuggable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ICanBeUpdated.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ICanBeUpdated.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ICanBeUpdated",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ICanBeUpdatedWithContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ICanBeUpdatedWithContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ICanBeUpdatedWithContext",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ICanRenderOnCanvas.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ICanRenderOnCanvas.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ICanRenderOnCanvas",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IColorEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IColorEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IColorEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IDampingTimingParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IDampingTimingParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IDampingTimingParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IDampingTimingVectorParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IDampingTimingVectorParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IDampingTimingVectorParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IDefinesViewport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IDefinesViewport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IDefinesViewport",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IDrawnBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IDrawnBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IDrawnBase",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IDrawnTextSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IDrawnTextSpan.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IDrawnTextSpan",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IHasAfterEffects.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IHasAfterEffects.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IHasAfterEffects",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IHasBanner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IHasBanner.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IHasBanner",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IImageEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IImageEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IImageEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IInsideViewport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IInsideViewport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IInsideViewport",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IInsideWheelStack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IInsideWheelStack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IInsideWheelStack",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IInterpolator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IInterpolator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IInterpolator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ILayoutInsideViewport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ILayoutInsideViewport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ILayoutInsideViewport",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IOverlayEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IOverlayEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IOverlayEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IPostRendererEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IPostRendererEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IPostRendererEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IRefreshIndicator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IRefreshIndicator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IRefreshIndicator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IRenderEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IRenderEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IRenderEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IRenderObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IRenderObject.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IRenderObject",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaCell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaCell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaCell",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaControl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaControl.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaControl",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaDrawable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaDrawable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaDrawable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaGestureListener.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaGestureListener.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaGestureListener",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaGestureProcessor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaGestureProcessor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaGestureProcessor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaGridLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaGridLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaGridLayout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaLayer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaLayer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaLayer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaLayout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaSharpView.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaSharpView.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaSharpView",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IStateEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IStateEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IStateEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ITimingParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ITimingParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ITimingParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ITimingVectorParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ITimingVectorParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ITimingVectorParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IVisibilityAware.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IVisibilityAware.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IVisibilityAware",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IWithContent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IWithContent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IWithContent",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.InfiniteLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.InfiniteLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.InfiniteLayout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.KeyboardManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.KeyboardManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.KeyboardManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LayoutStructure.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LayoutStructure.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LayoutStructure",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LayoutType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LayoutType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LayoutType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LineGlyph.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LineGlyph.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LineGlyph",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LineSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LineSpan.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LineSpan",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LinearDirectionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LinearDirectionType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LinearDirectionType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LinearInterpolationTimingParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LinearInterpolationTimingParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LinearInterpolationTimingParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LoadPriority.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LoadPriority.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LoadPriority",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LoadedImageSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LoadedImageSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LoadedImageSource",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LockTouch.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LockTouch.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LockTouch",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.Looper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.Looper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.Looper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LottieRefreshIndicator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LottieRefreshIndicator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LottieRefreshIndicator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.MauiKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.MauiKey.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.MauiKey",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.MauiKey.yml\" sourcestartlinenumber=\"1\">These are platform-independent. They correspond to JavaScript keys.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.MauiKeyMapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.MauiKeyMapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.MauiKeyMapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.MeasureRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.MeasureRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.MeasureRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.MeasuredListCell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.MeasuredListCell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.MeasuredListCell",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.MeasuredListCells.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.MeasuredListCells.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.MeasuredListCells",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.MeasuringStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.MeasuringStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.MeasuringStrategy",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ObjectAliveType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ObjectAliveType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ObjectAliveType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ObservableAttachedItemsCollection-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ObservableAttachedItemsCollection-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ObservableAttachedItemsCollection<T>",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ObservableAttachedItemsCollection-1.yml\" sourcestartlinenumber=\"1\">We have to subclass ObservableCollection to avoid it sending empty oldItems upon Reset.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.OrientationType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.OrientationType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.OrientationType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PanningModeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PanningModeType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PanningModeType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PendulumAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PendulumAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PendulumAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PerpetualPendulumAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PerpetualPendulumAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PerpetualPendulumAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PingPongAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PingPongAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PingPongAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.Plane.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.Plane.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.Plane",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PlanesScroll.ViewLayoutInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PlanesScroll.ViewLayoutInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PlanesScroll.ViewLayoutInfo",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.PlanesScroll.ViewLayoutInfo.yml\" sourcestartlinenumber=\"1\">Holds layout information for a rendered month cell.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PlanesScroll.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PlanesScroll.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PlanesScroll",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.PlanesScroll.yml\" sourcestartlinenumber=\"1\">Provides the ability to create/draw views directly while scrolling.\nContent will be generated dynamically, instead of the usual way.\nThis control main logic is inside PaintOnPlane override, also it hacks content to work without a real Content.\nYou have to override <code sourcefile=\"api/DrawnUi.Draw.PlanesScroll.yml\" sourcestartlinenumber=\"4\">GetMeasuredView</code> to provide your views to be drawn upon passed index.\nTODO: for horizonal</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PointIsInsideResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PointIsInsideResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PointIsInsideResult",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PointedDirectionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PointedDirectionType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PointedDirectionType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PrebuiltControlStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PrebuiltControlStyle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PrebuiltControlStyle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ProgressAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ProgressAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ProgressAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ProgressTrail.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ProgressTrail.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ProgressTrail",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ProgressTrail.yml\" sourcestartlinenumber=\"1\">Progress trail component for linear progress bars.\nSimilar to SliderTrail but optimized for progress display.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RangeAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RangeAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RangeAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RangeF.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RangeF.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RangeF",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RangeVectorAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RangeVectorAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RangeVectorAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RangeZone.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RangeZone.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RangeZone",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RecycleTemplateType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RecycleTemplateType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RecycleTemplateType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RecyclingTemplate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RecyclingTemplate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RecyclingTemplate",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RefreshIndicator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RefreshIndicator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RefreshIndicator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RelativePositionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RelativePositionType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RelativePositionType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RenderDrawingContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RenderDrawingContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RenderDrawingContext",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RenderLabel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RenderLabel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RenderLabel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RenderObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RenderObject.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RenderObject",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RenderTreeRenderer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RenderTreeRenderer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RenderTreeRenderer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RenderingAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RenderingAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RenderingAnimator",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.RenderingAnimator.yml\" sourcestartlinenumber=\"1\">This animator renders on canvas instead of just updating a value</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RenderingModeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RenderingModeType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RenderingModeType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.RippleAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.RippleAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.RippleAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SaturationEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SaturationEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SaturationEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScaledPoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScaledPoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScaledPoint",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScaledRect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScaledRect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScaledRect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScaledSize.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScaledSize.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScaledSize",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScrollFlingAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScrollFlingAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScrollFlingAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScrollFlingVectorAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScrollFlingVectorAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScrollFlingVectorAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScrollInteractionState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScrollInteractionState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScrollInteractionState",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScrollToIndexOrder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScrollToIndexOrder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScrollToIndexOrder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ScrollToPointOrder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ScrollToPointOrder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ScrollToPointOrder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ShaderDoubleTexturesEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ShaderDoubleTexturesEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ShaderDoubleTexturesEffect",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ShaderDoubleTexturesEffect.yml\" sourcestartlinenumber=\"1\">Base shader effect class that has 2 input textures.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ShapeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ShapeType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ShapeType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ShimmerAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ShimmerAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ShimmerAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SidePosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SidePosition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SidePosition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.Sk3dView.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.Sk3dView.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.Sk3dView",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.Sk3dView.yml\" sourcestartlinenumber=\"1\">Custom implementation of Android's Camera 3D helper for SkiaSharp</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkCamera3D.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkCamera3D.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkCamera3D",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkCamera3D2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkCamera3D2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkCamera3D2",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkPatch3D.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkPatch3D.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkPatch3D",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaAnchorBak.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaAnchorBak.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaAnchorBak",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaBackdrop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaBackdrop.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaBackdrop",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaBackdrop.yml\" sourcestartlinenumber=\"1\">Warning with CPU-rendering edges will not be blurred: <a href=\"https://issues.skia.org/issues/40036320\" sourcefile=\"api/DrawnUi.Draw.SkiaBackdrop.yml\" sourcestartlinenumber=\"1\">https://issues.skia.org/issues/40036320</a></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaBevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaBevel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaBevel",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaBevel.yml\" sourcestartlinenumber=\"1\">Defines properties for creating bevel or emboss effects on shapes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaButton.ButtonLabel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaButton.ButtonLabel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaButton.ButtonLabel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaButton.ButtonStyleType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaButton.ButtonStyleType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaButton.ButtonStyleType",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaButton.ButtonStyleType.yml\" sourcestartlinenumber=\"1\">Defines the button style variants available for different visual appearances.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaButton.IconPositionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaButton.IconPositionType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaButton.IconPositionType",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaButton.IconPositionType.yml\" sourcestartlinenumber=\"1\">Defines the position of an icon relative to the button text</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaButton.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaButton",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaButton.yml\" sourcestartlinenumber=\"1\">Button-like control, can include any content inside. It's either you use default content (todo templates?..)\nor can include any content inside, and properties will by applied by convention to a SkiaLabel with Tag <code sourcefile=\"api/DrawnUi.Draw.SkiaButton.yml\" sourcestartlinenumber=\"2\">MainLabel</code>, SkiaShape with Tag <code sourcefile=\"api/DrawnUi.Draw.SkiaButton.yml\" sourcestartlinenumber=\"2\">MainFrame</code>. At the same time you can override ApplyProperties() and apply them to your content yourself.\nConvention elements tags: BtnText, BtnShape.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaCacheType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaCacheType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaCacheType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaCheckbox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaCheckbox.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaCheckbox",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaCheckbox.yml\" sourcestartlinenumber=\"1\">Switch-like control, can include any content inside. It's aither you use default content (todo templates?..)\nor can include any content inside, and properties will by applied by convention to a SkiaShape with Tag <code sourcefile=\"api/DrawnUi.Draw.SkiaCheckbox.yml\" sourcestartlinenumber=\"2\">Frame</code>, SkiaShape with Tag <code sourcefile=\"api/DrawnUi.Draw.SkiaCheckbox.yml\" sourcestartlinenumber=\"2\">Thumb</code>. At the same time you can override ApplyProperties() and apply them to your content yourself.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaControl.CacheValidityType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaControl.CacheValidityType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaControl.CacheValidityType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaControl.ControlTappedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaControl.ControlTappedEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaControl.ControlTappedEventArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaControl.ParentMeasureRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaControl.ParentMeasureRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaControl.ParentMeasureRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaControl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaControl.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaControl",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaControlWithRect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaControlWithRect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaControlWithRect",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaControlWithRect.yml\" sourcestartlinenumber=\"1\">Used inside RenderingTree. Rect is real drawing position</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaControlsObservable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaControlsObservable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaControlsObservable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaCursor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaCursor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaCursor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaDrawingContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaDrawingContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaDrawingContext",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaEditor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaEditor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaEditor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaFontManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaFontManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaFontManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaFrame.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaFrame.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaFrame",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaFrame.yml\" sourcestartlinenumber=\"1\">Alias for SkiaShape type Rectangle</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaGesturesInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaGesturesInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaGesturesInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaGesturesParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaGesturesParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaGesturesParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaGradient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaGradient.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaGradient",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaGrid.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaGrid",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaGrid.yml\" sourcestartlinenumber=\"1\">MAUI Grid alternative</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaHotspot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaHotspot.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaHotspot",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaHotspotZoom.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaHotspotZoom.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaHotspotZoom",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaHoverMask.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaHoverMask.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaHoverMask",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaHoverMask.yml\" sourcestartlinenumber=\"1\">Paints the parent view with the background color with a clipped viewport oth this view size</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaImage.RescaledBitmap.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaImage.RescaledBitmap.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaImage.RescaledBitmap",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaImage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaImage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaImage",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaImageEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaImageEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaImageEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaImageEffects.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaImageEffects.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaImageEffects",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaImageManager.QueueItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaImageManager.QueueItem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaImageManager.QueueItem",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaImageManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaImageManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaImageManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaImageTiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaImageTiles.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaImageTiles",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.DecomposedText.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.DecomposedText.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel.DecomposedText",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.EmojiData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.EmojiData.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel.EmojiData",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.ObjectPools.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.ObjectPools.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel.ObjectPools",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLabel.ObjectPools.yml\" sourcestartlinenumber=\"1\">Thread-safe object pools for reducing GC allocations in text measurement</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.PooledStringBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.PooledStringBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel.PooledStringBuilder",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLabel.PooledStringBuilder.yml\" sourcestartlinenumber=\"1\">Helper struct for managing pooled StringBuilder with automatic return</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.SpanCollection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.SpanCollection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel.SpanCollection",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.SpanMeasurement.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.SpanMeasurement.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel.SpanMeasurement",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLabel.SpanMeasurement.yml\" sourcestartlinenumber=\"1\">Span-based measurement methods to avoid string allocations</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.TextMetrics.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.TextMetrics.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel.TextMetrics",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabel",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLabel.yml\" sourcestartlinenumber=\"1\">A high-performance text rendering control that provides advanced text formatting,\nlayout, and styling capabilities using SkiaSharp for rendering.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLabelFps.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLabelFps.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLabelFps",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayer",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayer.yml\" sourcestartlinenumber=\"1\">Absolute layout like MAUI Grid with just one column and row</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.BuildWrapLayout",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.yml\" sourcestartlinenumber=\"1\">Implementation for LayoutType.Wrap</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.Cell.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.Cell.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.Cell",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.SecondPassArrange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.SecondPassArrange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.SecondPassArrange",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.SecondPassArrange.yml\" sourcestartlinenumber=\"1\">Cell.Area contains the area for layout</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.SkiaGridStructure.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.SkiaGridStructure",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaMarkdownLabel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaMarkdownLabel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaMarkdownLabel",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaMarkdownLabel.yml\" sourcestartlinenumber=\"1\">Left for compatibility, use SkiaRichLabel</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaMauiElement.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaMauiElement.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaMauiElement",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaPoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaPoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaPoint",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaProgress.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaProgress.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaProgress",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaProgress.yml\" sourcestartlinenumber=\"1\">Linear progress bar control with platform-specific styling.\nShows progress from Min to Value within the Min-Max range.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaRangeBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaRangeBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaRangeBase",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaRangeBase.yml\" sourcestartlinenumber=\"1\">Base class for range-based controls like sliders and progress bars.\nProvides common functionality for value ranges, track management, and platform styling.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaRichLabel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaRichLabel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaRichLabel",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaRichLabel.yml\" sourcestartlinenumber=\"1\">Will internally create spans from markdown.\nSpans property must not be set directly.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaRow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaRow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaRow",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaRow.yml\" sourcestartlinenumber=\"1\">Horizontal stack,  like MAUI HorizontalStackLayout</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaScroll.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaScroll.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaScroll",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaScrollLooped.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaScrollLooped.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaScrollLooped",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaScrollLooped.yml\" sourcestartlinenumber=\"1\">Cycles content, so the scroll never ands but cycles from the start</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaSetter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaSetter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaSetter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaShaderEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaShaderEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaShaderEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaShadow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaShadow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaShadow",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaShape.ShapePaintArguments.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaShape.ShapePaintArguments.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaShape.ShapePaintArguments",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaShape.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaShape.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaShape",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaShape.yml\" sourcestartlinenumber=\"1\">Extension of SkiaShape that adds bevel and emboss functionality</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaSlider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaSlider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaSlider",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaStack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaStack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaStack",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaStack.yml\" sourcestartlinenumber=\"1\">Vertical stack, like MAUI VerticalStackLayout</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaSvg.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaSvg.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaSvg",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaSwitch.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaSwitch.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaSwitch",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaSwitch.yml\" sourcestartlinenumber=\"1\">Switch-like control, can include any content inside. It's aither you use default content (todo templates?..)\nor can include any content inside, and properties will by applied by convention to a SkiaShape with Tag <code sourcefile=\"api/DrawnUi.Draw.SkiaSwitch.yml\" sourcestartlinenumber=\"2\">Frame</code>, SkiaShape with Tag <code sourcefile=\"api/DrawnUi.Draw.SkiaSwitch.yml\" sourcestartlinenumber=\"2\">Thumb</code>. At the same time you can override ApplyProperties() and apply them to your content yourself.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaToggle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaToggle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaToggle",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaToggle.yml\" sourcestartlinenumber=\"1\">Base control for toggling between 2 states.\nIt provides no gestures support by itsself.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaTouchAnimation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaTouchAnimation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaTouchAnimation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaValueAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaValueAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaValueAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaVectorAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaVectorAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaVectorAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaWrap.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaWrap.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaWrap",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaWrap.yml\" sourcestartlinenumber=\"1\">A powerful flexible control, a bit like WPF StackPanel, arranges children in a responsive way according available size. Can change the number of Columns to use by default.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SliderThumb.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SliderThumb.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SliderThumb",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SliderTrail.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SliderTrail.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SliderTrail",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SliderValueDesc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SliderValueDesc.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SliderValueDesc",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SnapToChildrenType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SnapToChildrenType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SnapToChildrenType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.Snapping.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.Snapping.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.Snapping",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SnappingLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SnappingLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SnappingLayout",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SortedGestureListeners.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SortedGestureListeners.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SortedGestureListeners",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SourceType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SourceType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SourceType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SpaceDistribution.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SpaceDistribution.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SpaceDistribution",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SpringExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SpringExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SpringExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SpringTimingParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SpringTimingParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SpringTimingParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SpringTimingVectorParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SpringTimingVectorParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SpringTimingVectorParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SpringWithVelocityAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SpringWithVelocityAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SpringWithVelocityAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SpringWithVelocityVectorAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SpringWithVelocityVectorAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SpringWithVelocityVectorAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.StackLayoutStructure.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.StackLayoutStructure.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.StackLayoutStructure",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.StateEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.StateEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.StateEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.StaticResourcesExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.StaticResourcesExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.StaticResourcesExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.StringReference.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.StringReference.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.StringReference",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.Super.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.Super.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.Super",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SvgSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SvgSpan.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SvgSpan",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TemplatedViewsPool.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TemplatedViewsPool.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TemplatedViewsPool",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TextLine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TextLine.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TextLine",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TextSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TextSpan.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TextSpan",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TextTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TextTransform.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TextTransform",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TintEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TintEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TintEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TintWithAlphaEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TintWithAlphaEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TintWithAlphaEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ToggleAnimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ToggleAnimator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ToggleAnimator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TrackedObject-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TrackedObject-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TrackedObject<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.TransformAspect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.TransformAspect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.TransformAspect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.UnderdampedSpringTimingParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.UnderdampedSpringTimingParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.UnderdampedSpringTimingParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.UnderdampedSpringTimingVectorParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.UnderdampedSpringTimingVectorParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.UnderdampedSpringTimingVectorParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.UsedGlyph.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.UsedGlyph.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.UsedGlyph",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.VelocityAccumulator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.VelocityAccumulator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.VelocityAccumulator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ViewportScrollType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ViewportScrollType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ViewportScrollType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ViewsAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ViewsAdapter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ViewsAdapter",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ViewsAdapter.yml\" sourcestartlinenumber=\"1\">Top level class for working with ItemTemplates. Holds visible views.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ViewsIterator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ViewsIterator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ViewsIterator",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ViewsIterator.yml\" sourcestartlinenumber=\"1\">To iterate over virtual views</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.VirtualScroll.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.VirtualScroll.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.VirtualScroll",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.VirtualScroll.yml\" sourcestartlinenumber=\"1\">this control gets a view and draws it on a virtual scrolling plane</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.VirtualisationType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.VirtualisationType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.VirtualisationType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ViscousFluidInterpolator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ViscousFluidInterpolator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ViscousFluidInterpolator",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ViscousFluidInterpolator.yml\" sourcestartlinenumber=\"1\">Ported from google android</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.VisualLayer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.VisualLayer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.VisualLayer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.VisualTreeHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.VisualTreeHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.VisualTreeHandler",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.WindowParameters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.WindowParameters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.WindowParameters",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ZoomContent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ZoomContent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ZoomContent",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"1\">Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.TODO add animated movement</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ZoomEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ZoomEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ZoomEventArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Extensions.FloatingPointExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Extensions.FloatingPointExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Extensions.FloatingPointExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Extensions.InternalExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Extensions.InternalExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Extensions.InternalExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Extensions.PointExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Extensions.PointExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Extensions.PointExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Extensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Extensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Features.Images.ImagesExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Features.Images.ImagesExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Features.Images.ImagesExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Features.Images.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Features.Images.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Features.Images",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.HotReloadService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.HotReloadService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.HotReloadService",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.ClosedRange-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.ClosedRange-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.ClosedRange<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Enums.DoubleViewTransitionType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Enums.DoubleViewTransitionType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Enums.UpdateMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Enums.UpdateMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Enums.UpdateMode",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Enums.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Enums.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Enums",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.FileDescriptor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.FileDescriptor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.FileDescriptor",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Files.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Files.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Files",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Helpers.IntersectionUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Helpers.IntersectionUtils.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Helpers.IntersectionUtils",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Helpers.RubberBandUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Helpers.RubberBandUtils.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Helpers.RubberBandUtils",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Helpers.VelocityTracker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Helpers.VelocityTracker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Helpers.VelocityTracker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Helpers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Helpers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Helpers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.MeasuringConstraints.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.MeasuringConstraints.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.MeasuringConstraints",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.ContentLoadedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.ContentLoadedEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models.ContentLoadedEventArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.ImageSourceResourceStream.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models.ImageSourceResourceStream",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.LimitedConcurrentQueue-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.LimitedConcurrentQueue-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models.LimitedConcurrentQueue<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.LimitedQueue-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.LimitedQueue-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models.LimitedQueue<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.LimitedStack-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.LimitedStack-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models.LimitedStack<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.OrderedIndex.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.OrderedIndex.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models.OrderedIndex",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.PaperFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.PaperFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.PaperFormat",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Infrastructure.PaperFormat.yml\" sourcestartlinenumber=\"1\">Standard paper formats</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Pdf.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Pdf.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Pdf",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.PdfPagePosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.PdfPagePosition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.PdfPagePosition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Pendulum.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Pendulum.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Pendulum",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.PerpetualPendulum.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.PerpetualPendulum.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.PerpetualPendulum",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.RenderOnTimer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.RenderOnTimer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.RenderOnTimer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.SkSl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.SkSl.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.SkSl",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.SkiaTouchResultContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.SkiaTouchResultContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.SkiaTouchResultContext",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Spring.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Spring.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Spring",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.StorageType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.StorageType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.StorageType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Vector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Vector.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Vector",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.VisualTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.VisualTransform.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.VisualTransform",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Infrastructure.VisualTransform.yml\" sourcestartlinenumber=\"1\">Will enhance this in the future to include more properties</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.VisualTransformNative.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.VisualTransformNative.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.VisualTransformNative",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.VisualTreeChain.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.VisualTreeChain.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.VisualTreeChain",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.NotConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.NotConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml.NotConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.Xaml.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.Xaml.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.Xaml",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Internals.Markup.MarkupExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Internals.Markup.MarkupExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Internals.Markup.MarkupExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Internals.Markup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Internals.Markup.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Internals.Markup",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Internals.SelectableAction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Internals.SelectableAction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Internals.SelectableAction",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Internals.TitleWithStringId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Internals.TitleWithStringId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Internals.TitleWithStringId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Internals.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Internals.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Internals",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.DefinitionInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.DefinitionInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models.DefinitionInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.GridLengthType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.GridLengthType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models.GridLengthType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.GridSpan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.GridSpan.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models.GridSpan",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.RestartingTimer-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.RestartingTimer-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models.RestartingTimer<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.RestartingTimer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.RestartingTimer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models.RestartingTimer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.Screen.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.Screen.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models.Screen",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.SpanKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.SpanKey.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models.SpanKey",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.BasePageReloadable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.BasePageReloadable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.BasePageReloadable",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Views.BasePageReloadable.yml\" sourcestartlinenumber=\"1\">Base class for a page with canvas, supports C# HotReload for building UI with code (not XAML).\nOverride <code sourcefile=\"api/DrawnUi.Views.BasePageReloadable.yml\" sourcestartlinenumber=\"2\">Build()</code>, see examples.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.Canvas.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.Canvas.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.Canvas",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Views.Canvas.yml\" sourcestartlinenumber=\"1\">Optimized DrawnView having only one child inside Content property. Can autosize to to children size.\nFor all drawn app put this directly inside the ContentPage as root view.\nIf you put this inside some Maui control like Grid whatever expect more GC collections during animations making them somewhat less fluid.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.DisposableManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.DisposableManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.DisposableManager",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Views.DisposableManager.yml\" sourcestartlinenumber=\"1\">Manages delayed disposal of IDisposable objects based on frame count</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.DrawnUiBasePage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.DrawnUiBasePage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.DrawnUiBasePage",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Views.DrawnUiBasePage.yml\" sourcestartlinenumber=\"1\">Actually used to: respond to keyboard resizing on mobile and keyboard key presses on Mac. Other than for that this\nis not needed at all.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.DrawnView.DiagnosticData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.DrawnView.DiagnosticData.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.DrawnView.DiagnosticData",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.DrawnView.FocusedItemChangedArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.DrawnView.FocusedItemChangedArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.DrawnView.FocusedItemChangedArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.DrawnView.OffscreenCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.DrawnView.OffscreenCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.DrawnView.OffscreenCommand",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.DrawnView.TimedDisposable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.DrawnView.TimedDisposable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.DrawnView.TimedDisposable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.DrawnView.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.DrawnView.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.DrawnView",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SkiaView.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SkiaView.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SkiaView",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SkiaViewAccelerated.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SkiaViewAccelerated.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SkiaViewAccelerated",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi",
+      "Summary": null
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/game-ui.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/game-ui.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/gestures.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/gestures.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/gradients.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/gradients.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/layout-system.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/layout-system.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/platform-styling.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/platform-styling.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/skiascroll.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/skiascroll.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/animations.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/animations.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/buttons.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/buttons.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/carousels.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/carousels.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/drawers.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/drawers.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/images.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/images.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/input.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/input.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/layouts.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/layouts.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/native-integration.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/native-integration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/scroll.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/scroll.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/shapes.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/shapes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/shell.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/shell.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/sprites.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/sprites.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/switches.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/switches.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/controls/text.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/controls/text.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/drawing-pipeline.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/drawing-pipeline.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/faq.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/faq.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/first-app.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/first-app.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/fluent-extensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/fluent-extensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/interactive-cards.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/interactive-cards.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/news-feed-tutorial.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/news-feed-tutorial.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/porting-maui.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/porting-maui.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/samples.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/samples.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html"
+        },
+        ".json": {
+          "relative_path": "articles/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/whats-new.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/whats-new.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "demo.md",
+      "output": {
+        ".html": {
+          "relative_path": "demo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cards.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/cards.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Redirection",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

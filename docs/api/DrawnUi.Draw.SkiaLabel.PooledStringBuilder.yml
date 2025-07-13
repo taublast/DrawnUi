@@ -1,0 +1,609 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  commentId: T:DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  id: SkiaLabel.PooledStringBuilder
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaLabel.PooledStringBuilder.#ctor(System.Text.StringBuilder)
+  - DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose
+  - DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get
+  - DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder
+  langs:
+  - csharp
+  - vb
+  name: SkiaLabel.PooledStringBuilder
+  nameWithType: SkiaLabel.PooledStringBuilder
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  type: Struct
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PooledStringBuilder
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    startLine: 181
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Helper struct for managing pooled StringBuilder with automatic return
+  example: []
+  syntax:
+    content: 'public readonly struct SkiaLabel.PooledStringBuilder : IDisposable'
+    content.vb: Public Structure SkiaLabel.PooledStringBuilder Implements IDisposable
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder
+  commentId: P:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder
+  id: StringBuilder
+  parent: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  langs:
+  - csharp
+  - vb
+  name: StringBuilder
+  nameWithType: SkiaLabel.PooledStringBuilder.StringBuilder
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StringBuilder
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    startLine: 183
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public StringBuilder StringBuilder { get; }
+    parameters: []
+    return:
+      type: System.Text.StringBuilder
+    content.vb: Public ReadOnly Property StringBuilder As StringBuilder
+  overload: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder*
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.#ctor(System.Text.StringBuilder)
+  commentId: M:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.#ctor(System.Text.StringBuilder)
+  id: '#ctor(System.Text.StringBuilder)'
+  parent: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  langs:
+  - csharp
+  - vb
+  name: PooledStringBuilder(StringBuilder)
+  nameWithType: SkiaLabel.PooledStringBuilder.PooledStringBuilder(StringBuilder)
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.PooledStringBuilder(System.Text.StringBuilder)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    startLine: 185
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public PooledStringBuilder(StringBuilder sb)
+    parameters:
+    - id: sb
+      type: System.Text.StringBuilder
+    content.vb: Public Sub New(sb As StringBuilder)
+  overload: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.#ctor*
+  nameWithType.vb: SkiaLabel.PooledStringBuilder.New(StringBuilder)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.New(System.Text.StringBuilder)
+  name.vb: New(StringBuilder)
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get
+  commentId: M:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get
+  id: Get
+  parent: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  langs:
+  - csharp
+  - vb
+  name: Get()
+  nameWithType: SkiaLabel.PooledStringBuilder.Get()
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Get
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    startLine: 190
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SkiaLabel.PooledStringBuilder Get()
+    return:
+      type: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+    content.vb: Public Shared Function [Get]() As SkiaLabel.PooledStringBuilder
+  overload: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get*
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose
+  commentId: M:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose
+  id: Dispose
+  parent: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SkiaLabel.PooledStringBuilder.Dispose()
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    startLine: 195
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder
+  href: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.html#DrawnUi_Draw_SkiaLabel_PooledStringBuilder_StringBuilder
+  name: StringBuilder
+  nameWithType: SkiaLabel.PooledStringBuilder.StringBuilder
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.StringBuilder
+- uid: System.Text.StringBuilder
+  commentId: T:System.Text.StringBuilder
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.stringbuilder
+  name: StringBuilder
+  nameWithType: StringBuilder
+  fullName: System.Text.StringBuilder
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.#ctor*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.#ctor
+  href: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.html#DrawnUi_Draw_SkiaLabel_PooledStringBuilder__ctor_System_Text_StringBuilder_
+  name: PooledStringBuilder
+  nameWithType: SkiaLabel.PooledStringBuilder.PooledStringBuilder
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.PooledStringBuilder
+  nameWithType.vb: SkiaLabel.PooledStringBuilder.New
+  fullName.vb: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.New
+  name.vb: New
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get
+  href: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.html#DrawnUi_Draw_SkiaLabel_PooledStringBuilder_Get
+  name: Get
+  nameWithType: SkiaLabel.PooledStringBuilder.Get
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Get
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  commentId: T:DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLabel.html
+  name: SkiaLabel.PooledStringBuilder
+  nameWithType: SkiaLabel.PooledStringBuilder
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLabel
+    name: SkiaLabel
+    href: DrawnUi.Draw.SkiaLabel.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+    name: PooledStringBuilder
+    href: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLabel
+    name: SkiaLabel
+    href: DrawnUi.Draw.SkiaLabel.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder
+    name: PooledStringBuilder
+    href: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.html
+- uid: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose
+  href: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.html#DrawnUi_Draw_SkiaLabel_PooledStringBuilder_Dispose
+  name: Dispose
+  nameWithType: SkiaLabel.PooledStringBuilder.Dispose
+  fullName: DrawnUi.Draw.SkiaLabel.PooledStringBuilder.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )

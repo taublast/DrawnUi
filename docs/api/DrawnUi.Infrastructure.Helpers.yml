@@ -1,0 +1,68 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Helpers
+  commentId: N:DrawnUi.Infrastructure.Helpers
+  id: DrawnUi.Infrastructure.Helpers
+  children:
+  - DrawnUi.Infrastructure.Helpers.IntersectionUtils
+  - DrawnUi.Infrastructure.Helpers.RubberBandUtils
+  - DrawnUi.Infrastructure.Helpers.VelocityTracker
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Infrastructure.Helpers
+  nameWithType: DrawnUi.Infrastructure.Helpers
+  fullName: DrawnUi.Infrastructure.Helpers
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Infrastructure.Helpers.IntersectionUtils
+  commentId: T:DrawnUi.Infrastructure.Helpers.IntersectionUtils
+  href: DrawnUi.Infrastructure.Helpers.IntersectionUtils.html
+  name: IntersectionUtils
+  nameWithType: IntersectionUtils
+  fullName: DrawnUi.Infrastructure.Helpers.IntersectionUtils
+- uid: DrawnUi.Infrastructure.Helpers.RubberBandUtils
+  commentId: T:DrawnUi.Infrastructure.Helpers.RubberBandUtils
+  href: DrawnUi.Infrastructure.Helpers.RubberBandUtils.html
+  name: RubberBandUtils
+  nameWithType: RubberBandUtils
+  fullName: DrawnUi.Infrastructure.Helpers.RubberBandUtils
+- uid: DrawnUi.Infrastructure.Helpers.VelocityTracker
+  commentId: T:DrawnUi.Infrastructure.Helpers.VelocityTracker
+  parent: DrawnUi.Infrastructure.Helpers
+  href: DrawnUi.Infrastructure.Helpers.VelocityTracker.html
+  name: VelocityTracker
+  nameWithType: VelocityTracker
+  fullName: DrawnUi.Infrastructure.Helpers.VelocityTracker
+- uid: DrawnUi.Infrastructure.Helpers
+  commentId: N:DrawnUi.Infrastructure.Helpers
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure.Helpers
+  nameWithType: DrawnUi.Infrastructure.Helpers
+  fullName: DrawnUi.Infrastructure.Helpers
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Helpers
+    name: Helpers
+    href: DrawnUi.Infrastructure.Helpers.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Helpers
+    name: Helpers
+    href: DrawnUi.Infrastructure.Helpers.html

@@ -1,0 +1,584 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaImageEffect
+  commentId: T:DrawnUi.Draw.SkiaImageEffect
+  id: SkiaImageEffect
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaImageEffect.BlackAndWhite
+  - DrawnUi.Draw.SkiaImageEffect.Brightness
+  - DrawnUi.Draw.SkiaImageEffect.Contrast
+  - DrawnUi.Draw.SkiaImageEffect.Custom
+  - DrawnUi.Draw.SkiaImageEffect.Darken
+  - DrawnUi.Draw.SkiaImageEffect.Gamma
+  - DrawnUi.Draw.SkiaImageEffect.Grayscale
+  - DrawnUi.Draw.SkiaImageEffect.HSL
+  - DrawnUi.Draw.SkiaImageEffect.InvertColors
+  - DrawnUi.Draw.SkiaImageEffect.Lighten
+  - DrawnUi.Draw.SkiaImageEffect.None
+  - DrawnUi.Draw.SkiaImageEffect.Pastel
+  - DrawnUi.Draw.SkiaImageEffect.Saturation
+  - DrawnUi.Draw.SkiaImageEffect.Sepia
+  - DrawnUi.Draw.SkiaImageEffect.TSL
+  - DrawnUi.Draw.SkiaImageEffect.Tint
+  langs:
+  - csharp
+  - vb
+  name: SkiaImageEffect
+  nameWithType: SkiaImageEffect
+  fullName: DrawnUi.Draw.SkiaImageEffect
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaImageEffect
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum SkiaImageEffect
+    content.vb: Public Enum SkiaImageEffect
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaImageEffect.None
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.None
+  id: None
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: SkiaImageEffect.None
+  fullName: DrawnUi.Draw.SkiaImageEffect.None
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: None
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: None = 0
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.BlackAndWhite
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.BlackAndWhite
+  id: BlackAndWhite
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: BlackAndWhite
+  nameWithType: SkiaImageEffect.BlackAndWhite
+  fullName: DrawnUi.Draw.SkiaImageEffect.BlackAndWhite
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BlackAndWhite
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BlackAndWhite = 1
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Pastel
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Pastel
+  id: Pastel
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Pastel
+  nameWithType: SkiaImageEffect.Pastel
+  fullName: DrawnUi.Draw.SkiaImageEffect.Pastel
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Pastel
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Pastel = 2
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Tint
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Tint
+  id: Tint
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Tint
+  nameWithType: SkiaImageEffect.Tint
+  fullName: DrawnUi.Draw.SkiaImageEffect.Tint
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tint
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Background color will be used to tint
+  example: []
+  syntax:
+    content: Tint = 3
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Darken
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Darken
+  id: Darken
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Darken
+  nameWithType: SkiaImageEffect.Darken
+  fullName: DrawnUi.Draw.SkiaImageEffect.Darken
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Darken
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Darken = 4
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Lighten
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Lighten
+  id: Lighten
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Lighten
+  nameWithType: SkiaImageEffect.Lighten
+  fullName: DrawnUi.Draw.SkiaImageEffect.Lighten
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Lighten
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Lighten = 5
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Grayscale
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Grayscale
+  id: Grayscale
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Grayscale
+  nameWithType: SkiaImageEffect.Grayscale
+  fullName: DrawnUi.Draw.SkiaImageEffect.Grayscale
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Grayscale
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Grayscale = 6
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Sepia
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Sepia
+  id: Sepia
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Sepia
+  nameWithType: SkiaImageEffect.Sepia
+  fullName: DrawnUi.Draw.SkiaImageEffect.Sepia
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Sepia
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Sepia = 7
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.InvertColors
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.InvertColors
+  id: InvertColors
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: InvertColors
+  nameWithType: SkiaImageEffect.InvertColors
+  fullName: DrawnUi.Draw.SkiaImageEffect.InvertColors
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvertColors
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: InvertColors = 8
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Contrast
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Contrast
+  id: Contrast
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Contrast
+  nameWithType: SkiaImageEffect.Contrast
+  fullName: DrawnUi.Draw.SkiaImageEffect.Contrast
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Contrast
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Contrast = 9
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Saturation
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Saturation
+  id: Saturation
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Saturation
+  nameWithType: SkiaImageEffect.Saturation
+  fullName: DrawnUi.Draw.SkiaImageEffect.Saturation
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Saturation
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Saturation = 10
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Brightness
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Brightness
+  id: Brightness
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Brightness
+  nameWithType: SkiaImageEffect.Brightness
+  fullName: DrawnUi.Draw.SkiaImageEffect.Brightness
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Brightness
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Brightness = 11
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Gamma
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Gamma
+  id: Gamma
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Gamma
+  nameWithType: SkiaImageEffect.Gamma
+  fullName: DrawnUi.Draw.SkiaImageEffect.Gamma
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Gamma
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Gamma = 12
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.TSL
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.TSL
+  id: TSL
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: TSL
+  nameWithType: SkiaImageEffect.TSL
+  fullName: DrawnUi.Draw.SkiaImageEffect.TSL
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TSL
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: TSL = 13
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.HSL
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.HSL
+  id: HSL
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: HSL
+  nameWithType: SkiaImageEffect.HSL
+  fullName: DrawnUi.Draw.SkiaImageEffect.HSL
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HSL
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: HSL = 14
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+- uid: DrawnUi.Draw.SkiaImageEffect.Custom
+  commentId: F:DrawnUi.Draw.SkiaImageEffect.Custom
+  id: Custom
+  parent: DrawnUi.Draw.SkiaImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Custom
+  nameWithType: SkiaImageEffect.Custom
+  fullName: DrawnUi.Draw.SkiaImageEffect.Custom
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Custom
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Custom = 15
+    return:
+      type: DrawnUi.Draw.SkiaImageEffect
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaImageEffect
+  commentId: T:DrawnUi.Draw.SkiaImageEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaImageEffect.html
+  name: SkiaImageEffect
+  nameWithType: SkiaImageEffect
+  fullName: DrawnUi.Draw.SkiaImageEffect

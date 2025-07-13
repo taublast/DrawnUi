@@ -1,0 +1,1937 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaImageManager
+  commentId: T:DrawnUi.Draw.SkiaImageManager
+  id: SkiaImageManager
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaImageManager.#ctor
+  - DrawnUi.Draw.SkiaImageManager.AddToCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  - DrawnUi.Draw.SkiaImageManager.CacheLongevitySecs
+  - DrawnUi.Draw.SkiaImageManager.CanReload
+  - DrawnUi.Draw.SkiaImageManager.CancelAll
+  - DrawnUi.Draw.SkiaImageManager.Dispose
+  - DrawnUi.Draw.SkiaImageManager.GetFromCache(System.String)
+  - DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal(System.String)
+  - DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource(Microsoft.Maui.Controls.ImageSource)
+  - DrawnUi.Draw.SkiaImageManager.Instance
+  - DrawnUi.Draw.SkiaImageManager.IsDisposed
+  - DrawnUi.Draw.SkiaImageManager.IsLoadingLocked
+  - DrawnUi.Draw.SkiaImageManager.IsOffline
+  - DrawnUi.Draw.SkiaImageManager.LoadFromFile(System.String,System.Threading.CancellationToken)
+  - DrawnUi.Draw.SkiaImageManager.LoadImageAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  - DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)
+  - DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource,DrawnUi.Draw.LoadPriority)
+  - DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  - DrawnUi.Draw.SkiaImageManager.LoadLocalAsync
+  - DrawnUi.Draw.SkiaImageManager.LogEnabled
+  - DrawnUi.Draw.SkiaImageManager.NativeFilePrefix
+  - DrawnUi.Draw.SkiaImageManager.Preload(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaImageManager.PreloadBanners``1(System.Collections.Generic.IList{``0},System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaImageManager.PreloadImage(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaImageManager.PreloadImage(System.String,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaImageManager.PreloadImages(System.Collections.Generic.IList{System.String},System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaImageManager.ReuseBitmaps
+  - DrawnUi.Draw.SkiaImageManager.TraceLog(System.String)
+  - DrawnUi.Draw.SkiaImageManager.UpdateInCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: SkiaImageManager
+  nameWithType: SkiaImageManager
+  fullName: DrawnUi.Draw.SkiaImageManager
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaImageManager
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class SkiaImageManager : IDisposable'
+    content.vb: Public Class SkiaImageManager Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaImageManager.PreloadImage(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.PreloadImage(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  id: PreloadImage(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: PreloadImage(ImageSource, CancellationTokenSource)
+  nameWithType: SkiaImageManager.PreloadImage(ImageSource, CancellationTokenSource)
+  fullName: DrawnUi.Draw.SkiaImageManager.PreloadImage(Microsoft.Maui.Controls.ImageSource, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PreloadImage
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Preloads an image from the given source.
+  example: []
+  syntax:
+    content: public virtual Task PreloadImage(ImageSource source, CancellationTokenSource cancel = null)
+    parameters:
+    - id: source
+      type: Microsoft.Maui.Controls.ImageSource
+      description: The image source to preload
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Overridable Function PreloadImage(source As ImageSource, cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.SkiaImageManager.PreloadImage*
+- uid: DrawnUi.Draw.SkiaImageManager.PreloadImage(System.String,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.PreloadImage(System.String,System.Threading.CancellationTokenSource)
+  id: PreloadImage(System.String,System.Threading.CancellationTokenSource)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: PreloadImage(string, CancellationTokenSource)
+  nameWithType: SkiaImageManager.PreloadImage(string, CancellationTokenSource)
+  fullName: DrawnUi.Draw.SkiaImageManager.PreloadImage(string, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PreloadImage
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public virtual Task PreloadImage(string source, CancellationTokenSource cancel = null)
+    parameters:
+    - id: source
+      type: System.String
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Overridable Function PreloadImage(source As String, cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.SkiaImageManager.PreloadImage*
+  nameWithType.vb: SkiaImageManager.PreloadImage(String, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.PreloadImage(String, System.Threading.CancellationTokenSource)
+  name.vb: PreloadImage(String, CancellationTokenSource)
+- uid: DrawnUi.Draw.SkiaImageManager.PreloadImages(System.Collections.Generic.IList{System.String},System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.PreloadImages(System.Collections.Generic.IList{System.String},System.Threading.CancellationTokenSource)
+  id: PreloadImages(System.Collections.Generic.IList{System.String},System.Threading.CancellationTokenSource)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: PreloadImages(IList<string>, CancellationTokenSource)
+  nameWithType: SkiaImageManager.PreloadImages(IList<string>, CancellationTokenSource)
+  fullName: DrawnUi.Draw.SkiaImageManager.PreloadImages(System.Collections.Generic.IList<string>, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PreloadImages
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 68
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public virtual Task PreloadImages(IList<string> list, CancellationTokenSource cancel = null)
+    parameters:
+    - id: list
+      type: System.Collections.Generic.IList{System.String}
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Overridable Function PreloadImages(list As IList(Of String), cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.SkiaImageManager.PreloadImages*
+  nameWithType.vb: SkiaImageManager.PreloadImages(IList(Of String), CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.PreloadImages(System.Collections.Generic.IList(Of String), System.Threading.CancellationTokenSource)
+  name.vb: PreloadImages(IList(Of String), CancellationTokenSource)
+- uid: DrawnUi.Draw.SkiaImageManager.PreloadBanners``1(System.Collections.Generic.IList{``0},System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.PreloadBanners``1(System.Collections.Generic.IList{``0},System.Threading.CancellationTokenSource)
+  id: PreloadBanners``1(System.Collections.Generic.IList{``0},System.Threading.CancellationTokenSource)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: PreloadBanners<T>(IList<T>, CancellationTokenSource)
+  nameWithType: SkiaImageManager.PreloadBanners<T>(IList<T>, CancellationTokenSource)
+  fullName: DrawnUi.Draw.SkiaImageManager.PreloadBanners<T>(System.Collections.Generic.IList<T>, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PreloadBanners
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 118
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public virtual Task PreloadBanners<T>(IList<T> list, CancellationTokenSource cancel = null) where T : IHasBanner'
+    parameters:
+    - id: list
+      type: System.Collections.Generic.IList{{T}}
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    typeParameters:
+    - id: T
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Overridable Function PreloadBanners(Of T As IHasBanner)(list As IList(Of T), cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.SkiaImageManager.PreloadBanners*
+  nameWithType.vb: SkiaImageManager.PreloadBanners(Of T)(IList(Of T), CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.PreloadBanners(Of T)(System.Collections.Generic.IList(Of T), System.Threading.CancellationTokenSource)
+  name.vb: PreloadBanners(Of T)(IList(Of T), CancellationTokenSource)
+- uid: DrawnUi.Draw.SkiaImageManager.LoadLocalAsync
+  commentId: F:DrawnUi.Draw.SkiaImageManager.LoadLocalAsync
+  id: LoadLocalAsync
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: LoadLocalAsync
+  nameWithType: SkiaImageManager.LoadLocalAsync
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadLocalAsync
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LoadLocalAsync
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 174
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Normally we load local images in a synchronous manner, and remote in async one. Set this to true if you want to load load images async too.
+  example: []
+  syntax:
+    content: public static bool LoadLocalAsync
+    return:
+      type: System.Boolean
+    content.vb: Public Shared LoadLocalAsync As Boolean
+- uid: DrawnUi.Draw.SkiaImageManager.ReuseBitmaps
+  commentId: F:DrawnUi.Draw.SkiaImageManager.ReuseBitmaps
+  id: ReuseBitmaps
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: ReuseBitmaps
+  nameWithType: SkiaImageManager.ReuseBitmaps
+  fullName: DrawnUi.Draw.SkiaImageManager.ReuseBitmaps
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReuseBitmaps
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 179
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: If set to true will not return clones for same sources, but will just return the existing cached SKBitmap reference. Useful if you have a lot on images reusing same sources, but you have to be carefull not to dispose the shared image. SkiaImage is aware of this setting and will keep a cached SKBitmap from being disposed.
+  example: []
+  syntax:
+    content: public static bool ReuseBitmaps
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReuseBitmaps As Boolean
+- uid: DrawnUi.Draw.SkiaImageManager.CacheLongevitySecs
+  commentId: F:DrawnUi.Draw.SkiaImageManager.CacheLongevitySecs
+  id: CacheLongevitySecs
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: CacheLongevitySecs
+  nameWithType: SkiaImageManager.CacheLongevitySecs
+  fullName: DrawnUi.Draw.SkiaImageManager.CacheLongevitySecs
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CacheLongevitySecs
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 184
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Caching provider setting
+  example: []
+  syntax:
+    content: public static int CacheLongevitySecs
+    return:
+      type: System.Int32
+    content.vb: Public Shared CacheLongevitySecs As Integer
+- uid: DrawnUi.Draw.SkiaImageManager.NativeFilePrefix
+  commentId: F:DrawnUi.Draw.SkiaImageManager.NativeFilePrefix
+  id: NativeFilePrefix
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: NativeFilePrefix
+  nameWithType: SkiaImageManager.NativeFilePrefix
+  fullName: DrawnUi.Draw.SkiaImageManager.NativeFilePrefix
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NativeFilePrefix
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 189
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Convention for local files saved in native platform. Shared resources from Resources/Raw/ do not need this prefix.
+  example: []
+  syntax:
+    content: public static string NativeFilePrefix
+    return:
+      type: System.String
+    content.vb: Public Shared NativeFilePrefix As String
+- uid: DrawnUi.Draw.SkiaImageManager.CanReload
+  commentId: E:DrawnUi.Draw.SkiaImageManager.CanReload
+  id: CanReload
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: CanReload
+  nameWithType: SkiaImageManager.CanReload
+  fullName: DrawnUi.Draw.SkiaImageManager.CanReload
+  type: Event
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CanReload
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 191
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public event EventHandler CanReload
+    return:
+      type: System.EventHandler
+    content.vb: Public Event CanReload As EventHandler
+- uid: DrawnUi.Draw.SkiaImageManager.LogEnabled
+  commentId: F:DrawnUi.Draw.SkiaImageManager.LogEnabled
+  id: LogEnabled
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: LogEnabled
+  nameWithType: SkiaImageManager.LogEnabled
+  fullName: DrawnUi.Draw.SkiaImageManager.LogEnabled
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LogEnabled
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 195
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool LogEnabled
+    return:
+      type: System.Boolean
+    content.vb: Public Shared LogEnabled As Boolean
+- uid: DrawnUi.Draw.SkiaImageManager.TraceLog(System.String)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.TraceLog(System.String)
+  id: TraceLog(System.String)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: TraceLog(string)
+  nameWithType: SkiaImageManager.TraceLog(string)
+  fullName: DrawnUi.Draw.SkiaImageManager.TraceLog(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TraceLog
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 197
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void TraceLog(string message)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Public Shared Sub TraceLog(message As String)
+  overload: DrawnUi.Draw.SkiaImageManager.TraceLog*
+  nameWithType.vb: SkiaImageManager.TraceLog(String)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.TraceLog(String)
+  name.vb: TraceLog(String)
+- uid: DrawnUi.Draw.SkiaImageManager.Instance
+  commentId: P:DrawnUi.Draw.SkiaImageManager.Instance
+  id: Instance
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: SkiaImageManager.Instance
+  fullName: DrawnUi.Draw.SkiaImageManager.Instance
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Instance
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 214
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SkiaImageManager Instance { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaImageManager
+    content.vb: Public Shared ReadOnly Property Instance As SkiaImageManager
+  overload: DrawnUi.Draw.SkiaImageManager.Instance*
+- uid: DrawnUi.Draw.SkiaImageManager.#ctor
+  commentId: M:DrawnUi.Draw.SkiaImageManager.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: SkiaImageManager()
+  nameWithType: SkiaImageManager.SkiaImageManager()
+  fullName: DrawnUi.Draw.SkiaImageManager.SkiaImageManager()
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 225
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaImageManager()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Draw.SkiaImageManager.#ctor*
+  nameWithType.vb: SkiaImageManager.New()
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.New()
+  name.vb: New()
+- uid: DrawnUi.Draw.SkiaImageManager.IsLoadingLocked
+  commentId: P:DrawnUi.Draw.SkiaImageManager.IsLoadingLocked
+  id: IsLoadingLocked
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: IsLoadingLocked
+  nameWithType: SkiaImageManager.IsLoadingLocked
+  fullName: DrawnUi.Draw.SkiaImageManager.IsLoadingLocked
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsLoadingLocked
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 249
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsLoadingLocked { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsLoadingLocked As Boolean
+  overload: DrawnUi.Draw.SkiaImageManager.IsLoadingLocked*
+- uid: DrawnUi.Draw.SkiaImageManager.CancelAll
+  commentId: M:DrawnUi.Draw.SkiaImageManager.CancelAll
+  id: CancelAll
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: CancelAll()
+  nameWithType: SkiaImageManager.CancelAll()
+  fullName: DrawnUi.Draw.SkiaImageManager.CancelAll()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CancelAll
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 262
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void CancelAll()
+    content.vb: Public Sub CancelAll()
+  overload: DrawnUi.Draw.SkiaImageManager.CancelAll*
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.LoadImageAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  id: LoadImageAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: LoadImageAsync(ImageSource, CancellationToken)
+  nameWithType: SkiaImageManager.LoadImageAsync(ImageSource, CancellationToken)
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageAsync(Microsoft.Maui.Controls.ImageSource, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LoadImageAsync
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 326
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Direct load, without any queue or manager cache, for internal use. Please use LoadImageManagedAsync instead.
+  example: []
+  syntax:
+    content: public virtual Task<SKBitmap> LoadImageAsync(ImageSource source, CancellationToken token)
+    parameters:
+    - id: source
+      type: Microsoft.Maui.Controls.ImageSource
+      description: ''
+    - id: token
+      type: System.Threading.CancellationToken
+      description: ''
+    return:
+      type: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
+      description: ''
+    content.vb: Public Overridable Function LoadImageAsync(source As ImageSource, token As CancellationToken) As Task(Of SKBitmap)
+  overload: DrawnUi.Draw.SkiaImageManager.LoadImageAsync*
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource,DrawnUi.Draw.LoadPriority)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource,DrawnUi.Draw.LoadPriority)
+  id: LoadImageManagedAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource,DrawnUi.Draw.LoadPriority)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: LoadImageManagedAsync(ImageSource, CancellationTokenSource, LoadPriority)
+  nameWithType: SkiaImageManager.LoadImageManagedAsync(ImageSource, CancellationTokenSource, LoadPriority)
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync(Microsoft.Maui.Controls.ImageSource, System.Threading.CancellationTokenSource, DrawnUi.Draw.LoadPriority)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LoadImageManagedAsync
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 337
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Uses queue and manager cache
+  example: []
+  syntax:
+    content: public virtual Task<SKBitmap> LoadImageManagedAsync(ImageSource source, CancellationTokenSource token, LoadPriority priority = LoadPriority.Normal)
+    parameters:
+    - id: source
+      type: Microsoft.Maui.Controls.ImageSource
+      description: ''
+    - id: token
+      type: System.Threading.CancellationTokenSource
+      description: ''
+    - id: priority
+      type: DrawnUi.Draw.LoadPriority
+    return:
+      type: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
+      description: ''
+    content.vb: Public Overridable Function LoadImageManagedAsync(source As ImageSource, token As CancellationTokenSource, priority As LoadPriority = LoadPriority.Normal) As Task(Of SKBitmap)
+  overload: DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync*
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  id: LoadImageOnPlatformAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: LoadImageOnPlatformAsync(ImageSource, CancellationToken)
+  nameWithType: SkiaImageManager.LoadImageOnPlatformAsync(ImageSource, CancellationToken)
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync(Microsoft.Maui.Controls.ImageSource, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LoadImageOnPlatformAsync
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 446
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task<SKBitmap> LoadImageOnPlatformAsync(ImageSource source, CancellationToken cancel)
+    parameters:
+    - id: source
+      type: Microsoft.Maui.Controls.ImageSource
+    - id: cancel
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
+    content.vb: Public Shared Function LoadImageOnPlatformAsync(source As ImageSource, cancel As CancellationToken) As Task(Of SKBitmap)
+  overload: DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync*
+- uid: DrawnUi.Draw.SkiaImageManager.IsDisposed
+  commentId: P:DrawnUi.Draw.SkiaImageManager.IsDisposed
+  id: IsDisposed
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: IsDisposed
+  nameWithType: SkiaImageManager.IsDisposed
+  fullName: DrawnUi.Draw.SkiaImageManager.IsDisposed
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDisposed
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 593
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsDisposed { get; protected set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsDisposed As Boolean
+  overload: DrawnUi.Draw.SkiaImageManager.IsDisposed*
+- uid: DrawnUi.Draw.SkiaImageManager.UpdateInCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.UpdateInCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  id: UpdateInCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: UpdateInCache(string, SKBitmap, int)
+  nameWithType: SkiaImageManager.UpdateInCache(string, SKBitmap, int)
+  fullName: DrawnUi.Draw.SkiaImageManager.UpdateInCache(string, SkiaSharp.SKBitmap, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateInCache
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 670
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void UpdateInCache(string uri, SKBitmap bitmap, int cacheLongevityMinutes)
+    parameters:
+    - id: uri
+      type: System.String
+    - id: bitmap
+      type: SkiaSharp.SKBitmap
+    - id: cacheLongevityMinutes
+      type: System.Int32
+    content.vb: Public Sub UpdateInCache(uri As String, bitmap As SKBitmap, cacheLongevityMinutes As Integer)
+  overload: DrawnUi.Draw.SkiaImageManager.UpdateInCache*
+  nameWithType.vb: SkiaImageManager.UpdateInCache(String, SKBitmap, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.UpdateInCache(String, SkiaSharp.SKBitmap, Integer)
+  name.vb: UpdateInCache(String, SKBitmap, Integer)
+- uid: DrawnUi.Draw.SkiaImageManager.AddToCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.AddToCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  id: AddToCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: AddToCache(string, SKBitmap, int)
+  nameWithType: SkiaImageManager.AddToCache(string, SKBitmap, int)
+  fullName: DrawnUi.Draw.SkiaImageManager.AddToCache(string, SkiaSharp.SKBitmap, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddToCache
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 682
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Returns false if key already exists
+  example: []
+  syntax:
+    content: public bool AddToCache(string uri, SKBitmap bitmap, int cacheLongevitySecs)
+    parameters:
+    - id: uri
+      type: System.String
+      description: ''
+    - id: bitmap
+      type: SkiaSharp.SKBitmap
+      description: ''
+    - id: cacheLongevitySecs
+      type: System.Int32
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Public Function AddToCache(uri As String, bitmap As SKBitmap, cacheLongevitySecs As Integer) As Boolean
+  overload: DrawnUi.Draw.SkiaImageManager.AddToCache*
+  nameWithType.vb: SkiaImageManager.AddToCache(String, SKBitmap, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.AddToCache(String, SkiaSharp.SKBitmap, Integer)
+  name.vb: AddToCache(String, SKBitmap, Integer)
+- uid: DrawnUi.Draw.SkiaImageManager.GetFromCache(System.String)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.GetFromCache(System.String)
+  id: GetFromCache(System.String)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: GetFromCache(string)
+  nameWithType: SkiaImageManager.GetFromCache(string)
+  fullName: DrawnUi.Draw.SkiaImageManager.GetFromCache(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetFromCache
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 696
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Return bitmap from cache if existing, respects the `ReuseBitmaps` flag.
+  example: []
+  syntax:
+    content: public SKBitmap GetFromCache(string url)
+    parameters:
+    - id: url
+      type: System.String
+      description: ''
+    return:
+      type: SkiaSharp.SKBitmap
+      description: ''
+    content.vb: Public Function GetFromCache(url As String) As SKBitmap
+  overload: DrawnUi.Draw.SkiaImageManager.GetFromCache*
+  nameWithType.vb: SkiaImageManager.GetFromCache(String)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.GetFromCache(String)
+  name.vb: GetFromCache(String)
+- uid: DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal(System.String)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal(System.String)
+  id: GetFromCacheInternal(System.String)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: GetFromCacheInternal(string)
+  nameWithType: SkiaImageManager.GetFromCacheInternal(string)
+  fullName: DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetFromCacheInternal
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 709
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Used my manager for cache organization. You should use `GetFromCache` for custom controls instead.
+  example: []
+  syntax:
+    content: public SKBitmap GetFromCacheInternal(string url)
+    parameters:
+    - id: url
+      type: System.String
+      description: ''
+    return:
+      type: SkiaSharp.SKBitmap
+      description: ''
+    content.vb: Public Function GetFromCacheInternal(url As String) As SKBitmap
+  overload: DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal*
+  nameWithType.vb: SkiaImageManager.GetFromCacheInternal(String)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal(String)
+  name.vb: GetFromCacheInternal(String)
+- uid: DrawnUi.Draw.SkiaImageManager.Preload(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.Preload(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  id: Preload(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: Preload(ImageSource, CancellationTokenSource)
+  nameWithType: SkiaImageManager.Preload(ImageSource, CancellationTokenSource)
+  fullName: DrawnUi.Draw.SkiaImageManager.Preload(Microsoft.Maui.Controls.ImageSource, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Preload
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 714
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Task Preload(ImageSource source, CancellationTokenSource cts)
+    parameters:
+    - id: source
+      type: Microsoft.Maui.Controls.ImageSource
+    - id: cts
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function Preload(source As ImageSource, cts As CancellationTokenSource) As Task
+  overload: DrawnUi.Draw.SkiaImageManager.Preload*
+- uid: DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource(Microsoft.Maui.Controls.ImageSource)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource(Microsoft.Maui.Controls.ImageSource)
+  id: GetUriFromImageSource(Microsoft.Maui.Controls.ImageSource)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: GetUriFromImageSource(ImageSource)
+  nameWithType: SkiaImageManager.GetUriFromImageSource(ImageSource)
+  fullName: DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource(Microsoft.Maui.Controls.ImageSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetUriFromImageSource
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 754
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string GetUriFromImageSource(ImageSource source)
+    parameters:
+    - id: source
+      type: Microsoft.Maui.Controls.ImageSource
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetUriFromImageSource(source As ImageSource) As String
+  overload: DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource*
+- uid: DrawnUi.Draw.SkiaImageManager.Dispose
+  commentId: M:DrawnUi.Draw.SkiaImageManager.Dispose
+  id: Dispose
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SkiaImageManager.Dispose()
+  fullName: DrawnUi.Draw.SkiaImageManager.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 775
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Draw.SkiaImageManager.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: DrawnUi.Draw.SkiaImageManager.IsOffline
+  commentId: P:DrawnUi.Draw.SkiaImageManager.IsOffline
+  id: IsOffline
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: IsOffline
+  nameWithType: SkiaImageManager.IsOffline
+  fullName: DrawnUi.Draw.SkiaImageManager.IsOffline
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsOffline
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 784
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsOffline { get; protected set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsOffline As Boolean
+  overload: DrawnUi.Draw.SkiaImageManager.IsOffline*
+- uid: DrawnUi.Draw.SkiaImageManager.LoadFromFile(System.String,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.LoadFromFile(System.String,System.Threading.CancellationToken)
+  id: LoadFromFile(System.String,System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: LoadFromFile(string, CancellationToken)
+  nameWithType: SkiaImageManager.LoadFromFile(string, CancellationToken)
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadFromFile(string, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LoadFromFile
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 798
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task<SKBitmap> LoadFromFile(string filename, CancellationToken cancel)
+    parameters:
+    - id: filename
+      type: System.String
+    - id: cancel
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
+    content.vb: Public Shared Function LoadFromFile(filename As String, cancel As CancellationToken) As Task(Of SKBitmap)
+  overload: DrawnUi.Draw.SkiaImageManager.LoadFromFile*
+  nameWithType.vb: SkiaImageManager.LoadFromFile(String, CancellationToken)
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.LoadFromFile(String, System.Threading.CancellationToken)
+  name.vb: LoadFromFile(String, CancellationToken)
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)
+  id: LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: LoadImageFromInternetAsync(UriImageSource, CancellationToken)
+  nameWithType: SkiaImageManager.LoadImageFromInternetAsync(UriImageSource, CancellationToken)
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LoadImageFromInternetAsync
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 863
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task<SKBitmap> LoadImageFromInternetAsync(UriImageSource uriSource, CancellationToken cancel)
+    parameters:
+    - id: uriSource
+      type: Microsoft.Maui.Controls.UriImageSource
+    - id: cancel
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
+    content.vb: Public Shared Function LoadImageFromInternetAsync(uriSource As UriImageSource, cancel As CancellationToken) As Task(Of SKBitmap)
+  overload: DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaImageManager.PreloadImage*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.PreloadImage
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_PreloadImage_Microsoft_Maui_Controls_ImageSource_System_Threading_CancellationTokenSource_
+  name: PreloadImage
+  nameWithType: SkiaImageManager.PreloadImage
+  fullName: DrawnUi.Draw.SkiaImageManager.PreloadImage
+- uid: Microsoft.Maui.Controls.ImageSource
+  commentId: T:Microsoft.Maui.Controls.ImageSource
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.imagesource
+  name: ImageSource
+  nameWithType: ImageSource
+  fullName: Microsoft.Maui.Controls.ImageSource
+- uid: System.Threading.CancellationTokenSource
+  commentId: T:System.Threading.CancellationTokenSource
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  name: CancellationTokenSource
+  nameWithType: CancellationTokenSource
+  fullName: System.Threading.CancellationTokenSource
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.SkiaImageManager.PreloadImages*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.PreloadImages
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_PreloadImages_System_Collections_Generic_IList_System_String__System_Threading_CancellationTokenSource_
+  name: PreloadImages
+  nameWithType: SkiaImageManager.PreloadImages
+  fullName: DrawnUi.Draw.SkiaImageManager.PreloadImages
+- uid: System.Collections.Generic.IList{System.String}
+  commentId: T:System.Collections.Generic.IList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<string>
+  nameWithType: IList<string>
+  fullName: System.Collections.Generic.IList<string>
+  nameWithType.vb: IList(Of String)
+  fullName.vb: System.Collections.Generic.IList(Of String)
+  name.vb: IList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IList`1
+  commentId: T:System.Collections.Generic.IList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.SkiaImageManager.PreloadBanners*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.PreloadBanners
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_PreloadBanners__1_System_Collections_Generic_IList___0__System_Threading_CancellationTokenSource_
+  name: PreloadBanners
+  nameWithType: SkiaImageManager.PreloadBanners
+  fullName: DrawnUi.Draw.SkiaImageManager.PreloadBanners
+- uid: System.Collections.Generic.IList{{T}}
+  commentId: T:System.Collections.Generic.IList{``0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler
+- uid: DrawnUi.Draw.SkiaImageManager.TraceLog*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.TraceLog
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_TraceLog_System_String_
+  name: TraceLog
+  nameWithType: SkiaImageManager.TraceLog
+  fullName: DrawnUi.Draw.SkiaImageManager.TraceLog
+- uid: DrawnUi.Draw.SkiaImageManager.Instance*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.Instance
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_Instance
+  name: Instance
+  nameWithType: SkiaImageManager.Instance
+  fullName: DrawnUi.Draw.SkiaImageManager.Instance
+- uid: DrawnUi.Draw.SkiaImageManager
+  commentId: T:DrawnUi.Draw.SkiaImageManager
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaImageManager.html
+  name: SkiaImageManager
+  nameWithType: SkiaImageManager
+  fullName: DrawnUi.Draw.SkiaImageManager
+- uid: DrawnUi.Draw.SkiaImageManager.#ctor*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.#ctor
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager__ctor
+  name: SkiaImageManager
+  nameWithType: SkiaImageManager.SkiaImageManager
+  fullName: DrawnUi.Draw.SkiaImageManager.SkiaImageManager
+  nameWithType.vb: SkiaImageManager.New
+  fullName.vb: DrawnUi.Draw.SkiaImageManager.New
+  name.vb: New
+- uid: DrawnUi.Draw.SkiaImageManager.IsLoadingLocked*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.IsLoadingLocked
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_IsLoadingLocked
+  name: IsLoadingLocked
+  nameWithType: SkiaImageManager.IsLoadingLocked
+  fullName: DrawnUi.Draw.SkiaImageManager.IsLoadingLocked
+- uid: DrawnUi.Draw.SkiaImageManager.CancelAll*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.CancelAll
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_CancelAll
+  name: CancelAll
+  nameWithType: SkiaImageManager.CancelAll
+  fullName: DrawnUi.Draw.SkiaImageManager.CancelAll
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageAsync*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.LoadImageAsync
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_LoadImageAsync_Microsoft_Maui_Controls_ImageSource_System_Threading_CancellationToken_
+  name: LoadImageAsync
+  nameWithType: SkiaImageManager.LoadImageAsync
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageAsync
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
+  commentId: T:System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<SKBitmap>
+  nameWithType: Task<SKBitmap>
+  fullName: System.Threading.Tasks.Task<SkiaSharp.SKBitmap>
+  nameWithType.vb: Task(Of SKBitmap)
+  fullName.vb: System.Threading.Tasks.Task(Of SkiaSharp.SKBitmap)
+  name.vb: Task(Of SKBitmap)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: SkiaSharp.SKBitmap
+    name: SKBitmap
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SkiaSharp.SKBitmap
+    name: SKBitmap
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_LoadImageManagedAsync_Microsoft_Maui_Controls_ImageSource_System_Threading_CancellationTokenSource_DrawnUi_Draw_LoadPriority_
+  name: LoadImageManagedAsync
+  nameWithType: SkiaImageManager.LoadImageManagedAsync
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageManagedAsync
+- uid: DrawnUi.Draw.LoadPriority
+  commentId: T:DrawnUi.Draw.LoadPriority
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.LoadPriority.html
+  name: LoadPriority
+  nameWithType: LoadPriority
+  fullName: DrawnUi.Draw.LoadPriority
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_LoadImageOnPlatformAsync_Microsoft_Maui_Controls_ImageSource_System_Threading_CancellationToken_
+  name: LoadImageOnPlatformAsync
+  nameWithType: SkiaImageManager.LoadImageOnPlatformAsync
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageOnPlatformAsync
+- uid: DrawnUi.Draw.SkiaImageManager.IsDisposed*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.IsDisposed
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_IsDisposed
+  name: IsDisposed
+  nameWithType: SkiaImageManager.IsDisposed
+  fullName: DrawnUi.Draw.SkiaImageManager.IsDisposed
+- uid: DrawnUi.Draw.SkiaImageManager.UpdateInCache*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.UpdateInCache
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_UpdateInCache_System_String_SkiaSharp_SKBitmap_System_Int32_
+  name: UpdateInCache
+  nameWithType: SkiaImageManager.UpdateInCache
+  fullName: DrawnUi.Draw.SkiaImageManager.UpdateInCache
+- uid: SkiaSharp.SKBitmap
+  commentId: T:SkiaSharp.SKBitmap
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
+  name: SKBitmap
+  nameWithType: SKBitmap
+  fullName: SkiaSharp.SKBitmap
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.SkiaImageManager.AddToCache*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.AddToCache
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_AddToCache_System_String_SkiaSharp_SKBitmap_System_Int32_
+  name: AddToCache
+  nameWithType: SkiaImageManager.AddToCache
+  fullName: DrawnUi.Draw.SkiaImageManager.AddToCache
+- uid: DrawnUi.Draw.SkiaImageManager.GetFromCache*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.GetFromCache
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_GetFromCache_System_String_
+  name: GetFromCache
+  nameWithType: SkiaImageManager.GetFromCache
+  fullName: DrawnUi.Draw.SkiaImageManager.GetFromCache
+- uid: DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_GetFromCacheInternal_System_String_
+  name: GetFromCacheInternal
+  nameWithType: SkiaImageManager.GetFromCacheInternal
+  fullName: DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal
+- uid: DrawnUi.Draw.SkiaImageManager.Preload*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.Preload
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_Preload_Microsoft_Maui_Controls_ImageSource_System_Threading_CancellationTokenSource_
+  name: Preload
+  nameWithType: SkiaImageManager.Preload
+  fullName: DrawnUi.Draw.SkiaImageManager.Preload
+- uid: DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_GetUriFromImageSource_Microsoft_Maui_Controls_ImageSource_
+  name: GetUriFromImageSource
+  nameWithType: SkiaImageManager.GetUriFromImageSource
+  fullName: DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource
+- uid: DrawnUi.Draw.SkiaImageManager.Dispose*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.Dispose
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_Dispose
+  name: Dispose
+  nameWithType: SkiaImageManager.Dispose
+  fullName: DrawnUi.Draw.SkiaImageManager.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaImageManager.IsOffline*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.IsOffline
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_IsOffline
+  name: IsOffline
+  nameWithType: SkiaImageManager.IsOffline
+  fullName: DrawnUi.Draw.SkiaImageManager.IsOffline
+- uid: DrawnUi.Draw.SkiaImageManager.LoadFromFile*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.LoadFromFile
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_LoadFromFile_System_String_System_Threading_CancellationToken_
+  name: LoadFromFile
+  nameWithType: SkiaImageManager.LoadFromFile
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadFromFile
+- uid: DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_LoadImageFromInternetAsync_Microsoft_Maui_Controls_UriImageSource_System_Threading_CancellationToken_
+  name: LoadImageFromInternetAsync
+  nameWithType: SkiaImageManager.LoadImageFromInternetAsync
+  fullName: DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync
+- uid: Microsoft.Maui.Controls.UriImageSource
+  commentId: T:Microsoft.Maui.Controls.UriImageSource
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.uriimagesource
+  name: UriImageSource
+  nameWithType: UriImageSource
+  fullName: Microsoft.Maui.Controls.UriImageSource

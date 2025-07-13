@@ -1,0 +1,231 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaTouchAnimation
+  commentId: T:DrawnUi.Draw.SkiaTouchAnimation
+  id: SkiaTouchAnimation
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaTouchAnimation.None
+  - DrawnUi.Draw.SkiaTouchAnimation.Ripple
+  - DrawnUi.Draw.SkiaTouchAnimation.Shimmer
+  langs:
+  - csharp
+  - vb
+  name: SkiaTouchAnimation
+  nameWithType: SkiaTouchAnimation
+  fullName: DrawnUi.Draw.SkiaTouchAnimation
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaTouchAnimation
+    path: ../src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum SkiaTouchAnimation
+    content.vb: Public Enum SkiaTouchAnimation
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaTouchAnimation.None
+  commentId: F:DrawnUi.Draw.SkiaTouchAnimation.None
+  id: None
+  parent: DrawnUi.Draw.SkiaTouchAnimation
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: SkiaTouchAnimation.None
+  fullName: DrawnUi.Draw.SkiaTouchAnimation.None
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: None
+    path: ../src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: None = 0
+    return:
+      type: DrawnUi.Draw.SkiaTouchAnimation
+- uid: DrawnUi.Draw.SkiaTouchAnimation.Ripple
+  commentId: F:DrawnUi.Draw.SkiaTouchAnimation.Ripple
+  id: Ripple
+  parent: DrawnUi.Draw.SkiaTouchAnimation
+  langs:
+  - csharp
+  - vb
+  name: Ripple
+  nameWithType: SkiaTouchAnimation.Ripple
+  fullName: DrawnUi.Draw.SkiaTouchAnimation.Ripple
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Ripple
+    path: ../src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Ripple = 1
+    return:
+      type: DrawnUi.Draw.SkiaTouchAnimation
+- uid: DrawnUi.Draw.SkiaTouchAnimation.Shimmer
+  commentId: F:DrawnUi.Draw.SkiaTouchAnimation.Shimmer
+  id: Shimmer
+  parent: DrawnUi.Draw.SkiaTouchAnimation
+  langs:
+  - csharp
+  - vb
+  name: Shimmer
+  nameWithType: SkiaTouchAnimation.Shimmer
+  fullName: DrawnUi.Draw.SkiaTouchAnimation.Shimmer
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Shimmer
+    path: ../src/Shared/Draw/Internals/Enums/SkiaTouchAnimation.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Shimmer = 2
+    return:
+      type: DrawnUi.Draw.SkiaTouchAnimation
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaTouchAnimation
+  commentId: T:DrawnUi.Draw.SkiaTouchAnimation
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaTouchAnimation.html
+  name: SkiaTouchAnimation
+  nameWithType: SkiaTouchAnimation
+  fullName: DrawnUi.Draw.SkiaTouchAnimation

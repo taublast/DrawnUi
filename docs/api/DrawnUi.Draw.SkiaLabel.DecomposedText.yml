@@ -1,0 +1,671 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText
+  commentId: T:DrawnUi.Draw.SkiaLabel.DecomposedText
+  id: SkiaLabel.DecomposedText
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize
+  - DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs
+  - DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+  - DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace
+  - DrawnUi.Draw.SkiaLabel.DecomposedText.Lines
+  - DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut
+  langs:
+  - csharp
+  - vb
+  name: SkiaLabel.DecomposedText
+  nameWithType: SkiaLabel.DecomposedText
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DecomposedText
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    startLine: 52
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class SkiaLabel.DecomposedText
+    content.vb: Public Class SkiaLabel.DecomposedText
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.Lines
+  commentId: P:DrawnUi.Draw.SkiaLabel.DecomposedText.Lines
+  id: Lines
+  parent: DrawnUi.Draw.SkiaLabel.DecomposedText
+  langs:
+  - csharp
+  - vb
+  name: Lines
+  nameWithType: SkiaLabel.DecomposedText.Lines
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.Lines
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Lines
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    startLine: 55
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public TextLine[] Lines { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.TextLine[]
+    content.vb: Public Property Lines As TextLine()
+  overload: DrawnUi.Draw.SkiaLabel.DecomposedText.Lines*
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs
+  commentId: P:DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs
+  id: CountParagraphs
+  parent: DrawnUi.Draw.SkiaLabel.DecomposedText
+  langs:
+  - csharp
+  - vb
+  name: CountParagraphs
+  nameWithType: SkiaLabel.DecomposedText.CountParagraphs
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CountParagraphs
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    startLine: 57
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int CountParagraphs { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property CountParagraphs As Integer
+  overload: DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs*
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut
+  commentId: P:DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut
+  id: WasCut
+  parent: DrawnUi.Draw.SkiaLabel.DecomposedText
+  langs:
+  - csharp
+  - vb
+  name: WasCut
+  nameWithType: SkiaLabel.DecomposedText.WasCut
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WasCut
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool WasCut { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property WasCut As Boolean
+  overload: DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut*
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace
+  commentId: P:DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace
+  id: HasMoreVerticalSpace
+  parent: DrawnUi.Draw.SkiaLabel.DecomposedText
+  langs:
+  - csharp
+  - vb
+  name: HasMoreVerticalSpace
+  nameWithType: SkiaLabel.DecomposedText.HasMoreVerticalSpace
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HasMoreVerticalSpace
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    startLine: 63
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: pixels
+  example: []
+  syntax:
+    content: public float HasMoreVerticalSpace { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property HasMoreVerticalSpace As Single
+  overload: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace*
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+  commentId: P:DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+  id: HasMoreHorizontalSpace
+  parent: DrawnUi.Draw.SkiaLabel.DecomposedText
+  langs:
+  - csharp
+  - vb
+  name: HasMoreHorizontalSpace
+  nameWithType: SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HasMoreHorizontalSpace
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    startLine: 67
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: pixels
+  example: []
+  syntax:
+    content: public float HasMoreHorizontalSpace { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property HasMoreHorizontalSpace As Single
+  overload: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace*
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize
+  commentId: P:DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize
+  id: AutoSize
+  parent: DrawnUi.Draw.SkiaLabel.DecomposedText
+  langs:
+  - csharp
+  - vb
+  name: AutoSize
+  nameWithType: SkiaLabel.DecomposedText.AutoSize
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AutoSize
+    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    startLine: 69
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public AutoSizeType AutoSize { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.AutoSizeType
+    content.vb: Public Property AutoSize As AutoSizeType
+  overload: DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.Lines*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.DecomposedText.Lines
+  href: DrawnUi.Draw.SkiaLabel.DecomposedText.html#DrawnUi_Draw_SkiaLabel_DecomposedText_Lines
+  name: Lines
+  nameWithType: SkiaLabel.DecomposedText.Lines
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.Lines
+- uid: DrawnUi.Draw.TextLine[]
+  isExternal: true
+  href: DrawnUi.Draw.TextLine.html
+  name: TextLine[]
+  nameWithType: TextLine[]
+  fullName: DrawnUi.Draw.TextLine[]
+  nameWithType.vb: TextLine()
+  fullName.vb: DrawnUi.Draw.TextLine()
+  name.vb: TextLine()
+  spec.csharp:
+  - uid: DrawnUi.Draw.TextLine
+    name: TextLine
+    href: DrawnUi.Draw.TextLine.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: DrawnUi.Draw.TextLine
+    name: TextLine
+    href: DrawnUi.Draw.TextLine.html
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs
+  href: DrawnUi.Draw.SkiaLabel.DecomposedText.html#DrawnUi_Draw_SkiaLabel_DecomposedText_CountParagraphs
+  name: CountParagraphs
+  nameWithType: SkiaLabel.DecomposedText.CountParagraphs
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.CountParagraphs
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut
+  href: DrawnUi.Draw.SkiaLabel.DecomposedText.html#DrawnUi_Draw_SkiaLabel_DecomposedText_WasCut
+  name: WasCut
+  nameWithType: SkiaLabel.DecomposedText.WasCut
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.WasCut
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace
+  href: DrawnUi.Draw.SkiaLabel.DecomposedText.html#DrawnUi_Draw_SkiaLabel_DecomposedText_HasMoreVerticalSpace
+  name: HasMoreVerticalSpace
+  nameWithType: SkiaLabel.DecomposedText.HasMoreVerticalSpace
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreVerticalSpace
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+  href: DrawnUi.Draw.SkiaLabel.DecomposedText.html#DrawnUi_Draw_SkiaLabel_DecomposedText_HasMoreHorizontalSpace
+  name: HasMoreHorizontalSpace
+  nameWithType: SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.HasMoreHorizontalSpace
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize
+  href: DrawnUi.Draw.SkiaLabel.DecomposedText.html#DrawnUi_Draw_SkiaLabel_DecomposedText_AutoSize
+  name: AutoSize
+  nameWithType: SkiaLabel.DecomposedText.AutoSize
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText.AutoSize
+- uid: DrawnUi.Draw.AutoSizeType
+  commentId: T:DrawnUi.Draw.AutoSizeType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.AutoSizeType.html
+  name: AutoSizeType
+  nameWithType: AutoSizeType
+  fullName: DrawnUi.Draw.AutoSizeType

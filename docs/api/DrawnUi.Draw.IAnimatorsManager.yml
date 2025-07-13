@@ -1,0 +1,239 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IAnimatorsManager
+  commentId: T:DrawnUi.Draw.IAnimatorsManager
+  id: IAnimatorsManager
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IAnimatorsManager.AddAnimator(DrawnUi.Draw.ISkiaAnimator)
+  - DrawnUi.Draw.IAnimatorsManager.RemoveAnimator(System.Guid)
+  langs:
+  - csharp
+  - vb
+  name: IAnimatorsManager
+  nameWithType: IAnimatorsManager
+  fullName: DrawnUi.Draw.IAnimatorsManager
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IAnimatorsManager
+    path: ../src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This control is responsible for updating screen for running animators
+  example: []
+  syntax:
+    content: public interface IAnimatorsManager
+    content.vb: Public Interface IAnimatorsManager
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IAnimatorsManager.AddAnimator(DrawnUi.Draw.ISkiaAnimator)
+  commentId: M:DrawnUi.Draw.IAnimatorsManager.AddAnimator(DrawnUi.Draw.ISkiaAnimator)
+  id: AddAnimator(DrawnUi.Draw.ISkiaAnimator)
+  parent: DrawnUi.Draw.IAnimatorsManager
+  langs:
+  - csharp
+  - vb
+  name: AddAnimator(ISkiaAnimator)
+  nameWithType: IAnimatorsManager.AddAnimator(ISkiaAnimator)
+  fullName: DrawnUi.Draw.IAnimatorsManager.AddAnimator(DrawnUi.Draw.ISkiaAnimator)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddAnimator
+    path: ../src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void AddAnimator(ISkiaAnimator animator)
+    parameters:
+    - id: animator
+      type: DrawnUi.Draw.ISkiaAnimator
+    content.vb: Sub AddAnimator(animator As ISkiaAnimator)
+  overload: DrawnUi.Draw.IAnimatorsManager.AddAnimator*
+- uid: DrawnUi.Draw.IAnimatorsManager.RemoveAnimator(System.Guid)
+  commentId: M:DrawnUi.Draw.IAnimatorsManager.RemoveAnimator(System.Guid)
+  id: RemoveAnimator(System.Guid)
+  parent: DrawnUi.Draw.IAnimatorsManager
+  langs:
+  - csharp
+  - vb
+  name: RemoveAnimator(Guid)
+  nameWithType: IAnimatorsManager.RemoveAnimator(Guid)
+  fullName: DrawnUi.Draw.IAnimatorsManager.RemoveAnimator(System.Guid)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RemoveAnimator
+    path: ../src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void RemoveAnimator(Guid uid)
+    parameters:
+    - id: uid
+      type: System.Guid
+    content.vb: Sub RemoveAnimator(uid As Guid)
+  overload: DrawnUi.Draw.IAnimatorsManager.RemoveAnimator*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IAnimatorsManager.AddAnimator*
+  commentId: Overload:DrawnUi.Draw.IAnimatorsManager.AddAnimator
+  href: DrawnUi.Draw.IAnimatorsManager.html#DrawnUi_Draw_IAnimatorsManager_AddAnimator_DrawnUi_Draw_ISkiaAnimator_
+  name: AddAnimator
+  nameWithType: IAnimatorsManager.AddAnimator
+  fullName: DrawnUi.Draw.IAnimatorsManager.AddAnimator
+- uid: DrawnUi.Draw.ISkiaAnimator
+  commentId: T:DrawnUi.Draw.ISkiaAnimator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaAnimator.html
+  name: ISkiaAnimator
+  nameWithType: ISkiaAnimator
+  fullName: DrawnUi.Draw.ISkiaAnimator
+- uid: DrawnUi.Draw.IAnimatorsManager.RemoveAnimator*
+  commentId: Overload:DrawnUi.Draw.IAnimatorsManager.RemoveAnimator
+  href: DrawnUi.Draw.IAnimatorsManager.html#DrawnUi_Draw_IAnimatorsManager_RemoveAnimator_System_Guid_
+  name: RemoveAnimator
+  nameWithType: IAnimatorsManager.RemoveAnimator
+  fullName: DrawnUi.Draw.IAnimatorsManager.RemoveAnimator
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

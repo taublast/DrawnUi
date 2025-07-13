@@ -1,0 +1,1096 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ScaledSize
+  commentId: T:DrawnUi.Draw.ScaledSize
+  id: ScaledSize
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ScaledSize.#ctor
+  - DrawnUi.Draw.ScaledSize.Clone
+  - DrawnUi.Draw.ScaledSize.CreateEmpty(System.Single)
+  - DrawnUi.Draw.ScaledSize.Default
+  - DrawnUi.Draw.ScaledSize.FromPixels(SkiaSharp.SKSize,System.Single)
+  - DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)
+  - DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.ScaledSize.FromUnits(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.ScaledSize.HeightCut
+  - DrawnUi.Draw.ScaledSize.IsEmpty
+  - DrawnUi.Draw.ScaledSize.Pixels
+  - DrawnUi.Draw.ScaledSize.Scale
+  - DrawnUi.Draw.ScaledSize.SnapToPixel(System.Double,System.Double)
+  - DrawnUi.Draw.ScaledSize.Units
+  - DrawnUi.Draw.ScaledSize.WidthCut
+  - DrawnUi.Draw.ScaledSize.WithCut(System.Boolean,System.Boolean)
+  - DrawnUi.Draw.ScaledSize._scale
+  langs:
+  - csharp
+  - vb
+  name: ScaledSize
+  nameWithType: ScaledSize
+  fullName: DrawnUi.Draw.ScaledSize
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ScaledSize
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class ScaledSize
+    content.vb: Public Class ScaledSize
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ScaledSize.#ctor
+  commentId: M:DrawnUi.Draw.ScaledSize.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: ScaledSize()
+  nameWithType: ScaledSize.ScaledSize()
+  fullName: DrawnUi.Draw.ScaledSize.ScaledSize()
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ScaledSize()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Draw.ScaledSize.#ctor*
+  nameWithType.vb: ScaledSize.New()
+  fullName.vb: DrawnUi.Draw.ScaledSize.New()
+  name.vb: New()
+- uid: DrawnUi.Draw.ScaledSize.WithCut(System.Boolean,System.Boolean)
+  commentId: M:DrawnUi.Draw.ScaledSize.WithCut(System.Boolean,System.Boolean)
+  id: WithCut(System.Boolean,System.Boolean)
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: WithCut(bool, bool)
+  nameWithType: ScaledSize.WithCut(bool, bool)
+  fullName: DrawnUi.Draw.ScaledSize.WithCut(bool, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WithCut
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 30
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ScaledSize WithCut(bool widthCut, bool heightCut)
+    parameters:
+    - id: widthCut
+      type: System.Boolean
+    - id: heightCut
+      type: System.Boolean
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Function WithCut(widthCut As Boolean, heightCut As Boolean) As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.WithCut*
+  nameWithType.vb: ScaledSize.WithCut(Boolean, Boolean)
+  fullName.vb: DrawnUi.Draw.ScaledSize.WithCut(Boolean, Boolean)
+  name.vb: WithCut(Boolean, Boolean)
+- uid: DrawnUi.Draw.ScaledSize.Default
+  commentId: P:DrawnUi.Draw.ScaledSize.Default
+  id: Default
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: ScaledSize.Default
+  fullName: DrawnUi.Draw.ScaledSize.Default
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Default
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ScaledSize Default { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Shared ReadOnly Property [Default] As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.Default*
+- uid: DrawnUi.Draw.ScaledSize._scale
+  commentId: F:DrawnUi.Draw.ScaledSize._scale
+  id: _scale
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: _scale
+  nameWithType: ScaledSize._scale
+  fullName: DrawnUi.Draw.ScaledSize._scale
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _scale
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float _scale
+    return:
+      type: System.Single
+    content.vb: Public _scale As Single
+- uid: DrawnUi.Draw.ScaledSize.Scale
+  commentId: P:DrawnUi.Draw.ScaledSize.Scale
+  id: Scale
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: Scale
+  nameWithType: ScaledSize.Scale
+  fullName: DrawnUi.Draw.ScaledSize.Scale
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Scale
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 45
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Scale { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Scale As Single
+  overload: DrawnUi.Draw.ScaledSize.Scale*
+- uid: DrawnUi.Draw.ScaledSize.Units
+  commentId: P:DrawnUi.Draw.ScaledSize.Units
+  id: Units
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: Units
+  nameWithType: ScaledSize.Units
+  fullName: DrawnUi.Draw.ScaledSize.Units
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Units
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 57
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKSize Units { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKSize
+    content.vb: Public Property Units As SKSize
+  overload: DrawnUi.Draw.ScaledSize.Units*
+- uid: DrawnUi.Draw.ScaledSize.Pixels
+  commentId: P:DrawnUi.Draw.ScaledSize.Pixels
+  id: Pixels
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: Pixels
+  nameWithType: ScaledSize.Pixels
+  fullName: DrawnUi.Draw.ScaledSize.Pixels
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Pixels
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 58
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKSize Pixels { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKSize
+    content.vb: Public Property Pixels As SKSize
+  overload: DrawnUi.Draw.ScaledSize.Pixels*
+- uid: DrawnUi.Draw.ScaledSize.WidthCut
+  commentId: P:DrawnUi.Draw.ScaledSize.WidthCut
+  id: WidthCut
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: WidthCut
+  nameWithType: ScaledSize.WidthCut
+  fullName: DrawnUi.Draw.ScaledSize.WidthCut
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WidthCut
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool WidthCut { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property WidthCut As Boolean
+  overload: DrawnUi.Draw.ScaledSize.WidthCut*
+- uid: DrawnUi.Draw.ScaledSize.HeightCut
+  commentId: P:DrawnUi.Draw.ScaledSize.HeightCut
+  id: HeightCut
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: HeightCut
+  nameWithType: ScaledSize.HeightCut
+  fullName: DrawnUi.Draw.ScaledSize.HeightCut
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HeightCut
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 60
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool HeightCut { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property HeightCut As Boolean
+  overload: DrawnUi.Draw.ScaledSize.HeightCut*
+- uid: DrawnUi.Draw.ScaledSize.Clone
+  commentId: M:DrawnUi.Draw.ScaledSize.Clone
+  id: Clone
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: Clone()
+  nameWithType: ScaledSize.Clone()
+  fullName: DrawnUi.Draw.ScaledSize.Clone()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clone
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 62
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ScaledSize Clone()
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Function Clone() As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.Clone*
+- uid: DrawnUi.Draw.ScaledSize.CreateEmpty(System.Single)
+  commentId: M:DrawnUi.Draw.ScaledSize.CreateEmpty(System.Single)
+  id: CreateEmpty(System.Single)
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: CreateEmpty(float)
+  nameWithType: ScaledSize.CreateEmpty(float)
+  fullName: DrawnUi.Draw.ScaledSize.CreateEmpty(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateEmpty
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 74
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ScaledSize CreateEmpty(float scale)
+    parameters:
+    - id: scale
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Shared Function CreateEmpty(scale As Single) As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.CreateEmpty*
+  nameWithType.vb: ScaledSize.CreateEmpty(Single)
+  fullName.vb: DrawnUi.Draw.ScaledSize.CreateEmpty(Single)
+  name.vb: CreateEmpty(Single)
+- uid: DrawnUi.Draw.ScaledSize.IsEmpty
+  commentId: P:DrawnUi.Draw.ScaledSize.IsEmpty
+  id: IsEmpty
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: IsEmpty
+  nameWithType: ScaledSize.IsEmpty
+  fullName: DrawnUi.Draw.ScaledSize.IsEmpty
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsEmpty
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 84
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsEmpty { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsEmpty As Boolean
+  overload: DrawnUi.Draw.ScaledSize.IsEmpty*
+- uid: DrawnUi.Draw.ScaledSize.SnapToPixel(System.Double,System.Double)
+  commentId: M:DrawnUi.Draw.ScaledSize.SnapToPixel(System.Double,System.Double)
+  id: SnapToPixel(System.Double,System.Double)
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: SnapToPixel(double, double)
+  nameWithType: ScaledSize.SnapToPixel(double, double)
+  fullName: DrawnUi.Draw.ScaledSize.SnapToPixel(double, double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SnapToPixel
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 92
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static float SnapToPixel(double point, double scale)
+    parameters:
+    - id: point
+      type: System.Double
+    - id: scale
+      type: System.Double
+    return:
+      type: System.Single
+    content.vb: Public Shared Function SnapToPixel(point As Double, scale As Double) As Single
+  overload: DrawnUi.Draw.ScaledSize.SnapToPixel*
+  nameWithType.vb: ScaledSize.SnapToPixel(Double, Double)
+  fullName.vb: DrawnUi.Draw.ScaledSize.SnapToPixel(Double, Double)
+  name.vb: SnapToPixel(Double, Double)
+- uid: DrawnUi.Draw.ScaledSize.FromUnits(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.ScaledSize.FromUnits(System.Single,System.Single,System.Single)
+  id: FromUnits(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: FromUnits(float, float, float)
+  nameWithType: ScaledSize.FromUnits(float, float, float)
+  fullName: DrawnUi.Draw.ScaledSize.FromUnits(float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromUnits
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 98
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ScaledSize FromUnits(float width, float height, float scale)
+    parameters:
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    - id: scale
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Shared Function FromUnits(width As Single, height As Single, scale As Single) As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.FromUnits*
+  nameWithType.vb: ScaledSize.FromUnits(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.ScaledSize.FromUnits(Single, Single, Single)
+  name.vb: FromUnits(Single, Single, Single)
+- uid: DrawnUi.Draw.ScaledSize.FromPixels(SkiaSharp.SKSize,System.Single)
+  commentId: M:DrawnUi.Draw.ScaledSize.FromPixels(SkiaSharp.SKSize,System.Single)
+  id: FromPixels(SkiaSharp.SKSize,System.Single)
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: FromPixels(SKSize, float)
+  nameWithType: ScaledSize.FromPixels(SKSize, float)
+  fullName: DrawnUi.Draw.ScaledSize.FromPixels(SkiaSharp.SKSize, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromPixels
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 130
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ScaledSize FromPixels(SKSize size, float scale)
+    parameters:
+    - id: size
+      type: SkiaSharp.SKSize
+    - id: scale
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Shared Function FromPixels(size As SKSize, scale As Single) As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.FromPixels*
+  nameWithType.vb: ScaledSize.FromPixels(SKSize, Single)
+  fullName.vb: DrawnUi.Draw.ScaledSize.FromPixels(SkiaSharp.SKSize, Single)
+  name.vb: FromPixels(SKSize, Single)
+- uid: DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Single)
+  id: FromPixels(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: FromPixels(float, float, float)
+  nameWithType: ScaledSize.FromPixels(float, float, float)
+  fullName: DrawnUi.Draw.ScaledSize.FromPixels(float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromPixels
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 135
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ScaledSize FromPixels(float width, float height, float scale)
+    parameters:
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    - id: scale
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Shared Function FromPixels(width As Single, height As Single, scale As Single) As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.FromPixels*
+  nameWithType.vb: ScaledSize.FromPixels(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.ScaledSize.FromPixels(Single, Single, Single)
+  name.vb: FromPixels(Single, Single, Single)
+- uid: DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)
+  commentId: M:DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)
+  id: FromPixels(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: FromPixels(float, float, bool, bool, float)
+  nameWithType: ScaledSize.FromPixels(float, float, bool, bool, float)
+  fullName: DrawnUi.Draw.ScaledSize.FromPixels(float, float, bool, bool, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromPixels
+    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    startLine: 140
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ScaledSize FromPixels(float width, float height, bool widthCut, bool heighCut, float scale)
+    parameters:
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    - id: widthCut
+      type: System.Boolean
+    - id: heighCut
+      type: System.Boolean
+    - id: scale
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Shared Function FromPixels(width As Single, height As Single, widthCut As Boolean, heighCut As Boolean, scale As Single) As ScaledSize
+  overload: DrawnUi.Draw.ScaledSize.FromPixels*
+  nameWithType.vb: ScaledSize.FromPixels(Single, Single, Boolean, Boolean, Single)
+  fullName.vb: DrawnUi.Draw.ScaledSize.FromPixels(Single, Single, Boolean, Boolean, Single)
+  name.vb: FromPixels(Single, Single, Boolean, Boolean, Single)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ScaledSize.#ctor*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.#ctor
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize__ctor
+  name: ScaledSize
+  nameWithType: ScaledSize.ScaledSize
+  fullName: DrawnUi.Draw.ScaledSize.ScaledSize
+  nameWithType.vb: ScaledSize.New
+  fullName.vb: DrawnUi.Draw.ScaledSize.New
+  name.vb: New
+- uid: DrawnUi.Draw.ScaledSize.WithCut*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.WithCut
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_WithCut_System_Boolean_System_Boolean_
+  name: WithCut
+  nameWithType: ScaledSize.WithCut
+  fullName: DrawnUi.Draw.ScaledSize.WithCut
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.ScaledSize
+  commentId: T:DrawnUi.Draw.ScaledSize
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScaledSize.html
+  name: ScaledSize
+  nameWithType: ScaledSize
+  fullName: DrawnUi.Draw.ScaledSize
+- uid: DrawnUi.Draw.ScaledSize.Default*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.Default
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_Default
+  name: Default
+  nameWithType: ScaledSize.Default
+  fullName: DrawnUi.Draw.ScaledSize.Default
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.ScaledSize.Scale*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.Scale
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_Scale
+  name: Scale
+  nameWithType: ScaledSize.Scale
+  fullName: DrawnUi.Draw.ScaledSize.Scale
+- uid: DrawnUi.Draw.ScaledSize.Units*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.Units
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_Units
+  name: Units
+  nameWithType: ScaledSize.Units
+  fullName: DrawnUi.Draw.ScaledSize.Units
+- uid: SkiaSharp.SKSize
+  commentId: T:SkiaSharp.SKSize
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksize
+  name: SKSize
+  nameWithType: SKSize
+  fullName: SkiaSharp.SKSize
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.ScaledSize.Pixels*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.Pixels
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_Pixels
+  name: Pixels
+  nameWithType: ScaledSize.Pixels
+  fullName: DrawnUi.Draw.ScaledSize.Pixels
+- uid: DrawnUi.Draw.ScaledSize.WidthCut*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.WidthCut
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_WidthCut
+  name: WidthCut
+  nameWithType: ScaledSize.WidthCut
+  fullName: DrawnUi.Draw.ScaledSize.WidthCut
+- uid: DrawnUi.Draw.ScaledSize.HeightCut*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.HeightCut
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_HeightCut
+  name: HeightCut
+  nameWithType: ScaledSize.HeightCut
+  fullName: DrawnUi.Draw.ScaledSize.HeightCut
+- uid: DrawnUi.Draw.ScaledSize.Clone*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.Clone
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_Clone
+  name: Clone
+  nameWithType: ScaledSize.Clone
+  fullName: DrawnUi.Draw.ScaledSize.Clone
+- uid: DrawnUi.Draw.ScaledSize.CreateEmpty*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.CreateEmpty
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_CreateEmpty_System_Single_
+  name: CreateEmpty
+  nameWithType: ScaledSize.CreateEmpty
+  fullName: DrawnUi.Draw.ScaledSize.CreateEmpty
+- uid: DrawnUi.Draw.ScaledSize.IsEmpty*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.IsEmpty
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_IsEmpty
+  name: IsEmpty
+  nameWithType: ScaledSize.IsEmpty
+  fullName: DrawnUi.Draw.ScaledSize.IsEmpty
+- uid: DrawnUi.Draw.ScaledSize.SnapToPixel*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.SnapToPixel
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_SnapToPixel_System_Double_System_Double_
+  name: SnapToPixel
+  nameWithType: ScaledSize.SnapToPixel
+  fullName: DrawnUi.Draw.ScaledSize.SnapToPixel
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.ScaledSize.FromUnits*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.FromUnits
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_FromUnits_System_Single_System_Single_System_Single_
+  name: FromUnits
+  nameWithType: ScaledSize.FromUnits
+  fullName: DrawnUi.Draw.ScaledSize.FromUnits
+- uid: DrawnUi.Draw.ScaledSize.FromPixels*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.FromPixels
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_FromPixels_SkiaSharp_SKSize_System_Single_
+  name: FromPixels
+  nameWithType: ScaledSize.FromPixels
+  fullName: DrawnUi.Draw.ScaledSize.FromPixels

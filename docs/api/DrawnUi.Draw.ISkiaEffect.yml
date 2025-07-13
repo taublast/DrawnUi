@@ -1,0 +1,316 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ISkiaEffect
+  commentId: T:DrawnUi.Draw.ISkiaEffect
+  id: ISkiaEffect
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.ISkiaEffect.Dettach
+  - DrawnUi.Draw.ISkiaEffect.NeedApply
+  langs:
+  - csharp
+  - vb
+  name: ISkiaEffect
+  nameWithType: ISkiaEffect
+  fullName: DrawnUi.Draw.ISkiaEffect
+  type: Interface
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ISkiaEffect
+    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface ISkiaEffect : ICanBeUpdatedWithContext, ICanBeUpdated'
+    content.vb: Public Interface ISkiaEffect Inherits ICanBeUpdatedWithContext, ICanBeUpdated
+  inheritedMembers:
+  - DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  - DrawnUi.Draw.ICanBeUpdated.Update
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  id: Attach(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.ISkiaEffect
+  langs:
+  - csharp
+  - vb
+  name: Attach(SkiaControl)
+  nameWithType: ISkiaEffect.Attach(SkiaControl)
+  fullName: DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Attach
+    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void Attach(SkiaControl parent)
+    parameters:
+    - id: parent
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Sub Attach(parent As SkiaControl)
+  overload: DrawnUi.Draw.ISkiaEffect.Attach*
+- uid: DrawnUi.Draw.ISkiaEffect.Dettach
+  commentId: M:DrawnUi.Draw.ISkiaEffect.Dettach
+  id: Dettach
+  parent: DrawnUi.Draw.ISkiaEffect
+  langs:
+  - csharp
+  - vb
+  name: Dettach()
+  nameWithType: ISkiaEffect.Dettach()
+  fullName: DrawnUi.Draw.ISkiaEffect.Dettach()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dettach
+    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void Dettach()
+    content.vb: Sub Dettach()
+  overload: DrawnUi.Draw.ISkiaEffect.Dettach*
+- uid: DrawnUi.Draw.ISkiaEffect.NeedApply
+  commentId: P:DrawnUi.Draw.ISkiaEffect.NeedApply
+  id: NeedApply
+  parent: DrawnUi.Draw.ISkiaEffect
+  langs:
+  - csharp
+  - vb
+  name: NeedApply
+  nameWithType: ISkiaEffect.NeedApply
+  fullName: DrawnUi.Draw.ISkiaEffect.NeedApply
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NeedApply
+    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool NeedApply { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property NeedApply As Boolean
+  overload: DrawnUi.Draw.ISkiaEffect.NeedApply*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  commentId: P:DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  parent: DrawnUi.Draw.ICanBeUpdatedWithContext
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html#DrawnUi_Draw_ICanBeUpdatedWithContext_BindingContext
+  name: BindingContext
+  nameWithType: ICanBeUpdatedWithContext.BindingContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+- uid: DrawnUi.Draw.ICanBeUpdated.Update
+  commentId: M:DrawnUi.Draw.ICanBeUpdated.Update
+  parent: DrawnUi.Draw.ICanBeUpdated
+  href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  name: Update()
+  nameWithType: ICanBeUpdated.Update()
+  fullName: DrawnUi.Draw.ICanBeUpdated.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext
+  commentId: T:DrawnUi.Draw.ICanBeUpdatedWithContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html
+  name: ICanBeUpdatedWithContext
+  nameWithType: ICanBeUpdatedWithContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext
+- uid: DrawnUi.Draw.ICanBeUpdated
+  commentId: T:DrawnUi.Draw.ICanBeUpdated
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdated.html
+  name: ICanBeUpdated
+  nameWithType: ICanBeUpdated
+  fullName: DrawnUi.Draw.ICanBeUpdated
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ISkiaEffect.Attach*
+  commentId: Overload:DrawnUi.Draw.ISkiaEffect.Attach
+  href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Attach_DrawnUi_Draw_SkiaControl_
+  name: Attach
+  nameWithType: ISkiaEffect.Attach
+  fullName: DrawnUi.Draw.ISkiaEffect.Attach
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.ISkiaEffect.Dettach*
+  commentId: Overload:DrawnUi.Draw.ISkiaEffect.Dettach
+  href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Dettach
+  name: Dettach
+  nameWithType: ISkiaEffect.Dettach
+  fullName: DrawnUi.Draw.ISkiaEffect.Dettach
+- uid: DrawnUi.Draw.ISkiaEffect.NeedApply*
+  commentId: Overload:DrawnUi.Draw.ISkiaEffect.NeedApply
+  href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_NeedApply
+  name: NeedApply
+  nameWithType: ISkiaEffect.NeedApply
+  fullName: DrawnUi.Draw.ISkiaEffect.NeedApply
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
