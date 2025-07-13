@@ -1,0 +1,1448 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.VisualLayer
+  commentId: T:DrawnUi.Draw.VisualLayer
+  id: VisualLayer
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.VisualLayer.#ctor
+  - DrawnUi.Draw.VisualLayer.#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.VisualLayer,SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.VisualLayer.AttachFromCache(DrawnUi.Draw.CachedObject)
+  - DrawnUi.Draw.VisualLayer.Cache
+  - DrawnUi.Draw.VisualLayer.Cached
+  - DrawnUi.Draw.VisualLayer.Children
+  - DrawnUi.Draw.VisualLayer.Control
+  - DrawnUi.Draw.VisualLayer.CreateEmpty
+  - DrawnUi.Draw.VisualLayer.DecomposeMatrix(SkiaSharp.SKMatrix,SkiaSharp.SKPoint@,System.Single@,SkiaSharp.SKPoint@)
+  - DrawnUi.Draw.VisualLayer.Destination
+  - DrawnUi.Draw.VisualLayer.HitBox
+  - DrawnUi.Draw.VisualLayer.HitBoxWithTransforms
+  - DrawnUi.Draw.VisualLayer.IsFrozen
+  - DrawnUi.Draw.VisualLayer.OpacityTotal
+  - DrawnUi.Draw.VisualLayer.Origin
+  - DrawnUi.Draw.VisualLayer.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.VisualLayer.RotationTotal
+  - DrawnUi.Draw.VisualLayer.ScaleTotal
+  - DrawnUi.Draw.VisualLayer.TransformRect(SkiaSharp.SKRect,SkiaSharp.SKMatrix)
+  - DrawnUi.Draw.VisualLayer.Transforms
+  - DrawnUi.Draw.VisualLayer.TransformsTotal
+  - DrawnUi.Draw.VisualLayer.TranslationTotal
+  langs:
+  - csharp
+  - vb
+  name: VisualLayer
+  nameWithType: VisualLayer
+  fullName: DrawnUi.Draw.VisualLayer
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VisualLayer
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class VisualLayer
+    content.vb: Public Class VisualLayer
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.VisualLayer.IsFrozen
+  commentId: P:DrawnUi.Draw.VisualLayer.IsFrozen
+  id: IsFrozen
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: IsFrozen
+  nameWithType: VisualLayer.IsFrozen
+  fullName: DrawnUi.Draw.VisualLayer.IsFrozen
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsFrozen
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 24
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Child of a cached object
+  example: []
+  syntax:
+    content: public bool IsFrozen { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsFrozen As Boolean
+  overload: DrawnUi.Draw.VisualLayer.IsFrozen*
+- uid: DrawnUi.Draw.VisualLayer.Control
+  commentId: P:DrawnUi.Draw.VisualLayer.Control
+  id: Control
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Control
+  nameWithType: VisualLayer.Control
+  fullName: DrawnUi.Draw.VisualLayer.Control
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Control
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: The SkiaControl this layer represents
+  example: []
+  syntax:
+    content: public SkiaControl Control { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Property Control As SkiaControl
+  overload: DrawnUi.Draw.VisualLayer.Control*
+- uid: DrawnUi.Draw.VisualLayer.Children
+  commentId: P:DrawnUi.Draw.VisualLayer.Children
+  id: Children
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Children
+  nameWithType: VisualLayer.Children
+  fullName: DrawnUi.Draw.VisualLayer.Children
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Children
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Child layers contained within this layer
+  example: []
+  syntax:
+    content: public List<VisualLayer> Children { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Draw.VisualLayer}
+    content.vb: Public Property Children As List(Of VisualLayer)
+  overload: DrawnUi.Draw.VisualLayer.Children*
+- uid: DrawnUi.Draw.VisualLayer.Cache
+  commentId: P:DrawnUi.Draw.VisualLayer.Cache
+  id: Cache
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Cache
+  nameWithType: VisualLayer.Cache
+  fullName: DrawnUi.Draw.VisualLayer.Cache
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Cache
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 39
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Cached rendering object, null means render control directly
+  example: []
+  syntax:
+    content: public CachedObject Cache { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.CachedObject
+    content.vb: Public Property Cache As CachedObject
+  overload: DrawnUi.Draw.VisualLayer.Cache*
+- uid: DrawnUi.Draw.VisualLayer.Cached
+  commentId: P:DrawnUi.Draw.VisualLayer.Cached
+  id: Cached
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Cached
+  nameWithType: VisualLayer.Cached
+  fullName: DrawnUi.Draw.VisualLayer.Cached
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Cached
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Type of caching applied to this layer
+  example: []
+  syntax:
+    content: public SkiaCacheType Cached { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaCacheType
+    content.vb: Public Property Cached As SkiaCacheType
+  overload: DrawnUi.Draw.VisualLayer.Cached*
+- uid: DrawnUi.Draw.VisualLayer.Destination
+  commentId: P:DrawnUi.Draw.VisualLayer.Destination
+  id: Destination
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Destination
+  nameWithType: VisualLayer.Destination
+  fullName: DrawnUi.Draw.VisualLayer.Destination
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Destination
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 49
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Layout bounds in local coordinates
+  example: []
+  syntax:
+    content: public SKRect Destination { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Property Destination As SKRect
+  overload: DrawnUi.Draw.VisualLayer.Destination*
+- uid: DrawnUi.Draw.VisualLayer.Origin
+  commentId: P:DrawnUi.Draw.VisualLayer.Origin
+  id: Origin
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Origin
+  nameWithType: VisualLayer.Origin
+  fullName: DrawnUi.Draw.VisualLayer.Origin
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Origin
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Layout bounds in local coordinates at time of creation
+  example: []
+  syntax:
+    content: public SKRect Origin { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public ReadOnly Property Origin As SKRect
+  overload: DrawnUi.Draw.VisualLayer.Origin*
+- uid: DrawnUi.Draw.VisualLayer.Transforms
+  commentId: P:DrawnUi.Draw.VisualLayer.Transforms
+  id: Transforms
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Transforms
+  nameWithType: VisualLayer.Transforms
+  fullName: DrawnUi.Draw.VisualLayer.Transforms
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Transforms
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Local transformation matrix applied to this layer
+  example: []
+  syntax:
+    content: public SKMatrix Transforms { get; protected set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKMatrix
+    content.vb: Public Property Transforms As SKMatrix
+  overload: DrawnUi.Draw.VisualLayer.Transforms*
+- uid: DrawnUi.Draw.VisualLayer.TransformsTotal
+  commentId: P:DrawnUi.Draw.VisualLayer.TransformsTotal
+  id: TransformsTotal
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: TransformsTotal
+  nameWithType: VisualLayer.TransformsTotal
+  fullName: DrawnUi.Draw.VisualLayer.TransformsTotal
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TransformsTotal
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 64
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Combined transformation matrix including all parent transforms
+  example: []
+  syntax:
+    content: public SKMatrix TransformsTotal { get; protected set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKMatrix
+    content.vb: Public Property TransformsTotal As SKMatrix
+  overload: DrawnUi.Draw.VisualLayer.TransformsTotal*
+- uid: DrawnUi.Draw.VisualLayer.OpacityTotal
+  commentId: P:DrawnUi.Draw.VisualLayer.OpacityTotal
+  id: OpacityTotal
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: OpacityTotal
+  nameWithType: VisualLayer.OpacityTotal
+  fullName: DrawnUi.Draw.VisualLayer.OpacityTotal
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OpacityTotal
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 69
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Combined opacity including all parent opacities
+  example: []
+  syntax:
+    content: public double OpacityTotal { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property OpacityTotal As Double
+  overload: DrawnUi.Draw.VisualLayer.OpacityTotal*
+- uid: DrawnUi.Draw.VisualLayer.RotationTotal
+  commentId: P:DrawnUi.Draw.VisualLayer.RotationTotal
+  id: RotationTotal
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: RotationTotal
+  nameWithType: VisualLayer.RotationTotal
+  fullName: DrawnUi.Draw.VisualLayer.RotationTotal
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RotationTotal
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 74
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Total rotation in degrees extracted from transform matrix
+  example: []
+  syntax:
+    content: public double RotationTotal { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property RotationTotal As Double
+  overload: DrawnUi.Draw.VisualLayer.RotationTotal*
+- uid: DrawnUi.Draw.VisualLayer.ScaleTotal
+  commentId: P:DrawnUi.Draw.VisualLayer.ScaleTotal
+  id: ScaleTotal
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: ScaleTotal
+  nameWithType: VisualLayer.ScaleTotal
+  fullName: DrawnUi.Draw.VisualLayer.ScaleTotal
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ScaleTotal
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 87
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Total scale factors extracted from transform matrix
+  example: []
+  syntax:
+    content: public SKPoint ScaleTotal { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property ScaleTotal As SKPoint
+  overload: DrawnUi.Draw.VisualLayer.ScaleTotal*
+- uid: DrawnUi.Draw.VisualLayer.TranslationTotal
+  commentId: P:DrawnUi.Draw.VisualLayer.TranslationTotal
+  id: TranslationTotal
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: TranslationTotal
+  nameWithType: VisualLayer.TranslationTotal
+  fullName: DrawnUi.Draw.VisualLayer.TranslationTotal
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TranslationTotal
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 100
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Total translation extracted from transform matrix
+  example: []
+  syntax:
+    content: public SKPoint TranslationTotal { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property TranslationTotal As SKPoint
+  overload: DrawnUi.Draw.VisualLayer.TranslationTotal*
+- uid: DrawnUi.Draw.VisualLayer.HitBox
+  commentId: P:DrawnUi.Draw.VisualLayer.HitBox
+  id: HitBox
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: HitBox
+  nameWithType: VisualLayer.HitBox
+  fullName: DrawnUi.Draw.VisualLayer.HitBox
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HitBox
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 113
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: A hitbox rather for internal use, because it is same as LastDrawnAt. For exact position on canvas use HitBoxWithTransforms.
+  example: []
+  syntax:
+    content: public ScaledRect HitBox { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ScaledRect
+    content.vb: Public Property HitBox As ScaledRect
+  overload: DrawnUi.Draw.VisualLayer.HitBox*
+- uid: DrawnUi.Draw.VisualLayer.HitBoxWithTransforms
+  commentId: P:DrawnUi.Draw.VisualLayer.HitBoxWithTransforms
+  id: HitBoxWithTransforms
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: HitBoxWithTransforms
+  nameWithType: VisualLayer.HitBoxWithTransforms
+  fullName: DrawnUi.Draw.VisualLayer.HitBoxWithTransforms
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HitBoxWithTransforms
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 118
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Exact position on canvas use HitBoxWithTransforms, all matrix transforms and Left, Top offset applied.
+  example: []
+  syntax:
+    content: public ScaledRect HitBoxWithTransforms { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ScaledRect
+    content.vb: Public Property HitBoxWithTransforms As ScaledRect
+  overload: DrawnUi.Draw.VisualLayer.HitBoxWithTransforms*
+- uid: DrawnUi.Draw.VisualLayer.Render(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.VisualLayer.Render(DrawnUi.Draw.DrawingContext)
+  id: Render(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: Render(DrawingContext)
+  nameWithType: VisualLayer.Render(DrawingContext)
+  fullName: DrawnUi.Draw.VisualLayer.Render(DrawnUi.Draw.DrawingContext)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Render
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 120
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Render(DrawingContext context)
+    parameters:
+    - id: context
+      type: DrawnUi.Draw.DrawingContext
+    content.vb: Public Sub Render(context As DrawingContext)
+  overload: DrawnUi.Draw.VisualLayer.Render*
+- uid: DrawnUi.Draw.VisualLayer.DecomposeMatrix(SkiaSharp.SKMatrix,SkiaSharp.SKPoint@,System.Single@,SkiaSharp.SKPoint@)
+  commentId: M:DrawnUi.Draw.VisualLayer.DecomposeMatrix(SkiaSharp.SKMatrix,SkiaSharp.SKPoint@,System.Single@,SkiaSharp.SKPoint@)
+  id: DecomposeMatrix(SkiaSharp.SKMatrix,SkiaSharp.SKPoint@,System.Single@,SkiaSharp.SKPoint@)
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: DecomposeMatrix(SKMatrix, out SKPoint, out float, out SKPoint)
+  nameWithType: VisualLayer.DecomposeMatrix(SKMatrix, out SKPoint, out float, out SKPoint)
+  fullName: DrawnUi.Draw.VisualLayer.DecomposeMatrix(SkiaSharp.SKMatrix, out SkiaSharp.SKPoint, out float, out SkiaSharp.SKPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DecomposeMatrix
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 140
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void DecomposeMatrix(SKMatrix m, out SKPoint scale, out float rotation, out SKPoint translation)
+    parameters:
+    - id: m
+      type: SkiaSharp.SKMatrix
+    - id: scale
+      type: SkiaSharp.SKPoint
+    - id: rotation
+      type: System.Single
+    - id: translation
+      type: SkiaSharp.SKPoint
+    content.vb: Public Shared Sub DecomposeMatrix(m As SKMatrix, scale As SKPoint, rotation As Single, translation As SKPoint)
+  overload: DrawnUi.Draw.VisualLayer.DecomposeMatrix*
+  nameWithType.vb: VisualLayer.DecomposeMatrix(SKMatrix, SKPoint, Single, SKPoint)
+  fullName.vb: DrawnUi.Draw.VisualLayer.DecomposeMatrix(SkiaSharp.SKMatrix, SkiaSharp.SKPoint, Single, SkiaSharp.SKPoint)
+  name.vb: DecomposeMatrix(SKMatrix, SKPoint, Single, SKPoint)
+- uid: DrawnUi.Draw.VisualLayer.AttachFromCache(DrawnUi.Draw.CachedObject)
+  commentId: M:DrawnUi.Draw.VisualLayer.AttachFromCache(DrawnUi.Draw.CachedObject)
+  id: AttachFromCache(DrawnUi.Draw.CachedObject)
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: AttachFromCache(CachedObject)
+  nameWithType: VisualLayer.AttachFromCache(CachedObject)
+  fullName: DrawnUi.Draw.VisualLayer.AttachFromCache(DrawnUi.Draw.CachedObject)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AttachFromCache
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 159
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Attaches cached children and relocates them to account for new parent position
+  example: []
+  syntax:
+    content: public void AttachFromCache(CachedObject cache)
+    parameters:
+    - id: cache
+      type: DrawnUi.Draw.CachedObject
+      description: Cached object containing children to attach
+    content.vb: Public Sub AttachFromCache(cache As CachedObject)
+  overload: DrawnUi.Draw.VisualLayer.AttachFromCache*
+- uid: DrawnUi.Draw.VisualLayer.#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.VisualLayer,SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.VisualLayer.#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.VisualLayer,SkiaSharp.SKRect,System.Single)
+  id: '#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.VisualLayer,SkiaSharp.SKRect,System.Single)'
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: VisualLayer(SkiaControl, VisualLayer, SKRect, float)
+  nameWithType: VisualLayer.VisualLayer(SkiaControl, VisualLayer, SKRect, float)
+  fullName: DrawnUi.Draw.VisualLayer.VisualLayer(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.VisualLayer, SkiaSharp.SKRect, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 244
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Create this ONLY when DrawingRect and RenderTransformMatrix are ready
+  example: []
+  syntax:
+    content: public VisualLayer(SkiaControl control, VisualLayer parent, SKRect destination, float scale)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: parent
+      type: DrawnUi.Draw.VisualLayer
+      description: ''
+    - id: destination
+      type: SkiaSharp.SKRect
+      description: ''
+    - id: scale
+      type: System.Single
+      description: ''
+    content.vb: Public Sub New(control As SkiaControl, parent As VisualLayer, destination As SKRect, scale As Single)
+  overload: DrawnUi.Draw.VisualLayer.#ctor*
+  nameWithType.vb: VisualLayer.New(SkiaControl, VisualLayer, SKRect, Single)
+  fullName.vb: DrawnUi.Draw.VisualLayer.New(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.VisualLayer, SkiaSharp.SKRect, Single)
+  name.vb: New(SkiaControl, VisualLayer, SKRect, Single)
+- uid: DrawnUi.Draw.VisualLayer.#ctor
+  commentId: M:DrawnUi.Draw.VisualLayer.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: VisualLayer()
+  nameWithType: VisualLayer.VisualLayer()
+  fullName: DrawnUi.Draw.VisualLayer.VisualLayer()
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 283
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected VisualLayer()
+    content.vb: Protected Sub New()
+  overload: DrawnUi.Draw.VisualLayer.#ctor*
+  nameWithType.vb: VisualLayer.New()
+  fullName.vb: DrawnUi.Draw.VisualLayer.New()
+  name.vb: New()
+- uid: DrawnUi.Draw.VisualLayer.CreateEmpty
+  commentId: M:DrawnUi.Draw.VisualLayer.CreateEmpty
+  id: CreateEmpty
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: CreateEmpty()
+  nameWithType: VisualLayer.CreateEmpty()
+  fullName: DrawnUi.Draw.VisualLayer.CreateEmpty()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateEmpty
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 288
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static VisualLayer CreateEmpty()
+    return:
+      type: DrawnUi.Draw.VisualLayer
+    content.vb: Public Shared Function CreateEmpty() As VisualLayer
+  overload: DrawnUi.Draw.VisualLayer.CreateEmpty*
+- uid: DrawnUi.Draw.VisualLayer.TransformRect(SkiaSharp.SKRect,SkiaSharp.SKMatrix)
+  commentId: M:DrawnUi.Draw.VisualLayer.TransformRect(SkiaSharp.SKRect,SkiaSharp.SKMatrix)
+  id: TransformRect(SkiaSharp.SKRect,SkiaSharp.SKMatrix)
+  parent: DrawnUi.Draw.VisualLayer
+  langs:
+  - csharp
+  - vb
+  name: TransformRect(SKRect, SKMatrix)
+  nameWithType: VisualLayer.TransformRect(SKRect, SKMatrix)
+  fullName: DrawnUi.Draw.VisualLayer.TransformRect(SkiaSharp.SKRect, SkiaSharp.SKMatrix)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/VisualLayer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TransformRect
+    path: ../src/Shared/Draw/Base/VisualLayer.cs
+    startLine: 377
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Helper to transform a rectangle using a matrix
+  example: []
+  syntax:
+    content: public static SKRect TransformRect(SKRect rect, SKMatrix matrix)
+    parameters:
+    - id: rect
+      type: SkiaSharp.SKRect
+      description: ''
+    - id: matrix
+      type: SkiaSharp.SKMatrix
+      description: ''
+    return:
+      type: SkiaSharp.SKRect
+      description: ''
+    content.vb: Public Shared Function TransformRect(rect As SKRect, matrix As SKMatrix) As SKRect
+  overload: DrawnUi.Draw.VisualLayer.TransformRect*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.VisualLayer.IsFrozen*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.IsFrozen
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_IsFrozen
+  name: IsFrozen
+  nameWithType: VisualLayer.IsFrozen
+  fullName: DrawnUi.Draw.VisualLayer.IsFrozen
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.VisualLayer.Control*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Control
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Control
+  name: Control
+  nameWithType: VisualLayer.Control
+  fullName: DrawnUi.Draw.VisualLayer.Control
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.VisualLayer.Children*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Children
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Children
+  name: Children
+  nameWithType: VisualLayer.Children
+  fullName: DrawnUi.Draw.VisualLayer.Children
+- uid: System.Collections.Generic.List{DrawnUi.Draw.VisualLayer}
+  commentId: T:System.Collections.Generic.List{DrawnUi.Draw.VisualLayer}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<VisualLayer>
+  nameWithType: List<VisualLayer>
+  fullName: System.Collections.Generic.List<DrawnUi.Draw.VisualLayer>
+  nameWithType.vb: List(Of VisualLayer)
+  fullName.vb: System.Collections.Generic.List(Of DrawnUi.Draw.VisualLayer)
+  name.vb: List(Of VisualLayer)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Draw.VisualLayer
+    name: VisualLayer
+    href: DrawnUi.Draw.VisualLayer.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.VisualLayer
+    name: VisualLayer
+    href: DrawnUi.Draw.VisualLayer.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.VisualLayer.Cache*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Cache
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Cache
+  name: Cache
+  nameWithType: VisualLayer.Cache
+  fullName: DrawnUi.Draw.VisualLayer.Cache
+- uid: DrawnUi.Draw.CachedObject
+  commentId: T:DrawnUi.Draw.CachedObject
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.CachedObject.html
+  name: CachedObject
+  nameWithType: CachedObject
+  fullName: DrawnUi.Draw.CachedObject
+- uid: DrawnUi.Draw.VisualLayer.Cached*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Cached
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Cached
+  name: Cached
+  nameWithType: VisualLayer.Cached
+  fullName: DrawnUi.Draw.VisualLayer.Cached
+- uid: DrawnUi.Draw.SkiaCacheType
+  commentId: T:DrawnUi.Draw.SkiaCacheType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaCacheType.html
+  name: SkiaCacheType
+  nameWithType: SkiaCacheType
+  fullName: DrawnUi.Draw.SkiaCacheType
+- uid: DrawnUi.Draw.VisualLayer.Destination*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Destination
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Destination
+  name: Destination
+  nameWithType: VisualLayer.Destination
+  fullName: DrawnUi.Draw.VisualLayer.Destination
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.VisualLayer.Origin*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Origin
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Origin
+  name: Origin
+  nameWithType: VisualLayer.Origin
+  fullName: DrawnUi.Draw.VisualLayer.Origin
+- uid: DrawnUi.Draw.VisualLayer.Transforms*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Transforms
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Transforms
+  name: Transforms
+  nameWithType: VisualLayer.Transforms
+  fullName: DrawnUi.Draw.VisualLayer.Transforms
+- uid: SkiaSharp.SKMatrix
+  commentId: T:SkiaSharp.SKMatrix
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skmatrix
+  name: SKMatrix
+  nameWithType: SKMatrix
+  fullName: SkiaSharp.SKMatrix
+- uid: DrawnUi.Draw.VisualLayer.TransformsTotal*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.TransformsTotal
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_TransformsTotal
+  name: TransformsTotal
+  nameWithType: VisualLayer.TransformsTotal
+  fullName: DrawnUi.Draw.VisualLayer.TransformsTotal
+- uid: DrawnUi.Draw.VisualLayer.OpacityTotal*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.OpacityTotal
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_OpacityTotal
+  name: OpacityTotal
+  nameWithType: VisualLayer.OpacityTotal
+  fullName: DrawnUi.Draw.VisualLayer.OpacityTotal
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.VisualLayer.RotationTotal*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.RotationTotal
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_RotationTotal
+  name: RotationTotal
+  nameWithType: VisualLayer.RotationTotal
+  fullName: DrawnUi.Draw.VisualLayer.RotationTotal
+- uid: DrawnUi.Draw.VisualLayer.ScaleTotal*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.ScaleTotal
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_ScaleTotal
+  name: ScaleTotal
+  nameWithType: VisualLayer.ScaleTotal
+  fullName: DrawnUi.Draw.VisualLayer.ScaleTotal
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: DrawnUi.Draw.VisualLayer.TranslationTotal*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.TranslationTotal
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_TranslationTotal
+  name: TranslationTotal
+  nameWithType: VisualLayer.TranslationTotal
+  fullName: DrawnUi.Draw.VisualLayer.TranslationTotal
+- uid: DrawnUi.Draw.VisualLayer.HitBox*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.HitBox
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_HitBox
+  name: HitBox
+  nameWithType: VisualLayer.HitBox
+  fullName: DrawnUi.Draw.VisualLayer.HitBox
+- uid: DrawnUi.Draw.ScaledRect
+  commentId: T:DrawnUi.Draw.ScaledRect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScaledRect.html
+  name: ScaledRect
+  nameWithType: ScaledRect
+  fullName: DrawnUi.Draw.ScaledRect
+- uid: DrawnUi.Draw.VisualLayer.HitBoxWithTransforms*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.HitBoxWithTransforms
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_HitBoxWithTransforms
+  name: HitBoxWithTransforms
+  nameWithType: VisualLayer.HitBoxWithTransforms
+  fullName: DrawnUi.Draw.VisualLayer.HitBoxWithTransforms
+- uid: DrawnUi.Draw.VisualLayer.Render*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.Render
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_Render_DrawnUi_Draw_DrawingContext_
+  name: Render
+  nameWithType: VisualLayer.Render
+  fullName: DrawnUi.Draw.VisualLayer.Render
+- uid: DrawnUi.Draw.DrawingContext
+  commentId: T:DrawnUi.Draw.DrawingContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawingContext.html
+  name: DrawingContext
+  nameWithType: DrawingContext
+  fullName: DrawnUi.Draw.DrawingContext
+- uid: DrawnUi.Draw.VisualLayer.DecomposeMatrix*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.DecomposeMatrix
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_DecomposeMatrix_SkiaSharp_SKMatrix_SkiaSharp_SKPoint__System_Single__SkiaSharp_SKPoint__
+  name: DecomposeMatrix
+  nameWithType: VisualLayer.DecomposeMatrix
+  fullName: DrawnUi.Draw.VisualLayer.DecomposeMatrix
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.VisualLayer.AttachFromCache*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.AttachFromCache
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_AttachFromCache_DrawnUi_Draw_CachedObject_
+  name: AttachFromCache
+  nameWithType: VisualLayer.AttachFromCache
+  fullName: DrawnUi.Draw.VisualLayer.AttachFromCache
+- uid: DrawnUi.Draw.VisualLayer.#ctor*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.#ctor
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer__ctor_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_VisualLayer_SkiaSharp_SKRect_System_Single_
+  name: VisualLayer
+  nameWithType: VisualLayer.VisualLayer
+  fullName: DrawnUi.Draw.VisualLayer.VisualLayer
+  nameWithType.vb: VisualLayer.New
+  fullName.vb: DrawnUi.Draw.VisualLayer.New
+  name.vb: New
+- uid: DrawnUi.Draw.VisualLayer
+  commentId: T:DrawnUi.Draw.VisualLayer
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.VisualLayer.html
+  name: VisualLayer
+  nameWithType: VisualLayer
+  fullName: DrawnUi.Draw.VisualLayer
+- uid: DrawnUi.Draw.VisualLayer.CreateEmpty*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.CreateEmpty
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_CreateEmpty
+  name: CreateEmpty
+  nameWithType: VisualLayer.CreateEmpty
+  fullName: DrawnUi.Draw.VisualLayer.CreateEmpty
+- uid: DrawnUi.Draw.VisualLayer.TransformRect*
+  commentId: Overload:DrawnUi.Draw.VisualLayer.TransformRect
+  href: DrawnUi.Draw.VisualLayer.html#DrawnUi_Draw_VisualLayer_TransformRect_SkiaSharp_SKRect_SkiaSharp_SKMatrix_
+  name: TransformRect
+  nameWithType: VisualLayer.TransformRect
+  fullName: DrawnUi.Draw.VisualLayer.TransformRect

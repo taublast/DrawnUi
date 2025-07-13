@@ -1,0 +1,995 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaDrawingContext
+  commentId: T:DrawnUi.Draw.SkiaDrawingContext
+  id: SkiaDrawingContext
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaDrawingContext.Canvas
+  - DrawnUi.Draw.SkiaDrawingContext.Clone
+  - DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage(SkiaSharp.SKSurface,SkiaSharp.SKSize)
+  - DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations(SkiaSharp.SKPictureRecorder,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaDrawingContext.DeviceDensity
+  - DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos
+  - DrawnUi.Draw.SkiaDrawingContext.Height
+  - DrawnUi.Draw.SkiaDrawingContext.IsRecycled
+  - DrawnUi.Draw.SkiaDrawingContext.IsVirtual
+  - DrawnUi.Draw.SkiaDrawingContext.Services
+  - DrawnUi.Draw.SkiaDrawingContext.Superview
+  - DrawnUi.Draw.SkiaDrawingContext.Surface
+  - DrawnUi.Draw.SkiaDrawingContext.Width
+  langs:
+  - csharp
+  - vb
+  name: SkiaDrawingContext
+  nameWithType: SkiaDrawingContext
+  fullName: DrawnUi.Draw.SkiaDrawingContext
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaDrawingContext
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 173
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class SkiaDrawingContext
+    content.vb: Public Class SkiaDrawingContext
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - DrawnUi.Draw.RenderDrawingContext
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaDrawingContext.Canvas
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.Canvas
+  id: Canvas
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: Canvas
+  nameWithType: SkiaDrawingContext.Canvas
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Canvas
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Canvas
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 175
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKCanvas Canvas { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKCanvas
+    content.vb: Public Property Canvas As SKCanvas
+  overload: DrawnUi.Draw.SkiaDrawingContext.Canvas*
+- uid: DrawnUi.Draw.SkiaDrawingContext.Surface
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.Surface
+  id: Surface
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: Surface
+  nameWithType: SkiaDrawingContext.Surface
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Surface
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Surface
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 176
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKSurface Surface { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKSurface
+    content.vb: Public Property Surface As SKSurface
+  overload: DrawnUi.Draw.SkiaDrawingContext.Surface*
+- uid: DrawnUi.Draw.SkiaDrawingContext.Width
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.Width
+  id: Width
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: SkiaDrawingContext.Width
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Width
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Width
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 177
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Width { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Width As Single
+  overload: DrawnUi.Draw.SkiaDrawingContext.Width*
+- uid: DrawnUi.Draw.SkiaDrawingContext.Height
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.Height
+  id: Height
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: SkiaDrawingContext.Height
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Height
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Height
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 178
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Height { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Height As Single
+  overload: DrawnUi.Draw.SkiaDrawingContext.Height*
+- uid: DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos
+  id: FrameTimeNanos
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: FrameTimeNanos
+  nameWithType: SkiaDrawingContext.FrameTimeNanos
+  fullName: DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FrameTimeNanos
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 179
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public long FrameTimeNanos { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property FrameTimeNanos As Long
+  overload: DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos*
+- uid: DrawnUi.Draw.SkiaDrawingContext.Superview
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.Superview
+  id: Superview
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: Superview
+  nameWithType: SkiaDrawingContext.Superview
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Superview
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Superview
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 180
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DrawnView? Superview { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Views.DrawnView
+    content.vb: Public Property Superview As DrawnView
+  overload: DrawnUi.Draw.SkiaDrawingContext.Superview*
+- uid: DrawnUi.Draw.SkiaDrawingContext.IsVirtual
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.IsVirtual
+  id: IsVirtual
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: IsVirtual
+  nameWithType: SkiaDrawingContext.IsVirtual
+  fullName: DrawnUi.Draw.SkiaDrawingContext.IsVirtual
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsVirtual
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 185
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Recording cache
+  example: []
+  syntax:
+    content: public bool IsVirtual { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsVirtual As Boolean
+  overload: DrawnUi.Draw.SkiaDrawingContext.IsVirtual*
+- uid: DrawnUi.Draw.SkiaDrawingContext.IsRecycled
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.IsRecycled
+  id: IsRecycled
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: IsRecycled
+  nameWithType: SkiaDrawingContext.IsRecycled
+  fullName: DrawnUi.Draw.SkiaDrawingContext.IsRecycled
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsRecycled
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 190
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Reusing surface from previous cache
+  example: []
+  syntax:
+    content: public bool IsRecycled { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsRecycled As Boolean
+  overload: DrawnUi.Draw.SkiaDrawingContext.IsRecycled*
+- uid: DrawnUi.Draw.SkiaDrawingContext.Clone
+  commentId: M:DrawnUi.Draw.SkiaDrawingContext.Clone
+  id: Clone
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: Clone()
+  nameWithType: SkiaDrawingContext.Clone()
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Clone()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clone
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 192
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaDrawingContext Clone()
+    return:
+      type: DrawnUi.Draw.SkiaDrawingContext
+    content.vb: Public Function Clone() As SkiaDrawingContext
+  overload: DrawnUi.Draw.SkiaDrawingContext.Clone*
+- uid: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage(SkiaSharp.SKSurface,SkiaSharp.SKSize)
+  commentId: M:DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage(SkiaSharp.SKSurface,SkiaSharp.SKSize)
+  id: CreateForRecordingImage(SkiaSharp.SKSurface,SkiaSharp.SKSize)
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: CreateForRecordingImage(SKSurface, SKSize)
+  nameWithType: SkiaDrawingContext.CreateForRecordingImage(SKSurface, SKSize)
+  fullName: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage(SkiaSharp.SKSurface, SkiaSharp.SKSize)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateForRecordingImage
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 205
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaDrawingContext CreateForRecordingImage(SKSurface surface, SKSize size)
+    parameters:
+    - id: surface
+      type: SkiaSharp.SKSurface
+    - id: size
+      type: SkiaSharp.SKSize
+    return:
+      type: DrawnUi.Draw.SkiaDrawingContext
+    content.vb: Public Function CreateForRecordingImage(surface As SKSurface, size As SKSize) As SkiaDrawingContext
+  overload: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage*
+- uid: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations(SkiaSharp.SKPictureRecorder,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations(SkiaSharp.SKPictureRecorder,SkiaSharp.SKRect)
+  id: CreateForRecordingOperations(SkiaSharp.SKPictureRecorder,SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: CreateForRecordingOperations(SKPictureRecorder, SKRect)
+  nameWithType: SkiaDrawingContext.CreateForRecordingOperations(SKPictureRecorder, SKRect)
+  fullName: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations(SkiaSharp.SKPictureRecorder, SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateForRecordingOperations
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 219
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaDrawingContext CreateForRecordingOperations(SKPictureRecorder recorder, SKRect cacheRecordingArea)
+    parameters:
+    - id: recorder
+      type: SkiaSharp.SKPictureRecorder
+    - id: cacheRecordingArea
+      type: SkiaSharp.SKRect
+    return:
+      type: DrawnUi.Draw.SkiaDrawingContext
+    content.vb: Public Function CreateForRecordingOperations(recorder As SKPictureRecorder, cacheRecordingArea As SKRect) As SkiaDrawingContext
+  overload: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations*
+- uid: DrawnUi.Draw.SkiaDrawingContext.DeviceDensity
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.DeviceDensity
+  id: DeviceDensity
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: DeviceDensity
+  nameWithType: SkiaDrawingContext.DeviceDensity
+  fullName: DrawnUi.Draw.SkiaDrawingContext.DeviceDensity
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DeviceDensity
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 233
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static float DeviceDensity { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Shared ReadOnly Property DeviceDensity As Single
+  overload: DrawnUi.Draw.SkiaDrawingContext.DeviceDensity*
+- uid: DrawnUi.Draw.SkiaDrawingContext.Services
+  commentId: P:DrawnUi.Draw.SkiaDrawingContext.Services
+  id: Services
+  parent: DrawnUi.Draw.SkiaDrawingContext
+  langs:
+  - csharp
+  - vb
+  name: Services
+  nameWithType: SkiaDrawingContext.Services
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Services
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Services
+    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    startLine: 241
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static IServiceProvider Services { get; }
+    parameters: []
+    return:
+      type: System.IServiceProvider
+    content.vb: Public Shared ReadOnly Property Services As IServiceProvider
+  overload: DrawnUi.Draw.SkiaDrawingContext.Services*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaDrawingContext.Canvas*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.Canvas
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_Canvas
+  name: Canvas
+  nameWithType: SkiaDrawingContext.Canvas
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Canvas
+- uid: SkiaSharp.SKCanvas
+  commentId: T:SkiaSharp.SKCanvas
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas
+  name: SKCanvas
+  nameWithType: SKCanvas
+  fullName: SkiaSharp.SKCanvas
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.SkiaDrawingContext.Surface*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.Surface
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_Surface
+  name: Surface
+  nameWithType: SkiaDrawingContext.Surface
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Surface
+- uid: SkiaSharp.SKSurface
+  commentId: T:SkiaSharp.SKSurface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  name: SKSurface
+  nameWithType: SKSurface
+  fullName: SkiaSharp.SKSurface
+- uid: DrawnUi.Draw.SkiaDrawingContext.Width*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.Width
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_Width
+  name: Width
+  nameWithType: SkiaDrawingContext.Width
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Width
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SkiaDrawingContext.Height*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.Height
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_Height
+  name: Height
+  nameWithType: SkiaDrawingContext.Height
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Height
+- uid: DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_FrameTimeNanos
+  name: FrameTimeNanos
+  nameWithType: SkiaDrawingContext.FrameTimeNanos
+  fullName: DrawnUi.Draw.SkiaDrawingContext.FrameTimeNanos
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: DrawnUi.Draw.SkiaDrawingContext.Superview*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.Superview
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_Superview
+  name: Superview
+  nameWithType: SkiaDrawingContext.Superview
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Superview
+- uid: DrawnUi.Views.DrawnView
+  commentId: T:DrawnUi.Views.DrawnView
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.DrawnView.html
+  name: DrawnView
+  nameWithType: DrawnView
+  fullName: DrawnUi.Views.DrawnView
+- uid: DrawnUi.Views
+  commentId: N:DrawnUi.Views
+  href: DrawnUi.html
+  name: DrawnUi.Views
+  nameWithType: DrawnUi.Views
+  fullName: DrawnUi.Views
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Views
+    name: Views
+    href: DrawnUi.Views.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Views
+    name: Views
+    href: DrawnUi.Views.html
+- uid: DrawnUi.Draw.SkiaDrawingContext.IsVirtual*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.IsVirtual
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_IsVirtual
+  name: IsVirtual
+  nameWithType: SkiaDrawingContext.IsVirtual
+  fullName: DrawnUi.Draw.SkiaDrawingContext.IsVirtual
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.SkiaDrawingContext.IsRecycled*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.IsRecycled
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_IsRecycled
+  name: IsRecycled
+  nameWithType: SkiaDrawingContext.IsRecycled
+  fullName: DrawnUi.Draw.SkiaDrawingContext.IsRecycled
+- uid: DrawnUi.Draw.SkiaDrawingContext.Clone*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.Clone
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_Clone
+  name: Clone
+  nameWithType: SkiaDrawingContext.Clone
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Clone
+- uid: DrawnUi.Draw.SkiaDrawingContext
+  commentId: T:DrawnUi.Draw.SkiaDrawingContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaDrawingContext.html
+  name: SkiaDrawingContext
+  nameWithType: SkiaDrawingContext
+  fullName: DrawnUi.Draw.SkiaDrawingContext
+- uid: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_CreateForRecordingImage_SkiaSharp_SKSurface_SkiaSharp_SKSize_
+  name: CreateForRecordingImage
+  nameWithType: SkiaDrawingContext.CreateForRecordingImage
+  fullName: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingImage
+- uid: SkiaSharp.SKSize
+  commentId: T:SkiaSharp.SKSize
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksize
+  name: SKSize
+  nameWithType: SKSize
+  fullName: SkiaSharp.SKSize
+- uid: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_CreateForRecordingOperations_SkiaSharp_SKPictureRecorder_SkiaSharp_SKRect_
+  name: CreateForRecordingOperations
+  nameWithType: SkiaDrawingContext.CreateForRecordingOperations
+  fullName: DrawnUi.Draw.SkiaDrawingContext.CreateForRecordingOperations
+- uid: SkiaSharp.SKPictureRecorder
+  commentId: T:SkiaSharp.SKPictureRecorder
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpicturerecorder
+  name: SKPictureRecorder
+  nameWithType: SKPictureRecorder
+  fullName: SkiaSharp.SKPictureRecorder
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: DrawnUi.Draw.SkiaDrawingContext.DeviceDensity*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.DeviceDensity
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_DeviceDensity
+  name: DeviceDensity
+  nameWithType: SkiaDrawingContext.DeviceDensity
+  fullName: DrawnUi.Draw.SkiaDrawingContext.DeviceDensity
+- uid: DrawnUi.Draw.SkiaDrawingContext.Services*
+  commentId: Overload:DrawnUi.Draw.SkiaDrawingContext.Services
+  href: DrawnUi.Draw.SkiaDrawingContext.html#DrawnUi_Draw_SkiaDrawingContext_Services
+  name: Services
+  nameWithType: SkiaDrawingContext.Services
+  fullName: DrawnUi.Draw.SkiaDrawingContext.Services
+- uid: System.IServiceProvider
+  commentId: T:System.IServiceProvider
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  name: IServiceProvider
+  nameWithType: IServiceProvider
+  fullName: System.IServiceProvider

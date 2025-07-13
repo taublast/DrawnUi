@@ -1,0 +1,971 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ActionOnTickAnimator
+  commentId: T:DrawnUi.Draw.ActionOnTickAnimator
+  id: ActionOnTickAnimator
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ActionOnTickAnimator.#ctor(DrawnUi.Draw.SkiaControl,System.Action{System.Int64})
+  - DrawnUi.Draw.ActionOnTickAnimator.TickFrame(System.Int64)
+  langs:
+  - csharp
+  - vb
+  name: ActionOnTickAnimator
+  nameWithType: ActionOnTickAnimator
+  fullName: DrawnUi.Draw.ActionOnTickAnimator
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Features/Animations/ExecuteOnTick.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ActionOnTickAnimator
+    path: ../src/Shared/Features/Animations/ExecuteOnTick.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Just register this animator to run custom code on every frame creating a kind of game loop if needed.
+  example: []
+  syntax:
+    content: 'public class ActionOnTickAnimator : AnimatorBase, ISkiaAnimator, IDisposable'
+    content.vb: Public Class ActionOnTickAnimator Inherits AnimatorBase Implements ISkiaAnimator, IDisposable
+  inheritance:
+  - System.Object
+  - DrawnUi.Draw.AnimatorBase
+  implements:
+  - DrawnUi.Draw.ISkiaAnimator
+  - System.IDisposable
+  inheritedMembers:
+  - DrawnUi.Draw.AnimatorBase.IsPostAnimator
+  - DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+  - DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+  - DrawnUi.Draw.AnimatorBase.runDelayMs
+  - DrawnUi.Draw.AnimatorBase.Register
+  - DrawnUi.Draw.AnimatorBase.Unregister
+  - DrawnUi.Draw.AnimatorBase.Cancel
+  - DrawnUi.Draw.AnimatorBase.Start(System.Double)
+  - DrawnUi.Draw.AnimatorBase.Pause
+  - DrawnUi.Draw.AnimatorBase.Resume
+  - DrawnUi.Draw.AnimatorBase.IsPaused
+  - DrawnUi.Draw.AnimatorBase.Stop
+  - DrawnUi.Draw.AnimatorBase.OnStop
+  - DrawnUi.Draw.AnimatorBase.OnStart
+  - DrawnUi.Draw.AnimatorBase.Parent
+  - DrawnUi.Draw.AnimatorBase.IsDeactivated
+  - DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+  - DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+  - DrawnUi.Draw.AnimatorBase.Uid
+  - DrawnUi.Draw.AnimatorBase.Dispose
+  - DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+  - DrawnUi.Draw.AnimatorBase.IsRunning
+  - DrawnUi.Draw.AnimatorBase.WasStarted
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ActionOnTickAnimator.TickFrame(System.Int64)
+  commentId: M:DrawnUi.Draw.ActionOnTickAnimator.TickFrame(System.Int64)
+  id: TickFrame(System.Int64)
+  parent: DrawnUi.Draw.ActionOnTickAnimator
+  langs:
+  - csharp
+  - vb
+  name: TickFrame(long)
+  nameWithType: ActionOnTickAnimator.TickFrame(long)
+  fullName: DrawnUi.Draw.ActionOnTickAnimator.TickFrame(long)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/ExecuteOnTick.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TickFrame
+    path: ../src/Shared/Features/Animations/ExecuteOnTick.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Time in NANOS
+  example: []
+  syntax:
+    content: public override bool TickFrame(long frameTimeNanos)
+    parameters:
+    - id: frameTimeNanos
+      type: System.Int64
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Public Overrides Function TickFrame(frameTimeNanos As Long) As Boolean
+  overridden: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+  overload: DrawnUi.Draw.ActionOnTickAnimator.TickFrame*
+  nameWithType.vb: ActionOnTickAnimator.TickFrame(Long)
+  fullName.vb: DrawnUi.Draw.ActionOnTickAnimator.TickFrame(Long)
+  name.vb: TickFrame(Long)
+- uid: DrawnUi.Draw.ActionOnTickAnimator.#ctor(DrawnUi.Draw.SkiaControl,System.Action{System.Int64})
+  commentId: M:DrawnUi.Draw.ActionOnTickAnimator.#ctor(DrawnUi.Draw.SkiaControl,System.Action{System.Int64})
+  id: '#ctor(DrawnUi.Draw.SkiaControl,System.Action{System.Int64})'
+  parent: DrawnUi.Draw.ActionOnTickAnimator
+  langs:
+  - csharp
+  - vb
+  name: ActionOnTickAnimator(SkiaControl, Action<long>)
+  nameWithType: ActionOnTickAnimator.ActionOnTickAnimator(SkiaControl, Action<long>)
+  fullName: DrawnUi.Draw.ActionOnTickAnimator.ActionOnTickAnimator(DrawnUi.Draw.SkiaControl, System.Action<long>)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Features/Animations/ExecuteOnTick.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Features/Animations/ExecuteOnTick.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ActionOnTickAnimator(SkiaControl parent, Action<long> action)
+    parameters:
+    - id: parent
+      type: DrawnUi.Draw.SkiaControl
+    - id: action
+      type: System.Action{System.Int64}
+    content.vb: Public Sub New(parent As SkiaControl, action As Action(Of Long))
+  overload: DrawnUi.Draw.ActionOnTickAnimator.#ctor*
+  nameWithType.vb: ActionOnTickAnimator.New(SkiaControl, Action(Of Long))
+  fullName.vb: DrawnUi.Draw.ActionOnTickAnimator.New(DrawnUi.Draw.SkiaControl, System.Action(Of Long))
+  name.vb: New(SkiaControl, Action(Of Long))
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Draw.AnimatorBase
+  commentId: T:DrawnUi.Draw.AnimatorBase
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.AnimatorBase.html
+  name: AnimatorBase
+  nameWithType: AnimatorBase
+  fullName: DrawnUi.Draw.AnimatorBase
+- uid: DrawnUi.Draw.ISkiaAnimator
+  commentId: T:DrawnUi.Draw.ISkiaAnimator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaAnimator.html
+  name: ISkiaAnimator
+  nameWithType: ISkiaAnimator
+  fullName: DrawnUi.Draw.ISkiaAnimator
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Draw.AnimatorBase.IsPostAnimator
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsPostAnimator
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPostAnimator
+  name: IsPostAnimator
+  nameWithType: AnimatorBase.IsPostAnimator
+  fullName: DrawnUi.Draw.AnimatorBase.IsPostAnimator
+- uid: DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsHiddenInViewTree
+  name: IsHiddenInViewTree
+  nameWithType: AnimatorBase.IsHiddenInViewTree
+  fullName: DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+- uid: DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+  commentId: M:DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_
+  name: Radians(double)
+  nameWithType: AnimatorBase.Radians(double)
+  fullName: DrawnUi.Draw.AnimatorBase.Radians(double)
+  nameWithType.vb: AnimatorBase.Radians(Double)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.Radians(Double)
+  name.vb: Radians(Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+    name: Radians
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+    name: Radians
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.runDelayMs
+  commentId: F:DrawnUi.Draw.AnimatorBase.runDelayMs
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_runDelayMs
+  name: runDelayMs
+  nameWithType: AnimatorBase.runDelayMs
+  fullName: DrawnUi.Draw.AnimatorBase.runDelayMs
+- uid: DrawnUi.Draw.AnimatorBase.Register
+  commentId: M:DrawnUi.Draw.AnimatorBase.Register
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register
+  name: Register()
+  nameWithType: AnimatorBase.Register()
+  fullName: DrawnUi.Draw.AnimatorBase.Register()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Register
+    name: Register
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Register
+    name: Register
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Unregister
+  commentId: M:DrawnUi.Draw.AnimatorBase.Unregister
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister
+  name: Unregister()
+  nameWithType: AnimatorBase.Unregister()
+  fullName: DrawnUi.Draw.AnimatorBase.Unregister()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Unregister
+    name: Unregister
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Unregister
+    name: Unregister
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Cancel
+  commentId: M:DrawnUi.Draw.AnimatorBase.Cancel
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel
+  name: Cancel()
+  nameWithType: AnimatorBase.Cancel()
+  fullName: DrawnUi.Draw.AnimatorBase.Cancel()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Cancel
+    name: Cancel
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Cancel
+    name: Cancel
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Start(System.Double)
+  commentId: M:DrawnUi.Draw.AnimatorBase.Start(System.Double)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Start_System_Double_
+  name: Start(double)
+  nameWithType: AnimatorBase.Start(double)
+  fullName: DrawnUi.Draw.AnimatorBase.Start(double)
+  nameWithType.vb: AnimatorBase.Start(Double)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.Start(Double)
+  name.vb: Start(Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Start(System.Double)
+    name: Start
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Start_System_Double_
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Start(System.Double)
+    name: Start
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Start_System_Double_
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Pause
+  commentId: M:DrawnUi.Draw.AnimatorBase.Pause
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause
+  name: Pause()
+  nameWithType: AnimatorBase.Pause()
+  fullName: DrawnUi.Draw.AnimatorBase.Pause()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Pause
+    name: Pause
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Pause
+    name: Pause
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Resume
+  commentId: M:DrawnUi.Draw.AnimatorBase.Resume
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume
+  name: Resume()
+  nameWithType: AnimatorBase.Resume()
+  fullName: DrawnUi.Draw.AnimatorBase.Resume()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Resume
+    name: Resume
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Resume
+    name: Resume
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.IsPaused
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsPaused
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPaused
+  name: IsPaused
+  nameWithType: AnimatorBase.IsPaused
+  fullName: DrawnUi.Draw.AnimatorBase.IsPaused
+- uid: DrawnUi.Draw.AnimatorBase.Stop
+  commentId: M:DrawnUi.Draw.AnimatorBase.Stop
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Stop
+  name: Stop()
+  nameWithType: AnimatorBase.Stop()
+  fullName: DrawnUi.Draw.AnimatorBase.Stop()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Stop
+    name: Stop
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Stop
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Stop
+    name: Stop
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Stop
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.OnStop
+  commentId: P:DrawnUi.Draw.AnimatorBase.OnStop
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStop
+  name: OnStop
+  nameWithType: AnimatorBase.OnStop
+  fullName: DrawnUi.Draw.AnimatorBase.OnStop
+- uid: DrawnUi.Draw.AnimatorBase.OnStart
+  commentId: P:DrawnUi.Draw.AnimatorBase.OnStart
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStart
+  name: OnStart
+  nameWithType: AnimatorBase.OnStart
+  fullName: DrawnUi.Draw.AnimatorBase.OnStart
+- uid: DrawnUi.Draw.AnimatorBase.Parent
+  commentId: P:DrawnUi.Draw.AnimatorBase.Parent
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Parent
+  name: Parent
+  nameWithType: AnimatorBase.Parent
+  fullName: DrawnUi.Draw.AnimatorBase.Parent
+- uid: DrawnUi.Draw.AnimatorBase.IsDeactivated
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsDeactivated
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsDeactivated
+  name: IsDeactivated
+  nameWithType: AnimatorBase.IsDeactivated
+  fullName: DrawnUi.Draw.AnimatorBase.IsDeactivated
+- uid: DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+  commentId: P:DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_LastFrameTimeNanos
+  name: LastFrameTimeNanos
+  nameWithType: AnimatorBase.LastFrameTimeNanos
+  fullName: DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+- uid: DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+  commentId: P:DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_StartFrameTimeNanos
+  name: StartFrameTimeNanos
+  nameWithType: AnimatorBase.StartFrameTimeNanos
+  fullName: DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+- uid: DrawnUi.Draw.AnimatorBase.Uid
+  commentId: P:DrawnUi.Draw.AnimatorBase.Uid
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Uid
+  name: Uid
+  nameWithType: AnimatorBase.Uid
+  fullName: DrawnUi.Draw.AnimatorBase.Uid
+- uid: DrawnUi.Draw.AnimatorBase.Dispose
+  commentId: M:DrawnUi.Draw.AnimatorBase.Dispose
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Dispose
+  name: Dispose()
+  nameWithType: AnimatorBase.Dispose()
+  fullName: DrawnUi.Draw.AnimatorBase.Dispose()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+  commentId: M:DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnRunningStateChanged_System_Boolean_
+  name: OnRunningStateChanged(bool)
+  nameWithType: AnimatorBase.OnRunningStateChanged(bool)
+  fullName: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(bool)
+  nameWithType.vb: AnimatorBase.OnRunningStateChanged(Boolean)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(Boolean)
+  name.vb: OnRunningStateChanged(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+    name: OnRunningStateChanged
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnRunningStateChanged_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+    name: OnRunningStateChanged
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnRunningStateChanged_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.IsRunning
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsRunning
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsRunning
+  name: IsRunning
+  nameWithType: AnimatorBase.IsRunning
+  fullName: DrawnUi.Draw.AnimatorBase.IsRunning
+- uid: DrawnUi.Draw.AnimatorBase.WasStarted
+  commentId: P:DrawnUi.Draw.AnimatorBase.WasStarted
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_WasStarted
+  name: WasStarted
+  nameWithType: AnimatorBase.WasStarted
+  fullName: DrawnUi.Draw.AnimatorBase.WasStarted
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+  commentId: M:DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_TickFrame_System_Int64_
+  name: TickFrame(long)
+  nameWithType: AnimatorBase.TickFrame(long)
+  fullName: DrawnUi.Draw.AnimatorBase.TickFrame(long)
+  nameWithType.vb: AnimatorBase.TickFrame(Long)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.TickFrame(Long)
+  name.vb: TickFrame(Long)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+    name: TickFrame
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_TickFrame_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+    name: TickFrame
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_TickFrame_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: DrawnUi.Draw.ActionOnTickAnimator.TickFrame*
+  commentId: Overload:DrawnUi.Draw.ActionOnTickAnimator.TickFrame
+  href: DrawnUi.Draw.ActionOnTickAnimator.html#DrawnUi_Draw_ActionOnTickAnimator_TickFrame_System_Int64_
+  name: TickFrame
+  nameWithType: ActionOnTickAnimator.TickFrame
+  fullName: DrawnUi.Draw.ActionOnTickAnimator.TickFrame
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.ActionOnTickAnimator.#ctor*
+  commentId: Overload:DrawnUi.Draw.ActionOnTickAnimator.#ctor
+  href: DrawnUi.Draw.ActionOnTickAnimator.html#DrawnUi_Draw_ActionOnTickAnimator__ctor_DrawnUi_Draw_SkiaControl_System_Action_System_Int64__
+  name: ActionOnTickAnimator
+  nameWithType: ActionOnTickAnimator.ActionOnTickAnimator
+  fullName: DrawnUi.Draw.ActionOnTickAnimator.ActionOnTickAnimator
+  nameWithType.vb: ActionOnTickAnimator.New
+  fullName.vb: DrawnUi.Draw.ActionOnTickAnimator.New
+  name.vb: New
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: System.Action{System.Int64}
+  commentId: T:System.Action{System.Int64}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<long>
+  nameWithType: Action<long>
+  fullName: System.Action<long>
+  nameWithType.vb: Action(Of Long)
+  fullName.vb: System.Action(Of Long)
+  name.vb: Action(Of Long)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

@@ -1,0 +1,344 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IImageEffect
+  commentId: T:DrawnUi.Draw.IImageEffect
+  id: IImageEffect
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IImageEffect.CreateFilter(SkiaSharp.SKRect)
+  - DrawnUi.Draw.IImageEffect.Filter
+  langs:
+  - csharp
+  - vb
+  name: IImageEffect
+  nameWithType: IImageEffect
+  fullName: DrawnUi.Draw.IImageEffect
+  type: Interface
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/IImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IImageEffect
+    path: ../src/Maui/DrawnUi/Features/Effects/IImageEffect.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface IImageEffect : ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated'
+    content.vb: Public Interface IImageEffect Inherits ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated
+  inheritedMembers:
+  - DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.ISkiaEffect.Dettach
+  - DrawnUi.Draw.ISkiaEffect.NeedApply
+  - DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  - DrawnUi.Draw.ICanBeUpdated.Update
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IImageEffect.Filter
+  commentId: P:DrawnUi.Draw.IImageEffect.Filter
+  id: Filter
+  parent: DrawnUi.Draw.IImageEffect
+  langs:
+  - csharp
+  - vb
+  name: Filter
+  nameWithType: IImageEffect.Filter
+  fullName: DrawnUi.Draw.IImageEffect.Filter
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/IImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Filter
+    path: ../src/Maui/DrawnUi/Features/Effects/IImageEffect.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SKImageFilter Filter { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKImageFilter
+    content.vb: ReadOnly Property Filter As SKImageFilter
+  overload: DrawnUi.Draw.IImageEffect.Filter*
+- uid: DrawnUi.Draw.IImageEffect.CreateFilter(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.IImageEffect.CreateFilter(SkiaSharp.SKRect)
+  id: CreateFilter(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.IImageEffect
+  langs:
+  - csharp
+  - vb
+  name: CreateFilter(SKRect)
+  nameWithType: IImageEffect.CreateFilter(SKRect)
+  fullName: DrawnUi.Draw.IImageEffect.CreateFilter(SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/IImageEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateFilter
+    path: ../src/Maui/DrawnUi/Features/Effects/IImageEffect.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SKImageFilter CreateFilter(SKRect destination)
+    parameters:
+    - id: destination
+      type: SkiaSharp.SKRect
+    return:
+      type: SkiaSharp.SKImageFilter
+    content.vb: Function CreateFilter(destination As SKRect) As SKImageFilter
+  overload: DrawnUi.Draw.IImageEffect.CreateFilter*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.ISkiaEffect
+  href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Attach_DrawnUi_Draw_SkiaControl_
+  name: Attach(SkiaControl)
+  nameWithType: ISkiaEffect.Attach(SkiaControl)
+  fullName: DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+    name: Attach
+    href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Attach_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+    name: Attach
+    href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Attach_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.ISkiaEffect.Dettach
+  commentId: M:DrawnUi.Draw.ISkiaEffect.Dettach
+  parent: DrawnUi.Draw.ISkiaEffect
+  href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Dettach
+  name: Dettach()
+  nameWithType: ISkiaEffect.Dettach()
+  fullName: DrawnUi.Draw.ISkiaEffect.Dettach()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaEffect.Dettach
+    name: Dettach
+    href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Dettach
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaEffect.Dettach
+    name: Dettach
+    href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_Dettach
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ISkiaEffect.NeedApply
+  commentId: P:DrawnUi.Draw.ISkiaEffect.NeedApply
+  parent: DrawnUi.Draw.ISkiaEffect
+  href: DrawnUi.Draw.ISkiaEffect.html#DrawnUi_Draw_ISkiaEffect_NeedApply
+  name: NeedApply
+  nameWithType: ISkiaEffect.NeedApply
+  fullName: DrawnUi.Draw.ISkiaEffect.NeedApply
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  commentId: P:DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  parent: DrawnUi.Draw.ICanBeUpdatedWithContext
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html#DrawnUi_Draw_ICanBeUpdatedWithContext_BindingContext
+  name: BindingContext
+  nameWithType: ICanBeUpdatedWithContext.BindingContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+- uid: DrawnUi.Draw.ICanBeUpdated.Update
+  commentId: M:DrawnUi.Draw.ICanBeUpdated.Update
+  parent: DrawnUi.Draw.ICanBeUpdated
+  href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  name: Update()
+  nameWithType: ICanBeUpdated.Update()
+  fullName: DrawnUi.Draw.ICanBeUpdated.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ISkiaEffect
+  commentId: T:DrawnUi.Draw.ISkiaEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaEffect.html
+  name: ISkiaEffect
+  nameWithType: ISkiaEffect
+  fullName: DrawnUi.Draw.ISkiaEffect
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext
+  commentId: T:DrawnUi.Draw.ICanBeUpdatedWithContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html
+  name: ICanBeUpdatedWithContext
+  nameWithType: ICanBeUpdatedWithContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext
+- uid: DrawnUi.Draw.ICanBeUpdated
+  commentId: T:DrawnUi.Draw.ICanBeUpdated
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdated.html
+  name: ICanBeUpdated
+  nameWithType: ICanBeUpdated
+  fullName: DrawnUi.Draw.ICanBeUpdated
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IImageEffect.Filter*
+  commentId: Overload:DrawnUi.Draw.IImageEffect.Filter
+  href: DrawnUi.Draw.IImageEffect.html#DrawnUi_Draw_IImageEffect_Filter
+  name: Filter
+  nameWithType: IImageEffect.Filter
+  fullName: DrawnUi.Draw.IImageEffect.Filter
+- uid: SkiaSharp.SKImageFilter
+  commentId: T:SkiaSharp.SKImageFilter
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skimagefilter
+  name: SKImageFilter
+  nameWithType: SKImageFilter
+  fullName: SkiaSharp.SKImageFilter
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.IImageEffect.CreateFilter*
+  commentId: Overload:DrawnUi.Draw.IImageEffect.CreateFilter
+  href: DrawnUi.Draw.IImageEffect.html#DrawnUi_Draw_IImageEffect_CreateFilter_SkiaSharp_SKRect_
+  name: CreateFilter
+  nameWithType: IImageEffect.CreateFilter
+  fullName: DrawnUi.Draw.IImageEffect.CreateFilter
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect

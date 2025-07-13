@@ -1,0 +1,1300 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Controls.RadioButtons
+  commentId: T:DrawnUi.Controls.RadioButtons
+  id: RadioButtons
+  parent: DrawnUi.Controls
+  children:
+  - DrawnUi.Controls.RadioButtons.#ctor
+  - DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton,DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton,System.String)
+  - DrawnUi.Controls.RadioButtons.All
+  - DrawnUi.Controls.RadioButtons.Changed
+  - DrawnUi.Controls.RadioButtons.GetSelected(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Controls.RadioButtons.GetSelected(System.String)
+  - DrawnUi.Controls.RadioButtons.GetSelectedIndex(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Controls.RadioButtons.GetSelectedIndex(System.String)
+  - DrawnUi.Controls.RadioButtons.GroupsByName
+  - DrawnUi.Controls.RadioButtons.GroupsByParent
+  - DrawnUi.Controls.RadioButtons.RemoveFromGroup(DrawnUi.Draw.SkiaControl,DrawnUi.Controls.ISkiaRadioButton)
+  - DrawnUi.Controls.RadioButtons.RemoveFromGroup(System.String,DrawnUi.Controls.ISkiaRadioButton)
+  - DrawnUi.Controls.RadioButtons.RemoveFromGroups(DrawnUi.Controls.ISkiaRadioButton)
+  - DrawnUi.Controls.RadioButtons.ReportValueChange(DrawnUi.Controls.ISkiaRadioButton,System.Boolean)
+  - DrawnUi.Controls.RadioButtons.Select(DrawnUi.Draw.SkiaControl,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: RadioButtons
+  nameWithType: RadioButtons
+  fullName: DrawnUi.Controls.RadioButtons
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RadioButtons
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: >-
+    Manages radio button groups, ensuring only one button is selected per group.
+
+    Supports grouping by parent control or by string name.
+  example: []
+  syntax:
+    content: public class RadioButtons
+    content.vb: Public Class RadioButtons
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Controls.RadioButtons.All
+  commentId: P:DrawnUi.Controls.RadioButtons.All
+  id: All
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: All
+  nameWithType: RadioButtons.All
+  fullName: DrawnUi.Controls.RadioButtons.All
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: All
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Gets the singleton instance of the RadioButtons manager.
+  example: []
+  syntax:
+    content: public static RadioButtons All { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Controls.RadioButtons
+    content.vb: Public Shared ReadOnly Property All As RadioButtons
+  overload: DrawnUi.Controls.RadioButtons.All*
+- uid: DrawnUi.Controls.RadioButtons.Changed
+  commentId: E:DrawnUi.Controls.RadioButtons.Changed
+  id: Changed
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: Changed
+  nameWithType: RadioButtons.Changed
+  fullName: DrawnUi.Controls.RadioButtons.Changed
+  type: Event
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Changed
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Occurs when a radio button selection changes in any group.
+  example: []
+  syntax:
+    content: public event EventHandler Changed
+    return:
+      type: System.EventHandler
+    content.vb: Public Event Changed As EventHandler
+- uid: DrawnUi.Controls.RadioButtons.GetSelected(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Controls.RadioButtons.GetSelected(DrawnUi.Draw.SkiaControl)
+  id: GetSelected(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: GetSelected(SkiaControl)
+  nameWithType: RadioButtons.GetSelected(SkiaControl)
+  fullName: DrawnUi.Controls.RadioButtons.GetSelected(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetSelected
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Gets the currently selected radio button in the group associated with the specified parent control.
+  example: []
+  syntax:
+    content: public SkiaControl GetSelected(SkiaControl parent)
+    parameters:
+    - id: parent
+      type: DrawnUi.Draw.SkiaControl
+      description: The parent control that defines the radio button group.
+    return:
+      type: DrawnUi.Draw.SkiaControl
+      description: The selected SkiaControl, or null if no button is selected or group doesn't exist.
+    content.vb: Public Function GetSelected(parent As SkiaControl) As SkiaControl
+  overload: DrawnUi.Controls.RadioButtons.GetSelected*
+- uid: DrawnUi.Controls.RadioButtons.GetSelected(System.String)
+  commentId: M:DrawnUi.Controls.RadioButtons.GetSelected(System.String)
+  id: GetSelected(System.String)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: GetSelected(string)
+  nameWithType: RadioButtons.GetSelected(string)
+  fullName: DrawnUi.Controls.RadioButtons.GetSelected(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetSelected
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 50
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Gets the currently selected radio button in the group with the specified name.
+  example: []
+  syntax:
+    content: public SkiaControl GetSelected(string groupName)
+    parameters:
+    - id: groupName
+      type: System.String
+      description: The name of the radio button group.
+    return:
+      type: DrawnUi.Draw.SkiaControl
+      description: The selected SkiaControl, or null if no button is selected or group doesn't exist.
+    content.vb: Public Function GetSelected(groupName As String) As SkiaControl
+  overload: DrawnUi.Controls.RadioButtons.GetSelected*
+  nameWithType.vb: RadioButtons.GetSelected(String)
+  fullName.vb: DrawnUi.Controls.RadioButtons.GetSelected(String)
+  name.vb: GetSelected(String)
+- uid: DrawnUi.Controls.RadioButtons.GetSelectedIndex(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Controls.RadioButtons.GetSelectedIndex(DrawnUi.Draw.SkiaControl)
+  id: GetSelectedIndex(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: GetSelectedIndex(SkiaControl)
+  nameWithType: RadioButtons.GetSelectedIndex(SkiaControl)
+  fullName: DrawnUi.Controls.RadioButtons.GetSelectedIndex(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetSelectedIndex
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 66
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Gets the index of the currently selected radio button in the group associated with the specified parent control.
+  example: []
+  syntax:
+    content: public int GetSelectedIndex(SkiaControl parent)
+    parameters:
+    - id: parent
+      type: DrawnUi.Draw.SkiaControl
+      description: The parent control that defines the radio button group.
+    return:
+      type: System.Int32
+      description: The zero-based index of the selected button, or -1 if no button is selected or group doesn't exist.
+    content.vb: Public Function GetSelectedIndex(parent As SkiaControl) As Integer
+  overload: DrawnUi.Controls.RadioButtons.GetSelectedIndex*
+- uid: DrawnUi.Controls.RadioButtons.GetSelectedIndex(System.String)
+  commentId: M:DrawnUi.Controls.RadioButtons.GetSelectedIndex(System.String)
+  id: GetSelectedIndex(System.String)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: GetSelectedIndex(string)
+  nameWithType: RadioButtons.GetSelectedIndex(string)
+  fullName: DrawnUi.Controls.RadioButtons.GetSelectedIndex(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetSelectedIndex
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 81
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Gets the index of the currently selected radio button in the group with the specified name.
+  example: []
+  syntax:
+    content: public int GetSelectedIndex(string groupName)
+    parameters:
+    - id: groupName
+      type: System.String
+      description: The name of the radio button group.
+    return:
+      type: System.Int32
+      description: The zero-based index of the selected button, or -1 if no button is selected or group doesn't exist.
+    content.vb: Public Function GetSelectedIndex(groupName As String) As Integer
+  overload: DrawnUi.Controls.RadioButtons.GetSelectedIndex*
+  nameWithType.vb: RadioButtons.GetSelectedIndex(String)
+  fullName.vb: DrawnUi.Controls.RadioButtons.GetSelectedIndex(String)
+  name.vb: GetSelectedIndex(String)
+- uid: DrawnUi.Controls.RadioButtons.Select(DrawnUi.Draw.SkiaControl,System.Int32)
+  commentId: M:DrawnUi.Controls.RadioButtons.Select(DrawnUi.Draw.SkiaControl,System.Int32)
+  id: Select(DrawnUi.Draw.SkiaControl,System.Int32)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: Select(SkiaControl, int)
+  nameWithType: RadioButtons.Select(SkiaControl, int)
+  fullName: DrawnUi.Controls.RadioButtons.Select(DrawnUi.Draw.SkiaControl, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Select
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 110
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Selects the radio button at the specified index in the group associated with the container control.
+  example: []
+  syntax:
+    content: public void Select(SkiaControl container, int index)
+    parameters:
+    - id: container
+      type: DrawnUi.Draw.SkiaControl
+      description: The parent control that defines the radio button group.
+    - id: index
+      type: System.Int32
+      description: The zero-based index of the button to select.
+    content.vb: Public Sub [Select](container As SkiaControl, index As Integer)
+  overload: DrawnUi.Controls.RadioButtons.Select*
+  nameWithType.vb: RadioButtons.Select(SkiaControl, Integer)
+  fullName.vb: DrawnUi.Controls.RadioButtons.Select(DrawnUi.Draw.SkiaControl, Integer)
+  name.vb: Select(SkiaControl, Integer)
+- uid: DrawnUi.Controls.RadioButtons.GroupsByName
+  commentId: P:DrawnUi.Controls.RadioButtons.GroupsByName
+  id: GroupsByName
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: GroupsByName
+  nameWithType: RadioButtons.GroupsByName
+  fullName: DrawnUi.Controls.RadioButtons.GroupsByName
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GroupsByName
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 124
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected Dictionary<string, List<ISkiaRadioButton>> GroupsByName { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{DrawnUi.Controls.ISkiaRadioButton}}
+    content.vb: Protected Property GroupsByName As Dictionary(Of String, List(Of ISkiaRadioButton))
+  overload: DrawnUi.Controls.RadioButtons.GroupsByName*
+- uid: DrawnUi.Controls.RadioButtons.GroupsByParent
+  commentId: P:DrawnUi.Controls.RadioButtons.GroupsByParent
+  id: GroupsByParent
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: GroupsByParent
+  nameWithType: RadioButtons.GroupsByParent
+  fullName: DrawnUi.Controls.RadioButtons.GroupsByParent
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GroupsByParent
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 125
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected Dictionary<SkiaControl, List<ISkiaRadioButton>> GroupsByParent { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,System.Collections.Generic.List{DrawnUi.Controls.ISkiaRadioButton}}
+    content.vb: Protected Property GroupsByParent As Dictionary(Of SkiaControl, List(Of ISkiaRadioButton))
+  overload: DrawnUi.Controls.RadioButtons.GroupsByParent*
+- uid: DrawnUi.Controls.RadioButtons.#ctor
+  commentId: M:DrawnUi.Controls.RadioButtons.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: RadioButtons()
+  nameWithType: RadioButtons.RadioButtons()
+  fullName: DrawnUi.Controls.RadioButtons.RadioButtons()
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 130
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Initializes a new instance of the RadioButtons class.
+  example: []
+  syntax:
+    content: public RadioButtons()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Controls.RadioButtons.#ctor*
+  nameWithType.vb: RadioButtons.New()
+  fullName.vb: DrawnUi.Controls.RadioButtons.New()
+  name.vb: New()
+- uid: DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton,System.String)
+  commentId: M:DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton,System.String)
+  id: AddToGroup(DrawnUi.Controls.ISkiaRadioButton,System.String)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: AddToGroup(ISkiaRadioButton, string)
+  nameWithType: RadioButtons.AddToGroup(ISkiaRadioButton, string)
+  fullName: DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton, string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddToGroup
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 141
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Adds a radio button control to a named group. Ensures at least one button in the group is selected.
+  example: []
+  syntax:
+    content: public void AddToGroup(ISkiaRadioButton control, string groupName)
+    parameters:
+    - id: control
+      type: DrawnUi.Controls.ISkiaRadioButton
+      description: The radio button control to add to the group.
+    - id: groupName
+      type: System.String
+      description: The name of the group to add the control to.
+    content.vb: Public Sub AddToGroup(control As ISkiaRadioButton, groupName As String)
+  overload: DrawnUi.Controls.RadioButtons.AddToGroup*
+  nameWithType.vb: RadioButtons.AddToGroup(ISkiaRadioButton, String)
+  fullName.vb: DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton, String)
+  name.vb: AddToGroup(ISkiaRadioButton, String)
+- uid: DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton,DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton,DrawnUi.Draw.SkiaControl)
+  id: AddToGroup(DrawnUi.Controls.ISkiaRadioButton,DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: AddToGroup(ISkiaRadioButton, SkiaControl)
+  nameWithType: RadioButtons.AddToGroup(ISkiaRadioButton, SkiaControl)
+  fullName: DrawnUi.Controls.RadioButtons.AddToGroup(DrawnUi.Controls.ISkiaRadioButton, DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddToGroup
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 156
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Adds a radio button control to a parent-based group. Ensures at least one button in the group is selected.
+  example: []
+  syntax:
+    content: public void AddToGroup(ISkiaRadioButton control, SkiaControl parent)
+    parameters:
+    - id: control
+      type: DrawnUi.Controls.ISkiaRadioButton
+      description: The radio button control to add to the group.
+    - id: parent
+      type: DrawnUi.Draw.SkiaControl
+      description: The parent control that defines the group.
+    content.vb: Public Sub AddToGroup(control As ISkiaRadioButton, parent As SkiaControl)
+  overload: DrawnUi.Controls.RadioButtons.AddToGroup*
+- uid: DrawnUi.Controls.RadioButtons.RemoveFromGroup(System.String,DrawnUi.Controls.ISkiaRadioButton)
+  commentId: M:DrawnUi.Controls.RadioButtons.RemoveFromGroup(System.String,DrawnUi.Controls.ISkiaRadioButton)
+  id: RemoveFromGroup(System.String,DrawnUi.Controls.ISkiaRadioButton)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: RemoveFromGroup(string, ISkiaRadioButton)
+  nameWithType: RadioButtons.RemoveFromGroup(string, ISkiaRadioButton)
+  fullName: DrawnUi.Controls.RadioButtons.RemoveFromGroup(string, DrawnUi.Controls.ISkiaRadioButton)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RemoveFromGroup
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 171
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Removes a radio button control from a named group. Ensures at least one button remains selected in the group.
+  example: []
+  syntax:
+    content: public void RemoveFromGroup(string groupName, ISkiaRadioButton control)
+    parameters:
+    - id: groupName
+      type: System.String
+      description: The name of the group to remove the control from.
+    - id: control
+      type: DrawnUi.Controls.ISkiaRadioButton
+      description: The radio button control to remove.
+    content.vb: Public Sub RemoveFromGroup(groupName As String, control As ISkiaRadioButton)
+  overload: DrawnUi.Controls.RadioButtons.RemoveFromGroup*
+  nameWithType.vb: RadioButtons.RemoveFromGroup(String, ISkiaRadioButton)
+  fullName.vb: DrawnUi.Controls.RadioButtons.RemoveFromGroup(String, DrawnUi.Controls.ISkiaRadioButton)
+  name.vb: RemoveFromGroup(String, ISkiaRadioButton)
+- uid: DrawnUi.Controls.RadioButtons.RemoveFromGroup(DrawnUi.Draw.SkiaControl,DrawnUi.Controls.ISkiaRadioButton)
+  commentId: M:DrawnUi.Controls.RadioButtons.RemoveFromGroup(DrawnUi.Draw.SkiaControl,DrawnUi.Controls.ISkiaRadioButton)
+  id: RemoveFromGroup(DrawnUi.Draw.SkiaControl,DrawnUi.Controls.ISkiaRadioButton)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: RemoveFromGroup(SkiaControl, ISkiaRadioButton)
+  nameWithType: RadioButtons.RemoveFromGroup(SkiaControl, ISkiaRadioButton)
+  fullName: DrawnUi.Controls.RadioButtons.RemoveFromGroup(DrawnUi.Draw.SkiaControl, DrawnUi.Controls.ISkiaRadioButton)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RemoveFromGroup
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 185
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Removes a radio button control from a parent-based group. Ensures at least one button remains selected in the group.
+  example: []
+  syntax:
+    content: public void RemoveFromGroup(SkiaControl parent, ISkiaRadioButton control)
+    parameters:
+    - id: parent
+      type: DrawnUi.Draw.SkiaControl
+      description: The parent control that defines the group to remove the control from.
+    - id: control
+      type: DrawnUi.Controls.ISkiaRadioButton
+      description: The radio button control to remove.
+    content.vb: Public Sub RemoveFromGroup(parent As SkiaControl, control As ISkiaRadioButton)
+  overload: DrawnUi.Controls.RadioButtons.RemoveFromGroup*
+- uid: DrawnUi.Controls.RadioButtons.RemoveFromGroups(DrawnUi.Controls.ISkiaRadioButton)
+  commentId: M:DrawnUi.Controls.RadioButtons.RemoveFromGroups(DrawnUi.Controls.ISkiaRadioButton)
+  id: RemoveFromGroups(DrawnUi.Controls.ISkiaRadioButton)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: RemoveFromGroups(ISkiaRadioButton)
+  nameWithType: RadioButtons.RemoveFromGroups(ISkiaRadioButton)
+  fullName: DrawnUi.Controls.RadioButtons.RemoveFromGroups(DrawnUi.Controls.ISkiaRadioButton)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RemoveFromGroups
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 198
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Removes a radio button control from all groups it belongs to. Ensures at least one button remains selected in affected groups.
+  example: []
+  syntax:
+    content: public void RemoveFromGroups(ISkiaRadioButton control)
+    parameters:
+    - id: control
+      type: DrawnUi.Controls.ISkiaRadioButton
+      description: The radio button control to remove from all groups.
+    content.vb: Public Sub RemoveFromGroups(control As ISkiaRadioButton)
+  overload: DrawnUi.Controls.RadioButtons.RemoveFromGroups*
+- uid: DrawnUi.Controls.RadioButtons.ReportValueChange(DrawnUi.Controls.ISkiaRadioButton,System.Boolean)
+  commentId: M:DrawnUi.Controls.RadioButtons.ReportValueChange(DrawnUi.Controls.ISkiaRadioButton,System.Boolean)
+  id: ReportValueChange(DrawnUi.Controls.ISkiaRadioButton,System.Boolean)
+  parent: DrawnUi.Controls.RadioButtons
+  langs:
+  - csharp
+  - vb
+  name: ReportValueChange(ISkiaRadioButton, bool)
+  nameWithType: RadioButtons.ReportValueChange(ISkiaRadioButton, bool)
+  fullName: DrawnUi.Controls.RadioButtons.ReportValueChange(DrawnUi.Controls.ISkiaRadioButton, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReportValueChange
+    path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
+    startLine: 245
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Called by radio button controls to report value changes. Manages mutual exclusion within groups and fires the Changed event.
+  example: []
+  syntax:
+    content: public void ReportValueChange(ISkiaRadioButton control, bool newValue)
+    parameters:
+    - id: control
+      type: DrawnUi.Controls.ISkiaRadioButton
+      description: The radio button control reporting the change.
+    - id: newValue
+      type: System.Boolean
+      description: The new value of the control (true for selected, false for unselected).
+    content.vb: Public Sub ReportValueChange(control As ISkiaRadioButton, newValue As Boolean)
+  overload: DrawnUi.Controls.RadioButtons.ReportValueChange*
+  nameWithType.vb: RadioButtons.ReportValueChange(ISkiaRadioButton, Boolean)
+  fullName.vb: DrawnUi.Controls.RadioButtons.ReportValueChange(DrawnUi.Controls.ISkiaRadioButton, Boolean)
+  name.vb: ReportValueChange(ISkiaRadioButton, Boolean)
+references:
+- uid: DrawnUi.Controls
+  commentId: N:DrawnUi.Controls
+  href: DrawnUi.html
+  name: DrawnUi.Controls
+  nameWithType: DrawnUi.Controls
+  fullName: DrawnUi.Controls
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Controls.RadioButtons.All*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.All
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_All
+  name: All
+  nameWithType: RadioButtons.All
+  fullName: DrawnUi.Controls.RadioButtons.All
+- uid: DrawnUi.Controls.RadioButtons
+  commentId: T:DrawnUi.Controls.RadioButtons
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.RadioButtons.html
+  name: RadioButtons
+  nameWithType: RadioButtons
+  fullName: DrawnUi.Controls.RadioButtons
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler
+- uid: DrawnUi.Controls.RadioButtons.GetSelected*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.GetSelected
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_GetSelected_DrawnUi_Draw_SkiaControl_
+  name: GetSelected
+  nameWithType: RadioButtons.GetSelected
+  fullName: DrawnUi.Controls.RadioButtons.GetSelected
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Controls.RadioButtons.GetSelectedIndex*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.GetSelectedIndex
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_GetSelectedIndex_DrawnUi_Draw_SkiaControl_
+  name: GetSelectedIndex
+  nameWithType: RadioButtons.GetSelectedIndex
+  fullName: DrawnUi.Controls.RadioButtons.GetSelectedIndex
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Controls.RadioButtons.Select*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.Select
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_Select_DrawnUi_Draw_SkiaControl_System_Int32_
+  name: Select
+  nameWithType: RadioButtons.Select
+  fullName: DrawnUi.Controls.RadioButtons.Select
+- uid: DrawnUi.Controls.RadioButtons.GroupsByName*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.GroupsByName
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_GroupsByName
+  name: GroupsByName
+  nameWithType: RadioButtons.GroupsByName
+  fullName: DrawnUi.Controls.RadioButtons.GroupsByName
+- uid: System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{DrawnUi.Controls.ISkiaRadioButton}}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{DrawnUi.Controls.ISkiaRadioButton}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, List<ISkiaRadioButton>>
+  nameWithType: Dictionary<string, List<ISkiaRadioButton>>
+  fullName: System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<DrawnUi.Controls.ISkiaRadioButton>>
+  nameWithType.vb: Dictionary(Of String, List(Of ISkiaRadioButton))
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, System.Collections.Generic.List(Of DrawnUi.Controls.ISkiaRadioButton))
+  name.vb: Dictionary(Of String, List(Of ISkiaRadioButton))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Controls.ISkiaRadioButton
+    name: ISkiaRadioButton
+    href: DrawnUi.Controls.ISkiaRadioButton.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.ISkiaRadioButton
+    name: ISkiaRadioButton
+    href: DrawnUi.Controls.ISkiaRadioButton.html
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Controls.RadioButtons.GroupsByParent*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.GroupsByParent
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_GroupsByParent
+  name: GroupsByParent
+  nameWithType: RadioButtons.GroupsByParent
+  fullName: DrawnUi.Controls.RadioButtons.GroupsByParent
+- uid: System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,System.Collections.Generic.List{DrawnUi.Controls.ISkiaRadioButton}}
+  commentId: T:System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,System.Collections.Generic.List{DrawnUi.Controls.ISkiaRadioButton}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<SkiaControl, List<ISkiaRadioButton>>
+  nameWithType: Dictionary<SkiaControl, List<ISkiaRadioButton>>
+  fullName: System.Collections.Generic.Dictionary<DrawnUi.Draw.SkiaControl, System.Collections.Generic.List<DrawnUi.Controls.ISkiaRadioButton>>
+  nameWithType.vb: Dictionary(Of SkiaControl, List(Of ISkiaRadioButton))
+  fullName.vb: System.Collections.Generic.Dictionary(Of DrawnUi.Draw.SkiaControl, System.Collections.Generic.List(Of DrawnUi.Controls.ISkiaRadioButton))
+  name.vb: Dictionary(Of SkiaControl, List(Of ISkiaRadioButton))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Controls.ISkiaRadioButton
+    name: ISkiaRadioButton
+    href: DrawnUi.Controls.ISkiaRadioButton.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.ISkiaRadioButton
+    name: ISkiaRadioButton
+    href: DrawnUi.Controls.ISkiaRadioButton.html
+  - name: )
+  - name: )
+- uid: DrawnUi.Controls.RadioButtons.#ctor*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.#ctor
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons__ctor
+  name: RadioButtons
+  nameWithType: RadioButtons.RadioButtons
+  fullName: DrawnUi.Controls.RadioButtons.RadioButtons
+  nameWithType.vb: RadioButtons.New
+  fullName.vb: DrawnUi.Controls.RadioButtons.New
+  name.vb: New
+- uid: DrawnUi.Controls.RadioButtons.AddToGroup*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.AddToGroup
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_AddToGroup_DrawnUi_Controls_ISkiaRadioButton_System_String_
+  name: AddToGroup
+  nameWithType: RadioButtons.AddToGroup
+  fullName: DrawnUi.Controls.RadioButtons.AddToGroup
+- uid: DrawnUi.Controls.ISkiaRadioButton
+  commentId: T:DrawnUi.Controls.ISkiaRadioButton
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.ISkiaRadioButton.html
+  name: ISkiaRadioButton
+  nameWithType: ISkiaRadioButton
+  fullName: DrawnUi.Controls.ISkiaRadioButton
+- uid: DrawnUi.Controls.RadioButtons.RemoveFromGroup*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.RemoveFromGroup
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_RemoveFromGroup_System_String_DrawnUi_Controls_ISkiaRadioButton_
+  name: RemoveFromGroup
+  nameWithType: RadioButtons.RemoveFromGroup
+  fullName: DrawnUi.Controls.RadioButtons.RemoveFromGroup
+- uid: DrawnUi.Controls.RadioButtons.RemoveFromGroups*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.RemoveFromGroups
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_RemoveFromGroups_DrawnUi_Controls_ISkiaRadioButton_
+  name: RemoveFromGroups
+  nameWithType: RadioButtons.RemoveFromGroups
+  fullName: DrawnUi.Controls.RadioButtons.RemoveFromGroups
+- uid: DrawnUi.Controls.RadioButtons.ReportValueChange*
+  commentId: Overload:DrawnUi.Controls.RadioButtons.ReportValueChange
+  href: DrawnUi.Controls.RadioButtons.html#DrawnUi_Controls_RadioButtons_ReportValueChange_DrawnUi_Controls_ISkiaRadioButton_System_Boolean_
+  name: ReportValueChange
+  nameWithType: RadioButtons.ReportValueChange
+  fullName: DrawnUi.Controls.RadioButtons.ReportValueChange
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

@@ -1,0 +1,231 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.StorageType
+  commentId: T:DrawnUi.Infrastructure.StorageType
+  id: StorageType
+  parent: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.StorageType.Cache
+  - DrawnUi.Infrastructure.StorageType.Internal
+  - DrawnUi.Infrastructure.StorageType.Public
+  langs:
+  - csharp
+  - vb
+  name: StorageType
+  nameWithType: StorageType
+  fullName: DrawnUi.Infrastructure.StorageType
+  type: Enum
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StorageType
+    path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public enum StorageType
+    content.vb: Public Enum StorageType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.StorageType.Cache
+  commentId: F:DrawnUi.Infrastructure.StorageType.Cache
+  id: Cache
+  parent: DrawnUi.Infrastructure.StorageType
+  langs:
+  - csharp
+  - vb
+  name: Cache
+  nameWithType: StorageType.Cache
+  fullName: DrawnUi.Infrastructure.StorageType.Cache
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Cache
+    path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: Cache = 0
+    return:
+      type: DrawnUi.Infrastructure.StorageType
+- uid: DrawnUi.Infrastructure.StorageType.Internal
+  commentId: F:DrawnUi.Infrastructure.StorageType.Internal
+  id: Internal
+  parent: DrawnUi.Infrastructure.StorageType
+  langs:
+  - csharp
+  - vb
+  name: Internal
+  nameWithType: StorageType.Internal
+  fullName: DrawnUi.Infrastructure.StorageType.Internal
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Internal
+    path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: Internal = 1
+    return:
+      type: DrawnUi.Infrastructure.StorageType
+- uid: DrawnUi.Infrastructure.StorageType.Public
+  commentId: F:DrawnUi.Infrastructure.StorageType.Public
+  id: Public
+  parent: DrawnUi.Infrastructure.StorageType
+  langs:
+  - csharp
+  - vb
+  name: Public
+  nameWithType: StorageType.Public
+  fullName: DrawnUi.Infrastructure.StorageType.Public
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Public
+    path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: Public = 2
+    return:
+      type: DrawnUi.Infrastructure.StorageType
+references:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Infrastructure.StorageType
+  commentId: T:DrawnUi.Infrastructure.StorageType
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.StorageType.html
+  name: StorageType
+  nameWithType: StorageType
+  fullName: DrawnUi.Infrastructure.StorageType

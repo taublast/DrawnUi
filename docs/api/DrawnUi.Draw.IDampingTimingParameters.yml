@@ -1,0 +1,250 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IDampingTimingParameters
+  commentId: T:DrawnUi.Draw.IDampingTimingParameters
+  id: IDampingTimingParameters
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt(System.Single)
+  langs:
+  - csharp
+  - vb
+  name: IDampingTimingParameters
+  nameWithType: IDampingTimingParameters
+  fullName: DrawnUi.Draw.IDampingTimingParameters
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IDampingTimingParameters
+    path: ../src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface IDampingTimingParameters : ITimingParameters'
+    content.vb: Public Interface IDampingTimingParameters Inherits ITimingParameters
+  inheritedMembers:
+  - DrawnUi.Draw.ITimingParameters.DurationSecs
+  - DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt(System.Single)
+  commentId: M:DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt(System.Single)
+  id: AmplitudeAt(System.Single)
+  parent: DrawnUi.Draw.IDampingTimingParameters
+  langs:
+  - csharp
+  - vb
+  name: AmplitudeAt(float)
+  nameWithType: IDampingTimingParameters.AmplitudeAt(float)
+  fullName: DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AmplitudeAt
+    path: ../src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: float AmplitudeAt(float offsetSecs)
+    parameters:
+    - id: offsetSecs
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Function AmplitudeAt(offsetSecs As Single) As Single
+  overload: DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt*
+  nameWithType.vb: IDampingTimingParameters.AmplitudeAt(Single)
+  fullName.vb: DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt(Single)
+  name.vb: AmplitudeAt(Single)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.ITimingParameters.DurationSecs
+  commentId: P:DrawnUi.Draw.ITimingParameters.DurationSecs
+  parent: DrawnUi.Draw.ITimingParameters
+  href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_DurationSecs
+  name: DurationSecs
+  nameWithType: ITimingParameters.DurationSecs
+  fullName: DrawnUi.Draw.ITimingParameters.DurationSecs
+- uid: DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+  commentId: M:DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+  parent: DrawnUi.Draw.ITimingParameters
+  isExternal: true
+  href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_ValueAt_System_Single_
+  name: ValueAt(float)
+  nameWithType: ITimingParameters.ValueAt(float)
+  fullName: DrawnUi.Draw.ITimingParameters.ValueAt(float)
+  nameWithType.vb: ITimingParameters.ValueAt(Single)
+  fullName.vb: DrawnUi.Draw.ITimingParameters.ValueAt(Single)
+  name.vb: ValueAt(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ITimingParameters.ValueAt(System.Single)
+    name: ValueAt
+    href: DrawnUi.Draw.ITimingParameters.html#DrawnUi_Draw_ITimingParameters_ValueAt_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ITimingParameters
+  commentId: T:DrawnUi.Draw.ITimingParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ITimingParameters.html
+  name: ITimingParameters
+  nameWithType: ITimingParameters
+  fullName: DrawnUi.Draw.ITimingParameters
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt*
+  commentId: Overload:DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt
+  href: DrawnUi.Draw.IDampingTimingParameters.html#DrawnUi_Draw_IDampingTimingParameters_AmplitudeAt_System_Single_
+  name: AmplitudeAt
+  nameWithType: IDampingTimingParameters.AmplitudeAt
+  fullName: DrawnUi.Draw.IDampingTimingParameters.AmplitudeAt
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

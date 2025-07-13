@@ -1,0 +1,255 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaButton.ButtonStyleType
+  commentId: T:DrawnUi.Draw.SkiaButton.ButtonStyleType
+  id: SkiaButton.ButtonStyleType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaButton.ButtonStyleType.Contained
+  - DrawnUi.Draw.SkiaButton.ButtonStyleType.Outlined
+  - DrawnUi.Draw.SkiaButton.ButtonStyleType.Text
+  langs:
+  - csharp
+  - vb
+  name: SkiaButton.ButtonStyleType
+  nameWithType: SkiaButton.ButtonStyleType
+  fullName: DrawnUi.Draw.SkiaButton.ButtonStyleType
+  type: Enum
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ButtonStyleType
+    path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+    startLine: 762
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Defines the button style variants available for different visual appearances.
+  example: []
+  syntax:
+    content: public enum SkiaButton.ButtonStyleType
+    content.vb: Public Enum SkiaButton.ButtonStyleType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaButton.ButtonStyleType.Contained
+  commentId: F:DrawnUi.Draw.SkiaButton.ButtonStyleType.Contained
+  id: Contained
+  parent: DrawnUi.Draw.SkiaButton.ButtonStyleType
+  langs:
+  - csharp
+  - vb
+  name: Contained
+  nameWithType: SkiaButton.ButtonStyleType.Contained
+  fullName: DrawnUi.Draw.SkiaButton.ButtonStyleType.Contained
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Contained
+    path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+    startLine: 767
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Standard filled button with background color and text
+  example: []
+  syntax:
+    content: Contained = 0
+    return:
+      type: DrawnUi.Draw.SkiaButton.ButtonStyleType
+- uid: DrawnUi.Draw.SkiaButton.ButtonStyleType.Outlined
+  commentId: F:DrawnUi.Draw.SkiaButton.ButtonStyleType.Outlined
+  id: Outlined
+  parent: DrawnUi.Draw.SkiaButton.ButtonStyleType
+  langs:
+  - csharp
+  - vb
+  name: Outlined
+  nameWithType: SkiaButton.ButtonStyleType.Outlined
+  fullName: DrawnUi.Draw.SkiaButton.ButtonStyleType.Outlined
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Outlined
+    path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+    startLine: 772
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Button with outline border and transparent background
+  example: []
+  syntax:
+    content: Outlined = 1
+    return:
+      type: DrawnUi.Draw.SkiaButton.ButtonStyleType
+- uid: DrawnUi.Draw.SkiaButton.ButtonStyleType.Text
+  commentId: F:DrawnUi.Draw.SkiaButton.ButtonStyleType.Text
+  id: Text
+  parent: DrawnUi.Draw.SkiaButton.ButtonStyleType
+  langs:
+  - csharp
+  - vb
+  name: Text
+  nameWithType: SkiaButton.ButtonStyleType.Text
+  fullName: DrawnUi.Draw.SkiaButton.ButtonStyleType.Text
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Text
+    path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
+    startLine: 777
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Button with no background or border, only text
+  example: []
+  syntax:
+    content: Text = 2
+    return:
+      type: DrawnUi.Draw.SkiaButton.ButtonStyleType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaButton.ButtonStyleType
+  commentId: T:DrawnUi.Draw.SkiaButton.ButtonStyleType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaButton.html
+  name: SkiaButton.ButtonStyleType
+  nameWithType: SkiaButton.ButtonStyleType
+  fullName: DrawnUi.Draw.SkiaButton.ButtonStyleType
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaButton
+    name: SkiaButton
+    href: DrawnUi.Draw.SkiaButton.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaButton.ButtonStyleType
+    name: ButtonStyleType
+    href: DrawnUi.Draw.SkiaButton.ButtonStyleType.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaButton
+    name: SkiaButton
+    href: DrawnUi.Draw.SkiaButton.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaButton.ButtonStyleType
+    name: ButtonStyleType
+    href: DrawnUi.Draw.SkiaButton.ButtonStyleType.html

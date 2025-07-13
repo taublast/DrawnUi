@@ -1,0 +1,1193 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.DynamicGrid`1
+  commentId: T:DrawnUi.Draw.DynamicGrid`1
+  id: DynamicGrid`1
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.DynamicGrid`1.Add(`0,System.Int32,System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.Clear
+  - DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.Get(System.Int32,System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.GetChildren
+  - DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans
+  - DrawnUi.Draw.DynamicGrid`1.GetColumn(System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.GetCount
+  - DrawnUi.Draw.DynamicGrid`1.GetRow(System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.MaxColumns
+  - DrawnUi.Draw.DynamicGrid`1.MaxRows
+  - DrawnUi.Draw.DynamicGrid`1.grid
+  langs:
+  - csharp
+  - vb
+  name: DynamicGrid<T>
+  nameWithType: DynamicGrid<T>
+  fullName: DrawnUi.Draw.DynamicGrid<T>
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DynamicGrid
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class DynamicGrid<T>
+    typeParameters:
+    - id: T
+    content.vb: Public Class DynamicGrid(Of T)
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - DrawnUi.Draw.LayoutStructure
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  nameWithType.vb: DynamicGrid(Of T)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T)
+  name.vb: DynamicGrid(Of T)
+- uid: DrawnUi.Draw.DynamicGrid`1.grid
+  commentId: F:DrawnUi.Draw.DynamicGrid`1.grid
+  id: grid
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: grid
+  nameWithType: DynamicGrid<T>.grid
+  fullName: DrawnUi.Draw.DynamicGrid<T>.grid
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: grid
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected Dictionary<(int, int), T> grid
+    return:
+      type: System.Collections.Generic.Dictionary{System.ValueTuple{System.Int32,System.Int32},{T}}
+    content.vb: Protected grid As Dictionary(Of (Integer, Integer), T)
+  nameWithType.vb: DynamicGrid(Of T).grid
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).grid
+- uid: DrawnUi.Draw.DynamicGrid`1.MaxRows
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.MaxRows
+  id: MaxRows
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: MaxRows
+  nameWithType: DynamicGrid<T>.MaxRows
+  fullName: DrawnUi.Draw.DynamicGrid<T>.MaxRows
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MaxRows
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int MaxRows { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxRows As Integer
+  overload: DrawnUi.Draw.DynamicGrid`1.MaxRows*
+  nameWithType.vb: DynamicGrid(Of T).MaxRows
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).MaxRows
+- uid: DrawnUi.Draw.DynamicGrid`1.MaxColumns
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.MaxColumns
+  id: MaxColumns
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: MaxColumns
+  nameWithType: DynamicGrid<T>.MaxColumns
+  fullName: DrawnUi.Draw.DynamicGrid<T>.MaxColumns
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MaxColumns
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int MaxColumns { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxColumns As Integer
+  overload: DrawnUi.Draw.DynamicGrid`1.MaxColumns*
+  nameWithType.vb: DynamicGrid(Of T).MaxColumns
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).MaxColumns
+- uid: DrawnUi.Draw.DynamicGrid`1.Add(`0,System.Int32,System.Int32)
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.Add(`0,System.Int32,System.Int32)
+  id: Add(`0,System.Int32,System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: Add(T, int, int)
+  nameWithType: DynamicGrid<T>.Add(T, int, int)
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Add(T, int, int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Add
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Add(T item, int column, int row)
+    parameters:
+    - id: item
+      type: '{T}'
+    - id: column
+      type: System.Int32
+    - id: row
+      type: System.Int32
+    content.vb: Public Sub Add(item As T, column As Integer, row As Integer)
+  overload: DrawnUi.Draw.DynamicGrid`1.Add*
+  nameWithType.vb: DynamicGrid(Of T).Add(T, Integer, Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Add(T, Integer, Integer)
+  name.vb: Add(T, Integer, Integer)
+- uid: DrawnUi.Draw.DynamicGrid`1.Get(System.Int32,System.Int32)
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.Get(System.Int32,System.Int32)
+  id: Get(System.Int32,System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: Get(int, int)
+  nameWithType: DynamicGrid<T>.Get(int, int)
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Get(int, int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Get
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public T Get(int column, int row)
+    parameters:
+    - id: column
+      type: System.Int32
+    - id: row
+      type: System.Int32
+    return:
+      type: '{T}'
+    content.vb: Public Function [Get](column As Integer, row As Integer) As T
+  overload: DrawnUi.Draw.DynamicGrid`1.Get*
+  nameWithType.vb: DynamicGrid(Of T).Get(Integer, Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Get(Integer, Integer)
+  name.vb: Get(Integer, Integer)
+- uid: DrawnUi.Draw.DynamicGrid`1.GetRow(System.Int32)
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.GetRow(System.Int32)
+  id: GetRow(System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: GetRow(int)
+  nameWithType: DynamicGrid<T>.GetRow(int)
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetRow(int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetRow
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 50
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public IEnumerable<T> GetRow(int row)
+    parameters:
+    - id: row
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public Function GetRow(row As Integer) As IEnumerable(Of T)
+  overload: DrawnUi.Draw.DynamicGrid`1.GetRow*
+  nameWithType.vb: DynamicGrid(Of T).GetRow(Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetRow(Integer)
+  name.vb: GetRow(Integer)
+- uid: DrawnUi.Draw.DynamicGrid`1.GetColumn(System.Int32)
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.GetColumn(System.Int32)
+  id: GetColumn(System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: GetColumn(int)
+  nameWithType: DynamicGrid<T>.GetColumn(int)
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetColumn(int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetColumn
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 61
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public IEnumerable<T> GetColumn(int column)
+    parameters:
+    - id: column
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public Function GetColumn(column As Integer) As IEnumerable(Of T)
+  overload: DrawnUi.Draw.DynamicGrid`1.GetColumn*
+  nameWithType.vb: DynamicGrid(Of T).GetColumn(Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetColumn(Integer)
+  name.vb: GetColumn(Integer)
+- uid: DrawnUi.Draw.DynamicGrid`1.Clear
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.Clear
+  id: Clear
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: DynamicGrid<T>.Clear()
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Clear()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clear
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 72
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: DrawnUi.Draw.DynamicGrid`1.Clear*
+  nameWithType.vb: DynamicGrid(Of T).Clear()
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Clear()
+- uid: DrawnUi.Draw.DynamicGrid`1.GetChildren
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.GetChildren
+  id: GetChildren
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: GetChildren()
+  nameWithType: DynamicGrid<T>.GetChildren()
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetChildren()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetChildren
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 79
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public IEnumerable<T> GetChildren()
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public Function GetChildren() As IEnumerable(Of T)
+  overload: DrawnUi.Draw.DynamicGrid`1.GetChildren*
+  nameWithType.vb: DynamicGrid(Of T).GetChildren()
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetChildren()
+- uid: DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
+  id: FindChildAtIndex(System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: FindChildAtIndex(int)
+  nameWithType: DynamicGrid<T>.FindChildAtIndex(int)
+  fullName: DrawnUi.Draw.DynamicGrid<T>.FindChildAtIndex(int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FindChildAtIndex
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 84
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public T FindChildAtIndex(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+    return:
+      type: '{T}'
+    content.vb: Public Function FindChildAtIndex(index As Integer) As T
+  overload: DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex*
+  nameWithType.vb: DynamicGrid(Of T).FindChildAtIndex(Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).FindChildAtIndex(Integer)
+  name.vb: FindChildAtIndex(Integer)
+- uid: DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans
+  id: GetChildrenAsSpans
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: GetChildrenAsSpans()
+  nameWithType: DynamicGrid<T>.GetChildrenAsSpans()
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetChildrenAsSpans()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetChildrenAsSpans
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 89
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Span<T> GetChildrenAsSpans()
+    return:
+      type: System.Span{{T}}
+    content.vb: Public Function GetChildrenAsSpans() As Span(Of T)
+  overload: DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans*
+  nameWithType.vb: DynamicGrid(Of T).GetChildrenAsSpans()
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetChildrenAsSpans()
+- uid: DrawnUi.Draw.DynamicGrid`1.GetCount
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.GetCount
+  id: GetCount
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: GetCount()
+  nameWithType: DynamicGrid<T>.GetCount()
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetCount()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCount
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 94
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int GetCount()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetCount() As Integer
+  overload: DrawnUi.Draw.DynamicGrid`1.GetCount*
+  nameWithType.vb: DynamicGrid(Of T).GetCount()
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetCount()
+- uid: DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
+  commentId: M:DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
+  id: GetColumnCountForRow(System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: GetColumnCountForRow(int)
+  nameWithType: DynamicGrid<T>.GetColumnCountForRow(int)
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetColumnCountForRow(int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetColumnCountForRow
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 105
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Returns the column count for the specified row.
+
+    This value is cached and updated each time an item is added.
+  example: []
+  syntax:
+    content: public int GetColumnCountForRow(int row)
+    parameters:
+    - id: row
+      type: System.Int32
+      description: Row number to get the column count for.
+    return:
+      type: System.Int32
+      description: Number of columns in the specified row.
+    content.vb: Public Function GetColumnCountForRow(row As Integer) As Integer
+  overload: DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow*
+  nameWithType.vb: DynamicGrid(Of T).GetColumnCountForRow(Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetColumnCountForRow(Integer)
+  name.vb: GetColumnCountForRow(Integer)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Collections.Generic.Dictionary{System.ValueTuple{System.Int32,System.Int32},{T}}
+  commentId: T:System.Collections.Generic.Dictionary{System.ValueTuple{System.Int32,System.Int32},`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<(int, int), T>
+  nameWithType: Dictionary<(int, int), T>
+  fullName: System.Collections.Generic.Dictionary<(int, int), T>
+  nameWithType.vb: Dictionary(Of (Integer, Integer), T)
+  fullName.vb: System.Collections.Generic.Dictionary(Of (Integer, Integer), T)
+  name.vb: Dictionary(Of (Integer, Integer), T)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  - name: ','
+  - name: " "
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.DynamicGrid`1.MaxRows*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.MaxRows
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_MaxRows
+  name: MaxRows
+  nameWithType: DynamicGrid<T>.MaxRows
+  fullName: DrawnUi.Draw.DynamicGrid<T>.MaxRows
+  nameWithType.vb: DynamicGrid(Of T).MaxRows
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).MaxRows
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.DynamicGrid`1.MaxColumns*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.MaxColumns
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_MaxColumns
+  name: MaxColumns
+  nameWithType: DynamicGrid<T>.MaxColumns
+  fullName: DrawnUi.Draw.DynamicGrid<T>.MaxColumns
+  nameWithType.vb: DynamicGrid(Of T).MaxColumns
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).MaxColumns
+- uid: DrawnUi.Draw.DynamicGrid`1.Add*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.Add
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Add__0_System_Int32_System_Int32_
+  name: Add
+  nameWithType: DynamicGrid<T>.Add
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Add
+  nameWithType.vb: DynamicGrid(Of T).Add
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Add
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: DrawnUi.Draw.DynamicGrid`1.Get*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.Get
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Get_System_Int32_System_Int32_
+  name: Get
+  nameWithType: DynamicGrid<T>.Get
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Get
+  nameWithType.vb: DynamicGrid(Of T).Get
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Get
+- uid: DrawnUi.Draw.DynamicGrid`1.GetRow*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetRow
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetRow_System_Int32_
+  name: GetRow
+  nameWithType: DynamicGrid<T>.GetRow
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetRow
+  nameWithType.vb: DynamicGrid(Of T).GetRow
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetRow
+- uid: System.Collections.Generic.IEnumerable{{T}}
+  commentId: T:System.Collections.Generic.IEnumerable{`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.DynamicGrid`1.GetColumn*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetColumn
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetColumn_System_Int32_
+  name: GetColumn
+  nameWithType: DynamicGrid<T>.GetColumn
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetColumn
+  nameWithType.vb: DynamicGrid(Of T).GetColumn
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetColumn
+- uid: DrawnUi.Draw.DynamicGrid`1.Clear*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.Clear
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Clear
+  name: Clear
+  nameWithType: DynamicGrid<T>.Clear
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Clear
+  nameWithType.vb: DynamicGrid(Of T).Clear
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Clear
+- uid: DrawnUi.Draw.DynamicGrid`1.GetChildren*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetChildren
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetChildren
+  name: GetChildren
+  nameWithType: DynamicGrid<T>.GetChildren
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetChildren
+  nameWithType.vb: DynamicGrid(Of T).GetChildren
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetChildren
+- uid: DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_FindChildAtIndex_System_Int32_
+  name: FindChildAtIndex
+  nameWithType: DynamicGrid<T>.FindChildAtIndex
+  fullName: DrawnUi.Draw.DynamicGrid<T>.FindChildAtIndex
+  nameWithType.vb: DynamicGrid(Of T).FindChildAtIndex
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).FindChildAtIndex
+- uid: DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetChildrenAsSpans
+  name: GetChildrenAsSpans
+  nameWithType: DynamicGrid<T>.GetChildrenAsSpans
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetChildrenAsSpans
+  nameWithType.vb: DynamicGrid(Of T).GetChildrenAsSpans
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetChildrenAsSpans
+- uid: System.Span{{T}}
+  commentId: T:System.Span{`0}
+  parent: System
+  definition: System.Span`1
+  href: https://learn.microsoft.com/dotnet/api/system.span-1
+  name: Span<T>
+  nameWithType: Span<T>
+  fullName: System.Span<T>
+  nameWithType.vb: Span(Of T)
+  fullName.vb: System.Span(Of T)
+  name.vb: Span(Of T)
+  spec.csharp:
+  - uid: System.Span`1
+    name: Span
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.span-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Span`1
+    name: Span
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.span-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Span`1
+  commentId: T:System.Span`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.span-1
+  name: Span<T>
+  nameWithType: Span<T>
+  fullName: System.Span<T>
+  nameWithType.vb: Span(Of T)
+  fullName.vb: System.Span(Of T)
+  name.vb: Span(Of T)
+  spec.csharp:
+  - uid: System.Span`1
+    name: Span
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.span-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Span`1
+    name: Span
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.span-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.DynamicGrid`1.GetCount*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetCount
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetCount
+  name: GetCount
+  nameWithType: DynamicGrid<T>.GetCount
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetCount
+  nameWithType.vb: DynamicGrid(Of T).GetCount
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetCount
+- uid: DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetColumnCountForRow_System_Int32_
+  name: GetColumnCountForRow
+  nameWithType: DynamicGrid<T>.GetColumnCountForRow
+  fullName: DrawnUi.Draw.DynamicGrid<T>.GetColumnCountForRow
+  nameWithType.vb: DynamicGrid(Of T).GetColumnCountForRow
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetColumnCountForRow

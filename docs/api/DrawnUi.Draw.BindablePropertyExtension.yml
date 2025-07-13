@@ -1,0 +1,759 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.BindablePropertyExtension
+  commentId: T:DrawnUi.Draw.BindablePropertyExtension
+  id: BindablePropertyExtension
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.BindablePropertyExtension.Name
+  - DrawnUi.Draw.BindablePropertyExtension.ProvideValue(System.IServiceProvider)
+  - DrawnUi.Draw.BindablePropertyExtension.Type
+  langs:
+  - csharp
+  - vb
+  name: BindablePropertyExtension
+  nameWithType: BindablePropertyExtension
+  fullName: DrawnUi.Draw.BindablePropertyExtension
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BindablePropertyExtension
+    path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class BindablePropertyExtension : IMarkupExtension<BindableProperty>, IMarkupExtension'
+    content.vb: Public Class BindablePropertyExtension Implements IMarkupExtension(Of BindableProperty), IMarkupExtension
+  inheritance:
+  - System.Object
+  implements:
+  - Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}
+  - Microsoft.Maui.Controls.Xaml.IMarkupExtension
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.BindablePropertyExtension.Name
+  commentId: P:DrawnUi.Draw.BindablePropertyExtension.Name
+  id: Name
+  parent: DrawnUi.Draw.BindablePropertyExtension
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: BindablePropertyExtension.Name
+  fullName: DrawnUi.Draw.BindablePropertyExtension.Name
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Name
+    path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: DrawnUi.Draw.BindablePropertyExtension.Name*
+- uid: DrawnUi.Draw.BindablePropertyExtension.Type
+  commentId: P:DrawnUi.Draw.BindablePropertyExtension.Type
+  id: Type
+  parent: DrawnUi.Draw.BindablePropertyExtension
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: BindablePropertyExtension.Type
+  fullName: DrawnUi.Draw.BindablePropertyExtension.Type
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Type
+    path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Type Type { get; set; }
+    parameters: []
+    return:
+      type: System.Type
+    content.vb: Public Property Type As Type
+  overload: DrawnUi.Draw.BindablePropertyExtension.Type*
+- uid: DrawnUi.Draw.BindablePropertyExtension.ProvideValue(System.IServiceProvider)
+  commentId: M:DrawnUi.Draw.BindablePropertyExtension.ProvideValue(System.IServiceProvider)
+  id: ProvideValue(System.IServiceProvider)
+  parent: DrawnUi.Draw.BindablePropertyExtension
+  langs:
+  - csharp
+  - vb
+  name: ProvideValue(IServiceProvider)
+  nameWithType: BindablePropertyExtension.ProvideValue(IServiceProvider)
+  fullName: DrawnUi.Draw.BindablePropertyExtension.ProvideValue(System.IServiceProvider)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ProvideValue
+    path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public BindableProperty ProvideValue(IServiceProvider serviceProvider)
+    parameters:
+    - id: serviceProvider
+      type: System.IServiceProvider
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Function ProvideValue(serviceProvider As IServiceProvider) As BindableProperty
+  overload: DrawnUi.Draw.BindablePropertyExtension.ProvideValue*
+  implements:
+  - Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}.ProvideValue(System.IServiceProvider)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}
+  commentId: T:Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}
+  parent: Microsoft.Maui.Controls.Xaml
+  definition: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1
+  name: IMarkupExtension<BindableProperty>
+  nameWithType: IMarkupExtension<BindableProperty>
+  fullName: Microsoft.Maui.Controls.Xaml.IMarkupExtension<Microsoft.Maui.Controls.BindableProperty>
+  nameWithType.vb: IMarkupExtension(Of BindableProperty)
+  fullName.vb: Microsoft.Maui.Controls.Xaml.IMarkupExtension(Of Microsoft.Maui.Controls.BindableProperty)
+  name.vb: IMarkupExtension(Of BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1
+    name: IMarkupExtension
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1
+  - name: <
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1
+    name: IMarkupExtension
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension
+  commentId: T:Microsoft.Maui.Controls.Xaml.IMarkupExtension
+  parent: Microsoft.Maui.Controls.Xaml
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension
+  name: IMarkupExtension
+  nameWithType: IMarkupExtension
+  fullName: Microsoft.Maui.Controls.Xaml.IMarkupExtension
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1
+  commentId: T:Microsoft.Maui.Controls.Xaml.IMarkupExtension`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1
+  name: IMarkupExtension<T>
+  nameWithType: IMarkupExtension<T>
+  fullName: Microsoft.Maui.Controls.Xaml.IMarkupExtension<T>
+  nameWithType.vb: IMarkupExtension(Of T)
+  fullName.vb: Microsoft.Maui.Controls.Xaml.IMarkupExtension(Of T)
+  name.vb: IMarkupExtension(Of T)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1
+    name: IMarkupExtension
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1
+    name: IMarkupExtension
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Microsoft.Maui.Controls.Xaml
+  commentId: N:Microsoft.Maui.Controls.Xaml
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls.Xaml
+  nameWithType: Microsoft.Maui.Controls.Xaml
+  fullName: Microsoft.Maui.Controls.Xaml
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  - name: .
+  - uid: Microsoft.Maui.Controls.Xaml
+    name: Xaml
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  - name: .
+  - uid: Microsoft.Maui.Controls.Xaml
+    name: Xaml
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.BindablePropertyExtension.Name*
+  commentId: Overload:DrawnUi.Draw.BindablePropertyExtension.Name
+  href: DrawnUi.Draw.BindablePropertyExtension.html#DrawnUi_Draw_BindablePropertyExtension_Name
+  name: Name
+  nameWithType: BindablePropertyExtension.Name
+  fullName: DrawnUi.Draw.BindablePropertyExtension.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.BindablePropertyExtension.Type*
+  commentId: Overload:DrawnUi.Draw.BindablePropertyExtension.Type
+  href: DrawnUi.Draw.BindablePropertyExtension.html#DrawnUi_Draw_BindablePropertyExtension_Type
+  name: Type
+  nameWithType: BindablePropertyExtension.Type
+  fullName: DrawnUi.Draw.BindablePropertyExtension.Type
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.type
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: DrawnUi.Draw.BindablePropertyExtension.ProvideValue*
+  commentId: Overload:DrawnUi.Draw.BindablePropertyExtension.ProvideValue
+  href: DrawnUi.Draw.BindablePropertyExtension.html#DrawnUi_Draw_BindablePropertyExtension_ProvideValue_System_IServiceProvider_
+  name: ProvideValue
+  nameWithType: BindablePropertyExtension.ProvideValue
+  fullName: DrawnUi.Draw.BindablePropertyExtension.ProvideValue
+- uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}.ProvideValue(System.IServiceProvider)
+  commentId: M:Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}.ProvideValue(System.IServiceProvider)
+  parent: Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}
+  definition: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1.ProvideValue(System.IServiceProvider)
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1.providevalue
+  name: ProvideValue(IServiceProvider)
+  nameWithType: IMarkupExtension<BindableProperty>.ProvideValue(IServiceProvider)
+  fullName: Microsoft.Maui.Controls.Xaml.IMarkupExtension<Microsoft.Maui.Controls.BindableProperty>.ProvideValue(System.IServiceProvider)
+  nameWithType.vb: IMarkupExtension(Of BindableProperty).ProvideValue(IServiceProvider)
+  fullName.vb: Microsoft.Maui.Controls.Xaml.IMarkupExtension(Of Microsoft.Maui.Controls.BindableProperty).ProvideValue(System.IServiceProvider)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}.ProvideValue(System.IServiceProvider)
+    name: ProvideValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1.providevalue
+  - name: (
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension{Microsoft.Maui.Controls.BindableProperty}.ProvideValue(System.IServiceProvider)
+    name: ProvideValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1.providevalue
+  - name: (
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: )
+- uid: System.IServiceProvider
+  commentId: T:System.IServiceProvider
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  name: IServiceProvider
+  nameWithType: IServiceProvider
+  fullName: System.IServiceProvider
+- uid: Microsoft.Maui.Controls.BindableProperty
+  commentId: T:Microsoft.Maui.Controls.BindableProperty
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  name: BindableProperty
+  nameWithType: BindableProperty
+  fullName: Microsoft.Maui.Controls.BindableProperty
+- uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1.ProvideValue(System.IServiceProvider)
+  commentId: M:Microsoft.Maui.Controls.Xaml.IMarkupExtension`1.ProvideValue(System.IServiceProvider)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1.providevalue
+  name: ProvideValue(IServiceProvider)
+  nameWithType: IMarkupExtension<T>.ProvideValue(IServiceProvider)
+  fullName: Microsoft.Maui.Controls.Xaml.IMarkupExtension<T>.ProvideValue(System.IServiceProvider)
+  nameWithType.vb: IMarkupExtension(Of T).ProvideValue(IServiceProvider)
+  fullName.vb: Microsoft.Maui.Controls.Xaml.IMarkupExtension(Of T).ProvideValue(System.IServiceProvider)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1.ProvideValue(System.IServiceProvider)
+    name: ProvideValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1.providevalue
+  - name: (
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.Xaml.IMarkupExtension`1.ProvideValue(System.IServiceProvider)
+    name: ProvideValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.xaml.imarkupextension-1.providevalue
+  - name: (
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: )
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls

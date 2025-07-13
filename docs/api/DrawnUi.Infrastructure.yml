@@ -1,0 +1,193 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  id: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.ClosedRange`1
+  - DrawnUi.Infrastructure.FileDescriptor
+  - DrawnUi.Infrastructure.Files
+  - DrawnUi.Infrastructure.MeasuringConstraints
+  - DrawnUi.Infrastructure.PaperFormat
+  - DrawnUi.Infrastructure.Pdf
+  - DrawnUi.Infrastructure.PdfPagePosition
+  - DrawnUi.Infrastructure.Pendulum
+  - DrawnUi.Infrastructure.PerpetualPendulum
+  - DrawnUi.Infrastructure.RenderOnTimer
+  - DrawnUi.Infrastructure.SkSl
+  - DrawnUi.Infrastructure.SkiaTouchResultContext
+  - DrawnUi.Infrastructure.Spring
+  - DrawnUi.Infrastructure.StorageType
+  - DrawnUi.Infrastructure.Vector
+  - DrawnUi.Infrastructure.VisualTransform
+  - DrawnUi.Infrastructure.VisualTransformNative
+  - DrawnUi.Infrastructure.VisualTreeChain
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Infrastructure.FileDescriptor
+  commentId: T:DrawnUi.Infrastructure.FileDescriptor
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.FileDescriptor.html
+  name: FileDescriptor
+  nameWithType: FileDescriptor
+  fullName: DrawnUi.Infrastructure.FileDescriptor
+- uid: DrawnUi.Infrastructure.Files
+  commentId: T:DrawnUi.Infrastructure.Files
+  href: DrawnUi.Infrastructure.Files.html
+  name: Files
+  nameWithType: Files
+  fullName: DrawnUi.Infrastructure.Files
+- uid: DrawnUi.Infrastructure.StorageType
+  commentId: T:DrawnUi.Infrastructure.StorageType
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.StorageType.html
+  name: StorageType
+  nameWithType: StorageType
+  fullName: DrawnUi.Infrastructure.StorageType
+- uid: DrawnUi.Infrastructure.PaperFormat
+  commentId: T:DrawnUi.Infrastructure.PaperFormat
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.PaperFormat.html
+  name: PaperFormat
+  nameWithType: PaperFormat
+  fullName: DrawnUi.Infrastructure.PaperFormat
+- uid: DrawnUi.Infrastructure.PdfPagePosition
+  commentId: T:DrawnUi.Infrastructure.PdfPagePosition
+  href: DrawnUi.Infrastructure.PdfPagePosition.html
+  name: PdfPagePosition
+  nameWithType: PdfPagePosition
+  fullName: DrawnUi.Infrastructure.PdfPagePosition
+- uid: DrawnUi.Infrastructure.Pdf
+  commentId: T:DrawnUi.Infrastructure.Pdf
+  href: DrawnUi.Infrastructure.Pdf.html
+  name: Pdf
+  nameWithType: Pdf
+  fullName: DrawnUi.Infrastructure.Pdf
+- uid: DrawnUi.Infrastructure.SkSl
+  commentId: T:DrawnUi.Infrastructure.SkSl
+  href: DrawnUi.Infrastructure.SkSl.html
+  name: SkSl
+  nameWithType: SkSl
+  fullName: DrawnUi.Infrastructure.SkSl
+- uid: DrawnUi.Infrastructure.PerpetualPendulum
+  commentId: T:DrawnUi.Infrastructure.PerpetualPendulum
+  href: DrawnUi.Infrastructure.PerpetualPendulum.html
+  name: PerpetualPendulum
+  nameWithType: PerpetualPendulum
+  fullName: DrawnUi.Infrastructure.PerpetualPendulum
+- uid: DrawnUi.Infrastructure.Pendulum
+  commentId: T:DrawnUi.Infrastructure.Pendulum
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.Pendulum.html
+  name: Pendulum
+  nameWithType: Pendulum
+  fullName: DrawnUi.Infrastructure.Pendulum
+- uid: DrawnUi.Infrastructure.ClosedRange`1
+  commentId: T:DrawnUi.Infrastructure.ClosedRange`1
+  href: DrawnUi.Infrastructure.ClosedRange-1.html
+  name: ClosedRange<T>
+  nameWithType: ClosedRange<T>
+  fullName: DrawnUi.Infrastructure.ClosedRange<T>
+  nameWithType.vb: ClosedRange(Of T)
+  fullName.vb: DrawnUi.Infrastructure.ClosedRange(Of T)
+  name.vb: ClosedRange(Of T)
+  spec.csharp:
+  - uid: DrawnUi.Infrastructure.ClosedRange`1
+    name: ClosedRange
+    href: DrawnUi.Infrastructure.ClosedRange-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: DrawnUi.Infrastructure.ClosedRange`1
+    name: ClosedRange
+    href: DrawnUi.Infrastructure.ClosedRange-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Infrastructure.MeasuringConstraints
+  commentId: T:DrawnUi.Infrastructure.MeasuringConstraints
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.MeasuringConstraints.html
+  name: MeasuringConstraints
+  nameWithType: MeasuringConstraints
+  fullName: DrawnUi.Infrastructure.MeasuringConstraints
+- uid: DrawnUi.Infrastructure.RenderOnTimer
+  commentId: T:DrawnUi.Infrastructure.RenderOnTimer
+  href: DrawnUi.Infrastructure.RenderOnTimer.html
+  name: RenderOnTimer
+  nameWithType: RenderOnTimer
+  fullName: DrawnUi.Infrastructure.RenderOnTimer
+- uid: DrawnUi.Infrastructure.SkiaTouchResultContext
+  commentId: T:DrawnUi.Infrastructure.SkiaTouchResultContext
+  href: DrawnUi.Infrastructure.SkiaTouchResultContext.html
+  name: SkiaTouchResultContext
+  nameWithType: SkiaTouchResultContext
+  fullName: DrawnUi.Infrastructure.SkiaTouchResultContext
+- uid: DrawnUi.Infrastructure.Spring
+  commentId: T:DrawnUi.Infrastructure.Spring
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.Spring.html
+  name: Spring
+  nameWithType: Spring
+  fullName: DrawnUi.Infrastructure.Spring
+- uid: DrawnUi.Infrastructure.Vector
+  commentId: T:DrawnUi.Infrastructure.Vector
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.Vector.html
+  name: Vector
+  nameWithType: Vector
+  fullName: DrawnUi.Infrastructure.Vector
+- uid: DrawnUi.Infrastructure.VisualTransform
+  commentId: T:DrawnUi.Infrastructure.VisualTransform
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.VisualTransform.html
+  name: VisualTransform
+  nameWithType: VisualTransform
+  fullName: DrawnUi.Infrastructure.VisualTransform
+- uid: DrawnUi.Infrastructure.VisualTransformNative
+  commentId: T:DrawnUi.Infrastructure.VisualTransformNative
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.VisualTransformNative.html
+  name: VisualTransformNative
+  nameWithType: VisualTransformNative
+  fullName: DrawnUi.Infrastructure.VisualTransformNative
+- uid: DrawnUi.Infrastructure.VisualTreeChain
+  commentId: T:DrawnUi.Infrastructure.VisualTreeChain
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.VisualTreeChain.html
+  name: VisualTreeChain
+  nameWithType: VisualTreeChain
+  fullName: DrawnUi.Infrastructure.VisualTreeChain
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html

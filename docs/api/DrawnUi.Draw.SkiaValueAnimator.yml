@@ -1,0 +1,2150 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaValueAnimator
+  commentId: T:DrawnUi.Draw.SkiaValueAnimator
+  id: SkiaValueAnimator
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaValueAnimator.#ctor(DrawnUi.Draw.IDrawnBase)
+  - DrawnUi.Draw.SkiaValueAnimator.ClampOnStart
+  - DrawnUi.Draw.SkiaValueAnimator.CycleFInished
+  - DrawnUi.Draw.SkiaValueAnimator.Debug
+  - DrawnUi.Draw.SkiaValueAnimator.Dispose
+  - DrawnUi.Draw.SkiaValueAnimator.Easing
+  - DrawnUi.Draw.SkiaValueAnimator.ElapsedMs
+  - DrawnUi.Draw.SkiaValueAnimator.Finished
+  - DrawnUi.Draw.SkiaValueAnimator.FinishedRunning
+  - DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+  - DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds
+  - DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged(System.Boolean)
+  - DrawnUi.Draw.SkiaValueAnimator.OnUpdated
+  - DrawnUi.Draw.SkiaValueAnimator.Progress
+  - DrawnUi.Draw.SkiaValueAnimator.Repeat
+  - DrawnUi.Draw.SkiaValueAnimator.RunAsync(System.Action,System.Threading.CancellationToken)
+  - DrawnUi.Draw.SkiaValueAnimator.Seek(System.Single)
+  - DrawnUi.Draw.SkiaValueAnimator.SetSpeed(System.Double)
+  - DrawnUi.Draw.SkiaValueAnimator.SetValue(System.Double)
+  - DrawnUi.Draw.SkiaValueAnimator.Speed
+  - DrawnUi.Draw.SkiaValueAnimator.Start(System.Double)
+  - DrawnUi.Draw.SkiaValueAnimator.Stop
+  - DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
+  - DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue(System.Int64)
+  - DrawnUi.Draw.SkiaValueAnimator.UpdateValue(System.Int64,System.Int64)
+  - DrawnUi.Draw.SkiaValueAnimator.mMaxValue
+  - DrawnUi.Draw.SkiaValueAnimator.mMinValue
+  - DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
+  - DrawnUi.Draw.SkiaValueAnimator.mValue
+  langs:
+  - csharp
+  - vb
+  name: SkiaValueAnimator
+  nameWithType: SkiaValueAnimator
+  fullName: DrawnUi.Draw.SkiaValueAnimator
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaValueAnimator
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class SkiaValueAnimator : AnimatorBase, ISkiaAnimator, IDisposable'
+    content.vb: Public Class SkiaValueAnimator Inherits AnimatorBase Implements ISkiaAnimator, IDisposable
+  inheritance:
+  - System.Object
+  - DrawnUi.Draw.AnimatorBase
+  derivedClasses:
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator
+  - DrawnUi.Draw.PendulumAnimator
+  - DrawnUi.Draw.ProgressAnimator
+  - DrawnUi.Draw.RangeAnimator
+  - DrawnUi.Draw.RenderingAnimator
+  - DrawnUi.Draw.ScrollFlingAnimator
+  - DrawnUi.Draw.SkiaVectorAnimator
+  - DrawnUi.Draw.SpringWithVelocityAnimator
+  implements:
+  - DrawnUi.Draw.ISkiaAnimator
+  - System.IDisposable
+  inheritedMembers:
+  - DrawnUi.Draw.AnimatorBase.IsPostAnimator
+  - DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+  - DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+  - DrawnUi.Draw.AnimatorBase.runDelayMs
+  - DrawnUi.Draw.AnimatorBase.Register
+  - DrawnUi.Draw.AnimatorBase.Unregister
+  - DrawnUi.Draw.AnimatorBase.Cancel
+  - DrawnUi.Draw.AnimatorBase.Pause
+  - DrawnUi.Draw.AnimatorBase.Resume
+  - DrawnUi.Draw.AnimatorBase.IsPaused
+  - DrawnUi.Draw.AnimatorBase.OnStop
+  - DrawnUi.Draw.AnimatorBase.OnStart
+  - DrawnUi.Draw.AnimatorBase.Parent
+  - DrawnUi.Draw.AnimatorBase.IsDeactivated
+  - DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+  - DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+  - DrawnUi.Draw.AnimatorBase.Uid
+  - DrawnUi.Draw.AnimatorBase.IsRunning
+  - DrawnUi.Draw.AnimatorBase.WasStarted
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaValueAnimator.Dispose
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.Dispose
+  id: Dispose
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SkiaValueAnimator.Dispose()
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public override void Dispose()
+    content.vb: Public Overrides Sub Dispose()
+  overridden: DrawnUi.Draw.AnimatorBase.Dispose
+  overload: DrawnUi.Draw.SkiaValueAnimator.Dispose*
+- uid: DrawnUi.Draw.SkiaValueAnimator.Stop
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.Stop
+  id: Stop
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Stop()
+  nameWithType: SkiaValueAnimator.Stop()
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Stop()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Stop
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public override void Stop()
+    content.vb: Public Overrides Sub [Stop]()
+  overridden: DrawnUi.Draw.AnimatorBase.Stop
+  overload: DrawnUi.Draw.SkiaValueAnimator.Stop*
+- uid: DrawnUi.Draw.SkiaValueAnimator.RunAsync(System.Action,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.RunAsync(System.Action,System.Threading.CancellationToken)
+  id: RunAsync(System.Action,System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: RunAsync(Action, CancellationToken)
+  nameWithType: SkiaValueAnimator.RunAsync(Action, CancellationToken)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.RunAsync(System.Action, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RunAsync
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public virtual Task RunAsync(Action initialize, CancellationToken cancellationToken = default)
+    parameters:
+    - id: initialize
+      type: System.Action
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Overridable Function RunAsync(initialize As Action, cancellationToken As CancellationToken = Nothing) As Task
+  overload: DrawnUi.Draw.SkiaValueAnimator.RunAsync*
+- uid: DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged(System.Boolean)
+  id: OnRunningStateChanged(System.Boolean)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: OnRunningStateChanged(bool)
+  nameWithType: SkiaValueAnimator.OnRunningStateChanged(bool)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnRunningStateChanged
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 55
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: protected override void OnRunningStateChanged(bool isRunning)
+    parameters:
+    - id: isRunning
+      type: System.Boolean
+    content.vb: Protected Overrides Sub OnRunningStateChanged(isRunning As Boolean)
+  overridden: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+  overload: DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged*
+  nameWithType.vb: SkiaValueAnimator.OnRunningStateChanged(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged(Boolean)
+  name.vb: OnRunningStateChanged(Boolean)
+- uid: DrawnUi.Draw.SkiaValueAnimator.Seek(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.Seek(System.Single)
+  id: Seek(System.Single)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Seek(float)
+  nameWithType: SkiaValueAnimator.Seek(float)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Seek(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Seek
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 68
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Seek(float msTime)
+    parameters:
+    - id: msTime
+      type: System.Single
+    content.vb: Public Sub Seek(msTime As Single)
+  overload: DrawnUi.Draw.SkiaValueAnimator.Seek*
+  nameWithType.vb: SkiaValueAnimator.Seek(Single)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.Seek(Single)
+  name.vb: Seek(Single)
+- uid: DrawnUi.Draw.SkiaValueAnimator.CycleFInished
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.CycleFInished
+  id: CycleFInished
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: CycleFInished
+  nameWithType: SkiaValueAnimator.CycleFInished
+  fullName: DrawnUi.Draw.SkiaValueAnimator.CycleFInished
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CycleFInished
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 77
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Animator self finished a cycle, might still repeat
+  example: []
+  syntax:
+    content: public Action CycleFInished { get; set; }
+    parameters: []
+    return:
+      type: System.Action
+    content.vb: Public Property CycleFInished As Action
+  overload: DrawnUi.Draw.SkiaValueAnimator.CycleFInished*
+- uid: DrawnUi.Draw.SkiaValueAnimator.Finished
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.Finished
+  id: Finished
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Finished
+  nameWithType: SkiaValueAnimator.Finished
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Finished
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Finished
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 82
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Animator self finished running without being stopped manually
+  example: []
+  syntax:
+    content: public Action Finished { get; set; }
+    parameters: []
+    return:
+      type: System.Action
+    content.vb: Public Property Finished As Action
+  overload: DrawnUi.Draw.SkiaValueAnimator.Finished*
+- uid: DrawnUi.Draw.SkiaValueAnimator.FinishedRunning
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.FinishedRunning
+  id: FinishedRunning
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: FinishedRunning()
+  nameWithType: SkiaValueAnimator.FinishedRunning()
+  fullName: DrawnUi.Draw.SkiaValueAnimator.FinishedRunning()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FinishedRunning
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 84
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected virtual bool FinishedRunning()
+    return:
+      type: System.Boolean
+    content.vb: Protected Overridable Function FinishedRunning() As Boolean
+  overload: DrawnUi.Draw.SkiaValueAnimator.FinishedRunning*
+- uid: DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+  commentId: F:DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+  id: FrameTimeInterpolator
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: FrameTimeInterpolator
+  nameWithType: SkiaValueAnimator.FrameTimeInterpolator
+  fullName: DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FrameTimeInterpolator
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 112
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected FrameTimeInterpolator FrameTimeInterpolator
+    return:
+      type: DrawnUi.Draw.FrameTimeInterpolator
+    content.vb: Protected FrameTimeInterpolator As FrameTimeInterpolator
+- uid: DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
+  id: TickFrame(System.Int64)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: TickFrame(long)
+  nameWithType: SkiaValueAnimator.TickFrame(long)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.TickFrame(long)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TickFrame
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 114
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Time in NANOS
+  example: []
+  syntax:
+    content: public override bool TickFrame(long frameTimeNanos)
+    parameters:
+    - id: frameTimeNanos
+      type: System.Int64
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Public Overrides Function TickFrame(frameTimeNanos As Long) As Boolean
+  overridden: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+  overload: DrawnUi.Draw.SkiaValueAnimator.TickFrame*
+  nameWithType.vb: SkiaValueAnimator.TickFrame(Long)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.TickFrame(Long)
+  name.vb: TickFrame(Long)
+- uid: DrawnUi.Draw.SkiaValueAnimator.Repeat
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.Repeat
+  id: Repeat
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Repeat
+  nameWithType: SkiaValueAnimator.Repeat
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Repeat
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Repeat
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 175
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: -1 means forever..
+  example: []
+  syntax:
+    content: public int Repeat { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Repeat As Integer
+  overload: DrawnUi.Draw.SkiaValueAnimator.Repeat*
+- uid: DrawnUi.Draw.SkiaValueAnimator.mValue
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.mValue
+  id: mValue
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: mValue
+  nameWithType: SkiaValueAnimator.mValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mValue
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: mValue
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 189
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double mValue { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property mValue As Double
+  overload: DrawnUi.Draw.SkiaValueAnimator.mValue*
+- uid: DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
+  id: mStartValueIsSet
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: mStartValueIsSet
+  nameWithType: SkiaValueAnimator.mStartValueIsSet
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: mStartValueIsSet
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 204
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool mStartValueIsSet { get; protected set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property mStartValueIsSet As Boolean
+  overload: DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet*
+- uid: DrawnUi.Draw.SkiaValueAnimator.mMaxValue
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.mMaxValue
+  id: mMaxValue
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: mMaxValue
+  nameWithType: SkiaValueAnimator.mMaxValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mMaxValue
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: mMaxValue
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 205
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double mMaxValue { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property mMaxValue As Double
+  overload: DrawnUi.Draw.SkiaValueAnimator.mMaxValue*
+- uid: DrawnUi.Draw.SkiaValueAnimator.mMinValue
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.mMinValue
+  id: mMinValue
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: mMinValue
+  nameWithType: SkiaValueAnimator.mMinValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mMinValue
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: mMinValue
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 206
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double mMinValue { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property mMinValue As Double
+  overload: DrawnUi.Draw.SkiaValueAnimator.mMinValue*
+- uid: DrawnUi.Draw.SkiaValueAnimator.Easing
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.Easing
+  id: Easing
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Easing
+  nameWithType: SkiaValueAnimator.Easing
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Easing
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Easing
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 207
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Easing Easing { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Easing
+    content.vb: Public Property Easing As Easing
+  overload: DrawnUi.Draw.SkiaValueAnimator.Easing*
+- uid: DrawnUi.Draw.SkiaValueAnimator.Speed
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.Speed
+  id: Speed
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Speed
+  nameWithType: SkiaValueAnimator.Speed
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Speed
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Speed
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 208
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double Speed { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property Speed As Double
+  overload: DrawnUi.Draw.SkiaValueAnimator.Speed*
+- uid: DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue(System.Int64)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue(System.Int64)
+  id: TransformReportedValue(System.Int64)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: TransformReportedValue(long)
+  nameWithType: SkiaValueAnimator.TransformReportedValue(long)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue(long)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TransformReportedValue
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 215
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: /// Passed over mValue, you can change the reported passed value here
+  example: []
+  syntax:
+    content: protected virtual double TransformReportedValue(long deltaT)
+    parameters:
+    - id: deltaT
+      type: System.Int64
+      description: ''
+    return:
+      type: System.Double
+      description: modified mValue for callback consumer
+    content.vb: Protected Overridable Function TransformReportedValue(deltaT As Long) As Double
+  overload: DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue*
+  nameWithType.vb: SkiaValueAnimator.TransformReportedValue(Long)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue(Long)
+  name.vb: TransformReportedValue(Long)
+- uid: DrawnUi.Draw.SkiaValueAnimator.Debug
+  commentId: F:DrawnUi.Draw.SkiaValueAnimator.Debug
+  id: Debug
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Debug
+  nameWithType: SkiaValueAnimator.Debug
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Debug
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Debug
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 220
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool Debug
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Debug As Boolean
+- uid: DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds
+  id: GetNanoseconds
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: GetNanoseconds()
+  nameWithType: SkiaValueAnimator.GetNanoseconds()
+  fullName: DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetNanoseconds
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 223
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static long GetNanoseconds()
+    return:
+      type: System.Int64
+    content.vb: Public Shared Function GetNanoseconds() As Long
+  overload: DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds*
+- uid: DrawnUi.Draw.SkiaValueAnimator.UpdateValue(System.Int64,System.Int64)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.UpdateValue(System.Int64,System.Int64)
+  id: UpdateValue(System.Int64,System.Int64)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: UpdateValue(long, long)
+  nameWithType: SkiaValueAnimator.UpdateValue(long, long)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.UpdateValue(long, long)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateValue
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 237
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Update mValue using time distance between rendered frames.
+
+    Return true if anims is finished.
+  example: []
+  syntax:
+    content: protected virtual bool UpdateValue(long deltaT, long deltaFromStart)
+    parameters:
+    - id: deltaT
+      type: System.Int64
+      description: ''
+    - id: deltaFromStart
+      type: System.Int64
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Protected Overridable Function UpdateValue(deltaT As Long, deltaFromStart As Long) As Boolean
+  overload: DrawnUi.Draw.SkiaValueAnimator.UpdateValue*
+  nameWithType.vb: SkiaValueAnimator.UpdateValue(Long, Long)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.UpdateValue(Long, Long)
+  name.vb: UpdateValue(Long, Long)
+- uid: DrawnUi.Draw.SkiaValueAnimator.ElapsedMs
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.ElapsedMs
+  id: ElapsedMs
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: ElapsedMs
+  nameWithType: SkiaValueAnimator.ElapsedMs
+  fullName: DrawnUi.Draw.SkiaValueAnimator.ElapsedMs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ElapsedMs
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 272
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public double ElapsedMs { get; protected set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property ElapsedMs As Double
+  overload: DrawnUi.Draw.SkiaValueAnimator.ElapsedMs*
+- uid: DrawnUi.Draw.SkiaValueAnimator.Progress
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.Progress
+  id: Progress
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Progress
+  nameWithType: SkiaValueAnimator.Progress
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Progress
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Progress
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 277
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: We are using this internally to apply easing. Can be above 1 when finishing. If you need progress 0-1 use ProgressAnimator.
+  example: []
+  syntax:
+    content: protected double Progress { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Protected Property Progress As Double
+  overload: DrawnUi.Draw.SkiaValueAnimator.Progress*
+- uid: DrawnUi.Draw.SkiaValueAnimator.OnUpdated
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.OnUpdated
+  id: OnUpdated
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: OnUpdated
+  nameWithType: SkiaValueAnimator.OnUpdated
+  fullName: DrawnUi.Draw.SkiaValueAnimator.OnUpdated
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnUpdated
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 279
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Action<double> OnUpdated { get; set; }
+    parameters: []
+    return:
+      type: System.Action{System.Double}
+    content.vb: Public Property OnUpdated As Action(Of Double)
+  overload: DrawnUi.Draw.SkiaValueAnimator.OnUpdated*
+- uid: DrawnUi.Draw.SkiaValueAnimator.ClampOnStart
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.ClampOnStart
+  id: ClampOnStart
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: ClampOnStart()
+  nameWithType: SkiaValueAnimator.ClampOnStart()
+  fullName: DrawnUi.Draw.SkiaValueAnimator.ClampOnStart()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ClampOnStart
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 281
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected virtual void ClampOnStart()
+    content.vb: Protected Overridable Sub ClampOnStart()
+  overload: DrawnUi.Draw.SkiaValueAnimator.ClampOnStart*
+- uid: DrawnUi.Draw.SkiaValueAnimator.Start(System.Double)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.Start(System.Double)
+  id: Start(System.Double)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: Start(double)
+  nameWithType: SkiaValueAnimator.Start(double)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Start(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Start
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 296
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public override void Start(double delayMs = 0)
+    parameters:
+    - id: delayMs
+      type: System.Double
+    content.vb: Public Overrides Sub Start(delayMs As Double = 0)
+  overridden: DrawnUi.Draw.AnimatorBase.Start(System.Double)
+  overload: DrawnUi.Draw.SkiaValueAnimator.Start*
+  nameWithType.vb: SkiaValueAnimator.Start(Double)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.Start(Double)
+  name.vb: Start(Double)
+- uid: DrawnUi.Draw.SkiaValueAnimator.SetValue(System.Double)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.SetValue(System.Double)
+  id: SetValue(System.Double)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: SetValue(double)
+  nameWithType: SkiaValueAnimator.SetValue(double)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.SetValue(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetValue
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 310
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaValueAnimator SetValue(double value)
+    parameters:
+    - id: value
+      type: System.Double
+    return:
+      type: DrawnUi.Draw.SkiaValueAnimator
+    content.vb: Public Function SetValue(value As Double) As SkiaValueAnimator
+  overload: DrawnUi.Draw.SkiaValueAnimator.SetValue*
+  nameWithType.vb: SkiaValueAnimator.SetValue(Double)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.SetValue(Double)
+  name.vb: SetValue(Double)
+- uid: DrawnUi.Draw.SkiaValueAnimator.SetSpeed(System.Double)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.SetSpeed(System.Double)
+  id: SetSpeed(System.Double)
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: SetSpeed(double)
+  nameWithType: SkiaValueAnimator.SetSpeed(double)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.SetSpeed(double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetSpeed
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 316
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaValueAnimator SetSpeed(double value)
+    parameters:
+    - id: value
+      type: System.Double
+    return:
+      type: DrawnUi.Draw.SkiaValueAnimator
+    content.vb: Public Function SetSpeed(value As Double) As SkiaValueAnimator
+  overload: DrawnUi.Draw.SkiaValueAnimator.SetSpeed*
+  nameWithType.vb: SkiaValueAnimator.SetSpeed(Double)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.SetSpeed(Double)
+  name.vb: SetSpeed(Double)
+- uid: DrawnUi.Draw.SkiaValueAnimator.#ctor(DrawnUi.Draw.IDrawnBase)
+  commentId: M:DrawnUi.Draw.SkiaValueAnimator.#ctor(DrawnUi.Draw.IDrawnBase)
+  id: '#ctor(DrawnUi.Draw.IDrawnBase)'
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: SkiaValueAnimator(IDrawnBase)
+  nameWithType: SkiaValueAnimator.SkiaValueAnimator(IDrawnBase)
+  fullName: DrawnUi.Draw.SkiaValueAnimator.SkiaValueAnimator(DrawnUi.Draw.IDrawnBase)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 324
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaValueAnimator(IDrawnBase parent)
+    parameters:
+    - id: parent
+      type: DrawnUi.Draw.IDrawnBase
+    content.vb: Public Sub New(parent As IDrawnBase)
+  overload: DrawnUi.Draw.SkiaValueAnimator.#ctor*
+  nameWithType.vb: SkiaValueAnimator.New(IDrawnBase)
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.New(DrawnUi.Draw.IDrawnBase)
+  name.vb: New(IDrawnBase)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Draw.AnimatorBase
+  commentId: T:DrawnUi.Draw.AnimatorBase
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.AnimatorBase.html
+  name: AnimatorBase
+  nameWithType: AnimatorBase
+  fullName: DrawnUi.Draw.AnimatorBase
+- uid: DrawnUi.Draw.ISkiaAnimator
+  commentId: T:DrawnUi.Draw.ISkiaAnimator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaAnimator.html
+  name: ISkiaAnimator
+  nameWithType: ISkiaAnimator
+  fullName: DrawnUi.Draw.ISkiaAnimator
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Draw.AnimatorBase.IsPostAnimator
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsPostAnimator
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPostAnimator
+  name: IsPostAnimator
+  nameWithType: AnimatorBase.IsPostAnimator
+  fullName: DrawnUi.Draw.AnimatorBase.IsPostAnimator
+- uid: DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsHiddenInViewTree
+  name: IsHiddenInViewTree
+  nameWithType: AnimatorBase.IsHiddenInViewTree
+  fullName: DrawnUi.Draw.AnimatorBase.IsHiddenInViewTree
+- uid: DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+  commentId: M:DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_
+  name: Radians(double)
+  nameWithType: AnimatorBase.Radians(double)
+  fullName: DrawnUi.Draw.AnimatorBase.Radians(double)
+  nameWithType.vb: AnimatorBase.Radians(Double)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.Radians(Double)
+  name.vb: Radians(Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+    name: Radians
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Radians(System.Double)
+    name: Radians
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.runDelayMs
+  commentId: F:DrawnUi.Draw.AnimatorBase.runDelayMs
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_runDelayMs
+  name: runDelayMs
+  nameWithType: AnimatorBase.runDelayMs
+  fullName: DrawnUi.Draw.AnimatorBase.runDelayMs
+- uid: DrawnUi.Draw.AnimatorBase.Register
+  commentId: M:DrawnUi.Draw.AnimatorBase.Register
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register
+  name: Register()
+  nameWithType: AnimatorBase.Register()
+  fullName: DrawnUi.Draw.AnimatorBase.Register()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Register
+    name: Register
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Register
+    name: Register
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Unregister
+  commentId: M:DrawnUi.Draw.AnimatorBase.Unregister
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister
+  name: Unregister()
+  nameWithType: AnimatorBase.Unregister()
+  fullName: DrawnUi.Draw.AnimatorBase.Unregister()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Unregister
+    name: Unregister
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Unregister
+    name: Unregister
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Cancel
+  commentId: M:DrawnUi.Draw.AnimatorBase.Cancel
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel
+  name: Cancel()
+  nameWithType: AnimatorBase.Cancel()
+  fullName: DrawnUi.Draw.AnimatorBase.Cancel()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Cancel
+    name: Cancel
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Cancel
+    name: Cancel
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Pause
+  commentId: M:DrawnUi.Draw.AnimatorBase.Pause
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause
+  name: Pause()
+  nameWithType: AnimatorBase.Pause()
+  fullName: DrawnUi.Draw.AnimatorBase.Pause()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Pause
+    name: Pause
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Pause
+    name: Pause
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.Resume
+  commentId: M:DrawnUi.Draw.AnimatorBase.Resume
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume
+  name: Resume()
+  nameWithType: AnimatorBase.Resume()
+  fullName: DrawnUi.Draw.AnimatorBase.Resume()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Resume
+    name: Resume
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Resume
+    name: Resume
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatorBase.IsPaused
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsPaused
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPaused
+  name: IsPaused
+  nameWithType: AnimatorBase.IsPaused
+  fullName: DrawnUi.Draw.AnimatorBase.IsPaused
+- uid: DrawnUi.Draw.AnimatorBase.OnStop
+  commentId: P:DrawnUi.Draw.AnimatorBase.OnStop
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStop
+  name: OnStop
+  nameWithType: AnimatorBase.OnStop
+  fullName: DrawnUi.Draw.AnimatorBase.OnStop
+- uid: DrawnUi.Draw.AnimatorBase.OnStart
+  commentId: P:DrawnUi.Draw.AnimatorBase.OnStart
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStart
+  name: OnStart
+  nameWithType: AnimatorBase.OnStart
+  fullName: DrawnUi.Draw.AnimatorBase.OnStart
+- uid: DrawnUi.Draw.AnimatorBase.Parent
+  commentId: P:DrawnUi.Draw.AnimatorBase.Parent
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Parent
+  name: Parent
+  nameWithType: AnimatorBase.Parent
+  fullName: DrawnUi.Draw.AnimatorBase.Parent
+- uid: DrawnUi.Draw.AnimatorBase.IsDeactivated
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsDeactivated
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsDeactivated
+  name: IsDeactivated
+  nameWithType: AnimatorBase.IsDeactivated
+  fullName: DrawnUi.Draw.AnimatorBase.IsDeactivated
+- uid: DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+  commentId: P:DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_LastFrameTimeNanos
+  name: LastFrameTimeNanos
+  nameWithType: AnimatorBase.LastFrameTimeNanos
+  fullName: DrawnUi.Draw.AnimatorBase.LastFrameTimeNanos
+- uid: DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+  commentId: P:DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_StartFrameTimeNanos
+  name: StartFrameTimeNanos
+  nameWithType: AnimatorBase.StartFrameTimeNanos
+  fullName: DrawnUi.Draw.AnimatorBase.StartFrameTimeNanos
+- uid: DrawnUi.Draw.AnimatorBase.Uid
+  commentId: P:DrawnUi.Draw.AnimatorBase.Uid
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Uid
+  name: Uid
+  nameWithType: AnimatorBase.Uid
+  fullName: DrawnUi.Draw.AnimatorBase.Uid
+- uid: DrawnUi.Draw.AnimatorBase.IsRunning
+  commentId: P:DrawnUi.Draw.AnimatorBase.IsRunning
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsRunning
+  name: IsRunning
+  nameWithType: AnimatorBase.IsRunning
+  fullName: DrawnUi.Draw.AnimatorBase.IsRunning
+- uid: DrawnUi.Draw.AnimatorBase.WasStarted
+  commentId: P:DrawnUi.Draw.AnimatorBase.WasStarted
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_WasStarted
+  name: WasStarted
+  nameWithType: AnimatorBase.WasStarted
+  fullName: DrawnUi.Draw.AnimatorBase.WasStarted
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.AnimatorBase.Dispose
+  commentId: M:DrawnUi.Draw.AnimatorBase.Dispose
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Dispose
+  name: Dispose()
+  nameWithType: AnimatorBase.Dispose()
+  fullName: DrawnUi.Draw.AnimatorBase.Dispose()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaValueAnimator.Dispose*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Dispose
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Dispose
+  name: Dispose
+  nameWithType: SkiaValueAnimator.Dispose
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Dispose
+- uid: DrawnUi.Draw.AnimatorBase.Stop
+  commentId: M:DrawnUi.Draw.AnimatorBase.Stop
+  parent: DrawnUi.Draw.AnimatorBase
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Stop
+  name: Stop()
+  nameWithType: AnimatorBase.Stop()
+  fullName: DrawnUi.Draw.AnimatorBase.Stop()
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Stop
+    name: Stop
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Stop
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Stop
+    name: Stop
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Stop
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaValueAnimator.Stop*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Stop
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Stop
+  name: Stop
+  nameWithType: SkiaValueAnimator.Stop
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Stop
+- uid: DrawnUi.Draw.SkiaValueAnimator.RunAsync*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.RunAsync
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_RunAsync_System_Action_System_Threading_CancellationToken_
+  name: RunAsync
+  nameWithType: SkiaValueAnimator.RunAsync
+  fullName: DrawnUi.Draw.SkiaValueAnimator.RunAsync
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+  commentId: M:DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnRunningStateChanged_System_Boolean_
+  name: OnRunningStateChanged(bool)
+  nameWithType: AnimatorBase.OnRunningStateChanged(bool)
+  fullName: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(bool)
+  nameWithType.vb: AnimatorBase.OnRunningStateChanged(Boolean)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(Boolean)
+  name.vb: OnRunningStateChanged(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+    name: OnRunningStateChanged
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnRunningStateChanged_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.OnRunningStateChanged(System.Boolean)
+    name: OnRunningStateChanged
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnRunningStateChanged_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_OnRunningStateChanged_System_Boolean_
+  name: OnRunningStateChanged
+  nameWithType: SkiaValueAnimator.OnRunningStateChanged
+  fullName: DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.SkiaValueAnimator.Seek*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Seek
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Seek_System_Single_
+  name: Seek
+  nameWithType: SkiaValueAnimator.Seek
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Seek
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SkiaValueAnimator.CycleFInished*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.CycleFInished
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_CycleFInished
+  name: CycleFInished
+  nameWithType: SkiaValueAnimator.CycleFInished
+  fullName: DrawnUi.Draw.SkiaValueAnimator.CycleFInished
+- uid: DrawnUi.Draw.SkiaValueAnimator.Finished*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Finished
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Finished
+  name: Finished
+  nameWithType: SkiaValueAnimator.Finished
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Finished
+- uid: DrawnUi.Draw.SkiaValueAnimator.FinishedRunning*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.FinishedRunning
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_FinishedRunning
+  name: FinishedRunning
+  nameWithType: SkiaValueAnimator.FinishedRunning
+  fullName: DrawnUi.Draw.SkiaValueAnimator.FinishedRunning
+- uid: DrawnUi.Draw.FrameTimeInterpolator
+  commentId: T:DrawnUi.Draw.FrameTimeInterpolator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.FrameTimeInterpolator.html
+  name: FrameTimeInterpolator
+  nameWithType: FrameTimeInterpolator
+  fullName: DrawnUi.Draw.FrameTimeInterpolator
+- uid: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+  commentId: M:DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_TickFrame_System_Int64_
+  name: TickFrame(long)
+  nameWithType: AnimatorBase.TickFrame(long)
+  fullName: DrawnUi.Draw.AnimatorBase.TickFrame(long)
+  nameWithType.vb: AnimatorBase.TickFrame(Long)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.TickFrame(Long)
+  name.vb: TickFrame(Long)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+    name: TickFrame
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_TickFrame_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
+    name: TickFrame
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_TickFrame_System_Int64_
+  - name: (
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: DrawnUi.Draw.SkiaValueAnimator.TickFrame*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.TickFrame
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_TickFrame_System_Int64_
+  name: TickFrame
+  nameWithType: SkiaValueAnimator.TickFrame
+  fullName: DrawnUi.Draw.SkiaValueAnimator.TickFrame
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: DrawnUi.Draw.SkiaValueAnimator.Repeat*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Repeat
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Repeat
+  name: Repeat
+  nameWithType: SkiaValueAnimator.Repeat
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Repeat
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.SkiaValueAnimator.mValue*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.mValue
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mValue
+  name: mValue
+  nameWithType: SkiaValueAnimator.mValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mValue
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mStartValueIsSet
+  name: mStartValueIsSet
+  nameWithType: SkiaValueAnimator.mStartValueIsSet
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
+- uid: DrawnUi.Draw.SkiaValueAnimator.mMaxValue*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.mMaxValue
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mMaxValue
+  name: mMaxValue
+  nameWithType: SkiaValueAnimator.mMaxValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mMaxValue
+- uid: DrawnUi.Draw.SkiaValueAnimator.mMinValue*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.mMinValue
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_mMinValue
+  name: mMinValue
+  nameWithType: SkiaValueAnimator.mMinValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.mMinValue
+- uid: DrawnUi.Draw.SkiaValueAnimator.Easing*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Easing
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Easing
+  name: Easing
+  nameWithType: SkiaValueAnimator.Easing
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Easing
+- uid: Microsoft.Maui.Easing
+  commentId: T:Microsoft.Maui.Easing
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  name: Easing
+  nameWithType: Easing
+  fullName: Microsoft.Maui.Easing
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: DrawnUi.Draw.SkiaValueAnimator.Speed*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Speed
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Speed
+  name: Speed
+  nameWithType: SkiaValueAnimator.Speed
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Speed
+- uid: DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_TransformReportedValue_System_Int64_
+  name: TransformReportedValue
+  nameWithType: SkiaValueAnimator.TransformReportedValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue
+- uid: DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_GetNanoseconds
+  name: GetNanoseconds
+  nameWithType: SkiaValueAnimator.GetNanoseconds
+  fullName: DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds
+- uid: DrawnUi.Draw.SkiaValueAnimator.UpdateValue*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.UpdateValue
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_UpdateValue_System_Int64_System_Int64_
+  name: UpdateValue
+  nameWithType: SkiaValueAnimator.UpdateValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.UpdateValue
+- uid: DrawnUi.Draw.SkiaValueAnimator.ElapsedMs*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.ElapsedMs
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_ElapsedMs
+  name: ElapsedMs
+  nameWithType: SkiaValueAnimator.ElapsedMs
+  fullName: DrawnUi.Draw.SkiaValueAnimator.ElapsedMs
+- uid: DrawnUi.Draw.SkiaValueAnimator.Progress*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Progress
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Progress
+  name: Progress
+  nameWithType: SkiaValueAnimator.Progress
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Progress
+- uid: DrawnUi.Draw.SkiaValueAnimator.OnUpdated*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.OnUpdated
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_OnUpdated
+  name: OnUpdated
+  nameWithType: SkiaValueAnimator.OnUpdated
+  fullName: DrawnUi.Draw.SkiaValueAnimator.OnUpdated
+- uid: System.Action{System.Double}
+  commentId: T:System.Action{System.Double}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<double>
+  nameWithType: Action<double>
+  fullName: System.Action<double>
+  nameWithType.vb: Action(Of Double)
+  fullName.vb: System.Action(Of Double)
+  name.vb: Action(Of Double)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.SkiaValueAnimator.ClampOnStart*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.ClampOnStart
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_ClampOnStart
+  name: ClampOnStart
+  nameWithType: SkiaValueAnimator.ClampOnStart
+  fullName: DrawnUi.Draw.SkiaValueAnimator.ClampOnStart
+- uid: DrawnUi.Draw.AnimatorBase.Start(System.Double)
+  commentId: M:DrawnUi.Draw.AnimatorBase.Start(System.Double)
+  parent: DrawnUi.Draw.AnimatorBase
+  isExternal: true
+  href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Start_System_Double_
+  name: Start(double)
+  nameWithType: AnimatorBase.Start(double)
+  fullName: DrawnUi.Draw.AnimatorBase.Start(double)
+  nameWithType.vb: AnimatorBase.Start(Double)
+  fullName.vb: DrawnUi.Draw.AnimatorBase.Start(Double)
+  name.vb: Start(Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.AnimatorBase.Start(System.Double)
+    name: Start
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Start_System_Double_
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.AnimatorBase.Start(System.Double)
+    name: Start
+    href: DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Start_System_Double_
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: DrawnUi.Draw.SkiaValueAnimator.Start*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.Start
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_Start_System_Double_
+  name: Start
+  nameWithType: SkiaValueAnimator.Start
+  fullName: DrawnUi.Draw.SkiaValueAnimator.Start
+- uid: DrawnUi.Draw.SkiaValueAnimator.SetValue*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.SetValue
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_SetValue_System_Double_
+  name: SetValue
+  nameWithType: SkiaValueAnimator.SetValue
+  fullName: DrawnUi.Draw.SkiaValueAnimator.SetValue
+- uid: DrawnUi.Draw.SkiaValueAnimator
+  commentId: T:DrawnUi.Draw.SkiaValueAnimator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaValueAnimator.html
+  name: SkiaValueAnimator
+  nameWithType: SkiaValueAnimator
+  fullName: DrawnUi.Draw.SkiaValueAnimator
+- uid: DrawnUi.Draw.SkiaValueAnimator.SetSpeed*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.SetSpeed
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_SetSpeed_System_Double_
+  name: SetSpeed
+  nameWithType: SkiaValueAnimator.SetSpeed
+  fullName: DrawnUi.Draw.SkiaValueAnimator.SetSpeed
+- uid: DrawnUi.Draw.SkiaValueAnimator.#ctor*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.#ctor
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator__ctor_DrawnUi_Draw_IDrawnBase_
+  name: SkiaValueAnimator
+  nameWithType: SkiaValueAnimator.SkiaValueAnimator
+  fullName: DrawnUi.Draw.SkiaValueAnimator.SkiaValueAnimator
+  nameWithType.vb: SkiaValueAnimator.New
+  fullName.vb: DrawnUi.Draw.SkiaValueAnimator.New
+  name.vb: New
+- uid: DrawnUi.Draw.IDrawnBase
+  commentId: T:DrawnUi.Draw.IDrawnBase
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IDrawnBase.html
+  name: IDrawnBase
+  nameWithType: IDrawnBase
+  fullName: DrawnUi.Draw.IDrawnBase

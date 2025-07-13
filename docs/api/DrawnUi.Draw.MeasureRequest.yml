@@ -1,0 +1,704 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.MeasureRequest
+  commentId: T:DrawnUi.Draw.MeasureRequest
+  id: MeasureRequest
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.MeasureRequest.#ctor(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.MeasureRequest.#ctor(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.MeasureRequest.Destination
+  - DrawnUi.Draw.MeasureRequest.Empty
+  - DrawnUi.Draw.MeasureRequest.HeightRequest
+  - DrawnUi.Draw.MeasureRequest.IsSame
+  - DrawnUi.Draw.MeasureRequest.Scale
+  - DrawnUi.Draw.MeasureRequest.WidthRequest
+  langs:
+  - csharp
+  - vb
+  name: MeasureRequest
+  nameWithType: MeasureRequest
+  fullName: DrawnUi.Draw.MeasureRequest
+  type: Struct
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasureRequest
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public struct MeasureRequest
+    content.vb: Public Structure MeasureRequest
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.MeasureRequest.Empty
+  commentId: F:DrawnUi.Draw.MeasureRequest.Empty
+  id: Empty
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: Empty
+  nameWithType: MeasureRequest.Empty
+  fullName: DrawnUi.Draw.MeasureRequest.Empty
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Empty
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static MeasureRequest Empty
+    return:
+      type: DrawnUi.Draw.MeasureRequest
+    content.vb: Public Shared Empty As MeasureRequest
+- uid: DrawnUi.Draw.MeasureRequest.#ctor(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.MeasureRequest.#ctor(System.Single,System.Single,System.Single)
+  id: '#ctor(System.Single,System.Single,System.Single)'
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: MeasureRequest(float, float, float)
+  nameWithType: MeasureRequest.MeasureRequest(float, float, float)
+  fullName: DrawnUi.Draw.MeasureRequest.MeasureRequest(float, float, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public MeasureRequest(float width, float height, float scale)
+    parameters:
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    - id: scale
+      type: System.Single
+    content.vb: Public Sub New(width As Single, height As Single, scale As Single)
+  overload: DrawnUi.Draw.MeasureRequest.#ctor*
+  nameWithType.vb: MeasureRequest.New(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.MeasureRequest.New(Single, Single, Single)
+  name.vb: New(Single, Single, Single)
+- uid: DrawnUi.Draw.MeasureRequest.#ctor(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.MeasureRequest.#ctor(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  id: '#ctor(SkiaSharp.SKRect,System.Single,System.Single,System.Single)'
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: MeasureRequest(SKRect, float, float, float)
+  nameWithType: MeasureRequest.MeasureRequest(SKRect, float, float, float)
+  fullName: DrawnUi.Draw.MeasureRequest.MeasureRequest(SkiaSharp.SKRect, float, float, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public MeasureRequest(SKRect rectForChildrenPixels, float width, float height, float scale)
+    parameters:
+    - id: rectForChildrenPixels
+      type: SkiaSharp.SKRect
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    - id: scale
+      type: System.Single
+    content.vb: Public Sub New(rectForChildrenPixels As SKRect, width As Single, height As Single, scale As Single)
+  overload: DrawnUi.Draw.MeasureRequest.#ctor*
+  nameWithType.vb: MeasureRequest.New(SKRect, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.MeasureRequest.New(SkiaSharp.SKRect, Single, Single, Single)
+  name.vb: New(SKRect, Single, Single, Single)
+- uid: DrawnUi.Draw.MeasureRequest.IsSame
+  commentId: P:DrawnUi.Draw.MeasureRequest.IsSame
+  id: IsSame
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: IsSame
+  nameWithType: MeasureRequest.IsSame
+  fullName: DrawnUi.Draw.MeasureRequest.IsSame
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsSame
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsSame { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsSame As Boolean
+  overload: DrawnUi.Draw.MeasureRequest.IsSame*
+- uid: DrawnUi.Draw.MeasureRequest.Destination
+  commentId: P:DrawnUi.Draw.MeasureRequest.Destination
+  id: Destination
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: Destination
+  nameWithType: MeasureRequest.Destination
+  fullName: DrawnUi.Draw.MeasureRequest.Destination
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Destination
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKRect Destination { readonly get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Property Destination As SKRect
+  overload: DrawnUi.Draw.MeasureRequest.Destination*
+- uid: DrawnUi.Draw.MeasureRequest.WidthRequest
+  commentId: P:DrawnUi.Draw.MeasureRequest.WidthRequest
+  id: WidthRequest
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: WidthRequest
+  nameWithType: MeasureRequest.WidthRequest
+  fullName: DrawnUi.Draw.MeasureRequest.WidthRequest
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WidthRequest
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float WidthRequest { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property WidthRequest As Single
+  overload: DrawnUi.Draw.MeasureRequest.WidthRequest*
+- uid: DrawnUi.Draw.MeasureRequest.HeightRequest
+  commentId: P:DrawnUi.Draw.MeasureRequest.HeightRequest
+  id: HeightRequest
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: HeightRequest
+  nameWithType: MeasureRequest.HeightRequest
+  fullName: DrawnUi.Draw.MeasureRequest.HeightRequest
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HeightRequest
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 24
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float HeightRequest { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property HeightRequest As Single
+  overload: DrawnUi.Draw.MeasureRequest.HeightRequest*
+- uid: DrawnUi.Draw.MeasureRequest.Scale
+  commentId: P:DrawnUi.Draw.MeasureRequest.Scale
+  id: Scale
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: Scale
+  nameWithType: MeasureRequest.Scale
+  fullName: DrawnUi.Draw.MeasureRequest.Scale
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Scale
+    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    startLine: 25
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Scale { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Scale As Single
+  overload: DrawnUi.Draw.MeasureRequest.Scale*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.MeasureRequest
+  commentId: T:DrawnUi.Draw.MeasureRequest
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.MeasureRequest.html
+  name: MeasureRequest
+  nameWithType: MeasureRequest
+  fullName: DrawnUi.Draw.MeasureRequest
+- uid: DrawnUi.Draw.MeasureRequest.#ctor*
+  commentId: Overload:DrawnUi.Draw.MeasureRequest.#ctor
+  href: DrawnUi.Draw.MeasureRequest.html#DrawnUi_Draw_MeasureRequest__ctor_System_Single_System_Single_System_Single_
+  name: MeasureRequest
+  nameWithType: MeasureRequest.MeasureRequest
+  fullName: DrawnUi.Draw.MeasureRequest.MeasureRequest
+  nameWithType.vb: MeasureRequest.New
+  fullName.vb: DrawnUi.Draw.MeasureRequest.New
+  name.vb: New
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.MeasureRequest.IsSame*
+  commentId: Overload:DrawnUi.Draw.MeasureRequest.IsSame
+  href: DrawnUi.Draw.MeasureRequest.html#DrawnUi_Draw_MeasureRequest_IsSame
+  name: IsSame
+  nameWithType: MeasureRequest.IsSame
+  fullName: DrawnUi.Draw.MeasureRequest.IsSame
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.MeasureRequest.Destination*
+  commentId: Overload:DrawnUi.Draw.MeasureRequest.Destination
+  href: DrawnUi.Draw.MeasureRequest.html#DrawnUi_Draw_MeasureRequest_Destination
+  name: Destination
+  nameWithType: MeasureRequest.Destination
+  fullName: DrawnUi.Draw.MeasureRequest.Destination
+- uid: DrawnUi.Draw.MeasureRequest.WidthRequest*
+  commentId: Overload:DrawnUi.Draw.MeasureRequest.WidthRequest
+  href: DrawnUi.Draw.MeasureRequest.html#DrawnUi_Draw_MeasureRequest_WidthRequest
+  name: WidthRequest
+  nameWithType: MeasureRequest.WidthRequest
+  fullName: DrawnUi.Draw.MeasureRequest.WidthRequest
+- uid: DrawnUi.Draw.MeasureRequest.HeightRequest*
+  commentId: Overload:DrawnUi.Draw.MeasureRequest.HeightRequest
+  href: DrawnUi.Draw.MeasureRequest.html#DrawnUi_Draw_MeasureRequest_HeightRequest
+  name: HeightRequest
+  nameWithType: MeasureRequest.HeightRequest
+  fullName: DrawnUi.Draw.MeasureRequest.HeightRequest
+- uid: DrawnUi.Draw.MeasureRequest.Scale*
+  commentId: Overload:DrawnUi.Draw.MeasureRequest.Scale
+  href: DrawnUi.Draw.MeasureRequest.html#DrawnUi_Draw_MeasureRequest_Scale
+  name: Scale
+  nameWithType: MeasureRequest.Scale
+  fullName: DrawnUi.Draw.MeasureRequest.Scale

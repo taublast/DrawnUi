@@ -1,0 +1,282 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  commentId: T:DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  id: VelocitySkiaAnimator.PresetType
+  parent: DrawnUi.Animate.Animators
+  children:
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Alpha
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Default
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Rotation
+  - DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Scale
+  langs:
+  - csharp
+  - vb
+  name: VelocitySkiaAnimator.PresetType
+  nameWithType: VelocitySkiaAnimator.PresetType
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PresetType
+    path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+    startLine: 398
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Animate.Animators
+  syntax:
+    content: public enum VelocitySkiaAnimator.PresetType
+    content.vb: Public Enum VelocitySkiaAnimator.PresetType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Default
+  commentId: F:DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Default
+  id: Default
+  parent: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: VelocitySkiaAnimator.PresetType.Default
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Default
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Default
+    path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+    startLine: 400
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Animate.Animators
+  syntax:
+    content: Default = 0
+    return:
+      type: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Scale
+  commentId: F:DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Scale
+  id: Scale
+  parent: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  langs:
+  - csharp
+  - vb
+  name: Scale
+  nameWithType: VelocitySkiaAnimator.PresetType.Scale
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Scale
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Scale
+    path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+    startLine: 401
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Animate.Animators
+  syntax:
+    content: Scale = 1
+    return:
+      type: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Rotation
+  commentId: F:DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Rotation
+  id: Rotation
+  parent: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  langs:
+  - csharp
+  - vb
+  name: Rotation
+  nameWithType: VelocitySkiaAnimator.PresetType.Rotation
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Rotation
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Rotation
+    path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+    startLine: 402
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Animate.Animators
+  syntax:
+    content: Rotation = 2
+    return:
+      type: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Alpha
+  commentId: F:DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Alpha
+  id: Alpha
+  parent: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  langs:
+  - csharp
+  - vb
+  name: Alpha
+  nameWithType: VelocitySkiaAnimator.PresetType.Alpha
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.Alpha
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Alpha
+    path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
+    startLine: 403
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Animate.Animators
+  syntax:
+    content: Alpha = 3
+    return:
+      type: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+references:
+- uid: DrawnUi.Animate.Animators
+  commentId: N:DrawnUi.Animate.Animators
+  href: DrawnUi.html
+  name: DrawnUi.Animate.Animators
+  nameWithType: DrawnUi.Animate.Animators
+  fullName: DrawnUi.Animate.Animators
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Animate
+    name: Animate
+    href: DrawnUi.Animate.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators
+    name: Animators
+    href: DrawnUi.Animate.Animators.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Animate
+    name: Animate
+    href: DrawnUi.Animate.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators
+    name: Animators
+    href: DrawnUi.Animate.Animators.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  commentId: T:DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  parent: DrawnUi.Animate.Animators
+  href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  name: VelocitySkiaAnimator.PresetType
+  nameWithType: VelocitySkiaAnimator.PresetType
+  fullName: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+  spec.csharp:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+    name: PresetType
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.html
+  spec.vb:
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator
+    name: VelocitySkiaAnimator
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.html
+  - name: .
+  - uid: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType
+    name: PresetType
+    href: DrawnUi.Animate.Animators.VelocitySkiaAnimator.PresetType.html

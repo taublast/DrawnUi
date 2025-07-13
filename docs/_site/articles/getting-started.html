@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Getting Started with DrawnUI | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Getting Started with DrawnUI | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/getting-started.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getting-started-with-drawnui">Getting Started with DrawnUI</h1>
+
+<p>This guide will help you get started with DrawnUI in your .NET MAUI application.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Target .NET 9.</p>
+<p>To make everything compile from first attempt You might also need at least the following MAUI setup inside your csproj:</p>
+<pre><code>	&lt;PropertyGroup&gt;
+		&lt;SupportedOSPlatformVersion Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'&quot;&gt;15.0&lt;/SupportedOSPlatformVersion&gt;
+		&lt;SupportedOSPlatformVersion Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'&quot;&gt;15.2&lt;/SupportedOSPlatformVersion&gt;
+		&lt;SupportedOSPlatformVersion Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'&quot;&gt;21.0&lt;/SupportedOSPlatformVersion&gt;
+        &lt;SupportedOSPlatformVersion Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'&quot;&gt;10.0.19041.0&lt;/SupportedOSPlatformVersion&gt;
+        &lt;TargetPlatformMinVersion Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'&quot;&gt;10.0.19041.0&lt;/TargetPlatformMinVersion&gt;
+	&lt;/PropertyGroup&gt;
+    
+    &lt;ItemGroup&gt;
+        &lt;PackageReference Include=&quot;Microsoft.Maui.Controls&quot; Version=&quot;9.0.70&quot; /&gt;
+        &lt;PackageReference Include=&quot;Microsoft.Maui.Controls.Compatibility&quot; Version=&quot;9.0.70&quot; /&gt;
+    &lt;/ItemGroup&gt;
+
+</code></pre>
+<h3 id="add-the-nuget-package">Add the NuGet Package</h3>
+<p>Install the <strong>DrawnUi.Maui</strong> NuGet package in your .NET MAUI project:</p>
+<pre><code class="lang-bash">dotnet add package DrawnUi.Maui
+</code></pre>
+<blockquote>
+<p><strong>Important</strong>: Please install stable versions only.</p>
+</blockquote>
+<p>Alternatively, you can fork the DrawnUi repo and reference the main project directly.</p>
+<h3 id="additional-packages">Additional Packages</h3>
+<p>There are additional packages supporting optional features:</p>
+<ul>
+<li><strong>DrawnUi.Maui.Camera</strong> - Camera implementations for all platforms</li>
+<li><strong>DrawnUi.Maui.Game</strong> - Gaming helpers and frame time interpolators</li>
+<li><strong>DrawnUi.Maui.Maps</strong> - Map integration features</li>
+</ul>
+<p>These must be referenced separately if needed.</p>
+<h3 id="2-initialize-in-your-maui-app">2. Initialize in Your MAUI App</h3>
+<p>Update your <code>MauiProgram.cs</code> file to initialize draw:</p>
+<pre><code class="lang-csharp">using DrawnUi.Draw;
+
+public static class MauiProgram
+{
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp&lt;App&gt;()
+            .UseDrawnUi() // &lt;---- Add this line
+            .ConfigureFonts(fonts =&gt;
+            {
+                fonts.AddFont(&quot;OpenSans-Regular.ttf&quot;, &quot;FontText&quot;);
+                fonts.AddFont(&quot;OpenSans-Semibold.ttf&quot;, &quot;OpenSansSemibold&quot;);
+            });
+
+        return builder.Build();
+    }
+}
+</code></pre>
+<h3 id="add-namespace-to-xaml">Add Namespace to XAML</h3>
+<p>Add the DrawnUi namespace to your XAML files:</p>
+<pre><code class="lang-xml">&lt;ContentPage xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
+             x:Class=&quot;YourNamespace.YourPage&quot;&gt;
+    &lt;!-- Page content --&gt;
+&lt;/ContentPage&gt;
+</code></pre>
+<h3 id="using-drawnui-controls">Using DrawnUi Controls</h3>
+<p>Now you can add DrawnUi controls to your page. You have two main options:</p>
+<h4 id="option-1-use-canvas-inside-a-regular-contentpage">Option 1: Use Canvas inside a regular ContentPage</h4>
+<pre><code class="lang-xml">&lt;ContentPage xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
+             x:Class=&quot;YourNamespace.YourPage&quot;&gt;
+
+    &lt;draw:Canvas HorizontalOptions=&quot;Fill&quot; VerticalOptions=&quot;Fill&quot;&gt;
+        &lt;draw:SkiaLayout Type=&quot;Column&quot; Spacing=&quot;16&quot; Padding=&quot;32&quot;&gt;
+            &lt;draw:SkiaLabel
+                Text=&quot;Hello DrawnUi!&quot;
+                FontSize=&quot;24&quot;
+                HorizontalOptions=&quot;Center&quot;
+                VerticalOptions=&quot;Center&quot; /&gt;
+
+            &lt;draw:SkiaButton
+                Text=&quot;Click Me&quot;
+                WidthRequest=&quot;120&quot;
+                HeightRequest=&quot;40&quot;
+                CornerRadius=&quot;8&quot;
+                BackgroundColor=&quot;Blue&quot;
+                TextColor=&quot;White&quot;
+                VerticalOptions=&quot;Center&quot;
+                HorizontalOptions=&quot;Center&quot;
+                Clicked=&quot;OnButtonClicked&quot; /&gt;
+
+        &lt;/draw:SkiaLayout&gt;
+    &lt;/draw:Canvas&gt;
+&lt;/ContentPage&gt;
+</code></pre>
+<h4 id="option-2-use-drawnuibasepage-for-keyboard-support">Option 2: Use DrawnUiBasePage (for keyboard support)</h4>
+<pre><code class="lang-xml">&lt;draw:DrawnUiBasePage xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+                      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+                      xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
+                      x:Class=&quot;YourNamespace.YourPage&quot;&gt;
+
+    &lt;draw:Canvas 
+        RenderingMode=&quot;Accelerated&quot;
+        Gestures=&quot;Lock&quot;
+        HorizontalOptions=&quot;Fill&quot; VerticalOptions=&quot;Fill&quot;&gt;
+        &lt;draw:SkiaLayout Type=&quot;Column&quot; Spacing=&quot;16&quot; Padding=&quot;32&quot;&gt;
+            &lt;draw:SkiaLabel
+                Text=&quot;Hello DrawnUi!&quot;
+                FontSize=&quot;24&quot;
+                HorizontalOptions=&quot;Center&quot;
+                VerticalOptions=&quot;Center&quot; /&gt;
+
+            &lt;draw:SkiaButton
+                Text=&quot;Click Me&quot;
+                WidthRequest=&quot;120&quot;
+                HeightRequest=&quot;40&quot;
+                CornerRadius=&quot;8&quot;
+                BackgroundColor=&quot;Blue&quot;
+                TextColor=&quot;White&quot;
+                VerticalOptions=&quot;Center&quot;
+                HorizontalOptions=&quot;Center&quot;
+                Clicked=&quot;OnButtonClicked&quot; /&gt;
+        &lt;/draw:SkiaLayout&gt;
+    &lt;/draw:Canvas&gt;
+&lt;/draw:DrawnUiBasePage&gt;
+</code></pre>
+<h3 id="setup-canvas">Setup Canvas</h3>
+<p>If you indend to process gestures inside your canvas setup the <code>Gestures</code> property accordingly
+If you would have animated content or use shaders set <code>RenderingMode</code> to <code>Accelerated</code>. Otherwise leave it as it is to use the default lightweight <code>Software</code> mode, it is still perfect for rendering static content.</p>
+<h3 id="handling-events">Handling Events</h3>
+<p>Handle control events in your code-behind:</p>
+<pre><code class="lang-csharp">private void OnButtonClicked(SkiaButton sender, SkiaGesturesParameters e)
+{
+    // Handle button click
+    DisplayAlert(&quot;DrawnUi&quot;, &quot;Button clicked!&quot;, &quot;OK&quot;);
+}
+</code></pre>
+<blockquote>
+<p><strong>Important</strong>: DrawnUi button events use <code>Action&lt;SkiaButton, SkiaGesturesParameters&gt;</code> instead of the standard EventHandler pattern. The first parameter is the specific control type (SkiaButton), and the second contains gesture information.</p>
+</blockquote>
+<h2 id="using-styles">Using Styles</h2>
+<p>DrawnUi supports MAUI styling, You can set default properties for drawn controls all like you would do it for MAUI controls.
+Add this to <code>Resources/Styles.xaml</code> to set default fonts for all SkiaLabel and SkiaRichLabel controls:</p>
+<pre><code class="lang-xml"> ...
+
+ &lt;ResourceDictionary
+    xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+    xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;&gt;
+
+    &lt;Style ApplyToDerivedTypes=&quot;True&quot; TargetType=&quot;draw:SkiaLabel&quot;&gt;
+        &lt;Setter Property=&quot;TextColor&quot; Value=&quot;Black&quot; /&gt;
+        &lt;Setter Property=&quot;FontSize&quot; Value=&quot;14&quot; /&gt;
+        &lt;Setter Property=&quot;FontFamily&quot; Value=&quot;FontText&quot; /&gt;
+    &lt;/Style&gt;
+
+...
+</code></pre>
+<h2 id="using-platform-specific-styles">Using Platform-Specific Styles</h2>
+<p>Some of DrawnUi controls support platform-specific styling:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaButton
+    Text=&quot;Platform Style&quot;
+    ControlStyle=&quot;Material&quot;
+    WidthRequest=&quot;150&quot;
+    HeightRequest=&quot;40&quot; /&gt;
+    
+&lt;draw:SkiaSwitch
+    ControlStyle=&quot;Cupertino&quot;
+    IsToggled=&quot;true&quot;
+    Margin=&quot;0,20,0,0&quot; /&gt;
+</code></pre>
+<h2 id="important-differences-from-standard-maui">Important Differences from Standard MAUI</h2>
+<p>When working with DrawnUI, keep these key differences in mind:</p>
+<ul>
+<li><strong>Layout Options</strong>: <code>HorizontalOptions</code> and <code>VerticalOptions</code> defaults are <code>Start</code>, not <code>Fill</code>. Request size explicitly or set options to <code>Fill</code>, otherwise your control will take zero space.</li>
+<li><strong>Grid Defaults</strong>: <code>Grid</code> layout type default Row- and Column are &quot;Auto&quot; and not &quot;*&quot;.</li>
+<li><strong>Grid Spacing</strong>: <code>Grid</code> layout type default col/row Spacing is 1, not 8.</li>
+<li><strong>Canvas Behavior</strong>: The <code>Canvas</code> control is aware of its children's size and will resize accordingly. You can also set a fixed size for the <code>Canvas</code> and its children will adapt to it.</li>
+</ul>
+<h2 id="quick-examples">Quick Examples</h2>
+<h3 id="simple-svg-icon">Simple SVG Icon</h3>
+<pre><code class="lang-xml">&lt;draw:Canvas&gt;
+    &lt;draw:SkiaSvg
+        Source=&quot;Svg/dotnet_bot.svg&quot;
+        LockRatio=&quot;1&quot;
+        TintColor=&quot;White&quot;
+        WidthRequest=&quot;44&quot; /&gt;
+&lt;/draw:Canvas&gt;
+</code></pre>
+<p>In this example, <code>LockRatio=&quot;1&quot;</code> tells the engine to take the highest calculated dimension and multiply it by 1, so even without <code>HeightRequest</code>, it becomes 44x44 pts.</p>
+<h3 id="code-behind-example">Code-Behind Example</h3>
+<pre><code class="lang-csharp">Canvas = new Canvas()
+{
+    Gestures = GesturesMode.Enabled,
+    RenderingMode = RenderingModeType.Accelerated,
+    HorizontalOptions = LayoutOptions.Fill,
+    VerticalOptions = LayoutOptions.Fill,
+    BackgroundColor = Colors.Black,
+    Content = new SkiaLayout()
+    {
+        HorizontalOptions = LayoutOptions.Fill,
+        VerticalOptions = LayoutOptions.Fill,
+        Children = new List&lt;SkiaControl&gt;()
+        {
+            new SkiaShape()
+            {
+                BackgroundColor = Colors.DodgerBlue,
+                CornerRadius = 16,
+                WidthRequest = 150,
+                HeightRequest = 150,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                Content = new SkiaLabel()
+                {
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
+                    Text = &quot;Hello DrawnUI!&quot;
+                }
+            }
+        }
+    }
+};
+</code></pre>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li>Create <a href="first-app.html">Your First DrawnUI App</a></li>
+<li>Explore the <a href="controls/index.html">Controls documentation</a> to learn about available controls</li>
+<li>See <a href="advanced/platform-styling.html">Platform-Specific Styling</a> for more styling options</li>
+<li>Check out the <a href="samples.html">Sample Applications</a> for complete examples</li>
+<li>Review <a href="development-notes.md">Development Notes</a> for technical requirements and best practices</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/getting-started.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

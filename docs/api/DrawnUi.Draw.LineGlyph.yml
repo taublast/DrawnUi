@@ -1,0 +1,951 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.LineGlyph
+  commentId: T:DrawnUi.Draw.LineGlyph
+  id: LineGlyph
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.LineGlyph.FromGlyph(DrawnUi.Draw.UsedGlyph,System.Single,System.Single)
+  - DrawnUi.Draw.LineGlyph.GetGlyphText
+  - DrawnUi.Draw.LineGlyph.Id
+  - DrawnUi.Draw.LineGlyph.IsAvailable
+  - DrawnUi.Draw.LineGlyph.IsNumber
+  - DrawnUi.Draw.LineGlyph.Length
+  - DrawnUi.Draw.LineGlyph.Move(DrawnUi.Draw.LineGlyph,System.Single)
+  - DrawnUi.Draw.LineGlyph.Position
+  - DrawnUi.Draw.LineGlyph.Source
+  - DrawnUi.Draw.LineGlyph.StartIndex
+  - DrawnUi.Draw.LineGlyph.Symbol
+  - DrawnUi.Draw.LineGlyph.Width
+  langs:
+  - csharp
+  - vb
+  name: LineGlyph
+  nameWithType: LineGlyph
+  fullName: DrawnUi.Draw.LineGlyph
+  type: Struct
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LineGlyph
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public struct LineGlyph
+    content.vb: Public Structure LineGlyph
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.LineGlyph.FromGlyph(DrawnUi.Draw.UsedGlyph,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.LineGlyph.FromGlyph(DrawnUi.Draw.UsedGlyph,System.Single,System.Single)
+  id: FromGlyph(DrawnUi.Draw.UsedGlyph,System.Single,System.Single)
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: FromGlyph(UsedGlyph, float, float)
+  nameWithType: LineGlyph.FromGlyph(UsedGlyph, float, float)
+  fullName: DrawnUi.Draw.LineGlyph.FromGlyph(DrawnUi.Draw.UsedGlyph, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromGlyph
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static LineGlyph FromGlyph(UsedGlyph glyph, float position, float width)
+    parameters:
+    - id: glyph
+      type: DrawnUi.Draw.UsedGlyph
+    - id: position
+      type: System.Single
+    - id: width
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.LineGlyph
+    content.vb: Public Shared Function FromGlyph(glyph As UsedGlyph, position As Single, width As Single) As LineGlyph
+  overload: DrawnUi.Draw.LineGlyph.FromGlyph*
+  nameWithType.vb: LineGlyph.FromGlyph(UsedGlyph, Single, Single)
+  fullName.vb: DrawnUi.Draw.LineGlyph.FromGlyph(DrawnUi.Draw.UsedGlyph, Single, Single)
+  name.vb: FromGlyph(UsedGlyph, Single, Single)
+- uid: DrawnUi.Draw.LineGlyph.Source
+  commentId: P:DrawnUi.Draw.LineGlyph.Source
+  id: Source
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: Source
+  nameWithType: LineGlyph.Source
+  fullName: DrawnUi.Draw.LineGlyph.Source
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Source
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string Source { readonly get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Source As String
+  overload: DrawnUi.Draw.LineGlyph.Source*
+- uid: DrawnUi.Draw.LineGlyph.StartIndex
+  commentId: P:DrawnUi.Draw.LineGlyph.StartIndex
+  id: StartIndex
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: StartIndex
+  nameWithType: LineGlyph.StartIndex
+  fullName: DrawnUi.Draw.LineGlyph.StartIndex
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StartIndex
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 26
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Position inside existing span
+  example: []
+  syntax:
+    content: public int StartIndex { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property StartIndex As Integer
+  overload: DrawnUi.Draw.LineGlyph.StartIndex*
+- uid: DrawnUi.Draw.LineGlyph.Length
+  commentId: P:DrawnUi.Draw.LineGlyph.Length
+  id: Length
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: Length
+  nameWithType: LineGlyph.Length
+  fullName: DrawnUi.Draw.LineGlyph.Length
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Length
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Length inside existing span
+  example: []
+  syntax:
+    content: public int Length { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Length As Integer
+  overload: DrawnUi.Draw.LineGlyph.Length*
+- uid: DrawnUi.Draw.LineGlyph.IsNumber
+  commentId: M:DrawnUi.Draw.LineGlyph.IsNumber
+  id: IsNumber
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: IsNumber()
+  nameWithType: LineGlyph.IsNumber()
+  fullName: DrawnUi.Draw.LineGlyph.IsNumber()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsNumber
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 33
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsNumber()
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsNumber() As Boolean
+  overload: DrawnUi.Draw.LineGlyph.IsNumber*
+- uid: DrawnUi.Draw.LineGlyph.GetGlyphText
+  commentId: M:DrawnUi.Draw.LineGlyph.GetGlyphText
+  id: GetGlyphText
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: GetGlyphText()
+  nameWithType: LineGlyph.GetGlyphText()
+  fullName: DrawnUi.Draw.LineGlyph.GetGlyphText()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetGlyphText
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 39
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ReadOnlySpan<char> GetGlyphText()
+    return:
+      type: System.ReadOnlySpan{System.Char}
+    content.vb: Public Function GetGlyphText() As ReadOnlySpan(Of Char)
+  overload: DrawnUi.Draw.LineGlyph.GetGlyphText*
+- uid: DrawnUi.Draw.LineGlyph.Id
+  commentId: P:DrawnUi.Draw.LineGlyph.Id
+  id: Id
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: LineGlyph.Id
+  fullName: DrawnUi.Draw.LineGlyph.Id
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Id
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ushort Id { readonly get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property Id As UShort
+  overload: DrawnUi.Draw.LineGlyph.Id*
+- uid: DrawnUi.Draw.LineGlyph.Symbol
+  commentId: P:DrawnUi.Draw.LineGlyph.Symbol
+  id: Symbol
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: Symbol
+  nameWithType: LineGlyph.Symbol
+  fullName: DrawnUi.Draw.LineGlyph.Symbol
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Symbol
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 46
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int Symbol { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Symbol As Integer
+  overload: DrawnUi.Draw.LineGlyph.Symbol*
+- uid: DrawnUi.Draw.LineGlyph.Position
+  commentId: P:DrawnUi.Draw.LineGlyph.Position
+  id: Position
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: Position
+  nameWithType: LineGlyph.Position
+  fullName: DrawnUi.Draw.LineGlyph.Position
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Position
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 48
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Position { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Position As Single
+  overload: DrawnUi.Draw.LineGlyph.Position*
+- uid: DrawnUi.Draw.LineGlyph.Width
+  commentId: P:DrawnUi.Draw.LineGlyph.Width
+  id: Width
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: LineGlyph.Width
+  fullName: DrawnUi.Draw.LineGlyph.Width
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Width
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 53
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Measured text with advance
+  example: []
+  syntax:
+    content: public float Width { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Width As Single
+  overload: DrawnUi.Draw.LineGlyph.Width*
+- uid: DrawnUi.Draw.LineGlyph.Move(DrawnUi.Draw.LineGlyph,System.Single)
+  commentId: M:DrawnUi.Draw.LineGlyph.Move(DrawnUi.Draw.LineGlyph,System.Single)
+  id: Move(DrawnUi.Draw.LineGlyph,System.Single)
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: Move(LineGlyph, float)
+  nameWithType: LineGlyph.Move(LineGlyph, float)
+  fullName: DrawnUi.Draw.LineGlyph.Move(DrawnUi.Draw.LineGlyph, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Move
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 55
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static LineGlyph Move(LineGlyph existing, float position)
+    parameters:
+    - id: existing
+      type: DrawnUi.Draw.LineGlyph
+    - id: position
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.LineGlyph
+    content.vb: Public Shared Function Move(existing As LineGlyph, position As Single) As LineGlyph
+  overload: DrawnUi.Draw.LineGlyph.Move*
+  nameWithType.vb: LineGlyph.Move(LineGlyph, Single)
+  fullName.vb: DrawnUi.Draw.LineGlyph.Move(DrawnUi.Draw.LineGlyph, Single)
+  name.vb: Move(LineGlyph, Single)
+- uid: DrawnUi.Draw.LineGlyph.IsAvailable
+  commentId: P:DrawnUi.Draw.LineGlyph.IsAvailable
+  id: IsAvailable
+  parent: DrawnUi.Draw.LineGlyph
+  langs:
+  - csharp
+  - vb
+  name: IsAvailable
+  nameWithType: LineGlyph.IsAvailable
+  fullName: DrawnUi.Draw.LineGlyph.IsAvailable
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsAvailable
+    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    startLine: 62
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsAvailable { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsAvailable As Boolean
+  overload: DrawnUi.Draw.LineGlyph.IsAvailable*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.LineGlyph.FromGlyph*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.FromGlyph
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_FromGlyph_DrawnUi_Draw_UsedGlyph_System_Single_System_Single_
+  name: FromGlyph
+  nameWithType: LineGlyph.FromGlyph
+  fullName: DrawnUi.Draw.LineGlyph.FromGlyph
+- uid: DrawnUi.Draw.UsedGlyph
+  commentId: T:DrawnUi.Draw.UsedGlyph
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.UsedGlyph.html
+  name: UsedGlyph
+  nameWithType: UsedGlyph
+  fullName: DrawnUi.Draw.UsedGlyph
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.LineGlyph
+  commentId: T:DrawnUi.Draw.LineGlyph
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.LineGlyph.html
+  name: LineGlyph
+  nameWithType: LineGlyph
+  fullName: DrawnUi.Draw.LineGlyph
+- uid: DrawnUi.Draw.LineGlyph.Source*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.Source
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_Source
+  name: Source
+  nameWithType: LineGlyph.Source
+  fullName: DrawnUi.Draw.LineGlyph.Source
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.LineGlyph.StartIndex*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.StartIndex
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_StartIndex
+  name: StartIndex
+  nameWithType: LineGlyph.StartIndex
+  fullName: DrawnUi.Draw.LineGlyph.StartIndex
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.LineGlyph.Length*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.Length
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_Length
+  name: Length
+  nameWithType: LineGlyph.Length
+  fullName: DrawnUi.Draw.LineGlyph.Length
+- uid: DrawnUi.Draw.LineGlyph.IsNumber*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.IsNumber
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_IsNumber
+  name: IsNumber
+  nameWithType: LineGlyph.IsNumber
+  fullName: DrawnUi.Draw.LineGlyph.IsNumber
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.LineGlyph.GetGlyphText*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.GetGlyphText
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_GetGlyphText
+  name: GetGlyphText
+  nameWithType: LineGlyph.GetGlyphText
+  fullName: DrawnUi.Draw.LineGlyph.GetGlyphText
+- uid: System.ReadOnlySpan{System.Char}
+  commentId: T:System.ReadOnlySpan{System.Char}
+  parent: System
+  definition: System.ReadOnlySpan`1
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<char>
+  nameWithType: ReadOnlySpan<char>
+  fullName: System.ReadOnlySpan<char>
+  nameWithType.vb: ReadOnlySpan(Of Char)
+  fullName.vb: System.ReadOnlySpan(Of Char)
+  name.vb: ReadOnlySpan(Of Char)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Char
+    name: char
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.char
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Char
+    name: Char
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.char
+  - name: )
+- uid: System.ReadOnlySpan`1
+  commentId: T:System.ReadOnlySpan`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<T>
+  nameWithType: ReadOnlySpan<T>
+  fullName: System.ReadOnlySpan<T>
+  nameWithType.vb: ReadOnlySpan(Of T)
+  fullName.vb: System.ReadOnlySpan(Of T)
+  name.vb: ReadOnlySpan(Of T)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.LineGlyph.Id*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.Id
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_Id
+  name: Id
+  nameWithType: LineGlyph.Id
+  fullName: DrawnUi.Draw.LineGlyph.Id
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint16
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: DrawnUi.Draw.LineGlyph.Symbol*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.Symbol
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_Symbol
+  name: Symbol
+  nameWithType: LineGlyph.Symbol
+  fullName: DrawnUi.Draw.LineGlyph.Symbol
+- uid: DrawnUi.Draw.LineGlyph.Position*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.Position
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_Position
+  name: Position
+  nameWithType: LineGlyph.Position
+  fullName: DrawnUi.Draw.LineGlyph.Position
+- uid: DrawnUi.Draw.LineGlyph.Width*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.Width
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_Width
+  name: Width
+  nameWithType: LineGlyph.Width
+  fullName: DrawnUi.Draw.LineGlyph.Width
+- uid: DrawnUi.Draw.LineGlyph.Move*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.Move
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_Move_DrawnUi_Draw_LineGlyph_System_Single_
+  name: Move
+  nameWithType: LineGlyph.Move
+  fullName: DrawnUi.Draw.LineGlyph.Move
+- uid: DrawnUi.Draw.LineGlyph.IsAvailable*
+  commentId: Overload:DrawnUi.Draw.LineGlyph.IsAvailable
+  href: DrawnUi.Draw.LineGlyph.html#DrawnUi_Draw_LineGlyph_IsAvailable
+  name: IsAvailable
+  nameWithType: LineGlyph.IsAvailable
+  fullName: DrawnUi.Draw.LineGlyph.IsAvailable

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>SkiaShell | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SkiaShell | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/shell.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="skiashell">SkiaShell</h1>
+
+<p>SkiaShell is a powerful navigation framework for DrawnUi applications that provides full navigation capabilities similar to MAUI's Shell, but with the performance and customization benefits of direct SkiaSharp rendering.</p>
+<h2 id="overview">Overview</h2>
+<p>SkiaShell acts as a replacement for the standard MAUI Shell, allowing for fully drawn UI with SkiaSharp while maintaining compatibility with MAUI's routing capabilities. It provides complete navigation stack management, modal presentations, popups, and toast notifications within a DrawnUi.Maui Canvas.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>MAUI-compatible navigation</strong>: Use familiar navigation patterns with <code>GoToAsync</code></li>
+<li><strong>Navigation stack management</strong>: Handle screen, modal, popup, and toast stacks</li>
+<li><strong>Routing with parameters</strong>: Support for query parameters in navigation routes</li>
+<li><strong>Modal and popup systems</strong>: Present overlays with customizable animations</li>
+<li><strong>Background freezing</strong>: Capture and display screenshots of current views as backgrounds</li>
+<li><strong>Toast notifications</strong>: Show temporary messages with automatic dismissal</li>
+<li><strong>Back button handling</strong>: Handle hardware back button with customizable behavior</li>
+</ul>
+<h2 id="setup">Setup</h2>
+<h3 id="basic-configuration">Basic Configuration</h3>
+<p>To use SkiaShell in your application, you need to:</p>
+<ol>
+<li>Optiinal: create a page that derives from <code>DrawnUiBasePage</code>. This class provide support to track native keyboard to be able to adapt layout accordingly.</li>
+<li>Add a Canvas to your page</li>
+<li>Set up the required layout structure on the canvas</li>
+<li>Initialize the shell to register elements present on the canvas that would serve for navigation</li>
+</ol>
+<p>Here's a basic example:</p>
+<pre><code class="lang-xml">&lt;drawn:DrawnUiBasePage
+    x:Class=&quot;MyApp.MainShellPage&quot;
+    xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+    xmlns:drawn=&quot;clr-namespace:DrawnUi.Maui;assembly=DrawnUi.Maui&quot;&gt;
+
+    &lt;drawn:Canvas
+        x:Name=&quot;MainCanvas&quot;
+        HardwareAcceleration=&quot;Enabled&quot;
+        Gestures=&quot;Enabled&quot;
+        HorizontalOptions=&quot;Fill&quot;
+        VerticalOptions=&quot;Fill&quot;&gt;
+        
+        &lt;!-- Main content goes here --&gt;
+        &lt;drawn:SkiaLayout
+            Tag=&quot;ShellLayout&quot;
+            HorizontalOptions=&quot;Fill&quot;
+            VerticalOptions=&quot;Fill&quot;&gt;
+            
+            &lt;drawn:SkiaLayout
+                Tag=&quot;RootLayout&quot;
+                HorizontalOptions=&quot;Fill&quot;
+                VerticalOptions=&quot;Fill&quot;&gt;
+                
+                &lt;drawn:SkiaViewSwitcher
+                    Tag=&quot;NavigationLayout&quot;
+                    HorizontalOptions=&quot;Fill&quot;
+                    VerticalOptions=&quot;Fill&quot; /&gt;
+                    
+            &lt;/drawn:SkiaLayout&gt;
+            
+        &lt;/drawn:SkiaLayout&gt;
+    &lt;/drawn:Canvas&gt;
+    
+&lt;/drawn:DrawnUiBasePage&gt;
+</code></pre>
+<p>In your code-behind:</p>
+<pre><code class="lang-csharp">public partial class MainShellPage : DrawnUiBasePage
+{
+    public MainShellPage()
+    {
+        InitializeComponent();
+        
+        // Initialize and register the shell
+        Shell = new SkiaShell();
+        Shell.Initialize(MainCanvas);
+    }
+    
+    public SkiaShell Shell { get; private set; }
+    
+    // Register routes in OnAppearing or constructor
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        
+        // Register navigation routes
+        Shell.RegisterRoute(&quot;home&quot;, typeof(HomePage));
+        Shell.RegisterRoute(&quot;details&quot;, typeof(DetailsPage));
+        
+        // Navigate to the initial route
+        Shell.GoToAsync(&quot;home&quot;);
+    }
+}
+</code></pre>
+<h3 id="required-layout-tags">Required Layout Tags</h3>
+<p>SkiaShell relies on specific tags to identify key components in your layout:</p>
+<ul>
+<li><code>ShellLayout</code>: The outer container for all navigation elements (typically directly inside the Canvas)</li>
+<li><code>RootLayout</code>: The main layout container (inside ShellLayout)</li>
+<li><code>NavigationLayout</code>: A <code>SkiaViewSwitcher</code> that handles page transitions (inside RootLayout)</li>
+</ul>
+<h2 id="navigation">Navigation</h2>
+<h3 id="basic-navigation">Basic Navigation</h3>
+<pre><code class="lang-csharp">// Navigate to a registered route
+await Shell.GoToAsync(&quot;details&quot;);
+
+// Navigate with parameters
+await Shell.GoToAsync(&quot;details?id=123&amp;name=Product&quot;);
+
+// Navigate back
+bool handled = Shell.GoBack(true); // true to animate
+
+// Check if can go back
+bool canGoBack = Shell.CanGoBack();
+</code></pre>
+<h3 id="push-and-pop-pages">Push and Pop Pages</h3>
+<pre><code class="lang-csharp">// Push a page instance
+var detailsPage = new DetailsPage();
+await Shell.PushAsync(detailsPage, animated: true);
+
+// Pop the current page
+var poppedPage = await Shell.PopAsync(animated: true);
+
+// Pop to the root page
+await Shell.PopToRootAsync(animated: true);
+</code></pre>
+<h3 id="route-registration">Route Registration</h3>
+<p>Routes need to be registered before navigation:</p>
+<pre><code class="lang-csharp">// Register a route with a page type
+Shell.RegisterRoute(&quot;details&quot;, typeof(DetailsPage));
+
+// Register a route with a factory function
+Shell.RegisterRoute(&quot;profile&quot;, () =&gt; new ProfilePage());
+</code></pre>
+<h3 id="route-parameters">Route Parameters</h3>
+<p>Extract parameters in the destination page:</p>
+<pre><code class="lang-csharp">public class DetailsPage : SkiaControl
+{
+    protected override void OnParentChanged()
+    {
+        base.OnParentChanged();
+        
+        // Get query parameters from shell route
+        var shell = AppShell; // Helper property to get the shell
+        
+        if (shell?.RouteParameters != null)
+        {
+            string id = shell.RouteParameters.GetValueOrDefault(&quot;id&quot;);
+            string name = shell.RouteParameters.GetValueOrDefault(&quot;name&quot;);
+            
+            // Use the parameters
+            LoadDetails(id, name);
+        }
+    }
+}
+</code></pre>
+<h2 id="modals-and-popups">Modals and Popups</h2>
+<h3 id="modal-presentation">Modal Presentation</h3>
+<pre><code class="lang-csharp">// Show a modal from a registered route
+await Shell.PushModalAsync(&quot;details&quot;, useGestures: true, animated: true);
+
+// Show a modal from a page instance
+await Shell.PushModalAsync(new DetailsPage(), useGestures: true, animated: true);
+
+// Dismiss the modal
+await Shell.PopModalAsync(animated: true);
+</code></pre>
+<h3 id="popup-presentation">Popup Presentation</h3>
+<pre><code class="lang-csharp">// Create a popup content
+var popupContent = new SkiaLayout
+{
+    WidthRequest = 300,
+    HeightRequest = 200,
+    BackgroundColor = Colors.White,
+    CornerRadius = 10
+};
+
+// Add content to the popup
+popupContent.Add(new SkiaLabel 
+{ 
+    Text = &quot;This is a popup&quot;,
+    HorizontalOptions = LayoutOptions.Center,
+    VerticalOptions = LayoutOptions.Center
+});
+
+// Show popup
+await Shell.OpenPopupAsync(
+    content: popupContent,
+    animated: true,
+    closeWhenBackgroundTapped: true,
+    freezeBackground: true
+);
+
+// Close popup
+await Shell.ClosePopupAsync(animated: true);
+</code></pre>
+<h3 id="toast-notifications">Toast Notifications</h3>
+<pre><code class="lang-csharp">// Show a simple text toast
+Shell.ShowToast(&quot;Operation completed successfully&quot;, msShowTime: 3000);
+
+// Show a custom toast
+Shell.ShowToast(new SkiaRichLabel
+{
+    Text = &quot;**Important:** Your data has been saved.&quot;,
+    TextColor = Colors.White
+}, msShowTime: 3000);
+</code></pre>
+<h2 id="customization">Customization</h2>
+<h3 id="visual-customization">Visual Customization</h3>
+<pre><code class="lang-csharp">// Set global appearance properties
+SkiaShell.PopupBackgroundColor = new SKColor(0, 0, 0, 128); // 50% transparent black
+SkiaShell.PopupsBackgroundBlur = 10; // Blur amount
+SkiaShell.PopupsAnimationSpeed = 350; // Animation duration in ms
+SkiaShell.ToastBackgroundColor = new SKColor(50, 50, 50, 230);
+SkiaShell.ToastTextColor = Colors.White;
+</code></pre>
+<h3 id="animation-control">Animation Control</h3>
+<p>Control the animation duration and timing:</p>
+<pre><code class="lang-csharp">// Fast navigation with minimal animation
+await Shell.GoToAsync(&quot;details&quot;, new NavigationParameters
+{
+    AnimationDuration = 150
+});
+
+// Slow modal presentation with specific animation
+await Shell.PushModalAsync(&quot;settings&quot;, new NavigationParameters
+{
+    AnimationDuration = 500,
+    AnimationType = NavigationType.SlideFromRight
+});
+</code></pre>
+<h3 id="navigation-events">Navigation Events</h3>
+<pre><code class="lang-csharp">// Subscribe to navigation events
+Shell.Navigated += OnNavigated;
+Shell.Navigating += OnNavigating;
+Shell.RouteChanged += OnRouteChanged;
+
+// Handle the events
+private void OnNavigating(object sender, SkiaShellNavigatingArgs e)
+{
+    // Access navigation details
+    string source = e.Source.ToString();
+    string destination = e.Destination;
+    
+    // Optionally cancel navigation
+    if (HasUnsavedChanges)
+    {
+        e.Cancel = true;
+        ShowSavePrompt();
+    }
+}
+
+private void OnNavigated(object sender, SkiaShellNavigatedArgs e)
+{
+    // Navigation completed
+    Debug.WriteLine($&quot;Navigated from {e.Source} to {e.Destination}&quot;);
+}
+</code></pre>
+<h3 id="custom-back-navigation">Custom Back Navigation</h3>
+<p>Implement the <code>IHandleGoBack</code> interface to handle back navigation in view models:</p>
+<pre><code class="lang-csharp">public class EditViewModel : IHandleGoBack
+{
+    public bool OnShellGoBack(bool animate)
+    {
+        // Check for unsaved changes
+        if (HasUnsavedChanges)
+        {
+            // Show confirmation dialog
+            ShowConfirmationDialog();
+            
+            // Return true to indicate we're handling the back navigation
+            return true;
+        }
+        
+        // Return false to let the default back navigation occur
+        return false;
+    }
+}
+</code></pre>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3 id="background-freezing">Background Freezing</h3>
+<p>When showing modals or popups, SkiaShell can freeze the background content by taking a screenshot:</p>
+<pre><code class="lang-csharp">// Show a modal with frozen background
+await Shell.PushModalAsync(&quot;details&quot;, new NavigationParameters
+{
+    FreezeBackground = true,
+    FreezeBlur = 5,
+    FreezeTint = new SKColor(0, 0, 0, 100)
+});
+</code></pre>
+<h3 id="custom-modal-presentation">Custom Modal Presentation</h3>
+<p>Create a custom modal presentation style:</p>
+<pre><code class="lang-csharp">// Subclass SkiaShell to customize modal presentation
+public class CustomShell : SkiaShell
+{
+    protected override SkiaDrawer CreateModalDrawer(SkiaControl content, bool useGestures)
+    {
+        var drawer = base.CreateModalDrawer(content, useGestures);
+        
+        // Customize the drawer
+        drawer.Direction = DrawerDirection.FromBottom;
+        drawer.HeaderSize = 40;
+        
+        // Add custom styling
+        content.BackgroundColor = Colors.White;
+        content.CornerRadius = new CornerRadius(20, 20, 0, 0);
+        
+        return drawer;
+    }
+}
+</code></pre>
+<h3 id="handling-page-lifecycle">Handling Page Lifecycle</h3>
+<p>Implement navigation-aware controls:</p>
+<pre><code class="lang-csharp">public class MyPage : SkiaLayout, INavigationAware
+{
+    public void OnAppearing()
+    {
+        // Page is becoming visible
+        LoadData();
+    }
+    
+    public void OnDisappearing()
+    {
+        // Page is being hidden
+        SaveData();
+    }
+}
+</code></pre>
+<h2 id="example-complete-shell-application">Example: Complete Shell Application</h2>
+<p>Here's a complete example of a minimal shell-based application:</p>
+<pre><code class="lang-xml">&lt;!-- MainShell.xaml --&gt;
+&lt;drawn:DrawnUiBasePage
+    x:Class=&quot;MyApp.MainShell&quot;
+    xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+    xmlns:drawn=&quot;clr-namespace:DrawnUi.Maui;assembly=DrawnUi.Maui&quot;&gt;
+
+    &lt;drawn:Canvas
+        x:Name=&quot;MainCanvas&quot;
+        HardwareAcceleration=&quot;Enabled&quot;
+        Gestures=&quot;Enabled&quot;&gt;
+        
+        &lt;drawn:SkiaLayout
+            Tag=&quot;ShellLayout&quot;
+            BackgroundColor=&quot;#F0F0F0&quot;
+            HorizontalOptions=&quot;Fill&quot;
+            VerticalOptions=&quot;Fill&quot;&gt;
+            
+            &lt;drawn:SkiaLayout
+                Tag=&quot;RootLayout&quot;
+                HorizontalOptions=&quot;Fill&quot;
+                VerticalOptions=&quot;Fill&quot;&gt;
+                
+                &lt;!-- Navigation content --&gt;
+                &lt;drawn:SkiaViewSwitcher
+                    Tag=&quot;NavigationLayout&quot; 
+                    HorizontalOptions=&quot;Fill&quot;
+                    VerticalOptions=&quot;Fill&quot;
+                    TransitionType=&quot;SlideHorizontal&quot; /&gt;
+                    
+                &lt;!-- Bottom tabs --&gt;
+                &lt;drawn:SkiaLayout
+                    LayoutType=&quot;Row&quot;
+                    HeightRequest=&quot;60&quot;
+                    BackgroundColor=&quot;White&quot;
+                    VerticalOptions=&quot;End&quot;
+                    HorizontalOptions=&quot;Fill&quot;
+                    Spacing=&quot;0&quot;&gt;
+                    
+                    &lt;drawn:SkiaHotspot 
+                        HorizontalOptions=&quot;FillAndExpand&quot;
+                        Tapped=&quot;OnHomeTabTapped&quot;&gt;
+                        &lt;drawn:SkiaLabel 
+                            Text=&quot;Home&quot; 
+                            HorizontalOptions=&quot;Center&quot;
+                            VerticalOptions=&quot;Center&quot; /&gt;
+                    &lt;/drawn:SkiaHotspot&gt;
+                    
+                    &lt;drawn:SkiaHotspot 
+                        HorizontalOptions=&quot;FillAndExpand&quot;
+                        Tapped=&quot;OnProfileTabTapped&quot;&gt;
+                        &lt;drawn:SkiaLabel 
+                            Text=&quot;Profile&quot; 
+                            HorizontalOptions=&quot;Center&quot;
+                            VerticalOptions=&quot;Center&quot; /&gt;
+                    &lt;/drawn:SkiaHotspot&gt;
+                    
+                    &lt;drawn:SkiaHotspot 
+                        HorizontalOptions=&quot;FillAndExpand&quot;
+                        Tapped=&quot;OnSettingsTabTapped&quot;&gt;
+                        &lt;drawn:SkiaLabel 
+                            Text=&quot;Settings&quot; 
+                            HorizontalOptions=&quot;Center&quot;
+                            VerticalOptions=&quot;Center&quot; /&gt;
+                    &lt;/drawn:SkiaHotspot&gt;
+                &lt;/drawn:SkiaLayout&gt;
+                
+            &lt;/drawn:SkiaLayout&gt;
+        &lt;/drawn:SkiaLayout&gt;
+    &lt;/drawn:Canvas&gt;
+&lt;/drawn:DrawnUiBasePage&gt;
+</code></pre>
+<pre><code class="lang-csharp">// MainShell.xaml.cs
+public partial class MainShell : DrawnUiBasePage
+{
+    public SkiaShell Shell { get; private set; }
+    
+    public MainShell()
+    {
+        InitializeComponent();
+        
+        // Initialize shell
+        Shell = new SkiaShell();
+        Shell.Initialize(MainCanvas);
+        
+        // Register routes
+        Shell.RegisterRoute(&quot;home&quot;, typeof(HomePage));
+        Shell.RegisterRoute(&quot;profile&quot;, typeof(ProfilePage));
+        Shell.RegisterRoute(&quot;settings&quot;, typeof(SettingsPage));
+        Shell.RegisterRoute(&quot;details&quot;, typeof(DetailsPage));
+        
+        // Navigate to initial route
+        Shell.GoToAsync(&quot;home&quot;);
+    }
+    
+    private void OnHomeTabTapped(object sender, EventArgs e)
+    {
+        Shell.GoToAsync(&quot;home&quot;);
+    }
+    
+    private void OnProfileTabTapped(object sender, EventArgs e)
+    {
+        Shell.GoToAsync(&quot;profile&quot;);
+    }
+    
+    private void OnSettingsTabTapped(object sender, EventArgs e)
+    {
+        Shell.GoToAsync(&quot;settings&quot;);
+    }
+    
+    protected override bool OnBackButtonPressed()
+    {
+        // Let shell handle back button
+        return Shell.GoBack(true);
+    }
+}
+</code></pre>
+<h2 id="skiatabsselector">SkiaTabsSelector</h2>
+<p><code>SkiaTabsSelector</code> is a control for creating top and bottom tabs with customizable appearance and behavior.</p>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaTabsSelector
+    x:Name=&quot;TabsSelector&quot;
+    SelectedIndex=&quot;0&quot;
+    TabHeight=&quot;50&quot;
+    TabsPosition=&quot;Bottom&quot;
+    BackgroundColor=&quot;White&quot;
+    SelectedTabColor=&quot;Blue&quot;
+    UnselectedTabColor=&quot;Gray&quot;
+    SelectionChanged=&quot;OnTabSelectionChanged&quot;&gt;
+
+    &lt;draw:SkiaTabsSelector.Tabs&gt;
+        &lt;draw:SkiaTab Text=&quot;Home&quot; Icon=&quot;home.png&quot; /&gt;
+        &lt;draw:SkiaTab Text=&quot;Search&quot; Icon=&quot;search.png&quot; /&gt;
+        &lt;draw:SkiaTab Text=&quot;Profile&quot; Icon=&quot;profile.png&quot; /&gt;
+        &lt;draw:SkiaTab Text=&quot;Settings&quot; Icon=&quot;settings.png&quot; /&gt;
+    &lt;/draw:SkiaTabsSelector.Tabs&gt;
+&lt;/draw:SkiaTabsSelector&gt;
+</code></pre>
+<h3 id="code-behind-example">Code-Behind Example</h3>
+<pre><code class="lang-csharp">var tabsSelector = new SkiaTabsSelector
+{
+    TabHeight = 60,
+    TabsPosition = TabsPosition.Top,
+    BackgroundColor = Colors.White,
+    SelectedTabColor = Colors.Blue,
+    UnselectedTabColor = Colors.Gray
+};
+
+// Add tabs
+tabsSelector.Tabs.Add(new SkiaTab { Text = &quot;Tab 1&quot;, Icon = &quot;icon1.png&quot; });
+tabsSelector.Tabs.Add(new SkiaTab { Text = &quot;Tab 2&quot;, Icon = &quot;icon2.png&quot; });
+tabsSelector.Tabs.Add(new SkiaTab { Text = &quot;Tab 3&quot;, Icon = &quot;icon3.png&quot; });
+
+// Handle selection changes
+tabsSelector.SelectionChanged += (s, e) =&gt; {
+    Console.WriteLine($&quot;Selected tab: {e.SelectedIndex}&quot;);
+};
+</code></pre>
+<h3 id="properties">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SelectedIndex</code></td>
+<td>int</td>
+<td>Index of the currently selected tab</td>
+</tr>
+<tr>
+<td><code>TabHeight</code></td>
+<td>double</td>
+<td>Height of the tab bar</td>
+</tr>
+<tr>
+<td><code>TabsPosition</code></td>
+<td>TabsPosition</td>
+<td>Position of tabs (Top, Bottom)</td>
+</tr>
+<tr>
+<td><code>SelectedTabColor</code></td>
+<td>Color</td>
+<td>Color of the selected tab</td>
+</tr>
+<tr>
+<td><code>UnselectedTabColor</code></td>
+<td>Color</td>
+<td>Color of unselected tabs</td>
+</tr>
+<tr>
+<td><code>Tabs</code></td>
+<td>ObservableCollection<skiatab></skiatab></td>
+<td>Collection of tabs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events">Events</h3>
+<ul>
+<li><code>SelectionChanged</code>: Raised when the selected tab changes
+<ul>
+<li>Event signature: <code>EventHandler&lt;TabSelectionChangedEventArgs&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="skiaviewswitcher">SkiaViewSwitcher</h2>
+<p><code>SkiaViewSwitcher</code> allows you to switch your views with animations like pop, push, and slide transitions.</p>
+<h3 id="basic-usage-1">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaViewSwitcher
+    x:Name=&quot;ViewSwitcher&quot;
+    TransitionType=&quot;SlideHorizontal&quot;
+    TransitionDuration=&quot;300&quot;
+    HorizontalOptions=&quot;Fill&quot;
+    VerticalOptions=&quot;Fill&quot;&gt;
+
+    &lt;!-- Views will be added programmatically --&gt;
+&lt;/draw:SkiaViewSwitcher&gt;
+</code></pre>
+<h3 id="code-behind-example-1">Code-Behind Example</h3>
+<pre><code class="lang-csharp">var viewSwitcher = new SkiaViewSwitcher
+{
+    TransitionType = ViewTransitionType.SlideHorizontal,
+    TransitionDuration = 300
+};
+
+// Switch to a new view
+var newView = new MyCustomView();
+await viewSwitcher.SwitchToAsync(newView, animated: true);
+
+// Push a view (adds to stack)
+await viewSwitcher.PushAsync(newView, animated: true);
+
+// Pop the current view
+await viewSwitcher.PopAsync(animated: true);
+</code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<ul>
+<li><strong>Layer Management</strong>: SkiaShell maintains separate navigation stacks for better organization and performance</li>
+<li><strong>Z-Index Control</strong>: Different types of content (modals, popups, toasts) have different Z-index ranges</li>
+<li><strong>Animation Control</strong>: Customize animations or disable them for better performance</li>
+<li><strong>Background Freezing</strong>: Uses screenshots to avoid continuously rendering background content</li>
+<li><strong>Locking Mechanism</strong>: Uses semaphores to prevent multiple simultaneous navigation operations</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/shell.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

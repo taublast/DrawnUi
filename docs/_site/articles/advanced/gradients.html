@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Using Gradients in DrawnUi.Maui | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Using Gradients in DrawnUi.Maui | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/advanced/gradients.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="using-gradients-in-drawnuimaui">Using Gradients in DrawnUi.Maui</h1>
+
+<p>DrawnUi.Maui provides powerful gradient support for shapes, text, and images, enabling visually rich and modern UI designs. This article covers the types of gradients available, how to apply them, and practical examples for common scenarios.</p>
+<h2 id="gradient-types">Gradient Types</h2>
+<p>DrawnUi.Maui supports several gradient types:</p>
+<ul>
+<li><strong>Linear Gradient</strong>: Colors transition along a straight line.</li>
+<li><strong>Radial Gradient</strong>: Colors radiate outward from a center point.</li>
+<li><strong>Sweep Gradient</strong>: Colors sweep around a center point in a circular fashion.</li>
+</ul>
+<h2 id="applying-gradients-to-shapes">Applying Gradients to Shapes</h2>
+<p>You can apply gradients to the background or stroke of any <code>SkiaShape</code> using the <code>BackgroundGradient</code> and <code>StrokeGradient</code> properties.</p>
+<h3 id="linear-gradient-example">Linear Gradient Example</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape Type=&quot;Rectangle&quot; CornerRadius=&quot;16&quot; WidthRequest=&quot;200&quot; HeightRequest=&quot;100&quot;&gt;
+    &lt;DrawUi:SkiaShape.BackgroundGradient&gt;
+        &lt;DrawUi:SkiaGradient 
+            Type=&quot;Linear&quot; 
+            StartColor=&quot;#FF6A00&quot; 
+            EndColor=&quot;#FFD800&quot; 
+            StartPoint=&quot;0,0&quot; 
+            EndPoint=&quot;1,1&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.BackgroundGradient&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<p>Maybe you have colors defined in a static class?</p>
+<pre><code class="lang-xml">&lt;draw:SkiaFrame
+    AnimationTapped=&quot;Ripple&quot;
+    Tapped=&quot;OnTapped_Item&quot;
+    WidthRequest=&quot;60&quot;
+    StrokeWidth=&quot;1&quot;
+    HeightRequest=&quot;28&quot;
+    StrokeColor=&quot;{Binding SelectionColor}&quot;
+    CornerRadius=&quot;4&quot;&gt;
+    &lt;draw:SkiaControl.FillGradient&gt;
+        &lt;draw:SkiaGradient
+            Opacity=&quot;0.1&quot;
+            EndXRatio=&quot;0&quot;
+            EndYRatio=&quot;1&quot;
+            StartXRatio=&quot;0&quot;
+            StartYRatio=&quot;0&quot;
+            Type=&quot;Linear&quot;&gt;
+            &lt;draw:SkiaGradient.Colors&gt;
+                &lt;x:Static Member=&quot;xam:BackColors.GradientStartNav&quot;/&gt;
+                &lt;x:Static Member=&quot;xam:BackColors.GradientEndNav&quot;/&gt;
+            &lt;/draw:SkiaGradient.Colors&gt;
+        &lt;/draw:SkiaGradient&gt;
+    &lt;/draw:SkiaControl.FillGradient&gt;
+    &lt;draw:SkiaRichLabel
+        HorizontalOptions=&quot;Center&quot;
+        HorizontalTextAlignment=&quot;Center&quot;
+        Text=&quot;{Binding Title}&quot;
+        TextColor=&quot;{Binding SelectionColor}&quot;
+        VerticalOptions=&quot;Center&quot; /&gt;
+&lt;/draw:SkiaFrame&gt;
+</code></pre>
+<h3 id="radial-gradient-example">Radial Gradient Example</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape Type=&quot;Circle&quot; WidthRequest=&quot;120&quot; HeightRequest=&quot;120&quot;&gt;
+    &lt;DrawUi:SkiaShape.BackgroundGradient&gt;
+        &lt;DrawUi:SkiaGradient 
+            Type=&quot;Radial&quot; 
+            StartColor=&quot;#00C3FF&quot; 
+            EndColor=&quot;#FFFF1C&quot; 
+            Center=&quot;0.5,0.5&quot; 
+            Radius=&quot;0.5&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.BackgroundGradient&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="sweep-gradient-example">Sweep Gradient Example</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape Type=&quot;Ellipse&quot; WidthRequest=&quot;180&quot; HeightRequest=&quot;100&quot;&gt;
+    &lt;DrawUi:SkiaShape.BackgroundGradient&gt;
+        &lt;DrawUi:SkiaGradient 
+            Type=&quot;Sweep&quot; 
+            StartColor=&quot;#FF0080&quot; 
+            EndColor=&quot;#7928CA&quot; 
+            Center=&quot;0.5,0.5&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.BackgroundGradient&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="multi-stop-gradients">Multi-Stop Gradients</h3>
+<p>You can define gradients with multiple color stops:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape Type=&quot;Rectangle&quot; WidthRequest=&quot;220&quot; HeightRequest=&quot;60&quot;&gt;
+    &lt;DrawUi:SkiaShape.BackgroundGradient&gt;
+        &lt;DrawUi:SkiaGradient Type=&quot;Linear&quot; StartPoint=&quot;0,0&quot; EndPoint=&quot;1,0&quot;&gt;
+            &lt;DrawUi:SkiaGradient.Stops&gt;
+                &lt;DrawUi:GradientStop Color=&quot;#FF6A00&quot; Offset=&quot;0.0&quot; /&gt;
+                &lt;DrawUi:GradientStop Color=&quot;#FFD800&quot; Offset=&quot;0.5&quot; /&gt;
+                &lt;DrawUi:GradientStop Color=&quot;#00FFB4&quot; Offset=&quot;1.0&quot; /&gt;
+            &lt;/DrawUi:SkiaGradient.Stops&gt;
+        &lt;/DrawUi:SkiaGradient&gt;
+    &lt;/DrawUi:SkiaShape.BackgroundGradient&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h2 id="applying-gradients-to-text">Applying Gradients to Text</h2>
+<p>You can apply gradients to text using the <code>FillGradient</code> property on <code>SkiaLabel</code>:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaLabel 
+    Text=&quot;Gradient Text&quot; 
+    FontSize=&quot;32&quot; 
+    FillGradient=&quot;{StaticResource MyGradient}&quot; /&gt;
+</code></pre>
+<p>Or define inline:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaLabel Text=&quot;Sunset&quot; FontSize=&quot;40&quot;&gt;
+    &lt;DrawUi:SkiaLabel.FillGradient&gt;
+        &lt;DrawUi:SkiaGradient Type=&quot;Linear&quot; StartColor=&quot;#FF6A00&quot; EndColor=&quot;#FFD800&quot; StartPoint=&quot;0,0&quot; EndPoint=&quot;1,0&quot; /&gt;
+    &lt;/DrawUi:SkiaLabel.FillGradient&gt;
+&lt;/DrawUi:SkiaLabel&gt;
+</code></pre>
+<h2 id="applying-gradients-to-svg-code-behind">Applying Gradients to SVG, code behind</h2>
+<p>You can overlay gradients on images using the <code>UseGradient</code>, <code>StartColor</code>, and <code>EndColor</code> properties on <code>SkiaImage</code>:</p>
+<pre><code class="lang-csharp">new SkiaSvg()
+{
+    HorizontalOptions = LayoutOptions.Center,
+    HeightRequest = 20,
+    LockRatio = 1,
+    UseCache = SkiaCacheType.Image,
+    FillGradient =
+        new SkiaGradient()
+        {
+            StartXRatio = 1,
+            EndXRatio = 0,
+            StartYRatio = 0,
+            EndYRatio = 1,
+            Colors =
+                new Color[] { BackColors.GradientStartNav,
+                    BackColors.GradientEndNav }
+        },
+}
+</code></pre>
+<p>This creates a fade effect from transparent to black over the image.</p>
+<h2 id="defining-gradients-as-resources">Defining Gradients as Resources</h2>
+<p>For reuse, define gradients as resources:</p>
+<pre><code class="lang-xml">&lt;ContentPage.Resources&gt;
+    &lt;DrawUi:SkiaGradient x:Key=&quot;MyGradient&quot; Type=&quot;Linear&quot; StartColor=&quot;#FF6A00&quot; EndColor=&quot;#FFD800&quot; StartPoint=&quot;0,0&quot; EndPoint=&quot;1,1&quot; /&gt;
+&lt;/ContentPage.Resources&gt;
+</code></pre>
+<p>Then reference with:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaLabel Text=&quot;Reusable Gradient&quot; FillGradient=&quot;{StaticResource MyGradient}&quot; /&gt;
+</code></pre>
+<h2 id="c-example-creating-a-gradient-in-code">C# Example: Creating a Gradient in Code</h2>
+<pre><code class="lang-csharp">var gradient = new SkiaGradient
+{
+    Type = SkiaGradientType.Linear,
+    StartColor = Colors.Red,
+    EndColor = Colors.Yellow,
+    StartPoint = new Point(0, 0),
+    EndPoint = new Point(1, 1)
+};
+
+control.FillGradient = gradient;
+</code></pre>
+<h2 id="tips-and-best-practices">Tips and Best Practices</h2>
+<ul>
+<li>Use gradients to add depth and visual interest to your UI.</li>
+<li>For performance, prefer simple gradients or reuse gradient resources.</li>
+<li>Gradients can be animated by changing their properties</li>
+<li>Combine gradients with shadows for modern card and button designs.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/advanced/gradients.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

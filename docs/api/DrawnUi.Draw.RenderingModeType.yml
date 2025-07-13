@@ -1,0 +1,240 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.RenderingModeType
+  commentId: T:DrawnUi.Draw.RenderingModeType
+  id: RenderingModeType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.RenderingModeType.Accelerated
+  - DrawnUi.Draw.RenderingModeType.AcceleratedRetained
+  - DrawnUi.Draw.RenderingModeType.Default
+  langs:
+  - csharp
+  - vb
+  name: RenderingModeType
+  nameWithType: RenderingModeType
+  fullName: DrawnUi.Draw.RenderingModeType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderingModeType
+    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum RenderingModeType
+    content.vb: Public Enum RenderingModeType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.RenderingModeType.Default
+  commentId: F:DrawnUi.Draw.RenderingModeType.Default
+  id: Default
+  parent: DrawnUi.Draw.RenderingModeType
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: RenderingModeType.Default
+  fullName: DrawnUi.Draw.RenderingModeType.Default
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Default
+    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: No hardware acceleration, lightweight and fast native renderers creation, best for static content, use cache for top layers.
+  example: []
+  syntax:
+    content: Default = 0
+    return:
+      type: DrawnUi.Draw.RenderingModeType
+- uid: DrawnUi.Draw.RenderingModeType.Accelerated
+  commentId: F:DrawnUi.Draw.RenderingModeType.Accelerated
+  id: Accelerated
+  parent: DrawnUi.Draw.RenderingModeType
+  langs:
+  - csharp
+  - vb
+  name: Accelerated
+  nameWithType: RenderingModeType.Accelerated
+  fullName: DrawnUi.Draw.RenderingModeType.Accelerated
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Accelerated
+    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 'Will use hardware accelerated renderers. Currently Metal for Apple, GL on Android and Angle on Windows. Windows note: canvas background will be opaque.'
+  example: []
+  syntax:
+    content: Accelerated = 1
+    return:
+      type: DrawnUi.Draw.RenderingModeType
+- uid: DrawnUi.Draw.RenderingModeType.AcceleratedRetained
+  commentId: F:DrawnUi.Draw.RenderingModeType.AcceleratedRetained
+  id: AcceleratedRetained
+  parent: DrawnUi.Draw.RenderingModeType
+  langs:
+  - csharp
+  - vb
+  name: AcceleratedRetained
+  nameWithType: RenderingModeType.AcceleratedRetained
+  fullName: DrawnUi.Draw.RenderingModeType.AcceleratedRetained
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AcceleratedRetained
+    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Experimental: will retain rendering result across frames, you can draw only changed areas over previous result.
+
+    Will use hardware accelerated renderers. Currently Metal for Apple, GL on Android and Angle on Windows. Windows note: canvas background will be opaque.
+  example: []
+  syntax:
+    content: AcceleratedRetained = 2
+    return:
+      type: DrawnUi.Draw.RenderingModeType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.RenderingModeType
+  commentId: T:DrawnUi.Draw.RenderingModeType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.RenderingModeType.html
+  name: RenderingModeType
+  nameWithType: RenderingModeType
+  fullName: DrawnUi.Draw.RenderingModeType

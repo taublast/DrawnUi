@@ -1,0 +1,394 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IHasAfterEffects
+  commentId: T:DrawnUi.Draw.IHasAfterEffects
+  id: IHasAfterEffects
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints(Microsoft.Maui.Graphics.PointF,SkiaSharp.SKPoint)
+  - DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
+  - DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation(Microsoft.Maui.Graphics.Color,System.Single,System.Single,System.Int32,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: IHasAfterEffects
+  nameWithType: IHasAfterEffects
+  fullName: DrawnUi.Draw.IHasAfterEffects
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IHasAfterEffects
+    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public interface IHasAfterEffects
+    content.vb: Public Interface IHasAfterEffects
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
+  commentId: M:DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
+  id: PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
+  parent: DrawnUi.Draw.IHasAfterEffects
+  langs:
+  - csharp
+  - vb
+  name: PlayRippleAnimation(Color, double, double, bool)
+  nameWithType: IHasAfterEffects.PlayRippleAnimation(Color, double, double, bool)
+  fullName: DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation(Microsoft.Maui.Graphics.Color, double, double, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlayRippleAnimation
+    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void PlayRippleAnimation(Color color, double x, double y, bool removePrevious = true)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+    - id: x
+      type: System.Double
+    - id: y
+      type: System.Double
+    - id: removePrevious
+      type: System.Boolean
+    content.vb: Sub PlayRippleAnimation(color As Color, x As Double, y As Double, removePrevious As Boolean = True)
+  overload: DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation*
+  nameWithType.vb: IHasAfterEffects.PlayRippleAnimation(Color, Double, Double, Boolean)
+  fullName.vb: DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation(Microsoft.Maui.Graphics.Color, Double, Double, Boolean)
+  name.vb: PlayRippleAnimation(Color, Double, Double, Boolean)
+- uid: DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation(Microsoft.Maui.Graphics.Color,System.Single,System.Single,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation(Microsoft.Maui.Graphics.Color,System.Single,System.Single,System.Int32,System.Boolean)
+  id: PlayShimmerAnimation(Microsoft.Maui.Graphics.Color,System.Single,System.Single,System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.IHasAfterEffects
+  langs:
+  - csharp
+  - vb
+  name: PlayShimmerAnimation(Color, float, float, int, bool)
+  nameWithType: IHasAfterEffects.PlayShimmerAnimation(Color, float, float, int, bool)
+  fullName: DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation(Microsoft.Maui.Graphics.Color, float, float, int, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlayShimmerAnimation
+    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: void PlayShimmerAnimation(Color color, float shimmerWidth, float shimmerAngle, int speedMs, bool removePrevious = true)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+    - id: shimmerWidth
+      type: System.Single
+    - id: shimmerAngle
+      type: System.Single
+    - id: speedMs
+      type: System.Int32
+    - id: removePrevious
+      type: System.Boolean
+    content.vb: Sub PlayShimmerAnimation(color As Color, shimmerWidth As Single, shimmerAngle As Single, speedMs As Integer, removePrevious As Boolean = True)
+  overload: DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation*
+  nameWithType.vb: IHasAfterEffects.PlayShimmerAnimation(Color, Single, Single, Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation(Microsoft.Maui.Graphics.Color, Single, Single, Integer, Boolean)
+  name.vb: PlayShimmerAnimation(Color, Single, Single, Integer, Boolean)
+- uid: DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints(Microsoft.Maui.Graphics.PointF,SkiaSharp.SKPoint)
+  commentId: M:DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints(Microsoft.Maui.Graphics.PointF,SkiaSharp.SKPoint)
+  id: GetOffsetInsideControlInPoints(Microsoft.Maui.Graphics.PointF,SkiaSharp.SKPoint)
+  parent: DrawnUi.Draw.IHasAfterEffects
+  langs:
+  - csharp
+  - vb
+  name: GetOffsetInsideControlInPoints(PointF, SKPoint)
+  nameWithType: IHasAfterEffects.GetOffsetInsideControlInPoints(PointF, SKPoint)
+  fullName: DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints(Microsoft.Maui.Graphics.PointF, SkiaSharp.SKPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetOffsetInsideControlInPoints
+    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SKPoint GetOffsetInsideControlInPoints(PointF argsLocation, SKPoint childOffset)
+    parameters:
+    - id: argsLocation
+      type: Microsoft.Maui.Graphics.PointF
+    - id: childOffset
+      type: SkiaSharp.SKPoint
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Function GetOffsetInsideControlInPoints(argsLocation As PointF, childOffset As SKPoint) As SKPoint
+  overload: DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation*
+  commentId: Overload:DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation
+  href: DrawnUi.Draw.IHasAfterEffects.html#DrawnUi_Draw_IHasAfterEffects_PlayRippleAnimation_Microsoft_Maui_Graphics_Color_System_Double_System_Double_System_Boolean_
+  name: PlayRippleAnimation
+  nameWithType: IHasAfterEffects.PlayRippleAnimation
+  fullName: DrawnUi.Draw.IHasAfterEffects.PlayRippleAnimation
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation*
+  commentId: Overload:DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation
+  href: DrawnUi.Draw.IHasAfterEffects.html#DrawnUi_Draw_IHasAfterEffects_PlayShimmerAnimation_Microsoft_Maui_Graphics_Color_System_Single_System_Single_System_Int32_System_Boolean_
+  name: PlayShimmerAnimation
+  nameWithType: IHasAfterEffects.PlayShimmerAnimation
+  fullName: DrawnUi.Draw.IHasAfterEffects.PlayShimmerAnimation
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints*
+  commentId: Overload:DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints
+  href: DrawnUi.Draw.IHasAfterEffects.html#DrawnUi_Draw_IHasAfterEffects_GetOffsetInsideControlInPoints_Microsoft_Maui_Graphics_PointF_SkiaSharp_SKPoint_
+  name: GetOffsetInsideControlInPoints
+  nameWithType: IHasAfterEffects.GetOffsetInsideControlInPoints
+  fullName: DrawnUi.Draw.IHasAfterEffects.GetOffsetInsideControlInPoints
+- uid: Microsoft.Maui.Graphics.PointF
+  commentId: T:Microsoft.Maui.Graphics.PointF
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.pointf
+  name: PointF
+  nameWithType: PointF
+  fullName: Microsoft.Maui.Graphics.PointF
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp

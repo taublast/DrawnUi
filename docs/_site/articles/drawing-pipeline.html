@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Understanding the Drawing Pipeline | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Understanding the Drawing Pipeline | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/drawing-pipeline.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="understanding-the-drawing-pipeline">Understanding the Drawing Pipeline</h1>
+
+<p>DrawnUI's drawing pipeline transforms your logical UI controls into pixel-perfect drawings on a Skia canvas.
+This article explains how the pipeline works, from initial layout calculations to final rendering.<br>
+DrawnUI is rather a rendering engine, not a UI-framework, and is not designed for an &quot;unaware&quot; usage.<br>
+In order to use it effectively, one needs to understand how it works in order to achive the best performance and results.<br>
+At the same time it's possible to create abstractional wrappers around performance-oriented controls, to automaticaly set caching types, layout options etc. that could be used without deep understanding of internals.</p>
+<h2 id="overview">Overview</h2>
+<p>The DrawnUI drawing pipeline consists of several key stages:</p>
+<ol>
+<li><strong>Executing pre-draw actions</strong> - including gestures processing, animations, etc.</li>
+<li><strong>Measuring and arranging</strong> - measure and arrange self and children if layout was invalidated</li>
+<li><strong>Drawing and caching</strong>   - painting and caching for future fast re-draws of recorded SKPicture or rasterized SKImage</li>
+<li><strong>Executing post-draw actions</strong> - like post-animations for overlays, etc.</li>
+</ol>
+<h2 id="pipeline-flow">Pipeline Flow</h2>
+<h3 id="1-executing-pre-draw-actions">1. Executing Pre-Draw Actions</h3>
+<p>Before any drawing occurs, DrawnUI executes several pre-draw actions including gestures processing, animations, etc.</p>
+<h4 id="invalidation-triggers">Invalidation Triggers</h4>
+<p>The pipeline begins when a control needs to be redrawn. This can happen due to:</p>
+<ul>
+<li>Some controls property changed (color, size, text, etc.)</li>
+<li>Layout changes (adding/removing children)</li>
+<li>Animation updates</li>
+<li>User interactions</li>
+<li>Canvas received a &quot;redraw&quot; request from the engine (app went foreground, graphics context changed etc).</li>
+<li>The top framework decided to re-draw our Canvas</li>
+</ul>
+<pre><code class="lang-csharp">// Most commonly used invalidation methods
+control.Update();            // Mark for redraw (Update), invalidates cache
+control.Repaint();           // Mark parent for redraw (Update), to repaint without destroying cache, at new positions, transformed etc
+control.Invalidate();        // Invalidate and (maybe, depending on this control  logic) update
+control.InvalidateMeasure(); // Just recalculate size and layout and update
+control.Parent?.Invalidate() // When the above doesn't work if parent refuses to invalidate due to its internal logic
+</code></pre>
+<h4 id="pre-draw-operations">Pre-Draw Operations</h4>
+<p><strong>Gesture Processing:</strong></p>
+<ul>
+<li>Process pending touch events and gestures</li>
+<li>Update gesture states and animations</li>
+<li>Handle user input through the control hierarchy</li>
+</ul>
+<p><strong>Animation Updates:</strong></p>
+<ul>
+<li>Execute frame-based animations</li>
+<li>Update animated properties</li>
+<li>Calculate interpolated values for smooth transitions</li>
+</ul>
+<p><strong>Layout Validation:</strong></p>
+<ul>
+<li>Check if measure/arrange is needed</li>
+<li>Process layout invalidations</li>
+<li>Prepare for drawing operations</li>
+</ul>
+<h3 id="2-measuring-and-arranging">2. Measuring and Arranging</h3>
+<p>This stage handles the layout system - measure and arrange self and children if layout was invalidated.</p>
+<h4 id="measure-stage">Measure Stage</h4>
+<p>Controls calculate their desired size based on available space and content requirements.</p>
+<pre><code class="lang-csharp">public virtual ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+{
+    // Create measure request with constraints
+    var request = CreateMeasureRequest(widthConstraint, heightConstraint, scale);
+
+    // Measure content and return desired size
+    return MeasureLayout(request, false);
+}
+</code></pre>
+<p><strong>Measure Process:</strong></p>
+<ol>
+<li><strong>Constraints Calculation</strong> - Determine available space considering margins and padding</li>
+<li><strong>Content Measurement</strong> - Measure child controls based on layout type</li>
+<li><strong>Size Request</strong> - Calculate final desired size</li>
+</ol>
+<p><strong>Layout Types:</strong></p>
+<ul>
+<li><code>Absolute</code> - Children positioned at specific coordinates</li>
+<li><code>Column/Row</code> - Stack children vertically or horizontally</li>
+<li><code>Grid</code> - Arrange children in rows and columns</li>
+<li><code>Wrap</code> - Flow children with wrapping</li>
+</ul>
+<h4 id="arrange-stage">Arrange Stage</h4>
+<p>The arrange stage positions controls within their allocated space and calculates final drawing rectangles.</p>
+<pre><code class="lang-csharp">public virtual void Arrange(SKRect destination, float widthRequest, float heightRequest, float scale)
+{
+    // Pre-arrange validation
+    if (!PreArrange(destination, widthRequest, heightRequest, scale))
+        return;
+
+    // Calculate final layout
+    var layout = CalculateLayout(arrangingFor, widthRequest, heightRequest, scale);
+
+    // Set drawing rectangle
+    DrawingRect = layout;
+
+    // Post-arrange processing
+    PostArrange(destination, widthRequest, heightRequest, scale);
+}
+</code></pre>
+<p><strong>Arrange Process:</strong></p>
+<ol>
+<li><strong>Pre-Arrange</strong> - Validate and prepare for layout</li>
+<li><strong>Layout Calculation</strong> - Determine final position and size</li>
+<li><strong>Drawing Rectangle</strong> - Set the area where control will be drawn</li>
+<li><strong>Post-Arrange</strong> - Cache layout information and handle changes</li>
+</ol>
+<h3 id="3-drawing-and-caching">3. Drawing and Caching</h3>
+<p>This is the core rendering stage - painting and caching for future fast re-draws of recorded SKPicture or rasterized SKImage.</p>
+<h4 id="paint-stage">Paint Stage</h4>
+<p>The paint stage renders the actual visual content to the Skia canvas.</p>
+<pre><code class="lang-csharp">protected virtual void Paint(DrawingContext ctx)
+{
+    // Paint background
+    PaintTintBackground(ctx.Context.Canvas, ctx.Destination);
+
+    // Execute custom paint operations
+    foreach (var action in ExecuteOnPaint.Values)
+    {
+        action?.Invoke(this, ctx);
+    }
+}
+</code></pre>
+<p><strong>Drawing Context:</strong></p>
+<ul>
+<li><code>SKCanvas</code> - The Skia drawing surface</li>
+<li><code>SKRect Destination</code> - Where to draw in pixels</li>
+<li><code>float Scale</code> - Pixel density scaling factor</li>
+<li><code>object Parameters</code> - Optional custom parameters</li>
+</ul>
+<h4 id="caching-system">Caching System</h4>
+<p>DrawnUI uses sophisticated caching to optimize rendering performance through render objects. This is crucial for achieving smooth 60fps animations and responsive UI.</p>
+<h5 id="cache-types">Cache Types</h5>
+<pre><code class="lang-csharp">public enum SkiaCacheType
+{
+    None,                    // No caching, direct drawing every frame
+    Operations,              // Cache drawing operations as SKPicture  
+    OperationsFull,          // Cache operations ignoring clipping bounds
+    Image,                   // Cache as rasterized SKBitmap  
+    ImageComposite,          // Advanced bitmap caching with composition
+    ImageDoubleBuffered,     // Background thread rendering of cache of same same, while showing previous cache
+    GPU                      // Hardware-accelerated GPU memory caching
+}
+</code></pre>
+<p><strong>Choosing the Right Cache Type:</strong></p>
+<ul>
+<li><strong>None</strong> - Do not cache scrolls, drawers etc, native views and their containers.</li>
+<li><strong>Operations</strong> - For anything, but maybe best for static vector content like text, icons, SVG.</li>
+<li><strong>Image</strong> - Rasterize anything once and then just draw the bitmap on every frame.</li>
+<li><strong>ImageDoubleBuffered</strong> - Perfect for recycled cells of same size</li>
+<li><strong>GPU</strong> - Use GPU memory for storing overlays, avoid large sizes.</li>
+</ul>
+<h5 id="render-object-pipeline">Render Object Pipeline</h5>
+<pre><code class="lang-csharp">public virtual bool DrawUsingRenderObject(DrawingContext context,
+    float widthRequest, float heightRequest)
+{
+    // 1. Arrange the control
+    Arrange(context.Destination, widthRequest, heightRequest, context.Scale);
+
+    // 2. Check if we can use cached render object
+    if (RenderObject != null &amp;&amp; CheckCachedObjectValid(RenderObject))
+    {
+        DrawRenderObjectInternal(context, RenderObject);
+        return true;
+    }
+
+    // 3. Create new render object if needed
+    var cache = CreateRenderingObject(context, recordArea, oldObject, UsingCacheType,
+        (ctx) =&gt; { PaintWithEffects(ctx); });
+
+    // 4. Draw using the render object
+    DrawRenderObjectInternal(context, cache);
+
+    return true;
+}
+</code></pre>
+<h5 id="cache-validation">Cache Validation</h5>
+<p>Render objects are invalidated when:</p>
+<ul>
+<li>Control size or position changes</li>
+<li>Visual properties change (colors, effects, transforms)</li>
+<li>Child controls are added, removed, or modified</li>
+<li>Animation state updates require re-rendering</li>
+<li>Hardware context changes (e.g., returning from background)</li>
+</ul>
+<h3 id="4-executing-post-draw-actions">4. Executing Post-Draw Actions</h3>
+<p>After the main drawing is complete, DrawnUI executes post-draw operations like post-animations for overlays, etc.</p>
+<p><strong>Post-Animations:</strong></p>
+<ul>
+<li>Overlay effects and animations</li>
+<li>Particle systems and visual effects</li>
+<li>UI feedback animations (ripples, highlights)</li>
+</ul>
+<p><strong>Smart Resource Management:</strong></p>
+<ul>
+<li>Frame-based disposal through DisposeManager</li>
+<li>Update animation states</li>
+<li>Prepare for next frame</li>
+</ul>
+<h4 id="disposemanager">DisposeManager</h4>
+<p>The <strong>DisposeManager</strong> is a resource management system that prevents crashes disposing resources in the middle of the drawing and ensures smooth performance by disposing packs of objects at once at the end of the frame. It is concurrent usage safe</p>
+<p><strong>Why It's Needed:</strong>
+In high-performance rendering, resources like SKBitmap, SKPicture, and render objects might still be referenced by background threads, GPU operations, or cached render objects even after they're &quot;logically&quot; no longer needed. Immediate disposal can cause crashes or visual glitches.</p>
+<p><strong>How to use:</strong></p>
+<pre><code class="lang-csharp">//call this
+control.DisposeObject(resource);
+</code></pre>
+<p><strong>Practice:</strong></p>
+<pre><code class="lang-csharp">// WUpdating a cached image
+var oldBitmap = this.CachedBitmap;
+this.CachedBitmap = newBitmap;
+
+// Don't dispose immediately - let DisposeManager handle it
+DisposeObject(oldBitmap); // Will be disposed safely after drawing few frames
+</code></pre>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li><strong>Crash Prevention</strong> - Resources are safely disposed after GPU/background operations complete</li>
+<li><strong>Performance</strong> - No blocking waits or expensive synchronization</li>
+<li><strong>Automatic</strong> - Works transparently without developer intervention</li>
+</ul>
+<h2 id="gesture-processing-integration">Gesture Processing Integration</h2>
+<p>Gesture processing is integrated throughout the pipeline, primarily during pre-draw actions. Canvas asynchronously receives gesture events from the native platform and accumulates them to be passed through the control hierarchy at the start of a new frame. Gesture events are processed in the order they were received, to the concerned control's <code>ISkiaGestureListener.OnSkiaGestureEvent</code> implementation. This is a technical method that should not be used directly - it calls <code>SkiaControl.ProcessGestures</code> method that can be safely overridden.</p>
+<h3 id="gesture-parameters">Gesture Parameters</h3>
+<h4 id="skiagesturesparameters">SkiaGesturesParameters</h4>
+<p>Contains the core gesture information:</p>
+<pre><code class="lang-csharp">public class SkiaGesturesParameters
+{
+    public TouchActionResult Type { get; set; }        // Down, Up, Tapped, Panning, etc.
+    public TouchActionEventArgs Event { get; set; }    // Touch details and coordinates
+}
+</code></pre>
+<p><strong>TouchActionResult Types:</strong></p>
+<ul>
+<li><code>Down</code> - Initial touch contact</li>
+<li><code>Up</code> - Touch release</li>
+<li><code>Tapped</code> - Quick tap gesture</li>
+<li><code>Panning</code> - Drag/swipe movement</li>
+<li><code>LongPressing</code> - Extended press</li>
+<li><code>Cancelled</code> - Gesture interrupted</li>
+</ul>
+<p><strong>TouchActionEventArgs Properties:</strong></p>
+<ul>
+<li><code>Location</code> - Current touch position</li>
+<li><code>StartingLocation</code> - Initial touch position</li>
+<li><code>Id</code> - Unique touch identifier for multi-touch</li>
+<li><code>NumberOfTouches</code> - Count of simultaneous touches</li>
+<li><code>Distance</code> - Movement delta and velocity information</li>
+</ul>
+<h4 id="gestureeventprocessinginfo">GestureEventProcessingInfo</h4>
+<p>Manages coordinate transformations and gesture ownership:</p>
+<pre><code class="lang-csharp">public struct GestureEventProcessingInfo
+{
+    public SKPoint MappedLocation { get; set; }        // Touch location with transforms applied
+    public SKPoint ChildOffset { get; set; }           // Coordinate offset for child controls
+    public SKPoint ChildOffsetDirect { get; set; }     // Direct offset without cached transforms
+    public ISkiaGestureListener AlreadyConsumed { get; set; } // Tracks gesture ownership
+}
+</code></pre>
+<h3 id="hit-testing-system">Hit Testing System</h3>
+<p>Hit testing determines which controls can receive touch input through a multi-stage process:</p>
+<h4 id="primary-hit-testing">Primary Hit Testing</h4>
+<pre><code class="lang-csharp">public virtual bool HitIsInside(float x, float y)
+{
+    var hitbox = HitBoxAuto;  // Gets transformed drawing rectangle
+    return hitbox.ContainsInclusive(x, y);
+}
+
+public virtual SKRect HitBoxAuto
+{
+    get
+    {
+        var moved = ApplyTransforms(DrawingRect);  // Apply all transforms
+        return moved;
+    }
+}
+</code></pre>
+<h4 id="transform-aware-hit-testing">Transform-Aware Hit Testing</h4>
+<p>The system accounts for control transformations (rotation, scale, translation):</p>
+<pre><code class="lang-csharp">public virtual bool IsGestureForChild(SkiaControlWithRect child, SKPoint point)
+{
+    if (child.Control != null &amp;&amp; !child.Control.InputTransparent &amp;&amp; child.Control.CanDraw)
+    {
+        var transformed = child.Control.ApplyTransforms(child.HitRect);
+        return transformed.ContainsInclusive(point.X, point.Y);
+    }
+    return false;
+}
+</code></pre>
+<h4 id="coordinate-transformation">Coordinate Transformation</h4>
+<p>Touch coordinates are transformed through the control hierarchy:</p>
+<pre><code class="lang-csharp">public SKPoint TransformPointToLocalSpace(SKPoint pointInParentSpace)
+{
+    // Apply inverse transformation to get point in local space
+    if (RenderTransformMatrix != SKMatrix.Identity &amp;&amp;
+        RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+    {
+        return inverse.MapPoint(pointInParentSpace);
+    }
+    return pointInParentSpace;
+}
+</code></pre>
+<h3 id="gesture-processing-flow">Gesture Processing Flow</h3>
+<h4 id="canvas-level-processing">Canvas-Level Processing</h4>
+<p>The Canvas manages the main gesture processing loop:</p>
+<pre><code class="lang-csharp">protected virtual void ProcessGestures(SkiaGesturesParameters args)
+{
+    // Create initial processing info with touch location
+    var adjust = new GestureEventProcessingInfo(
+        args.Event.Location.ToSKPoint(),
+        SKPoint.Empty,
+        SKPoint.Empty,
+        null);
+
+    // First pass: Process controls that already had input
+    foreach (var hadInput in HadInput.Values)
+    {
+        var consumed = hadInput.OnSkiaGestureEvent(args, adjust);
+        if (consumed != null) break;
+    }
+
+    // Second pass: Hit test all gesture listeners
+    foreach (var listener in GestureListeners.GetListeners())
+    {
+        if (listener.HitIsInside(args.Event.StartingLocation.X, args.Event.StartingLocation.Y))
+        {
+            var consumed = listener.OnSkiaGestureEvent(args, adjust);
+            if (consumed != null) break;
+        }
+    }
+}
+</code></pre>
+<h4 id="control-level-processing">Control-Level Processing</h4>
+<p>Individual controls process gestures with coordinate transformation:</p>
+<pre><code class="lang-csharp">public ISkiaGestureListener OnSkiaGestureEvent(SkiaGesturesParameters args,
+    GestureEventProcessingInfo apply)
+{
+    // Apply inverse transforms if control has transformations
+    if (HasTransform &amp;&amp; RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+    {
+        apply = new GestureEventProcessingInfo(
+            inverse.MapPoint(apply.MappedLocation),
+            apply.ChildOffset,
+            apply.ChildOffsetDirect,
+            apply.AlreadyConsumed
+        );
+    }
+
+    // Process the gesture
+    var result = ProcessGestures(args, apply);
+    return result; // Return consumer or null
+}
+</code></pre>
+<h4 id="practical-usage-example">Practical Usage Example</h4>
+<pre><code class="lang-csharp">public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args,
+    GestureEventProcessingInfo apply)
+{
+    // Get local coordinates
+    var point = TranslateInputOffsetToPixels(args.Event.Location, apply.ChildOffset);
+
+    switch (args.Type)
+    {
+        case TouchActionResult.Down:
+            IsPressed = true;
+            return this; // Consume the gesture
+
+        case TouchActionResult.Up:
+            if (IsPressed)
+            {
+                IsPressed = false;
+                OnClicked();
+                return this;
+            }
+            break;
+    }
+
+    return null; // Don't consume, pass to other controls
+}
+</code></pre>
+<h3 id="key-concepts">Key Concepts</h3>
+<p><strong>Gesture Consumption:</strong></p>
+<ul>
+<li>Return <code>this</code> to consume the gesture and prevent it from reaching other controls</li>
+<li>Return <code>null</code> to allow the gesture to continue through the hierarchy</li>
+<li><code>BlockGesturesBelow</code> property can block all gestures from reaching lower controls</li>
+</ul>
+<p><strong>Coordinate Spaces:</strong></p>
+<ul>
+<li><strong>Canvas Space</strong> - Root coordinate system</li>
+<li><strong>Parent Space</strong> - Coordinates relative to immediate parent</li>
+<li><strong>Local Space</strong> - Coordinates relative to the control itself</li>
+<li><strong>Transformed Space</strong> - Coordinates accounting for all applied transforms</li>
+</ul>
+<p><strong>Multi-Touch Support:</strong></p>
+<ul>
+<li>Each touch has a unique <code>Id</code> for tracking</li>
+<li><code>NumberOfTouches</code> indicates simultaneous touches</li>
+<li>Controls can handle complex multi-finger gestures</li>
+</ul>
+<h2 id="performance-optimizations">Performance Optimizations</h2>
+<p>Understanding these optimizations is crucial for building high-performance DrawnUI applications.</p>
+<h3 id="1-smart-caching-strategy">1. Smart Caching Strategy</h3>
+<p><strong>Choose Cache Types Wisely:</strong></p>
+<ul>
+<li><strong>Static Content</strong> - Use <code>Operations</code> for text, icons, simple shapes</li>
+<li><strong>Complex Graphics</strong> - Use <code>Image</code> for content with effects, shadows, gradients</li>
+<li><strong>Animated Content</strong> - Use <code>ImageDoubleBuffered</code> for smooth 60fps animations</li>
+<li><strong>High-Performance</strong> - Use <code>GPU</code> caching when hardware acceleration is available</li>
+</ul>
+<p><strong>Cache Invalidation Best Practices:</strong></p>
+<ul>
+<li>Batch property changes to minimize cache invalidations</li>
+<li>Use <code>Repaint()</code> instead of <code>Update()</code> when only position/transform changes</li>
+<li>Avoid frequent size changes that invalidate image caches</li>
+</ul>
+<h3 id="2-layout-system-optimization">2. Layout System Optimization</h3>
+<p><strong>Efficient Invalidation:</strong></p>
+<ul>
+<li><strong>Layout Dirty Tracking</strong> - Only re-layout when absolutely necessary</li>
+<li><strong>Measure Caching</strong> - Reuse previous measurements when constraints haven't changed</li>
+<li><strong>Viewport Limiting</strong> - Only process and measure visible content</li>
+<li><strong>Hierarchical Updates</strong> - Invalidate only affected branches of the control tree</li>
+</ul>
+<p><strong>Layout Performance Tips:</strong></p>
+<ul>
+<li>Prefer <code>Absolute</code> layout for static positioning</li>
+<li>Use <code>Column/Row</code> for simple stacking scenarios</li>
+<li>Reserve <code>Grid</code> for complex layouts that truly need it</li>
+<li>Minimize deep nesting of layout containers</li>
+</ul>
+<h3 id="3-drawing-pipeline-optimizations">3. Drawing Pipeline Optimizations</h3>
+<p><strong>Rendering Efficiency:</strong></p>
+<ul>
+<li><strong>Clipping Optimization</strong> - Skip drawing operations outside visible bounds</li>
+<li><strong>Transform Caching</strong> - Reuse transformation matrices across frames</li>
+<li><strong>Effect Batching</strong> - Group similar drawing operations to reduce state changes</li>
+<li><strong>Background Rendering</strong> - Use double-buffered caching for complex animations</li>
+</ul>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="custom-control-drawing">Custom Control Drawing</h3>
+<pre><code class="lang-csharp">public class MyCustomControl : SkiaControl
+{
+    protected override void Paint(DrawingContext ctx)
+    {
+        base.Paint(ctx); // Paint background
+        
+        var canvas = ctx.Context.Canvas;
+        var rect = ctx.Destination;
+        
+        // Custom drawing code here
+        using var paint = new SKPaint
+        {
+            Color = SKColors.Blue,
+            IsAntialias = true
+        };
+        
+        canvas.DrawCircle(rect.MidX, rect.MidY, 
+            Math.Min(rect.Width, rect.Height) / 2, paint);
+    }
+}
+</code></pre>
+<h3 id="layout-container">Layout Container</h3>
+<pre><code class="lang-csharp">public class MyLayout : SkiaLayout
+{
+    protected override ScaledSize MeasureAbsolute(SKRect rectForChildrenPixels, float scale)
+    {
+        // Measure all children
+        foreach (var child in Views)
+        {
+            var childSize = MeasureChild(child, 
+                rectForChildrenPixels.Width, 
+                rectForChildrenPixels.Height, scale);
+        }
+        
+        // Return total size needed
+        return ScaledSize.FromPixels(totalWidth, totalHeight, scale);
+    }
+    
+    protected override void ArrangeChildren(SKRect rectForChildrenPixels, float scale)
+    {
+        // Position each child
+        foreach (var child in Views)
+        {
+            var childRect = CalculateChildPosition(child, rectForChildrenPixels);
+            child.Arrange(childRect, child.SizeRequest.Width, child.SizeRequest.Height, scale);
+        }
+    }
+}
+</code></pre>
+<h2 id="debugging-the-pipeline">Debugging the Pipeline</h2>
+<h3 id="performance-monitoring">Performance Monitoring</h3>
+<pre><code class="lang-csharp">// Enable performance tracking
+Super.EnableRenderingStats = true;
+
+// Monitor frame rates
+var fps = canvasView.FPS;
+var frameTime = canvasView.FrameTime;
+</code></pre>
+<h3 id="visual-debugging">Visual Debugging</h3>
+<pre><code class="lang-csharp">// Show control boundaries
+control.DebugShowBounds = true;
+
+// Highlight invalidated areas
+Super.ShowInvalidatedAreas = true;
+</code></pre>
+<h2 id="best-practices-for-performance">Best Practices for Performance</h2>
+<ol>
+<li><strong>Master Cache Types</strong> - Choose the right <code>SkiaCacheType</code> based on content characteristics</li>
+<li><strong>Understand Invalidation</strong> - Use the most appropriate invalidation method for each scenario</li>
+<li><strong>Optimize Paint Methods</strong> - Keep custom <code>Paint()</code> implementations lightweight and efficient</li>
+<li><strong>Profile Continuously</strong> - Use built-in performance monitoring to identify bottlenecks</li>
+<li><strong>Design for Caching</strong> - Structure your UI to take advantage of render object caching</li>
+<li><strong>Handle Gestures Smartly</strong> - Return appropriate consumers to optimize hit-testing performance</li>
+<li><strong>Batch Updates</strong> - Group property changes to minimize pipeline overhead</li>
+</ol>
+<h2 id="debugging-and-profiling">Debugging and Profiling</h2>
+<pre><code class="lang-csharp">// Enable performance tracking
+Super.EnableRenderingStats = true;
+
+// Monitor frame rates and timing
+var fps = canvasView.FPS;
+var frameTime = canvasView.FrameTime;
+
+// Visual debugging
+control.DebugShowBounds = true;
+Super.ShowInvalidatedAreas = true;
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>DrawnUI is a rendering engine that requires understanding its pipeline to achieve optimal results. Unlike traditional UI frameworks that hide rendering complexity, DrawnUI exposes these details to give you control over performance and visual quality.</p>
+<p><strong>Key Takeaways:</strong></p>
+<ul>
+<li><strong>Pipeline Awareness</strong> - Understanding the 4-stage pipeline helps you make informed decisions</li>
+<li><strong>Caching Strategy</strong> - Proper cache type selection is crucial for performance</li>
+<li><strong>Invalidation Control</strong> - Knowing when and how to invalidate prevents unnecessary work</li>
+<li><strong>Performance-First Design</strong> - Design your UI architecture with the pipeline in mind</li>
+</ul>
+<p>Understanding DrawnUI's internals enables applications that can achieve smooth 60fps animations, pixel-perfect custom controls, and responsive user experiences across all platforms.</p>
+<p>Work with the pipeline design to create applications with smooth performance and visual quality.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/drawing-pipeline.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

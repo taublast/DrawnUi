@@ -1,0 +1,1684 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaFontManager
+  commentId: T:DrawnUi.Draw.SkiaFontManager
+  id: SkiaFontManager
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaFontManager.CanRender(SkiaSharp.SKTypeface,System.Int32)
+  - DrawnUi.Draw.SkiaFontManager.DefaultTypeface
+  - DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(System.String)
+  - DrawnUi.Draw.SkiaFontManager.FontRegistrar
+  - DrawnUi.Draw.SkiaFontManager.Fonts
+  - DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,DrawnUi.Draw.FontWeight)
+  - DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,System.Int32)
+  - DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames
+  - DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.Reflection.Assembly,System.String)
+  - DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.String)
+  - DrawnUi.Draw.SkiaFontManager.GetEmbeededFont(System.String,System.Reflection.Assembly,System.String)
+  - DrawnUi.Draw.SkiaFontManager.GetFont(System.String)
+  - DrawnUi.Draw.SkiaFontManager.GetFont(System.String,System.Int32)
+  - DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias(System.String,System.Int32)
+  - DrawnUi.Draw.SkiaFontManager.GetWeightEnum(System.Int32)
+  - DrawnUi.Draw.SkiaFontManager.Initialize
+  - DrawnUi.Draw.SkiaFontManager.Initialized
+  - DrawnUi.Draw.SkiaFontManager.Instance
+  - DrawnUi.Draw.SkiaFontManager.Manager
+  - DrawnUi.Draw.SkiaFontManager.RegisterWeight(System.String,DrawnUi.Draw.FontWeight)
+  - DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues(System.String)
+  - DrawnUi.Draw.SkiaFontManager.ThrowIfFailedToCreateFont
+  langs:
+  - csharp
+  - vb
+  name: SkiaFontManager
+  nameWithType: SkiaFontManager
+  fullName: DrawnUi.Draw.SkiaFontManager
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaFontManager
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class SkiaFontManager
+    content.vb: Public Class SkiaFontManager
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaFontManager.Initialized
+  commentId: P:DrawnUi.Draw.SkiaFontManager.Initialized
+  id: Initialized
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: Initialized
+  nameWithType: SkiaFontManager.Initialized
+  fullName: DrawnUi.Draw.SkiaFontManager.Initialized
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Initialized
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool Initialized { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Initialized As Boolean
+  overload: DrawnUi.Draw.SkiaFontManager.Initialized*
+- uid: DrawnUi.Draw.SkiaFontManager.DefaultTypeface
+  commentId: P:DrawnUi.Draw.SkiaFontManager.DefaultTypeface
+  id: DefaultTypeface
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: DefaultTypeface
+  nameWithType: SkiaFontManager.DefaultTypeface
+  fullName: DrawnUi.Draw.SkiaFontManager.DefaultTypeface
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DefaultTypeface
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SKTypeface DefaultTypeface { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKTypeface
+    content.vb: Public Shared ReadOnly Property DefaultTypeface As SKTypeface
+  overload: DrawnUi.Draw.SkiaFontManager.DefaultTypeface*
+- uid: DrawnUi.Draw.SkiaFontManager.Initialize
+  commentId: M:DrawnUi.Draw.SkiaFontManager.Initialize
+  id: Initialize
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: SkiaFontManager.Initialize()
+  fullName: DrawnUi.Draw.SkiaFontManager.Initialize()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Initialize
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Initialize()
+    content.vb: Public Sub Initialize()
+  overload: DrawnUi.Draw.SkiaFontManager.Initialize*
+- uid: DrawnUi.Draw.SkiaFontManager.ThrowIfFailedToCreateFont
+  commentId: F:DrawnUi.Draw.SkiaFontManager.ThrowIfFailedToCreateFont
+  id: ThrowIfFailedToCreateFont
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: ThrowIfFailedToCreateFont
+  nameWithType: SkiaFontManager.ThrowIfFailedToCreateFont
+  fullName: DrawnUi.Draw.SkiaFontManager.ThrowIfFailedToCreateFont
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ThrowIfFailedToCreateFont
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 71
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool ThrowIfFailedToCreateFont
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ThrowIfFailedToCreateFont As Boolean
+- uid: DrawnUi.Draw.SkiaFontManager.Manager
+  commentId: P:DrawnUi.Draw.SkiaFontManager.Manager
+  id: Manager
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: Manager
+  nameWithType: SkiaFontManager.Manager
+  fullName: DrawnUi.Draw.SkiaFontManager.Manager
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Manager
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 74
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SKFontManager Manager { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKFontManager
+    content.vb: Public Shared ReadOnly Property Manager As SKFontManager
+  overload: DrawnUi.Draw.SkiaFontManager.Manager*
+- uid: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(System.String)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(System.String)
+  id: FindBestTypefaceForString(System.String)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: FindBestTypefaceForString(string)
+  nameWithType: SkiaFontManager.FindBestTypefaceForString(string)
+  fullName: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FindBestTypefaceForString
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static (SKTypeface, int) FindBestTypefaceForString(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: System.ValueTuple{SkiaSharp.SKTypeface,System.Int32}
+    content.vb: Public Shared Function FindBestTypefaceForString(text As String) As (SKTypeface, Integer)
+  overload: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString*
+  nameWithType.vb: SkiaFontManager.FindBestTypefaceForString(String)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(String)
+  name.vb: FindBestTypefaceForString(String)
+- uid: DrawnUi.Draw.SkiaFontManager.CanRender(SkiaSharp.SKTypeface,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.CanRender(SkiaSharp.SKTypeface,System.Int32)
+  id: CanRender(SkiaSharp.SKTypeface,System.Int32)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: CanRender(SKTypeface, int)
+  nameWithType: SkiaFontManager.CanRender(SKTypeface, int)
+  fullName: DrawnUi.Draw.SkiaFontManager.CanRender(SkiaSharp.SKTypeface, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CanRender
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 115
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool CanRender(SKTypeface typeface, int character)
+    parameters:
+    - id: typeface
+      type: SkiaSharp.SKTypeface
+    - id: character
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function CanRender(typeface As SKTypeface, character As Integer) As Boolean
+  overload: DrawnUi.Draw.SkiaFontManager.CanRender*
+  nameWithType.vb: SkiaFontManager.CanRender(SKTypeface, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.CanRender(SkiaSharp.SKTypeface, Integer)
+  name.vb: CanRender(SKTypeface, Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues(System.String)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues(System.String)
+  id: StringToUnicodeValues(System.String)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: StringToUnicodeValues(string)
+  nameWithType: SkiaFontManager.StringToUnicodeValues(string)
+  fullName: DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StringToUnicodeValues
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 120
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static List<int> StringToUnicodeValues(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: System.Collections.Generic.List{System.Int32}
+    content.vb: Public Shared Function StringToUnicodeValues(text As String) As List(Of Integer)
+  overload: DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues*
+  nameWithType.vb: SkiaFontManager.StringToUnicodeValues(String)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues(String)
+  name.vb: StringToUnicodeValues(String)
+- uid: DrawnUi.Draw.SkiaFontManager.GetFont(System.String)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetFont(System.String)
+  id: GetFont(System.String)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetFont(string)
+  nameWithType: SkiaFontManager.GetFont(string)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetFont(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetFont
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 140
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKTypeface GetFont(string alias)
+    parameters:
+    - id: alias
+      type: System.String
+    return:
+      type: SkiaSharp.SKTypeface
+    content.vb: Public Function GetFont([alias] As String) As SKTypeface
+  overload: DrawnUi.Draw.SkiaFontManager.GetFont*
+  nameWithType.vb: SkiaFontManager.GetFont(String)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetFont(String)
+  name.vb: GetFont(String)
+- uid: DrawnUi.Draw.SkiaFontManager.RegisterWeight(System.String,DrawnUi.Draw.FontWeight)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.RegisterWeight(System.String,DrawnUi.Draw.FontWeight)
+  id: RegisterWeight(System.String,DrawnUi.Draw.FontWeight)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: RegisterWeight(string, FontWeight)
+  nameWithType: SkiaFontManager.RegisterWeight(string, FontWeight)
+  fullName: DrawnUi.Draw.SkiaFontManager.RegisterWeight(string, DrawnUi.Draw.FontWeight)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RegisterWeight
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 150
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void RegisterWeight(string alias, FontWeight weight)
+    parameters:
+    - id: alias
+      type: System.String
+    - id: weight
+      type: DrawnUi.Draw.FontWeight
+    content.vb: Public Shared Sub RegisterWeight([alias] As String, weight As FontWeight)
+  overload: DrawnUi.Draw.SkiaFontManager.RegisterWeight*
+  nameWithType.vb: SkiaFontManager.RegisterWeight(String, FontWeight)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.RegisterWeight(String, DrawnUi.Draw.FontWeight)
+  name.vb: RegisterWeight(String, FontWeight)
+- uid: DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias(System.String,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias(System.String,System.Int32)
+  id: GetRegisteredAlias(System.String,System.Int32)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetRegisteredAlias(string, int)
+  nameWithType: SkiaFontManager.GetRegisteredAlias(string, int)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias(string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetRegisteredAlias
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 163
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string GetRegisteredAlias(string alias, int weight)
+    parameters:
+    - id: alias
+      type: System.String
+    - id: weight
+      type: System.Int32
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetRegisteredAlias([alias] As String, weight As Integer) As String
+  overload: DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias*
+  nameWithType.vb: SkiaFontManager.GetRegisteredAlias(String, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias(String, Integer)
+  name.vb: GetRegisteredAlias(String, Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.GetFont(System.String,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetFont(System.String,System.Int32)
+  id: GetFont(System.String,System.Int32)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetFont(string, int)
+  nameWithType: SkiaFontManager.GetFont(string, int)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetFont(string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetFont
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 181
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKTypeface GetFont(string fontFamily, int fontWeight)
+    parameters:
+    - id: fontFamily
+      type: System.String
+    - id: fontWeight
+      type: System.Int32
+    return:
+      type: SkiaSharp.SKTypeface
+    content.vb: Public Function GetFont(fontFamily As String, fontWeight As Integer) As SKTypeface
+  overload: DrawnUi.Draw.SkiaFontManager.GetFont*
+  nameWithType.vb: SkiaFontManager.GetFont(String, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetFont(String, Integer)
+  name.vb: GetFont(String, Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.GetWeightEnum(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetWeightEnum(System.Int32)
+  id: GetWeightEnum(System.Int32)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetWeightEnum(int)
+  nameWithType: SkiaFontManager.GetWeightEnum(int)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetWeightEnum(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetWeightEnum
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 205
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the closest enum value to the given weight. Like 590 would return Semibold.
+  example: []
+  syntax:
+    content: public static FontWeight GetWeightEnum(int weight)
+    parameters:
+    - id: weight
+      type: System.Int32
+      description: ''
+    return:
+      type: DrawnUi.Draw.FontWeight
+      description: ''
+    content.vb: Public Shared Function GetWeightEnum(weight As Integer) As FontWeight
+  overload: DrawnUi.Draw.SkiaFontManager.GetWeightEnum*
+  nameWithType.vb: SkiaFontManager.GetWeightEnum(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetWeightEnum(Integer)
+  name.vb: GetWeightEnum(Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,DrawnUi.Draw.FontWeight)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,DrawnUi.Draw.FontWeight)
+  id: GetAlias(System.String,DrawnUi.Draw.FontWeight)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetAlias(string, FontWeight)
+  nameWithType: SkiaFontManager.GetAlias(string, FontWeight)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetAlias(string, DrawnUi.Draw.FontWeight)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetAlias
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 215
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string GetAlias(string alias, FontWeight weight)
+    parameters:
+    - id: alias
+      type: System.String
+    - id: weight
+      type: DrawnUi.Draw.FontWeight
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetAlias([alias] As String, weight As FontWeight) As String
+  overload: DrawnUi.Draw.SkiaFontManager.GetAlias*
+  nameWithType.vb: SkiaFontManager.GetAlias(String, FontWeight)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetAlias(String, DrawnUi.Draw.FontWeight)
+  name.vb: GetAlias(String, FontWeight)
+- uid: DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,System.Int32)
+  id: GetAlias(System.String,System.Int32)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetAlias(string, int)
+  nameWithType: SkiaFontManager.GetAlias(string, int)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetAlias(string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetAlias
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 223
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string GetAlias(string alias, int weight)
+    parameters:
+    - id: alias
+      type: System.String
+    - id: weight
+      type: System.Int32
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetAlias([alias] As String, weight As Integer) As String
+  overload: DrawnUi.Draw.SkiaFontManager.GetAlias*
+  nameWithType.vb: SkiaFontManager.GetAlias(String, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetAlias(String, Integer)
+  name.vb: GetAlias(String, Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.String)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.String)
+  id: GetEmbeddedResourceStream(System.String)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetEmbeddedResourceStream(string)
+  nameWithType: SkiaFontManager.GetEmbeddedResourceStream(string)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetEmbeddedResourceStream
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 238
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Takes the full name of a resource and loads it in to a stream.
+  example: []
+  syntax:
+    content: public static Stream GetEmbeddedResourceStream(string resourceName)
+    parameters:
+    - id: resourceName
+      type: System.String
+      description: >-
+        Assuming an embedded resource is a file
+            called info.png and is located in a folder called Resources, it
+            will be compiled in to the assembly with this fully qualified
+            name: Full.Assembly.Name.Resources.info.png. That is the string
+            that you should pass to this method.
+    return:
+      type: System.IO.Stream
+      description: ''
+    content.vb: Public Shared Function GetEmbeddedResourceStream(resourceName As String) As Stream
+  overload: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream*
+  nameWithType.vb: SkiaFontManager.GetEmbeddedResourceStream(String)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(String)
+  name.vb: GetEmbeddedResourceStream(String)
+- uid: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.Reflection.Assembly,System.String)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.Reflection.Assembly,System.String)
+  id: GetEmbeddedResourceStream(System.Reflection.Assembly,System.String)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetEmbeddedResourceStream(Assembly, string)
+  nameWithType: SkiaFontManager.GetEmbeddedResourceStream(Assembly, string)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.Reflection.Assembly, string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetEmbeddedResourceStream
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 243
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Stream GetEmbeddedResourceStream(Assembly assembly, string resourceFileName)
+    parameters:
+    - id: assembly
+      type: System.Reflection.Assembly
+    - id: resourceFileName
+      type: System.String
+    return:
+      type: System.IO.Stream
+    content.vb: Public Shared Function GetEmbeddedResourceStream(assembly As Assembly, resourceFileName As String) As Stream
+  overload: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream*
+  nameWithType.vb: SkiaFontManager.GetEmbeddedResourceStream(Assembly, String)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.Reflection.Assembly, String)
+  name.vb: GetEmbeddedResourceStream(Assembly, String)
+- uid: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames
+  id: GetEmbeddedResourceNames
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetEmbeddedResourceNames()
+  nameWithType: SkiaFontManager.GetEmbeddedResourceNames()
+  fullName: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetEmbeddedResourceNames
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 275
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Get the list of all emdedded resources in the assembly.
+  example: []
+  syntax:
+    content: public static string[] GetEmbeddedResourceNames()
+    return:
+      type: System.String[]
+      description: An array of fully qualified resource names
+    content.vb: Public Shared Function GetEmbeddedResourceNames() As String()
+  overload: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames*
+- uid: DrawnUi.Draw.SkiaFontManager.Instance
+  commentId: P:DrawnUi.Draw.SkiaFontManager.Instance
+  id: Instance
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: SkiaFontManager.Instance
+  fullName: DrawnUi.Draw.SkiaFontManager.Instance
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Instance
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 282
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SkiaFontManager Instance { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaFontManager
+    content.vb: Public Shared ReadOnly Property Instance As SkiaFontManager
+  overload: DrawnUi.Draw.SkiaFontManager.Instance*
+- uid: DrawnUi.Draw.SkiaFontManager.Fonts
+  commentId: P:DrawnUi.Draw.SkiaFontManager.Fonts
+  id: Fonts
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: Fonts
+  nameWithType: SkiaFontManager.Fonts
+  fullName: DrawnUi.Draw.SkiaFontManager.Fonts
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Fonts
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 295
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Dictionary<string, SKTypeface> Fonts { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKTypeface}
+    content.vb: Public Property Fonts As Dictionary(Of String, SKTypeface)
+  overload: DrawnUi.Draw.SkiaFontManager.Fonts*
+- uid: DrawnUi.Draw.SkiaFontManager.FontRegistrar
+  commentId: P:DrawnUi.Draw.SkiaFontManager.FontRegistrar
+  id: FontRegistrar
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: FontRegistrar
+  nameWithType: SkiaFontManager.FontRegistrar
+  fullName: DrawnUi.Draw.SkiaFontManager.FontRegistrar
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FontRegistrar
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 298
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static IFontRegistrar FontRegistrar { get; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.IFontRegistrar
+    content.vb: Public Shared ReadOnly Property FontRegistrar As IFontRegistrar
+  overload: DrawnUi.Draw.SkiaFontManager.FontRegistrar*
+- uid: DrawnUi.Draw.SkiaFontManager.GetEmbeededFont(System.String,System.Reflection.Assembly,System.String)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetEmbeededFont(System.String,System.Reflection.Assembly,System.String)
+  id: GetEmbeededFont(System.String,System.Reflection.Assembly,System.String)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetEmbeededFont(string, Assembly, string)
+  nameWithType: SkiaFontManager.GetEmbeededFont(string, Assembly, string)
+  fullName: DrawnUi.Draw.SkiaFontManager.GetEmbeededFont(string, System.Reflection.Assembly, string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetEmbeededFont
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 311
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKTypeface GetEmbeededFont(string filename, Assembly assembly, string alias = null)
+    parameters:
+    - id: filename
+      type: System.String
+    - id: assembly
+      type: System.Reflection.Assembly
+    - id: alias
+      type: System.String
+    return:
+      type: SkiaSharp.SKTypeface
+    content.vb: Public Function GetEmbeededFont(filename As String, assembly As Assembly, [alias] As String = Nothing) As SKTypeface
+  overload: DrawnUi.Draw.SkiaFontManager.GetEmbeededFont*
+  nameWithType.vb: SkiaFontManager.GetEmbeededFont(String, Assembly, String)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.GetEmbeededFont(String, System.Reflection.Assembly, String)
+  name.vb: GetEmbeededFont(String, Assembly, String)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaFontManager.Initialized*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.Initialized
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_Initialized
+  name: Initialized
+  nameWithType: SkiaFontManager.Initialized
+  fullName: DrawnUi.Draw.SkiaFontManager.Initialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.SkiaFontManager.DefaultTypeface*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.DefaultTypeface
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_DefaultTypeface
+  name: DefaultTypeface
+  nameWithType: SkiaFontManager.DefaultTypeface
+  fullName: DrawnUi.Draw.SkiaFontManager.DefaultTypeface
+- uid: SkiaSharp.SKTypeface
+  commentId: T:SkiaSharp.SKTypeface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  name: SKTypeface
+  nameWithType: SKTypeface
+  fullName: SkiaSharp.SKTypeface
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.SkiaFontManager.Initialize*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.Initialize
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_Initialize
+  name: Initialize
+  nameWithType: SkiaFontManager.Initialize
+  fullName: DrawnUi.Draw.SkiaFontManager.Initialize
+- uid: DrawnUi.Draw.SkiaFontManager.Manager*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.Manager
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_Manager
+  name: Manager
+  nameWithType: SkiaFontManager.Manager
+  fullName: DrawnUi.Draw.SkiaFontManager.Manager
+- uid: SkiaSharp.SKFontManager
+  commentId: T:SkiaSharp.SKFontManager
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skfontmanager
+  name: SKFontManager
+  nameWithType: SKFontManager
+  fullName: SkiaSharp.SKFontManager
+- uid: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_FindBestTypefaceForString_System_String_
+  name: FindBestTypefaceForString
+  nameWithType: SkiaFontManager.FindBestTypefaceForString
+  fullName: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueTuple{SkiaSharp.SKTypeface,System.Int32}
+  commentId: T:System.ValueTuple{SkiaSharp.SKTypeface,System.Int32}
+  parent: System
+  definition: System.ValueTuple`2
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  name: (SKTypeface, int)
+  nameWithType: (SKTypeface, int)
+  fullName: (SkiaSharp.SKTypeface, int)
+  nameWithType.vb: (SKTypeface, Integer)
+  fullName.vb: (SkiaSharp.SKTypeface, Integer)
+  name.vb: (SKTypeface, Integer)
+  spec.csharp:
+  - name: (
+  - uid: SkiaSharp.SKTypeface
+    name: SKTypeface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: SkiaSharp.SKTypeface
+    name: SKTypeface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: DrawnUi.Draw.SkiaFontManager.CanRender*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.CanRender
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_CanRender_SkiaSharp_SKTypeface_System_Int32_
+  name: CanRender
+  nameWithType: SkiaFontManager.CanRender
+  fullName: DrawnUi.Draw.SkiaFontManager.CanRender
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_StringToUnicodeValues_System_String_
+  name: StringToUnicodeValues
+  nameWithType: SkiaFontManager.StringToUnicodeValues
+  fullName: DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues
+- uid: System.Collections.Generic.List{System.Int32}
+  commentId: T:System.Collections.Generic.List{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<int>
+  nameWithType: List<int>
+  fullName: System.Collections.Generic.List<int>
+  nameWithType.vb: List(Of Integer)
+  fullName.vb: System.Collections.Generic.List(Of Integer)
+  name.vb: List(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.SkiaFontManager.GetFont*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetFont
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetFont_System_String_
+  name: GetFont
+  nameWithType: SkiaFontManager.GetFont
+  fullName: DrawnUi.Draw.SkiaFontManager.GetFont
+- uid: DrawnUi.Draw.SkiaFontManager.RegisterWeight*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.RegisterWeight
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_RegisterWeight_System_String_DrawnUi_Draw_FontWeight_
+  name: RegisterWeight
+  nameWithType: SkiaFontManager.RegisterWeight
+  fullName: DrawnUi.Draw.SkiaFontManager.RegisterWeight
+- uid: DrawnUi.Draw.FontWeight
+  commentId: T:DrawnUi.Draw.FontWeight
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.FontWeight.html
+  name: FontWeight
+  nameWithType: FontWeight
+  fullName: DrawnUi.Draw.FontWeight
+- uid: DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetRegisteredAlias_System_String_System_Int32_
+  name: GetRegisteredAlias
+  nameWithType: SkiaFontManager.GetRegisteredAlias
+  fullName: DrawnUi.Draw.SkiaFontManager.GetRegisteredAlias
+- uid: DrawnUi.Draw.SkiaFontManager.GetWeightEnum*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetWeightEnum
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetWeightEnum_System_Int32_
+  name: GetWeightEnum
+  nameWithType: SkiaFontManager.GetWeightEnum
+  fullName: DrawnUi.Draw.SkiaFontManager.GetWeightEnum
+- uid: DrawnUi.Draw.SkiaFontManager.GetAlias*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetAlias
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetAlias_System_String_DrawnUi_Draw_FontWeight_
+  name: GetAlias
+  nameWithType: SkiaFontManager.GetAlias
+  fullName: DrawnUi.Draw.SkiaFontManager.GetAlias
+- uid: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetEmbeddedResourceStream_System_String_
+  name: GetEmbeddedResourceStream
+  nameWithType: SkiaFontManager.GetEmbeddedResourceStream
+  fullName: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream
+- uid: System.IO.Stream
+  commentId: T:System.IO.Stream
+  parent: System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.stream
+  name: Stream
+  nameWithType: Stream
+  fullName: System.IO.Stream
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+- uid: System.Reflection.Assembly
+  commentId: T:System.Reflection.Assembly
+  parent: System.Reflection
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.reflection.assembly
+  name: Assembly
+  nameWithType: Assembly
+  fullName: System.Reflection.Assembly
+- uid: System.Reflection
+  commentId: N:System.Reflection
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Reflection
+  nameWithType: System.Reflection
+  fullName: System.Reflection
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Reflection
+    name: Reflection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.reflection
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Reflection
+    name: Reflection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.reflection
+- uid: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetEmbeddedResourceNames
+  name: GetEmbeddedResourceNames
+  nameWithType: SkiaFontManager.GetEmbeddedResourceNames
+  fullName: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames
+- uid: System.String[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaFontManager.Instance*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.Instance
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_Instance
+  name: Instance
+  nameWithType: SkiaFontManager.Instance
+  fullName: DrawnUi.Draw.SkiaFontManager.Instance
+- uid: DrawnUi.Draw.SkiaFontManager
+  commentId: T:DrawnUi.Draw.SkiaFontManager
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaFontManager.html
+  name: SkiaFontManager
+  nameWithType: SkiaFontManager
+  fullName: DrawnUi.Draw.SkiaFontManager
+- uid: DrawnUi.Draw.SkiaFontManager.Fonts*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.Fonts
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_Fonts
+  name: Fonts
+  nameWithType: SkiaFontManager.Fonts
+  fullName: DrawnUi.Draw.SkiaFontManager.Fonts
+- uid: System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKTypeface}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKTypeface}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, SKTypeface>
+  nameWithType: Dictionary<string, SKTypeface>
+  fullName: System.Collections.Generic.Dictionary<string, SkiaSharp.SKTypeface>
+  nameWithType.vb: Dictionary(Of String, SKTypeface)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, SkiaSharp.SKTypeface)
+  name.vb: Dictionary(Of String, SKTypeface)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKTypeface
+    name: SKTypeface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKTypeface
+    name: SKTypeface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: DrawnUi.Draw.SkiaFontManager.FontRegistrar*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.FontRegistrar
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_FontRegistrar
+  name: FontRegistrar
+  nameWithType: SkiaFontManager.FontRegistrar
+  fullName: DrawnUi.Draw.SkiaFontManager.FontRegistrar
+- uid: Microsoft.Maui.IFontRegistrar
+  commentId: T:Microsoft.Maui.IFontRegistrar
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ifontregistrar
+  name: IFontRegistrar
+  nameWithType: IFontRegistrar
+  fullName: Microsoft.Maui.IFontRegistrar
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: DrawnUi.Draw.SkiaFontManager.GetEmbeededFont*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetEmbeededFont
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetEmbeededFont_System_String_System_Reflection_Assembly_System_String_
+  name: GetEmbeededFont
+  nameWithType: SkiaFontManager.GetEmbeededFont
+  fullName: DrawnUi.Draw.SkiaFontManager.GetEmbeededFont

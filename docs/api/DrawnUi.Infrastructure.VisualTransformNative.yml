@@ -1,0 +1,835 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.VisualTransformNative
+  commentId: T:DrawnUi.Infrastructure.VisualTransformNative
+  id: VisualTransformNative
+  parent: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.VisualTransformNative.Equals(System.Object)
+  - DrawnUi.Infrastructure.VisualTransformNative.GetHashCode
+  - DrawnUi.Infrastructure.VisualTransformNative.IsVisible
+  - DrawnUi.Infrastructure.VisualTransformNative.Opacity
+  - DrawnUi.Infrastructure.VisualTransformNative.Rect
+  - DrawnUi.Infrastructure.VisualTransformNative.Rotation
+  - DrawnUi.Infrastructure.VisualTransformNative.Scale
+  - DrawnUi.Infrastructure.VisualTransformNative.Translation
+  - DrawnUi.Infrastructure.VisualTransformNative.op_Equality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  - DrawnUi.Infrastructure.VisualTransformNative.op_Inequality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  langs:
+  - csharp
+  - vb
+  name: VisualTransformNative
+  nameWithType: VisualTransformNative
+  fullName: DrawnUi.Infrastructure.VisualTransformNative
+  type: Struct
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VisualTransformNative
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public struct VisualTransformNative
+    content.vb: Public Structure VisualTransformNative
+  inheritedMembers:
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.VisualTransformNative.IsVisible
+  commentId: P:DrawnUi.Infrastructure.VisualTransformNative.IsVisible
+  id: IsVisible
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: IsVisible
+  nameWithType: VisualTransformNative.IsVisible
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.IsVisible
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsVisible
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public bool IsVisible { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsVisible As Boolean
+  overload: DrawnUi.Infrastructure.VisualTransformNative.IsVisible*
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Rect
+  commentId: P:DrawnUi.Infrastructure.VisualTransformNative.Rect
+  id: Rect
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: Rect
+  nameWithType: VisualTransformNative.Rect
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Rect
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Rect
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Pixels only
+  example: []
+  syntax:
+    content: public SKRect Rect { readonly get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Property Rect As SKRect
+  overload: DrawnUi.Infrastructure.VisualTransformNative.Rect*
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Translation
+  commentId: P:DrawnUi.Infrastructure.VisualTransformNative.Translation
+  id: Translation
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: Translation
+  nameWithType: VisualTransformNative.Translation
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Translation
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Translation
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public SKPoint Translation { readonly get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property Translation As SKPoint
+  overload: DrawnUi.Infrastructure.VisualTransformNative.Translation*
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Opacity
+  commentId: P:DrawnUi.Infrastructure.VisualTransformNative.Opacity
+  id: Opacity
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: Opacity
+  nameWithType: VisualTransformNative.Opacity
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Opacity
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Opacity
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public float Opacity { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Opacity As Single
+  overload: DrawnUi.Infrastructure.VisualTransformNative.Opacity*
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Rotation
+  commentId: P:DrawnUi.Infrastructure.VisualTransformNative.Rotation
+  id: Rotation
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: Rotation
+  nameWithType: VisualTransformNative.Rotation
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Rotation
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Rotation
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public float Rotation { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Rotation As Single
+  overload: DrawnUi.Infrastructure.VisualTransformNative.Rotation*
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Scale
+  commentId: P:DrawnUi.Infrastructure.VisualTransformNative.Scale
+  id: Scale
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: Scale
+  nameWithType: VisualTransformNative.Scale
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Scale
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Scale
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public SKPoint Scale { readonly get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property Scale As SKPoint
+  overload: DrawnUi.Infrastructure.VisualTransformNative.Scale*
+- uid: DrawnUi.Infrastructure.VisualTransformNative.op_Equality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  commentId: M:DrawnUi.Infrastructure.VisualTransformNative.op_Equality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  id: op_Equality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: operator ==(VisualTransformNative, VisualTransformNative)
+  nameWithType: VisualTransformNative.operator ==(VisualTransformNative, VisualTransformNative)
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.operator ==(DrawnUi.Infrastructure.VisualTransformNative, DrawnUi.Infrastructure.VisualTransformNative)
+  type: Operator
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: op_Equality
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public static bool operator ==(VisualTransformNative left, VisualTransformNative right)
+    parameters:
+    - id: left
+      type: DrawnUi.Infrastructure.VisualTransformNative
+    - id: right
+      type: DrawnUi.Infrastructure.VisualTransformNative
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As VisualTransformNative, right As VisualTransformNative) As Boolean
+  overload: DrawnUi.Infrastructure.VisualTransformNative.op_Equality*
+  nameWithType.vb: VisualTransformNative.=(VisualTransformNative, VisualTransformNative)
+  fullName.vb: DrawnUi.Infrastructure.VisualTransformNative.=(DrawnUi.Infrastructure.VisualTransformNative, DrawnUi.Infrastructure.VisualTransformNative)
+  name.vb: =(VisualTransformNative, VisualTransformNative)
+- uid: DrawnUi.Infrastructure.VisualTransformNative.op_Inequality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  commentId: M:DrawnUi.Infrastructure.VisualTransformNative.op_Inequality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  id: op_Inequality(DrawnUi.Infrastructure.VisualTransformNative,DrawnUi.Infrastructure.VisualTransformNative)
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: operator !=(VisualTransformNative, VisualTransformNative)
+  nameWithType: VisualTransformNative.operator !=(VisualTransformNative, VisualTransformNative)
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.operator !=(DrawnUi.Infrastructure.VisualTransformNative, DrawnUi.Infrastructure.VisualTransformNative)
+  type: Operator
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: op_Inequality
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public static bool operator !=(VisualTransformNative left, VisualTransformNative right)
+    parameters:
+    - id: left
+      type: DrawnUi.Infrastructure.VisualTransformNative
+    - id: right
+      type: DrawnUi.Infrastructure.VisualTransformNative
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As VisualTransformNative, right As VisualTransformNative) As Boolean
+  overload: DrawnUi.Infrastructure.VisualTransformNative.op_Inequality*
+  nameWithType.vb: VisualTransformNative.<>(VisualTransformNative, VisualTransformNative)
+  fullName.vb: DrawnUi.Infrastructure.VisualTransformNative.<>(DrawnUi.Infrastructure.VisualTransformNative, DrawnUi.Infrastructure.VisualTransformNative)
+  name.vb: <>(VisualTransformNative, VisualTransformNative)
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Equals(System.Object)
+  commentId: M:DrawnUi.Infrastructure.VisualTransformNative.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: VisualTransformNative.Equals(object)
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Equals
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Indicates whether this instance and a specified object are equal.
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current instance.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: DrawnUi.Infrastructure.VisualTransformNative.Equals*
+  nameWithType.vb: VisualTransformNative.Equals(Object)
+  fullName.vb: DrawnUi.Infrastructure.VisualTransformNative.Equals(Object)
+  name.vb: Equals(Object)
+- uid: DrawnUi.Infrastructure.VisualTransformNative.GetHashCode
+  commentId: M:DrawnUi.Infrastructure.VisualTransformNative.GetHashCode
+  id: GetHashCode
+  parent: DrawnUi.Infrastructure.VisualTransformNative
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: VisualTransformNative.GetHashCode()
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetHashCode
+    path: ../src/Shared/Draw/Internals/Models/VisualTransformNative.cs
+    startLine: 43
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Returns the hash code for this instance.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A 32-bit signed integer that is the hash code for this instance.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: DrawnUi.Infrastructure.VisualTransformNative.GetHashCode*
+references:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Infrastructure.VisualTransformNative.IsVisible*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.IsVisible
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_IsVisible
+  name: IsVisible
+  nameWithType: VisualTransformNative.IsVisible
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.IsVisible
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Rect*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.Rect
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_Rect
+  name: Rect
+  nameWithType: VisualTransformNative.Rect
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Rect
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Translation*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.Translation
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_Translation
+  name: Translation
+  nameWithType: VisualTransformNative.Translation
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Translation
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Opacity*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.Opacity
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_Opacity
+  name: Opacity
+  nameWithType: VisualTransformNative.Opacity
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Opacity
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Rotation*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.Rotation
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_Rotation
+  name: Rotation
+  nameWithType: VisualTransformNative.Rotation
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Rotation
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Scale*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.Scale
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_Scale
+  name: Scale
+  nameWithType: VisualTransformNative.Scale
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Scale
+- uid: DrawnUi.Infrastructure.VisualTransformNative.op_Equality*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.op_Equality
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_op_Equality_DrawnUi_Infrastructure_VisualTransformNative_DrawnUi_Infrastructure_VisualTransformNative_
+  name: operator ==
+  nameWithType: VisualTransformNative.operator ==
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.operator ==
+  nameWithType.vb: VisualTransformNative.=
+  fullName.vb: DrawnUi.Infrastructure.VisualTransformNative.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: DrawnUi.Infrastructure.VisualTransformNative.op_Equality*
+    name: ==
+    href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_op_Equality_DrawnUi_Infrastructure_VisualTransformNative_DrawnUi_Infrastructure_VisualTransformNative_
+- uid: DrawnUi.Infrastructure.VisualTransformNative
+  commentId: T:DrawnUi.Infrastructure.VisualTransformNative
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.VisualTransformNative.html
+  name: VisualTransformNative
+  nameWithType: VisualTransformNative
+  fullName: DrawnUi.Infrastructure.VisualTransformNative
+- uid: DrawnUi.Infrastructure.VisualTransformNative.op_Inequality*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.op_Inequality
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_op_Inequality_DrawnUi_Infrastructure_VisualTransformNative_DrawnUi_Infrastructure_VisualTransformNative_
+  name: operator !=
+  nameWithType: VisualTransformNative.operator !=
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.operator !=
+  nameWithType.vb: VisualTransformNative.<>
+  fullName.vb: DrawnUi.Infrastructure.VisualTransformNative.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: DrawnUi.Infrastructure.VisualTransformNative.op_Inequality*
+    name: '!='
+    href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_op_Inequality_DrawnUi_Infrastructure_VisualTransformNative_DrawnUi_Infrastructure_VisualTransformNative_
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Infrastructure.VisualTransformNative.Equals*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.Equals
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_Equals_System_Object_
+  name: Equals
+  nameWithType: VisualTransformNative.Equals
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.Equals
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: DrawnUi.Infrastructure.VisualTransformNative.GetHashCode*
+  commentId: Overload:DrawnUi.Infrastructure.VisualTransformNative.GetHashCode
+  href: DrawnUi.Infrastructure.VisualTransformNative.html#DrawnUi_Infrastructure_VisualTransformNative_GetHashCode
+  name: GetHashCode
+  nameWithType: VisualTransformNative.GetHashCode
+  fullName: DrawnUi.Infrastructure.VisualTransformNative.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

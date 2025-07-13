@@ -1,0 +1,856 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ColorExtensions
+  commentId: T:DrawnUi.Draw.ColorExtensions
+  id: ColorExtensions
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ColorExtensions.ColorFromHex(System.String)
+  - DrawnUi.Draw.ColorExtensions.ColorLookup
+  - DrawnUi.Draw.ColorExtensions.GetHexDesc(Microsoft.Maui.Graphics.Color)
+  - DrawnUi.Draw.ColorExtensions.GetHexString(Microsoft.Maui.Graphics.Color)
+  - DrawnUi.Draw.ColorExtensions.MakeDarker(Microsoft.Maui.Graphics.Color,System.Double)
+  - DrawnUi.Draw.ColorExtensions.MakeLighter(Microsoft.Maui.Graphics.Color,System.Double)
+  - DrawnUi.Draw.ColorExtensions.SetHexAlpha(System.String,System.Int32)
+  - DrawnUi.Draw.ColorExtensions.ToColorFromHex(System.String)
+  - DrawnUi.Draw.ColorExtensions.ToHex(Microsoft.Maui.Graphics.Color)
+  langs:
+  - csharp
+  - vb
+  name: ColorExtensions
+  nameWithType: ColorExtensions
+  fullName: DrawnUi.Draw.ColorExtensions
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColorExtensions
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static class ColorExtensions
+    content.vb: Public Module ColorExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.ColorExtensions.ColorFromHex(System.String)
+  commentId: M:DrawnUi.Draw.ColorExtensions.ColorFromHex(System.String)
+  id: ColorFromHex(System.String)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: ColorFromHex(string)
+  nameWithType: ColorExtensions.ColorFromHex(string)
+  fullName: DrawnUi.Draw.ColorExtensions.ColorFromHex(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColorFromHex
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Color ColorFromHex(this string hex)
+    parameters:
+    - id: hex
+      type: System.String
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Function ColorFromHex(hex As String) As Color
+  overload: DrawnUi.Draw.ColorExtensions.ColorFromHex*
+  nameWithType.vb: ColorExtensions.ColorFromHex(String)
+  fullName.vb: DrawnUi.Draw.ColorExtensions.ColorFromHex(String)
+  name.vb: ColorFromHex(String)
+- uid: DrawnUi.Draw.ColorExtensions.SetHexAlpha(System.String,System.Int32)
+  commentId: M:DrawnUi.Draw.ColorExtensions.SetHexAlpha(System.String,System.Int32)
+  id: SetHexAlpha(System.String,System.Int32)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: SetHexAlpha(string, int)
+  nameWithType: ColorExtensions.SetHexAlpha(string, int)
+  fullName: DrawnUi.Draw.ColorExtensions.SetHexAlpha(string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetHexAlpha
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string SetHexAlpha(this string hex, int percent)
+    parameters:
+    - id: hex
+      type: System.String
+    - id: percent
+      type: System.Int32
+    return:
+      type: System.String
+    content.vb: Public Shared Function SetHexAlpha(hex As String, percent As Integer) As String
+  overload: DrawnUi.Draw.ColorExtensions.SetHexAlpha*
+  nameWithType.vb: ColorExtensions.SetHexAlpha(String, Integer)
+  fullName.vb: DrawnUi.Draw.ColorExtensions.SetHexAlpha(String, Integer)
+  name.vb: SetHexAlpha(String, Integer)
+- uid: DrawnUi.Draw.ColorExtensions.MakeDarker(Microsoft.Maui.Graphics.Color,System.Double)
+  commentId: M:DrawnUi.Draw.ColorExtensions.MakeDarker(Microsoft.Maui.Graphics.Color,System.Double)
+  id: MakeDarker(Microsoft.Maui.Graphics.Color,System.Double)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: MakeDarker(Color, double)
+  nameWithType: ColorExtensions.MakeDarker(Color, double)
+  fullName: DrawnUi.Draw.ColorExtensions.MakeDarker(Microsoft.Maui.Graphics.Color, double)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MakeDarker
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Color MakeDarker(this Color color, double percent)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+    - id: percent
+      type: System.Double
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Function MakeDarker(color As Color, percent As Double) As Color
+  overload: DrawnUi.Draw.ColorExtensions.MakeDarker*
+  nameWithType.vb: ColorExtensions.MakeDarker(Color, Double)
+  fullName.vb: DrawnUi.Draw.ColorExtensions.MakeDarker(Microsoft.Maui.Graphics.Color, Double)
+  name.vb: MakeDarker(Color, Double)
+- uid: DrawnUi.Draw.ColorExtensions.MakeLighter(Microsoft.Maui.Graphics.Color,System.Double)
+  commentId: M:DrawnUi.Draw.ColorExtensions.MakeLighter(Microsoft.Maui.Graphics.Color,System.Double)
+  id: MakeLighter(Microsoft.Maui.Graphics.Color,System.Double)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: MakeLighter(Color, double)
+  nameWithType: ColorExtensions.MakeLighter(Color, double)
+  fullName: DrawnUi.Draw.ColorExtensions.MakeLighter(Microsoft.Maui.Graphics.Color, double)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MakeLighter
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 48
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Color MakeLighter(this Color color, double percent)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+    - id: percent
+      type: System.Double
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Function MakeLighter(color As Color, percent As Double) As Color
+  overload: DrawnUi.Draw.ColorExtensions.MakeLighter*
+  nameWithType.vb: ColorExtensions.MakeLighter(Color, Double)
+  fullName.vb: DrawnUi.Draw.ColorExtensions.MakeLighter(Microsoft.Maui.Graphics.Color, Double)
+  name.vb: MakeLighter(Color, Double)
+- uid: DrawnUi.Draw.ColorExtensions.ToHex(Microsoft.Maui.Graphics.Color)
+  commentId: M:DrawnUi.Draw.ColorExtensions.ToHex(Microsoft.Maui.Graphics.Color)
+  id: ToHex(Microsoft.Maui.Graphics.Color)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: ToHex(Color)
+  nameWithType: ColorExtensions.ToHex(Color)
+  fullName: DrawnUi.Draw.ColorExtensions.ToHex(Microsoft.Maui.Graphics.Color)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToHex
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 87
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string ToHex(this Color color)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+    return:
+      type: System.String
+    content.vb: Public Shared Function ToHex(color As Color) As String
+  overload: DrawnUi.Draw.ColorExtensions.ToHex*
+- uid: DrawnUi.Draw.ColorExtensions.ToColorFromHex(System.String)
+  commentId: M:DrawnUi.Draw.ColorExtensions.ToColorFromHex(System.String)
+  id: ToColorFromHex(System.String)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: ToColorFromHex(string)
+  nameWithType: ColorExtensions.ToColorFromHex(string)
+  fullName: DrawnUi.Draw.ColorExtensions.ToColorFromHex(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToColorFromHex
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 110
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public static Color ToColorFromHex(this string color)
+    parameters:
+    - id: color
+      type: System.String
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Function ToColorFromHex(color As String) As Color
+  overload: DrawnUi.Draw.ColorExtensions.ToColorFromHex*
+  nameWithType.vb: ColorExtensions.ToColorFromHex(String)
+  fullName.vb: DrawnUi.Draw.ColorExtensions.ToColorFromHex(String)
+  name.vb: ToColorFromHex(String)
+- uid: DrawnUi.Draw.ColorExtensions.GetHexString(Microsoft.Maui.Graphics.Color)
+  commentId: M:DrawnUi.Draw.ColorExtensions.GetHexString(Microsoft.Maui.Graphics.Color)
+  id: GetHexString(Microsoft.Maui.Graphics.Color)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: GetHexString(Color)
+  nameWithType: ColorExtensions.GetHexString(Color)
+  fullName: DrawnUi.Draw.ColorExtensions.GetHexString(Microsoft.Maui.Graphics.Color)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetHexString
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 116
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string GetHexString(this Color color)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetHexString(color As Color) As String
+  overload: DrawnUi.Draw.ColorExtensions.GetHexString*
+- uid: DrawnUi.Draw.ColorExtensions.GetHexDesc(Microsoft.Maui.Graphics.Color)
+  commentId: M:DrawnUi.Draw.ColorExtensions.GetHexDesc(Microsoft.Maui.Graphics.Color)
+  id: GetHexDesc(Microsoft.Maui.Graphics.Color)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: GetHexDesc(Color)
+  nameWithType: ColorExtensions.GetHexDesc(Color)
+  fullName: DrawnUi.Draw.ColorExtensions.GetHexDesc(Microsoft.Maui.Graphics.Color)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetHexDesc
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 128
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string GetHexDesc(this Color color)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetHexDesc(color As Color) As String
+  overload: DrawnUi.Draw.ColorExtensions.GetHexDesc*
+- uid: DrawnUi.Draw.ColorExtensions.ColorLookup
+  commentId: F:DrawnUi.Draw.ColorExtensions.ColorLookup
+  id: ColorLookup
+  parent: DrawnUi.Draw.ColorExtensions
+  langs:
+  - csharp
+  - vb
+  name: ColorLookup
+  nameWithType: ColorExtensions.ColorLookup
+  fullName: DrawnUi.Draw.ColorExtensions.ColorLookup
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColorLookup
+    path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
+    startLine: 140
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly Dictionary<string, Color> ColorLookup
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,Microsoft.Maui.Graphics.Color}
+    content.vb: Public Shared ReadOnly ColorLookup As Dictionary(Of String, Color)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.ColorExtensions.ColorFromHex*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.ColorFromHex
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_ColorFromHex_System_String_
+  name: ColorFromHex
+  nameWithType: ColorExtensions.ColorFromHex
+  fullName: DrawnUi.Draw.ColorExtensions.ColorFromHex
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.ColorExtensions.SetHexAlpha*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.SetHexAlpha
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_SetHexAlpha_System_String_System_Int32_
+  name: SetHexAlpha
+  nameWithType: ColorExtensions.SetHexAlpha
+  fullName: DrawnUi.Draw.ColorExtensions.SetHexAlpha
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.ColorExtensions.MakeDarker*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.MakeDarker
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_MakeDarker_Microsoft_Maui_Graphics_Color_System_Double_
+  name: MakeDarker
+  nameWithType: ColorExtensions.MakeDarker
+  fullName: DrawnUi.Draw.ColorExtensions.MakeDarker
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.ColorExtensions.MakeLighter*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.MakeLighter
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_MakeLighter_Microsoft_Maui_Graphics_Color_System_Double_
+  name: MakeLighter
+  nameWithType: ColorExtensions.MakeLighter
+  fullName: DrawnUi.Draw.ColorExtensions.MakeLighter
+- uid: DrawnUi.Draw.ColorExtensions.ToHex*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.ToHex
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_ToHex_Microsoft_Maui_Graphics_Color_
+  name: ToHex
+  nameWithType: ColorExtensions.ToHex
+  fullName: DrawnUi.Draw.ColorExtensions.ToHex
+- uid: DrawnUi.Draw.ColorExtensions.ToColorFromHex*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.ToColorFromHex
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_ToColorFromHex_System_String_
+  name: ToColorFromHex
+  nameWithType: ColorExtensions.ToColorFromHex
+  fullName: DrawnUi.Draw.ColorExtensions.ToColorFromHex
+- uid: DrawnUi.Draw.ColorExtensions.GetHexString*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.GetHexString
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_GetHexString_Microsoft_Maui_Graphics_Color_
+  name: GetHexString
+  nameWithType: ColorExtensions.GetHexString
+  fullName: DrawnUi.Draw.ColorExtensions.GetHexString
+- uid: DrawnUi.Draw.ColorExtensions.GetHexDesc*
+  commentId: Overload:DrawnUi.Draw.ColorExtensions.GetHexDesc
+  href: DrawnUi.Draw.ColorExtensions.html#DrawnUi_Draw_ColorExtensions_GetHexDesc_Microsoft_Maui_Graphics_Color_
+  name: GetHexDesc
+  nameWithType: ColorExtensions.GetHexDesc
+  fullName: DrawnUi.Draw.ColorExtensions.GetHexDesc
+- uid: System.Collections.Generic.Dictionary{System.String,Microsoft.Maui.Graphics.Color}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,Microsoft.Maui.Graphics.Color}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, Color>
+  nameWithType: Dictionary<string, Color>
+  fullName: System.Collections.Generic.Dictionary<string, Microsoft.Maui.Graphics.Color>
+  nameWithType.vb: Dictionary(Of String, Color)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Microsoft.Maui.Graphics.Color)
+  name.vb: Dictionary(Of String, Color)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi
+  commentId: N:DrawnUi
+  id: DrawnUi
+  children:
+  - DrawnUi.HotReloadService
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi
+  nameWithType: DrawnUi
+  fullName: DrawnUi
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.HotReloadService
+  commentId: T:DrawnUi.HotReloadService
+  href: DrawnUi.HotReloadService.html
+  name: HotReloadService
+  nameWithType: HotReloadService
+  fullName: DrawnUi.HotReloadService

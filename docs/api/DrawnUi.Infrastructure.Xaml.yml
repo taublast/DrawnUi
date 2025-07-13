@@ -1,0 +1,100 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Xaml
+  commentId: N:DrawnUi.Infrastructure.Xaml
+  id: DrawnUi.Infrastructure.Xaml
+  children:
+  - DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter
+  - DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter
+  - DrawnUi.Infrastructure.Xaml.NotConverter
+  - DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter
+  - DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter
+  - DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection
+  - DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Infrastructure.Xaml
+  nameWithType: DrawnUi.Infrastructure.Xaml
+  fullName: DrawnUi.Infrastructure.Xaml
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter
+  commentId: T:DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter
+  parent: DrawnUi.Infrastructure.Xaml
+  href: DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter.html
+  name: ColumnDefinitionTypeConverter
+  nameWithType: ColumnDefinitionTypeConverter
+  fullName: DrawnUi.Infrastructure.Xaml.ColumnDefinitionTypeConverter
+- uid: DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter
+  commentId: T:DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter
+  parent: DrawnUi.Infrastructure.Xaml
+  href: DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter.html
+  name: FrameworkImageSourceConverter
+  nameWithType: FrameworkImageSourceConverter
+  fullName: DrawnUi.Infrastructure.Xaml.FrameworkImageSourceConverter
+- uid: DrawnUi.Infrastructure.Xaml.NotConverter
+  commentId: T:DrawnUi.Infrastructure.Xaml.NotConverter
+  href: DrawnUi.Infrastructure.Xaml.NotConverter.html
+  name: NotConverter
+  nameWithType: NotConverter
+  fullName: DrawnUi.Infrastructure.Xaml.NotConverter
+- uid: DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter
+  commentId: T:DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter
+  parent: DrawnUi.Infrastructure.Xaml
+  href: DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter.html
+  name: RowDefinitionTypeConverter
+  nameWithType: RowDefinitionTypeConverter
+  fullName: DrawnUi.Infrastructure.Xaml.RowDefinitionTypeConverter
+- uid: DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter
+  commentId: T:DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter
+  parent: DrawnUi.Infrastructure.Xaml
+  href: DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter.html
+  name: SkiaPointCollectionConverter
+  nameWithType: SkiaPointCollectionConverter
+  fullName: DrawnUi.Infrastructure.Xaml.SkiaPointCollectionConverter
+- uid: DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection
+  commentId: T:DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection
+  href: DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection.html
+  name: SkiaShadowsCollection
+  nameWithType: SkiaShadowsCollection
+  fullName: DrawnUi.Infrastructure.Xaml.SkiaShadowsCollection
+- uid: DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter
+  commentId: T:DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter
+  parent: DrawnUi.Infrastructure.Xaml
+  href: DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter.html
+  name: StringToDoubleArrayTypeConverter
+  nameWithType: StringToDoubleArrayTypeConverter
+  fullName: DrawnUi.Infrastructure.Xaml.StringToDoubleArrayTypeConverter
+- uid: DrawnUi.Infrastructure.Xaml
+  commentId: N:DrawnUi.Infrastructure.Xaml
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure.Xaml
+  nameWithType: DrawnUi.Infrastructure.Xaml
+  fullName: DrawnUi.Infrastructure.Xaml
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Xaml
+    name: Xaml
+    href: DrawnUi.Infrastructure.Xaml.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Xaml
+    name: Xaml
+    href: DrawnUi.Infrastructure.Xaml.html

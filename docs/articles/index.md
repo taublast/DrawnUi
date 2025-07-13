@@ -4,7 +4,7 @@
 ![NuGet Version](https://img.shields.io/nuget/v/DrawnUi.Maui.svg)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 
-⭐️ [View on GitHub](https://github.com/taublast/DrawnUi.Maui)
+⭐️ [Source Code](https://github.com/taublast/DrawnUi.Maui) ⭐️
 
 **A rendering engine for .NET MAUI built on top of SkiaSharp**
 

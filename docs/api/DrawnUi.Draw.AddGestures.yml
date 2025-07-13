@@ -1,0 +1,1744 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.AddGestures
+  commentId: T:DrawnUi.Draw.AddGestures
+  id: AddGestures
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.AddGestures.AnimationPressedProperty
+  - DrawnUi.Draw.AddGestures.AnimationTappedProperty
+  - DrawnUi.Draw.AddGestures.AttachedListeners
+  - DrawnUi.Draw.AddGestures.CommandLongPressingParameterProperty
+  - DrawnUi.Draw.AddGestures.CommandLongPressingProperty
+  - DrawnUi.Draw.AddGestures.CommandPressedProperty
+  - DrawnUi.Draw.AddGestures.CommandTappedParameterProperty
+  - DrawnUi.Draw.AddGestures.CommandTappedProperty
+  - DrawnUi.Draw.AddGestures.GetAnimationPressed(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetAnimationTapped(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetCommandLongPressing(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetCommandPressed(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetCommandTapped(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetLockPanning(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetTouchEffectColor(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.GetTransformView(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.AddGestures.IsActive(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.AddGestures.LockPanningProperty
+  - DrawnUi.Draw.AddGestures.ManageRegistration(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.AddGestures.SetAnimationPressed(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  - DrawnUi.Draw.AddGestures.SetAnimationTapped(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  - DrawnUi.Draw.AddGestures.SetCommandLongPressing(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  - DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  - DrawnUi.Draw.AddGestures.SetCommandPressed(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  - DrawnUi.Draw.AddGestures.SetCommandTapped(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  - DrawnUi.Draw.AddGestures.SetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  - DrawnUi.Draw.AddGestures.SetLockPanning(Microsoft.Maui.Controls.BindableObject,System.Boolean)
+  - DrawnUi.Draw.AddGestures.SetTouchEffectColor(Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Graphics.Color)
+  - DrawnUi.Draw.AddGestures.SetTransformView(Microsoft.Maui.Controls.BindableObject,System.Object)
+  - DrawnUi.Draw.AddGestures.TouchEffectColorProperty
+  - DrawnUi.Draw.AddGestures.TransformViewProperty
+  langs:
+  - csharp
+  - vb
+  name: AddGestures
+  nameWithType: AddGestures
+  fullName: DrawnUi.Draw.AddGestures
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AddGestures
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: For fast and lazy gestures handling to attach to dran controls inside the canvas only
+  example: []
+  syntax:
+    content: public static class AddGestures
+    content.vb: Public Module AddGestures
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.AddGestures.AttachedListeners
+  commentId: F:DrawnUi.Draw.AddGestures.AttachedListeners
+  id: AttachedListeners
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: AttachedListeners
+  nameWithType: AddGestures.AttachedListeners
+  fullName: DrawnUi.Draw.AddGestures.AttachedListeners
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AttachedListeners
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 189
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Dictionary<SkiaControl, AddGestures.GestureListener> AttachedListeners
+    return:
+      type: System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.AddGestures.GestureListener}
+    content.vb: Public Shared AttachedListeners As Dictionary(Of SkiaControl, AddGestures.GestureListener)
+- uid: DrawnUi.Draw.AddGestures.ManageRegistration(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.AddGestures.ManageRegistration(DrawnUi.Draw.SkiaControl)
+  id: ManageRegistration(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: ManageRegistration(SkiaControl)
+  nameWithType: AddGestures.ManageRegistration(SkiaControl)
+  fullName: DrawnUi.Draw.AddGestures.ManageRegistration(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ManageRegistration
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 235
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void ManageRegistration(SkiaControl control)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public Shared Sub ManageRegistration(control As SkiaControl)
+  overload: DrawnUi.Draw.AddGestures.ManageRegistration*
+- uid: DrawnUi.Draw.AddGestures.IsActive(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.AddGestures.IsActive(DrawnUi.Draw.SkiaControl)
+  id: IsActive(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: IsActive(SkiaControl)
+  nameWithType: AddGestures.IsActive(SkiaControl)
+  fullName: DrawnUi.Draw.AddGestures.IsActive(DrawnUi.Draw.SkiaControl)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsActive
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 262
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool IsActive(SkiaControl listener)
+    parameters:
+    - id: listener
+      type: DrawnUi.Draw.SkiaControl
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsActive(listener As SkiaControl) As Boolean
+  overload: DrawnUi.Draw.AddGestures.IsActive*
+- uid: DrawnUi.Draw.AddGestures.CommandTappedProperty
+  commentId: F:DrawnUi.Draw.AddGestures.CommandTappedProperty
+  id: CommandTappedProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: CommandTappedProperty
+  nameWithType: AddGestures.CommandTappedProperty
+  fullName: DrawnUi.Draw.AddGestures.CommandTappedProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CommandTappedProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 279
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty CommandTappedProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly CommandTappedProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetCommandTapped(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetCommandTapped(Microsoft.Maui.Controls.BindableObject)
+  id: GetCommandTapped(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetCommandTapped(BindableObject)
+  nameWithType: AddGestures.GetCommandTapped(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetCommandTapped(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCommandTapped
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 287
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ICommand GetCommandTapped(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: System.Windows.Input.ICommand
+    content.vb: Public Shared Function GetCommandTapped(view As BindableObject) As ICommand
+  overload: DrawnUi.Draw.AddGestures.GetCommandTapped*
+- uid: DrawnUi.Draw.AddGestures.SetCommandTapped(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  commentId: M:DrawnUi.Draw.AddGestures.SetCommandTapped(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  id: SetCommandTapped(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetCommandTapped(BindableObject, ICommand)
+  nameWithType: AddGestures.SetCommandTapped(BindableObject, ICommand)
+  fullName: DrawnUi.Draw.AddGestures.SetCommandTapped(Microsoft.Maui.Controls.BindableObject, System.Windows.Input.ICommand)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetCommandTapped
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 292
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetCommandTapped(BindableObject view, ICommand value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: System.Windows.Input.ICommand
+    content.vb: Public Shared Sub SetCommandTapped(view As BindableObject, value As ICommand)
+  overload: DrawnUi.Draw.AddGestures.SetCommandTapped*
+- uid: DrawnUi.Draw.AddGestures.CommandTappedParameterProperty
+  commentId: F:DrawnUi.Draw.AddGestures.CommandTappedParameterProperty
+  id: CommandTappedParameterProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: CommandTappedParameterProperty
+  nameWithType: AddGestures.CommandTappedParameterProperty
+  fullName: DrawnUi.Draw.AddGestures.CommandTappedParameterProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CommandTappedParameterProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 299
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty CommandTappedParameterProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly CommandTappedParameterProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject)
+  id: GetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetCommandTappedParameter(BindableObject)
+  nameWithType: AddGestures.GetCommandTappedParameter(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCommandTappedParameter
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 306
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static object GetCommandTappedParameter(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: System.Object
+    content.vb: Public Shared Function GetCommandTappedParameter(view As BindableObject) As Object
+  overload: DrawnUi.Draw.AddGestures.GetCommandTappedParameter*
+- uid: DrawnUi.Draw.AddGestures.SetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  commentId: M:DrawnUi.Draw.AddGestures.SetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  id: SetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetCommandTappedParameter(BindableObject, object)
+  nameWithType: AddGestures.SetCommandTappedParameter(BindableObject, object)
+  fullName: DrawnUi.Draw.AddGestures.SetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject, object)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetCommandTappedParameter
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 311
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetCommandTappedParameter(BindableObject view, object value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: System.Object
+    content.vb: Public Shared Sub SetCommandTappedParameter(view As BindableObject, value As Object)
+  overload: DrawnUi.Draw.AddGestures.SetCommandTappedParameter*
+  nameWithType.vb: AddGestures.SetCommandTappedParameter(BindableObject, Object)
+  fullName.vb: DrawnUi.Draw.AddGestures.SetCommandTappedParameter(Microsoft.Maui.Controls.BindableObject, Object)
+  name.vb: SetCommandTappedParameter(BindableObject, Object)
+- uid: DrawnUi.Draw.AddGestures.CommandLongPressingProperty
+  commentId: F:DrawnUi.Draw.AddGestures.CommandLongPressingProperty
+  id: CommandLongPressingProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: CommandLongPressingProperty
+  nameWithType: AddGestures.CommandLongPressingProperty
+  fullName: DrawnUi.Draw.AddGestures.CommandLongPressingProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CommandLongPressingProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 318
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty CommandLongPressingProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly CommandLongPressingProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetCommandLongPressing(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetCommandLongPressing(Microsoft.Maui.Controls.BindableObject)
+  id: GetCommandLongPressing(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetCommandLongPressing(BindableObject)
+  nameWithType: AddGestures.GetCommandLongPressing(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetCommandLongPressing(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCommandLongPressing
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 326
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ICommand GetCommandLongPressing(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: System.Windows.Input.ICommand
+    content.vb: Public Shared Function GetCommandLongPressing(view As BindableObject) As ICommand
+  overload: DrawnUi.Draw.AddGestures.GetCommandLongPressing*
+- uid: DrawnUi.Draw.AddGestures.SetCommandLongPressing(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  commentId: M:DrawnUi.Draw.AddGestures.SetCommandLongPressing(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  id: SetCommandLongPressing(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetCommandLongPressing(BindableObject, ICommand)
+  nameWithType: AddGestures.SetCommandLongPressing(BindableObject, ICommand)
+  fullName: DrawnUi.Draw.AddGestures.SetCommandLongPressing(Microsoft.Maui.Controls.BindableObject, System.Windows.Input.ICommand)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetCommandLongPressing
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 331
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetCommandLongPressing(BindableObject view, ICommand value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: System.Windows.Input.ICommand
+    content.vb: Public Shared Sub SetCommandLongPressing(view As BindableObject, value As ICommand)
+  overload: DrawnUi.Draw.AddGestures.SetCommandLongPressing*
+- uid: DrawnUi.Draw.AddGestures.CommandLongPressingParameterProperty
+  commentId: F:DrawnUi.Draw.AddGestures.CommandLongPressingParameterProperty
+  id: CommandLongPressingParameterProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: CommandLongPressingParameterProperty
+  nameWithType: AddGestures.CommandLongPressingParameterProperty
+  fullName: DrawnUi.Draw.AddGestures.CommandLongPressingParameterProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CommandLongPressingParameterProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 338
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty CommandLongPressingParameterProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly CommandLongPressingParameterProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject)
+  id: GetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetCommandLongPressingParameter(BindableObject)
+  nameWithType: AddGestures.GetCommandLongPressingParameter(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCommandLongPressingParameter
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 345
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static object GetCommandLongPressingParameter(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: System.Object
+    content.vb: Public Shared Function GetCommandLongPressingParameter(view As BindableObject) As Object
+  overload: DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter*
+- uid: DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  commentId: M:DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  id: SetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject,System.Object)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetCommandLongPressingParameter(BindableObject, object)
+  nameWithType: AddGestures.SetCommandLongPressingParameter(BindableObject, object)
+  fullName: DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject, object)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetCommandLongPressingParameter
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 350
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetCommandLongPressingParameter(BindableObject view, object value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: System.Object
+    content.vb: Public Shared Sub SetCommandLongPressingParameter(view As BindableObject, value As Object)
+  overload: DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter*
+  nameWithType.vb: AddGestures.SetCommandLongPressingParameter(BindableObject, Object)
+  fullName.vb: DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter(Microsoft.Maui.Controls.BindableObject, Object)
+  name.vb: SetCommandLongPressingParameter(BindableObject, Object)
+- uid: DrawnUi.Draw.AddGestures.TransformViewProperty
+  commentId: F:DrawnUi.Draw.AddGestures.TransformViewProperty
+  id: TransformViewProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: TransformViewProperty
+  nameWithType: AddGestures.TransformViewProperty
+  fullName: DrawnUi.Draw.AddGestures.TransformViewProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TransformViewProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 355
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty TransformViewProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly TransformViewProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetTransformView(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetTransformView(Microsoft.Maui.Controls.BindableObject)
+  id: GetTransformView(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetTransformView(BindableObject)
+  nameWithType: AddGestures.GetTransformView(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetTransformView(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetTransformView
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 362
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static object GetTransformView(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: System.Object
+    content.vb: Public Shared Function GetTransformView(view As BindableObject) As Object
+  overload: DrawnUi.Draw.AddGestures.GetTransformView*
+- uid: DrawnUi.Draw.AddGestures.SetTransformView(Microsoft.Maui.Controls.BindableObject,System.Object)
+  commentId: M:DrawnUi.Draw.AddGestures.SetTransformView(Microsoft.Maui.Controls.BindableObject,System.Object)
+  id: SetTransformView(Microsoft.Maui.Controls.BindableObject,System.Object)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetTransformView(BindableObject, object)
+  nameWithType: AddGestures.SetTransformView(BindableObject, object)
+  fullName: DrawnUi.Draw.AddGestures.SetTransformView(Microsoft.Maui.Controls.BindableObject, object)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetTransformView
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 367
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetTransformView(BindableObject view, object value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: System.Object
+    content.vb: Public Shared Sub SetTransformView(view As BindableObject, value As Object)
+  overload: DrawnUi.Draw.AddGestures.SetTransformView*
+  nameWithType.vb: AddGestures.SetTransformView(BindableObject, Object)
+  fullName.vb: DrawnUi.Draw.AddGestures.SetTransformView(Microsoft.Maui.Controls.BindableObject, Object)
+  name.vb: SetTransformView(BindableObject, Object)
+- uid: DrawnUi.Draw.AddGestures.AnimationTappedProperty
+  commentId: F:DrawnUi.Draw.AddGestures.AnimationTappedProperty
+  id: AnimationTappedProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: AnimationTappedProperty
+  nameWithType: AddGestures.AnimationTappedProperty
+  fullName: DrawnUi.Draw.AddGestures.AnimationTappedProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AnimationTappedProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 372
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty AnimationTappedProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly AnimationTappedProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetAnimationTapped(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetAnimationTapped(Microsoft.Maui.Controls.BindableObject)
+  id: GetAnimationTapped(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetAnimationTapped(BindableObject)
+  nameWithType: AddGestures.GetAnimationTapped(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetAnimationTapped(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetAnimationTapped
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 380
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SkiaTouchAnimation GetAnimationTapped(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: DrawnUi.Draw.SkiaTouchAnimation
+    content.vb: Public Shared Function GetAnimationTapped(view As BindableObject) As SkiaTouchAnimation
+  overload: DrawnUi.Draw.AddGestures.GetAnimationTapped*
+- uid: DrawnUi.Draw.AddGestures.SetAnimationTapped(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  commentId: M:DrawnUi.Draw.AddGestures.SetAnimationTapped(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  id: SetAnimationTapped(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetAnimationTapped(BindableObject, SkiaTouchAnimation)
+  nameWithType: AddGestures.SetAnimationTapped(BindableObject, SkiaTouchAnimation)
+  fullName: DrawnUi.Draw.AddGestures.SetAnimationTapped(Microsoft.Maui.Controls.BindableObject, DrawnUi.Draw.SkiaTouchAnimation)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetAnimationTapped
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 390
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetAnimationTapped(BindableObject view, SkiaTouchAnimation value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: DrawnUi.Draw.SkiaTouchAnimation
+    content.vb: Public Shared Sub SetAnimationTapped(view As BindableObject, value As SkiaTouchAnimation)
+  overload: DrawnUi.Draw.AddGestures.SetAnimationTapped*
+- uid: DrawnUi.Draw.AddGestures.CommandPressedProperty
+  commentId: F:DrawnUi.Draw.AddGestures.CommandPressedProperty
+  id: CommandPressedProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: CommandPressedProperty
+  nameWithType: AddGestures.CommandPressedProperty
+  fullName: DrawnUi.Draw.AddGestures.CommandPressedProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CommandPressedProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 395
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty CommandPressedProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly CommandPressedProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetCommandPressed(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetCommandPressed(Microsoft.Maui.Controls.BindableObject)
+  id: GetCommandPressed(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetCommandPressed(BindableObject)
+  nameWithType: AddGestures.GetCommandPressed(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetCommandPressed(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCommandPressed
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 403
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ICommand GetCommandPressed(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: System.Windows.Input.ICommand
+    content.vb: Public Shared Function GetCommandPressed(view As BindableObject) As ICommand
+  overload: DrawnUi.Draw.AddGestures.GetCommandPressed*
+- uid: DrawnUi.Draw.AddGestures.SetCommandPressed(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  commentId: M:DrawnUi.Draw.AddGestures.SetCommandPressed(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  id: SetCommandPressed(Microsoft.Maui.Controls.BindableObject,System.Windows.Input.ICommand)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetCommandPressed(BindableObject, ICommand)
+  nameWithType: AddGestures.SetCommandPressed(BindableObject, ICommand)
+  fullName: DrawnUi.Draw.AddGestures.SetCommandPressed(Microsoft.Maui.Controls.BindableObject, System.Windows.Input.ICommand)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetCommandPressed
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 408
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetCommandPressed(BindableObject view, ICommand value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: System.Windows.Input.ICommand
+    content.vb: Public Shared Sub SetCommandPressed(view As BindableObject, value As ICommand)
+  overload: DrawnUi.Draw.AddGestures.SetCommandPressed*
+- uid: DrawnUi.Draw.AddGestures.AnimationPressedProperty
+  commentId: F:DrawnUi.Draw.AddGestures.AnimationPressedProperty
+  id: AnimationPressedProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: AnimationPressedProperty
+  nameWithType: AddGestures.AnimationPressedProperty
+  fullName: DrawnUi.Draw.AddGestures.AnimationPressedProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AnimationPressedProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 415
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty AnimationPressedProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly AnimationPressedProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetAnimationPressed(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetAnimationPressed(Microsoft.Maui.Controls.BindableObject)
+  id: GetAnimationPressed(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetAnimationPressed(BindableObject)
+  nameWithType: AddGestures.GetAnimationPressed(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetAnimationPressed(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetAnimationPressed
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 423
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SkiaTouchAnimation GetAnimationPressed(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: DrawnUi.Draw.SkiaTouchAnimation
+    content.vb: Public Shared Function GetAnimationPressed(view As BindableObject) As SkiaTouchAnimation
+  overload: DrawnUi.Draw.AddGestures.GetAnimationPressed*
+- uid: DrawnUi.Draw.AddGestures.SetAnimationPressed(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  commentId: M:DrawnUi.Draw.AddGestures.SetAnimationPressed(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  id: SetAnimationPressed(Microsoft.Maui.Controls.BindableObject,DrawnUi.Draw.SkiaTouchAnimation)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetAnimationPressed(BindableObject, SkiaTouchAnimation)
+  nameWithType: AddGestures.SetAnimationPressed(BindableObject, SkiaTouchAnimation)
+  fullName: DrawnUi.Draw.AddGestures.SetAnimationPressed(Microsoft.Maui.Controls.BindableObject, DrawnUi.Draw.SkiaTouchAnimation)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetAnimationPressed
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 428
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetAnimationPressed(BindableObject view, SkiaTouchAnimation value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: DrawnUi.Draw.SkiaTouchAnimation
+    content.vb: Public Shared Sub SetAnimationPressed(view As BindableObject, value As SkiaTouchAnimation)
+  overload: DrawnUi.Draw.AddGestures.SetAnimationPressed*
+- uid: DrawnUi.Draw.AddGestures.TouchEffectColorProperty
+  commentId: F:DrawnUi.Draw.AddGestures.TouchEffectColorProperty
+  id: TouchEffectColorProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: TouchEffectColorProperty
+  nameWithType: AddGestures.TouchEffectColorProperty
+  fullName: DrawnUi.Draw.AddGestures.TouchEffectColorProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TouchEffectColorProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 433
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty TouchEffectColorProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly TouchEffectColorProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetTouchEffectColor(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetTouchEffectColor(Microsoft.Maui.Controls.BindableObject)
+  id: GetTouchEffectColor(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetTouchEffectColor(BindableObject)
+  nameWithType: AddGestures.GetTouchEffectColor(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetTouchEffectColor(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetTouchEffectColor
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 440
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Color GetTouchEffectColor(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Function GetTouchEffectColor(view As BindableObject) As Color
+  overload: DrawnUi.Draw.AddGestures.GetTouchEffectColor*
+- uid: DrawnUi.Draw.AddGestures.SetTouchEffectColor(Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Graphics.Color)
+  commentId: M:DrawnUi.Draw.AddGestures.SetTouchEffectColor(Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Graphics.Color)
+  id: SetTouchEffectColor(Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Graphics.Color)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetTouchEffectColor(BindableObject, Color)
+  nameWithType: AddGestures.SetTouchEffectColor(BindableObject, Color)
+  fullName: DrawnUi.Draw.AddGestures.SetTouchEffectColor(Microsoft.Maui.Controls.BindableObject, Microsoft.Maui.Graphics.Color)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetTouchEffectColor
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 451
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetTouchEffectColor(BindableObject view, Color value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Sub SetTouchEffectColor(view As BindableObject, value As Color)
+  overload: DrawnUi.Draw.AddGestures.SetTouchEffectColor*
+- uid: DrawnUi.Draw.AddGestures.LockPanningProperty
+  commentId: F:DrawnUi.Draw.AddGestures.LockPanningProperty
+  id: LockPanningProperty
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: LockPanningProperty
+  nameWithType: AddGestures.LockPanningProperty
+  fullName: DrawnUi.Draw.AddGestures.LockPanningProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LockPanningProperty
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 457
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty LockPanningProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly LockPanningProperty As BindableProperty
+- uid: DrawnUi.Draw.AddGestures.GetLockPanning(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.AddGestures.GetLockPanning(Microsoft.Maui.Controls.BindableObject)
+  id: GetLockPanning(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: GetLockPanning(BindableObject)
+  nameWithType: AddGestures.GetLockPanning(BindableObject)
+  fullName: DrawnUi.Draw.AddGestures.GetLockPanning(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetLockPanning
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 465
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool GetLockPanning(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function GetLockPanning(view As BindableObject) As Boolean
+  overload: DrawnUi.Draw.AddGestures.GetLockPanning*
+- uid: DrawnUi.Draw.AddGestures.SetLockPanning(Microsoft.Maui.Controls.BindableObject,System.Boolean)
+  commentId: M:DrawnUi.Draw.AddGestures.SetLockPanning(Microsoft.Maui.Controls.BindableObject,System.Boolean)
+  id: SetLockPanning(Microsoft.Maui.Controls.BindableObject,System.Boolean)
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: SetLockPanning(BindableObject, bool)
+  nameWithType: AddGestures.SetLockPanning(BindableObject, bool)
+  fullName: DrawnUi.Draw.AddGestures.SetLockPanning(Microsoft.Maui.Controls.BindableObject, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetLockPanning
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 470
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetLockPanning(BindableObject view, bool value)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: value
+      type: System.Boolean
+    content.vb: Public Shared Sub SetLockPanning(view As BindableObject, value As Boolean)
+  overload: DrawnUi.Draw.AddGestures.SetLockPanning*
+  nameWithType.vb: AddGestures.SetLockPanning(BindableObject, Boolean)
+  fullName.vb: DrawnUi.Draw.AddGestures.SetLockPanning(Microsoft.Maui.Controls.BindableObject, Boolean)
+  name.vb: SetLockPanning(BindableObject, Boolean)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.AddGestures.GestureListener}
+  commentId: T:System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.AddGestures.GestureListener}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<SkiaControl, AddGestures.GestureListener>
+  nameWithType: Dictionary<SkiaControl, AddGestures.GestureListener>
+  fullName: System.Collections.Generic.Dictionary<DrawnUi.Draw.SkiaControl, DrawnUi.Draw.AddGestures.GestureListener>
+  nameWithType.vb: Dictionary(Of SkiaControl, AddGestures.GestureListener)
+  fullName.vb: System.Collections.Generic.Dictionary(Of DrawnUi.Draw.SkiaControl, DrawnUi.Draw.AddGestures.GestureListener)
+  name.vb: Dictionary(Of SkiaControl, AddGestures.GestureListener)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures
+    name: AddGestures
+    href: DrawnUi.Draw.AddGestures.html
+  - name: .
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures
+    name: AddGestures
+    href: DrawnUi.Draw.AddGestures.html
+  - name: .
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.AddGestures.ManageRegistration*
+  commentId: Overload:DrawnUi.Draw.AddGestures.ManageRegistration
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_ManageRegistration_DrawnUi_Draw_SkiaControl_
+  name: ManageRegistration
+  nameWithType: AddGestures.ManageRegistration
+  fullName: DrawnUi.Draw.AddGestures.ManageRegistration
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.AddGestures.IsActive*
+  commentId: Overload:DrawnUi.Draw.AddGestures.IsActive
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_IsActive_DrawnUi_Draw_SkiaControl_
+  name: IsActive
+  nameWithType: AddGestures.IsActive
+  fullName: DrawnUi.Draw.AddGestures.IsActive
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Microsoft.Maui.Controls.BindableProperty
+  commentId: T:Microsoft.Maui.Controls.BindableProperty
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  name: BindableProperty
+  nameWithType: BindableProperty
+  fullName: Microsoft.Maui.Controls.BindableProperty
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: DrawnUi.Draw.AddGestures.GetCommandTapped*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetCommandTapped
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetCommandTapped_Microsoft_Maui_Controls_BindableObject_
+  name: GetCommandTapped
+  nameWithType: AddGestures.GetCommandTapped
+  fullName: DrawnUi.Draw.AddGestures.GetCommandTapped
+- uid: Microsoft.Maui.Controls.BindableObject
+  commentId: T:Microsoft.Maui.Controls.BindableObject
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  name: BindableObject
+  nameWithType: BindableObject
+  fullName: Microsoft.Maui.Controls.BindableObject
+- uid: System.Windows.Input.ICommand
+  commentId: T:System.Windows.Input.ICommand
+  parent: System.Windows.Input
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.input.icommand
+  name: ICommand
+  nameWithType: ICommand
+  fullName: System.Windows.Input.ICommand
+- uid: System.Windows.Input
+  commentId: N:System.Windows.Input
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Windows.Input
+  nameWithType: System.Windows.Input
+  fullName: System.Windows.Input
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Input
+    name: Input
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.input
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Input
+    name: Input
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.input
+- uid: DrawnUi.Draw.AddGestures.SetCommandTapped*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetCommandTapped
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetCommandTapped_Microsoft_Maui_Controls_BindableObject_System_Windows_Input_ICommand_
+  name: SetCommandTapped
+  nameWithType: AddGestures.SetCommandTapped
+  fullName: DrawnUi.Draw.AddGestures.SetCommandTapped
+- uid: DrawnUi.Draw.AddGestures.GetCommandTappedParameter*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetCommandTappedParameter
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetCommandTappedParameter_Microsoft_Maui_Controls_BindableObject_
+  name: GetCommandTappedParameter
+  nameWithType: AddGestures.GetCommandTappedParameter
+  fullName: DrawnUi.Draw.AddGestures.GetCommandTappedParameter
+- uid: DrawnUi.Draw.AddGestures.SetCommandTappedParameter*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetCommandTappedParameter
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetCommandTappedParameter_Microsoft_Maui_Controls_BindableObject_System_Object_
+  name: SetCommandTappedParameter
+  nameWithType: AddGestures.SetCommandTappedParameter
+  fullName: DrawnUi.Draw.AddGestures.SetCommandTappedParameter
+- uid: DrawnUi.Draw.AddGestures.GetCommandLongPressing*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetCommandLongPressing
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetCommandLongPressing_Microsoft_Maui_Controls_BindableObject_
+  name: GetCommandLongPressing
+  nameWithType: AddGestures.GetCommandLongPressing
+  fullName: DrawnUi.Draw.AddGestures.GetCommandLongPressing
+- uid: DrawnUi.Draw.AddGestures.SetCommandLongPressing*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetCommandLongPressing
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetCommandLongPressing_Microsoft_Maui_Controls_BindableObject_System_Windows_Input_ICommand_
+  name: SetCommandLongPressing
+  nameWithType: AddGestures.SetCommandLongPressing
+  fullName: DrawnUi.Draw.AddGestures.SetCommandLongPressing
+- uid: DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetCommandLongPressingParameter_Microsoft_Maui_Controls_BindableObject_
+  name: GetCommandLongPressingParameter
+  nameWithType: AddGestures.GetCommandLongPressingParameter
+  fullName: DrawnUi.Draw.AddGestures.GetCommandLongPressingParameter
+- uid: DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetCommandLongPressingParameter_Microsoft_Maui_Controls_BindableObject_System_Object_
+  name: SetCommandLongPressingParameter
+  nameWithType: AddGestures.SetCommandLongPressingParameter
+  fullName: DrawnUi.Draw.AddGestures.SetCommandLongPressingParameter
+- uid: DrawnUi.Draw.AddGestures.GetTransformView*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetTransformView
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetTransformView_Microsoft_Maui_Controls_BindableObject_
+  name: GetTransformView
+  nameWithType: AddGestures.GetTransformView
+  fullName: DrawnUi.Draw.AddGestures.GetTransformView
+- uid: DrawnUi.Draw.AddGestures.SetTransformView*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetTransformView
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetTransformView_Microsoft_Maui_Controls_BindableObject_System_Object_
+  name: SetTransformView
+  nameWithType: AddGestures.SetTransformView
+  fullName: DrawnUi.Draw.AddGestures.SetTransformView
+- uid: DrawnUi.Draw.AddGestures.GetAnimationTapped*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetAnimationTapped
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetAnimationTapped_Microsoft_Maui_Controls_BindableObject_
+  name: GetAnimationTapped
+  nameWithType: AddGestures.GetAnimationTapped
+  fullName: DrawnUi.Draw.AddGestures.GetAnimationTapped
+- uid: DrawnUi.Draw.SkiaTouchAnimation
+  commentId: T:DrawnUi.Draw.SkiaTouchAnimation
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaTouchAnimation.html
+  name: SkiaTouchAnimation
+  nameWithType: SkiaTouchAnimation
+  fullName: DrawnUi.Draw.SkiaTouchAnimation
+- uid: DrawnUi.Draw.AddGestures.SetAnimationTapped*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetAnimationTapped
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetAnimationTapped_Microsoft_Maui_Controls_BindableObject_DrawnUi_Draw_SkiaTouchAnimation_
+  name: SetAnimationTapped
+  nameWithType: AddGestures.SetAnimationTapped
+  fullName: DrawnUi.Draw.AddGestures.SetAnimationTapped
+- uid: DrawnUi.Draw.AddGestures.GetCommandPressed*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetCommandPressed
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetCommandPressed_Microsoft_Maui_Controls_BindableObject_
+  name: GetCommandPressed
+  nameWithType: AddGestures.GetCommandPressed
+  fullName: DrawnUi.Draw.AddGestures.GetCommandPressed
+- uid: DrawnUi.Draw.AddGestures.SetCommandPressed*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetCommandPressed
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetCommandPressed_Microsoft_Maui_Controls_BindableObject_System_Windows_Input_ICommand_
+  name: SetCommandPressed
+  nameWithType: AddGestures.SetCommandPressed
+  fullName: DrawnUi.Draw.AddGestures.SetCommandPressed
+- uid: DrawnUi.Draw.AddGestures.GetAnimationPressed*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetAnimationPressed
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetAnimationPressed_Microsoft_Maui_Controls_BindableObject_
+  name: GetAnimationPressed
+  nameWithType: AddGestures.GetAnimationPressed
+  fullName: DrawnUi.Draw.AddGestures.GetAnimationPressed
+- uid: DrawnUi.Draw.AddGestures.SetAnimationPressed*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetAnimationPressed
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetAnimationPressed_Microsoft_Maui_Controls_BindableObject_DrawnUi_Draw_SkiaTouchAnimation_
+  name: SetAnimationPressed
+  nameWithType: AddGestures.SetAnimationPressed
+  fullName: DrawnUi.Draw.AddGestures.SetAnimationPressed
+- uid: DrawnUi.Draw.AddGestures.GetTouchEffectColor*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetTouchEffectColor
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetTouchEffectColor_Microsoft_Maui_Controls_BindableObject_
+  name: GetTouchEffectColor
+  nameWithType: AddGestures.GetTouchEffectColor
+  fullName: DrawnUi.Draw.AddGestures.GetTouchEffectColor
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.AddGestures.SetTouchEffectColor*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetTouchEffectColor
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetTouchEffectColor_Microsoft_Maui_Controls_BindableObject_Microsoft_Maui_Graphics_Color_
+  name: SetTouchEffectColor
+  nameWithType: AddGestures.SetTouchEffectColor
+  fullName: DrawnUi.Draw.AddGestures.SetTouchEffectColor
+- uid: DrawnUi.Draw.AddGestures.GetLockPanning*
+  commentId: Overload:DrawnUi.Draw.AddGestures.GetLockPanning
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_GetLockPanning_Microsoft_Maui_Controls_BindableObject_
+  name: GetLockPanning
+  nameWithType: AddGestures.GetLockPanning
+  fullName: DrawnUi.Draw.AddGestures.GetLockPanning
+- uid: DrawnUi.Draw.AddGestures.SetLockPanning*
+  commentId: Overload:DrawnUi.Draw.AddGestures.SetLockPanning
+  href: DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_SetLockPanning_Microsoft_Maui_Controls_BindableObject_System_Boolean_
+  name: SetLockPanning
+  nameWithType: AddGestures.SetLockPanning
+  fullName: DrawnUi.Draw.AddGestures.SetLockPanning

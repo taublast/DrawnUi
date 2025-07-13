@@ -1,0 +1,350 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IInsideViewport
+  commentId: T:DrawnUi.Draw.IInsideViewport
+  id: IInsideViewport
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IInsideViewport.OnLoaded
+  - DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  langs:
+  - csharp
+  - vb
+  name: IInsideViewport
+  nameWithType: IInsideViewport
+  fullName: DrawnUi.Draw.IInsideViewport
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IInsideViewport
+    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface IInsideViewport : IVisibilityAware, IDisposable'
+    content.vb: Public Interface IInsideViewport Inherits IVisibilityAware, IDisposable
+  inheritedMembers:
+  - DrawnUi.Draw.IVisibilityAware.OnAppearing
+  - DrawnUi.Draw.IVisibilityAware.OnAppeared
+  - DrawnUi.Draw.IVisibilityAware.OnDisappeared
+  - DrawnUi.Draw.IVisibilityAware.OnDisappearing
+  - System.IDisposable.Dispose
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  commentId: M:DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  id: OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  parent: DrawnUi.Draw.IInsideViewport
+  langs:
+  - csharp
+  - vb
+  name: OnViewportWasChanged(ScaledRect)
+  nameWithType: IInsideViewport.OnViewportWasChanged(ScaledRect)
+  fullName: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnViewportWasChanged
+    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Will be called when viewport containing this view has changed
+  example: []
+  syntax:
+    content: void OnViewportWasChanged(ScaledRect viewport)
+    parameters:
+    - id: viewport
+      type: DrawnUi.Draw.ScaledRect
+      description: ''
+    content.vb: Sub OnViewportWasChanged(viewport As ScaledRect)
+  overload: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged*
+- uid: DrawnUi.Draw.IInsideViewport.OnLoaded
+  commentId: M:DrawnUi.Draw.IInsideViewport.OnLoaded
+  id: OnLoaded
+  parent: DrawnUi.Draw.IInsideViewport
+  langs:
+  - csharp
+  - vb
+  name: OnLoaded()
+  nameWithType: IInsideViewport.OnLoaded()
+  fullName: DrawnUi.Draw.IInsideViewport.OnLoaded()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnLoaded
+    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 'IInsideViewport interface: loaded is called when the view is created, but not yet visible'
+  example: []
+  syntax:
+    content: void OnLoaded()
+    content.vb: Sub OnLoaded()
+  overload: DrawnUi.Draw.IInsideViewport.OnLoaded*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.IVisibilityAware.OnAppearing
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnAppearing
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppearing
+  name: OnAppearing()
+  nameWithType: IVisibilityAware.OnAppearing()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnAppearing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppearing
+    name: OnAppearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppearing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppearing
+    name: OnAppearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppearing
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware.OnAppeared
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnAppeared
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppeared
+  name: OnAppeared()
+  nameWithType: IVisibilityAware.OnAppeared()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnAppeared()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppeared
+    name: OnAppeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppeared
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppeared
+    name: OnAppeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppeared
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware.OnDisappeared
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnDisappeared
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappeared
+  name: OnDisappeared()
+  nameWithType: IVisibilityAware.OnDisappeared()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnDisappeared()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappeared
+    name: OnDisappeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappeared
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappeared
+    name: OnDisappeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappeared
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware.OnDisappearing
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnDisappearing
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappearing
+  name: OnDisappearing()
+  nameWithType: IVisibilityAware.OnDisappearing()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnDisappearing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappearing
+    name: OnDisappearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappearing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappearing
+    name: OnDisappearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappearing
+  - name: (
+  - name: )
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware
+  commentId: T:DrawnUi.Draw.IVisibilityAware
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IVisibilityAware.html
+  name: IVisibilityAware
+  nameWithType: IVisibilityAware
+  fullName: DrawnUi.Draw.IVisibilityAware
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged*
+  commentId: Overload:DrawnUi.Draw.IInsideViewport.OnViewportWasChanged
+  href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
+  name: OnViewportWasChanged
+  nameWithType: IInsideViewport.OnViewportWasChanged
+  fullName: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged
+- uid: DrawnUi.Draw.ScaledRect
+  commentId: T:DrawnUi.Draw.ScaledRect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScaledRect.html
+  name: ScaledRect
+  nameWithType: ScaledRect
+  fullName: DrawnUi.Draw.ScaledRect
+- uid: DrawnUi.Draw.IInsideViewport.OnLoaded*
+  commentId: Overload:DrawnUi.Draw.IInsideViewport.OnLoaded
+  href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnLoaded
+  name: OnLoaded
+  nameWithType: IInsideViewport.OnLoaded
+  fullName: DrawnUi.Draw.IInsideViewport.OnLoaded

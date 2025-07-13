@@ -1,0 +1,1021 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaImageEffects
+  commentId: T:DrawnUi.Draw.SkiaImageEffects
+  id: SkiaImageEffects
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaImageEffects.Brightness(System.Single)
+  - DrawnUi.Draw.SkiaImageEffects.Contrast(System.Single)
+  - DrawnUi.Draw.SkiaImageEffects.Darken(System.Single)
+  - DrawnUi.Draw.SkiaImageEffects.Gamma(System.Single)
+  - DrawnUi.Draw.SkiaImageEffects.Grayscale
+  - DrawnUi.Draw.SkiaImageEffects.Grayscale2
+  - DrawnUi.Draw.SkiaImageEffects.HSL(System.Single,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  - DrawnUi.Draw.SkiaImageEffects.InvertColors
+  - DrawnUi.Draw.SkiaImageEffects.Lighten(System.Single)
+  - DrawnUi.Draw.SkiaImageEffects.Lightness(System.Single)
+  - DrawnUi.Draw.SkiaImageEffects.Pastel
+  - DrawnUi.Draw.SkiaImageEffects.Saturation(System.Single)
+  - DrawnUi.Draw.SkiaImageEffects.Sepia
+  - DrawnUi.Draw.SkiaImageEffects.Tint(Microsoft.Maui.Graphics.Color,SkiaSharp.SKBlendMode)
+  - DrawnUi.Draw.SkiaImageEffects.TintSL(Microsoft.Maui.Graphics.Color,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  langs:
+  - csharp
+  - vb
+  name: SkiaImageEffects
+  nameWithType: SkiaImageEffects
+  fullName: DrawnUi.Draw.SkiaImageEffects
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaImageEffects
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static class SkiaImageEffects
+    content.vb: Public Module SkiaImageEffects
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.SkiaImageEffects.Tint(Microsoft.Maui.Graphics.Color,SkiaSharp.SKBlendMode)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Tint(Microsoft.Maui.Graphics.Color,SkiaSharp.SKBlendMode)
+  id: Tint(Microsoft.Maui.Graphics.Color,SkiaSharp.SKBlendMode)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Tint(Color, SKBlendMode)
+  nameWithType: SkiaImageEffects.Tint(Color, SKBlendMode)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Tint(Microsoft.Maui.Graphics.Color, SkiaSharp.SKBlendMode)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tint
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 24
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 'If you want to Tint: SKBlendMode.SrcATop + ColorTint with alpha below 1'
+  example: []
+  syntax:
+    content: public static SKColorFilter Tint(Color color, SKBlendMode mode)
+    parameters:
+    - id: color
+      type: Microsoft.Maui.Graphics.Color
+      description: ''
+    - id: mode
+      type: SkiaSharp.SKBlendMode
+      description: ''
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Tint(color As Color, mode As SKBlendMode) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Tint*
+- uid: DrawnUi.Draw.SkiaImageEffects.TintSL(Microsoft.Maui.Graphics.Color,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.TintSL(Microsoft.Maui.Graphics.Color,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  id: TintSL(Microsoft.Maui.Graphics.Color,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: TintSL(Color, float, float, SKBlendMode)
+  nameWithType: SkiaImageEffects.TintSL(Color, float, float, SKBlendMode)
+  fullName: DrawnUi.Draw.SkiaImageEffects.TintSL(Microsoft.Maui.Graphics.Color, float, float, SkiaSharp.SKBlendMode)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TintSL
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SKColorFilter TintSL(Color tint, float saturation, float lightness, SKBlendMode mode)
+    parameters:
+    - id: tint
+      type: Microsoft.Maui.Graphics.Color
+    - id: saturation
+      type: System.Single
+    - id: lightness
+      type: System.Single
+    - id: mode
+      type: SkiaSharp.SKBlendMode
+    return:
+      type: SkiaSharp.SKColorFilter
+    content.vb: Public Shared Function TintSL(tint As Color, saturation As Single, lightness As Single, mode As SKBlendMode) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.TintSL*
+  nameWithType.vb: SkiaImageEffects.TintSL(Color, Single, Single, SKBlendMode)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.TintSL(Microsoft.Maui.Graphics.Color, Single, Single, SkiaSharp.SKBlendMode)
+  name.vb: TintSL(Color, Single, Single, SKBlendMode)
+- uid: DrawnUi.Draw.SkiaImageEffects.HSL(System.Single,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.HSL(System.Single,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  id: HSL(System.Single,System.Single,System.Single,SkiaSharp.SKBlendMode)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: HSL(float, float, float, SKBlendMode)
+  nameWithType: SkiaImageEffects.HSL(float, float, float, SKBlendMode)
+  fullName: DrawnUi.Draw.SkiaImageEffects.HSL(float, float, float, SkiaSharp.SKBlendMode)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HSL
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 46
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SKColorFilter HSL(float hue, float saturation, float lightness, SKBlendMode mode)
+    parameters:
+    - id: hue
+      type: System.Single
+    - id: saturation
+      type: System.Single
+    - id: lightness
+      type: System.Single
+    - id: mode
+      type: SkiaSharp.SKBlendMode
+    return:
+      type: SkiaSharp.SKColorFilter
+    content.vb: Public Shared Function HSL(hue As Single, saturation As Single, lightness As Single, mode As SKBlendMode) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.HSL*
+  nameWithType.vb: SkiaImageEffects.HSL(Single, Single, Single, SKBlendMode)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.HSL(Single, Single, Single, SkiaSharp.SKBlendMode)
+  name.vb: HSL(Single, Single, Single, SKBlendMode)
+- uid: DrawnUi.Draw.SkiaImageEffects.Darken(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Darken(System.Single)
+  id: Darken(System.Single)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Darken(float)
+  nameWithType: SkiaImageEffects.Darken(float)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Darken(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Darken
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 72
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SKColorFilter Darken(float amount)
+    parameters:
+    - id: amount
+      type: System.Single
+    return:
+      type: SkiaSharp.SKColorFilter
+    content.vb: Public Shared Function Darken(amount As Single) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Darken*
+  nameWithType.vb: SkiaImageEffects.Darken(Single)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.Darken(Single)
+  name.vb: Darken(Single)
+- uid: DrawnUi.Draw.SkiaImageEffects.Lighten(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Lighten(System.Single)
+  id: Lighten(System.Single)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Lighten(float)
+  nameWithType: SkiaImageEffects.Lighten(float)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Lighten(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Lighten
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 85
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SKColorFilter Lighten(float amount)
+    parameters:
+    - id: amount
+      type: System.Single
+    return:
+      type: SkiaSharp.SKColorFilter
+    content.vb: Public Shared Function Lighten(amount As Single) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Lighten*
+  nameWithType.vb: SkiaImageEffects.Lighten(Single)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.Lighten(Single)
+  name.vb: Lighten(Single)
+- uid: DrawnUi.Draw.SkiaImageEffects.Grayscale
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Grayscale
+  id: Grayscale
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Grayscale()
+  nameWithType: SkiaImageEffects.Grayscale()
+  fullName: DrawnUi.Draw.SkiaImageEffects.Grayscale()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Grayscale
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 102
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 'This effect turns an image to grayscale. This particular version uses the NTSC/PAL/SECAM standard luminance value weights: 0.2989 for red, 0.587 for green, and 0.114 for blue.'
+  example: []
+  syntax:
+    content: public static SKColorFilter Grayscale()
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Grayscale() As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Grayscale*
+- uid: DrawnUi.Draw.SkiaImageEffects.Grayscale2
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Grayscale2
+  id: Grayscale2
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Grayscale2()
+  nameWithType: SkiaImageEffects.Grayscale2()
+  fullName: DrawnUi.Draw.SkiaImageEffects.Grayscale2()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Grayscale2
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 123
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This effect turns an image to grayscale.
+  example: []
+  syntax:
+    content: public static SKColorFilter Grayscale2()
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Grayscale2() As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Grayscale2*
+- uid: DrawnUi.Draw.SkiaImageEffects.Pastel
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Pastel
+  id: Pastel
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Pastel()
+  nameWithType: SkiaImageEffects.Pastel()
+  fullName: DrawnUi.Draw.SkiaImageEffects.Pastel()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Pastel
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 135
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static SKColorFilter Pastel()
+    return:
+      type: SkiaSharp.SKColorFilter
+    content.vb: Public Shared Function Pastel() As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Pastel*
+- uid: DrawnUi.Draw.SkiaImageEffects.Sepia
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Sepia
+  id: Sepia
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Sepia()
+  nameWithType: SkiaImageEffects.Sepia()
+  fullName: DrawnUi.Draw.SkiaImageEffects.Sepia()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Sepia
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 152
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: The sepia effect can give your photos a warm, brownish tone that mimics the look of an older photo.
+  example: []
+  syntax:
+    content: public static SKColorFilter Sepia()
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Sepia() As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Sepia*
+- uid: DrawnUi.Draw.SkiaImageEffects.InvertColors
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.InvertColors
+  id: InvertColors
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: InvertColors()
+  nameWithType: SkiaImageEffects.InvertColors()
+  fullName: DrawnUi.Draw.SkiaImageEffects.InvertColors()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvertColors
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 169
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This effect inverts the colors in an image. NOT WORKING!
+  example: []
+  syntax:
+    content: public static SKColorFilter InvertColors()
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function InvertColors() As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.InvertColors*
+- uid: DrawnUi.Draw.SkiaImageEffects.Contrast(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Contrast(System.Single)
+  id: Contrast(System.Single)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Contrast(float)
+  nameWithType: SkiaImageEffects.Contrast(float)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Contrast(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Contrast
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 186
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This effect adjusts the contrast of an image. amount is the adjustment level. Negative values decrease contrast, positive values increase contrast, and 0 means no change.
+  example: []
+  syntax:
+    content: public static SKColorFilter Contrast(float amount)
+    parameters:
+    - id: amount
+      type: System.Single
+      description: ''
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Contrast(amount As Single) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Contrast*
+  nameWithType.vb: SkiaImageEffects.Contrast(Single)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.Contrast(Single)
+  name.vb: Contrast(Single)
+- uid: DrawnUi.Draw.SkiaImageEffects.Saturation(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Saturation(System.Single)
+  id: Saturation(System.Single)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Saturation(float)
+  nameWithType: SkiaImageEffects.Saturation(float)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Saturation(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Saturation
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 205
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This effect adjusts the saturation of an image. amount is the adjustment level. Negative values desaturate the image, positive values increase saturation, and 0 means no change.
+  example: []
+  syntax:
+    content: public static SKColorFilter Saturation(float amount)
+    parameters:
+    - id: amount
+      type: System.Single
+      description: ''
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Saturation(amount As Single) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Saturation*
+  nameWithType.vb: SkiaImageEffects.Saturation(Single)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.Saturation(Single)
+  name.vb: Saturation(Single)
+- uid: DrawnUi.Draw.SkiaImageEffects.Brightness(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Brightness(System.Single)
+  id: Brightness(System.Single)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Brightness(float)
+  nameWithType: SkiaImageEffects.Brightness(float)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Brightness(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Brightness
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 228
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This effect increases the brightness of an image. amount is between 0 (no change) and 1 (white).
+  example: []
+  syntax:
+    content: public static SKColorFilter Brightness(float amount)
+    parameters:
+    - id: amount
+      type: System.Single
+      description: ''
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Brightness(amount As Single) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Brightness*
+  nameWithType.vb: SkiaImageEffects.Brightness(Single)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.Brightness(Single)
+  name.vb: Brightness(Single)
+- uid: DrawnUi.Draw.SkiaImageEffects.Lightness(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Lightness(System.Single)
+  id: Lightness(System.Single)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Lightness(float)
+  nameWithType: SkiaImageEffects.Lightness(float)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Lightness(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Lightness
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 244
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 'Adjusts the brightness of an image:'
+  example: []
+  syntax:
+    content: public static SKColorFilter Lightness(float amount)
+    parameters:
+    - id: amount
+      type: System.Single
+      description: ''
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Lightness(amount As Single) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Lightness*
+  nameWithType.vb: SkiaImageEffects.Lightness(Single)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.Lightness(Single)
+  name.vb: Lightness(Single)
+- uid: DrawnUi.Draw.SkiaImageEffects.Gamma(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaImageEffects.Gamma(System.Single)
+  id: Gamma(System.Single)
+  parent: DrawnUi.Draw.SkiaImageEffects
+  langs:
+  - csharp
+  - vb
+  name: Gamma(float)
+  nameWithType: SkiaImageEffects.Gamma(float)
+  fullName: DrawnUi.Draw.SkiaImageEffects.Gamma(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Gamma
+    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffects.cs
+    startLine: 262
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This effect applies gamma correction to an image. gamma must be greater than 0. A .
+  example: []
+  syntax:
+    content: public static SKColorFilter Gamma(float gamma)
+    parameters:
+    - id: gamma
+      type: System.Single
+      description: ''
+    return:
+      type: SkiaSharp.SKColorFilter
+      description: ''
+    content.vb: Public Shared Function Gamma(gamma As Single) As SKColorFilter
+  overload: DrawnUi.Draw.SkiaImageEffects.Gamma*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: ''
+  nameWithType.vb: SkiaImageEffects.Gamma(Single)
+  fullName.vb: DrawnUi.Draw.SkiaImageEffects.Gamma(Single)
+  name.vb: Gamma(Single)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.SkiaImageEffects.Tint*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Tint
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Tint_Microsoft_Maui_Graphics_Color_SkiaSharp_SKBlendMode_
+  name: Tint
+  nameWithType: SkiaImageEffects.Tint
+  fullName: DrawnUi.Draw.SkiaImageEffects.Tint
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: SkiaSharp.SKBlendMode
+  commentId: T:SkiaSharp.SKBlendMode
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skblendmode
+  name: SKBlendMode
+  nameWithType: SKBlendMode
+  fullName: SkiaSharp.SKBlendMode
+- uid: SkiaSharp.SKColorFilter
+  commentId: T:SkiaSharp.SKColorFilter
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skcolorfilter
+  name: SKColorFilter
+  nameWithType: SKColorFilter
+  fullName: SkiaSharp.SKColorFilter
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.SkiaImageEffects.TintSL*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.TintSL
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_TintSL_Microsoft_Maui_Graphics_Color_System_Single_System_Single_SkiaSharp_SKBlendMode_
+  name: TintSL
+  nameWithType: SkiaImageEffects.TintSL
+  fullName: DrawnUi.Draw.SkiaImageEffects.TintSL
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SkiaImageEffects.HSL*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.HSL
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_HSL_System_Single_System_Single_System_Single_SkiaSharp_SKBlendMode_
+  name: HSL
+  nameWithType: SkiaImageEffects.HSL
+  fullName: DrawnUi.Draw.SkiaImageEffects.HSL
+- uid: DrawnUi.Draw.SkiaImageEffects.Darken*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Darken
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Darken_System_Single_
+  name: Darken
+  nameWithType: SkiaImageEffects.Darken
+  fullName: DrawnUi.Draw.SkiaImageEffects.Darken
+- uid: DrawnUi.Draw.SkiaImageEffects.Lighten*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Lighten
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Lighten_System_Single_
+  name: Lighten
+  nameWithType: SkiaImageEffects.Lighten
+  fullName: DrawnUi.Draw.SkiaImageEffects.Lighten
+- uid: DrawnUi.Draw.SkiaImageEffects.Grayscale*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Grayscale
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Grayscale
+  name: Grayscale
+  nameWithType: SkiaImageEffects.Grayscale
+  fullName: DrawnUi.Draw.SkiaImageEffects.Grayscale
+- uid: DrawnUi.Draw.SkiaImageEffects.Grayscale2*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Grayscale2
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Grayscale2
+  name: Grayscale2
+  nameWithType: SkiaImageEffects.Grayscale2
+  fullName: DrawnUi.Draw.SkiaImageEffects.Grayscale2
+- uid: DrawnUi.Draw.SkiaImageEffects.Pastel*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Pastel
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Pastel
+  name: Pastel
+  nameWithType: SkiaImageEffects.Pastel
+  fullName: DrawnUi.Draw.SkiaImageEffects.Pastel
+- uid: DrawnUi.Draw.SkiaImageEffects.Sepia*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Sepia
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Sepia
+  name: Sepia
+  nameWithType: SkiaImageEffects.Sepia
+  fullName: DrawnUi.Draw.SkiaImageEffects.Sepia
+- uid: DrawnUi.Draw.SkiaImageEffects.InvertColors*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.InvertColors
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_InvertColors
+  name: InvertColors
+  nameWithType: SkiaImageEffects.InvertColors
+  fullName: DrawnUi.Draw.SkiaImageEffects.InvertColors
+- uid: DrawnUi.Draw.SkiaImageEffects.Contrast*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Contrast
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Contrast_System_Single_
+  name: Contrast
+  nameWithType: SkiaImageEffects.Contrast
+  fullName: DrawnUi.Draw.SkiaImageEffects.Contrast
+- uid: DrawnUi.Draw.SkiaImageEffects.Saturation*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Saturation
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Saturation_System_Single_
+  name: Saturation
+  nameWithType: SkiaImageEffects.Saturation
+  fullName: DrawnUi.Draw.SkiaImageEffects.Saturation
+- uid: DrawnUi.Draw.SkiaImageEffects.Brightness*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Brightness
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Brightness_System_Single_
+  name: Brightness
+  nameWithType: SkiaImageEffects.Brightness
+  fullName: DrawnUi.Draw.SkiaImageEffects.Brightness
+- uid: DrawnUi.Draw.SkiaImageEffects.Lightness*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Lightness
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Lightness_System_Single_
+  name: Lightness
+  nameWithType: SkiaImageEffects.Lightness
+  fullName: DrawnUi.Draw.SkiaImageEffects.Lightness
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: DrawnUi.Draw.SkiaImageEffects.Gamma*
+  commentId: Overload:DrawnUi.Draw.SkiaImageEffects.Gamma
+  href: DrawnUi.Draw.SkiaImageEffects.html#DrawnUi_Draw_SkiaImageEffects_Gamma_System_Single_
+  name: Gamma
+  nameWithType: SkiaImageEffects.Gamma
+  fullName: DrawnUi.Draw.SkiaImageEffects.Gamma

@@ -1,0 +1,702 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs
+  commentId: T:DrawnUi.Controls.SkiaShellNavigatingArgs
+  id: SkiaShellNavigatingArgs
+  parent: DrawnUi.Controls
+  children:
+  - DrawnUi.Controls.SkiaShellNavigatingArgs.#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,System.String,DrawnUi.Controls.NavigationSource)
+  - DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel
+  - DrawnUi.Controls.SkiaShellNavigatingArgs.Previous
+  - DrawnUi.Controls.SkiaShellNavigatingArgs.Route
+  - DrawnUi.Controls.SkiaShellNavigatingArgs.Source
+  - DrawnUi.Controls.SkiaShellNavigatingArgs.View
+  langs:
+  - csharp
+  - vb
+  name: SkiaShellNavigatingArgs
+  nameWithType: SkiaShellNavigatingArgs
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaShellNavigatingArgs
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: 'public class SkiaShellNavigatingArgs : EventArgs'
+    content.vb: Public Class SkiaShellNavigatingArgs Inherits EventArgs
+  inheritance:
+  - System.Object
+  - System.EventArgs
+  inheritedMembers:
+  - System.EventArgs.Empty
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,System.String,DrawnUi.Controls.NavigationSource)
+  commentId: M:DrawnUi.Controls.SkiaShellNavigatingArgs.#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,System.String,DrawnUi.Controls.NavigationSource)
+  id: '#ctor(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,System.String,DrawnUi.Controls.NavigationSource)'
+  parent: DrawnUi.Controls.SkiaShellNavigatingArgs
+  langs:
+  - csharp
+  - vb
+  name: SkiaShellNavigatingArgs(SkiaControl, SkiaControl, string, NavigationSource)
+  nameWithType: SkiaShellNavigatingArgs.SkiaShellNavigatingArgs(SkiaControl, SkiaControl, string, NavigationSource)
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.SkiaShellNavigatingArgs(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaControl, string, DrawnUi.Controls.NavigationSource)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public SkiaShellNavigatingArgs(SkiaControl view, SkiaControl current, string route, NavigationSource source)
+    parameters:
+    - id: view
+      type: DrawnUi.Draw.SkiaControl
+    - id: current
+      type: DrawnUi.Draw.SkiaControl
+    - id: route
+      type: System.String
+    - id: source
+      type: DrawnUi.Controls.NavigationSource
+    content.vb: Public Sub New(view As SkiaControl, current As SkiaControl, route As String, source As NavigationSource)
+  overload: DrawnUi.Controls.SkiaShellNavigatingArgs.#ctor*
+  nameWithType.vb: SkiaShellNavigatingArgs.New(SkiaControl, SkiaControl, String, NavigationSource)
+  fullName.vb: DrawnUi.Controls.SkiaShellNavigatingArgs.New(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaControl, String, DrawnUi.Controls.NavigationSource)
+  name.vb: New(SkiaControl, SkiaControl, String, NavigationSource)
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel
+  commentId: P:DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel
+  id: Cancel
+  parent: DrawnUi.Controls.SkiaShellNavigatingArgs
+  langs:
+  - csharp
+  - vb
+  name: Cancel
+  nameWithType: SkiaShellNavigatingArgs.Cancel
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Cancel
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: If you set this to True the navigation will be canceled
+  example: []
+  syntax:
+    content: public bool Cancel { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Cancel As Boolean
+  overload: DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel*
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Route
+  commentId: P:DrawnUi.Controls.SkiaShellNavigatingArgs.Route
+  id: Route
+  parent: DrawnUi.Controls.SkiaShellNavigatingArgs
+  langs:
+  - csharp
+  - vb
+  name: Route
+  nameWithType: SkiaShellNavigatingArgs.Route
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Route
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Route
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Is never null
+  example: []
+  syntax:
+    content: public string Route { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Route As String
+  overload: DrawnUi.Controls.SkiaShellNavigatingArgs.Route*
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.View
+  commentId: P:DrawnUi.Controls.SkiaShellNavigatingArgs.View
+  id: View
+  parent: DrawnUi.Controls.SkiaShellNavigatingArgs
+  langs:
+  - csharp
+  - vb
+  name: View
+  nameWithType: SkiaShellNavigatingArgs.View
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.View
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: View
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    startLine: 25
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: The SkiaControl that will navigate
+  example: []
+  syntax:
+    content: public SkiaControl View { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public ReadOnly Property View As SkiaControl
+  overload: DrawnUi.Controls.SkiaShellNavigatingArgs.View*
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Previous
+  commentId: P:DrawnUi.Controls.SkiaShellNavigatingArgs.Previous
+  id: Previous
+  parent: DrawnUi.Controls.SkiaShellNavigatingArgs
+  langs:
+  - csharp
+  - vb
+  name: Previous
+  nameWithType: SkiaShellNavigatingArgs.Previous
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Previous
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Previous
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    startLine: 30
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: The SkiaControl that is upfront now
+  example: []
+  syntax:
+    content: public SkiaControl Previous { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Public ReadOnly Property Previous As SkiaControl
+  overload: DrawnUi.Controls.SkiaShellNavigatingArgs.Previous*
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Source
+  commentId: P:DrawnUi.Controls.SkiaShellNavigatingArgs.Source
+  id: Source
+  parent: DrawnUi.Controls.SkiaShellNavigatingArgs
+  langs:
+  - csharp
+  - vb
+  name: Source
+  nameWithType: SkiaShellNavigatingArgs.Source
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Source
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Source
+    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    startLine: 32
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public NavigationSource Source { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Controls.NavigationSource
+    content.vb: Public ReadOnly Property Source As NavigationSource
+  overload: DrawnUi.Controls.SkiaShellNavigatingArgs.Source*
+references:
+- uid: DrawnUi.Controls
+  commentId: N:DrawnUi.Controls
+  href: DrawnUi.html
+  name: DrawnUi.Controls
+  nameWithType: DrawnUi.Controls
+  fullName: DrawnUi.Controls
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.EventArgs
+  commentId: T:System.EventArgs
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventargs
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.EventArgs.Empty
+  commentId: F:System.EventArgs.Empty
+  parent: System.EventArgs
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventargs.empty
+  name: Empty
+  nameWithType: EventArgs.Empty
+  fullName: System.EventArgs.Empty
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.#ctor*
+  commentId: Overload:DrawnUi.Controls.SkiaShellNavigatingArgs.#ctor
+  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html#DrawnUi_Controls_SkiaShellNavigatingArgs__ctor_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl_System_String_DrawnUi_Controls_NavigationSource_
+  name: SkiaShellNavigatingArgs
+  nameWithType: SkiaShellNavigatingArgs.SkiaShellNavigatingArgs
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.SkiaShellNavigatingArgs
+  nameWithType.vb: SkiaShellNavigatingArgs.New
+  fullName.vb: DrawnUi.Controls.SkiaShellNavigatingArgs.New
+  name.vb: New
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Controls.NavigationSource
+  commentId: T:DrawnUi.Controls.NavigationSource
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.NavigationSource.html
+  name: NavigationSource
+  nameWithType: NavigationSource
+  fullName: DrawnUi.Controls.NavigationSource
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel*
+  commentId: Overload:DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel
+  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html#DrawnUi_Controls_SkiaShellNavigatingArgs_Cancel
+  name: Cancel
+  nameWithType: SkiaShellNavigatingArgs.Cancel
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Cancel
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Route*
+  commentId: Overload:DrawnUi.Controls.SkiaShellNavigatingArgs.Route
+  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html#DrawnUi_Controls_SkiaShellNavigatingArgs_Route
+  name: Route
+  nameWithType: SkiaShellNavigatingArgs.Route
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Route
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.View*
+  commentId: Overload:DrawnUi.Controls.SkiaShellNavigatingArgs.View
+  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html#DrawnUi_Controls_SkiaShellNavigatingArgs_View
+  name: View
+  nameWithType: SkiaShellNavigatingArgs.View
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.View
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Previous*
+  commentId: Overload:DrawnUi.Controls.SkiaShellNavigatingArgs.Previous
+  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html#DrawnUi_Controls_SkiaShellNavigatingArgs_Previous
+  name: Previous
+  nameWithType: SkiaShellNavigatingArgs.Previous
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Previous
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs.Source*
+  commentId: Overload:DrawnUi.Controls.SkiaShellNavigatingArgs.Source
+  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html#DrawnUi_Controls_SkiaShellNavigatingArgs_Source
+  name: Source
+  nameWithType: SkiaShellNavigatingArgs.Source
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs.Source

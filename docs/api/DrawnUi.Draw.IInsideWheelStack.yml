@@ -1,0 +1,217 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IInsideWheelStack
+  commentId: T:DrawnUi.Draw.IInsideWheelStack
+  id: IInsideWheelStack
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IInsideWheelStack.OnPositionChanged(System.Single,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: IInsideWheelStack
+  nameWithType: IInsideWheelStack
+  fullName: DrawnUi.Draw.IInsideWheelStack
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IInsideWheelStack.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IInsideWheelStack
+    path: ../src/Shared/Draw/Internals/Interfaces/IInsideWheelStack.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public interface IInsideWheelStack
+    content.vb: Public Interface IInsideWheelStack
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IInsideWheelStack.OnPositionChanged(System.Single,System.Boolean)
+  commentId: M:DrawnUi.Draw.IInsideWheelStack.OnPositionChanged(System.Single,System.Boolean)
+  id: OnPositionChanged(System.Single,System.Boolean)
+  parent: DrawnUi.Draw.IInsideWheelStack
+  langs:
+  - csharp
+  - vb
+  name: OnPositionChanged(float, bool)
+  nameWithType: IInsideWheelStack.OnPositionChanged(float, bool)
+  fullName: DrawnUi.Draw.IInsideWheelStack.OnPositionChanged(float, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IInsideWheelStack.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnPositionChanged
+    path: ../src/Shared/Draw/Internals/Interfaces/IInsideWheelStack.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Called by parent stack inside picker wheel when position changes
+  example: []
+  syntax:
+    content: void OnPositionChanged(float offsetRatio, bool isSelected)
+    parameters:
+    - id: offsetRatio
+      type: System.Single
+      description: 0.0-X.X offset from selection axis, beyond 1.0 is offscreen. Normally you would change opacity accordingly to this.
+    - id: isSelected
+      type: System.Boolean
+      description: Whether cell is currently selected, normally you would change text color accordingly.
+    content.vb: Sub OnPositionChanged(offsetRatio As Single, isSelected As Boolean)
+  overload: DrawnUi.Draw.IInsideWheelStack.OnPositionChanged*
+  nameWithType.vb: IInsideWheelStack.OnPositionChanged(Single, Boolean)
+  fullName.vb: DrawnUi.Draw.IInsideWheelStack.OnPositionChanged(Single, Boolean)
+  name.vb: OnPositionChanged(Single, Boolean)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IInsideWheelStack.OnPositionChanged*
+  commentId: Overload:DrawnUi.Draw.IInsideWheelStack.OnPositionChanged
+  href: DrawnUi.Draw.IInsideWheelStack.html#DrawnUi_Draw_IInsideWheelStack_OnPositionChanged_System_Single_System_Boolean_
+  name: OnPositionChanged
+  nameWithType: IInsideWheelStack.OnPositionChanged
+  fullName: DrawnUi.Draw.IInsideWheelStack.OnPositionChanged
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

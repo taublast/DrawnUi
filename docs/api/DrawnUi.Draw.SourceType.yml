@@ -1,0 +1,285 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SourceType
+  commentId: T:DrawnUi.Draw.SourceType
+  id: SourceType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SourceType.LocalFile
+  - DrawnUi.Draw.SourceType.NativeStream
+  - DrawnUi.Draw.SourceType.PackageFile
+  - DrawnUi.Draw.SourceType.Unknown
+  - DrawnUi.Draw.SourceType.Url
+  langs:
+  - csharp
+  - vb
+  name: SourceType
+  nameWithType: SourceType
+  fullName: DrawnUi.Draw.SourceType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SourceType
+    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum SourceType
+    content.vb: Public Enum SourceType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SourceType.Unknown
+  commentId: F:DrawnUi.Draw.SourceType.Unknown
+  id: Unknown
+  parent: DrawnUi.Draw.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: SourceType.Unknown
+  fullName: DrawnUi.Draw.SourceType.Unknown
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Unknown
+    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Unknown = 0
+    return:
+      type: DrawnUi.Draw.SourceType
+- uid: DrawnUi.Draw.SourceType.Url
+  commentId: F:DrawnUi.Draw.SourceType.Url
+  id: Url
+  parent: DrawnUi.Draw.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Url
+  nameWithType: SourceType.Url
+  fullName: DrawnUi.Draw.SourceType.Url
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Url
+    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Url = 1
+    return:
+      type: DrawnUi.Draw.SourceType
+- uid: DrawnUi.Draw.SourceType.LocalFile
+  commentId: F:DrawnUi.Draw.SourceType.LocalFile
+  id: LocalFile
+  parent: DrawnUi.Draw.SourceType
+  langs:
+  - csharp
+  - vb
+  name: LocalFile
+  nameWithType: SourceType.LocalFile
+  fullName: DrawnUi.Draw.SourceType.LocalFile
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LocalFile
+    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LocalFile = 2
+    return:
+      type: DrawnUi.Draw.SourceType
+- uid: DrawnUi.Draw.SourceType.PackageFile
+  commentId: F:DrawnUi.Draw.SourceType.PackageFile
+  id: PackageFile
+  parent: DrawnUi.Draw.SourceType
+  langs:
+  - csharp
+  - vb
+  name: PackageFile
+  nameWithType: SourceType.PackageFile
+  fullName: DrawnUi.Draw.SourceType.PackageFile
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PackageFile
+    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: PackageFile = 3
+    return:
+      type: DrawnUi.Draw.SourceType
+- uid: DrawnUi.Draw.SourceType.NativeStream
+  commentId: F:DrawnUi.Draw.SourceType.NativeStream
+  id: NativeStream
+  parent: DrawnUi.Draw.SourceType
+  langs:
+  - csharp
+  - vb
+  name: NativeStream
+  nameWithType: SourceType.NativeStream
+  fullName: DrawnUi.Draw.SourceType.NativeStream
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NativeStream
+    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: NativeStream = 4
+    return:
+      type: DrawnUi.Draw.SourceType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SourceType
+  commentId: T:DrawnUi.Draw.SourceType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SourceType.html
+  name: SourceType
+  nameWithType: SourceType
+  fullName: DrawnUi.Draw.SourceType

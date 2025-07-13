@@ -1,0 +1,1691 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  id: InternalExtensions
+  parent: DrawnUi.Extensions
+  children:
+  - DrawnUi.Extensions.InternalExtensions.Clamp(System.Double,System.Double,System.Double)
+  - DrawnUi.Extensions.InternalExtensions.Clamp(System.Int32,System.Int32,System.Int32)
+  - DrawnUi.Extensions.InternalExtensions.Clamp(System.Single,System.Single,System.Single)
+  - DrawnUi.Extensions.InternalExtensions.Clone(SkiaSharp.SKRect)
+  - DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  - DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect,System.Single,System.Single)
+  - DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren(Microsoft.Maui.IView)
+  - DrawnUi.Extensions.InternalExtensions.FindMauiContext(Microsoft.Maui.Controls.Element,System.Boolean)
+  - DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,System.Single)
+  - DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  - DrawnUi.Extensions.InternalExtensions.GetItemAtIndex``1(System.Collections.Generic.LinkedList{``0},System.Int32)
+  - DrawnUi.Extensions.InternalExtensions.GetParentsPath(Microsoft.Maui.Controls.Element)
+  - DrawnUi.Extensions.InternalExtensions.IntersectsWith(SkiaSharp.SKRect,SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  - DrawnUi.Extensions.InternalExtensions.IsEven(System.Int32)
+  - DrawnUi.Extensions.InternalExtensions.ToDegrees(System.Single)
+  - DrawnUi.Extensions.InternalExtensions.ToSKRect(Microsoft.Maui.Graphics.Rect,System.Single)
+  - DrawnUi.Extensions.InternalExtensions.WithCancellation(System.Threading.Tasks.Task,System.Threading.CancellationToken)
+  - DrawnUi.Extensions.InternalExtensions.WithCancellation``1(System.Threading.Tasks.Task{``0},System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InternalExtensions
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static class InternalExtensions
+    content.vb: Public Module InternalExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Extensions.InternalExtensions.FindMauiContext(Microsoft.Maui.Controls.Element,System.Boolean)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FindMauiContext(Microsoft.Maui.Controls.Element,System.Boolean)
+  id: FindMauiContext(Microsoft.Maui.Controls.Element,System.Boolean)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: FindMauiContext(Element, bool)
+  nameWithType: InternalExtensions.FindMauiContext(Element, bool)
+  fullName: DrawnUi.Extensions.InternalExtensions.FindMauiContext(Microsoft.Maui.Controls.Element, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FindMauiContext
+    path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static IMauiContext? FindMauiContext(this Element element, bool fallbackToAppMauiContext = false)
+    parameters:
+    - id: element
+      type: Microsoft.Maui.Controls.Element
+    - id: fallbackToAppMauiContext
+      type: System.Boolean
+    return:
+      type: Microsoft.Maui.IMauiContext
+    content.vb: Public Shared Function FindMauiContext(element As Element, fallbackToAppMauiContext As Boolean = False) As IMauiContext
+  overload: DrawnUi.Extensions.InternalExtensions.FindMauiContext*
+  nameWithType.vb: InternalExtensions.FindMauiContext(Element, Boolean)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FindMauiContext(Microsoft.Maui.Controls.Element, Boolean)
+  name.vb: FindMauiContext(Element, Boolean)
+- uid: DrawnUi.Extensions.InternalExtensions.GetParentsPath(Microsoft.Maui.Controls.Element)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.GetParentsPath(Microsoft.Maui.Controls.Element)
+  id: GetParentsPath(Microsoft.Maui.Controls.Element)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: GetParentsPath(Element)
+  nameWithType: InternalExtensions.GetParentsPath(Element)
+  fullName: DrawnUi.Extensions.InternalExtensions.GetParentsPath(Microsoft.Maui.Controls.Element)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetParentsPath
+    path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static IEnumerable<Element> GetParentsPath(this Element self)
+    parameters:
+    - id: self
+      type: Microsoft.Maui.Controls.Element
+    return:
+      type: System.Collections.Generic.IEnumerable{Microsoft.Maui.Controls.Element}
+    content.vb: Public Shared Function GetParentsPath(self As Element) As IEnumerable(Of Element)
+  overload: DrawnUi.Extensions.InternalExtensions.GetParentsPath*
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  id: FromPlatform(System.Object)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromPlatform
+    path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static SkiaShadow FromPlatform(this object platform)
+    parameters:
+    - id: platform
+      type: System.Object
+    return:
+      type: DrawnUi.Draw.SkiaShadow
+    content.vb: Public Shared Function FromPlatform(platform As Object) As SkiaShadow
+  overload: DrawnUi.Extensions.InternalExtensions.FromPlatform*
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,SkiaSharp.SKRect,System.Single)
+  id: FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,SkiaSharp.SKRect,System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: FromPlatform(Geometry, SKPath, SKRect, float)
+  nameWithType: InternalExtensions.FromPlatform(Geometry, SKPath, SKRect, float)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry, SkiaSharp.SKPath, SkiaSharp.SKRect, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromPlatform
+    path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+    startLine: 56
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static void FromPlatform(this Geometry geometry, SKPath path, SKRect destination, float scale)
+    parameters:
+    - id: geometry
+      type: Microsoft.Maui.Controls.Shapes.Geometry
+    - id: path
+      type: SkiaSharp.SKPath
+    - id: destination
+      type: SkiaSharp.SKRect
+    - id: scale
+      type: System.Single
+    content.vb: Public Shared Sub FromPlatform(geometry As Geometry, path As SKPath, destination As SKRect, scale As Single)
+  overload: DrawnUi.Extensions.InternalExtensions.FromPlatform*
+  nameWithType.vb: InternalExtensions.FromPlatform(Geometry, SKPath, SKRect, Single)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry, SkiaSharp.SKPath, SkiaSharp.SKRect, Single)
+  name.vb: FromPlatform(Geometry, SKPath, SKRect, Single)
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,System.Single)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,System.Single)
+  id: FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry,SkiaSharp.SKPath,System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: FromPlatform(Geometry, SKPath, float)
+  nameWithType: InternalExtensions.FromPlatform(Geometry, SKPath, float)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry, SkiaSharp.SKPath, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromPlatform
+    path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+    startLine: 62
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static SKPath FromPlatform(this Geometry geometry, SKPath path, float scale)
+    parameters:
+    - id: geometry
+      type: Microsoft.Maui.Controls.Shapes.Geometry
+    - id: path
+      type: SkiaSharp.SKPath
+    - id: scale
+      type: System.Single
+    return:
+      type: SkiaSharp.SKPath
+    content.vb: Public Shared Function FromPlatform(geometry As Geometry, path As SKPath, scale As Single) As SKPath
+  overload: DrawnUi.Extensions.InternalExtensions.FromPlatform*
+  nameWithType.vb: InternalExtensions.FromPlatform(Geometry, SKPath, Single)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Microsoft.Maui.Controls.Shapes.Geometry, SkiaSharp.SKPath, Single)
+  name.vb: FromPlatform(Geometry, SKPath, Single)
+- uid: DrawnUi.Extensions.InternalExtensions.ToSKRect(Microsoft.Maui.Graphics.Rect,System.Single)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.ToSKRect(Microsoft.Maui.Graphics.Rect,System.Single)
+  id: ToSKRect(Microsoft.Maui.Graphics.Rect,System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: ToSKRect(Rect, float)
+  nameWithType: InternalExtensions.ToSKRect(Rect, float)
+  fullName: DrawnUi.Extensions.InternalExtensions.ToSKRect(Microsoft.Maui.Graphics.Rect, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToSKRect
+    path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static SKRect ToSKRect(this Rect rect, float scale)
+    parameters:
+    - id: rect
+      type: Microsoft.Maui.Graphics.Rect
+    - id: scale
+      type: System.Single
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Shared Function ToSKRect(rect As Rect, scale As Single) As SKRect
+  overload: DrawnUi.Extensions.InternalExtensions.ToSKRect*
+  nameWithType.vb: InternalExtensions.ToSKRect(Rect, Single)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.ToSKRect(Microsoft.Maui.Graphics.Rect, Single)
+  name.vb: ToSKRect(Rect, Single)
+- uid: DrawnUi.Extensions.InternalExtensions.ToDegrees(System.Single)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.ToDegrees(System.Single)
+  id: ToDegrees(System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: ToDegrees(float)
+  nameWithType: InternalExtensions.ToDegrees(float)
+  fullName: DrawnUi.Extensions.InternalExtensions.ToDegrees(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToDegrees
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  summary: Radians to degrees
+  example: []
+  syntax:
+    content: public static float ToDegrees(this float radians)
+    parameters:
+    - id: radians
+      type: System.Single
+      description: ''
+    return:
+      type: System.Single
+      description: ''
+    content.vb: Public Shared Function ToDegrees(radians As Single) As Single
+  overload: DrawnUi.Extensions.InternalExtensions.ToDegrees*
+  nameWithType.vb: InternalExtensions.ToDegrees(Single)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.ToDegrees(Single)
+  name.vb: ToDegrees(Single)
+- uid: DrawnUi.Extensions.InternalExtensions.IntersectsWith(SkiaSharp.SKRect,SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.IntersectsWith(SkiaSharp.SKRect,SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  id: IntersectsWith(SkiaSharp.SKRect,SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: IntersectsWith(SKRect, SKRect, SKPoint)
+  nameWithType: InternalExtensions.IntersectsWith(SKRect, SKRect, SKPoint)
+  fullName: DrawnUi.Extensions.InternalExtensions.IntersectsWith(SkiaSharp.SKRect, SkiaSharp.SKRect, SkiaSharp.SKPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IntersectsWith
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static bool IntersectsWith(this SKRect rect, SKRect with, SKPoint offset)
+    parameters:
+    - id: rect
+      type: SkiaSharp.SKRect
+    - id: with
+      type: SkiaSharp.SKRect
+    - id: offset
+      type: SkiaSharp.SKPoint
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IntersectsWith(rect As SKRect, [with] As SKRect, offset As SKPoint) As Boolean
+  overload: DrawnUi.Extensions.InternalExtensions.IntersectsWith*
+- uid: DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  id: ContainsInclusive(SkiaSharp.SKRect,SkiaSharp.SKPoint)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: ContainsInclusive(SKRect, SKPoint)
+  nameWithType: InternalExtensions.ContainsInclusive(SKRect, SKPoint)
+  fullName: DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect, SkiaSharp.SKPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ContainsInclusive
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  summary: The default Skia method is returning false if point is on the bounds, We correct this by custom function.
+  example: []
+  syntax:
+    content: public static bool ContainsInclusive(this SKRect rect, SKPoint point)
+    parameters:
+    - id: rect
+      type: SkiaSharp.SKRect
+      description: ''
+    - id: point
+      type: SkiaSharp.SKPoint
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Public Shared Function ContainsInclusive(rect As SKRect, point As SKPoint) As Boolean
+  overload: DrawnUi.Extensions.InternalExtensions.ContainsInclusive*
+- uid: DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect,System.Single,System.Single)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect,System.Single,System.Single)
+  id: ContainsInclusive(SkiaSharp.SKRect,System.Single,System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: ContainsInclusive(SKRect, float, float)
+  nameWithType: InternalExtensions.ContainsInclusive(SKRect, float, float)
+  fullName: DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ContainsInclusive
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  summary: The default Skia method is returning false if point is on the bounds, We correct this by custom function.
+  example: []
+  syntax:
+    content: public static bool ContainsInclusive(this SKRect rect, float x, float y)
+    parameters:
+    - id: rect
+      type: SkiaSharp.SKRect
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function ContainsInclusive(rect As SKRect, x As Single, y As Single) As Boolean
+  overload: DrawnUi.Extensions.InternalExtensions.ContainsInclusive*
+  nameWithType.vb: InternalExtensions.ContainsInclusive(SKRect, Single, Single)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.ContainsInclusive(SkiaSharp.SKRect, Single, Single)
+  name.vb: ContainsInclusive(SKRect, Single, Single)
+- uid: DrawnUi.Extensions.InternalExtensions.GetItemAtIndex``1(System.Collections.Generic.LinkedList{``0},System.Int32)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.GetItemAtIndex``1(System.Collections.Generic.LinkedList{``0},System.Int32)
+  id: GetItemAtIndex``1(System.Collections.Generic.LinkedList{``0},System.Int32)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: GetItemAtIndex<T>(LinkedList<T>, int)
+  nameWithType: InternalExtensions.GetItemAtIndex<T>(LinkedList<T>, int)
+  fullName: DrawnUi.Extensions.InternalExtensions.GetItemAtIndex<T>(System.Collections.Generic.LinkedList<T>, int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetItemAtIndex
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 46
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static T GetItemAtIndex<T>(this LinkedList<T> linkedStack, int index)
+    parameters:
+    - id: linkedStack
+      type: System.Collections.Generic.LinkedList{{T}}
+    - id: index
+      type: System.Int32
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Shared Function GetItemAtIndex(Of T)(linkedStack As LinkedList(Of T), index As Integer) As T
+  overload: DrawnUi.Extensions.InternalExtensions.GetItemAtIndex*
+  nameWithType.vb: InternalExtensions.GetItemAtIndex(Of T)(LinkedList(Of T), Integer)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.GetItemAtIndex(Of T)(System.Collections.Generic.LinkedList(Of T), Integer)
+  name.vb: GetItemAtIndex(Of T)(LinkedList(Of T), Integer)
+- uid: DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren(Microsoft.Maui.IView)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren(Microsoft.Maui.IView)
+  id: DisposeControlAndChildren(Microsoft.Maui.IView)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: DisposeControlAndChildren(IView)
+  nameWithType: InternalExtensions.DisposeControlAndChildren(IView)
+  fullName: DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren(Microsoft.Maui.IView)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DisposeControlAndChildren
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 63
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static void DisposeControlAndChildren(this IView view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.IView
+    content.vb: Public Shared Sub DisposeControlAndChildren(view As IView)
+  overload: DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren*
+- uid: DrawnUi.Extensions.InternalExtensions.WithCancellation(System.Threading.Tasks.Task,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.WithCancellation(System.Threading.Tasks.Task,System.Threading.CancellationToken)
+  id: WithCancellation(System.Threading.Tasks.Task,System.Threading.CancellationToken)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: WithCancellation(Task, CancellationToken)
+  nameWithType: InternalExtensions.WithCancellation(Task, CancellationToken)
+  fullName: DrawnUi.Extensions.InternalExtensions.WithCancellation(System.Threading.Tasks.Task, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WithCancellation
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 120
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static Task WithCancellation(this Task task, CancellationToken cancellationToken)
+    parameters:
+    - id: task
+      type: System.Threading.Tasks.Task
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function WithCancellation(task As Task, cancellationToken As CancellationToken) As Task
+  overload: DrawnUi.Extensions.InternalExtensions.WithCancellation*
+- uid: DrawnUi.Extensions.InternalExtensions.WithCancellation``1(System.Threading.Tasks.Task{``0},System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.WithCancellation``1(System.Threading.Tasks.Task{``0},System.Threading.CancellationToken)
+  id: WithCancellation``1(System.Threading.Tasks.Task{``0},System.Threading.CancellationToken)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: WithCancellation<T>(Task<T>, CancellationToken)
+  nameWithType: InternalExtensions.WithCancellation<T>(Task<T>, CancellationToken)
+  fullName: DrawnUi.Extensions.InternalExtensions.WithCancellation<T>(System.Threading.Tasks.Task<T>, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WithCancellation
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 131
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static Task<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
+    parameters:
+    - id: task
+      type: System.Threading.Tasks.Task{{T}}
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    typeParameters:
+    - id: T
+    return:
+      type: System.Threading.Tasks.Task{{T}}
+    content.vb: Public Shared Function WithCancellation(Of T)(task As Task(Of T), cancellationToken As CancellationToken) As Task(Of T)
+  overload: DrawnUi.Extensions.InternalExtensions.WithCancellation*
+  nameWithType.vb: InternalExtensions.WithCancellation(Of T)(Task(Of T), CancellationToken)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.WithCancellation(Of T)(System.Threading.Tasks.Task(Of T), System.Threading.CancellationToken)
+  name.vb: WithCancellation(Of T)(Task(Of T), CancellationToken)
+- uid: DrawnUi.Extensions.InternalExtensions.Clone(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.Clone(SkiaSharp.SKRect)
+  id: Clone(SkiaSharp.SKRect)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: Clone(SKRect)
+  nameWithType: InternalExtensions.Clone(SKRect)
+  fullName: DrawnUi.Extensions.InternalExtensions.Clone(SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clone
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 141
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static SKRect Clone(this SKRect rect)
+    parameters:
+    - id: rect
+      type: SkiaSharp.SKRect
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Shared Function Clone(rect As SKRect) As SKRect
+  overload: DrawnUi.Extensions.InternalExtensions.Clone*
+- uid: DrawnUi.Extensions.InternalExtensions.IsEven(System.Int32)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.IsEven(System.Int32)
+  id: IsEven(System.Int32)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: IsEven(int)
+  nameWithType: InternalExtensions.IsEven(int)
+  fullName: DrawnUi.Extensions.InternalExtensions.IsEven(int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsEven
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 146
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static bool IsEven(this int value)
+    parameters:
+    - id: value
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsEven(value As Integer) As Boolean
+  overload: DrawnUi.Extensions.InternalExtensions.IsEven*
+  nameWithType.vb: InternalExtensions.IsEven(Integer)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.IsEven(Integer)
+  name.vb: IsEven(Integer)
+- uid: DrawnUi.Extensions.InternalExtensions.Clamp(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.Clamp(System.Single,System.Single,System.Single)
+  id: Clamp(System.Single,System.Single,System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: Clamp(float, float, float)
+  nameWithType: InternalExtensions.Clamp(float, float, float)
+  fullName: DrawnUi.Extensions.InternalExtensions.Clamp(float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clamp
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 151
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static float Clamp(this float self, float min, float max)
+    parameters:
+    - id: self
+      type: System.Single
+    - id: min
+      type: System.Single
+    - id: max
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Public Shared Function Clamp(self As Single, min As Single, max As Single) As Single
+  overload: DrawnUi.Extensions.InternalExtensions.Clamp*
+  nameWithType.vb: InternalExtensions.Clamp(Single, Single, Single)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.Clamp(Single, Single, Single)
+  name.vb: Clamp(Single, Single, Single)
+- uid: DrawnUi.Extensions.InternalExtensions.Clamp(System.Double,System.Double,System.Double)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.Clamp(System.Double,System.Double,System.Double)
+  id: Clamp(System.Double,System.Double,System.Double)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: Clamp(double, double, double)
+  nameWithType: InternalExtensions.Clamp(double, double, double)
+  fullName: DrawnUi.Extensions.InternalExtensions.Clamp(double, double, double)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clamp
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 170
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static double Clamp(this double self, double min, double max)
+    parameters:
+    - id: self
+      type: System.Double
+    - id: min
+      type: System.Double
+    - id: max
+      type: System.Double
+    return:
+      type: System.Double
+    content.vb: Public Shared Function Clamp(self As Double, min As Double, max As Double) As Double
+  overload: DrawnUi.Extensions.InternalExtensions.Clamp*
+  nameWithType.vb: InternalExtensions.Clamp(Double, Double, Double)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.Clamp(Double, Double, Double)
+  name.vb: Clamp(Double, Double, Double)
+- uid: DrawnUi.Extensions.InternalExtensions.Clamp(System.Int32,System.Int32,System.Int32)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.Clamp(System.Int32,System.Int32,System.Int32)
+  id: Clamp(System.Int32,System.Int32,System.Int32)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.InternalExtensions
+  langs:
+  - csharp
+  - vb
+  name: Clamp(int, int, int)
+  nameWithType: InternalExtensions.Clamp(int, int, int)
+  fullName: DrawnUi.Extensions.InternalExtensions.Clamp(int, int, int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clamp
+    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    startLine: 189
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static int Clamp(this int self, int min, int max)
+    parameters:
+    - id: self
+      type: System.Int32
+    - id: min
+      type: System.Int32
+    - id: max
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function Clamp(self As Integer, min As Integer, max As Integer) As Integer
+  overload: DrawnUi.Extensions.InternalExtensions.Clamp*
+  nameWithType.vb: InternalExtensions.Clamp(Integer, Integer, Integer)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.Clamp(Integer, Integer, Integer)
+  name.vb: Clamp(Integer, Integer, Integer)
+references:
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FindMauiContext*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.FindMauiContext
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FindMauiContext_Microsoft_Maui_Controls_Element_System_Boolean_
+  name: FindMauiContext
+  nameWithType: InternalExtensions.FindMauiContext
+  fullName: DrawnUi.Extensions.InternalExtensions.FindMauiContext
+- uid: Microsoft.Maui.Controls.Element
+  commentId: T:Microsoft.Maui.Controls.Element
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element
+  name: Element
+  nameWithType: Element
+  fullName: Microsoft.Maui.Controls.Element
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Microsoft.Maui.IMauiContext
+  commentId: T:Microsoft.Maui.IMauiContext
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.imauicontext
+  name: IMauiContext
+  nameWithType: IMauiContext
+  fullName: Microsoft.Maui.IMauiContext
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: DrawnUi.Extensions.InternalExtensions.GetParentsPath*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.GetParentsPath
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_GetParentsPath_Microsoft_Maui_Controls_Element_
+  name: GetParentsPath
+  nameWithType: InternalExtensions.GetParentsPath
+  fullName: DrawnUi.Extensions.InternalExtensions.GetParentsPath
+- uid: System.Collections.Generic.IEnumerable{Microsoft.Maui.Controls.Element}
+  commentId: T:System.Collections.Generic.IEnumerable{Microsoft.Maui.Controls.Element}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<Element>
+  nameWithType: IEnumerable<Element>
+  fullName: System.Collections.Generic.IEnumerable<Microsoft.Maui.Controls.Element>
+  nameWithType.vb: IEnumerable(Of Element)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Microsoft.Maui.Controls.Element)
+  name.vb: IEnumerable(Of Element)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Microsoft.Maui.Controls.Element
+    name: Element
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.Controls.Element
+    name: Element
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.FromPlatform
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform
+  nameWithType: InternalExtensions.FromPlatform
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaShadow
+  commentId: T:DrawnUi.Draw.SkiaShadow
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaShadow.html
+  name: SkiaShadow
+  nameWithType: SkiaShadow
+  fullName: DrawnUi.Draw.SkiaShadow
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: Microsoft.Maui.Controls.Shapes.Geometry
+  commentId: T:Microsoft.Maui.Controls.Shapes.Geometry
+  parent: Microsoft.Maui.Controls.Shapes
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.shapes.geometry
+  name: Geometry
+  nameWithType: Geometry
+  fullName: Microsoft.Maui.Controls.Shapes.Geometry
+- uid: SkiaSharp.SKPath
+  commentId: T:SkiaSharp.SKPath
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  name: SKPath
+  nameWithType: SKPath
+  fullName: SkiaSharp.SKPath
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Microsoft.Maui.Controls.Shapes
+  commentId: N:Microsoft.Maui.Controls.Shapes
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls.Shapes
+  nameWithType: Microsoft.Maui.Controls.Shapes
+  fullName: Microsoft.Maui.Controls.Shapes
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  - name: .
+  - uid: Microsoft.Maui.Controls.Shapes
+    name: Shapes
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.shapes
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  - name: .
+  - uid: Microsoft.Maui.Controls.Shapes
+    name: Shapes
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.shapes
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Extensions.InternalExtensions.ToSKRect*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.ToSKRect
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_ToSKRect_Microsoft_Maui_Graphics_Rect_System_Single_
+  name: ToSKRect
+  nameWithType: InternalExtensions.ToSKRect
+  fullName: DrawnUi.Extensions.InternalExtensions.ToSKRect
+- uid: Microsoft.Maui.Graphics.Rect
+  commentId: T:Microsoft.Maui.Graphics.Rect
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  name: Rect
+  nameWithType: Rect
+  fullName: Microsoft.Maui.Graphics.Rect
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Extensions.InternalExtensions.ToDegrees*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.ToDegrees
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_ToDegrees_System_Single_
+  name: ToDegrees
+  nameWithType: InternalExtensions.ToDegrees
+  fullName: DrawnUi.Extensions.InternalExtensions.ToDegrees
+- uid: DrawnUi.Extensions.InternalExtensions.IntersectsWith*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.IntersectsWith
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_IntersectsWith_SkiaSharp_SKRect_SkiaSharp_SKRect_SkiaSharp_SKPoint_
+  name: IntersectsWith
+  nameWithType: InternalExtensions.IntersectsWith
+  fullName: DrawnUi.Extensions.InternalExtensions.IntersectsWith
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: DrawnUi.Extensions.InternalExtensions.ContainsInclusive*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.ContainsInclusive
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_ContainsInclusive_SkiaSharp_SKRect_SkiaSharp_SKPoint_
+  name: ContainsInclusive
+  nameWithType: InternalExtensions.ContainsInclusive
+  fullName: DrawnUi.Extensions.InternalExtensions.ContainsInclusive
+- uid: DrawnUi.Extensions.InternalExtensions.GetItemAtIndex*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.GetItemAtIndex
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_GetItemAtIndex__1_System_Collections_Generic_LinkedList___0__System_Int32_
+  name: GetItemAtIndex
+  nameWithType: InternalExtensions.GetItemAtIndex
+  fullName: DrawnUi.Extensions.InternalExtensions.GetItemAtIndex
+- uid: System.Collections.Generic.LinkedList{{T}}
+  commentId: T:System.Collections.Generic.LinkedList{``0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.LinkedList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.linkedlist-1
+  name: LinkedList<T>
+  nameWithType: LinkedList<T>
+  fullName: System.Collections.Generic.LinkedList<T>
+  nameWithType.vb: LinkedList(Of T)
+  fullName.vb: System.Collections.Generic.LinkedList(Of T)
+  name.vb: LinkedList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.LinkedList`1
+    name: LinkedList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.linkedlist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.LinkedList`1
+    name: LinkedList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.linkedlist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.Collections.Generic.LinkedList`1
+  commentId: T:System.Collections.Generic.LinkedList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.linkedlist-1
+  name: LinkedList<T>
+  nameWithType: LinkedList<T>
+  fullName: System.Collections.Generic.LinkedList<T>
+  nameWithType.vb: LinkedList(Of T)
+  fullName.vb: System.Collections.Generic.LinkedList(Of T)
+  name.vb: LinkedList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.LinkedList`1
+    name: LinkedList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.linkedlist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.LinkedList`1
+    name: LinkedList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.linkedlist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_DisposeControlAndChildren_Microsoft_Maui_IView_
+  name: DisposeControlAndChildren
+  nameWithType: InternalExtensions.DisposeControlAndChildren
+  fullName: DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
+- uid: Microsoft.Maui.IView
+  commentId: T:Microsoft.Maui.IView
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  name: IView
+  nameWithType: IView
+  fullName: Microsoft.Maui.IView
+- uid: DrawnUi.Extensions.InternalExtensions.WithCancellation*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.WithCancellation
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_WithCancellation_System_Threading_Tasks_Task_System_Threading_CancellationToken_
+  name: WithCancellation
+  nameWithType: InternalExtensions.WithCancellation
+  fullName: DrawnUi.Extensions.InternalExtensions.WithCancellation
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task{{T}}
+  commentId: T:System.Threading.Tasks.Task{``0}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<T>
+  nameWithType: Task<T>
+  fullName: System.Threading.Tasks.Task<T>
+  nameWithType.vb: Task(Of T)
+  fullName.vb: System.Threading.Tasks.Task(Of T)
+  name.vb: Task(Of T)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.Clone*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.Clone
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_Clone_SkiaSharp_SKRect_
+  name: Clone
+  nameWithType: InternalExtensions.Clone
+  fullName: DrawnUi.Extensions.InternalExtensions.Clone
+- uid: DrawnUi.Extensions.InternalExtensions.IsEven*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.IsEven
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_IsEven_System_Int32_
+  name: IsEven
+  nameWithType: InternalExtensions.IsEven
+  fullName: DrawnUi.Extensions.InternalExtensions.IsEven
+- uid: DrawnUi.Extensions.InternalExtensions.Clamp*
+  commentId: Overload:DrawnUi.Extensions.InternalExtensions.Clamp
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_Clamp_System_Single_System_Single_System_Single_
+  name: Clamp
+  nameWithType: InternalExtensions.Clamp
+  fullName: DrawnUi.Extensions.InternalExtensions.Clamp
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double

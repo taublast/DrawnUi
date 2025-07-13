@@ -1,0 +1,235 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SpaceDistribution
+  commentId: T:DrawnUi.Draw.SpaceDistribution
+  id: SpaceDistribution
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SpaceDistribution.Auto
+  - DrawnUi.Draw.SpaceDistribution.Full
+  - DrawnUi.Draw.SpaceDistribution.None
+  langs:
+  - csharp
+  - vb
+  name: SpaceDistribution
+  nameWithType: SpaceDistribution
+  fullName: DrawnUi.Draw.SpaceDistribution
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SpaceDistribution
+    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum SpaceDistribution
+    content.vb: Public Enum SpaceDistribution
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SpaceDistribution.None
+  commentId: F:DrawnUi.Draw.SpaceDistribution.None
+  id: None
+  parent: DrawnUi.Draw.SpaceDistribution
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: SpaceDistribution.None
+  fullName: DrawnUi.Draw.SpaceDistribution.None
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: None
+    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: None = 0
+    return:
+      type: DrawnUi.Draw.SpaceDistribution
+- uid: DrawnUi.Draw.SpaceDistribution.Auto
+  commentId: F:DrawnUi.Draw.SpaceDistribution.Auto
+  id: Auto
+  parent: DrawnUi.Draw.SpaceDistribution
+  langs:
+  - csharp
+  - vb
+  name: Auto
+  nameWithType: SpaceDistribution.Auto
+  fullName: DrawnUi.Draw.SpaceDistribution.Auto
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Auto
+    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Distribute space evenly between all items but do not affect empty space remaining at the end of the last line
+  example: []
+  syntax:
+    content: Auto = 1
+    return:
+      type: DrawnUi.Draw.SpaceDistribution
+- uid: DrawnUi.Draw.SpaceDistribution.Full
+  commentId: F:DrawnUi.Draw.SpaceDistribution.Full
+  id: Full
+  parent: DrawnUi.Draw.SpaceDistribution
+  langs:
+  - csharp
+  - vb
+  name: Full
+  nameWithType: SpaceDistribution.Full
+  fullName: DrawnUi.Draw.SpaceDistribution.Full
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Full
+    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Distribute space evenly between all items but do not affect empty space
+  example: []
+  syntax:
+    content: Full = 2
+    return:
+      type: DrawnUi.Draw.SpaceDistribution
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SpaceDistribution
+  commentId: T:DrawnUi.Draw.SpaceDistribution
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SpaceDistribution.html
+  name: SpaceDistribution
+  nameWithType: SpaceDistribution
+  fullName: DrawnUi.Draw.SpaceDistribution

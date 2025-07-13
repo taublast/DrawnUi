@@ -1,0 +1,603 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Extensions.PointExtensions
+  commentId: T:DrawnUi.Extensions.PointExtensions
+  id: PointExtensions
+  parent: DrawnUi.Extensions
+  children:
+  - DrawnUi.Extensions.PointExtensions.Add(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  - DrawnUi.Extensions.PointExtensions.Center(Microsoft.Maui.Graphics.Point[])
+  - DrawnUi.Extensions.PointExtensions.Clamped(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Rect)
+  - DrawnUi.Extensions.PointExtensions.Length(Microsoft.Maui.Graphics.Point)
+  - DrawnUi.Extensions.PointExtensions.Subtract(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  langs:
+  - csharp
+  - vb
+  name: PointExtensions
+  nameWithType: PointExtensions
+  fullName: DrawnUi.Extensions.PointExtensions
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PointExtensions
+    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static class PointExtensions
+    content.vb: Public Module PointExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Extensions.PointExtensions.Length(Microsoft.Maui.Graphics.Point)
+  commentId: M:DrawnUi.Extensions.PointExtensions.Length(Microsoft.Maui.Graphics.Point)
+  id: Length(Microsoft.Maui.Graphics.Point)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.PointExtensions
+  langs:
+  - csharp
+  - vb
+  name: Length(Point)
+  nameWithType: PointExtensions.Length(Point)
+  fullName: DrawnUi.Extensions.PointExtensions.Length(Microsoft.Maui.Graphics.Point)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Length
+    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    startLine: 36
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static double Length(this Point p)
+    parameters:
+    - id: p
+      type: Microsoft.Maui.Graphics.Point
+    return:
+      type: System.Double
+    content.vb: Public Shared Function Length(p As Point) As Double
+  overload: DrawnUi.Extensions.PointExtensions.Length*
+- uid: DrawnUi.Extensions.PointExtensions.Clamped(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Rect)
+  commentId: M:DrawnUi.Extensions.PointExtensions.Clamped(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Rect)
+  id: Clamped(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Rect)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.PointExtensions
+  langs:
+  - csharp
+  - vb
+  name: Clamped(Point, Rect)
+  nameWithType: PointExtensions.Clamped(Point, Rect)
+  fullName: DrawnUi.Extensions.PointExtensions.Clamped(Microsoft.Maui.Graphics.Point, Microsoft.Maui.Graphics.Rect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clamped
+    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    startLine: 41
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  syntax:
+    content: public static Point Clamped(this Point p, Rect rect)
+    parameters:
+    - id: p
+      type: Microsoft.Maui.Graphics.Point
+    - id: rect
+      type: Microsoft.Maui.Graphics.Rect
+    return:
+      type: Microsoft.Maui.Graphics.Point
+    content.vb: Public Shared Function Clamped(p As Point, rect As Rect) As Point
+  overload: DrawnUi.Extensions.PointExtensions.Clamped*
+- uid: DrawnUi.Extensions.PointExtensions.Add(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  commentId: M:DrawnUi.Extensions.PointExtensions.Add(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  id: Add(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.PointExtensions
+  langs:
+  - csharp
+  - vb
+  name: Add(Point, Point)
+  nameWithType: PointExtensions.Add(Point, Point)
+  fullName: DrawnUi.Extensions.PointExtensions.Add(Microsoft.Maui.Graphics.Point, Microsoft.Maui.Graphics.Point)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Add
+    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  summary: Adds the coordinates of one Point to another.
+  example: []
+  syntax:
+    content: public static Point Add(this Point first, Point second)
+    parameters:
+    - id: first
+      type: Microsoft.Maui.Graphics.Point
+      description: ''
+    - id: second
+      type: Microsoft.Maui.Graphics.Point
+      description: ''
+    return:
+      type: Microsoft.Maui.Graphics.Point
+      description: ''
+    content.vb: Public Shared Function Add(first As Point, second As Point) As Point
+  overload: DrawnUi.Extensions.PointExtensions.Add*
+- uid: DrawnUi.Extensions.PointExtensions.Center(Microsoft.Maui.Graphics.Point[])
+  commentId: M:DrawnUi.Extensions.PointExtensions.Center(Microsoft.Maui.Graphics.Point[])
+  id: Center(Microsoft.Maui.Graphics.Point[])
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.PointExtensions
+  langs:
+  - csharp
+  - vb
+  name: Center(Point[])
+  nameWithType: PointExtensions.Center(Point[])
+  fullName: DrawnUi.Extensions.PointExtensions.Center(Microsoft.Maui.Graphics.Point[])
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Center
+    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    startLine: 64
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  summary: Gets the center of some touch points.
+  example: []
+  syntax:
+    content: public static Point Center(this Point[] touches)
+    parameters:
+    - id: touches
+      type: Microsoft.Maui.Graphics.Point[]
+      description: ''
+    return:
+      type: Microsoft.Maui.Graphics.Point
+      description: ''
+    content.vb: Public Shared Function Center(touches As Point()) As Point
+  overload: DrawnUi.Extensions.PointExtensions.Center*
+  nameWithType.vb: PointExtensions.Center(Point())
+  fullName.vb: DrawnUi.Extensions.PointExtensions.Center(Microsoft.Maui.Graphics.Point())
+  name.vb: Center(Point())
+- uid: DrawnUi.Extensions.PointExtensions.Subtract(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  commentId: M:DrawnUi.Extensions.PointExtensions.Subtract(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  id: Subtract(Microsoft.Maui.Graphics.Point,Microsoft.Maui.Graphics.Point)
+  isExtensionMethod: true
+  parent: DrawnUi.Extensions.PointExtensions
+  langs:
+  - csharp
+  - vb
+  name: Subtract(Point, Point)
+  nameWithType: PointExtensions.Subtract(Point, Point)
+  fullName: DrawnUi.Extensions.PointExtensions.Subtract(Microsoft.Maui.Graphics.Point, Microsoft.Maui.Graphics.Point)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Subtract
+    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    startLine: 83
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Extensions
+  summary: Subtracts the coordinates of one Point from another.
+  example: []
+  syntax:
+    content: public static Point Subtract(this Point first, Point second)
+    parameters:
+    - id: first
+      type: Microsoft.Maui.Graphics.Point
+      description: ''
+    - id: second
+      type: Microsoft.Maui.Graphics.Point
+      description: ''
+    return:
+      type: Microsoft.Maui.Graphics.Point
+      description: ''
+    content.vb: Public Shared Function Subtract(first As Point, second As Point) As Point
+  overload: DrawnUi.Extensions.PointExtensions.Subtract*
+references:
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.PointExtensions.Length*
+  commentId: Overload:DrawnUi.Extensions.PointExtensions.Length
+  href: DrawnUi.Extensions.PointExtensions.html#DrawnUi_Extensions_PointExtensions_Length_Microsoft_Maui_Graphics_Point_
+  name: Length
+  nameWithType: PointExtensions.Length
+  fullName: DrawnUi.Extensions.PointExtensions.Length
+- uid: Microsoft.Maui.Graphics.Point
+  commentId: T:Microsoft.Maui.Graphics.Point
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.point
+  name: Point
+  nameWithType: Point
+  fullName: Microsoft.Maui.Graphics.Point
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Extensions.PointExtensions.Clamped*
+  commentId: Overload:DrawnUi.Extensions.PointExtensions.Clamped
+  href: DrawnUi.Extensions.PointExtensions.html#DrawnUi_Extensions_PointExtensions_Clamped_Microsoft_Maui_Graphics_Point_Microsoft_Maui_Graphics_Rect_
+  name: Clamped
+  nameWithType: PointExtensions.Clamped
+  fullName: DrawnUi.Extensions.PointExtensions.Clamped
+- uid: Microsoft.Maui.Graphics.Rect
+  commentId: T:Microsoft.Maui.Graphics.Rect
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  name: Rect
+  nameWithType: Rect
+  fullName: Microsoft.Maui.Graphics.Rect
+- uid: DrawnUi.Extensions.PointExtensions.Add*
+  commentId: Overload:DrawnUi.Extensions.PointExtensions.Add
+  href: DrawnUi.Extensions.PointExtensions.html#DrawnUi_Extensions_PointExtensions_Add_Microsoft_Maui_Graphics_Point_Microsoft_Maui_Graphics_Point_
+  name: Add
+  nameWithType: PointExtensions.Add
+  fullName: DrawnUi.Extensions.PointExtensions.Add
+- uid: DrawnUi.Extensions.PointExtensions.Center*
+  commentId: Overload:DrawnUi.Extensions.PointExtensions.Center
+  href: DrawnUi.Extensions.PointExtensions.html#DrawnUi_Extensions_PointExtensions_Center_Microsoft_Maui_Graphics_Point___
+  name: Center
+  nameWithType: PointExtensions.Center
+  fullName: DrawnUi.Extensions.PointExtensions.Center
+- uid: Microsoft.Maui.Graphics.Point[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.point
+  name: Point[]
+  nameWithType: Point[]
+  fullName: Microsoft.Maui.Graphics.Point[]
+  nameWithType.vb: Point()
+  fullName.vb: Microsoft.Maui.Graphics.Point()
+  name.vb: Point()
+  spec.csharp:
+  - uid: Microsoft.Maui.Graphics.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.point
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Microsoft.Maui.Graphics.Point
+    name: Point
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.point
+  - name: (
+  - name: )
+- uid: DrawnUi.Extensions.PointExtensions.Subtract*
+  commentId: Overload:DrawnUi.Extensions.PointExtensions.Subtract
+  href: DrawnUi.Extensions.PointExtensions.html#DrawnUi_Extensions_PointExtensions_Subtract_Microsoft_Maui_Graphics_Point_Microsoft_Maui_Graphics_Point_
+  name: Subtract
+  nameWithType: PointExtensions.Subtract
+  fullName: DrawnUi.Extensions.PointExtensions.Subtract

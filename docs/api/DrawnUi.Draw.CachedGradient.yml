@@ -1,0 +1,541 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.CachedGradient
+  commentId: T:DrawnUi.Draw.CachedGradient
+  id: CachedGradient
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.CachedGradient.Gradient
+  - DrawnUi.Draw.CachedGradient.OnDisposing
+  langs:
+  - csharp
+  - vb
+  name: CachedGradient
+  nameWithType: CachedGradient
+  fullName: DrawnUi.Draw.CachedGradient
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/CachedGradient.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CachedGradient
+    path: ../src/Shared/Draw/Internals/Models/CachedGradient.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public class CachedGradient : CachedShader, IDisposable'
+    content.vb: Public Class CachedGradient Inherits CachedShader Implements IDisposable
+  inheritance:
+  - System.Object
+  - DrawnUi.Draw.CachedShader
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - DrawnUi.Draw.CachedShader.Destination
+  - DrawnUi.Draw.CachedShader.Shader
+  - DrawnUi.Draw.CachedShader.Dispose
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.CachedGradient.Gradient
+  commentId: P:DrawnUi.Draw.CachedGradient.Gradient
+  id: Gradient
+  parent: DrawnUi.Draw.CachedGradient
+  langs:
+  - csharp
+  - vb
+  name: Gradient
+  nameWithType: CachedGradient.Gradient
+  fullName: DrawnUi.Draw.CachedGradient.Gradient
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/CachedGradient.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Gradient
+    path: ../src/Shared/Draw/Internals/Models/CachedGradient.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaGradient Gradient { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaGradient
+    content.vb: Public Property Gradient As SkiaGradient
+  overload: DrawnUi.Draw.CachedGradient.Gradient*
+- uid: DrawnUi.Draw.CachedGradient.OnDisposing
+  commentId: M:DrawnUi.Draw.CachedGradient.OnDisposing
+  id: OnDisposing
+  parent: DrawnUi.Draw.CachedGradient
+  langs:
+  - csharp
+  - vb
+  name: OnDisposing()
+  nameWithType: CachedGradient.OnDisposing()
+  fullName: DrawnUi.Draw.CachedGradient.OnDisposing()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/CachedGradient.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnDisposing
+    path: ../src/Shared/Draw/Internals/Models/CachedGradient.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: protected override void OnDisposing()
+    content.vb: Protected Overrides Sub OnDisposing()
+  overridden: DrawnUi.Draw.CachedShader.OnDisposing
+  overload: DrawnUi.Draw.CachedGradient.OnDisposing*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Draw.CachedShader
+  commentId: T:DrawnUi.Draw.CachedShader
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.CachedShader.html
+  name: CachedShader
+  nameWithType: CachedShader
+  fullName: DrawnUi.Draw.CachedShader
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Draw.CachedShader.Destination
+  commentId: P:DrawnUi.Draw.CachedShader.Destination
+  parent: DrawnUi.Draw.CachedShader
+  href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_Destination
+  name: Destination
+  nameWithType: CachedShader.Destination
+  fullName: DrawnUi.Draw.CachedShader.Destination
+- uid: DrawnUi.Draw.CachedShader.Shader
+  commentId: P:DrawnUi.Draw.CachedShader.Shader
+  parent: DrawnUi.Draw.CachedShader
+  href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_Shader
+  name: Shader
+  nameWithType: CachedShader.Shader
+  fullName: DrawnUi.Draw.CachedShader.Shader
+- uid: DrawnUi.Draw.CachedShader.Dispose
+  commentId: M:DrawnUi.Draw.CachedShader.Dispose
+  parent: DrawnUi.Draw.CachedShader
+  href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_Dispose
+  name: Dispose()
+  nameWithType: CachedShader.Dispose()
+  fullName: DrawnUi.Draw.CachedShader.Dispose()
+  spec.csharp:
+  - uid: DrawnUi.Draw.CachedShader.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.CachedShader.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_Dispose
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.CachedGradient.Gradient*
+  commentId: Overload:DrawnUi.Draw.CachedGradient.Gradient
+  href: DrawnUi.Draw.CachedGradient.html#DrawnUi_Draw_CachedGradient_Gradient
+  name: Gradient
+  nameWithType: CachedGradient.Gradient
+  fullName: DrawnUi.Draw.CachedGradient.Gradient
+- uid: DrawnUi.Draw.SkiaGradient
+  commentId: T:DrawnUi.Draw.SkiaGradient
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaGradient.html
+  name: SkiaGradient
+  nameWithType: SkiaGradient
+  fullName: DrawnUi.Draw.SkiaGradient
+- uid: DrawnUi.Draw.CachedShader.OnDisposing
+  commentId: M:DrawnUi.Draw.CachedShader.OnDisposing
+  parent: DrawnUi.Draw.CachedShader
+  href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_OnDisposing
+  name: OnDisposing()
+  nameWithType: CachedShader.OnDisposing()
+  fullName: DrawnUi.Draw.CachedShader.OnDisposing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.CachedShader.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_OnDisposing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.CachedShader.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.CachedShader.html#DrawnUi_Draw_CachedShader_OnDisposing
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.CachedGradient.OnDisposing*
+  commentId: Overload:DrawnUi.Draw.CachedGradient.OnDisposing
+  href: DrawnUi.Draw.CachedGradient.html#DrawnUi_Draw_CachedGradient_OnDisposing
+  name: OnDisposing
+  nameWithType: CachedGradient.OnDisposing
+  fullName: DrawnUi.Draw.CachedGradient.OnDisposing

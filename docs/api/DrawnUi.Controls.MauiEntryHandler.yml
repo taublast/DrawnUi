@@ -1,0 +1,3954 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Controls.MauiEntryHandler
+  commentId: T:DrawnUi.Controls.MauiEntryHandler
+  id: MauiEntryHandler
+  parent: DrawnUi.Controls
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: MauiEntryHandler
+  nameWithType: MauiEntryHandler
+  fullName: DrawnUi.Controls.MauiEntryHandler
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/MauiEntryHandler.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MauiEntryHandler
+    path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntryHandler.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: 'public class MauiEntryHandler : EntryHandler, IEntryHandler, IViewHandler, IElementHandler'
+    content.vb: Public Class MauiEntryHandler Inherits EntryHandler Implements IEntryHandler, IViewHandler, IElementHandler
+  inheritance:
+  - System.Object
+  - Microsoft.Maui.Handlers.ElementHandler
+  - Microsoft.Maui.Handlers.ViewHandler
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  - Microsoft.Maui.Handlers.EntryHandler
+  implements:
+  - Microsoft.Maui.Handlers.IEntryHandler
+  - Microsoft.Maui.IViewHandler
+  - Microsoft.Maui.IElementHandler
+  inheritedMembers:
+  - Microsoft.Maui.Handlers.EntryHandler.Mapper
+  - Microsoft.Maui.Handlers.EntryHandler.CommandMapper
+  - Microsoft.Maui.Handlers.EntryHandler.CreatePlatformView
+  - Microsoft.Maui.Handlers.EntryHandler.MapText(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapTextColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapIsPassword(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapHorizontalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapVerticalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapIsTextPredictionEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapIsSpellCheckEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapMaxLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapPlaceholder(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapPlaceholderColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapIsReadOnly(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapKeyboard(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapFont(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapReturnType(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapClearButtonVisibility(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapCharacterSpacing(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapCursorPosition(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.EntryHandler.MapSelectionLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IElement)
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.CreatePlatformView
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.ConnectHandler(System.Object)
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.DisconnectHandler(System.Object)
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.GetDesiredSize(System.Double,System.Double)
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetupContainer
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.RemoveContainer
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformView
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.VirtualView
+  - Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformViewFactory
+  - Microsoft.Maui.Handlers.ViewHandler.ViewMapper
+  - Microsoft.Maui.Handlers.ViewHandler.ViewCommandMapper
+  - Microsoft.Maui.Handlers.ViewHandler.SetupContainer
+  - Microsoft.Maui.Handlers.ViewHandler.RemoveContainer
+  - Microsoft.Maui.Handlers.ViewHandler.GetDesiredSize(System.Double,System.Double)
+  - Microsoft.Maui.Handlers.ViewHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  - Microsoft.Maui.Handlers.ViewHandler.MapWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapMinimumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapMaximumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapMinimumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapMaximumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapIsEnabled(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapVisibility(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapBackground(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapFlowDirection(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapOpacity(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapAutomationId(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapClip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapShadow(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapSemantics(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapInvalidateMeasure(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  - Microsoft.Maui.Handlers.ViewHandler.MapContainerView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapBorderView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapFrame(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  - Microsoft.Maui.Handlers.ViewHandler.MapZIndex(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  - Microsoft.Maui.Handlers.ViewHandler.MapFocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  - Microsoft.Maui.Handlers.ViewHandler.MapInputTransparent(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapUnfocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  - Microsoft.Maui.Handlers.ViewHandler.MapToolTip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapTranslationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapTranslationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapScale(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapScaleX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapScaleY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapRotation(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapRotationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapRotationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapAnchorX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapAnchorY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.MapContextFlyout(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  - Microsoft.Maui.Handlers.ViewHandler.HasContainer
+  - Microsoft.Maui.Handlers.ViewHandler.NeedsContainer
+  - Microsoft.Maui.Handlers.ViewHandler.ContainerView
+  - Microsoft.Maui.Handlers.ViewHandler.PlatformView
+  - Microsoft.Maui.Handlers.ViewHandler.VirtualView
+  - Microsoft.Maui.Handlers.ElementHandler.ElementMapper
+  - Microsoft.Maui.Handlers.ElementHandler.ElementCommandMapper
+  - Microsoft.Maui.Handlers.ElementHandler.SetMauiContext(Microsoft.Maui.IMauiContext)
+  - Microsoft.Maui.Handlers.ElementHandler.SetVirtualView(Microsoft.Maui.IElement)
+  - Microsoft.Maui.Handlers.ElementHandler.UpdateValue(System.String)
+  - Microsoft.Maui.Handlers.ElementHandler.Invoke(System.String,System.Object)
+  - Microsoft.Maui.Handlers.ElementHandler.MauiContext
+  - Microsoft.Maui.Handlers.ElementHandler.Services
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+references:
+- uid: DrawnUi.Controls
+  commentId: N:DrawnUi.Controls
+  href: DrawnUi.html
+  name: DrawnUi.Controls
+  nameWithType: DrawnUi.Controls
+  fullName: DrawnUi.Controls
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Controls
+    name: Controls
+    href: DrawnUi.Controls.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Microsoft.Maui.Handlers.ElementHandler
+  commentId: T:Microsoft.Maui.Handlers.ElementHandler
+  parent: Microsoft.Maui.Handlers
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler
+  name: ElementHandler
+  nameWithType: ElementHandler
+  fullName: Microsoft.Maui.Handlers.ElementHandler
+- uid: Microsoft.Maui.Handlers.ViewHandler
+  commentId: T:Microsoft.Maui.Handlers.ViewHandler
+  parent: Microsoft.Maui.Handlers
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler
+  name: ViewHandler
+  nameWithType: ViewHandler
+  fullName: Microsoft.Maui.Handlers.ViewHandler
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  commentId: T:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  parent: Microsoft.Maui.Handlers
+  definition: Microsoft.Maui.Handlers.ViewHandler`2
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2
+  name: ViewHandler<IEntry, object>
+  nameWithType: ViewHandler<IEntry, object>
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>
+  nameWithType.vb: ViewHandler(Of IEntry, Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object)
+  name.vb: ViewHandler(Of IEntry, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2
+    name: ViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2
+  - name: <
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2
+    name: ViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler
+  commentId: T:Microsoft.Maui.Handlers.EntryHandler
+  parent: Microsoft.Maui.Handlers
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler
+  name: EntryHandler
+  nameWithType: EntryHandler
+  fullName: Microsoft.Maui.Handlers.EntryHandler
+- uid: Microsoft.Maui.Handlers.IEntryHandler
+  commentId: T:Microsoft.Maui.Handlers.IEntryHandler
+  parent: Microsoft.Maui.Handlers
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  name: IEntryHandler
+  nameWithType: IEntryHandler
+  fullName: Microsoft.Maui.Handlers.IEntryHandler
+- uid: Microsoft.Maui.IViewHandler
+  commentId: T:Microsoft.Maui.IViewHandler
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  name: IViewHandler
+  nameWithType: IViewHandler
+  fullName: Microsoft.Maui.IViewHandler
+- uid: Microsoft.Maui.IElementHandler
+  commentId: T:Microsoft.Maui.IElementHandler
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ielementhandler
+  name: IElementHandler
+  nameWithType: IElementHandler
+  fullName: Microsoft.Maui.IElementHandler
+- uid: Microsoft.Maui.Handlers.EntryHandler.Mapper
+  commentId: F:Microsoft.Maui.Handlers.EntryHandler.Mapper
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapper
+  name: Mapper
+  nameWithType: EntryHandler.Mapper
+  fullName: Microsoft.Maui.Handlers.EntryHandler.Mapper
+- uid: Microsoft.Maui.Handlers.EntryHandler.CommandMapper
+  commentId: F:Microsoft.Maui.Handlers.EntryHandler.CommandMapper
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.commandmapper
+  name: CommandMapper
+  nameWithType: EntryHandler.CommandMapper
+  fullName: Microsoft.Maui.Handlers.EntryHandler.CommandMapper
+- uid: Microsoft.Maui.Handlers.EntryHandler.CreatePlatformView
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.CreatePlatformView
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.createplatformview
+  name: CreatePlatformView()
+  nameWithType: EntryHandler.CreatePlatformView()
+  fullName: Microsoft.Maui.Handlers.EntryHandler.CreatePlatformView()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.CreatePlatformView
+    name: CreatePlatformView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.createplatformview
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.CreatePlatformView
+    name: CreatePlatformView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.createplatformview
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapText(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapText(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maptext
+  name: MapText(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapText(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapText(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapText(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapText
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maptext
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapText(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapText
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maptext
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapTextColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapTextColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maptextcolor
+  name: MapTextColor(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapTextColor(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapTextColor(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapTextColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapTextColor
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maptextcolor
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapTextColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapTextColor
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maptextcolor
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapIsPassword(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapIsPassword(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapispassword
+  name: MapIsPassword(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapIsPassword(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapIsPassword(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsPassword(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsPassword
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapispassword
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsPassword(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsPassword
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapispassword
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapHorizontalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapHorizontalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maphorizontaltextalignment
+  name: MapHorizontalTextAlignment(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapHorizontalTextAlignment(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapHorizontalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapHorizontalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapHorizontalTextAlignment
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maphorizontaltextalignment
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapHorizontalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapHorizontalTextAlignment
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.maphorizontaltextalignment
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapVerticalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapVerticalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapverticaltextalignment
+  name: MapVerticalTextAlignment(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapVerticalTextAlignment(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapVerticalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapVerticalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapVerticalTextAlignment
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapverticaltextalignment
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapVerticalTextAlignment(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapVerticalTextAlignment
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapverticaltextalignment
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapIsTextPredictionEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapIsTextPredictionEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapistextpredictionenabled
+  name: MapIsTextPredictionEnabled(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapIsTextPredictionEnabled(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapIsTextPredictionEnabled(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsTextPredictionEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsTextPredictionEnabled
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapistextpredictionenabled
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsTextPredictionEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsTextPredictionEnabled
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapistextpredictionenabled
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapIsSpellCheckEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapIsSpellCheckEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapisspellcheckenabled
+  name: MapIsSpellCheckEnabled(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapIsSpellCheckEnabled(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapIsSpellCheckEnabled(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsSpellCheckEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsSpellCheckEnabled
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapisspellcheckenabled
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsSpellCheckEnabled(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsSpellCheckEnabled
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapisspellcheckenabled
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapMaxLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapMaxLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapmaxlength
+  name: MapMaxLength(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapMaxLength(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapMaxLength(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapMaxLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapMaxLength
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapmaxlength
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapMaxLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapMaxLength
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapmaxlength
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholder(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapPlaceholder(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapplaceholder
+  name: MapPlaceholder(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapPlaceholder(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholder(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholder(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapPlaceholder
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapplaceholder
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholder(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapPlaceholder
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapplaceholder
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholderColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapPlaceholderColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapplaceholdercolor
+  name: MapPlaceholderColor(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapPlaceholderColor(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholderColor(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholderColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapPlaceholderColor
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapplaceholdercolor
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapPlaceholderColor(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapPlaceholderColor
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapplaceholdercolor
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapIsReadOnly(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapIsReadOnly(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapisreadonly
+  name: MapIsReadOnly(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapIsReadOnly(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapIsReadOnly(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsReadOnly(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsReadOnly
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapisreadonly
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapIsReadOnly(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapIsReadOnly
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapisreadonly
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapKeyboard(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapKeyboard(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapkeyboard
+  name: MapKeyboard(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapKeyboard(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapKeyboard(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapKeyboard(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapKeyboard
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapkeyboard
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapKeyboard(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapKeyboard
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapkeyboard
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapFont(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapFont(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapfont
+  name: MapFont(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapFont(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapFont(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapFont(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapFont
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapfont
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapFont(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapFont
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapfont
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapReturnType(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapReturnType(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapreturntype
+  name: MapReturnType(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapReturnType(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapReturnType(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapReturnType(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapReturnType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapreturntype
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapReturnType(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapReturnType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapreturntype
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapClearButtonVisibility(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapClearButtonVisibility(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapclearbuttonvisibility
+  name: MapClearButtonVisibility(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapClearButtonVisibility(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapClearButtonVisibility(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapClearButtonVisibility(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapClearButtonVisibility
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapclearbuttonvisibility
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapClearButtonVisibility(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapClearButtonVisibility
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapclearbuttonvisibility
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapCharacterSpacing(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapCharacterSpacing(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapcharacterspacing
+  name: MapCharacterSpacing(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapCharacterSpacing(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapCharacterSpacing(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapCharacterSpacing(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapCharacterSpacing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapcharacterspacing
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapCharacterSpacing(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapCharacterSpacing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapcharacterspacing
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapCursorPosition(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapCursorPosition(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapcursorposition
+  name: MapCursorPosition(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapCursorPosition(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapCursorPosition(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapCursorPosition(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapCursorPosition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapcursorposition
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapCursorPosition(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapCursorPosition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapcursorposition
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.EntryHandler.MapSelectionLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  commentId: M:Microsoft.Maui.Handlers.EntryHandler.MapSelectionLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+  parent: Microsoft.Maui.Handlers.EntryHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapselectionlength
+  name: MapSelectionLength(IEntryHandler, IEntry)
+  nameWithType: EntryHandler.MapSelectionLength(IEntryHandler, IEntry)
+  fullName: Microsoft.Maui.Handlers.EntryHandler.MapSelectionLength(Microsoft.Maui.Handlers.IEntryHandler, Microsoft.Maui.IEntry)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapSelectionLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapSelectionLength
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapselectionlength
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.EntryHandler.MapSelectionLength(Microsoft.Maui.Handlers.IEntryHandler,Microsoft.Maui.IEntry)
+    name: MapSelectionLength
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.entryhandler.mapselectionlength
+  - name: (
+  - uid: Microsoft.Maui.Handlers.IEntryHandler
+    name: IEntryHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.ientryhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IEntry
+    name: IEntry
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ientry
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IView)
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-iview)
+  name: SetVirtualView(IView)
+  nameWithType: ViewHandler<IEntry, object>.SetVirtualView(IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.SetVirtualView(Microsoft.Maui.IView)
+  nameWithType.vb: ViewHandler(Of IEntry, Object).SetVirtualView(IView)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).SetVirtualView(Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IView)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-iview)
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IView)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-iview)
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IElement)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IElement)
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IElement)
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-ielement)
+  name: SetVirtualView(IElement)
+  nameWithType: ViewHandler<IEntry, object>.SetVirtualView(IElement)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.SetVirtualView(Microsoft.Maui.IElement)
+  nameWithType.vb: ViewHandler(Of IEntry, Object).SetVirtualView(IElement)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).SetVirtualView(Microsoft.Maui.IElement)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IElement)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-ielement)
+  - name: (
+  - uid: Microsoft.Maui.IElement
+    name: IElement
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ielement
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetVirtualView(Microsoft.Maui.IElement)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-ielement)
+  - name: (
+  - uid: Microsoft.Maui.IElement
+    name: IElement
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ielement
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.CreatePlatformView
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.CreatePlatformView
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.CreatePlatformView
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.createplatformview
+  name: CreatePlatformView()
+  nameWithType: ViewHandler<IEntry, object>.CreatePlatformView()
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.CreatePlatformView()
+  nameWithType.vb: ViewHandler(Of IEntry, Object).CreatePlatformView()
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).CreatePlatformView()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.CreatePlatformView
+    name: CreatePlatformView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.createplatformview
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.CreatePlatformView
+    name: CreatePlatformView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.createplatformview
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.ConnectHandler(System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.ConnectHandler(System.Object)
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.ConnectHandler(`1)
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.connecthandler
+  name: ConnectHandler(object)
+  nameWithType: ViewHandler<IEntry, object>.ConnectHandler(object)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.ConnectHandler(object)
+  nameWithType.vb: ViewHandler(Of IEntry, Object).ConnectHandler(Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).ConnectHandler(Object)
+  name.vb: ConnectHandler(Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.ConnectHandler(System.Object)
+    name: ConnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.connecthandler
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.ConnectHandler(System.Object)
+    name: ConnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.connecthandler
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.DisconnectHandler(System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.DisconnectHandler(System.Object)
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.DisconnectHandler(`1)
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.disconnecthandler
+  name: DisconnectHandler(object)
+  nameWithType: ViewHandler<IEntry, object>.DisconnectHandler(object)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.DisconnectHandler(object)
+  nameWithType.vb: ViewHandler(Of IEntry, Object).DisconnectHandler(Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).DisconnectHandler(Object)
+  name.vb: DisconnectHandler(Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.DisconnectHandler(System.Object)
+    name: DisconnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.disconnecthandler
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.DisconnectHandler(System.Object)
+    name: DisconnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.disconnecthandler
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformarrange
+  name: PlatformArrange(Rect)
+  nameWithType: ViewHandler<IEntry, object>.PlatformArrange(Rect)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  nameWithType.vb: ViewHandler(Of IEntry, Object).PlatformArrange(Rect)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+    name: PlatformArrange
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformarrange
+  - name: (
+  - uid: Microsoft.Maui.Graphics.Rect
+    name: Rect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+    name: PlatformArrange
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformarrange
+  - name: (
+  - uid: Microsoft.Maui.Graphics.Rect
+    name: Rect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.GetDesiredSize(System.Double,System.Double)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.GetDesiredSize(System.Double,System.Double)
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.GetDesiredSize(System.Double,System.Double)
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.getdesiredsize
+  name: GetDesiredSize(double, double)
+  nameWithType: ViewHandler<IEntry, object>.GetDesiredSize(double, double)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.GetDesiredSize(double, double)
+  nameWithType.vb: ViewHandler(Of IEntry, Object).GetDesiredSize(Double, Double)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).GetDesiredSize(Double, Double)
+  name.vb: GetDesiredSize(Double, Double)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.GetDesiredSize(System.Double,System.Double)
+    name: GetDesiredSize
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.getdesiredsize
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.GetDesiredSize(System.Double,System.Double)
+    name: GetDesiredSize
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.getdesiredsize
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetupContainer
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetupContainer
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.SetupContainer
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setupcontainer
+  name: SetupContainer()
+  nameWithType: ViewHandler<IEntry, object>.SetupContainer()
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.SetupContainer()
+  nameWithType.vb: ViewHandler(Of IEntry, Object).SetupContainer()
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).SetupContainer()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetupContainer
+    name: SetupContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setupcontainer
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.SetupContainer
+    name: SetupContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setupcontainer
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.RemoveContainer
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.RemoveContainer
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.RemoveContainer
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.removecontainer
+  name: RemoveContainer()
+  nameWithType: ViewHandler<IEntry, object>.RemoveContainer()
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.RemoveContainer()
+  nameWithType.vb: ViewHandler(Of IEntry, Object).RemoveContainer()
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).RemoveContainer()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.RemoveContainer
+    name: RemoveContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.removecontainer
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.RemoveContainer
+    name: RemoveContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.removecontainer
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformView
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformView
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.PlatformView
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformview
+  name: PlatformView
+  nameWithType: ViewHandler<IEntry, object>.PlatformView
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.PlatformView
+  nameWithType.vb: ViewHandler(Of IEntry, Object).PlatformView
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).PlatformView
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.VirtualView
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.VirtualView
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.VirtualView
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.virtualview
+  name: VirtualView
+  nameWithType: ViewHandler<IEntry, object>.VirtualView
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.VirtualView
+  nameWithType.vb: ViewHandler(Of IEntry, Object).VirtualView
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).VirtualView
+- uid: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformViewFactory
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}.PlatformViewFactory
+  parent: Microsoft.Maui.Handlers.ViewHandler{Microsoft.Maui.IEntry,System.Object}
+  definition: Microsoft.Maui.Handlers.ViewHandler`2.PlatformViewFactory
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformviewfactory
+  name: PlatformViewFactory
+  nameWithType: ViewHandler<IEntry, object>.PlatformViewFactory
+  fullName: Microsoft.Maui.Handlers.ViewHandler<Microsoft.Maui.IEntry, object>.PlatformViewFactory
+  nameWithType.vb: ViewHandler(Of IEntry, Object).PlatformViewFactory
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of Microsoft.Maui.IEntry, Object).PlatformViewFactory
+- uid: Microsoft.Maui.Handlers.ViewHandler.ViewMapper
+  commentId: F:Microsoft.Maui.Handlers.ViewHandler.ViewMapper
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.viewmapper
+  name: ViewMapper
+  nameWithType: ViewHandler.ViewMapper
+  fullName: Microsoft.Maui.Handlers.ViewHandler.ViewMapper
+- uid: Microsoft.Maui.Handlers.ViewHandler.ViewCommandMapper
+  commentId: F:Microsoft.Maui.Handlers.ViewHandler.ViewCommandMapper
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.viewcommandmapper
+  name: ViewCommandMapper
+  nameWithType: ViewHandler.ViewCommandMapper
+  fullName: Microsoft.Maui.Handlers.ViewHandler.ViewCommandMapper
+- uid: Microsoft.Maui.Handlers.ViewHandler.SetupContainer
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.SetupContainer
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.setupcontainer
+  name: SetupContainer()
+  nameWithType: ViewHandler.SetupContainer()
+  fullName: Microsoft.Maui.Handlers.ViewHandler.SetupContainer()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.SetupContainer
+    name: SetupContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.setupcontainer
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.SetupContainer
+    name: SetupContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.setupcontainer
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.RemoveContainer
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.RemoveContainer
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.removecontainer
+  name: RemoveContainer()
+  nameWithType: ViewHandler.RemoveContainer()
+  fullName: Microsoft.Maui.Handlers.ViewHandler.RemoveContainer()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.RemoveContainer
+    name: RemoveContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.removecontainer
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.RemoveContainer
+    name: RemoveContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.removecontainer
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.GetDesiredSize(System.Double,System.Double)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.GetDesiredSize(System.Double,System.Double)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.getdesiredsize
+  name: GetDesiredSize(double, double)
+  nameWithType: ViewHandler.GetDesiredSize(double, double)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.GetDesiredSize(double, double)
+  nameWithType.vb: ViewHandler.GetDesiredSize(Double, Double)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler.GetDesiredSize(Double, Double)
+  name.vb: GetDesiredSize(Double, Double)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.GetDesiredSize(System.Double,System.Double)
+    name: GetDesiredSize
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.getdesiredsize
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.GetDesiredSize(System.Double,System.Double)
+    name: GetDesiredSize
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.getdesiredsize
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.platformarrange
+  name: PlatformArrange(Rect)
+  nameWithType: ViewHandler.PlatformArrange(Rect)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+    name: PlatformArrange
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.platformarrange
+  - name: (
+  - uid: Microsoft.Maui.Graphics.Rect
+    name: Rect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+    name: PlatformArrange
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.platformarrange
+  - name: (
+  - uid: Microsoft.Maui.Graphics.Rect
+    name: Rect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapwidth
+  name: MapWidth(IViewHandler, IView)
+  nameWithType: ViewHandler.MapWidth(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapWidth(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapWidth
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapwidth
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapWidth
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapwidth
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapheight
+  name: MapHeight(IViewHandler, IView)
+  nameWithType: ViewHandler.MapHeight(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapHeight(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapHeight
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapheight
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapHeight
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapheight
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapMinimumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapMinimumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapminimumheight
+  name: MapMinimumHeight(IViewHandler, IView)
+  nameWithType: ViewHandler.MapMinimumHeight(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapMinimumHeight(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMinimumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMinimumHeight
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapminimumheight
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMinimumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMinimumHeight
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapminimumheight
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapMaximumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapMaximumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapmaximumheight
+  name: MapMaximumHeight(IViewHandler, IView)
+  nameWithType: ViewHandler.MapMaximumHeight(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapMaximumHeight(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMaximumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMaximumHeight
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapmaximumheight
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMaximumHeight(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMaximumHeight
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapmaximumheight
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapMinimumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapMinimumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapminimumwidth
+  name: MapMinimumWidth(IViewHandler, IView)
+  nameWithType: ViewHandler.MapMinimumWidth(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapMinimumWidth(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMinimumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMinimumWidth
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapminimumwidth
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMinimumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMinimumWidth
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapminimumwidth
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapMaximumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapMaximumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapmaximumwidth
+  name: MapMaximumWidth(IViewHandler, IView)
+  nameWithType: ViewHandler.MapMaximumWidth(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapMaximumWidth(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMaximumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMaximumWidth
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapmaximumwidth
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapMaximumWidth(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapMaximumWidth
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapmaximumwidth
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapIsEnabled(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapIsEnabled(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapisenabled
+  name: MapIsEnabled(IViewHandler, IView)
+  nameWithType: ViewHandler.MapIsEnabled(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapIsEnabled(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapIsEnabled(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapIsEnabled
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapisenabled
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapIsEnabled(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapIsEnabled
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapisenabled
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapVisibility(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapVisibility(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapvisibility
+  name: MapVisibility(IViewHandler, IView)
+  nameWithType: ViewHandler.MapVisibility(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapVisibility(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapVisibility(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapVisibility
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapvisibility
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapVisibility(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapVisibility
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapvisibility
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapBackground(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapBackground(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapbackground
+  name: MapBackground(IViewHandler, IView)
+  nameWithType: ViewHandler.MapBackground(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapBackground(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapBackground(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapBackground
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapbackground
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapBackground(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapBackground
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapbackground
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapFlowDirection(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapFlowDirection(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapflowdirection
+  name: MapFlowDirection(IViewHandler, IView)
+  nameWithType: ViewHandler.MapFlowDirection(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapFlowDirection(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapFlowDirection(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapFlowDirection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapflowdirection
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapFlowDirection(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapFlowDirection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapflowdirection
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapOpacity(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapOpacity(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapopacity
+  name: MapOpacity(IViewHandler, IView)
+  nameWithType: ViewHandler.MapOpacity(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapOpacity(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapOpacity(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapOpacity
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapopacity
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapOpacity(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapOpacity
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapopacity
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapAutomationId(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapAutomationId(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapautomationid
+  name: MapAutomationId(IViewHandler, IView)
+  nameWithType: ViewHandler.MapAutomationId(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapAutomationId(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapAutomationId(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapAutomationId
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapautomationid
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapAutomationId(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapAutomationId
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapautomationid
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapClip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapClip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapclip
+  name: MapClip(IViewHandler, IView)
+  nameWithType: ViewHandler.MapClip(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapClip(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapClip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapClip
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapclip
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapClip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapClip
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapclip
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapShadow(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapShadow(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapshadow
+  name: MapShadow(IViewHandler, IView)
+  nameWithType: ViewHandler.MapShadow(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapShadow(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapShadow(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapShadow
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapshadow
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapShadow(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapShadow
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapshadow
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapSemantics(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapSemantics(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapsemantics
+  name: MapSemantics(IViewHandler, IView)
+  nameWithType: ViewHandler.MapSemantics(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapSemantics(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapSemantics(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapSemantics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapsemantics
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapSemantics(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapSemantics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapsemantics
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapInvalidateMeasure(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapInvalidateMeasure(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapinvalidatemeasure
+  name: MapInvalidateMeasure(IViewHandler, IView, object)
+  nameWithType: ViewHandler.MapInvalidateMeasure(IViewHandler, IView, object)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapInvalidateMeasure(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, object)
+  nameWithType.vb: ViewHandler.MapInvalidateMeasure(IViewHandler, IView, Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler.MapInvalidateMeasure(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, Object)
+  name.vb: MapInvalidateMeasure(IViewHandler, IView, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapInvalidateMeasure(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapInvalidateMeasure
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapinvalidatemeasure
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapInvalidateMeasure(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapInvalidateMeasure
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapinvalidatemeasure
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapContainerView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapContainerView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapcontainerview
+  name: MapContainerView(IViewHandler, IView)
+  nameWithType: ViewHandler.MapContainerView(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapContainerView(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapContainerView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapContainerView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapcontainerview
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapContainerView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapContainerView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapcontainerview
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapBorderView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapBorderView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapborderview
+  name: MapBorderView(IViewHandler, IView)
+  nameWithType: ViewHandler.MapBorderView(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapBorderView(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapBorderView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapBorderView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapborderview
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapBorderView(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapBorderView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapborderview
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapFrame(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapFrame(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapframe
+  name: MapFrame(IViewHandler, IView, object)
+  nameWithType: ViewHandler.MapFrame(IViewHandler, IView, object)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapFrame(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, object)
+  nameWithType.vb: ViewHandler.MapFrame(IViewHandler, IView, Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler.MapFrame(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, Object)
+  name.vb: MapFrame(IViewHandler, IView, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapFrame(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapFrame
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapframe
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapFrame(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapFrame
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapframe
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapZIndex(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapZIndex(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapzindex
+  name: MapZIndex(IViewHandler, IView, object)
+  nameWithType: ViewHandler.MapZIndex(IViewHandler, IView, object)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapZIndex(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, object)
+  nameWithType.vb: ViewHandler.MapZIndex(IViewHandler, IView, Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler.MapZIndex(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, Object)
+  name.vb: MapZIndex(IViewHandler, IView, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapZIndex(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapZIndex
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapzindex
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapZIndex(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapZIndex
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapzindex
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapFocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapFocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapfocus
+  name: MapFocus(IViewHandler, IView, object)
+  nameWithType: ViewHandler.MapFocus(IViewHandler, IView, object)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapFocus(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, object)
+  nameWithType.vb: ViewHandler.MapFocus(IViewHandler, IView, Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler.MapFocus(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, Object)
+  name.vb: MapFocus(IViewHandler, IView, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapFocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapFocus
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapfocus
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapFocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapFocus
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapfocus
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapInputTransparent(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapInputTransparent(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapinputtransparent
+  name: MapInputTransparent(IViewHandler, IView)
+  nameWithType: ViewHandler.MapInputTransparent(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapInputTransparent(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapInputTransparent(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapInputTransparent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapinputtransparent
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapInputTransparent(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapInputTransparent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapinputtransparent
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapUnfocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapUnfocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapunfocus
+  name: MapUnfocus(IViewHandler, IView, object)
+  nameWithType: ViewHandler.MapUnfocus(IViewHandler, IView, object)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapUnfocus(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, object)
+  nameWithType.vb: ViewHandler.MapUnfocus(IViewHandler, IView, Object)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler.MapUnfocus(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView, Object)
+  name.vb: MapUnfocus(IViewHandler, IView, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapUnfocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapUnfocus
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapunfocus
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapUnfocus(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView,System.Object)
+    name: MapUnfocus
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapunfocus
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapToolTip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapToolTip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptooltip
+  name: MapToolTip(IViewHandler, IView)
+  nameWithType: ViewHandler.MapToolTip(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapToolTip(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapToolTip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapToolTip
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptooltip
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapToolTip(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapToolTip
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptooltip
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapTranslationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapTranslationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptranslationx
+  name: MapTranslationX(IViewHandler, IView)
+  nameWithType: ViewHandler.MapTranslationX(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapTranslationX(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapTranslationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapTranslationX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptranslationx
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapTranslationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapTranslationX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptranslationx
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapTranslationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapTranslationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptranslationy
+  name: MapTranslationY(IViewHandler, IView)
+  nameWithType: ViewHandler.MapTranslationY(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapTranslationY(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapTranslationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapTranslationY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptranslationy
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapTranslationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapTranslationY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maptranslationy
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapScale(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapScale(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscale
+  name: MapScale(IViewHandler, IView)
+  nameWithType: ViewHandler.MapScale(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapScale(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapScale(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapScale
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscale
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapScale(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapScale
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscale
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapScaleX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapScaleX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscalex
+  name: MapScaleX(IViewHandler, IView)
+  nameWithType: ViewHandler.MapScaleX(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapScaleX(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapScaleX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapScaleX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscalex
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapScaleX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapScaleX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscalex
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapScaleY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapScaleY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscaley
+  name: MapScaleY(IViewHandler, IView)
+  nameWithType: ViewHandler.MapScaleY(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapScaleY(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapScaleY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapScaleY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscaley
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapScaleY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapScaleY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapscaley
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapRotation(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapRotation(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotation
+  name: MapRotation(IViewHandler, IView)
+  nameWithType: ViewHandler.MapRotation(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapRotation(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapRotation(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapRotation
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotation
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapRotation(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapRotation
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotation
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapRotationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapRotationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotationx
+  name: MapRotationX(IViewHandler, IView)
+  nameWithType: ViewHandler.MapRotationX(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapRotationX(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapRotationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapRotationX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotationx
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapRotationX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapRotationX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotationx
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapRotationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapRotationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotationy
+  name: MapRotationY(IViewHandler, IView)
+  nameWithType: ViewHandler.MapRotationY(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapRotationY(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapRotationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapRotationY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotationy
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapRotationY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapRotationY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.maprotationy
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapAnchorX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapAnchorX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapanchorx
+  name: MapAnchorX(IViewHandler, IView)
+  nameWithType: ViewHandler.MapAnchorX(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapAnchorX(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapAnchorX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapAnchorX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapanchorx
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapAnchorX(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapAnchorX
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapanchorx
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapAnchorY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapAnchorY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapanchory
+  name: MapAnchorY(IViewHandler, IView)
+  nameWithType: ViewHandler.MapAnchorY(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapAnchorY(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapAnchorY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapAnchorY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapanchory
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapAnchorY(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapAnchorY
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapanchory
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.MapContextFlyout(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler.MapContextFlyout(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapcontextflyout
+  name: MapContextFlyout(IViewHandler, IView)
+  nameWithType: ViewHandler.MapContextFlyout(IViewHandler, IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler.MapContextFlyout(Microsoft.Maui.IViewHandler, Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapContextFlyout(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapContextFlyout
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapcontextflyout
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler.MapContextFlyout(Microsoft.Maui.IViewHandler,Microsoft.Maui.IView)
+    name: MapContextFlyout
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.mapcontextflyout
+  - name: (
+  - uid: Microsoft.Maui.IViewHandler
+    name: IViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iviewhandler
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler.HasContainer
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler.HasContainer
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.hascontainer
+  name: HasContainer
+  nameWithType: ViewHandler.HasContainer
+  fullName: Microsoft.Maui.Handlers.ViewHandler.HasContainer
+- uid: Microsoft.Maui.Handlers.ViewHandler.NeedsContainer
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler.NeedsContainer
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.needscontainer
+  name: NeedsContainer
+  nameWithType: ViewHandler.NeedsContainer
+  fullName: Microsoft.Maui.Handlers.ViewHandler.NeedsContainer
+- uid: Microsoft.Maui.Handlers.ViewHandler.ContainerView
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler.ContainerView
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.containerview
+  name: ContainerView
+  nameWithType: ViewHandler.ContainerView
+  fullName: Microsoft.Maui.Handlers.ViewHandler.ContainerView
+- uid: Microsoft.Maui.Handlers.ViewHandler.PlatformView
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler.PlatformView
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.platformview
+  name: PlatformView
+  nameWithType: ViewHandler.PlatformView
+  fullName: Microsoft.Maui.Handlers.ViewHandler.PlatformView
+- uid: Microsoft.Maui.Handlers.ViewHandler.VirtualView
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler.VirtualView
+  parent: Microsoft.Maui.Handlers.ViewHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler.virtualview
+  name: VirtualView
+  nameWithType: ViewHandler.VirtualView
+  fullName: Microsoft.Maui.Handlers.ViewHandler.VirtualView
+- uid: Microsoft.Maui.Handlers.ElementHandler.ElementMapper
+  commentId: F:Microsoft.Maui.Handlers.ElementHandler.ElementMapper
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.elementmapper
+  name: ElementMapper
+  nameWithType: ElementHandler.ElementMapper
+  fullName: Microsoft.Maui.Handlers.ElementHandler.ElementMapper
+- uid: Microsoft.Maui.Handlers.ElementHandler.ElementCommandMapper
+  commentId: F:Microsoft.Maui.Handlers.ElementHandler.ElementCommandMapper
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.elementcommandmapper
+  name: ElementCommandMapper
+  nameWithType: ElementHandler.ElementCommandMapper
+  fullName: Microsoft.Maui.Handlers.ElementHandler.ElementCommandMapper
+- uid: Microsoft.Maui.Handlers.ElementHandler.SetMauiContext(Microsoft.Maui.IMauiContext)
+  commentId: M:Microsoft.Maui.Handlers.ElementHandler.SetMauiContext(Microsoft.Maui.IMauiContext)
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.setmauicontext
+  name: SetMauiContext(IMauiContext)
+  nameWithType: ElementHandler.SetMauiContext(IMauiContext)
+  fullName: Microsoft.Maui.Handlers.ElementHandler.SetMauiContext(Microsoft.Maui.IMauiContext)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.SetMauiContext(Microsoft.Maui.IMauiContext)
+    name: SetMauiContext
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.setmauicontext
+  - name: (
+  - uid: Microsoft.Maui.IMauiContext
+    name: IMauiContext
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.imauicontext
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.SetMauiContext(Microsoft.Maui.IMauiContext)
+    name: SetMauiContext
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.setmauicontext
+  - name: (
+  - uid: Microsoft.Maui.IMauiContext
+    name: IMauiContext
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.imauicontext
+  - name: )
+- uid: Microsoft.Maui.Handlers.ElementHandler.SetVirtualView(Microsoft.Maui.IElement)
+  commentId: M:Microsoft.Maui.Handlers.ElementHandler.SetVirtualView(Microsoft.Maui.IElement)
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.setvirtualview
+  name: SetVirtualView(IElement)
+  nameWithType: ElementHandler.SetVirtualView(IElement)
+  fullName: Microsoft.Maui.Handlers.ElementHandler.SetVirtualView(Microsoft.Maui.IElement)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.SetVirtualView(Microsoft.Maui.IElement)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.setvirtualview
+  - name: (
+  - uid: Microsoft.Maui.IElement
+    name: IElement
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ielement
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.SetVirtualView(Microsoft.Maui.IElement)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.setvirtualview
+  - name: (
+  - uid: Microsoft.Maui.IElement
+    name: IElement
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ielement
+  - name: )
+- uid: Microsoft.Maui.Handlers.ElementHandler.UpdateValue(System.String)
+  commentId: M:Microsoft.Maui.Handlers.ElementHandler.UpdateValue(System.String)
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.updatevalue
+  name: UpdateValue(string)
+  nameWithType: ElementHandler.UpdateValue(string)
+  fullName: Microsoft.Maui.Handlers.ElementHandler.UpdateValue(string)
+  nameWithType.vb: ElementHandler.UpdateValue(String)
+  fullName.vb: Microsoft.Maui.Handlers.ElementHandler.UpdateValue(String)
+  name.vb: UpdateValue(String)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.UpdateValue(System.String)
+    name: UpdateValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.updatevalue
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.UpdateValue(System.String)
+    name: UpdateValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.updatevalue
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Microsoft.Maui.Handlers.ElementHandler.Invoke(System.String,System.Object)
+  commentId: M:Microsoft.Maui.Handlers.ElementHandler.Invoke(System.String,System.Object)
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.invoke
+  name: Invoke(string, object)
+  nameWithType: ElementHandler.Invoke(string, object)
+  fullName: Microsoft.Maui.Handlers.ElementHandler.Invoke(string, object)
+  nameWithType.vb: ElementHandler.Invoke(String, Object)
+  fullName.vb: Microsoft.Maui.Handlers.ElementHandler.Invoke(String, Object)
+  name.vb: Invoke(String, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.Invoke(System.String,System.Object)
+    name: Invoke
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.invoke
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ElementHandler.Invoke(System.String,System.Object)
+    name: Invoke
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.invoke
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Handlers.ElementHandler.MauiContext
+  commentId: P:Microsoft.Maui.Handlers.ElementHandler.MauiContext
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.mauicontext
+  name: MauiContext
+  nameWithType: ElementHandler.MauiContext
+  fullName: Microsoft.Maui.Handlers.ElementHandler.MauiContext
+- uid: Microsoft.Maui.Handlers.ElementHandler.Services
+  commentId: P:Microsoft.Maui.Handlers.ElementHandler.Services
+  parent: Microsoft.Maui.Handlers.ElementHandler
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.elementhandler.services
+  name: Services
+  nameWithType: ElementHandler.Services
+  fullName: Microsoft.Maui.Handlers.ElementHandler.Services
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Maui.Handlers
+  commentId: N:Microsoft.Maui.Handlers
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Handlers
+  nameWithType: Microsoft.Maui.Handlers
+  fullName: Microsoft.Maui.Handlers
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Handlers
+    name: Handlers
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Handlers
+    name: Handlers
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers
+- uid: Microsoft.Maui.Handlers.ViewHandler`2
+  commentId: T:Microsoft.Maui.Handlers.ViewHandler`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2
+  name: ViewHandler<TVirtualView, TPlatformView>
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView)
+  name.vb: ViewHandler(Of TVirtualView, TPlatformView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2
+    name: ViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2
+  - name: <
+  - name: TVirtualView
+  - name: ','
+  - name: " "
+  - name: TPlatformView
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2
+    name: ViewHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TVirtualView
+  - name: ','
+  - name: " "
+  - name: TPlatformView
+  - name: )
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IView)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IView)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-iview)
+  name: SetVirtualView(IView)
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.SetVirtualView(IView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.SetVirtualView(Microsoft.Maui.IView)
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).SetVirtualView(IView)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).SetVirtualView(Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IView)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-iview)
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IView)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-iview)
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IElement)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IElement)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-ielement)
+  name: SetVirtualView(IElement)
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.SetVirtualView(IElement)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.SetVirtualView(Microsoft.Maui.IElement)
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).SetVirtualView(IElement)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).SetVirtualView(Microsoft.Maui.IElement)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IElement)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-ielement)
+  - name: (
+  - uid: Microsoft.Maui.IElement
+    name: IElement
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ielement
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.SetVirtualView(Microsoft.Maui.IElement)
+    name: SetVirtualView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setvirtualview#microsoft-maui-handlers-viewhandler-2-setvirtualview(microsoft-maui-ielement)
+  - name: (
+  - uid: Microsoft.Maui.IElement
+    name: IElement
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.ielement
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.CreatePlatformView
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.CreatePlatformView
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.createplatformview
+  name: CreatePlatformView()
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.CreatePlatformView()
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.CreatePlatformView()
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).CreatePlatformView()
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).CreatePlatformView()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.CreatePlatformView
+    name: CreatePlatformView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.createplatformview
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.CreatePlatformView
+    name: CreatePlatformView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.createplatformview
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.ConnectHandler(`1)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.ConnectHandler(`1)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.connecthandler
+  name: ConnectHandler(TPlatformView)
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.ConnectHandler(TPlatformView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.ConnectHandler(TPlatformView)
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).ConnectHandler(TPlatformView)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).ConnectHandler(TPlatformView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.ConnectHandler(`1)
+    name: ConnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.connecthandler
+  - name: (
+  - name: TPlatformView
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.ConnectHandler(`1)
+    name: ConnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.connecthandler
+  - name: (
+  - name: TPlatformView
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.DisconnectHandler(`1)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.DisconnectHandler(`1)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.disconnecthandler
+  name: DisconnectHandler(TPlatformView)
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.DisconnectHandler(TPlatformView)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.DisconnectHandler(TPlatformView)
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).DisconnectHandler(TPlatformView)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).DisconnectHandler(TPlatformView)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.DisconnectHandler(`1)
+    name: DisconnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.disconnecthandler
+  - name: (
+  - name: TPlatformView
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.DisconnectHandler(`1)
+    name: DisconnectHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.disconnecthandler
+  - name: (
+  - name: TPlatformView
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformarrange
+  name: PlatformArrange(Rect)
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.PlatformArrange(Rect)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).PlatformArrange(Rect)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).PlatformArrange(Microsoft.Maui.Graphics.Rect)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+    name: PlatformArrange
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformarrange
+  - name: (
+  - uid: Microsoft.Maui.Graphics.Rect
+    name: Rect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.PlatformArrange(Microsoft.Maui.Graphics.Rect)
+    name: PlatformArrange
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformarrange
+  - name: (
+  - uid: Microsoft.Maui.Graphics.Rect
+    name: Rect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.GetDesiredSize(System.Double,System.Double)
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.GetDesiredSize(System.Double,System.Double)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.getdesiredsize
+  name: GetDesiredSize(double, double)
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.GetDesiredSize(double, double)
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.GetDesiredSize(double, double)
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).GetDesiredSize(Double, Double)
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).GetDesiredSize(Double, Double)
+  name.vb: GetDesiredSize(Double, Double)
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.GetDesiredSize(System.Double,System.Double)
+    name: GetDesiredSize
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.getdesiredsize
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.GetDesiredSize(System.Double,System.Double)
+    name: GetDesiredSize
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.getdesiredsize
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.SetupContainer
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.SetupContainer
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setupcontainer
+  name: SetupContainer()
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.SetupContainer()
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.SetupContainer()
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).SetupContainer()
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).SetupContainer()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.SetupContainer
+    name: SetupContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setupcontainer
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.SetupContainer
+    name: SetupContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.setupcontainer
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.RemoveContainer
+  commentId: M:Microsoft.Maui.Handlers.ViewHandler`2.RemoveContainer
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.removecontainer
+  name: RemoveContainer()
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.RemoveContainer()
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.RemoveContainer()
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).RemoveContainer()
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).RemoveContainer()
+  spec.csharp:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.RemoveContainer
+    name: RemoveContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.removecontainer
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Handlers.ViewHandler`2.RemoveContainer
+    name: RemoveContainer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.removecontainer
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.PlatformView
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler`2.PlatformView
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformview
+  name: PlatformView
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.PlatformView
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.PlatformView
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).PlatformView
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).PlatformView
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.VirtualView
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler`2.VirtualView
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.virtualview
+  name: VirtualView
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.VirtualView
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.VirtualView
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).VirtualView
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).VirtualView
+- uid: Microsoft.Maui.Handlers.ViewHandler`2.PlatformViewFactory
+  commentId: P:Microsoft.Maui.Handlers.ViewHandler`2.PlatformViewFactory
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.handlers.viewhandler-2.platformviewfactory
+  name: PlatformViewFactory
+  nameWithType: ViewHandler<TVirtualView, TPlatformView>.PlatformViewFactory
+  fullName: Microsoft.Maui.Handlers.ViewHandler<TVirtualView, TPlatformView>.PlatformViewFactory
+  nameWithType.vb: ViewHandler(Of TVirtualView, TPlatformView).PlatformViewFactory
+  fullName.vb: Microsoft.Maui.Handlers.ViewHandler(Of TVirtualView, TPlatformView).PlatformViewFactory
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html

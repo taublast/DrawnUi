@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Internals.Markup
+  commentId: N:DrawnUi.Internals.Markup
+  id: DrawnUi.Internals.Markup
+  children:
+  - DrawnUi.Internals.Markup.MarkupExtensions
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Internals.Markup
+  nameWithType: DrawnUi.Internals.Markup
+  fullName: DrawnUi.Internals.Markup
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Internals.Markup.MarkupExtensions
+  commentId: T:DrawnUi.Internals.Markup.MarkupExtensions
+  href: DrawnUi.Internals.Markup.MarkupExtensions.html
+  name: MarkupExtensions
+  nameWithType: MarkupExtensions
+  fullName: DrawnUi.Internals.Markup.MarkupExtensions

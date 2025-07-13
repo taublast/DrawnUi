@@ -1,0 +1,109 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Models
+  commentId: N:DrawnUi.Models
+  id: DrawnUi.Models
+  children:
+  - DrawnUi.Models.DefinitionInfo
+  - DrawnUi.Models.GridLengthType
+  - DrawnUi.Models.GridSpan
+  - DrawnUi.Models.RestartingTimer
+  - DrawnUi.Models.RestartingTimer`1
+  - DrawnUi.Models.Screen
+  - DrawnUi.Models.SpanKey
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Models
+  nameWithType: DrawnUi.Models
+  fullName: DrawnUi.Models
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Models.Screen
+  commentId: T:DrawnUi.Models.Screen
+  parent: DrawnUi.Models
+  href: DrawnUi.Models.Screen.html
+  name: Screen
+  nameWithType: Screen
+  fullName: DrawnUi.Models.Screen
+- uid: DrawnUi.Models.GridLengthType
+  commentId: T:DrawnUi.Models.GridLengthType
+  parent: DrawnUi.Models
+  href: DrawnUi.Models.GridLengthType.html
+  name: GridLengthType
+  nameWithType: GridLengthType
+  fullName: DrawnUi.Models.GridLengthType
+- uid: DrawnUi.Models.RestartingTimer`1
+  commentId: T:DrawnUi.Models.RestartingTimer`1
+  href: DrawnUi.Models.RestartingTimer-1.html
+  name: RestartingTimer<T>
+  nameWithType: RestartingTimer<T>
+  fullName: DrawnUi.Models.RestartingTimer<T>
+  nameWithType.vb: RestartingTimer(Of T)
+  fullName.vb: DrawnUi.Models.RestartingTimer(Of T)
+  name.vb: RestartingTimer(Of T)
+  spec.csharp:
+  - uid: DrawnUi.Models.RestartingTimer`1
+    name: RestartingTimer
+    href: DrawnUi.Models.RestartingTimer-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: DrawnUi.Models.RestartingTimer`1
+    name: RestartingTimer
+    href: DrawnUi.Models.RestartingTimer-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Models.RestartingTimer
+  commentId: T:DrawnUi.Models.RestartingTimer
+  href: DrawnUi.Models.RestartingTimer.html
+  name: RestartingTimer
+  nameWithType: RestartingTimer
+  fullName: DrawnUi.Models.RestartingTimer
+- uid: DrawnUi.Models.DefinitionInfo
+  commentId: T:DrawnUi.Models.DefinitionInfo
+  href: DrawnUi.Models.DefinitionInfo.html
+  name: DefinitionInfo
+  nameWithType: DefinitionInfo
+  fullName: DrawnUi.Models.DefinitionInfo
+- uid: DrawnUi.Models.GridSpan
+  commentId: T:DrawnUi.Models.GridSpan
+  href: DrawnUi.Models.GridSpan.html
+  name: GridSpan
+  nameWithType: GridSpan
+  fullName: DrawnUi.Models.GridSpan
+- uid: DrawnUi.Models.SpanKey
+  commentId: T:DrawnUi.Models.SpanKey
+  parent: DrawnUi.Models
+  href: DrawnUi.Models.SpanKey.html
+  name: SpanKey
+  nameWithType: SpanKey
+  fullName: DrawnUi.Models.SpanKey
+- uid: DrawnUi.Models
+  commentId: N:DrawnUi.Models
+  href: DrawnUi.html
+  name: DrawnUi.Models
+  nameWithType: DrawnUi.Models
+  fullName: DrawnUi.Models
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Models
+    name: Models
+    href: DrawnUi.Models.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Models
+    name: Models
+    href: DrawnUi.Models.html

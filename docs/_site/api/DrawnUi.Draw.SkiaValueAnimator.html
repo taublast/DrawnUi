@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SkiaValueAnimator | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SkiaValueAnimator | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Draw_SkiaValueAnimator.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.SkiaValueAnimator%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="DrawnUi.Draw.SkiaValueAnimator">
+
+
+
+  <h1 id="DrawnUi_Draw_SkiaValueAnimator" data-uid="DrawnUi.Draw.SkiaValueAnimator" class="text-break">
+Class SkiaValueAnimator  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L5"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Draw.html">Draw</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SkiaValueAnimator : AnimatorBase, ISkiaAnimator, IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.AnimatorBase.html">AnimatorBase</a></div>
+      <div><span class="xref">SkiaValueAnimator</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaAnimator.html">ISkiaAnimator</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="DrawnUi.Animate.Animators.VelocitySkiaAnimator.html">VelocitySkiaAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.PendulumAnimator.html">PendulumAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ProgressAnimator.html">ProgressAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.RangeAnimator.html">RangeAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.RenderingAnimator.html">RenderingAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ScrollFlingAnimator.html">ScrollFlingAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.SkiaVectorAnimator.html">SkiaVectorAnimator</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.SpringWithVelocityAnimator.html">SpringWithVelocityAnimator</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPostAnimator">AnimatorBase.IsPostAnimator</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsHiddenInViewTree">AnimatorBase.IsHiddenInViewTree</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Radians_System_Double_">AnimatorBase.Radians(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_runDelayMs">AnimatorBase.runDelayMs</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Register">AnimatorBase.Register()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Unregister">AnimatorBase.Unregister()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Cancel">AnimatorBase.Cancel()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Pause">AnimatorBase.Pause()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Resume">AnimatorBase.Resume()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsPaused">AnimatorBase.IsPaused</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStop">AnimatorBase.OnStop</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_OnStart">AnimatorBase.OnStart</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Parent">AnimatorBase.Parent</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsDeactivated">AnimatorBase.IsDeactivated</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_LastFrameTimeNanos">AnimatorBase.LastFrameTimeNanos</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_StartFrameTimeNanos">AnimatorBase.StartFrameTimeNanos</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_Uid">AnimatorBase.Uid</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_IsRunning">AnimatorBase.IsRunning</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.AnimatorBase.html#DrawnUi_Draw_AnimatorBase_WasStarted">AnimatorBase.WasStarted</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_">InternalExtensions.FromPlatform(object)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator__ctor_" data-uid="DrawnUi.Draw.SkiaValueAnimator.#ctor*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator__ctor_DrawnUi_Draw_IDrawnBase_" data-uid="DrawnUi.Draw.SkiaValueAnimator.#ctor(DrawnUi.Draw.IDrawnBase)">
+  SkiaValueAnimator(IDrawnBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L325"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SkiaValueAnimator(IDrawnBase parent)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>parent</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Debug" data-uid="DrawnUi.Draw.SkiaValueAnimator.Debug">
+  Debug
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L221"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool Debug</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_FrameTimeInterpolator" data-uid="DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator">
+  FrameTimeInterpolator
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected FrameTimeInterpolator FrameTimeInterpolator</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.FrameTimeInterpolator.html">FrameTimeInterpolator</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_CycleFInished_" data-uid="DrawnUi.Draw.SkiaValueAnimator.CycleFInished*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_CycleFInished" data-uid="DrawnUi.Draw.SkiaValueAnimator.CycleFInished">
+  CycleFInished
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Animator self finished a cycle, might still repeat</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Action CycleFInished { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Easing_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Easing*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Easing" data-uid="DrawnUi.Draw.SkiaValueAnimator.Easing">
+  Easing
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Easing Easing { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.easing">Easing</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_ElapsedMs_" data-uid="DrawnUi.Draw.SkiaValueAnimator.ElapsedMs*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_ElapsedMs" data-uid="DrawnUi.Draw.SkiaValueAnimator.ElapsedMs">
+  ElapsedMs
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ElapsedMs { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Finished_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Finished*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Finished" data-uid="DrawnUi.Draw.SkiaValueAnimator.Finished">
+  Finished
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Animator self finished running without being stopped manually</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Action Finished { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_OnUpdated_" data-uid="DrawnUi.Draw.SkiaValueAnimator.OnUpdated*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_OnUpdated" data-uid="DrawnUi.Draw.SkiaValueAnimator.OnUpdated">
+  OnUpdated
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L280"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Action&lt;double&gt; OnUpdated { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Progress_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Progress*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Progress" data-uid="DrawnUi.Draw.SkiaValueAnimator.Progress">
+  Progress
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>We are using this internally to apply easing. Can be above 1 when finishing. If you need progress 0-1 use ProgressAnimator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double Progress { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Repeat_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Repeat*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Repeat" data-uid="DrawnUi.Draw.SkiaValueAnimator.Repeat">
+  Repeat
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>-1 means forever..</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Repeat { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Speed_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Speed*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Speed" data-uid="DrawnUi.Draw.SkiaValueAnimator.Speed">
+  Speed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L209"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Speed { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_mMaxValue_" data-uid="DrawnUi.Draw.SkiaValueAnimator.mMaxValue*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_mMaxValue" data-uid="DrawnUi.Draw.SkiaValueAnimator.mMaxValue">
+  mMaxValue
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double mMaxValue { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_mMinValue_" data-uid="DrawnUi.Draw.SkiaValueAnimator.mMinValue*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_mMinValue" data-uid="DrawnUi.Draw.SkiaValueAnimator.mMinValue">
+  mMinValue
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double mMinValue { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_mStartValueIsSet_" data-uid="DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_mStartValueIsSet" data-uid="DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet">
+  mStartValueIsSet
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool mStartValueIsSet { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_mValue_" data-uid="DrawnUi.Draw.SkiaValueAnimator.mValue*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_mValue" data-uid="DrawnUi.Draw.SkiaValueAnimator.mValue">
+  mValue
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L190"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double mValue { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_ClampOnStart_" data-uid="DrawnUi.Draw.SkiaValueAnimator.ClampOnStart*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_ClampOnStart" data-uid="DrawnUi.Draw.SkiaValueAnimator.ClampOnStart">
+  ClampOnStart()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L282"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void ClampOnStart()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Dispose_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Dispose*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Dispose" data-uid="DrawnUi.Draw.SkiaValueAnimator.Dispose">
+  Dispose()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Dispose()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_FinishedRunning_" data-uid="DrawnUi.Draw.SkiaValueAnimator.FinishedRunning*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_FinishedRunning" data-uid="DrawnUi.Draw.SkiaValueAnimator.FinishedRunning">
+  FinishedRunning()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual bool FinishedRunning()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_GetNanoseconds_" data-uid="DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_GetNanoseconds" data-uid="DrawnUi.Draw.SkiaValueAnimator.GetNanoseconds">
+  GetNanoseconds()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L224"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static long GetNanoseconds()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_OnRunningStateChanged_" data-uid="DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_OnRunningStateChanged_System_Boolean_" data-uid="DrawnUi.Draw.SkiaValueAnimator.OnRunningStateChanged(System.Boolean)">
+  OnRunningStateChanged(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnRunningStateChanged(bool isRunning)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isRunning</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_RunAsync_" data-uid="DrawnUi.Draw.SkiaValueAnimator.RunAsync*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_RunAsync_System_Action_System_Threading_CancellationToken_" data-uid="DrawnUi.Draw.SkiaValueAnimator.RunAsync(System.Action,System.Threading.CancellationToken)">
+  RunAsync(Action, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task RunAsync(Action initialize, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>initialize</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Seek_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Seek*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Seek_System_Single_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Seek(System.Single)">
+  Seek(float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Seek(float msTime)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>msTime</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_SetSpeed_" data-uid="DrawnUi.Draw.SkiaValueAnimator.SetSpeed*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_SetSpeed_System_Double_" data-uid="DrawnUi.Draw.SkiaValueAnimator.SetSpeed(System.Double)">
+  SetSpeed(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L317"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SkiaValueAnimator SetSpeed(double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html">SkiaValueAnimator</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_SetValue_" data-uid="DrawnUi.Draw.SkiaValueAnimator.SetValue*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_SetValue_System_Double_" data-uid="DrawnUi.Draw.SkiaValueAnimator.SetValue(System.Double)">
+  SetValue(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L311"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SkiaValueAnimator SetValue(double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaValueAnimator.html">SkiaValueAnimator</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Start_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Start*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Start_System_Double_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Start(System.Double)">
+  Start(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L297"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Start(double delayMs = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>delayMs</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_Stop_" data-uid="DrawnUi.Draw.SkiaValueAnimator.Stop*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_Stop" data-uid="DrawnUi.Draw.SkiaValueAnimator.Stop">
+  Stop()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Stop()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_TickFrame_" data-uid="DrawnUi.Draw.SkiaValueAnimator.TickFrame*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_TickFrame_System_Int64_" data-uid="DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)">
+  TickFrame(long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Time in NANOS</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool TickFrame(long frameTimeNanos)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>frameTimeNanos</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_TransformReportedValue_" data-uid="DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_TransformReportedValue_System_Int64_" data-uid="DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue(System.Int64)">
+  TransformReportedValue(long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>/// Passed over mValue, you can change the reported passed value here</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual double TransformReportedValue(long deltaT)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>deltaT</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>modified mValue for callback consumer</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaValueAnimator_UpdateValue_" data-uid="DrawnUi.Draw.SkiaValueAnimator.UpdateValue*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaValueAnimator_UpdateValue_System_Int64_System_Int64_" data-uid="DrawnUi.Draw.SkiaValueAnimator.UpdateValue(System.Int64,System.Int64)">
+  UpdateValue(long, long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L238"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Update mValue using time distance between rendered frames.
+Return true if anims is finished.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual bool UpdateValue(long deltaT, long deltaFromStart)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>deltaT</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+    <dt><code>deltaFromStart</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animators/SkiaValueAnimator.cs/#L5" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SidePosition
+  commentId: T:DrawnUi.Draw.SidePosition
+  id: SidePosition
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SidePosition.Bottom
+  - DrawnUi.Draw.SidePosition.Left
+  - DrawnUi.Draw.SidePosition.Right
+  - DrawnUi.Draw.SidePosition.Top
+  langs:
+  - csharp
+  - vb
+  name: SidePosition
+  nameWithType: SidePosition
+  fullName: DrawnUi.Draw.SidePosition
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SidePosition
+    path: ../src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum SidePosition
+    content.vb: Public Enum SidePosition
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SidePosition.Top
+  commentId: F:DrawnUi.Draw.SidePosition.Top
+  id: Top
+  parent: DrawnUi.Draw.SidePosition
+  langs:
+  - csharp
+  - vb
+  name: Top
+  nameWithType: SidePosition.Top
+  fullName: DrawnUi.Draw.SidePosition.Top
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Top
+    path: ../src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Top = 0
+    return:
+      type: DrawnUi.Draw.SidePosition
+- uid: DrawnUi.Draw.SidePosition.Right
+  commentId: F:DrawnUi.Draw.SidePosition.Right
+  id: Right
+  parent: DrawnUi.Draw.SidePosition
+  langs:
+  - csharp
+  - vb
+  name: Right
+  nameWithType: SidePosition.Right
+  fullName: DrawnUi.Draw.SidePosition.Right
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Right
+    path: ../src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Right = 1
+    return:
+      type: DrawnUi.Draw.SidePosition
+- uid: DrawnUi.Draw.SidePosition.Bottom
+  commentId: F:DrawnUi.Draw.SidePosition.Bottom
+  id: Bottom
+  parent: DrawnUi.Draw.SidePosition
+  langs:
+  - csharp
+  - vb
+  name: Bottom
+  nameWithType: SidePosition.Bottom
+  fullName: DrawnUi.Draw.SidePosition.Bottom
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Bottom
+    path: ../src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Bottom = 2
+    return:
+      type: DrawnUi.Draw.SidePosition
+- uid: DrawnUi.Draw.SidePosition.Left
+  commentId: F:DrawnUi.Draw.SidePosition.Left
+  id: Left
+  parent: DrawnUi.Draw.SidePosition
+  langs:
+  - csharp
+  - vb
+  name: Left
+  nameWithType: SidePosition.Left
+  fullName: DrawnUi.Draw.SidePosition.Left
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Left
+    path: ../src/Shared/Draw/Internals/Enums/SelectionPosition.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Left = 3
+    return:
+      type: DrawnUi.Draw.SidePosition
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SidePosition
+  commentId: T:DrawnUi.Draw.SidePosition
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SidePosition.html
+  name: SidePosition
+  nameWithType: SidePosition
+  fullName: DrawnUi.Draw.SidePosition

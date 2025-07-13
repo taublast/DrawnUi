@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>DrawnUI Fluent C# Extensions - Developer Guide | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="DrawnUI Fluent C# Extensions - Developer Guide | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/fluent-extensions.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="drawnui-fluent-c-extensions---developer-guide">DrawnUI Fluent C# Extensions - Developer Guide</h1>
+
+<p>version 1.5a</p>
+<p>This guide covers the essential patterns of DrawnUI fluent extensions for drawn controls.
+Not all methods are listed here, as extensions are evolving.</p>
+<p><strong>WARNING: this API could become obsolete as i recently discovered UNO platform fluent syntax and thinking much about replicating it.</strong></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#core-philosophy">Core Philosophy</a></li>
+<li><a href="#actions-and-references">Actions and References</a></li>
+<li><a href="#property-observation">Property Observation</a></li>
+<li><a href="#common-patterns">Common Patterns</a></li>
+<li><a href="#layout-extensions">Layout Extensions</a></li>
+<li><a href="#gesture-handling">Gesture Handling</a></li>
+<li><a href="#control-helpers">Control Helpers</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+<h2 id="core-philosophy">Core Philosophy</h2>
+<p>Use these extensions to build your UI with C# using fluent chaining for clean, readable code.</p>
+<ul>
+<li><strong>Fluent chaining</strong> - Readable, declarative UI code</li>
+<li><strong>Performance first</strong> - Runs efficiently, does not require UI thread</li>
+<li><strong>Automatic cleanup</strong> - No memory leaks, subscriptions auto-dispose</li>
+<li><strong>Framework-independent</strong> - Multi-way property observations without framework bindings</li>
+</ul>
+<p><strong>.NET MAUI</strong> notice:</p>
+<ol>
+<li>While you can still create bindings in code, these extensions allow you to use MVVM without traditional bindings.</li>
+<li>Drawn controls do not require their properties to be accessed on UI-thread.</li>
+</ol>
+<pre><code class="lang-csharp">new SkiaLabel()
+{
+    UseCache = SkiaCacheType.Operations
+}
+.Observe(Model, (label, prop) =&gt; 
+{
+    if (prop.IsEither(nameof(BindingContext), nameof(Model.DisplayName)))
+    {
+        label.Text = Model.DisplayName;
+    }
+})
+.OnTapped((me) =&gt;
+{
+    Model.CommandAddRequest.Execute(null);
+})
+.CenterX()
+.WithHeight(44);
+</code></pre>
+<h2 id="actions-and-references">Actions and References</h2>
+<p>You can execute conditional code during construction and initialization of controls,
+and access controls by assigned references.</p>
+<p>Execute simple code within the fluent chain:</p>
+<pre><code class="lang-csharp">new SkiaMauiEditor()
+{
+    MaxLines = 1,
+    HeightRequest = 32,
+    Placeholder = &quot;...&quot;,
+    Padding = new Thickness(0, 2, 0, 4),
+}
+.Adapt(me =&gt;
+{
+    if (_multiline)
+    {
+        me.MaxLines = -1;
+        me.HeightRequest = 180;
+    }
+})
+</code></pre>
+<h3 id="assign-references">Assign References</h3>
+<p>You can declare a variable holding a reference to a control and assign it during control creation.</p>
+<pre><code class="lang-csharp">//declared in some scope
+SkiaLabel labelText;
+
+//assign variable during control creation
+new SkiaLabel(&quot;Hello World!&quot;).Assign(out labelText)
+</code></pre>
+<h3 id="getting-references-during-construction">Getting References During Construction</h3>
+<p>The variable you set with <code>Assign</code> will be available after the fluent chain has been completely built.
+If you need to access them for initialization, use the <code>Initialize</code> method.<br>
+For observing variables that are still null at the time of UI construction use access by action inside the <code>Observe</code>:</p>
+<pre><code class="lang-csharp">SkiaLabel statusLabel;
+SkiaButton button;
+int counter = 0;
+
+var layout = new SkiaStack
+{
+    Children =  
+    {           
+        new SkiaLabel(&quot;0&quot;)
+            .Assign(out statusLabel),
+
+        new SkiaLabel()             
+        .Observe(() =&gt; statusLabel, (me, prop) =&gt; //notice access by action!
+        {
+            if (prop.IsEither(nameof(BindingContext), nameof(Text)))
+            {
+                me.Text = $&quot;Label text changed to: {statusLabel.Text}&quot;;
+            }
+        }),
+
+        new SkiaButton(&quot;Click Me&quot;)
+        {
+            BackgroundColor = Colors.Grey
+        }
+        .Assign(out button) //  &lt;--- assign
+        .OnTapped(me =&gt; { statusLabel.Text = $&quot;{++counter}&quot;; })
+    }
+}                   
+.Initialize(me =&gt;
+{
+    //assigned variables &lt;--- access
+    button.BackgroundColor = Colors.Green;
+});
+</code></pre>
+<h3 id="parent-assignment">Parent Assignment</h3>
+<p>You would normally include children like this:</p>
+<pre><code class="lang-csharp">new SkiaStack
+{
+    Children = 
+    {           
+        new SkiaLabel(&quot;0&quot;),
+        new SkiaButton(&quot;Click Me&quot;)
+    }
+}    
+</code></pre>
+<p>Or you might prefer this approach:</p>
+<pre><code class="lang-csharp">new SkiaStack()
+    .WithChildren(
+        new SkiaLabel(&quot;0&quot;),
+        new SkiaButton(&quot;Click Me&quot;)
+    )
+</code></pre>
+<p>In case you need to assign a single control to a parent properly:</p>
+<pre><code class="lang-csharp">var child = new SkiaLabel(&quot;I'm a child&quot;)
+    .AssignParent(parentLayout)  // Adds to parent automatically
+    .CenterX();
+</code></pre>
+<p>or</p>
+<pre><code class="lang-csharp">var child = new SkiaLabel(&quot;I'm a child&quot;);
+parentLayout.AddSubView(child);
+</code></pre>
+<p>To properly remove children by code:</p>
+<pre><code class="lang-csharp">layout.Children.RemoveAt(0); //remove the first one
+
+layout.RemoveSubView(child); //remove child
+
+layout.ClearChildren(); //clear them all
+</code></pre>
+<h2 id="property-observation">Property Observation</h2>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Observe properties of any <code>INotifyPropertyChanged</code> source</li>
+<li>Always check for <code>nameof(BindingContext)</code> for initial default value setup</li>
+<li>Extension will automatically unsubscribe/cleanup when control is disposed</li>
+<li>Can use <code>propertyName.IsEither(prop1, prop2)</code> for multiple properties</li>
+</ul>
+<h3 id="1-observevm-callback---basic-pattern">1. <code>.Observe(vm, callback)</code> - Basic Pattern</h3>
+<p>Observes property changes on any <code>INotifyPropertyChanged</code> source:</p>
+<pre><code class="lang-csharp">//BindingMode.OneWay alternative
+new SkiaLabel()
+.Observe(Model, (label, prop) =&gt; {
+    if (prop.IsEither(nameof(BindingContext), nameof(Model.DisplayName)))
+    {
+        //get value from viewmodel      
+        label.Text = Model.DisplayName;
+    }
+});
+</code></pre>
+<h3 id="2-observeselfcallback---self-observation">2. <code>.ObserveSelf(callback)</code> - Self Observation</h3>
+<p>Observes the control's own property changes:</p>
+<pre><code class="lang-csharp">//BindingMode.OneWayToSource alternative
+wheelPicker
+    .ObserveSelf((me, prop) =&gt; {          
+        if (prop.IsEither(nameof(BindingContext), nameof(me.SelectedIndex)))
+        {
+            //set viewmodel property
+            viewModel.CurrentIndex = me.SelectedIndex;
+        }
+    });
+</code></pre>
+<h3 id="3-observebindingcontexttcontrol-tviewmodelcallback---typed-viewmodel">3. <code>.ObserveBindingContext&lt;TControl, TViewModel&gt;(callback)</code> - Typed ViewModel</h3>
+<p>Type-safe observation of the control's BindingContext:</p>
+<pre><code class="lang-csharp">new SkiaLabel()
+.ObserveBindingContext&lt;SkiaLabel, ChatViewModel&gt;((me, vm, prop) =&gt; {
+    if (prop.IsEither(nameof(BindingContext), nameof(vm.MessageCount)))
+    {
+        me.Text = $&quot;Messages: {vm.MessageCount}&quot;;
+    }
+});
+</code></pre>
+<h3 id="4-observepropertiestarget-propertynames-callback---multiple-properties">4. <code>.ObserveProperties(target, propertyNames, callback)</code> - Multiple Properties</h3>
+<p>Observes specific properties on a source control. BindingContext is automatically included:</p>
+<pre><code class="lang-csharp">new SkiaButton(&quot;Submit&quot;)
+.ObserveProperties(viewModel, 
+    new[] { nameof(viewModel.CanSubmit), nameof(viewModel.IsLoading) }, 
+    me =&gt; 
+    {
+        if (viewModel.CanSubmit &amp;&amp; !viewModel.IsLoading)
+        {
+            me.IsEnabled = true;
+            me.Opacity = 1.0;
+        }
+        else
+        {
+            me.IsEnabled = false;
+            me.Opacity = 0.5;
+        }
+    });
+</code></pre>
+<h3 id="5-observepropertyonparent-targetselector-parentpropertyname-callback---dynamic-target">5. <code>.ObservePropertyOn(parent, targetSelector, parentPropertyName, callback)</code> - Dynamic Target</h3>
+<p>Observes a dynamically resolved target object using a function selector. When the parent's properties change, re-evaluates the selector and automatically unsubscribes from old target and subscribes to new one:</p>
+<pre><code class="lang-csharp">new SkiaLabel()
+.ObservePropertyOn(
+    this,
+    () =&gt; CurrentTimer,
+    nameof(CurrentTimer),
+    (me, prop) =&gt;
+    {
+        if (prop.IsEither(nameof(BindingContext), nameof(RunningTimer.Time)))
+        {
+            me.Text = $&quot;{CurrentTimer.Time:mm\\:ss}&quot;;
+        }
+    }
+)
+</code></pre>
+<h3 id="6-observepropertiesonparent-targetselector-parentpropertyname-propertynames-callback---dynamic-target-multiple-properties">6. <code>.ObservePropertiesOn(parent, targetSelector, parentPropertyName, propertyNames, callback)</code> - Dynamic Target Multiple Properties</h3>
+<p>Similar to <code>ObservePropertyOn</code> but observes multiple specific properties on the dynamically resolved target:</p>
+<pre><code class="lang-csharp">new SkiaLabel()
+.ObservePropertiesOn(
+    parentViewModel,
+    () =&gt; parentViewModel.CurrentUser,
+    nameof(ParentViewModel.CurrentUser),
+    new[] { nameof(User.Name), nameof(User.Status) },
+    me =&gt;
+    {
+        var user = parentViewModel.CurrentUser;
+        me.Text = user != null ? $&quot;{user.Name} - {user.Status}&quot; : &quot;No user&quot;;
+    }
+)
+</code></pre>
+<h3 id="7-observebindingcontextontcontrol-ttarget-tviewmodeltarget-callback---another-controls-bindingcontext">7. <code>.ObserveBindingContextOn&lt;TControl, TTarget, TViewModel&gt;(target, callback)</code> - Another Control's BindingContext</h3>
+<p>Watches for property changes on another control's BindingContext:</p>
+<pre><code class="lang-csharp">new SkiaLabel()
+.ObserveBindingContextOn&lt;SkiaLabel, SkiaEntry, MyViewModel&gt;(
+    entryControl,
+    (me, target, vm, prop) =&gt;
+    {
+        if (prop.IsEither(nameof(BindingContext), nameof(vm.ValidationError)))
+        {
+            me.Text = vm.ValidationError ?? &quot;&quot;;
+            me.IsVisible = !string.IsNullOrEmpty(vm.ValidationError);
+        }
+    }
+)
+</code></pre>
+<h3 id="8-observeont-tparent-ttargetparent-targetselector-parentpropertyname-callback-propertyfilter---core-dynamic-observation">8. <code>.ObserveOn&lt;T, TParent, TTarget&gt;(parent, targetSelector, parentPropertyName, callback, propertyFilter)</code> - Core Dynamic Observation</h3>
+<p>The foundational method for observing dynamically resolved target objects. When the parent's properties change, re-evaluates the selector and automatically unsubscribes from old target and subscribes to new one. This is AOT-compatible:</p>
+<pre><code class="lang-csharp">new SkiaLabel()
+.ObserveOn(
+    parentViewModel,
+    () =&gt; parentViewModel.CurrentTimer,
+    nameof(parentViewModel.CurrentTimer),
+    (me, prop) =&gt; {
+        if (prop.IsEither(nameof(BindingContext), nameof(Timer.RemainingTime)))
+        {
+            me.Text = $&quot;Time: {parentViewModel.CurrentTimer?.RemainingTime ?? 0}&quot;;
+        }
+    },
+    new[] { nameof(BindingContext), nameof(Timer.RemainingTime) }
+);
+</code></pre>
+<h3 id="9-observet-tsourcesourcefetcher-callback-propertyfilter---delayed-assignment-observation">9. <code>.Observe&lt;T, TSource&gt;(sourceFetcher, callback, propertyFilter)</code> - Delayed Assignment Observation</h3>
+<p>Observes a control that will be assigned later in the initialization process using a function selector:</p>
+<pre><code class="lang-csharp">new SkiaLabel()
+.Observe(() =&gt; statusLabel, (me, prop) =&gt; {
+    if (prop.IsEither(nameof(BindingContext), nameof(SkiaLabel.Text)))
+    {
+        me.TextColor = statusLabel.Text.Contains(&quot;Error&quot;) ? Colors.Red : Colors.Green;
+    }
+});
+</code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="observe-injected-viewmodel">Observe injected ViewModel</h3>
+<p>When you inject your ViewModel in the page/screen constructor you can observe a fixed reference:</p>
+<pre><code class="lang-csharp">public class MyScreen : AppScreen //subclassed custom SkiaLayout
+{
+    public readonly InjectedViewModel Model;
+
+    public ScreenChat(InjectedViewModel vm)
+    {
+        Model = vm;
+        BindingContext = Model;
+
+        CreateContent();
+    }
+}
+
+protected void CreateContent()
+{
+    HorizontalOptions = LayoutOptions.Fill;
+    VerticalOptions = LayoutOptions.Fill;
+    Type = LayoutType.Column;
+    Spacing = 0;
+    Padding = 16;
+    Children =
+    {
+        new SkiaLabel()
+        .Observe(Model, (me, prop) =&gt; //observe Model reference directly
+        {
+            bool attached = prop == nameof(BindingContext);
+            if (attached || prop == nameof(Model.Title))
+            {
+                me.Text = Model.Title;
+            }
+            if (attached || prop == nameof(Model.Error))
+            {
+                me.TextColor = Model.Error ? Colors.Red : Colors.Black;
+            }
+        }),
+    };
+}
+</code></pre>
+<h3 id="observe-another-control-property">Observe another control property</h3>
+<p>You have few options here, simple and advanced.</p>
+<p>Simple, when <code>Model</code> is not likely to change:</p>
+<pre><code class="lang-csharp">
+new SkiaLabel()
+.ObserveProperty(Model, nameof(Title), me =&gt;
+{
+    me.Text = Model.Title;
+}),
+</code></pre>
+<p>When <code>Model</code> is likely to change and is implementing INotifyPropertyChanged and is member of (for example) <code>this</code>:</p>
+<pre><code class="lang-csharp">
+new SkiaLabel()
+.ObservePropertyOn(this, ()=&gt;Model, nameof(Model), (me, propertyName) =&gt;
+{
+    me.Text = Model.Title;
+}),
+</code></pre>
+<p>Advanced:</p>
+<pre><code class="lang-csharp">SkiaLabel labelTitle;
+
+new SkiaLabel()
+.Observe(Model, (me, prop) =&gt;
+{
+    bool attached = prop == nameof(BindingContext);
+    if (attached || prop == nameof(Model.Title))
+    {
+        me.Text = Model.Title;
+    }
+})
+.Assign(out labelTitle),
+
+new SkiaLabel()
+.Observe(() =&gt; labelTitle, (me, prop) =&gt;
+{
+    bool attached = prop == nameof(BindingContext);
+    if (attached || prop == nameof(Text))
+    {
+        me.Text = $&quot;The title was: {labelTitle.Text}&quot;;
+    }
+}),
+</code></pre>
+<h3 id="two-way-bindings">Two-Way bindings</h3>
+<pre><code class="lang-csharp">new WheelPicker()
+.ObserveSelf((me, prop) =&gt;
+{
+    if (prop.IsEither(nameof(BindingContext), nameof(WheelPicker.SelectedIndex)))
+    {
+        IndexIso = me.SelectedIndex; //update local property from control
+    }
+})
+.Observe(this, (me, prop) =&gt;
+{
+    if (prop.IsEither(nameof(BindingContext), nameof(IndexIso)))
+    {
+        me.SelectedIndex = IndexIso; //update control property from local
+    }
+}),
+</code></pre>
+<h3 id="reactive-button-states">Reactive Button States</h3>
+<pre><code class="lang-csharp">var submitButton = new SkiaButton(&quot;Submit&quot;)
+    .ObserveBindingContext&lt;SkiaButton, MyViewModel&gt;((btn, vm, prop) =&gt; {
+        bool attached = prop == nameof(BindingContext);
+        if (attached || prop == nameof(vm.CanSubmit))
+        {
+            btn.IsEnabled = vm.CanSubmit;
+            btn.Opacity = vm.CanSubmit ? 1.0 : 0.5;
+        }
+        if (attached || prop == nameof(vm.IsReadOnly))
+        {
+            btn.IsVisible = !vm.IsReadOnly;
+        }
+    })
+    .OnTapped((me) =&gt; { viewModel.SubmitCommand.Execute(null); });
+</code></pre>
+<h3 id="conditional-visibility">Conditional Visibility</h3>
+<pre><code class="lang-csharp">var errorView = new SkiaLabel()
+    .ObserveBindingContext&lt;SkiaLabel, MyViewModel&gt;((lbl, vm, prop) =&gt; {
+        bool attached = prop == nameof(BindingContext);
+        if (attached || prop == nameof(vm.HasError))
+        {
+            lbl.IsVisible = vm.HasError;
+            lbl.Text = vm.ErrorMessage;
+        }
+    });
+</code></pre>
+<h3 id="loading-states">Loading States</h3>
+<pre><code class="lang-csharp">var loadingIndicator = new ActivityIndicator()
+    .ObserveBindingContext&lt;ActivityIndicator, MyViewModel&gt;((indicator, vm, prop) =&gt; {
+        bool attached = prop == nameof(BindingContext);
+        if (attached || prop == nameof(vm.IsLoading))
+        {
+            indicator.IsVisible = vm.IsLoading;
+            indicator.IsRunning = vm.IsLoading;
+        }
+    });
+</code></pre>
+<h3 id="list-content-management">List Content Management</h3>
+<pre><code class="lang-csharp">var listView = new CellsStack()
+    .ObserveBindingContext&lt;CellsStack, MyViewModel&gt;((list, vm, prop) =&gt; {
+        bool attached = prop == nameof(BindingContext);
+
+        if (attached || prop == nameof(vm.HasData))
+        {
+            list.ItemsSource = vm.HasData ? vm.Items : null;
+        }
+
+        if (attached || prop == nameof(vm.HasError))
+        {
+            if (vm.HasError)
+                list.ItemsSource = null;
+        }
+    });
+</code></pre>
+<h3 id="two-way-property-synchronization">Two-Way Property Synchronization</h3>
+<pre><code class="lang-csharp">// Sync slider value with viewModel
+var slider = new SkiaSlider()
+    .ObserveBindingContext&lt;SkiaSlider, MyViewModel&gt;((sld, vm, prop) =&gt; {
+        bool attached = prop == nameof(BindingContext);
+        if (attached || prop == nameof(vm.Volume))
+        {
+            if (Math.Abs(sld.Value - vm.Volume) &gt; 0.01) // Prevent loops
+                sld.Value = vm.Volume;
+        }
+    })
+    .ObserveSelf((sld, prop) =&gt; {
+        if (prop == nameof(sld.Value))
+        {
+            if (BindingContext is MyViewModel vm)
+                vm.Volume = sld.Value;
+        }
+    });
+</code></pre>
+<h2 id="layout-extensions">Layout Extensions</h2>
+<h3 id="positioning-and-sizing">Positioning and Sizing</h3>
+<pre><code class="lang-csharp">new SkiaLabel(&quot;Hello&quot;)
+    .Center()           // Centers both X and Y
+    .CenterX()          // Centers horizontally only
+    .CenterY()          // Centers vertically only
+    .Fill()             // Fills both directions
+    .FillX()            // Fills horizontally
+    .FillY()            // Fills vertically
+    .StartX()           // Aligns to start horizontally
+    .StartY()           // Aligns to start vertically
+    .EndX()             // Aligns to end horizontally
+    .EndY()             // Aligns to end vertically
+    .WithHeight(100)    // Sets height (HeightRequest)
+    .WithWidth(200)     // Sets width (WidthRequest)
+    .WithMargin(16)     // Uniform margin
+    .WithMargin(16, 8)  // Horizontal, vertical
+    .WithMargin(16, 8, 16, 8); // Left, top, right, bottom
+</code></pre>
+<h3 id="layout-specific-extensions">Layout-Specific Extensions</h3>
+<pre><code class="lang-csharp">new SkiaLayout()
+    .WithPadding(16)              // Uniform padding
+    .WithPadding(16, 8)           // Horizontal, vertical
+    .WithChildren(child1, child2) // Add multiple children
+    .WithContent(singleChild);    // For IWithContent containers
+</code></pre>
+<h3 id="additional-ui-extensions">Additional UI Extensions</h3>
+<pre><code class="lang-csharp">new SkiaLabel(&quot;Hello&quot;)
+    .WithCache(SkiaCacheType.Operations)    // Set cache type
+    .WithBackgroundColor(Colors.Blue)       // Set background color
+    .WithHorizontalOptions(LayoutOptions.Center) // Set horizontal options
+    .WithVerticalOptions(LayoutOptions.End) // Set vertical options
+    .WithHeight(100)                        // Set height request
+    .WithWidth(200)                         // Set width request
+    .WithMargin(new Thickness(16))          // Set margin with Thickness
+    .WithVisibility(true)                   // Set visibility
+    .WithTag(&quot;MyLabel&quot;);                    // Set tag
+</code></pre>
+<h3 id="shape-extensions">Shape Extensions</h3>
+<pre><code class="lang-csharp">new SkiaShape()
+    .WithShapeType(ShapeType.Rectangle)     // Set shape type
+    .Shape(ShapeType.Circle);               // Shorter alias
+</code></pre>
+<h3 id="image-extensions">Image Extensions</h3>
+<pre><code class="lang-csharp">new SkiaImage()
+    .WithAspect(TransformAspect.Fill);      // Set image aspect
+</code></pre>
+<h3 id="label-extensions">Label Extensions</h3>
+<pre><code class="lang-csharp">new SkiaLabel(&quot;Text&quot;)
+    .WithFontSize(16)                       // Set font size
+    .WithTextColor(Colors.Red)              // Set text color
+    .WithHorizontalTextAlignment(DrawTextAlignment.Center); // Set text alignment
+</code></pre>
+<h3 id="entry-extensions">Entry Extensions</h3>
+<pre><code class="lang-csharp">new SkiaMauiEntry()
+    .OnTextChanged((entry, text) =&gt;
+    {
+        // Handle text changes
+        Console.WriteLine($&quot;Text changed to: {text}&quot;);
+    });
+
+new SkiaMauiEditor()
+    .OnTextChanged((editor, text) =&gt;
+    {
+        // Handle editor text changes
+    });
+
+new SkiaLabel()
+    .OnTextChanged((label, text) =&gt;
+    {
+        // Handle label text changes via PropertyChanged
+    });
+</code></pre>
+<h2 id="gesture-handling">Gesture Handling</h2>
+<h3 id="basic-gestures">Basic Gestures</h3>
+<p>Can add gesture handling effects to any control:</p>
+<pre><code class="lang-csharp">anyControl
+.OnTapped(btn =&gt;
+{
+    viewModel.CommandExecute(null);
+})
+.OnLongPressing(btn =&gt;
+{
+    ShowContextMenu();
+});
+</code></pre>
+<h3 id="advanced-gesture-handling">Advanced Gesture Handling</h3>
+<p>Controls that implement <code>ISkiaGestureListener</code> (deriving from <code>SkiaLayout</code> etc) can use this extension.
+Technically, this calls a delegate <code>OnGestures</code> action before executing the <code>base.ProcessGestures</code> code.
+The same logic can be implemented by subclassing a control and overriding <code>ProcessGestures</code>.
+Return this control reference if you consumed a gesture, return <code>null</code> if not.
+The UP gesture should be marked as consumed ONLY for specific scenarios; please return <code>null</code> if unsure.</p>
+<pre><code class="lang-csharp">layout.WithGestures((me, args, apply) =&gt; {
+    ISkiaGestureListener consumed = null;
+
+    //your logic
+    if (args.Type == TouchActionResult.Panning)
+    {
+        // Handle panning
+        consumed = this; //we consumed this one
+    }
+
+    //return consumed state
+    if (consumed != null &amp;&amp; args.Type != TouchActionResult.Up)
+    {
+        return consumed; //do not let others use this gesture anymore
+    }
+    return null; //will send this gesture to other controls
+});
+</code></pre>
+<h2 id="control-helpers">Control Helpers</h2>
+<p>You might want to create helpers to be reused within your app, for example:</p>
+<pre><code class="lang-csharp">//define once
+public class AppButton : SkiaButton
+{
+    public AppButton(string caption)
+    {
+        UseCache = SkiaCacheType.Image;
+        HorizontalOptions = LayoutOptions.Center;
+        WidthRequest = 250;
+        HeightRequest = 44;
+        Text = caption;
+    }
+}
+
+//Use everywhere
+new AppButton(&quot;Click Me&quot;)
+</code></pre>
+<p>For convenience, some helpers come out of the box:</p>
+<ul>
+<li><code>SkiaLayer</code> - absolute layout, children will be super-positioned, create layers and anything. This is a <code>SkiaLayout</code> with horizontal Fill by default.</li>
+<li><code>SkiaStack</code> - Vertical stack, like MAUI VerticalStackLayout. This is a <code>SkiaLayout</code> type <code>Column</code> with horizontal Fill by default.</li>
+<li><code>SkiaRow</code> - Horizontal stack, like MAUI HorizontalStackLayout. This is a <code>SkiaLayout</code> type <code>Row</code>.</li>
+<li><code>SkiaWrap</code> - A powerful flexible control that arranges children in a responsive way according to available size. This is a <code>SkiaLayout</code> type <code>Wrap</code> with horizontal Fill by default.</li>
+<li><code>SkiaGrid</code> - MAUI Grid alternative to use rows and columns at will. If you are used to a MAUI grid with a single row/col just to position items one over the other, please use <code>SkiaLayer</code> instead!</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="always-check-for-bindingcontext">Always Check for BindingContext</h3>
+<pre><code class="lang-csharp">// ✅ CORRECT
+.ObserveBindingContext&lt;Control, ViewModel&gt;((ctrl, vm, prop) =&gt; {
+    bool attached = prop == nameof(BindingContext);
+    if (attached || prop == nameof(vm.MyProperty))
+    {
+        // Handle both initial setup and property changes
+    }
+});
+
+// ❌ WRONG - misses initial setup
+.ObserveBindingContext&lt;Control, ViewModel&gt;((ctrl, vm, prop) =&gt; {
+    if (prop == nameof(vm.MyProperty)) // Only triggers on changes
+    {
+        // Will miss initial value!
+    }
+});
+</code></pre>
+<h3 id="use-iseither-for-multiple-properties">Use IsEither for Multiple Properties</h3>
+<pre><code class="lang-csharp">// ✅ CORRECT
+if (prop.IsEither(nameof(BindingContext), nameof(vm.Prop1), nameof(vm.Prop2)))
+
+// ❌ VERBOSE
+if (prop == nameof(BindingContext) || prop == nameof(vm.Prop1) || prop == nameof(vm.Prop2))
+</code></pre>
+<h3 id="prevent-circular-updates">Prevent Circular Updates</h3>
+<pre><code class="lang-csharp">// ✅ CORRECT - prevents infinite loops
+.ObserveSelf((control, prop) =&gt; {
+    if (prop == nameof(control.Value))
+    {
+        if (Math.Abs(viewModel.Value - control.Value) &gt; 0.01)
+            viewModel.Value = control.Value;
+    }
+});
+</code></pre>
+<h3 id="chain-related-operations">Chain Related Operations</h3>
+<pre><code class="lang-csharp">new SkiaButton(&quot;Save&quot;)
+    .WithHeight(44)
+    .CenterX()
+    .WithMargin(16, 8)
+    .ObserveBindingContext&lt;SkiaButton, MyViewModel&gt;((btn, vm, prop) =&gt; {
+        // Reactive logic
+    })
+    .OnTapped((me) =&gt;
+    {
+        // Action logic
+    });
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="problem-observer-not-triggering">Problem: Observer Not Triggering</h3>
+<p><strong>Symptoms:</strong> UI doesn't update when ViewModel properties change</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Ensure ViewModel implements <code>INotifyPropertyChanged</code></li>
+<li>Check that property either has a static bindable property or calls <code>OnPropertyChanged()</code> in the setter.</li>
+</ol>
+<pre><code class="lang-csharp">// ✅ Make sure ViewModel raises PropertyChanged
+public class MyViewModel : INotifyPropertyChanged
+{
+    private string _name;
+    public string Name
+    {
+        get =&gt; _name;
+        set
+        {
+            if (value == _name)
+                return;
+            _name = value;
+            OnPropertyChanged(); // Must call this!
+        }
+    }
+}
+</code></pre>
+<ol start="3">
+<li>Check that property names match exactly; use <code>nameof()</code>.</li>
+<li>Ensure all your overrides, if any, of <code>void OnPropertyChanged([CallerMemberName] string propertyName = null)</code> have a <code>[CallerMemberName]</code> attribute.</li>
+<li>Verify you're checking for <code>nameof(BindingContext)</code> for initial setup.</li>
+</ol>
+<h3 id="problem-null-reference-exceptions">Problem: Null Reference Exceptions</h3>
+<p><strong>Symptoms:</strong> Crashes when accessing ViewModel properties</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Make sure you are not accessing an assigned control reference from <code>Adapt</code>; use <code>Initialize</code> instead.</li>
+<li>Check that the viewmodel was created and set.</li>
+</ol>
+<h3 id="problem-performance-issues">Problem: Performance Issues</h3>
+<p><strong>Symptoms:</strong> UI stuttering or slow updates</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Always use cache for layers of controls:
+<ul>
+<li>Do NOT cache scrolls/heavily animated controls and above</li>
+<li><code>UseCache = SkiaCacheType.Operations</code> for labels and svg</li>
+<li><code>UseCache = SkiaCacheType.Image</code> for complex layouts, buttons etc</li>
+<li><code>UseCache = SkiaCacheType.ImageComposite</code> for complex layouts where a region changes while others remain static, like a stack with different user-handled controls.</li>
+<li><code>UseCache = SkiaCacheType.ImageDoubleBuffered</code> for equally sized recycled cells. Will show old cache while preparing new one in background.</li>
+<li><code>UseCache = SkiaCacheType.GPU</code> for small static overlays like headers, navbars.</li>
+</ul>
+</li>
+<li>Check that you do not have logs spamming the console on every rendering frame.</li>
+</ol>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/fluent-extensions.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

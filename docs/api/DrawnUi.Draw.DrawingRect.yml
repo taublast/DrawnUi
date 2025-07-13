@@ -1,0 +1,1458 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.DrawingRect
+  commentId: T:DrawnUi.Draw.DrawingRect
+  id: DrawingRect
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.DrawingRect.#ctor
+  - DrawnUi.Draw.DrawingRect.#ctor(SkiaSharp.SKRect)
+  - DrawnUi.Draw.DrawingRect.#ctor(System.Single,System.Single)
+  - DrawnUi.Draw.DrawingRect.#ctor(System.Single,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.DrawingRect.Bottom
+  - DrawnUi.Draw.DrawingRect.Clone
+  - DrawnUi.Draw.DrawingRect.Compare(DrawnUi.Draw.DrawingRect)
+  - DrawnUi.Draw.DrawingRect.Contains(DrawnUi.Draw.DrawingRect)
+  - DrawnUi.Draw.DrawingRect.Contains(System.Single,System.Single)
+  - DrawnUi.Draw.DrawingRect.Empty
+  - DrawnUi.Draw.DrawingRect.Equals(System.Object)
+  - DrawnUi.Draw.DrawingRect.GetHashCode
+  - DrawnUi.Draw.DrawingRect.Height
+  - DrawnUi.Draw.DrawingRect.IntersectsWith(DrawnUi.Draw.DrawingRect)
+  - DrawnUi.Draw.DrawingRect.IntersectsWith(SkiaSharp.SKRect)
+  - DrawnUi.Draw.DrawingRect.IntersectsWith(System.Single,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.DrawingRect.Left
+  - DrawnUi.Draw.DrawingRect.MidX
+  - DrawnUi.Draw.DrawingRect.MidY
+  - DrawnUi.Draw.DrawingRect.Offset(System.Single,System.Single)
+  - DrawnUi.Draw.DrawingRect.Right
+  - DrawnUi.Draw.DrawingRect.Set(System.Single,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.DrawingRect.ToRect
+  - DrawnUi.Draw.DrawingRect.ToSkia
+  - DrawnUi.Draw.DrawingRect.Top
+  - DrawnUi.Draw.DrawingRect.Width
+  langs:
+  - csharp
+  - vb
+  name: DrawingRect
+  nameWithType: DrawingRect
+  fullName: DrawnUi.Draw.DrawingRect
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawingRect
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 3
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class DrawingRect
+    content.vb: Public Class DrawingRect
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.DrawingRect.#ctor
+  commentId: M:DrawnUi.Draw.DrawingRect.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: DrawingRect()
+  nameWithType: DrawingRect.DrawingRect()
+  fullName: DrawnUi.Draw.DrawingRect.DrawingRect()
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DrawingRect()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Draw.DrawingRect.#ctor*
+  nameWithType.vb: DrawingRect.New()
+  fullName.vb: DrawnUi.Draw.DrawingRect.New()
+  name.vb: New()
+- uid: DrawnUi.Draw.DrawingRect.#ctor(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DrawingRect.#ctor(System.Single,System.Single,System.Single,System.Single)
+  id: '#ctor(System.Single,System.Single,System.Single,System.Single)'
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: DrawingRect(float, float, float, float)
+  nameWithType: DrawingRect.DrawingRect(float, float, float, float)
+  fullName: DrawnUi.Draw.DrawingRect.DrawingRect(float, float, float, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DrawingRect(float left, float top, float right, float bottom)
+    parameters:
+    - id: left
+      type: System.Single
+    - id: top
+      type: System.Single
+    - id: right
+      type: System.Single
+    - id: bottom
+      type: System.Single
+    content.vb: Public Sub New(left As Single, top As Single, right As Single, bottom As Single)
+  overload: DrawnUi.Draw.DrawingRect.#ctor*
+  nameWithType.vb: DrawingRect.New(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.DrawingRect.New(Single, Single, Single, Single)
+  name.vb: New(Single, Single, Single, Single)
+- uid: DrawnUi.Draw.DrawingRect.Offset(System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DrawingRect.Offset(System.Single,System.Single)
+  id: Offset(System.Single,System.Single)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Offset(float, float)
+  nameWithType: DrawingRect.Offset(float, float)
+  fullName: DrawnUi.Draw.DrawingRect.Offset(float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Offset
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Offset(float x, float y)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    content.vb: Public Sub Offset(x As Single, y As Single)
+  overload: DrawnUi.Draw.DrawingRect.Offset*
+  nameWithType.vb: DrawingRect.Offset(Single, Single)
+  fullName.vb: DrawnUi.Draw.DrawingRect.Offset(Single, Single)
+  name.vb: Offset(Single, Single)
+- uid: DrawnUi.Draw.DrawingRect.Set(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DrawingRect.Set(System.Single,System.Single,System.Single,System.Single)
+  id: Set(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Set(float, float, float, float)
+  nameWithType: DrawingRect.Set(float, float, float, float)
+  fullName: DrawnUi.Draw.DrawingRect.Set(float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Set
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void Set(float left, float top, float right, float bottom)
+    parameters:
+    - id: left
+      type: System.Single
+    - id: top
+      type: System.Single
+    - id: right
+      type: System.Single
+    - id: bottom
+      type: System.Single
+    content.vb: Public Sub [Set](left As Single, top As Single, right As Single, bottom As Single)
+  overload: DrawnUi.Draw.DrawingRect.Set*
+  nameWithType.vb: DrawingRect.Set(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.DrawingRect.Set(Single, Single, Single, Single)
+  name.vb: Set(Single, Single, Single, Single)
+- uid: DrawnUi.Draw.DrawingRect.#ctor(System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DrawingRect.#ctor(System.Single,System.Single)
+  id: '#ctor(System.Single,System.Single)'
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: DrawingRect(float, float)
+  nameWithType: DrawingRect.DrawingRect(float, float)
+  fullName: DrawnUi.Draw.DrawingRect.DrawingRect(float, float)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 35
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DrawingRect(float width, float height)
+    parameters:
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    content.vb: Public Sub New(width As Single, height As Single)
+  overload: DrawnUi.Draw.DrawingRect.#ctor*
+  nameWithType.vb: DrawingRect.New(Single, Single)
+  fullName.vb: DrawnUi.Draw.DrawingRect.New(Single, Single)
+  name.vb: New(Single, Single)
+- uid: DrawnUi.Draw.DrawingRect.#ctor(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.DrawingRect.#ctor(SkiaSharp.SKRect)
+  id: '#ctor(SkiaSharp.SKRect)'
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: DrawingRect(SKRect)
+  nameWithType: DrawingRect.DrawingRect(SKRect)
+  fullName: DrawnUi.Draw.DrawingRect.DrawingRect(SkiaSharp.SKRect)
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 41
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DrawingRect(SKRect rect)
+    parameters:
+    - id: rect
+      type: SkiaSharp.SKRect
+    content.vb: Public Sub New(rect As SKRect)
+  overload: DrawnUi.Draw.DrawingRect.#ctor*
+  nameWithType.vb: DrawingRect.New(SKRect)
+  fullName.vb: DrawnUi.Draw.DrawingRect.New(SkiaSharp.SKRect)
+  name.vb: New(SKRect)
+- uid: DrawnUi.Draw.DrawingRect.Left
+  commentId: P:DrawnUi.Draw.DrawingRect.Left
+  id: Left
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Left
+  nameWithType: DrawingRect.Left
+  fullName: DrawnUi.Draw.DrawingRect.Left
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Left
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 49
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Left { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Left As Single
+  overload: DrawnUi.Draw.DrawingRect.Left*
+- uid: DrawnUi.Draw.DrawingRect.Top
+  commentId: P:DrawnUi.Draw.DrawingRect.Top
+  id: Top
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Top
+  nameWithType: DrawingRect.Top
+  fullName: DrawnUi.Draw.DrawingRect.Top
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Top
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 50
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Top { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Top As Single
+  overload: DrawnUi.Draw.DrawingRect.Top*
+- uid: DrawnUi.Draw.DrawingRect.Right
+  commentId: P:DrawnUi.Draw.DrawingRect.Right
+  id: Right
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Right
+  nameWithType: DrawingRect.Right
+  fullName: DrawnUi.Draw.DrawingRect.Right
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Right
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 51
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Right { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Right As Single
+  overload: DrawnUi.Draw.DrawingRect.Right*
+- uid: DrawnUi.Draw.DrawingRect.Bottom
+  commentId: P:DrawnUi.Draw.DrawingRect.Bottom
+  id: Bottom
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Bottom
+  nameWithType: DrawingRect.Bottom
+  fullName: DrawnUi.Draw.DrawingRect.Bottom
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Bottom
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 52
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Bottom { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Bottom As Single
+  overload: DrawnUi.Draw.DrawingRect.Bottom*
+- uid: DrawnUi.Draw.DrawingRect.Width
+  commentId: P:DrawnUi.Draw.DrawingRect.Width
+  id: Width
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: DrawingRect.Width
+  fullName: DrawnUi.Draw.DrawingRect.Width
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Width
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Width { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Width As Single
+  overload: DrawnUi.Draw.DrawingRect.Width*
+- uid: DrawnUi.Draw.DrawingRect.Height
+  commentId: P:DrawnUi.Draw.DrawingRect.Height
+  id: Height
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: DrawingRect.Height
+  fullName: DrawnUi.Draw.DrawingRect.Height
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Height
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 65
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float Height { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Height As Single
+  overload: DrawnUi.Draw.DrawingRect.Height*
+- uid: DrawnUi.Draw.DrawingRect.MidY
+  commentId: P:DrawnUi.Draw.DrawingRect.MidY
+  id: MidY
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: MidY
+  nameWithType: DrawingRect.MidY
+  fullName: DrawnUi.Draw.DrawingRect.MidY
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MidY
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 77
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float MidY { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property MidY As Single
+  overload: DrawnUi.Draw.DrawingRect.MidY*
+- uid: DrawnUi.Draw.DrawingRect.MidX
+  commentId: P:DrawnUi.Draw.DrawingRect.MidX
+  id: MidX
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: MidX
+  nameWithType: DrawingRect.MidX
+  fullName: DrawnUi.Draw.DrawingRect.MidX
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MidX
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 85
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float MidX { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property MidX As Single
+  overload: DrawnUi.Draw.DrawingRect.MidX*
+- uid: DrawnUi.Draw.DrawingRect.IntersectsWith(DrawnUi.Draw.DrawingRect)
+  commentId: M:DrawnUi.Draw.DrawingRect.IntersectsWith(DrawnUi.Draw.DrawingRect)
+  id: IntersectsWith(DrawnUi.Draw.DrawingRect)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: IntersectsWith(DrawingRect)
+  nameWithType: DrawingRect.IntersectsWith(DrawingRect)
+  fullName: DrawnUi.Draw.DrawingRect.IntersectsWith(DrawnUi.Draw.DrawingRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IntersectsWith
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 93
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IntersectsWith(DrawingRect other)
+    parameters:
+    - id: other
+      type: DrawnUi.Draw.DrawingRect
+    return:
+      type: System.Boolean
+    content.vb: Public Function IntersectsWith(other As DrawingRect) As Boolean
+  overload: DrawnUi.Draw.DrawingRect.IntersectsWith*
+- uid: DrawnUi.Draw.DrawingRect.IntersectsWith(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.DrawingRect.IntersectsWith(SkiaSharp.SKRect)
+  id: IntersectsWith(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: IntersectsWith(SKRect)
+  nameWithType: DrawingRect.IntersectsWith(SKRect)
+  fullName: DrawnUi.Draw.DrawingRect.IntersectsWith(SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IntersectsWith
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 99
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IntersectsWith(SKRect other)
+    parameters:
+    - id: other
+      type: SkiaSharp.SKRect
+    return:
+      type: System.Boolean
+    content.vb: Public Function IntersectsWith(other As SKRect) As Boolean
+  overload: DrawnUi.Draw.DrawingRect.IntersectsWith*
+- uid: DrawnUi.Draw.DrawingRect.IntersectsWith(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DrawingRect.IntersectsWith(System.Single,System.Single,System.Single,System.Single)
+  id: IntersectsWith(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: IntersectsWith(float, float, float, float)
+  nameWithType: DrawingRect.IntersectsWith(float, float, float, float)
+  fullName: DrawnUi.Draw.DrawingRect.IntersectsWith(float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IntersectsWith
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 105
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IntersectsWith(float left, float top, float right, float bottom)
+    parameters:
+    - id: left
+      type: System.Single
+    - id: top
+      type: System.Single
+    - id: right
+      type: System.Single
+    - id: bottom
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Public Function IntersectsWith(left As Single, top As Single, right As Single, bottom As Single) As Boolean
+  overload: DrawnUi.Draw.DrawingRect.IntersectsWith*
+  nameWithType.vb: DrawingRect.IntersectsWith(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.DrawingRect.IntersectsWith(Single, Single, Single, Single)
+  name.vb: IntersectsWith(Single, Single, Single, Single)
+- uid: DrawnUi.Draw.DrawingRect.Contains(System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.DrawingRect.Contains(System.Single,System.Single)
+  id: Contains(System.Single,System.Single)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Contains(float, float)
+  nameWithType: DrawingRect.Contains(float, float)
+  fullName: DrawnUi.Draw.DrawingRect.Contains(float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Contains
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 111
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool Contains(float x, float y)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Public Function Contains(x As Single, y As Single) As Boolean
+  overload: DrawnUi.Draw.DrawingRect.Contains*
+  nameWithType.vb: DrawingRect.Contains(Single, Single)
+  fullName.vb: DrawnUi.Draw.DrawingRect.Contains(Single, Single)
+  name.vb: Contains(Single, Single)
+- uid: DrawnUi.Draw.DrawingRect.Contains(DrawnUi.Draw.DrawingRect)
+  commentId: M:DrawnUi.Draw.DrawingRect.Contains(DrawnUi.Draw.DrawingRect)
+  id: Contains(DrawnUi.Draw.DrawingRect)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Contains(DrawingRect)
+  nameWithType: DrawingRect.Contains(DrawingRect)
+  fullName: DrawnUi.Draw.DrawingRect.Contains(DrawnUi.Draw.DrawingRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Contains
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 117
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool Contains(DrawingRect other)
+    parameters:
+    - id: other
+      type: DrawnUi.Draw.DrawingRect
+    return:
+      type: System.Boolean
+    content.vb: Public Function Contains(other As DrawingRect) As Boolean
+  overload: DrawnUi.Draw.DrawingRect.Contains*
+- uid: DrawnUi.Draw.DrawingRect.ToSkia
+  commentId: M:DrawnUi.Draw.DrawingRect.ToSkia
+  id: ToSkia
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: ToSkia()
+  nameWithType: DrawingRect.ToSkia()
+  fullName: DrawnUi.Draw.DrawingRect.ToSkia()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToSkia
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 123
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKRect ToSkia()
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public Function ToSkia() As SKRect
+  overload: DrawnUi.Draw.DrawingRect.ToSkia*
+- uid: DrawnUi.Draw.DrawingRect.ToRect
+  commentId: M:DrawnUi.Draw.DrawingRect.ToRect
+  id: ToRect
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: ToRect()
+  nameWithType: DrawingRect.ToRect()
+  fullName: DrawnUi.Draw.DrawingRect.ToRect()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToRect
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 128
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Rect ToRect()
+    return:
+      type: Microsoft.Maui.Graphics.Rect
+    content.vb: Public Function ToRect() As Rect
+  overload: DrawnUi.Draw.DrawingRect.ToRect*
+- uid: DrawnUi.Draw.DrawingRect.Empty
+  commentId: P:DrawnUi.Draw.DrawingRect.Empty
+  id: Empty
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Empty
+  nameWithType: DrawingRect.Empty
+  fullName: DrawnUi.Draw.DrawingRect.Empty
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Empty
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 133
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static DrawingRect Empty { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.DrawingRect
+    content.vb: Public Shared ReadOnly Property Empty As DrawingRect
+  overload: DrawnUi.Draw.DrawingRect.Empty*
+- uid: DrawnUi.Draw.DrawingRect.Clone
+  commentId: M:DrawnUi.Draw.DrawingRect.Clone
+  id: Clone
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Clone()
+  nameWithType: DrawingRect.Clone()
+  fullName: DrawnUi.Draw.DrawingRect.Clone()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clone
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 135
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public DrawingRect Clone()
+    return:
+      type: DrawnUi.Draw.DrawingRect
+    content.vb: Public Function Clone() As DrawingRect
+  overload: DrawnUi.Draw.DrawingRect.Clone*
+- uid: DrawnUi.Draw.DrawingRect.Compare(DrawnUi.Draw.DrawingRect)
+  commentId: M:DrawnUi.Draw.DrawingRect.Compare(DrawnUi.Draw.DrawingRect)
+  id: Compare(DrawnUi.Draw.DrawingRect)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Compare(DrawingRect)
+  nameWithType: DrawingRect.Compare(DrawingRect)
+  fullName: DrawnUi.Draw.DrawingRect.Compare(DrawnUi.Draw.DrawingRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Compare
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 140
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool Compare(DrawingRect b)
+    parameters:
+    - id: b
+      type: DrawnUi.Draw.DrawingRect
+    return:
+      type: System.Boolean
+    content.vb: Public Function Compare(b As DrawingRect) As Boolean
+  overload: DrawnUi.Draw.DrawingRect.Compare*
+- uid: DrawnUi.Draw.DrawingRect.Equals(System.Object)
+  commentId: M:DrawnUi.Draw.DrawingRect.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: DrawingRect.Equals(object)
+  fullName: DrawnUi.Draw.DrawingRect.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Equals
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 159
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: DrawnUi.Draw.DrawingRect.Equals*
+  nameWithType.vb: DrawingRect.Equals(Object)
+  fullName.vb: DrawnUi.Draw.DrawingRect.Equals(Object)
+  name.vb: Equals(Object)
+- uid: DrawnUi.Draw.DrawingRect.GetHashCode
+  commentId: M:DrawnUi.Draw.DrawingRect.GetHashCode
+  id: GetHashCode
+  parent: DrawnUi.Draw.DrawingRect
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: DrawingRect.GetHashCode()
+  fullName: DrawnUi.Draw.DrawingRect.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetHashCode
+    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    startLine: 172
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: DrawnUi.Draw.DrawingRect.GetHashCode*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.DrawingRect.#ctor*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.#ctor
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect__ctor
+  name: DrawingRect
+  nameWithType: DrawingRect.DrawingRect
+  fullName: DrawnUi.Draw.DrawingRect.DrawingRect
+  nameWithType.vb: DrawingRect.New
+  fullName.vb: DrawnUi.Draw.DrawingRect.New
+  name.vb: New
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.DrawingRect.Offset*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Offset
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Offset_System_Single_System_Single_
+  name: Offset
+  nameWithType: DrawingRect.Offset
+  fullName: DrawnUi.Draw.DrawingRect.Offset
+- uid: DrawnUi.Draw.DrawingRect.Set*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Set
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Set_System_Single_System_Single_System_Single_System_Single_
+  name: Set
+  nameWithType: DrawingRect.Set
+  fullName: DrawnUi.Draw.DrawingRect.Set
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.DrawingRect.Left*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Left
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Left
+  name: Left
+  nameWithType: DrawingRect.Left
+  fullName: DrawnUi.Draw.DrawingRect.Left
+- uid: DrawnUi.Draw.DrawingRect.Top*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Top
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Top
+  name: Top
+  nameWithType: DrawingRect.Top
+  fullName: DrawnUi.Draw.DrawingRect.Top
+- uid: DrawnUi.Draw.DrawingRect.Right*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Right
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Right
+  name: Right
+  nameWithType: DrawingRect.Right
+  fullName: DrawnUi.Draw.DrawingRect.Right
+- uid: DrawnUi.Draw.DrawingRect.Bottom*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Bottom
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Bottom
+  name: Bottom
+  nameWithType: DrawingRect.Bottom
+  fullName: DrawnUi.Draw.DrawingRect.Bottom
+- uid: DrawnUi.Draw.DrawingRect.Width*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Width
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Width
+  name: Width
+  nameWithType: DrawingRect.Width
+  fullName: DrawnUi.Draw.DrawingRect.Width
+- uid: DrawnUi.Draw.DrawingRect.Height*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Height
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Height
+  name: Height
+  nameWithType: DrawingRect.Height
+  fullName: DrawnUi.Draw.DrawingRect.Height
+- uid: DrawnUi.Draw.DrawingRect.MidY*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.MidY
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_MidY
+  name: MidY
+  nameWithType: DrawingRect.MidY
+  fullName: DrawnUi.Draw.DrawingRect.MidY
+- uid: DrawnUi.Draw.DrawingRect.MidX*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.MidX
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_MidX
+  name: MidX
+  nameWithType: DrawingRect.MidX
+  fullName: DrawnUi.Draw.DrawingRect.MidX
+- uid: DrawnUi.Draw.DrawingRect.IntersectsWith*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.IntersectsWith
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_IntersectsWith_DrawnUi_Draw_DrawingRect_
+  name: IntersectsWith
+  nameWithType: DrawingRect.IntersectsWith
+  fullName: DrawnUi.Draw.DrawingRect.IntersectsWith
+- uid: DrawnUi.Draw.DrawingRect
+  commentId: T:DrawnUi.Draw.DrawingRect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawingRect.html
+  name: DrawingRect
+  nameWithType: DrawingRect
+  fullName: DrawnUi.Draw.DrawingRect
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.DrawingRect.Contains*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Contains
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Contains_System_Single_System_Single_
+  name: Contains
+  nameWithType: DrawingRect.Contains
+  fullName: DrawnUi.Draw.DrawingRect.Contains
+- uid: DrawnUi.Draw.DrawingRect.ToSkia*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.ToSkia
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_ToSkia
+  name: ToSkia
+  nameWithType: DrawingRect.ToSkia
+  fullName: DrawnUi.Draw.DrawingRect.ToSkia
+- uid: DrawnUi.Draw.DrawingRect.ToRect*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.ToRect
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_ToRect
+  name: ToRect
+  nameWithType: DrawingRect.ToRect
+  fullName: DrawnUi.Draw.DrawingRect.ToRect
+- uid: Microsoft.Maui.Graphics.Rect
+  commentId: T:Microsoft.Maui.Graphics.Rect
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect
+  name: Rect
+  nameWithType: Rect
+  fullName: Microsoft.Maui.Graphics.Rect
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.DrawingRect.Empty*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Empty
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Empty
+  name: Empty
+  nameWithType: DrawingRect.Empty
+  fullName: DrawnUi.Draw.DrawingRect.Empty
+- uid: DrawnUi.Draw.DrawingRect.Clone*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Clone
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Clone
+  name: Clone
+  nameWithType: DrawingRect.Clone
+  fullName: DrawnUi.Draw.DrawingRect.Clone
+- uid: DrawnUi.Draw.DrawingRect.Compare*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Compare
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Compare_DrawnUi_Draw_DrawingRect_
+  name: Compare
+  nameWithType: DrawingRect.Compare
+  fullName: DrawnUi.Draw.DrawingRect.Compare
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.DrawingRect.Equals*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.Equals
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_Equals_System_Object_
+  name: Equals
+  nameWithType: DrawingRect.Equals
+  fullName: DrawnUi.Draw.DrawingRect.Equals
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.DrawingRect.GetHashCode*
+  commentId: Overload:DrawnUi.Draw.DrawingRect.GetHashCode
+  href: DrawnUi.Draw.DrawingRect.html#DrawnUi_Draw_DrawingRect_GetHashCode
+  name: GetHashCode
+  nameWithType: DrawingRect.GetHashCode
+  fullName: DrawnUi.Draw.DrawingRect.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>DrawnUi Documentation | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="DrawnUi Documentation | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/README.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="drawnui-documentation">DrawnUi Documentation</h1>
+
+<p>This folder contains the DocFX-based documentation for DrawnUi.</p>
+<h2 id="building-the-documentation">Building the Documentation</h2>
+<h3 id="option-1-using-net-tool-recommended">Option 1: Using .NET Tool (Recommended)</h3>
+<p>To build the documentation locally:</p>
+<ol>
+<li><p>Install DocFX as a .NET global tool:</p>
+<pre><code>dotnet tool install -g docfx
+</code></pre>
+</li>
+<li><p>Navigate to the docs folder:</p>
+<pre><code>cd docs
+</code></pre>
+</li>
+<li><p>Build the documentation:</p>
+<pre><code>docfx build
+</code></pre>
+</li>
+<li><p>Preview the documentation:</p>
+<pre><code>docfx serve _site
+</code></pre>
+</li>
+</ol>
+<h3 id="option-2-using-docker">Option 2: Using Docker</h3>
+<p>If you don't have .NET installed, you can use Docker:</p>
+<pre><code class="lang-bash"># From the repository root
+docker run --rm -it -v ${PWD}:/app -w /app/docs mcr.microsoft.com/dotnet/sdk:7.0 bash -c &quot;dotnet tool install -g docfx &amp;&amp; docfx build&quot;
+</code></pre>
+<h3 id="option-3-using-npm-package-alternative">Option 3: Using NPM Package (Alternative)</h3>
+<p>For environments where .NET isn't available:</p>
+<ol>
+<li><p>Install docfx via npm:</p>
+<pre><code>npm install -g @tsgkadot/docfx-flavored-markdown
+</code></pre>
+</li>
+<li><p>Build the documentation:</p>
+<pre><code>dfm build
+</code></pre>
+</li>
+</ol>
+<h2 id="documentation-structure">Documentation Structure</h2>
+<ul>
+<li><code>/api/</code>: Auto-generated API documentation from XML comments</li>
+<li><code>/articles/</code>: Conceptual documentation articles and tutorials</li>
+<li><code>/images/</code>: Images used in the documentation</li>
+<li><code>/templates/</code>: DocFX templates for styling</li>
+</ul>
+<h2 id="contributing-to-the-documentation">Contributing to the Documentation</h2>
+<p>When contributing to the documentation:</p>
+<ol>
+<li>For API documentation, add XML comments to the code in the DrawnUi source files</li>
+<li>For conceptual documentation, edit or create Markdown files in the <code>/articles/</code> folder</li>
+<li>After making changes, build the documentation to verify it renders correctly</li>
+</ol>
+<h2 id="api-documentation-guidelines">API Documentation Guidelines</h2>
+<p>When adding XML comments to your code:</p>
+<ul>
+<li>Use the <code>&lt;summary&gt;</code> tag to provide a brief description of the class/method/property</li>
+<li>Use the <code>&lt;param&gt;</code> tag to document parameters</li>
+<li>Use the <code>&lt;returns&gt;</code> tag to document return values</li>
+<li>Use the <code>&lt;example&gt;</code> tag to provide usage examples</li>
+<li>Use <code>&lt;see cref=&quot;...&quot;/&gt;</code> to create links to other types/members</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/README.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

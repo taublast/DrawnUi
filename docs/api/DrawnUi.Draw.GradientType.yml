@@ -1,0 +1,312 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.GradientType
+  commentId: T:DrawnUi.Draw.GradientType
+  id: GradientType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.GradientType.Circular
+  - DrawnUi.Draw.GradientType.Conical
+  - DrawnUi.Draw.GradientType.Linear
+  - DrawnUi.Draw.GradientType.None
+  - DrawnUi.Draw.GradientType.Oval
+  - DrawnUi.Draw.GradientType.Sweep
+  langs:
+  - csharp
+  - vb
+  name: GradientType
+  nameWithType: GradientType
+  fullName: DrawnUi.Draw.GradientType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GradientType
+    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum GradientType
+    content.vb: Public Enum GradientType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.GradientType.None
+  commentId: F:DrawnUi.Draw.GradientType.None
+  id: None
+  parent: DrawnUi.Draw.GradientType
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: GradientType.None
+  fullName: DrawnUi.Draw.GradientType.None
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: None
+    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: None = 0
+    return:
+      type: DrawnUi.Draw.GradientType
+- uid: DrawnUi.Draw.GradientType.Linear
+  commentId: F:DrawnUi.Draw.GradientType.Linear
+  id: Linear
+  parent: DrawnUi.Draw.GradientType
+  langs:
+  - csharp
+  - vb
+  name: Linear
+  nameWithType: GradientType.Linear
+  fullName: DrawnUi.Draw.GradientType.Linear
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Linear
+    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Linear = 1
+    return:
+      type: DrawnUi.Draw.GradientType
+- uid: DrawnUi.Draw.GradientType.Circular
+  commentId: F:DrawnUi.Draw.GradientType.Circular
+  id: Circular
+  parent: DrawnUi.Draw.GradientType
+  langs:
+  - csharp
+  - vb
+  name: Circular
+  nameWithType: GradientType.Circular
+  fullName: DrawnUi.Draw.GradientType.Circular
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Circular
+    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Circular = 2
+    return:
+      type: DrawnUi.Draw.GradientType
+- uid: DrawnUi.Draw.GradientType.Oval
+  commentId: F:DrawnUi.Draw.GradientType.Oval
+  id: Oval
+  parent: DrawnUi.Draw.GradientType
+  langs:
+  - csharp
+  - vb
+  name: Oval
+  nameWithType: GradientType.Oval
+  fullName: DrawnUi.Draw.GradientType.Oval
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Oval
+    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Oval = 3
+    return:
+      type: DrawnUi.Draw.GradientType
+- uid: DrawnUi.Draw.GradientType.Sweep
+  commentId: F:DrawnUi.Draw.GradientType.Sweep
+  id: Sweep
+  parent: DrawnUi.Draw.GradientType
+  langs:
+  - csharp
+  - vb
+  name: Sweep
+  nameWithType: GradientType.Sweep
+  fullName: DrawnUi.Draw.GradientType.Sweep
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Sweep
+    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Sweep = 4
+    return:
+      type: DrawnUi.Draw.GradientType
+- uid: DrawnUi.Draw.GradientType.Conical
+  commentId: F:DrawnUi.Draw.GradientType.Conical
+  id: Conical
+  parent: DrawnUi.Draw.GradientType
+  langs:
+  - csharp
+  - vb
+  name: Conical
+  nameWithType: GradientType.Conical
+  fullName: DrawnUi.Draw.GradientType.Conical
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Conical
+    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Conical = 5
+    return:
+      type: DrawnUi.Draw.GradientType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.GradientType
+  commentId: T:DrawnUi.Draw.GradientType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.GradientType.html
+  name: GradientType
+  nameWithType: GradientType
+  fullName: DrawnUi.Draw.GradientType

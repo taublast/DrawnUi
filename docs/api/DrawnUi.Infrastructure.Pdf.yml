@@ -1,0 +1,806 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Pdf
+  commentId: T:DrawnUi.Infrastructure.Pdf
+  id: Pdf
+  parent: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches(DrawnUi.Infrastructure.PaperFormat)
+  - DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(DrawnUi.Infrastructure.PaperFormat,System.Int32)
+  - DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize,System.Int32)
+  - DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize,System.Single)
+  - DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters(SkiaSharp.SKSize,System.Int32)
+  - DrawnUi.Infrastructure.Pdf.SplitStackToPages(DrawnUi.Draw.SkiaControl,System.Boolean,SkiaSharp.SKSize,System.Single)
+  - DrawnUi.Infrastructure.Pdf.SplitToPages(SkiaSharp.SKSize,SkiaSharp.SKSize)
+  langs:
+  - csharp
+  - vb
+  name: Pdf
+  nameWithType: Pdf
+  fullName: DrawnUi.Infrastructure.Pdf
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Pdf
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public static class Pdf
+    content.vb: Public Module Pdf
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(DrawnUi.Infrastructure.PaperFormat,System.Int32)
+  commentId: M:DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(DrawnUi.Infrastructure.PaperFormat,System.Int32)
+  id: GetPaperSizePixels(DrawnUi.Infrastructure.PaperFormat,System.Int32)
+  parent: DrawnUi.Infrastructure.Pdf
+  langs:
+  - csharp
+  - vb
+  name: GetPaperSizePixels(PaperFormat, int)
+  nameWithType: Pdf.GetPaperSizePixels(PaperFormat, int)
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(DrawnUi.Infrastructure.PaperFormat, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetPaperSizePixels
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 42
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Gets the paper size in pixels for a given paper format and DPI.
+  example: []
+  syntax:
+    content: public static SKSize GetPaperSizePixels(PaperFormat format, int dpi)
+    parameters:
+    - id: format
+      type: DrawnUi.Infrastructure.PaperFormat
+      description: The paper format.
+    - id: dpi
+      type: System.Int32
+      description: The dots per inch (DPI) value.
+    return:
+      type: SkiaSharp.SKSize
+      description: The paper size in pixels as an SKSize.
+    content.vb: Public Shared Function GetPaperSizePixels(format As PaperFormat, dpi As Integer) As SKSize
+  overload: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels*
+  nameWithType.vb: Pdf.GetPaperSizePixels(PaperFormat, Integer)
+  fullName.vb: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(DrawnUi.Infrastructure.PaperFormat, Integer)
+  name.vb: GetPaperSizePixels(PaperFormat, Integer)
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize,System.Int32)
+  commentId: M:DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize,System.Int32)
+  id: GetPaperSizePixels(SkiaSharp.SKSize,System.Int32)
+  parent: DrawnUi.Infrastructure.Pdf
+  langs:
+  - csharp
+  - vb
+  name: GetPaperSizePixels(SKSize, int)
+  nameWithType: Pdf.GetPaperSizePixels(SKSize, int)
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetPaperSizePixels
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Gets the paper size in pixels for a custom paper size in inches and DPI.
+  example: []
+  syntax:
+    content: public static SKSize GetPaperSizePixels(SKSize paperSizeInInches, int dpi)
+    parameters:
+    - id: paperSizeInInches
+      type: SkiaSharp.SKSize
+      description: The paper size in inches.
+    - id: dpi
+      type: System.Int32
+      description: The dots per inch (DPI) value.
+    return:
+      type: SkiaSharp.SKSize
+      description: The paper size in pixels as an SKSize.
+    content.vb: Public Shared Function GetPaperSizePixels(paperSizeInInches As SKSize, dpi As Integer) As SKSize
+  overload: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels*
+  nameWithType.vb: Pdf.GetPaperSizePixels(SKSize, Integer)
+  fullName.vb: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize, Integer)
+  name.vb: GetPaperSizePixels(SKSize, Integer)
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters(SkiaSharp.SKSize,System.Int32)
+  commentId: M:DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters(SkiaSharp.SKSize,System.Int32)
+  id: GetPaperSizePixelsFromMillimeters(SkiaSharp.SKSize,System.Int32)
+  parent: DrawnUi.Infrastructure.Pdf
+  langs:
+  - csharp
+  - vb
+  name: GetPaperSizePixelsFromMillimeters(SKSize, int)
+  nameWithType: Pdf.GetPaperSizePixelsFromMillimeters(SKSize, int)
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters(SkiaSharp.SKSize, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetPaperSizePixelsFromMillimeters
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 67
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Gets the paper size in pixels for a custom paper size in millimeters and DPI.
+  example: []
+  syntax:
+    content: public static SKSize GetPaperSizePixelsFromMillimeters(SKSize paperSizeInMillimeters, int dpi)
+    parameters:
+    - id: paperSizeInMillimeters
+      type: SkiaSharp.SKSize
+      description: The paper size in millimeters.
+    - id: dpi
+      type: System.Int32
+      description: The dots per inch (DPI) value.
+    return:
+      type: SkiaSharp.SKSize
+      description: The paper size in pixels as an SKSize.
+    content.vb: Public Shared Function GetPaperSizePixelsFromMillimeters(paperSizeInMillimeters As SKSize, dpi As Integer) As SKSize
+  overload: DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters*
+  nameWithType.vb: Pdf.GetPaperSizePixelsFromMillimeters(SKSize, Integer)
+  fullName.vb: DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters(SkiaSharp.SKSize, Integer)
+  name.vb: GetPaperSizePixelsFromMillimeters(SKSize, Integer)
+- uid: DrawnUi.Infrastructure.Pdf.SplitToPages(SkiaSharp.SKSize,SkiaSharp.SKSize)
+  commentId: M:DrawnUi.Infrastructure.Pdf.SplitToPages(SkiaSharp.SKSize,SkiaSharp.SKSize)
+  id: SplitToPages(SkiaSharp.SKSize,SkiaSharp.SKSize)
+  parent: DrawnUi.Infrastructure.Pdf
+  langs:
+  - csharp
+  - vb
+  name: SplitToPages(SKSize, SKSize)
+  nameWithType: Pdf.SplitToPages(SKSize, SKSize)
+  fullName: DrawnUi.Infrastructure.Pdf.SplitToPages(SkiaSharp.SKSize, SkiaSharp.SKSize)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SplitToPages
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 79
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Splits a SkiaStack content into multiple pages based on the provided paper size, considering height only.
+  example: []
+  syntax:
+    content: public static List<PdfPagePosition> SplitToPages(SKSize content, SKSize paper)
+    parameters:
+    - id: content
+      type: SkiaSharp.SKSize
+      description: The size of the content to be split.
+    - id: paper
+      type: SkiaSharp.SKSize
+      description: The size of the paper to split the content into.
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Infrastructure.PdfPagePosition}
+      description: A list of PdfPagePosition representing the positions of the pages.
+    content.vb: Public Shared Function SplitToPages(content As SKSize, paper As SKSize) As List(Of PdfPagePosition)
+  overload: DrawnUi.Infrastructure.Pdf.SplitToPages*
+- uid: DrawnUi.Infrastructure.Pdf.SplitStackToPages(DrawnUi.Draw.SkiaControl,System.Boolean,SkiaSharp.SKSize,System.Single)
+  commentId: M:DrawnUi.Infrastructure.Pdf.SplitStackToPages(DrawnUi.Draw.SkiaControl,System.Boolean,SkiaSharp.SKSize,System.Single)
+  id: SplitStackToPages(DrawnUi.Draw.SkiaControl,System.Boolean,SkiaSharp.SKSize,System.Single)
+  parent: DrawnUi.Infrastructure.Pdf
+  langs:
+  - csharp
+  - vb
+  name: SplitStackToPages(SkiaControl, bool, SKSize, float)
+  nameWithType: Pdf.SplitStackToPages(SkiaControl, bool, SKSize, float)
+  fullName: DrawnUi.Infrastructure.Pdf.SplitStackToPages(DrawnUi.Draw.SkiaControl, bool, SkiaSharp.SKSize, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SplitStackToPages
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 156
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: >-
+    Pages will be split upon first found vertical stick children.
+
+    Must specify if stack is templated.
+
+    If no stack is found will split to pages as usual.
+  example: []
+  syntax:
+    content: public static List<PdfPagePosition> SplitStackToPages(SkiaControl control, bool isTemplated, SKSize paper, float scale = 1)
+    parameters:
+    - id: control
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: isTemplated
+      type: System.Boolean
+      description: ''
+    - id: paper
+      type: SkiaSharp.SKSize
+      description: ''
+    - id: scale
+      type: System.Single
+      description: ''
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Infrastructure.PdfPagePosition}
+      description: ''
+    content.vb: Public Shared Function SplitStackToPages(control As SkiaControl, isTemplated As Boolean, paper As SKSize, scale As Single = 1) As List(Of PdfPagePosition)
+  overload: DrawnUi.Infrastructure.Pdf.SplitStackToPages*
+  nameWithType.vb: Pdf.SplitStackToPages(SkiaControl, Boolean, SKSize, Single)
+  fullName.vb: DrawnUi.Infrastructure.Pdf.SplitStackToPages(DrawnUi.Draw.SkiaControl, Boolean, SkiaSharp.SKSize, Single)
+  name.vb: SplitStackToPages(SkiaControl, Boolean, SKSize, Single)
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize,System.Single)
+  commentId: M:DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize,System.Single)
+  id: GetPaperSizePixels(SkiaSharp.SKSize,System.Single)
+  parent: DrawnUi.Infrastructure.Pdf
+  langs:
+  - csharp
+  - vb
+  name: GetPaperSizePixels(SKSize, float)
+  nameWithType: Pdf.GetPaperSizePixels(SKSize, float)
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetPaperSizePixels
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 231
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Calculates the paper size in pixels based on the paper size in inches and DPI.
+  example: []
+  syntax:
+    content: public static SKSize GetPaperSizePixels(SKSize paperSizeInInches, float dpi)
+    parameters:
+    - id: paperSizeInInches
+      type: SkiaSharp.SKSize
+      description: The paper size in inches.
+    - id: dpi
+      type: System.Single
+      description: The dots per inch (DPI) value.
+    return:
+      type: SkiaSharp.SKSize
+      description: The paper size in pixels as an SKSize.
+    content.vb: Public Shared Function GetPaperSizePixels(paperSizeInInches As SKSize, dpi As Single) As SKSize
+  overload: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels*
+  nameWithType.vb: Pdf.GetPaperSizePixels(SKSize, Single)
+  fullName.vb: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels(SkiaSharp.SKSize, Single)
+  name.vb: GetPaperSizePixels(SKSize, Single)
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches(DrawnUi.Infrastructure.PaperFormat)
+  commentId: M:DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches(DrawnUi.Infrastructure.PaperFormat)
+  id: GetPaperSizeInInches(DrawnUi.Infrastructure.PaperFormat)
+  parent: DrawnUi.Infrastructure.Pdf
+  langs:
+  - csharp
+  - vb
+  name: GetPaperSizeInInches(PaperFormat)
+  nameWithType: Pdf.GetPaperSizeInInches(PaperFormat)
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches(DrawnUi.Infrastructure.PaperFormat)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetPaperSizeInInches
+    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    startLine: 243
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Gets the paper size in inches for a given paper format.
+  example: []
+  syntax:
+    content: public static SKSize GetPaperSizeInInches(PaperFormat format)
+    parameters:
+    - id: format
+      type: DrawnUi.Infrastructure.PaperFormat
+      description: The paper format.
+    return:
+      type: SkiaSharp.SKSize
+      description: The paper size in inches as an SKSize.
+    content.vb: Public Shared Function GetPaperSizeInInches(format As PaperFormat) As SKSize
+  overload: DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches*
+references:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels*
+  commentId: Overload:DrawnUi.Infrastructure.Pdf.GetPaperSizePixels
+  href: DrawnUi.Infrastructure.Pdf.html#DrawnUi_Infrastructure_Pdf_GetPaperSizePixels_DrawnUi_Infrastructure_PaperFormat_System_Int32_
+  name: GetPaperSizePixels
+  nameWithType: Pdf.GetPaperSizePixels
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizePixels
+- uid: DrawnUi.Infrastructure.PaperFormat
+  commentId: T:DrawnUi.Infrastructure.PaperFormat
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.PaperFormat.html
+  name: PaperFormat
+  nameWithType: PaperFormat
+  fullName: DrawnUi.Infrastructure.PaperFormat
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SkiaSharp.SKSize
+  commentId: T:SkiaSharp.SKSize
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksize
+  name: SKSize
+  nameWithType: SKSize
+  fullName: SkiaSharp.SKSize
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters*
+  commentId: Overload:DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters
+  href: DrawnUi.Infrastructure.Pdf.html#DrawnUi_Infrastructure_Pdf_GetPaperSizePixelsFromMillimeters_SkiaSharp_SKSize_System_Int32_
+  name: GetPaperSizePixelsFromMillimeters
+  nameWithType: Pdf.GetPaperSizePixelsFromMillimeters
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizePixelsFromMillimeters
+- uid: DrawnUi.Infrastructure.Pdf.SplitToPages*
+  commentId: Overload:DrawnUi.Infrastructure.Pdf.SplitToPages
+  href: DrawnUi.Infrastructure.Pdf.html#DrawnUi_Infrastructure_Pdf_SplitToPages_SkiaSharp_SKSize_SkiaSharp_SKSize_
+  name: SplitToPages
+  nameWithType: Pdf.SplitToPages
+  fullName: DrawnUi.Infrastructure.Pdf.SplitToPages
+- uid: System.Collections.Generic.List{DrawnUi.Infrastructure.PdfPagePosition}
+  commentId: T:System.Collections.Generic.List{DrawnUi.Infrastructure.PdfPagePosition}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<PdfPagePosition>
+  nameWithType: List<PdfPagePosition>
+  fullName: System.Collections.Generic.List<DrawnUi.Infrastructure.PdfPagePosition>
+  nameWithType.vb: List(Of PdfPagePosition)
+  fullName.vb: System.Collections.Generic.List(Of DrawnUi.Infrastructure.PdfPagePosition)
+  name.vb: List(Of PdfPagePosition)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Infrastructure.PdfPagePosition
+    name: PdfPagePosition
+    href: DrawnUi.Infrastructure.PdfPagePosition.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Infrastructure.PdfPagePosition
+    name: PdfPagePosition
+    href: DrawnUi.Infrastructure.PdfPagePosition.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Infrastructure.Pdf.SplitStackToPages*
+  commentId: Overload:DrawnUi.Infrastructure.Pdf.SplitStackToPages
+  href: DrawnUi.Infrastructure.Pdf.html#DrawnUi_Infrastructure_Pdf_SplitStackToPages_DrawnUi_Draw_SkiaControl_System_Boolean_SkiaSharp_SKSize_System_Single_
+  name: SplitStackToPages
+  nameWithType: Pdf.SplitStackToPages
+  fullName: DrawnUi.Infrastructure.Pdf.SplitStackToPages
+- uid: DrawnUi.Draw.SkiaControl
+  commentId: T:DrawnUi.Draw.SkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl
+  nameWithType: SkiaControl
+  fullName: DrawnUi.Draw.SkiaControl
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches*
+  commentId: Overload:DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches
+  href: DrawnUi.Infrastructure.Pdf.html#DrawnUi_Infrastructure_Pdf_GetPaperSizeInInches_DrawnUi_Infrastructure_PaperFormat_
+  name: GetPaperSizeInInches
+  nameWithType: Pdf.GetPaperSizeInInches
+  fullName: DrawnUi.Infrastructure.Pdf.GetPaperSizeInInches

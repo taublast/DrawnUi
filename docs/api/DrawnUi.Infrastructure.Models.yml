@@ -1,0 +1,154 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.Models
+  commentId: N:DrawnUi.Infrastructure.Models
+  id: DrawnUi.Infrastructure.Models
+  children:
+  - DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs
+  - DrawnUi.Infrastructure.Models.ContentLoadedEventArgs
+  - DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+  - DrawnUi.Infrastructure.Models.LimitedConcurrentQueue`1
+  - DrawnUi.Infrastructure.Models.LimitedQueue`1
+  - DrawnUi.Infrastructure.Models.LimitedStack`1
+  - DrawnUi.Infrastructure.Models.OrderedIndex
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Infrastructure.Models
+  nameWithType: DrawnUi.Infrastructure.Models
+  fullName: DrawnUi.Infrastructure.Models
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+  commentId: T:DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+  href: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html
+  name: ImageSourceResourceStream
+  nameWithType: ImageSourceResourceStream
+  fullName: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+- uid: DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs
+  commentId: T:DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs
+  href: DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs.html
+  name: BitmapLoadedEventArgs
+  nameWithType: BitmapLoadedEventArgs
+  fullName: DrawnUi.Infrastructure.Models.BitmapLoadedEventArgs
+- uid: DrawnUi.Infrastructure.Models.ContentLoadedEventArgs
+  commentId: T:DrawnUi.Infrastructure.Models.ContentLoadedEventArgs
+  parent: DrawnUi.Infrastructure.Models
+  href: DrawnUi.Infrastructure.Models.ContentLoadedEventArgs.html
+  name: ContentLoadedEventArgs
+  nameWithType: ContentLoadedEventArgs
+  fullName: DrawnUi.Infrastructure.Models.ContentLoadedEventArgs
+- uid: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue`1
+  commentId: T:DrawnUi.Infrastructure.Models.LimitedConcurrentQueue`1
+  href: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue-1.html
+  name: LimitedConcurrentQueue<T>
+  nameWithType: LimitedConcurrentQueue<T>
+  fullName: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue<T>
+  nameWithType.vb: LimitedConcurrentQueue(Of T)
+  fullName.vb: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue(Of T)
+  name.vb: LimitedConcurrentQueue(Of T)
+  spec.csharp:
+  - uid: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue`1
+    name: LimitedConcurrentQueue
+    href: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue`1
+    name: LimitedConcurrentQueue
+    href: DrawnUi.Infrastructure.Models.LimitedConcurrentQueue-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Infrastructure.Models.LimitedQueue`1
+  commentId: T:DrawnUi.Infrastructure.Models.LimitedQueue`1
+  href: DrawnUi.Infrastructure.Models.LimitedQueue-1.html
+  name: LimitedQueue<T>
+  nameWithType: LimitedQueue<T>
+  fullName: DrawnUi.Infrastructure.Models.LimitedQueue<T>
+  nameWithType.vb: LimitedQueue(Of T)
+  fullName.vb: DrawnUi.Infrastructure.Models.LimitedQueue(Of T)
+  name.vb: LimitedQueue(Of T)
+  spec.csharp:
+  - uid: DrawnUi.Infrastructure.Models.LimitedQueue`1
+    name: LimitedQueue
+    href: DrawnUi.Infrastructure.Models.LimitedQueue-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: DrawnUi.Infrastructure.Models.LimitedQueue`1
+    name: LimitedQueue
+    href: DrawnUi.Infrastructure.Models.LimitedQueue-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Infrastructure.Models.LimitedStack`1
+  commentId: T:DrawnUi.Infrastructure.Models.LimitedStack`1
+  href: DrawnUi.Infrastructure.Models.LimitedStack-1.html
+  name: LimitedStack<T>
+  nameWithType: LimitedStack<T>
+  fullName: DrawnUi.Infrastructure.Models.LimitedStack<T>
+  nameWithType.vb: LimitedStack(Of T)
+  fullName.vb: DrawnUi.Infrastructure.Models.LimitedStack(Of T)
+  name.vb: LimitedStack(Of T)
+  spec.csharp:
+  - uid: DrawnUi.Infrastructure.Models.LimitedStack`1
+    name: LimitedStack
+    href: DrawnUi.Infrastructure.Models.LimitedStack-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: DrawnUi.Infrastructure.Models.LimitedStack`1
+    name: LimitedStack
+    href: DrawnUi.Infrastructure.Models.LimitedStack-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Infrastructure.Models.OrderedIndex
+  commentId: T:DrawnUi.Infrastructure.Models.OrderedIndex
+  parent: DrawnUi.Infrastructure.Models
+  href: DrawnUi.Infrastructure.Models.OrderedIndex.html
+  name: OrderedIndex
+  nameWithType: OrderedIndex
+  fullName: DrawnUi.Infrastructure.Models.OrderedIndex
+- uid: DrawnUi.Infrastructure.Models
+  commentId: N:DrawnUi.Infrastructure.Models
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure.Models
+  nameWithType: DrawnUi.Infrastructure.Models
+  fullName: DrawnUi.Infrastructure.Models
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Models
+    name: Models
+    href: DrawnUi.Infrastructure.Models.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  - name: .
+  - uid: DrawnUi.Infrastructure.Models
+    name: Models
+    href: DrawnUi.Infrastructure.Models.html

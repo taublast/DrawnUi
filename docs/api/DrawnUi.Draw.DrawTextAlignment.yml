@@ -1,0 +1,339 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.DrawTextAlignment
+  commentId: T:DrawnUi.Draw.DrawTextAlignment
+  id: DrawTextAlignment
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.DrawTextAlignment.Center
+  - DrawnUi.Draw.DrawTextAlignment.End
+  - DrawnUi.Draw.DrawTextAlignment.FillCharacters
+  - DrawnUi.Draw.DrawTextAlignment.FillCharactersFull
+  - DrawnUi.Draw.DrawTextAlignment.FillWords
+  - DrawnUi.Draw.DrawTextAlignment.FillWordsFull
+  - DrawnUi.Draw.DrawTextAlignment.Start
+  langs:
+  - csharp
+  - vb
+  name: DrawTextAlignment
+  nameWithType: DrawTextAlignment
+  fullName: DrawnUi.Draw.DrawTextAlignment
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawTextAlignment
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum DrawTextAlignment
+    content.vb: Public Enum DrawTextAlignment
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.DrawTextAlignment.Start
+  commentId: F:DrawnUi.Draw.DrawTextAlignment.Start
+  id: Start
+  parent: DrawnUi.Draw.DrawTextAlignment
+  langs:
+  - csharp
+  - vb
+  name: Start
+  nameWithType: DrawTextAlignment.Start
+  fullName: DrawnUi.Draw.DrawTextAlignment.Start
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Start
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Start = 0
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+- uid: DrawnUi.Draw.DrawTextAlignment.Center
+  commentId: F:DrawnUi.Draw.DrawTextAlignment.Center
+  id: Center
+  parent: DrawnUi.Draw.DrawTextAlignment
+  langs:
+  - csharp
+  - vb
+  name: Center
+  nameWithType: DrawTextAlignment.Center
+  fullName: DrawnUi.Draw.DrawTextAlignment.Center
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Center
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Center = 1
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+- uid: DrawnUi.Draw.DrawTextAlignment.End
+  commentId: F:DrawnUi.Draw.DrawTextAlignment.End
+  id: End
+  parent: DrawnUi.Draw.DrawTextAlignment
+  langs:
+  - csharp
+  - vb
+  name: End
+  nameWithType: DrawTextAlignment.End
+  fullName: DrawnUi.Draw.DrawTextAlignment.End
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: End
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: End = 2
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+- uid: DrawnUi.Draw.DrawTextAlignment.FillWords
+  commentId: F:DrawnUi.Draw.DrawTextAlignment.FillWords
+  id: FillWords
+  parent: DrawnUi.Draw.DrawTextAlignment
+  langs:
+  - csharp
+  - vb
+  name: FillWords
+  nameWithType: DrawTextAlignment.FillWords
+  fullName: DrawnUi.Draw.DrawTextAlignment.FillWords
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillWords
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: FillWords = 3
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+- uid: DrawnUi.Draw.DrawTextAlignment.FillWordsFull
+  commentId: F:DrawnUi.Draw.DrawTextAlignment.FillWordsFull
+  id: FillWordsFull
+  parent: DrawnUi.Draw.DrawTextAlignment
+  langs:
+  - csharp
+  - vb
+  name: FillWordsFull
+  nameWithType: DrawTextAlignment.FillWordsFull
+  fullName: DrawnUi.Draw.DrawTextAlignment.FillWordsFull
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillWordsFull
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: FillWordsFull = 4
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+- uid: DrawnUi.Draw.DrawTextAlignment.FillCharacters
+  commentId: F:DrawnUi.Draw.DrawTextAlignment.FillCharacters
+  id: FillCharacters
+  parent: DrawnUi.Draw.DrawTextAlignment
+  langs:
+  - csharp
+  - vb
+  name: FillCharacters
+  nameWithType: DrawTextAlignment.FillCharacters
+  fullName: DrawnUi.Draw.DrawTextAlignment.FillCharacters
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillCharacters
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: FillCharacters = 5
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+- uid: DrawnUi.Draw.DrawTextAlignment.FillCharactersFull
+  commentId: F:DrawnUi.Draw.DrawTextAlignment.FillCharactersFull
+  id: FillCharactersFull
+  parent: DrawnUi.Draw.DrawTextAlignment
+  langs:
+  - csharp
+  - vb
+  name: FillCharactersFull
+  nameWithType: DrawTextAlignment.FillCharactersFull
+  fullName: DrawnUi.Draw.DrawTextAlignment.FillCharactersFull
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillCharactersFull
+    path: ../src/Shared/Draw/Internals/Enums/DrawTextAlignment.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: FillCharactersFull = 6
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.DrawTextAlignment
+  commentId: T:DrawnUi.Draw.DrawTextAlignment
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawTextAlignment.html
+  name: DrawTextAlignment
+  nameWithType: DrawTextAlignment
+  fullName: DrawnUi.Draw.DrawTextAlignment

@@ -1,0 +1,2231 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ISkiaGridLayout
+  commentId: T:DrawnUi.Draw.ISkiaGridLayout
+  id: ISkiaGridLayout
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions
+  - DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing
+  - DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
+  - DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition
+  - DrawnUi.Draw.ISkiaGridLayout.GetColumn(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.ISkiaGridLayout.GetRow(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.ISkiaGridLayout.GetRowSpan(Microsoft.Maui.Controls.BindableObject)
+  - DrawnUi.Draw.ISkiaGridLayout.RowDefinitions
+  - DrawnUi.Draw.ISkiaGridLayout.RowSpacing
+  langs:
+  - csharp
+  - vb
+  name: ISkiaGridLayout
+  nameWithType: ISkiaGridLayout
+  fullName: DrawnUi.Draw.ISkiaGridLayout
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ISkiaGridLayout
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: 'public interface ISkiaGridLayout : ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable'
+    content.vb: Public Interface ISkiaGridLayout Inherits ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
+  inheritedMembers:
+  - DrawnUi.Draw.ISkiaLayout.NeedAutoSize
+  - DrawnUi.Draw.ISkiaLayout.NeedAutoHeight
+  - DrawnUi.Draw.ISkiaLayout.NeedAutoWidth
+  - DrawnUi.Draw.ISkiaControl.VisualLayer
+  - DrawnUi.Draw.ISkiaControl.Parent
+  - DrawnUi.Draw.ISkiaControl.Margin
+  - DrawnUi.Draw.ISkiaControl.Padding
+  - DrawnUi.Draw.ISkiaControl.SetParent(DrawnUi.Draw.IDrawnBase)
+  - DrawnUi.Draw.ISkiaControl.IsGhost
+  - DrawnUi.Draw.ISkiaControl.Clipping
+  - DrawnUi.Draw.ISkiaControl.ZIndex
+  - DrawnUi.Draw.ISkiaControl.OptionalOnBeforeDrawing
+  - DrawnUi.Draw.ISkiaControl.OnBeforeMeasure
+  - DrawnUi.Draw.ISkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.ISkiaControl.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.ISkiaControl.RenderedAtDestination
+  - DrawnUi.Draw.ISkiaControl.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  - DrawnUi.Draw.ISkiaControl.Measure(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.ISkiaControl.HorizontalOptions
+  - DrawnUi.Draw.ISkiaControl.VerticalOptions
+  - DrawnUi.Draw.ISkiaControl.CanDraw
+  - DrawnUi.Draw.IDrawnBase.DrawingRect
+  - DrawnUi.Draw.IDrawnBase.Tag
+  - DrawnUi.Draw.IDrawnBase.IsVisible
+  - DrawnUi.Draw.IDrawnBase.IsDisposed
+  - DrawnUi.Draw.IDrawnBase.IsDisposing
+  - DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+  - DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+  - DrawnUi.Draw.IDrawnBase.Invalidate
+  - DrawnUi.Draw.IDrawnBase.InvalidateParents
+  - DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  - DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  - DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  - DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  - DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  - DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  - DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  - DrawnUi.Draw.IDrawnBase.PostAnimators
+  - DrawnUi.Draw.IDrawnBase.Views
+  - DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.MeasuredSize
+  - DrawnUi.Draw.IDrawnBase.Destination
+  - DrawnUi.Draw.IDrawnBase.HeightRequest
+  - DrawnUi.Draw.IDrawnBase.WidthRequest
+  - DrawnUi.Draw.IDrawnBase.Height
+  - DrawnUi.Draw.IDrawnBase.Width
+  - DrawnUi.Draw.IDrawnBase.TranslationX
+  - DrawnUi.Draw.IDrawnBase.TranslationY
+  - DrawnUi.Draw.IDrawnBase.InputTransparent
+  - DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  - DrawnUi.Draw.IDrawnBase.ClipEffects
+  - DrawnUi.Draw.IDrawnBase.UpdateLocks
+  - DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  - DrawnUi.Draw.IDrawnBase.RenderingScale
+  - DrawnUi.Draw.IDrawnBase.X
+  - DrawnUi.Draw.IDrawnBase.Y
+  - DrawnUi.Draw.IDrawnBase.InvalidateViewport
+  - DrawnUi.Draw.IDrawnBase.Repaint
+  - DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  - DrawnUi.Draw.ICanBeUpdated.Update
+  - DrawnUi.Draw.ILayoutInsideViewport.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
+  - DrawnUi.Draw.ILayoutInsideViewport.GetChildIndexAt(SkiaSharp.SKPoint)
+  - DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  - DrawnUi.Draw.IInsideViewport.OnLoaded
+  - DrawnUi.Draw.IVisibilityAware.OnAppearing
+  - DrawnUi.Draw.IVisibilityAware.OnAppeared
+  - DrawnUi.Draw.IVisibilityAware.OnDisappeared
+  - DrawnUi.Draw.IVisibilityAware.OnDisappearing
+  - System.IDisposable.Dispose
+  extensionMethods:
+  - DrawnUi.Draw.IDrawnBase.DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.ISkiaControl)
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
+  commentId: P:DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
+  id: DefaultColumnDefinition
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: DefaultColumnDefinition
+  nameWithType: ISkiaGridLayout.DefaultColumnDefinition
+  fullName: DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DefaultColumnDefinition
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: ColumnDefinition DefaultColumnDefinition { get; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Controls.ColumnDefinition
+    content.vb: ReadOnly Property DefaultColumnDefinition As ColumnDefinition
+  overload: DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition*
+- uid: DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition
+  commentId: P:DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition
+  id: DefaultRowDefinition
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: DefaultRowDefinition
+  nameWithType: ISkiaGridLayout.DefaultRowDefinition
+  fullName: DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DefaultRowDefinition
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: RowDefinition DefaultRowDefinition { get; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Controls.RowDefinition
+    content.vb: ReadOnly Property DefaultRowDefinition As RowDefinition
+  overload: DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition*
+- uid: DrawnUi.Draw.ISkiaGridLayout.RowDefinitions
+  commentId: P:DrawnUi.Draw.ISkiaGridLayout.RowDefinitions
+  id: RowDefinitions
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: RowDefinitions
+  nameWithType: ISkiaGridLayout.RowDefinitions
+  fullName: DrawnUi.Draw.ISkiaGridLayout.RowDefinitions
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RowDefinitions
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: An IGridRowDefinition collection for the GridLayout instance.
+  example: []
+  syntax:
+    content: IReadOnlyList<IGridRowDefinition> RowDefinitions { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridRowDefinition}
+    content.vb: ReadOnly Property RowDefinitions As IReadOnlyList(Of IGridRowDefinition)
+  overload: DrawnUi.Draw.ISkiaGridLayout.RowDefinitions*
+- uid: DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions
+  commentId: P:DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions
+  id: ColumnDefinitions
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: ColumnDefinitions
+  nameWithType: ISkiaGridLayout.ColumnDefinitions
+  fullName: DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColumnDefinitions
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: An IGridColumnDefinition collection for the GridLayout instance.
+  example: []
+  syntax:
+    content: IReadOnlyList<IGridColumnDefinition> ColumnDefinitions { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridColumnDefinition}
+    content.vb: ReadOnly Property ColumnDefinitions As IReadOnlyList(Of IGridColumnDefinition)
+  overload: DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions*
+- uid: DrawnUi.Draw.ISkiaGridLayout.RowSpacing
+  commentId: P:DrawnUi.Draw.ISkiaGridLayout.RowSpacing
+  id: RowSpacing
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: RowSpacing
+  nameWithType: ISkiaGridLayout.RowSpacing
+  fullName: DrawnUi.Draw.ISkiaGridLayout.RowSpacing
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RowSpacing
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the amount of space left between rows in the GridLayout.
+  example: []
+  syntax:
+    content: double RowSpacing { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property RowSpacing As Double
+  overload: DrawnUi.Draw.ISkiaGridLayout.RowSpacing*
+- uid: DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing
+  commentId: P:DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing
+  id: ColumnSpacing
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: ColumnSpacing
+  nameWithType: ISkiaGridLayout.ColumnSpacing
+  fullName: DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColumnSpacing
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the amount of space left between columns in the GridLayout.
+  example: []
+  syntax:
+    content: double ColumnSpacing { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: ReadOnly Property ColumnSpacing As Double
+  overload: DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing*
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetRow(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.ISkiaGridLayout.GetRow(Microsoft.Maui.Controls.BindableObject)
+  id: GetRow(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: GetRow(BindableObject)
+  nameWithType: ISkiaGridLayout.GetRow(BindableObject)
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetRow(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetRow
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the row of the child element.
+  example: []
+  syntax:
+    content: int GetRow(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+      description: A view that belongs to the Grid layout.
+    return:
+      type: System.Int32
+      description: An integer that represents the row in which the item will appear.
+    content.vb: Function GetRow(view As BindableObject) As Integer
+  overload: DrawnUi.Draw.ISkiaGridLayout.GetRow*
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetRowSpan(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.ISkiaGridLayout.GetRowSpan(Microsoft.Maui.Controls.BindableObject)
+  id: GetRowSpan(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: GetRowSpan(BindableObject)
+  nameWithType: ISkiaGridLayout.GetRowSpan(BindableObject)
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetRowSpan(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetRowSpan
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 41
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the row span of the child element.
+  example: []
+  syntax:
+    content: int GetRowSpan(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+      description: A view that belongs to the Grid layout.
+    return:
+      type: System.Int32
+      description: The row that the child element is in.
+    content.vb: Function GetRowSpan(view As BindableObject) As Integer
+  overload: DrawnUi.Draw.ISkiaGridLayout.GetRowSpan*
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetColumn(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.ISkiaGridLayout.GetColumn(Microsoft.Maui.Controls.BindableObject)
+  id: GetColumn(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: GetColumn(BindableObject)
+  nameWithType: ISkiaGridLayout.GetColumn(BindableObject)
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetColumn(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetColumn
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 48
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the column of the child element.
+  example: []
+  syntax:
+    content: int GetColumn(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+      description: A view that belongs to the Grid layout.
+    return:
+      type: System.Int32
+      description: The column that the child element is in.
+    content.vb: Function GetColumn(view As BindableObject) As Integer
+  overload: DrawnUi.Draw.ISkiaGridLayout.GetColumn*
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan(Microsoft.Maui.Controls.BindableObject)
+  commentId: M:DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan(Microsoft.Maui.Controls.BindableObject)
+  id: GetColumnSpan(Microsoft.Maui.Controls.BindableObject)
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: GetColumnSpan(BindableObject)
+  nameWithType: ISkiaGridLayout.GetColumnSpan(BindableObject)
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan(Microsoft.Maui.Controls.BindableObject)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetColumnSpan
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 55
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the row span of the child element.
+  example: []
+  syntax:
+    content: int GetColumnSpan(BindableObject view)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.BindableObject
+      description: A view that belongs to the Grid layout.
+    return:
+      type: System.Int32
+      description: The row that the child element is in.
+    content.vb: Function GetColumnSpan(view As BindableObject) As Integer
+  overload: DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Draw.ISkiaLayout.NeedAutoSize
+  commentId: P:DrawnUi.Draw.ISkiaLayout.NeedAutoSize
+  parent: DrawnUi.Draw.ISkiaLayout
+  href: DrawnUi.Draw.ISkiaLayout.html#DrawnUi_Draw_ISkiaLayout_NeedAutoSize
+  name: NeedAutoSize
+  nameWithType: ISkiaLayout.NeedAutoSize
+  fullName: DrawnUi.Draw.ISkiaLayout.NeedAutoSize
+- uid: DrawnUi.Draw.ISkiaLayout.NeedAutoHeight
+  commentId: P:DrawnUi.Draw.ISkiaLayout.NeedAutoHeight
+  parent: DrawnUi.Draw.ISkiaLayout
+  href: DrawnUi.Draw.ISkiaLayout.html#DrawnUi_Draw_ISkiaLayout_NeedAutoHeight
+  name: NeedAutoHeight
+  nameWithType: ISkiaLayout.NeedAutoHeight
+  fullName: DrawnUi.Draw.ISkiaLayout.NeedAutoHeight
+- uid: DrawnUi.Draw.ISkiaLayout.NeedAutoWidth
+  commentId: P:DrawnUi.Draw.ISkiaLayout.NeedAutoWidth
+  parent: DrawnUi.Draw.ISkiaLayout
+  href: DrawnUi.Draw.ISkiaLayout.html#DrawnUi_Draw_ISkiaLayout_NeedAutoWidth
+  name: NeedAutoWidth
+  nameWithType: ISkiaLayout.NeedAutoWidth
+  fullName: DrawnUi.Draw.ISkiaLayout.NeedAutoWidth
+- uid: DrawnUi.Draw.ISkiaControl.VisualLayer
+  commentId: P:DrawnUi.Draw.ISkiaControl.VisualLayer
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_VisualLayer
+  name: VisualLayer
+  nameWithType: ISkiaControl.VisualLayer
+  fullName: DrawnUi.Draw.ISkiaControl.VisualLayer
+- uid: DrawnUi.Draw.ISkiaControl.Parent
+  commentId: P:DrawnUi.Draw.ISkiaControl.Parent
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Parent
+  name: Parent
+  nameWithType: ISkiaControl.Parent
+  fullName: DrawnUi.Draw.ISkiaControl.Parent
+- uid: DrawnUi.Draw.ISkiaControl.Margin
+  commentId: P:DrawnUi.Draw.ISkiaControl.Margin
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Margin
+  name: Margin
+  nameWithType: ISkiaControl.Margin
+  fullName: DrawnUi.Draw.ISkiaControl.Margin
+- uid: DrawnUi.Draw.ISkiaControl.Padding
+  commentId: P:DrawnUi.Draw.ISkiaControl.Padding
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Padding
+  name: Padding
+  nameWithType: ISkiaControl.Padding
+  fullName: DrawnUi.Draw.ISkiaControl.Padding
+- uid: DrawnUi.Draw.ISkiaControl.SetParent(DrawnUi.Draw.IDrawnBase)
+  commentId: M:DrawnUi.Draw.ISkiaControl.SetParent(DrawnUi.Draw.IDrawnBase)
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_SetParent_DrawnUi_Draw_IDrawnBase_
+  name: SetParent(IDrawnBase)
+  nameWithType: ISkiaControl.SetParent(IDrawnBase)
+  fullName: DrawnUi.Draw.ISkiaControl.SetParent(DrawnUi.Draw.IDrawnBase)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaControl.SetParent(DrawnUi.Draw.IDrawnBase)
+    name: SetParent
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_SetParent_DrawnUi_Draw_IDrawnBase_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaControl.SetParent(DrawnUi.Draw.IDrawnBase)
+    name: SetParent
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_SetParent_DrawnUi_Draw_IDrawnBase_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: )
+- uid: DrawnUi.Draw.ISkiaControl.IsGhost
+  commentId: P:DrawnUi.Draw.ISkiaControl.IsGhost
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_IsGhost
+  name: IsGhost
+  nameWithType: ISkiaControl.IsGhost
+  fullName: DrawnUi.Draw.ISkiaControl.IsGhost
+- uid: DrawnUi.Draw.ISkiaControl.Clipping
+  commentId: P:DrawnUi.Draw.ISkiaControl.Clipping
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Clipping
+  name: Clipping
+  nameWithType: ISkiaControl.Clipping
+  fullName: DrawnUi.Draw.ISkiaControl.Clipping
+- uid: DrawnUi.Draw.ISkiaControl.ZIndex
+  commentId: P:DrawnUi.Draw.ISkiaControl.ZIndex
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_ZIndex
+  name: ZIndex
+  nameWithType: ISkiaControl.ZIndex
+  fullName: DrawnUi.Draw.ISkiaControl.ZIndex
+- uid: DrawnUi.Draw.ISkiaControl.OptionalOnBeforeDrawing
+  commentId: M:DrawnUi.Draw.ISkiaControl.OptionalOnBeforeDrawing
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_OptionalOnBeforeDrawing
+  name: OptionalOnBeforeDrawing()
+  nameWithType: ISkiaControl.OptionalOnBeforeDrawing()
+  fullName: DrawnUi.Draw.ISkiaControl.OptionalOnBeforeDrawing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaControl.OptionalOnBeforeDrawing
+    name: OptionalOnBeforeDrawing
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_OptionalOnBeforeDrawing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaControl.OptionalOnBeforeDrawing
+    name: OptionalOnBeforeDrawing
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_OptionalOnBeforeDrawing
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ISkiaControl.OnBeforeMeasure
+  commentId: M:DrawnUi.Draw.ISkiaControl.OnBeforeMeasure
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_OnBeforeMeasure
+  name: OnBeforeMeasure()
+  nameWithType: ISkiaControl.OnBeforeMeasure()
+  fullName: DrawnUi.Draw.ISkiaControl.OnBeforeMeasure()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaControl.OnBeforeMeasure
+    name: OnBeforeMeasure
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_OnBeforeMeasure
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaControl.OnBeforeMeasure
+    name: OnBeforeMeasure
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_OnBeforeMeasure
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ISkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.ISkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.ISkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  name: Arrange(SKRect, float, float, float)
+  nameWithType: ISkiaControl.Arrange(SKRect, float, float, float)
+  fullName: DrawnUi.Draw.ISkiaControl.Arrange(SkiaSharp.SKRect, float, float, float)
+  nameWithType.vb: ISkiaControl.Arrange(SKRect, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.ISkiaControl.Arrange(SkiaSharp.SKRect, Single, Single, Single)
+  name.vb: Arrange(SKRect, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: Arrange
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: Arrange
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.ISkiaControl.Render(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.ISkiaControl.Render(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Render_DrawnUi_Draw_DrawingContext_
+  name: Render(DrawingContext)
+  nameWithType: ISkiaControl.Render(DrawingContext)
+  fullName: DrawnUi.Draw.ISkiaControl.Render(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaControl.Render(DrawnUi.Draw.DrawingContext)
+    name: Render
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Render_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaControl.Render(DrawnUi.Draw.DrawingContext)
+    name: Render
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Render_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+- uid: DrawnUi.Draw.ISkiaControl.RenderedAtDestination
+  commentId: P:DrawnUi.Draw.ISkiaControl.RenderedAtDestination
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_RenderedAtDestination
+  name: RenderedAtDestination
+  nameWithType: ISkiaControl.RenderedAtDestination
+  fullName: DrawnUi.Draw.ISkiaControl.RenderedAtDestination
+- uid: DrawnUi.Draw.ISkiaControl.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  commentId: M:DrawnUi.Draw.ISkiaControl.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  parent: DrawnUi.Draw.ISkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_SetChildren_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__
+  name: SetChildren(IEnumerable<SkiaControl>)
+  nameWithType: ISkiaControl.SetChildren(IEnumerable<SkiaControl>)
+  fullName: DrawnUi.Draw.ISkiaControl.SetChildren(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>)
+  nameWithType.vb: ISkiaControl.SetChildren(IEnumerable(Of SkiaControl))
+  fullName.vb: DrawnUi.Draw.ISkiaControl.SetChildren(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl))
+  name.vb: SetChildren(IEnumerable(Of SkiaControl))
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaControl.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+    name: SetChildren
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_SetChildren_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaControl.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+    name: SetChildren
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_SetChildren_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.ISkiaControl.Measure(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.ISkiaControl.Measure(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.ISkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Measure_System_Single_System_Single_System_Single_
+  name: Measure(float, float, float)
+  nameWithType: ISkiaControl.Measure(float, float, float)
+  fullName: DrawnUi.Draw.ISkiaControl.Measure(float, float, float)
+  nameWithType.vb: ISkiaControl.Measure(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.ISkiaControl.Measure(Single, Single, Single)
+  name.vb: Measure(Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ISkiaControl.Measure(System.Single,System.Single,System.Single)
+    name: Measure
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Measure_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ISkiaControl.Measure(System.Single,System.Single,System.Single)
+    name: Measure
+    href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_Measure_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.ISkiaControl.HorizontalOptions
+  commentId: P:DrawnUi.Draw.ISkiaControl.HorizontalOptions
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_HorizontalOptions
+  name: HorizontalOptions
+  nameWithType: ISkiaControl.HorizontalOptions
+  fullName: DrawnUi.Draw.ISkiaControl.HorizontalOptions
+- uid: DrawnUi.Draw.ISkiaControl.VerticalOptions
+  commentId: P:DrawnUi.Draw.ISkiaControl.VerticalOptions
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_VerticalOptions
+  name: VerticalOptions
+  nameWithType: ISkiaControl.VerticalOptions
+  fullName: DrawnUi.Draw.ISkiaControl.VerticalOptions
+- uid: DrawnUi.Draw.ISkiaControl.CanDraw
+  commentId: P:DrawnUi.Draw.ISkiaControl.CanDraw
+  parent: DrawnUi.Draw.ISkiaControl
+  href: DrawnUi.Draw.ISkiaControl.html#DrawnUi_Draw_ISkiaControl_CanDraw
+  name: CanDraw
+  nameWithType: ISkiaControl.CanDraw
+  fullName: DrawnUi.Draw.ISkiaControl.CanDraw
+- uid: DrawnUi.Draw.IDrawnBase.DrawingRect
+  commentId: P:DrawnUi.Draw.IDrawnBase.DrawingRect
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DrawingRect
+  name: DrawingRect
+  nameWithType: IDrawnBase.DrawingRect
+  fullName: DrawnUi.Draw.IDrawnBase.DrawingRect
+- uid: DrawnUi.Draw.IDrawnBase.Tag
+  commentId: P:DrawnUi.Draw.IDrawnBase.Tag
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Tag
+  name: Tag
+  nameWithType: IDrawnBase.Tag
+  fullName: DrawnUi.Draw.IDrawnBase.Tag
+- uid: DrawnUi.Draw.IDrawnBase.IsVisible
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsVisible
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsVisible
+  name: IsVisible
+  nameWithType: IDrawnBase.IsVisible
+  fullName: DrawnUi.Draw.IDrawnBase.IsVisible
+- uid: DrawnUi.Draw.IDrawnBase.IsDisposed
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsDisposed
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsDisposed
+  name: IsDisposed
+  nameWithType: IDrawnBase.IsDisposed
+  fullName: DrawnUi.Draw.IDrawnBase.IsDisposed
+- uid: DrawnUi.Draw.IDrawnBase.IsDisposing
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsDisposing
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsDisposing
+  name: IsDisposing
+  nameWithType: IDrawnBase.IsDisposing
+  fullName: DrawnUi.Draw.IDrawnBase.IsDisposing
+- uid: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+  commentId: M:DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsVisibleInViewTree
+  name: IsVisibleInViewTree()
+  nameWithType: IDrawnBase.IsVisibleInViewTree()
+  fullName: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+    name: IsVisibleInViewTree
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsVisibleInViewTree
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree
+    name: IsVisibleInViewTree
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsVisibleInViewTree
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+  commentId: M:DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+  parent: DrawnUi.Draw.IDrawnBase
+  isExternal: true
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_GetOnScreenVisibleArea_DrawnUi_Draw_DrawingContext_System_Numerics_Vector2_
+  name: GetOnScreenVisibleArea(DrawingContext, Vector2)
+  nameWithType: IDrawnBase.GetOnScreenVisibleArea(DrawingContext, Vector2)
+  fullName: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext, System.Numerics.Vector2)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+    name: GetOnScreenVisibleArea
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_GetOnScreenVisibleArea_DrawnUi_Draw_DrawingContext_System_Numerics_Vector2_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Numerics.Vector2
+    name: Vector2
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
+    name: GetOnScreenVisibleArea
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_GetOnScreenVisibleArea_DrawnUi_Draw_DrawingContext_System_Numerics_Vector2_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Numerics.Vector2
+    name: Vector2
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.Invalidate
+  commentId: M:DrawnUi.Draw.IDrawnBase.Invalidate
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Invalidate
+  name: Invalidate()
+  nameWithType: IDrawnBase.Invalidate()
+  fullName: DrawnUi.Draw.IDrawnBase.Invalidate()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.Invalidate
+    name: Invalidate
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Invalidate
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.Invalidate
+    name: Invalidate
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Invalidate
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateParents
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateParents
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateParents
+  name: InvalidateParents()
+  nameWithType: IDrawnBase.InvalidateParents()
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateParents()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateParents
+    name: InvalidateParents
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateParents
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateParents
+    name: InvalidateParents
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateParents
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  commentId: M:DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  parent: DrawnUi.Draw.IDrawnBase
+  isExternal: true
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ClipSmart_SkiaSharp_SKCanvas_SkiaSharp_SKPath_SkiaSharp_SKClipOperation_
+  name: ClipSmart(SKCanvas, SKPath, SKClipOperation)
+  nameWithType: IDrawnBase.ClipSmart(SKCanvas, SKPath, SKClipOperation)
+  fullName: DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas, SkiaSharp.SKPath, SkiaSharp.SKClipOperation)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+    name: ClipSmart
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ClipSmart_SkiaSharp_SKCanvas_SkiaSharp_SKPath_SkiaSharp_SKClipOperation_
+  - name: (
+  - uid: SkiaSharp.SKCanvas
+    name: SKCanvas
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPath
+    name: SKPath
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKClipOperation
+    name: SKClipOperation
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skclipoperation
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+    name: ClipSmart
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ClipSmart_SkiaSharp_SKCanvas_SkiaSharp_SKPath_SkiaSharp_SKClipOperation_
+  - name: (
+  - uid: SkiaSharp.SKCanvas
+    name: SKCanvas
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPath
+    name: SKPath
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKClipOperation
+    name: SKClipOperation
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skclipoperation
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  commentId: M:DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  parent: DrawnUi.Draw.IDrawnBase
+  isExternal: true
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_
+  name: CreateClip(object, bool, SKPath)
+  nameWithType: IDrawnBase.CreateClip(object, bool, SKPath)
+  fullName: DrawnUi.Draw.IDrawnBase.CreateClip(object, bool, SkiaSharp.SKPath)
+  nameWithType.vb: IDrawnBase.CreateClip(Object, Boolean, SKPath)
+  fullName.vb: DrawnUi.Draw.IDrawnBase.CreateClip(Object, Boolean, SkiaSharp.SKPath)
+  name.vb: CreateClip(Object, Boolean, SKPath)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+    name: CreateClip
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPath
+    name: SKPath
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+    name: CreateClip
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPath
+    name: SKPath
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  commentId: M:DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_
+  name: RegisterAnimator(ISkiaAnimator)
+  nameWithType: IDrawnBase.RegisterAnimator(ISkiaAnimator)
+  fullName: DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+    name: RegisterAnimator
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+    name: RegisterAnimator
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  parent: DrawnUi.Draw.IDrawnBase
+  isExternal: true
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAnimator_System_Guid_
+  name: UnregisterAnimator(Guid)
+  nameWithType: IDrawnBase.UnregisterAnimator(Guid)
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+    name: UnregisterAnimator
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAnimator_System_Guid_
+  - name: (
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)
+    name: UnregisterAnimator
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAnimator_System_Guid_
+  - name: (
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  parent: DrawnUi.Draw.IDrawnBase
+  isExternal: true
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAllAnimatorsByType_System_Type_
+  name: UnregisterAllAnimatorsByType(Type)
+  nameWithType: IDrawnBase.UnregisterAllAnimatorsByType(Type)
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+    name: UnregisterAllAnimatorsByType
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAllAnimatorsByType_System_Type_
+  - name: (
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)
+    name: UnregisterAllAnimatorsByType
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterAllAnimatorsByType_System_Type_
+  - name: (
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  commentId: M:DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  name: RegisterGestureListener(ISkiaGestureListener)
+  nameWithType: IDrawnBase.RegisterGestureListener(ISkiaGestureListener)
+  fullName: DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+    name: RegisterGestureListener
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaGestureListener
+    name: ISkiaGestureListener
+    href: DrawnUi.Draw.ISkiaGestureListener.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+    name: RegisterGestureListener
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RegisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaGestureListener
+    name: ISkiaGestureListener
+    href: DrawnUi.Draw.ISkiaGestureListener.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  name: UnregisterGestureListener(ISkiaGestureListener)
+  nameWithType: IDrawnBase.UnregisterGestureListener(ISkiaGestureListener)
+  fullName: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+    name: UnregisterGestureListener
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaGestureListener
+    name: ISkiaGestureListener
+    href: DrawnUi.Draw.ISkiaGestureListener.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)
+    name: UnregisterGestureListener
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UnregisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaGestureListener
+    name: ISkiaGestureListener
+    href: DrawnUi.Draw.ISkiaGestureListener.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.PostAnimators
+  commentId: P:DrawnUi.Draw.IDrawnBase.PostAnimators
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_PostAnimators
+  name: PostAnimators
+  nameWithType: IDrawnBase.PostAnimators
+  fullName: DrawnUi.Draw.IDrawnBase.PostAnimators
+- uid: DrawnUi.Draw.IDrawnBase.Views
+  commentId: P:DrawnUi.Draw.IDrawnBase.Views
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Views
+  name: Views
+  nameWithType: IDrawnBase.Views
+  fullName: DrawnUi.Draw.IDrawnBase.Views
+- uid: DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_AddSubView_DrawnUi_Draw_SkiaControl_
+  name: AddSubView(SkiaControl)
+  nameWithType: IDrawnBase.AddSubView(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+    name: AddSubView
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_AddSubView_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)
+    name: AddSubView
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_AddSubView_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RemoveSubView_DrawnUi_Draw_SkiaControl_
+  name: RemoveSubView(SkiaControl)
+  nameWithType: IDrawnBase.RemoveSubView(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+    name: RemoveSubView
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RemoveSubView_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)
+    name: RemoveSubView
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RemoveSubView_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.MeasuredSize
+  commentId: P:DrawnUi.Draw.IDrawnBase.MeasuredSize
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_MeasuredSize
+  name: MeasuredSize
+  nameWithType: IDrawnBase.MeasuredSize
+  fullName: DrawnUi.Draw.IDrawnBase.MeasuredSize
+- uid: DrawnUi.Draw.IDrawnBase.Destination
+  commentId: P:DrawnUi.Draw.IDrawnBase.Destination
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Destination
+  name: Destination
+  nameWithType: IDrawnBase.Destination
+  fullName: DrawnUi.Draw.IDrawnBase.Destination
+- uid: DrawnUi.Draw.IDrawnBase.HeightRequest
+  commentId: P:DrawnUi.Draw.IDrawnBase.HeightRequest
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_HeightRequest
+  name: HeightRequest
+  nameWithType: IDrawnBase.HeightRequest
+  fullName: DrawnUi.Draw.IDrawnBase.HeightRequest
+- uid: DrawnUi.Draw.IDrawnBase.WidthRequest
+  commentId: P:DrawnUi.Draw.IDrawnBase.WidthRequest
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_WidthRequest
+  name: WidthRequest
+  nameWithType: IDrawnBase.WidthRequest
+  fullName: DrawnUi.Draw.IDrawnBase.WidthRequest
+- uid: DrawnUi.Draw.IDrawnBase.Height
+  commentId: P:DrawnUi.Draw.IDrawnBase.Height
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Height
+  name: Height
+  nameWithType: IDrawnBase.Height
+  fullName: DrawnUi.Draw.IDrawnBase.Height
+- uid: DrawnUi.Draw.IDrawnBase.Width
+  commentId: P:DrawnUi.Draw.IDrawnBase.Width
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Width
+  name: Width
+  nameWithType: IDrawnBase.Width
+  fullName: DrawnUi.Draw.IDrawnBase.Width
+- uid: DrawnUi.Draw.IDrawnBase.TranslationX
+  commentId: P:DrawnUi.Draw.IDrawnBase.TranslationX
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_TranslationX
+  name: TranslationX
+  nameWithType: IDrawnBase.TranslationX
+  fullName: DrawnUi.Draw.IDrawnBase.TranslationX
+- uid: DrawnUi.Draw.IDrawnBase.TranslationY
+  commentId: P:DrawnUi.Draw.IDrawnBase.TranslationY
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_TranslationY
+  name: TranslationY
+  nameWithType: IDrawnBase.TranslationY
+  fullName: DrawnUi.Draw.IDrawnBase.TranslationY
+- uid: DrawnUi.Draw.IDrawnBase.InputTransparent
+  commentId: P:DrawnUi.Draw.IDrawnBase.InputTransparent
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InputTransparent
+  name: InputTransparent
+  nameWithType: IDrawnBase.InputTransparent
+  fullName: DrawnUi.Draw.IDrawnBase.InputTransparent
+- uid: DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  commentId: P:DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_IsClippedToBounds
+  name: IsClippedToBounds
+  nameWithType: IDrawnBase.IsClippedToBounds
+  fullName: DrawnUi.Draw.IDrawnBase.IsClippedToBounds
+- uid: DrawnUi.Draw.IDrawnBase.ClipEffects
+  commentId: P:DrawnUi.Draw.IDrawnBase.ClipEffects
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ClipEffects
+  name: ClipEffects
+  nameWithType: IDrawnBase.ClipEffects
+  fullName: DrawnUi.Draw.IDrawnBase.ClipEffects
+- uid: DrawnUi.Draw.IDrawnBase.UpdateLocks
+  commentId: P:DrawnUi.Draw.IDrawnBase.UpdateLocks
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UpdateLocks
+  name: UpdateLocks
+  nameWithType: IDrawnBase.UpdateLocks
+  fullName: DrawnUi.Draw.IDrawnBase.UpdateLocks
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateByChild_DrawnUi_Draw_SkiaControl_
+  name: InvalidateByChild(SkiaControl)
+  nameWithType: IDrawnBase.InvalidateByChild(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+    name: InvalidateByChild
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateByChild_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+    name: InvalidateByChild
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateByChild_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UpdateByChild_DrawnUi_Draw_SkiaControl_
+  name: UpdateByChild(SkiaControl)
+  nameWithType: IDrawnBase.UpdateByChild(SkiaControl)
+  fullName: DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+    name: UpdateByChild
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UpdateByChild_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)
+    name: UpdateByChild
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_UpdateByChild_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  commentId: P:DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_ShouldInvalidateByChildren
+  name: ShouldInvalidateByChildren
+  nameWithType: IDrawnBase.ShouldInvalidateByChildren
+  fullName: DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren
+- uid: DrawnUi.Draw.IDrawnBase.RenderingScale
+  commentId: P:DrawnUi.Draw.IDrawnBase.RenderingScale
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_RenderingScale
+  name: RenderingScale
+  nameWithType: IDrawnBase.RenderingScale
+  fullName: DrawnUi.Draw.IDrawnBase.RenderingScale
+- uid: DrawnUi.Draw.IDrawnBase.X
+  commentId: P:DrawnUi.Draw.IDrawnBase.X
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_X
+  name: X
+  nameWithType: IDrawnBase.X
+  fullName: DrawnUi.Draw.IDrawnBase.X
+- uid: DrawnUi.Draw.IDrawnBase.Y
+  commentId: P:DrawnUi.Draw.IDrawnBase.Y
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Y
+  name: Y
+  nameWithType: IDrawnBase.Y
+  fullName: DrawnUi.Draw.IDrawnBase.Y
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateViewport
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateViewport
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewport
+  name: InvalidateViewport()
+  nameWithType: IDrawnBase.InvalidateViewport()
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateViewport()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateViewport
+    name: InvalidateViewport
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewport
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateViewport
+    name: InvalidateViewport
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewport
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.Repaint
+  commentId: M:DrawnUi.Draw.IDrawnBase.Repaint
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Repaint
+  name: Repaint()
+  nameWithType: IDrawnBase.Repaint()
+  fullName: DrawnUi.Draw.IDrawnBase.Repaint()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.Repaint
+    name: Repaint
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Repaint
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.Repaint
+    name: Repaint
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_Repaint
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+  commentId: M:DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+  parent: DrawnUi.Draw.IDrawnBase
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewsList
+  name: InvalidateViewsList()
+  nameWithType: IDrawnBase.InvalidateViewsList()
+  fullName: DrawnUi.Draw.IDrawnBase.InvalidateViewsList()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+    name: InvalidateViewsList
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewsList
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.InvalidateViewsList
+    name: InvalidateViewsList
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewsList
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  parent: DrawnUi.Draw.IDrawnBase
+  isExternal: true
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+  name: DisposeObject(IDisposable)
+  nameWithType: IDrawnBase.DisposeObject(IDisposable)
+  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+    name: DisposeObject
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+  - name: (
+  - uid: System.IDisposable
+    name: IDisposable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+    name: DisposeObject
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+  - name: (
+  - uid: System.IDisposable
+    name: IDisposable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: )
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  commentId: P:DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+  parent: DrawnUi.Draw.ICanBeUpdatedWithContext
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html#DrawnUi_Draw_ICanBeUpdatedWithContext_BindingContext
+  name: BindingContext
+  nameWithType: ICanBeUpdatedWithContext.BindingContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
+- uid: DrawnUi.Draw.ICanBeUpdated.Update
+  commentId: M:DrawnUi.Draw.ICanBeUpdated.Update
+  parent: DrawnUi.Draw.ICanBeUpdated
+  href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  name: Update()
+  nameWithType: ICanBeUpdated.Update()
+  fullName: DrawnUi.Draw.ICanBeUpdated.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ICanBeUpdated.Update
+    name: Update
+    href: DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ILayoutInsideViewport.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
+  commentId: M:DrawnUi.Draw.ILayoutInsideViewport.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
+  parent: DrawnUi.Draw.ILayoutInsideViewport
+  isExternal: true
+  href: DrawnUi.Draw.ILayoutInsideViewport.html#DrawnUi_Draw_ILayoutInsideViewport_GetVisibleChildIndexAt_SkiaSharp_SKPoint_
+  name: GetVisibleChildIndexAt(SKPoint)
+  nameWithType: ILayoutInsideViewport.GetVisibleChildIndexAt(SKPoint)
+  fullName: DrawnUi.Draw.ILayoutInsideViewport.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ILayoutInsideViewport.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
+    name: GetVisibleChildIndexAt
+    href: DrawnUi.Draw.ILayoutInsideViewport.html#DrawnUi_Draw_ILayoutInsideViewport_GetVisibleChildIndexAt_SkiaSharp_SKPoint_
+  - name: (
+  - uid: SkiaSharp.SKPoint
+    name: SKPoint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ILayoutInsideViewport.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
+    name: GetVisibleChildIndexAt
+    href: DrawnUi.Draw.ILayoutInsideViewport.html#DrawnUi_Draw_ILayoutInsideViewport_GetVisibleChildIndexAt_SkiaSharp_SKPoint_
+  - name: (
+  - uid: SkiaSharp.SKPoint
+    name: SKPoint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: )
+- uid: DrawnUi.Draw.ILayoutInsideViewport.GetChildIndexAt(SkiaSharp.SKPoint)
+  commentId: M:DrawnUi.Draw.ILayoutInsideViewport.GetChildIndexAt(SkiaSharp.SKPoint)
+  parent: DrawnUi.Draw.ILayoutInsideViewport
+  isExternal: true
+  href: DrawnUi.Draw.ILayoutInsideViewport.html#DrawnUi_Draw_ILayoutInsideViewport_GetChildIndexAt_SkiaSharp_SKPoint_
+  name: GetChildIndexAt(SKPoint)
+  nameWithType: ILayoutInsideViewport.GetChildIndexAt(SKPoint)
+  fullName: DrawnUi.Draw.ILayoutInsideViewport.GetChildIndexAt(SkiaSharp.SKPoint)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ILayoutInsideViewport.GetChildIndexAt(SkiaSharp.SKPoint)
+    name: GetChildIndexAt
+    href: DrawnUi.Draw.ILayoutInsideViewport.html#DrawnUi_Draw_ILayoutInsideViewport_GetChildIndexAt_SkiaSharp_SKPoint_
+  - name: (
+  - uid: SkiaSharp.SKPoint
+    name: SKPoint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ILayoutInsideViewport.GetChildIndexAt(SkiaSharp.SKPoint)
+    name: GetChildIndexAt
+    href: DrawnUi.Draw.ILayoutInsideViewport.html#DrawnUi_Draw_ILayoutInsideViewport_GetChildIndexAt_SkiaSharp_SKPoint_
+  - name: (
+  - uid: SkiaSharp.SKPoint
+    name: SKPoint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: )
+- uid: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  commentId: M:DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  parent: DrawnUi.Draw.IInsideViewport
+  href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
+  name: OnViewportWasChanged(ScaledRect)
+  nameWithType: IInsideViewport.OnViewportWasChanged(ScaledRect)
+  fullName: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+    name: OnViewportWasChanged
+    href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+    name: OnViewportWasChanged
+    href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+- uid: DrawnUi.Draw.IInsideViewport.OnLoaded
+  commentId: M:DrawnUi.Draw.IInsideViewport.OnLoaded
+  parent: DrawnUi.Draw.IInsideViewport
+  href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnLoaded
+  name: OnLoaded()
+  nameWithType: IInsideViewport.OnLoaded()
+  fullName: DrawnUi.Draw.IInsideViewport.OnLoaded()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IInsideViewport.OnLoaded
+    name: OnLoaded
+    href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnLoaded
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IInsideViewport.OnLoaded
+    name: OnLoaded
+    href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnLoaded
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware.OnAppearing
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnAppearing
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppearing
+  name: OnAppearing()
+  nameWithType: IVisibilityAware.OnAppearing()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnAppearing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppearing
+    name: OnAppearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppearing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppearing
+    name: OnAppearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppearing
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware.OnAppeared
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnAppeared
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppeared
+  name: OnAppeared()
+  nameWithType: IVisibilityAware.OnAppeared()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnAppeared()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppeared
+    name: OnAppeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppeared
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnAppeared
+    name: OnAppeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnAppeared
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware.OnDisappeared
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnDisappeared
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappeared
+  name: OnDisappeared()
+  nameWithType: IVisibilityAware.OnDisappeared()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnDisappeared()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappeared
+    name: OnDisappeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappeared
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappeared
+    name: OnDisappeared
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappeared
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IVisibilityAware.OnDisappearing
+  commentId: M:DrawnUi.Draw.IVisibilityAware.OnDisappearing
+  parent: DrawnUi.Draw.IVisibilityAware
+  href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappearing
+  name: OnDisappearing()
+  nameWithType: IVisibilityAware.OnDisappearing()
+  fullName: DrawnUi.Draw.IVisibilityAware.OnDisappearing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappearing
+    name: OnDisappearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappearing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IVisibilityAware.OnDisappearing
+    name: OnDisappearing
+    href: DrawnUi.Draw.IVisibilityAware.html#DrawnUi_Draw_IVisibilityAware_OnDisappearing
+  - name: (
+  - name: )
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.IDrawnBase.DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.ISkiaControl)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  parent: DrawnUi.Draw.DrawnExtensions
+  definition: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  name: GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  nameWithType: DrawnExtensions.GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  fullName: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase, DrawnUi.Draw.ISkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ISkiaLayout
+  commentId: T:DrawnUi.Draw.ISkiaLayout
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaLayout.html
+  name: ISkiaLayout
+  nameWithType: ISkiaLayout
+  fullName: DrawnUi.Draw.ISkiaLayout
+- uid: DrawnUi.Draw.ISkiaControl
+  commentId: T:DrawnUi.Draw.ISkiaControl
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaControl.html
+  name: ISkiaControl
+  nameWithType: ISkiaControl
+  fullName: DrawnUi.Draw.ISkiaControl
+- uid: DrawnUi.Draw.IDrawnBase
+  commentId: T:DrawnUi.Draw.IDrawnBase
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IDrawnBase.html
+  name: IDrawnBase
+  nameWithType: IDrawnBase
+  fullName: DrawnUi.Draw.IDrawnBase
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext
+  commentId: T:DrawnUi.Draw.ICanBeUpdatedWithContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html
+  name: ICanBeUpdatedWithContext
+  nameWithType: ICanBeUpdatedWithContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext
+- uid: DrawnUi.Draw.ICanBeUpdated
+  commentId: T:DrawnUi.Draw.ICanBeUpdated
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdated.html
+  name: ICanBeUpdated
+  nameWithType: ICanBeUpdated
+  fullName: DrawnUi.Draw.ICanBeUpdated
+- uid: DrawnUi.Draw.ILayoutInsideViewport
+  commentId: T:DrawnUi.Draw.ILayoutInsideViewport
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ILayoutInsideViewport.html
+  name: ILayoutInsideViewport
+  nameWithType: ILayoutInsideViewport
+  fullName: DrawnUi.Draw.ILayoutInsideViewport
+- uid: DrawnUi.Draw.IInsideViewport
+  commentId: T:DrawnUi.Draw.IInsideViewport
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IInsideViewport.html
+  name: IInsideViewport
+  nameWithType: IInsideViewport
+  fullName: DrawnUi.Draw.IInsideViewport
+- uid: DrawnUi.Draw.IVisibilityAware
+  commentId: T:DrawnUi.Draw.IVisibilityAware
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IVisibilityAware.html
+  name: IVisibilityAware
+  nameWithType: IVisibilityAware
+  fullName: DrawnUi.Draw.IVisibilityAware
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  name: GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  nameWithType: DrawnExtensions.GetVelocityRatioForChild(IDrawnBase, ISkiaControl)
+  fullName: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase, DrawnUi.Draw.ISkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+    name: GetVelocityRatioForChild
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.IDrawnBase
+    name: IDrawnBase
+    href: DrawnUi.Draw.IDrawnBase.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ISkiaControl
+    name: ISkiaControl
+    href: DrawnUi.Draw.ISkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.DrawnExtensions
+  commentId: T:DrawnUi.Draw.DrawnExtensions
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawnExtensions.html
+  name: DrawnExtensions
+  nameWithType: DrawnExtensions
+  fullName: DrawnUi.Draw.DrawnExtensions
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_DefaultColumnDefinition
+  name: DefaultColumnDefinition
+  nameWithType: ISkiaGridLayout.DefaultColumnDefinition
+  fullName: DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
+- uid: Microsoft.Maui.Controls.ColumnDefinition
+  commentId: T:Microsoft.Maui.Controls.ColumnDefinition
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.columndefinition
+  name: ColumnDefinition
+  nameWithType: ColumnDefinition
+  fullName: Microsoft.Maui.Controls.ColumnDefinition
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_DefaultRowDefinition
+  name: DefaultRowDefinition
+  nameWithType: ISkiaGridLayout.DefaultRowDefinition
+  fullName: DrawnUi.Draw.ISkiaGridLayout.DefaultRowDefinition
+- uid: Microsoft.Maui.Controls.RowDefinition
+  commentId: T:Microsoft.Maui.Controls.RowDefinition
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.rowdefinition
+  name: RowDefinition
+  nameWithType: RowDefinition
+  fullName: Microsoft.Maui.Controls.RowDefinition
+- uid: DrawnUi.Draw.ISkiaGridLayout.RowDefinitions*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.RowDefinitions
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_RowDefinitions
+  name: RowDefinitions
+  nameWithType: ISkiaGridLayout.RowDefinitions
+  fullName: DrawnUi.Draw.ISkiaGridLayout.RowDefinitions
+- uid: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridRowDefinition}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridRowDefinition}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<IGridRowDefinition>
+  nameWithType: IReadOnlyList<IGridRowDefinition>
+  fullName: System.Collections.Generic.IReadOnlyList<Microsoft.Maui.IGridRowDefinition>
+  nameWithType.vb: IReadOnlyList(Of IGridRowDefinition)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Microsoft.Maui.IGridRowDefinition)
+  name.vb: IReadOnlyList(Of IGridRowDefinition)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Microsoft.Maui.IGridRowDefinition
+    name: IGridRowDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridrowdefinition
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IGridRowDefinition
+    name: IGridRowDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridrowdefinition
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_ColumnDefinitions
+  name: ColumnDefinitions
+  nameWithType: ISkiaGridLayout.ColumnDefinitions
+  fullName: DrawnUi.Draw.ISkiaGridLayout.ColumnDefinitions
+- uid: System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridColumnDefinition}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Microsoft.Maui.IGridColumnDefinition}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<IGridColumnDefinition>
+  nameWithType: IReadOnlyList<IGridColumnDefinition>
+  fullName: System.Collections.Generic.IReadOnlyList<Microsoft.Maui.IGridColumnDefinition>
+  nameWithType.vb: IReadOnlyList(Of IGridColumnDefinition)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Microsoft.Maui.IGridColumnDefinition)
+  name.vb: IReadOnlyList(Of IGridColumnDefinition)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Microsoft.Maui.IGridColumnDefinition
+    name: IGridColumnDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridcolumndefinition
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IGridColumnDefinition
+    name: IGridColumnDefinition
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.igridcolumndefinition
+  - name: )
+- uid: DrawnUi.Draw.ISkiaGridLayout.RowSpacing*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.RowSpacing
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_RowSpacing
+  name: RowSpacing
+  nameWithType: ISkiaGridLayout.RowSpacing
+  fullName: DrawnUi.Draw.ISkiaGridLayout.RowSpacing
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_ColumnSpacing
+  name: ColumnSpacing
+  nameWithType: ISkiaGridLayout.ColumnSpacing
+  fullName: DrawnUi.Draw.ISkiaGridLayout.ColumnSpacing
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetRow*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.GetRow
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_GetRow_Microsoft_Maui_Controls_BindableObject_
+  name: GetRow
+  nameWithType: ISkiaGridLayout.GetRow
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetRow
+- uid: Microsoft.Maui.Controls.BindableObject
+  commentId: T:Microsoft.Maui.Controls.BindableObject
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  name: BindableObject
+  nameWithType: BindableObject
+  fullName: Microsoft.Maui.Controls.BindableObject
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetRowSpan*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.GetRowSpan
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_GetRowSpan_Microsoft_Maui_Controls_BindableObject_
+  name: GetRowSpan
+  nameWithType: ISkiaGridLayout.GetRowSpan
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetRowSpan
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetColumn*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.GetColumn
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_GetColumn_Microsoft_Maui_Controls_BindableObject_
+  name: GetColumn
+  nameWithType: ISkiaGridLayout.GetColumn
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetColumn
+- uid: DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_GetColumnSpan_Microsoft_Maui_Controls_BindableObject_
+  name: GetColumnSpan
+  nameWithType: ISkiaGridLayout.GetColumnSpan
+  fullName: DrawnUi.Draw.ISkiaGridLayout.GetColumnSpan

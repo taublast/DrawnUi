@@ -1,0 +1,2913 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.Super
+  commentId: T:DrawnUi.Draw.Super
+  id: Super
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.Super.App
+  - DrawnUi.Draw.Super.AppContext
+  - DrawnUi.Draw.Super.BottomTabsHeight
+  - DrawnUi.Draw.Super.CacheEnabled
+  - DrawnUi.Draw.Super.CanUseHardwareAcceleration
+  - DrawnUi.Draw.Super.CapMicroSecs
+  - DrawnUi.Draw.Super.ColorAccent
+  - DrawnUi.Draw.Super.ColorPrimary
+  - DrawnUi.Draw.Super.CreateHttpClient
+  - DrawnUi.Draw.Super.DisplayException(Microsoft.Maui.Controls.VisualElement,System.Exception)
+  - DrawnUi.Draw.Super.EnableRendering
+  - DrawnUi.Draw.Super.EnqueueBackgroundTask(System.Func{System.Threading.Tasks.Task})
+  - DrawnUi.Draw.Super.FontSubPixelRendering
+  - DrawnUi.Draw.Super.GetCurrentTimeMs
+  - DrawnUi.Draw.Super.GetCurrentTimeNanos
+  - DrawnUi.Draw.Super.GpuCacheEnabled
+  - DrawnUi.Draw.Super.HotReload
+  - DrawnUi.Draw.Super.InBackground
+  - DrawnUi.Draw.Super.InitShared
+  - DrawnUi.Draw.Super.InitialWindowSize
+  - DrawnUi.Draw.Super.Initialized
+  - DrawnUi.Draw.Super.InsetsChanged
+  - DrawnUi.Draw.Super.IsRtl
+  - DrawnUi.Draw.Super.Log(System.Exception,System.String)
+  - DrawnUi.Draw.Super.Log(System.String,Microsoft.Extensions.Logging.LogLevel,System.String)
+  - DrawnUi.Draw.Super.MaxFrameLengthMs
+  - DrawnUi.Draw.Super.Multithreaded
+  - DrawnUi.Draw.Super.NavBarHeight
+  - DrawnUi.Draw.Super.NavigationBarHeight
+  - DrawnUi.Draw.Super.NeedGlobalRefresh
+  - DrawnUi.Draw.Super.NeedGlobalUpdate
+  - DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel
+  - DrawnUi.Draw.Super.OnCreated
+  - DrawnUi.Draw.Super.OnMauiAppCreated
+  - DrawnUi.Draw.Super.OnNativeAppCreated
+  - DrawnUi.Draw.Super.OnNativeAppDestroyed
+  - DrawnUi.Draw.Super.OnNativeAppPaused
+  - DrawnUi.Draw.Super.OnNativeAppResumed
+  - DrawnUi.Draw.Super.OnWentBackground
+  - DrawnUi.Draw.Super.OnWentForeground
+  - DrawnUi.Draw.Super.PreloadRegisteredFonts
+  - DrawnUi.Draw.Super.ProcessBackgroundQueue
+  - DrawnUi.Draw.Super.ResizeWindow(Microsoft.Maui.Controls.Window,System.Int32,System.Int32,System.Boolean)
+  - DrawnUi.Draw.Super.RunOnMainThreadAndWait(System.Action,System.Threading.CancellationToken)
+  - DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)
+  - DrawnUi.Draw.Super.Screen
+  - DrawnUi.Draw.Super.SendTapsOnMainThread
+  - DrawnUi.Draw.Super.Services
+  - DrawnUi.Draw.Super.SetLocale(System.String)
+  - DrawnUi.Draw.Super.SetupFrameLooper
+  - DrawnUi.Draw.Super.SkiaGeneration
+  - DrawnUi.Draw.Super.StatusBarHeight
+  - DrawnUi.Draw.Super.StopRenderingInBackground
+  - DrawnUi.Draw.Super.UseFrozenVisualLayers
+  - DrawnUi.Draw.Super.UserAgent
+  langs:
+  - csharp
+  - vb
+  name: Super
+  nameWithType: Super
+  fullName: DrawnUi.Draw.Super
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Super
+    path: ../src/Shared/Super.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public class Super
+    content.vb: Public Class Super
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.Super.HotReload
+  commentId: E:DrawnUi.Draw.Super.HotReload
+  id: HotReload
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: HotReload
+  nameWithType: Super.HotReload
+  fullName: DrawnUi.Draw.Super.HotReload
+  type: Event
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HotReload
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 46
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Will be triggered only if debugger is attached
+  example: []
+  syntax:
+    content: public static event Action<Type[]?>? HotReload
+    return:
+      type: System.Action{System.Type[]}
+    content.vb: Public Shared Event HotReload As Action(Of Type())
+- uid: DrawnUi.Draw.Super.ColorAccent
+  commentId: P:DrawnUi.Draw.Super.ColorAccent
+  id: ColorAccent
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: ColorAccent
+  nameWithType: Super.ColorAccent
+  fullName: DrawnUi.Draw.Super.ColorAccent
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColorAccent
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Color ColorAccent { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Property ColorAccent As Color
+  overload: DrawnUi.Draw.Super.ColorAccent*
+- uid: DrawnUi.Draw.Super.ColorPrimary
+  commentId: P:DrawnUi.Draw.Super.ColorPrimary
+  id: ColorPrimary
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: ColorPrimary
+  nameWithType: Super.ColorPrimary
+  fullName: DrawnUi.Draw.Super.ColorPrimary
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ColorPrimary
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 56
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Color ColorPrimary { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Shared Property ColorPrimary As Color
+  overload: DrawnUi.Draw.Super.ColorPrimary*
+- uid: DrawnUi.Draw.Super.App
+  commentId: P:DrawnUi.Draw.Super.App
+  id: App
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: App
+  nameWithType: Super.App
+  fullName: DrawnUi.Draw.Super.App
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: App
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 58
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static IApplication App { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.IApplication
+    content.vb: Public Shared Property App As IApplication
+  overload: DrawnUi.Draw.Super.App*
+- uid: DrawnUi.Draw.Super.DisplayException(Microsoft.Maui.Controls.VisualElement,System.Exception)
+  commentId: M:DrawnUi.Draw.Super.DisplayException(Microsoft.Maui.Controls.VisualElement,System.Exception)
+  id: DisplayException(Microsoft.Maui.Controls.VisualElement,System.Exception)
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: DisplayException(VisualElement, Exception)
+  nameWithType: Super.DisplayException(VisualElement, Exception)
+  fullName: DrawnUi.Draw.Super.DisplayException(Microsoft.Maui.Controls.VisualElement, System.Exception)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DisplayException
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 65
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Display xaml page creation exception
+  example: []
+  syntax:
+    content: public static void DisplayException(VisualElement view, Exception e)
+    parameters:
+    - id: view
+      type: Microsoft.Maui.Controls.VisualElement
+      description: ''
+    - id: e
+      type: System.Exception
+      description: ''
+    content.vb: Public Shared Sub DisplayException(view As VisualElement, e As Exception)
+  overload: DrawnUi.Draw.Super.DisplayException*
+- uid: DrawnUi.Draw.Super.Log(System.String,Microsoft.Extensions.Logging.LogLevel,System.String)
+  commentId: M:DrawnUi.Draw.Super.Log(System.String,Microsoft.Extensions.Logging.LogLevel,System.String)
+  id: Log(System.String,Microsoft.Extensions.Logging.LogLevel,System.String)
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: Log(string, LogLevel, string)
+  nameWithType: Super.Log(string, LogLevel, string)
+  fullName: DrawnUi.Draw.Super.Log(string, Microsoft.Extensions.Logging.LogLevel, string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Log
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 135
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void Log(string message, LogLevel logLevel = LogLevel.Error, string caller = null)
+    parameters:
+    - id: message
+      type: System.String
+    - id: logLevel
+      type: Microsoft.Extensions.Logging.LogLevel
+    - id: caller
+      type: System.String
+    content.vb: Public Shared Sub Log(message As String, logLevel As LogLevel = LogLevel.Error, caller As String = Nothing)
+  overload: DrawnUi.Draw.Super.Log*
+  nameWithType.vb: Super.Log(String, LogLevel, String)
+  fullName.vb: DrawnUi.Draw.Super.Log(String, Microsoft.Extensions.Logging.LogLevel, String)
+  name.vb: Log(String, LogLevel, String)
+- uid: DrawnUi.Draw.Super.Services
+  commentId: P:DrawnUi.Draw.Super.Services
+  id: Services
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: Services
+  nameWithType: Super.Services
+  fullName: DrawnUi.Draw.Super.Services
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Services
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 150
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static IServiceProvider Services { get; }
+    parameters: []
+    return:
+      type: System.IServiceProvider
+    content.vb: Public Shared ReadOnly Property Services As IServiceProvider
+  overload: DrawnUi.Draw.Super.Services*
+- uid: DrawnUi.Draw.Super.AppContext
+  commentId: P:DrawnUi.Draw.Super.AppContext
+  id: AppContext
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: AppContext
+  nameWithType: Super.AppContext
+  fullName: DrawnUi.Draw.Super.AppContext
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AppContext
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 172
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static IMauiContext AppContext { get; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.IMauiContext
+    content.vb: Public Shared ReadOnly Property AppContext As IMauiContext
+  overload: DrawnUi.Draw.Super.AppContext*
+- uid: DrawnUi.Draw.Super.ResizeWindow(Microsoft.Maui.Controls.Window,System.Int32,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.Super.ResizeWindow(Microsoft.Maui.Controls.Window,System.Int32,System.Int32,System.Boolean)
+  id: ResizeWindow(Microsoft.Maui.Controls.Window,System.Int32,System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: ResizeWindow(Window, int, int, bool)
+  nameWithType: Super.ResizeWindow(Window, int, int, bool)
+  fullName: DrawnUi.Draw.Super.ResizeWindow(Microsoft.Maui.Controls.Window, int, int, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Super.Maui.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ResizeWindow
+    path: ../src/Maui/DrawnUi/Super.Maui.cs
+    startLine: 207
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: For desktop platforms, will resize app window and eventually lock it from being resized.
+  example: []
+  syntax:
+    content: public static void ResizeWindow(Window window, int width, int height, bool isFixed)
+    parameters:
+    - id: window
+      type: Microsoft.Maui.Controls.Window
+      description: ''
+    - id: width
+      type: System.Int32
+      description: ''
+    - id: height
+      type: System.Int32
+      description: ''
+    - id: isFixed
+      type: System.Boolean
+      description: ''
+    content.vb: Public Shared Sub ResizeWindow(window As Window, width As Integer, height As Integer, isFixed As Boolean)
+  overload: DrawnUi.Draw.Super.ResizeWindow*
+  nameWithType.vb: Super.ResizeWindow(Window, Integer, Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.Super.ResizeWindow(Microsoft.Maui.Controls.Window, Integer, Integer, Boolean)
+  name.vb: ResizeWindow(Window, Integer, Integer, Boolean)
+- uid: DrawnUi.Draw.Super.UseFrozenVisualLayers
+  commentId: F:DrawnUi.Draw.Super.UseFrozenVisualLayers
+  id: UseFrozenVisualLayers
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: UseFrozenVisualLayers
+  nameWithType: Super.UseFrozenVisualLayers
+  fullName: DrawnUi.Draw.Super.UseFrozenVisualLayers
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UseFrozenVisualLayers
+    path: ../src/Shared/Super.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool UseFrozenVisualLayers
+    return:
+      type: System.Boolean
+    content.vb: Public Shared UseFrozenVisualLayers As Boolean
+- uid: DrawnUi.Draw.Super.CreateHttpClient
+  commentId: F:DrawnUi.Draw.Super.CreateHttpClient
+  id: CreateHttpClient
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: CreateHttpClient
+  nameWithType: Super.CreateHttpClient
+  fullName: DrawnUi.Draw.Super.CreateHttpClient
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateHttpClient
+    path: ../src/Shared/Super.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Since we removed IHttpClientFactory for faster app startup on mobile
+
+    one can set this delegate to be used to create a custom client that would be used for loading internet sources.
+  example: []
+  syntax:
+    content: public static Func<IServiceProvider, HttpClient> CreateHttpClient
+    return:
+      type: System.Func{System.IServiceProvider,System.Net.Http.HttpClient}
+      description: ''
+    content.vb: Public Shared CreateHttpClient As Func(Of IServiceProvider, HttpClient)
+- uid: DrawnUi.Draw.Super.SendTapsOnMainThread
+  commentId: F:DrawnUi.Draw.Super.SendTapsOnMainThread
+  id: SendTapsOnMainThread
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: SendTapsOnMainThread
+  nameWithType: Super.SendTapsOnMainThread
+  fullName: DrawnUi.Draw.Super.SendTapsOnMainThread
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SendTapsOnMainThread
+    path: ../src/Shared/Super.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Used by Tapped event handler, default is false
+  example: []
+  syntax:
+    content: public static bool SendTapsOnMainThread
+    return:
+      type: System.Boolean
+    content.vb: Public Shared SendTapsOnMainThread As Boolean
+- uid: DrawnUi.Draw.Super.Multithreaded
+  commentId: F:DrawnUi.Draw.Super.Multithreaded
+  id: Multithreaded
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: Multithreaded
+  nameWithType: Super.Multithreaded
+  fullName: DrawnUi.Draw.Super.Multithreaded
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Multithreaded
+    path: ../src/Shared/Super.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Experimental for dev use. Set OffscreenRenderingAtCanvasLevel to true when this is true.
+
+    Default is False
+  example: []
+  syntax:
+    content: public static bool Multithreaded
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Multithreaded As Boolean
+- uid: DrawnUi.Draw.Super.PreloadRegisteredFonts
+  commentId: F:DrawnUi.Draw.Super.PreloadRegisteredFonts
+  id: PreloadRegisteredFonts
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: PreloadRegisteredFonts
+  nameWithType: Super.PreloadRegisteredFonts
+  fullName: DrawnUi.Draw.Super.PreloadRegisteredFonts
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PreloadRegisteredFonts
+    path: ../src/Shared/Super.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool PreloadRegisteredFonts
+    return:
+      type: System.Boolean
+    content.vb: Public Shared PreloadRegisteredFonts As Boolean
+- uid: DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel
+  commentId: P:DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel
+  id: OffscreenRenderingAtCanvasLevel
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OffscreenRenderingAtCanvasLevel
+  nameWithType: Super.OffscreenRenderingAtCanvasLevel
+  fullName: DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OffscreenRenderingAtCanvasLevel
+    path: ../src/Shared/Super.cs
+    startLine: 37
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    If set to True will process all ofscreen rendering in one background thread at canvas level, otherwise every control will launch its own background processing thread.
+
+    Default is False
+  example: []
+  syntax:
+    content: public static bool OffscreenRenderingAtCanvasLevel { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property OffscreenRenderingAtCanvasLevel As Boolean
+  overload: DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel*
+- uid: DrawnUi.Draw.Super.SetupFrameLooper
+  commentId: M:DrawnUi.Draw.Super.SetupFrameLooper
+  id: SetupFrameLooper
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: SetupFrameLooper()
+  nameWithType: Super.SetupFrameLooper()
+  fullName: DrawnUi.Draw.Super.SetupFrameLooper()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetupFrameLooper
+    path: ../src/Shared/Super.cs
+    startLine: 41
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected static void SetupFrameLooper()
+    content.vb: Protected Shared Sub SetupFrameLooper()
+  overload: DrawnUi.Draw.Super.SetupFrameLooper*
+- uid: DrawnUi.Draw.Super.CanUseHardwareAcceleration
+  commentId: F:DrawnUi.Draw.Super.CanUseHardwareAcceleration
+  id: CanUseHardwareAcceleration
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: CanUseHardwareAcceleration
+  nameWithType: Super.CanUseHardwareAcceleration
+  fullName: DrawnUi.Draw.Super.CanUseHardwareAcceleration
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CanUseHardwareAcceleration
+    path: ../src/Shared/Super.cs
+    startLine: 51
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Can optionally disable hardware-acceleration with this flag, for example on iOS you would want to avoid creating many metal views.
+  example: []
+  syntax:
+    content: public static bool CanUseHardwareAcceleration
+    return:
+      type: System.Boolean
+    content.vb: Public Shared CanUseHardwareAcceleration As Boolean
+- uid: DrawnUi.Draw.Super.Log(System.Exception,System.String)
+  commentId: M:DrawnUi.Draw.Super.Log(System.Exception,System.String)
+  id: Log(System.Exception,System.String)
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: Log(Exception, string)
+  nameWithType: Super.Log(Exception, string)
+  fullName: DrawnUi.Draw.Super.Log(System.Exception, string)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Log
+    path: ../src/Shared/Super.cs
+    startLine: 53
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void Log(Exception e, string caller = null)
+    parameters:
+    - id: e
+      type: System.Exception
+    - id: caller
+      type: System.String
+    content.vb: Public Shared Sub Log(e As Exception, caller As String = Nothing)
+  overload: DrawnUi.Draw.Super.Log*
+  nameWithType.vb: Super.Log(Exception, String)
+  fullName.vb: DrawnUi.Draw.Super.Log(System.Exception, String)
+  name.vb: Log(Exception, String)
+- uid: DrawnUi.Draw.Super.SetLocale(System.String)
+  commentId: M:DrawnUi.Draw.Super.SetLocale(System.String)
+  id: SetLocale(System.String)
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: SetLocale(string)
+  nameWithType: Super.SetLocale(string)
+  fullName: DrawnUi.Draw.Super.SetLocale(string)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetLocale
+    path: ../src/Shared/Super.cs
+    startLine: 65
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void SetLocale(string lang)
+    parameters:
+    - id: lang
+      type: System.String
+    content.vb: Public Shared Sub SetLocale(lang As String)
+  overload: DrawnUi.Draw.Super.SetLocale*
+  nameWithType.vb: Super.SetLocale(String)
+  fullName.vb: DrawnUi.Draw.Super.SetLocale(String)
+  name.vb: SetLocale(String)
+- uid: DrawnUi.Draw.Super.Initialized
+  commentId: P:DrawnUi.Draw.Super.Initialized
+  id: Initialized
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: Initialized
+  nameWithType: Super.Initialized
+  fullName: DrawnUi.Draw.Super.Initialized
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Initialized
+    path: ../src/Shared/Super.cs
+    startLine: 73
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool Initialized { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property Initialized As Boolean
+  overload: DrawnUi.Draw.Super.Initialized*
+- uid: DrawnUi.Draw.Super.InitShared
+  commentId: M:DrawnUi.Draw.Super.InitShared
+  id: InitShared
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: InitShared()
+  nameWithType: Super.InitShared()
+  fullName: DrawnUi.Draw.Super.InitShared()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InitShared
+    path: ../src/Shared/Super.cs
+    startLine: 83
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected static void InitShared()
+    content.vb: Protected Shared Sub InitShared()
+  overload: DrawnUi.Draw.Super.InitShared*
+- uid: DrawnUi.Draw.Super.EnableRendering
+  commentId: P:DrawnUi.Draw.Super.EnableRendering
+  id: EnableRendering
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: EnableRendering
+  nameWithType: Super.EnableRendering
+  fullName: DrawnUi.Draw.Super.EnableRendering
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: EnableRendering
+    path: ../src/Shared/Super.cs
+    startLine: 93
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool EnableRendering { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property EnableRendering As Boolean
+  overload: DrawnUi.Draw.Super.EnableRendering*
+- uid: DrawnUi.Draw.Super.IsRtl
+  commentId: P:DrawnUi.Draw.Super.IsRtl
+  id: IsRtl
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: IsRtl
+  nameWithType: Super.IsRtl
+  fullName: DrawnUi.Draw.Super.IsRtl
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsRtl
+    path: ../src/Shared/Super.cs
+    startLine: 108
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: RTL support UNDER CONSTRUCTION
+  example: []
+  syntax:
+    content: public static bool IsRtl { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property IsRtl As Boolean
+  overload: DrawnUi.Draw.Super.IsRtl*
+- uid: DrawnUi.Draw.Super.FontSubPixelRendering
+  commentId: P:DrawnUi.Draw.Super.FontSubPixelRendering
+  id: FontSubPixelRendering
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: FontSubPixelRendering
+  nameWithType: Super.FontSubPixelRendering
+  fullName: DrawnUi.Draw.Super.FontSubPixelRendering
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FontSubPixelRendering
+    path: ../src/Shared/Super.cs
+    startLine: 125
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Enables sub-pixel font rendering, might provide better antialiasing on some platforms. Default is True;
+  example: []
+  syntax:
+    content: public static bool FontSubPixelRendering { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property FontSubPixelRendering As Boolean
+  overload: DrawnUi.Draw.Super.FontSubPixelRendering*
+- uid: DrawnUi.Draw.Super.InsetsChanged
+  commentId: F:DrawnUi.Draw.Super.InsetsChanged
+  id: InsetsChanged
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: InsetsChanged
+  nameWithType: Super.InsetsChanged
+  fullName: DrawnUi.Draw.Super.InsetsChanged
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InsetsChanged
+    path: ../src/Shared/Super.cs
+    startLine: 144
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Subscribe your navigation bar to react
+  example: []
+  syntax:
+    content: public static EventHandler InsetsChanged
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared InsetsChanged As EventHandler
+- uid: DrawnUi.Draw.Super.Screen
+  commentId: P:DrawnUi.Draw.Super.Screen
+  id: Screen
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: Screen
+  nameWithType: Super.Screen
+  fullName: DrawnUi.Draw.Super.Screen
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Screen
+    path: ../src/Shared/Super.cs
+    startLine: 150
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Screen Screen { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Models.Screen
+    content.vb: Public Shared ReadOnly Property Screen As Screen
+  overload: DrawnUi.Draw.Super.Screen*
+- uid: DrawnUi.Draw.Super.CapMicroSecs
+  commentId: F:DrawnUi.Draw.Super.CapMicroSecs
+  id: CapMicroSecs
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: CapMicroSecs
+  nameWithType: Super.CapMicroSecs
+  fullName: DrawnUi.Draw.Super.CapMicroSecs
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CapMicroSecs
+    path: ../src/Shared/Super.cs
+    startLine: 163
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Capping FPS,at 120
+  example: []
+  syntax:
+    content: public static float CapMicroSecs
+    return:
+      type: System.Single
+    content.vb: Public Shared CapMicroSecs As Single
+- uid: DrawnUi.Draw.Super.GetCurrentTimeMs
+  commentId: M:DrawnUi.Draw.Super.GetCurrentTimeMs
+  id: GetCurrentTimeMs
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: GetCurrentTimeMs()
+  nameWithType: Super.GetCurrentTimeMs()
+  fullName: DrawnUi.Draw.Super.GetCurrentTimeMs()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCurrentTimeMs
+    path: ../src/Shared/Super.cs
+    startLine: 165
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static long GetCurrentTimeMs()
+    return:
+      type: System.Int64
+    content.vb: Public Shared Function GetCurrentTimeMs() As Long
+  overload: DrawnUi.Draw.Super.GetCurrentTimeMs*
+- uid: DrawnUi.Draw.Super.GetCurrentTimeNanos
+  commentId: M:DrawnUi.Draw.Super.GetCurrentTimeNanos
+  id: GetCurrentTimeNanos
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: GetCurrentTimeNanos()
+  nameWithType: Super.GetCurrentTimeNanos()
+  fullName: DrawnUi.Draw.Super.GetCurrentTimeNanos()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCurrentTimeNanos
+    path: ../src/Shared/Super.cs
+    startLine: 172
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static long GetCurrentTimeNanos()
+    return:
+      type: System.Int64
+    content.vb: Public Shared Function GetCurrentTimeNanos() As Long
+  overload: DrawnUi.Draw.Super.GetCurrentTimeNanos*
+- uid: DrawnUi.Draw.Super.NavBarHeight
+  commentId: P:DrawnUi.Draw.Super.NavBarHeight
+  id: NavBarHeight
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: NavBarHeight
+  nameWithType: Super.NavBarHeight
+  fullName: DrawnUi.Draw.Super.NavBarHeight
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NavBarHeight
+    path: ../src/Shared/Super.cs
+    startLine: 182
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: In DP
+  example: []
+  syntax:
+    content: public static double NavBarHeight { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Shared Property NavBarHeight As Double
+  overload: DrawnUi.Draw.Super.NavBarHeight*
+- uid: DrawnUi.Draw.Super.StatusBarHeight
+  commentId: P:DrawnUi.Draw.Super.StatusBarHeight
+  id: StatusBarHeight
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: StatusBarHeight
+  nameWithType: Super.StatusBarHeight
+  fullName: DrawnUi.Draw.Super.StatusBarHeight
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StatusBarHeight
+    path: ../src/Shared/Super.cs
+    startLine: 187
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: In DP
+  example: []
+  syntax:
+    content: public static double StatusBarHeight { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Shared Property StatusBarHeight As Double
+  overload: DrawnUi.Draw.Super.StatusBarHeight*
+- uid: DrawnUi.Draw.Super.NavigationBarHeight
+  commentId: P:DrawnUi.Draw.Super.NavigationBarHeight
+  id: NavigationBarHeight
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: NavigationBarHeight
+  nameWithType: Super.NavigationBarHeight
+  fullName: DrawnUi.Draw.Super.NavigationBarHeight
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NavigationBarHeight
+    path: ../src/Shared/Super.cs
+    startLine: 192
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: In DP, actually Android only
+  example: []
+  syntax:
+    content: public static double NavigationBarHeight { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Shared Property NavigationBarHeight As Double
+  overload: DrawnUi.Draw.Super.NavigationBarHeight*
+- uid: DrawnUi.Draw.Super.BottomTabsHeight
+  commentId: P:DrawnUi.Draw.Super.BottomTabsHeight
+  id: BottomTabsHeight
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: BottomTabsHeight
+  nameWithType: Super.BottomTabsHeight
+  fullName: DrawnUi.Draw.Super.BottomTabsHeight
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BottomTabsHeight
+    path: ../src/Shared/Super.cs
+    startLine: 197
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: In DP
+  example: []
+  syntax:
+    content: public static double BottomTabsHeight { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Shared Property BottomTabsHeight As Double
+  overload: DrawnUi.Draw.Super.BottomTabsHeight*
+- uid: DrawnUi.Draw.Super.MaxFrameLengthMs
+  commentId: P:DrawnUi.Draw.Super.MaxFrameLengthMs
+  id: MaxFrameLengthMs
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: MaxFrameLengthMs
+  nameWithType: Super.MaxFrameLengthMs
+  fullName: DrawnUi.Draw.Super.MaxFrameLengthMs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MaxFrameLengthMs
+    path: ../src/Shared/Super.cs
+    startLine: 201
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static double MaxFrameLengthMs { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Shared Property MaxFrameLengthMs As Double
+  overload: DrawnUi.Draw.Super.MaxFrameLengthMs*
+- uid: DrawnUi.Draw.Super.OnNativeAppCreated
+  commentId: E:DrawnUi.Draw.Super.OnNativeAppCreated
+  id: OnNativeAppCreated
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnNativeAppCreated
+  nameWithType: Super.OnNativeAppCreated
+  fullName: DrawnUi.Draw.Super.OnNativeAppCreated
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnNativeAppCreated
+    path: ../src/Shared/Super.cs
+    startLine: 206
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: App was launched and UI is ready to be created
+  example: []
+  syntax:
+    content: public static event EventHandler OnNativeAppCreated
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnNativeAppCreated As EventHandler
+- uid: DrawnUi.Draw.Super.OnNativeAppPaused
+  commentId: E:DrawnUi.Draw.Super.OnNativeAppPaused
+  id: OnNativeAppPaused
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnNativeAppPaused
+  nameWithType: Super.OnNativeAppPaused
+  fullName: DrawnUi.Draw.Super.OnNativeAppPaused
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnNativeAppPaused
+    path: ../src/Shared/Super.cs
+    startLine: 208
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static event EventHandler OnNativeAppPaused
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnNativeAppPaused As EventHandler
+- uid: DrawnUi.Draw.Super.OnNativeAppResumed
+  commentId: E:DrawnUi.Draw.Super.OnNativeAppResumed
+  id: OnNativeAppResumed
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnNativeAppResumed
+  nameWithType: Super.OnNativeAppResumed
+  fullName: DrawnUi.Draw.Super.OnNativeAppResumed
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnNativeAppResumed
+    path: ../src/Shared/Super.cs
+    startLine: 210
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static event EventHandler OnNativeAppResumed
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnNativeAppResumed As EventHandler
+- uid: DrawnUi.Draw.Super.OnNativeAppDestroyed
+  commentId: E:DrawnUi.Draw.Super.OnNativeAppDestroyed
+  id: OnNativeAppDestroyed
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnNativeAppDestroyed
+  nameWithType: Super.OnNativeAppDestroyed
+  fullName: DrawnUi.Draw.Super.OnNativeAppDestroyed
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnNativeAppDestroyed
+    path: ../src/Shared/Super.cs
+    startLine: 212
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static event EventHandler OnNativeAppDestroyed
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnNativeAppDestroyed As EventHandler
+- uid: DrawnUi.Draw.Super.InitialWindowSize
+  commentId: F:DrawnUi.Draw.Super.InitialWindowSize
+  id: InitialWindowSize
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: InitialWindowSize
+  nameWithType: Super.InitialWindowSize
+  fullName: DrawnUi.Draw.Super.InitialWindowSize
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InitialWindowSize
+    path: ../src/Shared/Super.cs
+    startLine: 214
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Size InitialWindowSize
+    return:
+      type: Microsoft.Maui.Graphics.Size
+    content.vb: Public Shared InitialWindowSize As Size
+- uid: DrawnUi.Draw.Super.OnCreated
+  commentId: M:DrawnUi.Draw.Super.OnCreated
+  id: OnCreated
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnCreated()
+  nameWithType: Super.OnCreated()
+  fullName: DrawnUi.Draw.Super.OnCreated()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnCreated
+    path: ../src/Shared/Super.cs
+    startLine: 220
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void OnCreated()
+    content.vb: Public Shared Sub OnCreated()
+  overload: DrawnUi.Draw.Super.OnCreated*
+- uid: DrawnUi.Draw.Super.OnWentBackground
+  commentId: M:DrawnUi.Draw.Super.OnWentBackground
+  id: OnWentBackground
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnWentBackground()
+  nameWithType: Super.OnWentBackground()
+  fullName: DrawnUi.Draw.Super.OnWentBackground()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnWentBackground
+    path: ../src/Shared/Super.cs
+    startLine: 227
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void OnWentBackground()
+    content.vb: Public Shared Sub OnWentBackground()
+  overload: DrawnUi.Draw.Super.OnWentBackground*
+- uid: DrawnUi.Draw.Super.OnWentForeground
+  commentId: M:DrawnUi.Draw.Super.OnWentForeground
+  id: OnWentForeground
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnWentForeground()
+  nameWithType: Super.OnWentForeground()
+  fullName: DrawnUi.Draw.Super.OnWentForeground()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnWentForeground
+    path: ../src/Shared/Super.cs
+    startLine: 233
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void OnWentForeground()
+    content.vb: Public Shared Sub OnWentForeground()
+  overload: DrawnUi.Draw.Super.OnWentForeground*
+- uid: DrawnUi.Draw.Super.OnMauiAppCreated
+  commentId: F:DrawnUi.Draw.Super.OnMauiAppCreated
+  id: OnMauiAppCreated
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OnMauiAppCreated
+  nameWithType: Super.OnMauiAppCreated
+  fullName: DrawnUi.Draw.Super.OnMauiAppCreated
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnMauiAppCreated
+    path: ../src/Shared/Super.cs
+    startLine: 243
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Maui App was launched and UI is ready to be consumed
+  example: []
+  syntax:
+    content: public static Action OnMauiAppCreated
+    return:
+      type: System.Action
+    content.vb: Public Shared OnMauiAppCreated As Action
+- uid: DrawnUi.Draw.Super.NeedGlobalRefresh
+  commentId: E:DrawnUi.Draw.Super.NeedGlobalRefresh
+  id: NeedGlobalRefresh
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: NeedGlobalRefresh
+  nameWithType: Super.NeedGlobalRefresh
+  fullName: DrawnUi.Draw.Super.NeedGlobalRefresh
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NeedGlobalRefresh
+    path: ../src/Shared/Super.cs
+    startLine: 249
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This will force recalculate canvas visibility in ViewTree and update those visible. Also when GRContext changes, all references must be cleared to avoid crash on next draw
+  example: []
+  syntax:
+    content: public static event EventHandler NeedGlobalRefresh
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event NeedGlobalRefresh As EventHandler
+- uid: DrawnUi.Draw.Super.NeedGlobalUpdate
+  commentId: M:DrawnUi.Draw.Super.NeedGlobalUpdate
+  id: NeedGlobalUpdate
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: NeedGlobalUpdate()
+  nameWithType: Super.NeedGlobalUpdate()
+  fullName: DrawnUi.Draw.Super.NeedGlobalUpdate()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NeedGlobalUpdate
+    path: ../src/Shared/Super.cs
+    startLine: 255
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: This will force recalculate canvas visibility in ViewTree and update those visible. Also when GRContext changes, all references must be cleared to avoid crash on next draw
+  example: []
+  syntax:
+    content: public static void NeedGlobalUpdate()
+    content.vb: Public Shared Sub NeedGlobalUpdate()
+  overload: DrawnUi.Draw.Super.NeedGlobalUpdate*
+- uid: DrawnUi.Draw.Super.InBackground
+  commentId: P:DrawnUi.Draw.Super.InBackground
+  id: InBackground
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: InBackground
+  nameWithType: Super.InBackground
+  fullName: DrawnUi.Draw.Super.InBackground
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InBackground
+    path: ../src/Shared/Super.cs
+    startLine: 266
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool InBackground { get; protected set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property InBackground As Boolean
+  overload: DrawnUi.Draw.Super.InBackground*
+- uid: DrawnUi.Draw.Super.StopRenderingInBackground
+  commentId: P:DrawnUi.Draw.Super.StopRenderingInBackground
+  id: StopRenderingInBackground
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: StopRenderingInBackground
+  nameWithType: Super.StopRenderingInBackground
+  fullName: DrawnUi.Draw.Super.StopRenderingInBackground
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StopRenderingInBackground
+    path: ../src/Shared/Super.cs
+    startLine: 306
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool StopRenderingInBackground { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property StopRenderingInBackground As Boolean
+  overload: DrawnUi.Draw.Super.StopRenderingInBackground*
+- uid: DrawnUi.Draw.Super.RunOnMainThreadAndWait(System.Action,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.Super.RunOnMainThreadAndWait(System.Action,System.Threading.CancellationToken)
+  id: RunOnMainThreadAndWait(System.Action,System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: RunOnMainThreadAndWait(Action, CancellationToken)
+  nameWithType: Super.RunOnMainThreadAndWait(Action, CancellationToken)
+  fullName: DrawnUi.Draw.Super.RunOnMainThreadAndWait(System.Action, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RunOnMainThreadAndWait
+    path: ../src/Shared/Super.cs
+    startLine: 329
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void RunOnMainThreadAndWait(Action action, CancellationToken cancellationToken = default)
+    parameters:
+    - id: action
+      type: System.Action
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    content.vb: Public Shared Sub RunOnMainThreadAndWait(action As Action, cancellationToken As CancellationToken = Nothing)
+  overload: DrawnUi.Draw.Super.RunOnMainThreadAndWait*
+- uid: DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)
+  id: RunOnMainThreadAndWaitAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: RunOnMainThreadAndWaitAsync(Func<Task>, CancellationToken)
+  nameWithType: Super.RunOnMainThreadAndWaitAsync(Func<Task>, CancellationToken)
+  fullName: DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync(System.Func<System.Threading.Tasks.Task>, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RunOnMainThreadAndWaitAsync
+    path: ../src/Shared/Super.cs
+    startLine: 353
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task RunOnMainThreadAndWaitAsync(Func<Task> asyncAction, CancellationToken cancellationToken = default)
+    parameters:
+    - id: asyncAction
+      type: System.Func{System.Threading.Tasks.Task}
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function RunOnMainThreadAndWaitAsync(asyncAction As Func(Of Task), cancellationToken As CancellationToken = Nothing) As Task
+  overload: DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync*
+  nameWithType.vb: Super.RunOnMainThreadAndWaitAsync(Func(Of Task), CancellationToken)
+  fullName.vb: DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync(System.Func(Of System.Threading.Tasks.Task), System.Threading.CancellationToken)
+  name.vb: RunOnMainThreadAndWaitAsync(Func(Of Task), CancellationToken)
+- uid: DrawnUi.Draw.Super.CacheEnabled
+  commentId: P:DrawnUi.Draw.Super.CacheEnabled
+  id: CacheEnabled
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: CacheEnabled
+  nameWithType: Super.CacheEnabled
+  fullName: DrawnUi.Draw.Super.CacheEnabled
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CacheEnabled
+    path: ../src/Shared/Super.cs
+    startLine: 391
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool CacheEnabled { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property CacheEnabled As Boolean
+  overload: DrawnUi.Draw.Super.CacheEnabled*
+- uid: DrawnUi.Draw.Super.GpuCacheEnabled
+  commentId: P:DrawnUi.Draw.Super.GpuCacheEnabled
+  id: GpuCacheEnabled
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: GpuCacheEnabled
+  nameWithType: Super.GpuCacheEnabled
+  fullName: DrawnUi.Draw.Super.GpuCacheEnabled
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GpuCacheEnabled
+    path: ../src/Shared/Super.cs
+    startLine: 393
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool GpuCacheEnabled { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property GpuCacheEnabled As Boolean
+  overload: DrawnUi.Draw.Super.GpuCacheEnabled*
+- uid: DrawnUi.Draw.Super.UserAgent
+  commentId: P:DrawnUi.Draw.Super.UserAgent
+  id: UserAgent
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: UserAgent
+  nameWithType: Super.UserAgent
+  fullName: DrawnUi.Draw.Super.UserAgent
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UserAgent
+    path: ../src/Shared/Super.cs
+    startLine: 395
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static string UserAgent { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared Property UserAgent As String
+  overload: DrawnUi.Draw.Super.UserAgent*
+- uid: DrawnUi.Draw.Super.SkiaGeneration
+  commentId: F:DrawnUi.Draw.Super.SkiaGeneration
+  id: SkiaGeneration
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: SkiaGeneration
+  nameWithType: Super.SkiaGeneration
+  fullName: DrawnUi.Draw.Super.SkiaGeneration
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaGeneration
+    path: ../src/Shared/Super.cs
+    startLine: 397
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static int SkiaGeneration
+    return:
+      type: System.Int32
+    content.vb: Public Shared SkiaGeneration As Integer
+- uid: DrawnUi.Draw.Super.EnqueueBackgroundTask(System.Func{System.Threading.Tasks.Task})
+  commentId: M:DrawnUi.Draw.Super.EnqueueBackgroundTask(System.Func{System.Threading.Tasks.Task})
+  id: EnqueueBackgroundTask(System.Func{System.Threading.Tasks.Task})
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: EnqueueBackgroundTask(Func<Task>)
+  nameWithType: Super.EnqueueBackgroundTask(Func<Task>)
+  fullName: DrawnUi.Draw.Super.EnqueueBackgroundTask(System.Func<System.Threading.Tasks.Task>)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: EnqueueBackgroundTask
+    path: ../src/Shared/Super.cs
+    startLine: 402
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void EnqueueBackgroundTask(Func<Task> asyncAction)
+    parameters:
+    - id: asyncAction
+      type: System.Func{System.Threading.Tasks.Task}
+    content.vb: Public Shared Sub EnqueueBackgroundTask(asyncAction As Func(Of Task))
+  overload: DrawnUi.Draw.Super.EnqueueBackgroundTask*
+  nameWithType.vb: Super.EnqueueBackgroundTask(Func(Of Task))
+  fullName.vb: DrawnUi.Draw.Super.EnqueueBackgroundTask(System.Func(Of System.Threading.Tasks.Task))
+  name.vb: EnqueueBackgroundTask(Func(Of Task))
+- uid: DrawnUi.Draw.Super.ProcessBackgroundQueue
+  commentId: M:DrawnUi.Draw.Super.ProcessBackgroundQueue
+  id: ProcessBackgroundQueue
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: ProcessBackgroundQueue()
+  nameWithType: Super.ProcessBackgroundQueue()
+  fullName: DrawnUi.Draw.Super.ProcessBackgroundQueue()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ProcessBackgroundQueue
+    path: ../src/Shared/Super.cs
+    startLine: 407
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected static Task ProcessBackgroundQueue()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Protected Shared Function ProcessBackgroundQueue() As Task
+  overload: DrawnUi.Draw.Super.ProcessBackgroundQueue*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: System.Action{System.Type[]}
+  commentId: T:System.Action{System.Type[]}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<Type[]>
+  nameWithType: Action<Type[]>
+  fullName: System.Action<System.Type[]>
+  nameWithType.vb: Action(Of Type())
+  fullName.vb: System.Action(Of System.Type())
+  name.vb: Action(Of Type())
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: '['
+  - name: ']'
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Type
+    name: Type
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.type
+  - name: (
+  - name: )
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.Super.ColorAccent*
+  commentId: Overload:DrawnUi.Draw.Super.ColorAccent
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_ColorAccent
+  name: ColorAccent
+  nameWithType: Super.ColorAccent
+  fullName: DrawnUi.Draw.Super.ColorAccent
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.Super.ColorPrimary*
+  commentId: Overload:DrawnUi.Draw.Super.ColorPrimary
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_ColorPrimary
+  name: ColorPrimary
+  nameWithType: Super.ColorPrimary
+  fullName: DrawnUi.Draw.Super.ColorPrimary
+- uid: DrawnUi.Draw.Super.App*
+  commentId: Overload:DrawnUi.Draw.Super.App
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_App
+  name: App
+  nameWithType: Super.App
+  fullName: DrawnUi.Draw.Super.App
+- uid: Microsoft.Maui.IApplication
+  commentId: T:Microsoft.Maui.IApplication
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iapplication
+  name: IApplication
+  nameWithType: IApplication
+  fullName: Microsoft.Maui.IApplication
+- uid: Microsoft.Maui
+  commentId: N:Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui
+  nameWithType: Microsoft.Maui
+  fullName: Microsoft.Maui
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: DrawnUi.Draw.Super.DisplayException*
+  commentId: Overload:DrawnUi.Draw.Super.DisplayException
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_DisplayException_Microsoft_Maui_Controls_VisualElement_System_Exception_
+  name: DisplayException
+  nameWithType: Super.DisplayException
+  fullName: DrawnUi.Draw.Super.DisplayException
+- uid: Microsoft.Maui.Controls.VisualElement
+  commentId: T:Microsoft.Maui.Controls.VisualElement
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement
+  name: VisualElement
+  nameWithType: VisualElement
+  fullName: Microsoft.Maui.Controls.VisualElement
+- uid: System.Exception
+  commentId: T:System.Exception
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: DrawnUi.Draw.Super.Log*
+  commentId: Overload:DrawnUi.Draw.Super.Log
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_Log_System_String_Microsoft_Extensions_Logging_LogLevel_System_String_
+  name: Log
+  nameWithType: Super.Log
+  fullName: DrawnUi.Draw.Super.Log
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Microsoft.Extensions.Logging.LogLevel
+  commentId: T:Microsoft.Extensions.Logging.LogLevel
+  parent: Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: Microsoft.Extensions.Logging.LogLevel
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: DrawnUi.Draw.Super.Services*
+  commentId: Overload:DrawnUi.Draw.Super.Services
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_Services
+  name: Services
+  nameWithType: Super.Services
+  fullName: DrawnUi.Draw.Super.Services
+- uid: System.IServiceProvider
+  commentId: T:System.IServiceProvider
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  name: IServiceProvider
+  nameWithType: IServiceProvider
+  fullName: System.IServiceProvider
+- uid: DrawnUi.Draw.Super.AppContext*
+  commentId: Overload:DrawnUi.Draw.Super.AppContext
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_AppContext
+  name: AppContext
+  nameWithType: Super.AppContext
+  fullName: DrawnUi.Draw.Super.AppContext
+- uid: Microsoft.Maui.IMauiContext
+  commentId: T:Microsoft.Maui.IMauiContext
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.imauicontext
+  name: IMauiContext
+  nameWithType: IMauiContext
+  fullName: Microsoft.Maui.IMauiContext
+- uid: DrawnUi.Draw.Super.ResizeWindow*
+  commentId: Overload:DrawnUi.Draw.Super.ResizeWindow
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_ResizeWindow_Microsoft_Maui_Controls_Window_System_Int32_System_Int32_System_Boolean_
+  name: ResizeWindow
+  nameWithType: Super.ResizeWindow
+  fullName: DrawnUi.Draw.Super.ResizeWindow
+- uid: Microsoft.Maui.Controls.Window
+  commentId: T:Microsoft.Maui.Controls.Window
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.window
+  name: Window
+  nameWithType: Window
+  fullName: Microsoft.Maui.Controls.Window
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Func{System.IServiceProvider,System.Net.Http.HttpClient}
+  commentId: T:System.Func{System.IServiceProvider,System.Net.Http.HttpClient}
+  parent: System
+  definition: System.Func`2
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<IServiceProvider, HttpClient>
+  nameWithType: Func<IServiceProvider, HttpClient>
+  fullName: System.Func<System.IServiceProvider, System.Net.Http.HttpClient>
+  nameWithType.vb: Func(Of IServiceProvider, HttpClient)
+  fullName.vb: System.Func(Of System.IServiceProvider, System.Net.Http.HttpClient)
+  name.vb: Func(Of IServiceProvider, HttpClient)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: ','
+  - name: " "
+  - uid: System.Net.Http.HttpClient
+    name: HttpClient
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http.httpclient
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: ','
+  - name: " "
+  - uid: System.Net.Http.HttpClient
+    name: HttpClient
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http.httpclient
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel*
+  commentId: Overload:DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_OffscreenRenderingAtCanvasLevel
+  name: OffscreenRenderingAtCanvasLevel
+  nameWithType: Super.OffscreenRenderingAtCanvasLevel
+  fullName: DrawnUi.Draw.Super.OffscreenRenderingAtCanvasLevel
+- uid: DrawnUi.Draw.Super.SetupFrameLooper*
+  commentId: Overload:DrawnUi.Draw.Super.SetupFrameLooper
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_SetupFrameLooper
+  name: SetupFrameLooper
+  nameWithType: Super.SetupFrameLooper
+  fullName: DrawnUi.Draw.Super.SetupFrameLooper
+- uid: DrawnUi.Draw.Super.SetLocale*
+  commentId: Overload:DrawnUi.Draw.Super.SetLocale
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_SetLocale_System_String_
+  name: SetLocale
+  nameWithType: Super.SetLocale
+  fullName: DrawnUi.Draw.Super.SetLocale
+- uid: DrawnUi.Draw.Super.Initialized*
+  commentId: Overload:DrawnUi.Draw.Super.Initialized
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_Initialized
+  name: Initialized
+  nameWithType: Super.Initialized
+  fullName: DrawnUi.Draw.Super.Initialized
+- uid: DrawnUi.Draw.Super.InitShared*
+  commentId: Overload:DrawnUi.Draw.Super.InitShared
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_InitShared
+  name: InitShared
+  nameWithType: Super.InitShared
+  fullName: DrawnUi.Draw.Super.InitShared
+- uid: DrawnUi.Draw.Super.EnableRendering*
+  commentId: Overload:DrawnUi.Draw.Super.EnableRendering
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_EnableRendering
+  name: EnableRendering
+  nameWithType: Super.EnableRendering
+  fullName: DrawnUi.Draw.Super.EnableRendering
+- uid: DrawnUi.Draw.Super.IsRtl*
+  commentId: Overload:DrawnUi.Draw.Super.IsRtl
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_IsRtl
+  name: IsRtl
+  nameWithType: Super.IsRtl
+  fullName: DrawnUi.Draw.Super.IsRtl
+- uid: DrawnUi.Draw.Super.FontSubPixelRendering*
+  commentId: Overload:DrawnUi.Draw.Super.FontSubPixelRendering
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_FontSubPixelRendering
+  name: FontSubPixelRendering
+  nameWithType: Super.FontSubPixelRendering
+  fullName: DrawnUi.Draw.Super.FontSubPixelRendering
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler
+- uid: DrawnUi.Draw.Super.Screen*
+  commentId: Overload:DrawnUi.Draw.Super.Screen
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_Screen
+  name: Screen
+  nameWithType: Super.Screen
+  fullName: DrawnUi.Draw.Super.Screen
+- uid: DrawnUi.Models.Screen
+  commentId: T:DrawnUi.Models.Screen
+  parent: DrawnUi.Models
+  href: DrawnUi.Models.Screen.html
+  name: Screen
+  nameWithType: Screen
+  fullName: DrawnUi.Models.Screen
+- uid: DrawnUi.Models
+  commentId: N:DrawnUi.Models
+  href: DrawnUi.html
+  name: DrawnUi.Models
+  nameWithType: DrawnUi.Models
+  fullName: DrawnUi.Models
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Models
+    name: Models
+    href: DrawnUi.Models.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Models
+    name: Models
+    href: DrawnUi.Models.html
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.Super.GetCurrentTimeMs*
+  commentId: Overload:DrawnUi.Draw.Super.GetCurrentTimeMs
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_GetCurrentTimeMs
+  name: GetCurrentTimeMs
+  nameWithType: Super.GetCurrentTimeMs
+  fullName: DrawnUi.Draw.Super.GetCurrentTimeMs
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: DrawnUi.Draw.Super.GetCurrentTimeNanos*
+  commentId: Overload:DrawnUi.Draw.Super.GetCurrentTimeNanos
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_GetCurrentTimeNanos
+  name: GetCurrentTimeNanos
+  nameWithType: Super.GetCurrentTimeNanos
+  fullName: DrawnUi.Draw.Super.GetCurrentTimeNanos
+- uid: DrawnUi.Draw.Super.NavBarHeight*
+  commentId: Overload:DrawnUi.Draw.Super.NavBarHeight
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_NavBarHeight
+  name: NavBarHeight
+  nameWithType: Super.NavBarHeight
+  fullName: DrawnUi.Draw.Super.NavBarHeight
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.Super.StatusBarHeight*
+  commentId: Overload:DrawnUi.Draw.Super.StatusBarHeight
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_StatusBarHeight
+  name: StatusBarHeight
+  nameWithType: Super.StatusBarHeight
+  fullName: DrawnUi.Draw.Super.StatusBarHeight
+- uid: DrawnUi.Draw.Super.NavigationBarHeight*
+  commentId: Overload:DrawnUi.Draw.Super.NavigationBarHeight
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_NavigationBarHeight
+  name: NavigationBarHeight
+  nameWithType: Super.NavigationBarHeight
+  fullName: DrawnUi.Draw.Super.NavigationBarHeight
+- uid: DrawnUi.Draw.Super.BottomTabsHeight*
+  commentId: Overload:DrawnUi.Draw.Super.BottomTabsHeight
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_BottomTabsHeight
+  name: BottomTabsHeight
+  nameWithType: Super.BottomTabsHeight
+  fullName: DrawnUi.Draw.Super.BottomTabsHeight
+- uid: DrawnUi.Draw.Super.MaxFrameLengthMs*
+  commentId: Overload:DrawnUi.Draw.Super.MaxFrameLengthMs
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_MaxFrameLengthMs
+  name: MaxFrameLengthMs
+  nameWithType: Super.MaxFrameLengthMs
+  fullName: DrawnUi.Draw.Super.MaxFrameLengthMs
+- uid: Microsoft.Maui.Graphics.Size
+  commentId: T:Microsoft.Maui.Graphics.Size
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.size
+  name: Size
+  nameWithType: Size
+  fullName: Microsoft.Maui.Graphics.Size
+- uid: DrawnUi.Draw.Super.OnCreated*
+  commentId: Overload:DrawnUi.Draw.Super.OnCreated
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_OnCreated
+  name: OnCreated
+  nameWithType: Super.OnCreated
+  fullName: DrawnUi.Draw.Super.OnCreated
+- uid: DrawnUi.Draw.Super.OnWentBackground*
+  commentId: Overload:DrawnUi.Draw.Super.OnWentBackground
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_OnWentBackground
+  name: OnWentBackground
+  nameWithType: Super.OnWentBackground
+  fullName: DrawnUi.Draw.Super.OnWentBackground
+- uid: DrawnUi.Draw.Super.OnWentForeground*
+  commentId: Overload:DrawnUi.Draw.Super.OnWentForeground
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_OnWentForeground
+  name: OnWentForeground
+  nameWithType: Super.OnWentForeground
+  fullName: DrawnUi.Draw.Super.OnWentForeground
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: DrawnUi.Draw.Super.NeedGlobalUpdate*
+  commentId: Overload:DrawnUi.Draw.Super.NeedGlobalUpdate
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_NeedGlobalUpdate
+  name: NeedGlobalUpdate
+  nameWithType: Super.NeedGlobalUpdate
+  fullName: DrawnUi.Draw.Super.NeedGlobalUpdate
+- uid: DrawnUi.Draw.Super.InBackground*
+  commentId: Overload:DrawnUi.Draw.Super.InBackground
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_InBackground
+  name: InBackground
+  nameWithType: Super.InBackground
+  fullName: DrawnUi.Draw.Super.InBackground
+- uid: DrawnUi.Draw.Super.StopRenderingInBackground*
+  commentId: Overload:DrawnUi.Draw.Super.StopRenderingInBackground
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_StopRenderingInBackground
+  name: StopRenderingInBackground
+  nameWithType: Super.StopRenderingInBackground
+  fullName: DrawnUi.Draw.Super.StopRenderingInBackground
+- uid: DrawnUi.Draw.Super.RunOnMainThreadAndWait*
+  commentId: Overload:DrawnUi.Draw.Super.RunOnMainThreadAndWait
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_RunOnMainThreadAndWait_System_Action_System_Threading_CancellationToken_
+  name: RunOnMainThreadAndWait
+  nameWithType: Super.RunOnMainThreadAndWait
+  fullName: DrawnUi.Draw.Super.RunOnMainThreadAndWait
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync*
+  commentId: Overload:DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_RunOnMainThreadAndWaitAsync_System_Func_System_Threading_Tasks_Task__System_Threading_CancellationToken_
+  name: RunOnMainThreadAndWaitAsync
+  nameWithType: Super.RunOnMainThreadAndWaitAsync
+  fullName: DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync
+- uid: System.Func{System.Threading.Tasks.Task}
+  commentId: T:System.Func{System.Threading.Tasks.Task}
+  parent: System
+  definition: System.Func`1
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<Task>
+  nameWithType: Func<Task>
+  fullName: System.Func<System.Threading.Tasks.Task>
+  nameWithType.vb: Func(Of Task)
+  fullName.vb: System.Func(Of System.Threading.Tasks.Task)
+  name.vb: Func(Of Task)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - uid: System.Threading.Tasks.Task
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Threading.Tasks.Task
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  - name: )
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: DrawnUi.Draw.Super.CacheEnabled*
+  commentId: Overload:DrawnUi.Draw.Super.CacheEnabled
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_CacheEnabled
+  name: CacheEnabled
+  nameWithType: Super.CacheEnabled
+  fullName: DrawnUi.Draw.Super.CacheEnabled
+- uid: DrawnUi.Draw.Super.GpuCacheEnabled*
+  commentId: Overload:DrawnUi.Draw.Super.GpuCacheEnabled
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_GpuCacheEnabled
+  name: GpuCacheEnabled
+  nameWithType: Super.GpuCacheEnabled
+  fullName: DrawnUi.Draw.Super.GpuCacheEnabled
+- uid: DrawnUi.Draw.Super.UserAgent*
+  commentId: Overload:DrawnUi.Draw.Super.UserAgent
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_UserAgent
+  name: UserAgent
+  nameWithType: Super.UserAgent
+  fullName: DrawnUi.Draw.Super.UserAgent
+- uid: DrawnUi.Draw.Super.EnqueueBackgroundTask*
+  commentId: Overload:DrawnUi.Draw.Super.EnqueueBackgroundTask
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_EnqueueBackgroundTask_System_Func_System_Threading_Tasks_Task__
+  name: EnqueueBackgroundTask
+  nameWithType: Super.EnqueueBackgroundTask
+  fullName: DrawnUi.Draw.Super.EnqueueBackgroundTask
+- uid: DrawnUi.Draw.Super.ProcessBackgroundQueue*
+  commentId: Overload:DrawnUi.Draw.Super.ProcessBackgroundQueue
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_ProcessBackgroundQueue
+  name: ProcessBackgroundQueue
+  nameWithType: Super.ProcessBackgroundQueue
+  fullName: DrawnUi.Draw.Super.ProcessBackgroundQueue

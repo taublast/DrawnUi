@@ -1,0 +1,561 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Views.DrawnView.TimedDisposable
+  commentId: T:DrawnUi.Views.DrawnView.TimedDisposable
+  id: DrawnView.TimedDisposable
+  parent: DrawnUi.Views
+  children:
+  - DrawnUi.Views.DrawnView.TimedDisposable.#ctor(System.IDisposable)
+  - DrawnUi.Views.DrawnView.TimedDisposable.Disposable
+  - DrawnUi.Views.DrawnView.TimedDisposable.Dispose
+  - DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime
+  langs:
+  - csharp
+  - vb
+  name: DrawnView.TimedDisposable
+  nameWithType: DrawnView.TimedDisposable
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable
+  type: Struct
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DrawnView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TimedDisposable
+    path: ../src/Maui/DrawnUi/Views/DrawnView.cs
+    startLine: 1595
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  syntax:
+    content: 'public readonly struct DrawnView.TimedDisposable : IDisposable'
+    content.vb: Public Structure DrawnView.TimedDisposable Implements IDisposable
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.Disposable
+  commentId: P:DrawnUi.Views.DrawnView.TimedDisposable.Disposable
+  id: Disposable
+  parent: DrawnUi.Views.DrawnView.TimedDisposable
+  langs:
+  - csharp
+  - vb
+  name: Disposable
+  nameWithType: DrawnView.TimedDisposable.Disposable
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.Disposable
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DrawnView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Disposable
+    path: ../src/Maui/DrawnUi/Views/DrawnView.cs
+    startLine: 1597
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  syntax:
+    content: public IDisposable Disposable { get; }
+    parameters: []
+    return:
+      type: System.IDisposable
+    content.vb: Public ReadOnly Property Disposable As IDisposable
+  overload: DrawnUi.Views.DrawnView.TimedDisposable.Disposable*
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime
+  commentId: P:DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime
+  id: EnqueuedTime
+  parent: DrawnUi.Views.DrawnView.TimedDisposable
+  langs:
+  - csharp
+  - vb
+  name: EnqueuedTime
+  nameWithType: DrawnView.TimedDisposable.EnqueuedTime
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DrawnView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: EnqueuedTime
+    path: ../src/Maui/DrawnUi/Views/DrawnView.cs
+    startLine: 1598
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  syntax:
+    content: public DateTime EnqueuedTime { get; }
+    parameters: []
+    return:
+      type: System.DateTime
+    content.vb: Public ReadOnly Property EnqueuedTime As Date
+  overload: DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime*
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.#ctor(System.IDisposable)
+  commentId: M:DrawnUi.Views.DrawnView.TimedDisposable.#ctor(System.IDisposable)
+  id: '#ctor(System.IDisposable)'
+  parent: DrawnUi.Views.DrawnView.TimedDisposable
+  langs:
+  - csharp
+  - vb
+  name: TimedDisposable(IDisposable)
+  nameWithType: DrawnView.TimedDisposable.TimedDisposable(IDisposable)
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.TimedDisposable(System.IDisposable)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DrawnView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Views/DrawnView.cs
+    startLine: 1600
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  syntax:
+    content: public TimedDisposable(IDisposable disposable)
+    parameters:
+    - id: disposable
+      type: System.IDisposable
+    content.vb: Public Sub New(disposable As IDisposable)
+  overload: DrawnUi.Views.DrawnView.TimedDisposable.#ctor*
+  nameWithType.vb: DrawnView.TimedDisposable.New(IDisposable)
+  fullName.vb: DrawnUi.Views.DrawnView.TimedDisposable.New(System.IDisposable)
+  name.vb: New(IDisposable)
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.Dispose
+  commentId: M:DrawnUi.Views.DrawnView.TimedDisposable.Dispose
+  id: Dispose
+  parent: DrawnUi.Views.DrawnView.TimedDisposable
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: DrawnView.TimedDisposable.Dispose()
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DrawnView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Views/DrawnView.cs
+    startLine: 1606
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Views.DrawnView.TimedDisposable.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+references:
+- uid: DrawnUi.Views
+  commentId: N:DrawnUi.Views
+  href: DrawnUi.html
+  name: DrawnUi.Views
+  nameWithType: DrawnUi.Views
+  fullName: DrawnUi.Views
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Views
+    name: Views
+    href: DrawnUi.Views.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Views
+    name: Views
+    href: DrawnUi.Views.html
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.Disposable*
+  commentId: Overload:DrawnUi.Views.DrawnView.TimedDisposable.Disposable
+  href: DrawnUi.Views.DrawnView.TimedDisposable.html#DrawnUi_Views_DrawnView_TimedDisposable_Disposable
+  name: Disposable
+  nameWithType: DrawnView.TimedDisposable.Disposable
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.Disposable
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime*
+  commentId: Overload:DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime
+  href: DrawnUi.Views.DrawnView.TimedDisposable.html#DrawnUi_Views_DrawnView_TimedDisposable_EnqueuedTime
+  name: EnqueuedTime
+  nameWithType: DrawnView.TimedDisposable.EnqueuedTime
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.datetime
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.#ctor*
+  commentId: Overload:DrawnUi.Views.DrawnView.TimedDisposable.#ctor
+  href: DrawnUi.Views.DrawnView.TimedDisposable.html#DrawnUi_Views_DrawnView_TimedDisposable__ctor_System_IDisposable_
+  name: TimedDisposable
+  nameWithType: DrawnView.TimedDisposable.TimedDisposable
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.TimedDisposable
+  nameWithType.vb: DrawnView.TimedDisposable.New
+  fullName.vb: DrawnUi.Views.DrawnView.TimedDisposable.New
+  name.vb: New
+- uid: DrawnUi.Views.DrawnView.TimedDisposable.Dispose*
+  commentId: Overload:DrawnUi.Views.DrawnView.TimedDisposable.Dispose
+  href: DrawnUi.Views.DrawnView.TimedDisposable.html#DrawnUi_Views_DrawnView_TimedDisposable_Dispose
+  name: Dispose
+  nameWithType: DrawnView.TimedDisposable.Dispose
+  fullName: DrawnUi.Views.DrawnView.TimedDisposable.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )

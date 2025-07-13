@@ -1,0 +1,699 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ISkiaGestureListener
+  commentId: T:DrawnUi.Draw.ISkiaGestureListener
+  id: ISkiaGestureListener
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow
+  - DrawnUi.Draw.ISkiaGestureListener.CanDraw
+  - DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime
+  - DrawnUi.Draw.ISkiaGestureListener.HitIsInside(System.Single,System.Single)
+  - DrawnUi.Draw.ISkiaGestureListener.InputTransparent
+  - DrawnUi.Draw.ISkiaGestureListener.LockFocus
+  - DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged(System.Boolean)
+  - DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.ISkiaGestureListener.Tag
+  - DrawnUi.Draw.ISkiaGestureListener.Uid
+  - DrawnUi.Draw.ISkiaGestureListener.ZIndex
+  langs:
+  - csharp
+  - vb
+  name: ISkiaGestureListener
+  nameWithType: ISkiaGestureListener
+  fullName: DrawnUi.Draw.ISkiaGestureListener
+  type: Interface
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ISkiaGestureListener
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public interface ISkiaGestureListener
+    content.vb: Public Interface ISkiaGestureListener
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  id: OnSkiaGestureEvent(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: OnSkiaGestureEvent(SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: ISkiaGestureListener.OnSkiaGestureEvent(SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnSkiaGestureEvent
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Called when a gesture is detected.
+  example: []
+  syntax:
+    content: ISkiaGestureListener OnSkiaGestureEvent(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    parameters:
+    - id: args
+      type: DrawnUi.Draw.SkiaGesturesParameters
+      description: ''
+    - id: apply
+      type: DrawnUi.Draw.GestureEventProcessingInfo
+    return:
+      type: DrawnUi.Draw.ISkiaGestureListener
+      description: >-
+        WHO CONSUMED if gesture consumed and blocked to be passed, NULL if gesture not locked and could be passed below.
+            If you pass this to subview you must set your own offset parameters, do not pass what you received its for this level use.
+    content.vb: Function OnSkiaGestureEvent(args As SkiaGesturesParameters, apply As GestureEventProcessingInfo) As ISkiaGestureListener
+  overload: DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent*
+- uid: DrawnUi.Draw.ISkiaGestureListener.InputTransparent
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.InputTransparent
+  id: InputTransparent
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: InputTransparent
+  nameWithType: ISkiaGestureListener.InputTransparent
+  fullName: DrawnUi.Draw.ISkiaGestureListener.InputTransparent
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InputTransparent
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool InputTransparent { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property InputTransparent As Boolean
+  overload: DrawnUi.Draw.ISkiaGestureListener.InputTransparent*
+- uid: DrawnUi.Draw.ISkiaGestureListener.LockFocus
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.LockFocus
+  id: LockFocus
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: LockFocus
+  nameWithType: ISkiaGestureListener.LockFocus
+  fullName: DrawnUi.Draw.ISkiaGestureListener.LockFocus
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LockFocus
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool LockFocus { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property LockFocus As Boolean
+  overload: DrawnUi.Draw.ISkiaGestureListener.LockFocus*
+- uid: DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow
+  id: BlockGesturesBelow
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: BlockGesturesBelow
+  nameWithType: ISkiaGestureListener.BlockGesturesBelow
+  fullName: DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BlockGesturesBelow
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool BlockGesturesBelow { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property BlockGesturesBelow As Boolean
+  overload: DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow*
+- uid: DrawnUi.Draw.ISkiaGestureListener.CanDraw
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.CanDraw
+  id: CanDraw
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: CanDraw
+  nameWithType: ISkiaGestureListener.CanDraw
+  fullName: DrawnUi.Draw.ISkiaGestureListener.CanDraw
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CanDraw
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool CanDraw { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property CanDraw As Boolean
+  overload: DrawnUi.Draw.ISkiaGestureListener.CanDraw*
+- uid: DrawnUi.Draw.ISkiaGestureListener.Tag
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.Tag
+  id: Tag
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: Tag
+  nameWithType: ISkiaGestureListener.Tag
+  fullName: DrawnUi.Draw.ISkiaGestureListener.Tag
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tag
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: string Tag { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Tag As String
+  overload: DrawnUi.Draw.ISkiaGestureListener.Tag*
+- uid: DrawnUi.Draw.ISkiaGestureListener.Uid
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.Uid
+  id: Uid
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: Uid
+  nameWithType: ISkiaGestureListener.Uid
+  fullName: DrawnUi.Draw.ISkiaGestureListener.Uid
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Uid
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 25
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Guid Uid { get; }
+    parameters: []
+    return:
+      type: System.Guid
+    content.vb: ReadOnly Property Uid As Guid
+  overload: DrawnUi.Draw.ISkiaGestureListener.Uid*
+- uid: DrawnUi.Draw.ISkiaGestureListener.ZIndex
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.ZIndex
+  id: ZIndex
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: ZIndex
+  nameWithType: ISkiaGestureListener.ZIndex
+  fullName: DrawnUi.Draw.ISkiaGestureListener.ZIndex
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ZIndex
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: int ZIndex { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property ZIndex As Integer
+  overload: DrawnUi.Draw.ISkiaGestureListener.ZIndex*
+- uid: DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime
+  commentId: P:DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime
+  id: GestureListenerRegistrationTime
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: GestureListenerRegistrationTime
+  nameWithType: ISkiaGestureListener.GestureListenerRegistrationTime
+  fullName: DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GestureListenerRegistrationTime
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: DateTime? GestureListenerRegistrationTime { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.DateTime}
+    content.vb: Property GestureListenerRegistrationTime As Date?
+  overload: DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime*
+- uid: DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged(System.Boolean)
+  commentId: M:DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged(System.Boolean)
+  id: OnFocusChanged(System.Boolean)
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: OnFocusChanged(bool)
+  nameWithType: ISkiaGestureListener.OnFocusChanged(bool)
+  fullName: DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnFocusChanged
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    This will be called only for views registered at Superview.FocusedChild.
+
+    The view must return true of false to indicate if it accepts focus.
+  example: []
+  syntax:
+    content: bool OnFocusChanged(bool focus)
+    parameters:
+    - id: focus
+      type: System.Boolean
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Function OnFocusChanged(focus As Boolean) As Boolean
+  overload: DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged*
+  nameWithType.vb: ISkiaGestureListener.OnFocusChanged(Boolean)
+  fullName.vb: DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged(Boolean)
+  name.vb: OnFocusChanged(Boolean)
+- uid: DrawnUi.Draw.ISkiaGestureListener.HitIsInside(System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.ISkiaGestureListener.HitIsInside(System.Single,System.Single)
+  id: HitIsInside(System.Single,System.Single)
+  parent: DrawnUi.Draw.ISkiaGestureListener
+  langs:
+  - csharp
+  - vb
+  name: HitIsInside(float, float)
+  nameWithType: ISkiaGestureListener.HitIsInside(float, float)
+  fullName: DrawnUi.Draw.ISkiaGestureListener.HitIsInside(float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HitIsInside
+    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    startLine: 40
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: bool HitIsInside(float x, float y)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Function HitIsInside(x As Single, y As Single) As Boolean
+  overload: DrawnUi.Draw.ISkiaGestureListener.HitIsInside*
+  nameWithType.vb: ISkiaGestureListener.HitIsInside(Single, Single)
+  fullName.vb: DrawnUi.Draw.ISkiaGestureListener.HitIsInside(Single, Single)
+  name.vb: HitIsInside(Single, Single)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_OnSkiaGestureEvent_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: OnSkiaGestureEvent
+  nameWithType: ISkiaGestureListener.OnSkiaGestureEvent
+  fullName: DrawnUi.Draw.ISkiaGestureListener.OnSkiaGestureEvent
+- uid: DrawnUi.Draw.SkiaGesturesParameters
+  commentId: T:DrawnUi.Draw.SkiaGesturesParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaGesturesParameters.html
+  name: SkiaGesturesParameters
+  nameWithType: SkiaGesturesParameters
+  fullName: DrawnUi.Draw.SkiaGesturesParameters
+- uid: DrawnUi.Draw.GestureEventProcessingInfo
+  commentId: T:DrawnUi.Draw.GestureEventProcessingInfo
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  name: GestureEventProcessingInfo
+  nameWithType: GestureEventProcessingInfo
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo
+- uid: DrawnUi.Draw.ISkiaGestureListener
+  commentId: T:DrawnUi.Draw.ISkiaGestureListener
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaGestureListener.html
+  name: ISkiaGestureListener
+  nameWithType: ISkiaGestureListener
+  fullName: DrawnUi.Draw.ISkiaGestureListener
+- uid: DrawnUi.Draw.ISkiaGestureListener.InputTransparent*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.InputTransparent
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_InputTransparent
+  name: InputTransparent
+  nameWithType: ISkiaGestureListener.InputTransparent
+  fullName: DrawnUi.Draw.ISkiaGestureListener.InputTransparent
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.ISkiaGestureListener.LockFocus*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.LockFocus
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_LockFocus
+  name: LockFocus
+  nameWithType: ISkiaGestureListener.LockFocus
+  fullName: DrawnUi.Draw.ISkiaGestureListener.LockFocus
+- uid: DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_BlockGesturesBelow
+  name: BlockGesturesBelow
+  nameWithType: ISkiaGestureListener.BlockGesturesBelow
+  fullName: DrawnUi.Draw.ISkiaGestureListener.BlockGesturesBelow
+- uid: DrawnUi.Draw.ISkiaGestureListener.CanDraw*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.CanDraw
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_CanDraw
+  name: CanDraw
+  nameWithType: ISkiaGestureListener.CanDraw
+  fullName: DrawnUi.Draw.ISkiaGestureListener.CanDraw
+- uid: DrawnUi.Draw.ISkiaGestureListener.Tag*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.Tag
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_Tag
+  name: Tag
+  nameWithType: ISkiaGestureListener.Tag
+  fullName: DrawnUi.Draw.ISkiaGestureListener.Tag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Draw.ISkiaGestureListener.Uid*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.Uid
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_Uid
+  name: Uid
+  nameWithType: ISkiaGestureListener.Uid
+  fullName: DrawnUi.Draw.ISkiaGestureListener.Uid
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: DrawnUi.Draw.ISkiaGestureListener.ZIndex*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.ZIndex
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_ZIndex
+  name: ZIndex
+  nameWithType: ISkiaGestureListener.ZIndex
+  fullName: DrawnUi.Draw.ISkiaGestureListener.ZIndex
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_GestureListenerRegistrationTime
+  name: GestureListenerRegistrationTime
+  nameWithType: ISkiaGestureListener.GestureListenerRegistrationTime
+  fullName: DrawnUi.Draw.ISkiaGestureListener.GestureListenerRegistrationTime
+- uid: System.Nullable{System.DateTime}
+  commentId: T:System.Nullable{System.DateTime}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.datetime
+  name: DateTime?
+  nameWithType: DateTime?
+  fullName: System.DateTime?
+  nameWithType.vb: Date?
+  fullName.vb: Date?
+  name.vb: Date?
+  spec.csharp:
+  - uid: System.DateTime
+    name: DateTime
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.datetime
+  - name: '?'
+  spec.vb:
+  - uid: System.DateTime
+    name: Date
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.datetime
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_OnFocusChanged_System_Boolean_
+  name: OnFocusChanged
+  nameWithType: ISkiaGestureListener.OnFocusChanged
+  fullName: DrawnUi.Draw.ISkiaGestureListener.OnFocusChanged
+- uid: DrawnUi.Draw.ISkiaGestureListener.HitIsInside*
+  commentId: Overload:DrawnUi.Draw.ISkiaGestureListener.HitIsInside
+  href: DrawnUi.Draw.ISkiaGestureListener.html#DrawnUi_Draw_ISkiaGestureListener_HitIsInside_System_Single_System_Single_
+  name: HitIsInside
+  nameWithType: ISkiaGestureListener.HitIsInside
+  fullName: DrawnUi.Draw.ISkiaGestureListener.HitIsInside
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

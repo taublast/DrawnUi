@@ -1,0 +1,258 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.PointedDirectionType
+  commentId: T:DrawnUi.Draw.PointedDirectionType
+  id: PointedDirectionType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.PointedDirectionType.BottomToTop
+  - DrawnUi.Draw.PointedDirectionType.LeftToRight
+  - DrawnUi.Draw.PointedDirectionType.RightToLeft
+  - DrawnUi.Draw.PointedDirectionType.TopToBottom
+  langs:
+  - csharp
+  - vb
+  name: PointedDirectionType
+  nameWithType: PointedDirectionType
+  fullName: DrawnUi.Draw.PointedDirectionType
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PointedDirectionType
+    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum PointedDirectionType
+    content.vb: Public Enum PointedDirectionType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.PointedDirectionType.LeftToRight
+  commentId: F:DrawnUi.Draw.PointedDirectionType.LeftToRight
+  id: LeftToRight
+  parent: DrawnUi.Draw.PointedDirectionType
+  langs:
+  - csharp
+  - vb
+  name: LeftToRight
+  nameWithType: PointedDirectionType.LeftToRight
+  fullName: DrawnUi.Draw.PointedDirectionType.LeftToRight
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LeftToRight
+    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LeftToRight = 0
+    return:
+      type: DrawnUi.Draw.PointedDirectionType
+- uid: DrawnUi.Draw.PointedDirectionType.RightToLeft
+  commentId: F:DrawnUi.Draw.PointedDirectionType.RightToLeft
+  id: RightToLeft
+  parent: DrawnUi.Draw.PointedDirectionType
+  langs:
+  - csharp
+  - vb
+  name: RightToLeft
+  nameWithType: PointedDirectionType.RightToLeft
+  fullName: DrawnUi.Draw.PointedDirectionType.RightToLeft
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RightToLeft
+    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: RightToLeft = 1
+    return:
+      type: DrawnUi.Draw.PointedDirectionType
+- uid: DrawnUi.Draw.PointedDirectionType.TopToBottom
+  commentId: F:DrawnUi.Draw.PointedDirectionType.TopToBottom
+  id: TopToBottom
+  parent: DrawnUi.Draw.PointedDirectionType
+  langs:
+  - csharp
+  - vb
+  name: TopToBottom
+  nameWithType: PointedDirectionType.TopToBottom
+  fullName: DrawnUi.Draw.PointedDirectionType.TopToBottom
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TopToBottom
+    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: TopToBottom = 2
+    return:
+      type: DrawnUi.Draw.PointedDirectionType
+- uid: DrawnUi.Draw.PointedDirectionType.BottomToTop
+  commentId: F:DrawnUi.Draw.PointedDirectionType.BottomToTop
+  id: BottomToTop
+  parent: DrawnUi.Draw.PointedDirectionType
+  langs:
+  - csharp
+  - vb
+  name: BottomToTop
+  nameWithType: PointedDirectionType.BottomToTop
+  fullName: DrawnUi.Draw.PointedDirectionType.BottomToTop
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BottomToTop
+    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BottomToTop = 3
+    return:
+      type: DrawnUi.Draw.PointedDirectionType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.PointedDirectionType
+  commentId: T:DrawnUi.Draw.PointedDirectionType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.PointedDirectionType.html
+  name: PointedDirectionType
+  nameWithType: PointedDirectionType
+  fullName: DrawnUi.Draw.PointedDirectionType
