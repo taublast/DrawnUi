@@ -53,6 +53,8 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+desktop.ini
+
 *_i.c
 *_p.c
 *_i.h
