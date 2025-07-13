@@ -74,16 +74,25 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-      "_appTitle": "DrawnUI for .NET MAUI",
-      "_enableSearch": true,
-      "_appLogoPath": "images/logo.png",
-      "_appFaviconPath": "images/favicon.ico",
-      "_disableContribution": false,
-      "_gitContribute": {
-        "repo": "https://github.com/taublast/DrawnUi",
-        "branch": "master"
-      }
-
+"_appTitle": "DrawnUI for .NET MAUI",
+  "_appDescription": "DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.",
+  "_appKeywords": ".NET MAUI, SkiaSharp, cross-platform UI, hardware acceleration, mobile development, iOS, Android, Windows, MacCatalyst, custom controls, animations, gestures, pixel-perfect, rendering engine",
+  "_appAuthor": "Nick Kovalsky aka AppoMobi (@taublast)",
+  "description": "DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.",
+  "keywords": ".NET MAUI, SkiaSharp, cross-platform UI, hardware acceleration, mobile development, iOS, Android, Windows, MacCatalyst, custom controls, animations, gestures, pixel-perfect, rendering engine",
+  "author": "Nick Kovalsky (@taublast)",
+  "og:title": "DrawnUI for .NET MAUI",
+  "og:description": "Create stunning cross-platform apps with DrawnUI - a powerful rendering engine for .NET MAUI built on SkiaSharp. Hardware-accelerated performance with pixel-perfect controls.",
+  "og:type": "website",
+  "og:url": "https://taublast.github.io/drawnui",
+  "og:image": "https://taublast.github.io/drawnui/images/logo.png",
+  "twitter:card": "summary_large_image",
+  "twitter:title": "DrawnUI for .NET MAUI",
+  "twitter:description": "Hardware-accelerated rendering engine for .NET MAUI built on SkiaSharp",
+    "_gitContribute": {
+      "repo": "https://github.com/taublast/drawnui",
+      "branch": "master"
+    }
     }
   }
 }
