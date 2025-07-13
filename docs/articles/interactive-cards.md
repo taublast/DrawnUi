@@ -12,9 +12,10 @@ An interactive card gallery featuring:
 - 🎨 **Beautiful gradient cards** with unicode text, controls and gradients
 - ✨ **Smooth animations** (scale, rotation, color changing)
 - 👆 **Gesture interactions** (tap, pan)
-- 💫 **Visual effects** for shadows and glow
+- 💫 **Visual effects** for shadows and glow  
 
----
+<img src="../images/cards.png" alt="Interactive Cards Demo" width="350" style="margin-top: 16px;" />
+
 
 ## Prerequisites
 
