@@ -145,3 +145,101 @@ code {
     border-right: 1px solid #333333 !important;
     padding-right: 8px !important;
 }
+
+/* ===== CUSTOM SPACING AND TYPOGRAPHY ===== */
+
+/* Main content area spacing */
+.article {
+    line-height: 1.6;
+}
+
+/* Heading spacing improvements */
+h1 {
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+h2 {
+    margin-top: 2.5rem !important;
+    margin-bottom: 1.25rem !important;
+}
+
+h3 {
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+}
+
+h4 {
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+h5, h6 {
+    margin-top: 1.25rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* First heading after content start should have less top margin */
+.article > h1:first-child,
+.article > h2:first-child,
+.article > h3:first-child {
+    margin-top: 0 !important;
+}
+
+/* Paragraph spacing */
+p {
+    margin-bottom: 1rem !important;
+}
+
+/* List spacing */
+ul, ol {
+    margin-bottom: 1rem !important;
+}
+
+ul li, ol li {
+    margin-bottom: 0.25rem !important;
+}
+
+/* Nested list spacing */
+ul ul, ol ol, ul ol, ol ul {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Code block spacing */
+pre {
+    margin-top: 1rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Blockquote spacing */
+blockquote {
+    margin-top: 1rem !important;
+    margin-bottom: 1.5rem !important;
+    padding-left: 1rem !important;
+    border-left: 4px solid #ddd !important;
+}
+
+/* Table spacing */
+table {
+    margin-top: 1rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Horizontal rule spacing */
+hr {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+/* Image spacing */
+img {
+    margin-top: 0.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Badge/shield spacing */
+img[src*="shields.io"], img[src*="badge"] {
+    margin: 0.25rem 0.25rem 0.25rem 0 !important;
+    display: inline !important;
+}

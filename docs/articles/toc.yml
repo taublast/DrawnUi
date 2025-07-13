@@ -5,9 +5,9 @@
   items:
     - name: Installation and Setup
       href: getting-started.md
-    - name: Your First DrawnUi App
+    - name: Your First Drawn App
       href: first-app.md
-    - name: Interactive Card Gallery
+    - name: Drawn Cards Tutorial
       href: interactive-cards.md
     - name: News Feed Tutorial
       href: news-feed-tutorial.md

@@ -12,7 +12,6 @@ To make everything compile from first attempt You might also need at least the f
 
 ```
 	<PropertyGroup>
-        <WindowsPackageType>MSIX</WindowsPackageType>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
@@ -27,7 +26,6 @@ To make everything compile from first attempt You might also need at least the f
 
 ```
 
-For Windows to overcome an existing restriction in SkiaSharp you would need to enable MSIX packaging for your Windows project. This limitation will be resolved.
 ### Add the NuGet Package
 
 Install the **DrawnUi.Maui** NuGet package in your .NET MAUI project:

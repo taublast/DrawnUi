@@ -4,12 +4,22 @@ Explore real-world examples and code snippets to help you get started and master
 
 ## Example Apps
 
-### Complete Demo Applications
+### Learning Projects
+
+- **[Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox)** 🧪 - Experiment with:
+  - Pre-built drawn controls
+  - Playground examples
+  - Custom controls development
+  - Maps integration
+  - Various styling approaches
+
 - **[Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo)** 🤩 - A comprehensive totally drawn app demo featuring:
   - Recycled cells and virtualization
   - Camera integration examples
   - Custom controls showcase
   - Updated with latest NuGet package
+
+### Complete Demo Applications
 
 - **[Space Shooter Game](https://github.com/taublast/AppoMobi.Maui.DrawnUi.SpaceShooter)** 🎮 - Dynamic arcade game demonstrating:
   - Full keyboard support implementation
@@ -23,19 +33,6 @@ Explore real-world examples and code snippets to help you get started and master
   - Hardware acceleration examples
   - Modern rendering techniques
 
-### Learning Projects
-- **[Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox)** 🧪 - Experiment with:
-  - Pre-built drawn controls
-  - Playground examples
-  - Custom controls development
-  - Maps integration
-  - Various styling approaches
-
-- **[Drawn CollectionView Demo](https://github.com/taublast/SurfAppCompareDrawn)** 📱 - Learn how to:
-  - Convert existing recycled cells lists to drawn ones
-  - Compare performance benefits
-  - Implement virtualization patterns
-  - Optimize list rendering
 
 ## Code Snippets
 - [Game UI & Interactive Games](advanced/game-ui.md)

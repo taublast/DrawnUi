@@ -61,8 +61,12 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "modern"
+      "modern",
+      "my-template"
     ],
+     "styles": {
+            "website": ["styles/main.css"]
+        },
     "postProcessors": [],
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
@@ -70,7 +74,7 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-      "_appTitle": "DrawnUi Documentation",
+      "_appTitle": "DrawnUI for .NET MAUI",
       "_enableSearch": true,
       "_appLogoPath": "images/logo.png",
       "_appFaviconPath": "images/favicon.ico",

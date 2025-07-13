@@ -1,0 +1,263 @@
+/* ===== LIGHT MODE (DEFAULT) ===== */
+
+/* Light mode code styling - uses default DocFX colors */
+/* (Empty - let DocFX handle light mode styling) */
+
+/* ===== DARK MODE SYNTAX HIGHLIGHTING ===== */
+@media (prefers-color-scheme: dark) {
+    /* Code block background */
+    pre, code {
+        background-color: #000000 ;
+        color: #dfdfdf ;
+    }
+
+    /* Comments */
+    .hljs-comment,
+    .hljs-quote {
+        color: #4fe34f ;
+    }
+
+    /* XML Documentation Comments */
+    .hljs-doctag,
+    .hljs-meta .hljs-doctag {
+        color: #0ab90A ;
+    }
+
+    /* Strings */
+    .hljs-string,
+    .hljs-literal {
+        color: #edf5a0 ;
+    }
+
+    /* String interpolation/templates */
+    .hljs-template-string,
+    .hljs-template-variable {
+        color: #fb7773 ;
+    }
+
+    /* Keywords (if, else, for, while, etc.) */
+    .hljs-keyword {
+        color: #e2dc29 ;
+    }
+
+    /* Control flow keywords */
+    .hljs-keyword.hljs-control,
+    .hljs-keyword.hljs-flow {
+        color: #ea97e5 ;
+    }
+
+    /* Types, classes, interfaces */
+    .hljs-type,
+    .hljs-class,
+    .hljs-title.class_,
+    .hljs-built_in {
+        color: #edf5a0 ;
+    }
+
+    /* Enums */
+    .hljs-enum {
+        color: #74c88f ;
+    }
+
+    /* Method/Function names */
+    .hljs-title.function_,
+    .hljs-function .hljs-title,
+    .hljs-method {
+        color: #f9ffb4 ;
+    }
+
+    /* Variables, properties */
+    .hljs-variable,
+    .hljs-property,
+    .hljs-attr {
+        color: #9CDCFE ;
+    }
+
+    /* Constants, enum members */
+    .hljs-variable.constant_,
+    .hljs-constant {
+        color: #dfdfdf ;
+    }
+
+    /* Numbers */
+    .hljs-number {
+        color: #dfdfdf ;
+    }
+
+    /* Operators */
+    .hljs-operator {
+        color: #e2dc29 ;
+    }
+
+    /* Punctuation */
+    .hljs-punctuation {
+        color: #cfcfcf ;
+    }
+
+    /* Preprocessor directives */
+    .hljs-meta,
+    .hljs-preprocessor {
+        color: #b8b8b8 ;
+    }
+
+    /* Attributes */
+    .hljs-attribute,
+    .hljs-meta-string {
+        color: #dfdfdf ;
+    }
+
+    /* Namespaces */
+    .hljs-namespace {
+        color: #dfdfdf ;
+    }
+
+    /* C# specific */
+    .hljs-keyword.hljs-type {
+        color: #e2dc29 ;
+    }
+
+    .hljs-keyword.hljs-modifier {
+        color: #e2dc29 ;
+    }
+
+    /* Generic type parameters */
+    .hljs-title.class_.generic_ {
+        color: #edf5a0 ;
+    }
+
+    /* LINQ keywords */
+    .hljs-keyword.hljs-linq {
+        color: #ea97e5 ;
+    }
+
+    /* Override default code block styling */
+    .hljs {
+        background: #000000 ;
+        color: #dfdfdf ;
+    }
+
+    /* Ensure proper contrast for inline code */
+    code {
+        background-color: #111111 ;
+        color: #dfdfdf ;
+        padding: 2px 4px ;
+        border-radius: 3px ;
+    }
+
+    /* Line numbers (if enabled) */
+    .hljs-ln-numbers {
+        color: #666666 ;
+        border-right: 1px solid #333333 ;
+        padding-right: 8px ;
+    }
+} /* End of dark mode media query */
+
+/* ===== CUSTOM SPACING AND TYPOGRAPHY ===== */
+
+code{
+    padding: 1rem;
+}
+
+/* Main content area spacing */
+.article {
+    line-height: 1.6;
+}
+
+/* Heading spacing improvements */
+h1 {
+    margin-top: 2rem ;
+    margin-bottom: 1.5rem ;
+}
+
+h2 {
+    margin-top: 2.5rem ;
+    margin-bottom: 1.25rem ;
+}
+
+h3 {
+    margin-top: 2rem ;
+    margin-bottom: 1rem ;
+}
+
+h4 {
+    margin-top: 1.5rem ;
+    margin-bottom: 0.75rem ;
+}
+
+h5, h6 {
+    margin-top: 1.25rem ;
+    margin-bottom: 0.5rem ;
+}
+
+/* First heading after content start should have less top margin */
+.article > h1:first-child,
+.article > h2:first-child,
+.article > h3:first-child {
+    margin-top: 0 ;
+}
+
+/* Paragraph spacing */
+p {
+    margin-bottom: 1rem ;
+}
+
+/* List spacing */
+ul, ol {
+    margin-bottom: 1rem ;
+}
+
+ul li, ol li {
+    margin-bottom: 0.25rem ;
+}
+
+/* Nested list spacing */
+ul ul, ol ol, ul ol, ol ul {
+    margin-top: 0.25rem ;
+    margin-bottom: 0.5rem ;
+}
+
+/* Code block spacing and styling */
+pre {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+/* Rounded corners for code blocks */
+pre,
+code.hljs {
+    border-radius: 4px ;
+    padding: 1 rem;
+}
+
+/* Blockquote spacing */
+blockquote {
+    margin-top: 1rem ;
+    margin-bottom: 1.5rem ;
+    padding-left: 1rem ;
+    border-left: 4px solid #ddd ;
+}
+
+/* Table spacing */
+table {
+    margin-top: 1rem ;
+    margin-bottom: 1.5rem ;
+}
+
+/* Horizontal rule spacing */
+hr {
+    margin-top: 2rem ;
+    margin-bottom: 2rem ;
+}
+
+/* Image spacing */
+img {
+    margin-top: 0.5rem ;
+    margin-bottom: 1rem ;
+}
+
+/* Badge/shield spacing */
+img[src*="shields.io"], img[src*="badge"] {
+    margin: 0.25rem 0.25rem 0.25rem 0 ;
+    display: inline ;
+}
