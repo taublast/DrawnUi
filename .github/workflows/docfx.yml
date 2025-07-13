@@ -24,9 +24,8 @@ jobs:
         dotnet-version: '9.x'
     
     - name: Install DocFX
-      run: |
-        dotnet tool install -g docfx
-        dotnet restore
+      run: dotnet tool install -g docfx
+
     
     - name: Build Documentation
       run: |
