@@ -3,7 +3,7 @@
 ![NuGet Version](https://img.shields.io/nuget/v/AppoMobi.Maui.DrawnUi.svg)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 
-📕 [Documentattion](https://taublast.github.io/DrawnUi/)
+📕 [Documentation](https://taublast.github.io/DrawnUi/)
 
 Replace native controls with a Skia Canvas! 🤩 On **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
