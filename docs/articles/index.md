@@ -6,33 +6,34 @@
 
 ⭐️ [View on GitHub](https://github.com/taublast/DrawnUi.Maui)
 
-**A rendering engine for .NET MAUI built on top of SkiaSharp, to replace native controls with a Skia Canvas!**
+**A rendering engine for .NET MAUI built on top of SkiaSharp**
 
-**Hardware-accelerated rendering** on **iOS**, **MacCatalyst**, **Android**, **Windows** with enhanced layout system, gestures and animations powered by [SkiaSharp](https://github.com/mono/SkiaSharp) 😍.
+**Hardware-accelerated rendering engine** for **iOS**, **MacCatalyst**, **Android**, **Windows** with enhanced WPF-like layout system, gestures and animations, powered by [SkiaSharp](https://github.com/mono/SkiaSharp) 🤩.
 
 ---
 
-## 🎯 Purpose
+## 🌞 The Purpose
 
-* **Rendering engine** to create, layout and render your drawn controls with gestures and animations
+* **Easy canvas drawing** with high-level helpers 
+* **Smart creation of controls** by compositing different components
+* **Custom layout system** to create, layout and render your drawn controls with gestures and animations
 * **Hardware-accelerated** rendering on iOS • MacCatalyst • Android • Windows
 * **Free to use** under the MIT license, stable NuGet package available
 * **Hybrid approach**: Use inside existing MAUI apps by wrapping drawn controls in `Canvas` views
-* **Fully drawn apps**: Create totally drawn apps with just one `Canvas` as root view using `SkiaShell` + `SkiaViewSwitcher` for navigation
-* **Virtual controls**: No native views/handlers created, UI-thread not required to access and modify them
-
-> **Note**: This is a rendering engine for creating custom drawn controls, NOT a development framework with pre-defined elements. Shipped controls are provided for quick start convenience.
+* **Fully drawn apps**: Create totally drawn apps with just one Canvas as root view 
+* **Virtual controls**: No native views/handlers created, UI-thread not required for access
+* **To have the tools to create and use your own controls** to expand the limits of the predefined
 
 ## ⚡ Features
 
 ### 🎨 **Rendering & Graphics**
-* **Hardware-accelerated** SkiaSharp rendering with 60fps performance
+* **Hardware-accelerated** SkiaSharp rendering with max performance
 * **Pixel-perfect controls** with complete visual customization
 * **2D and 3D transforms** for advanced visual effects
 * **Visual effects** for every control: filters, shaders, shadows, blur
 * **Caching system** for optimized re-drawing performance
 
-### 🎯 **Development Experience**
+### 😍 **Development Experience**
 * **Design in XAML or code-behind** - choose your preferred approach
 * **Fluent C# syntax** for programmatic UI creation
 * **Hot Reload compatible** for rapid development iteration
@@ -55,8 +56,6 @@
 * **SkiaShell + SkiaViewSwitcher** for fully drawn app navigation
 * **Modals, popups, toasts** and custom overlays
 * **Enhanced layout system** with advanced positioning
-
-
 
 
 ## 📦 Quick Installation
@@ -110,8 +109,7 @@ A: Well, since you draw, why not just draw a game instead of a business app. Dra
 
 ### Documentation & Guides
 - **[Getting Started Guide](getting-started.md)** - Complete installation and setup
-- **[Your First DrawnUI App](first-app.md)** - Step-by-step tutorial
-- **[Interactive Card Gallery](interactive-cards.md)** - Build impressive animations
+- **[Sample Apps](samples.md)** - Tutorials and example projects
 - **[FAQ](faq.md)** - Frequently asked questions and answers
 - **[Controls Documentation](controls/index.md)** - Complete controls reference
 - **[Advanced Features](advanced/index.md)** - Performance and platform topics
@@ -123,7 +121,6 @@ A: Well, since you draw, why not just draw a game instead of a business app. Dra
 
 ### Additional Resources
 - **[Fluent Extensions](fluent-extensions.md)** - Code-behind UI creation patterns
-- **[Sample Applications](samples.md)** - Complete example projects
 - **[What's New](whats-new.md)** - Latest updates and features
 
 **Can't find what you're looking for?** → **[Ask in GitHub Discussions](https://github.com/taublast/DrawnUi/discussions)** - The community is here to help!
@@ -132,6 +129,6 @@ A: Well, since you draw, why not just draw a game instead of a business app. Dra
 
 ## 🚀 Ready to Start?
 
-**New to DrawnUI?** → **[Your First DrawnUI App](first-app.md)** - Perfect starting point!
+**Need setup help?** → **[Getting Started Guide](getting-started.md)** - Complete installation and setup
+**Ready to build?** → **[Sample Apps](samples.md)** - Tutorials and example projects
 **Want something impressive?** → **[Interactive Card Gallery](interactive-cards.md)** - Build animations and effects!
-**Need detailed setup?** → **[Getting Started Guide](getting-started.md)** - Complete installation guide

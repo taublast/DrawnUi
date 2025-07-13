@@ -5,17 +5,20 @@
   items:
     - name: Installation and Setup
       href: getting-started.md
+    - name: Porting Native to Drawn
+      href: porting-maui.md
+
+- name: Sample Apps
+  href: samples.md
+  items:
+    - name: Sample Apps Overview
+      href: samples.md
     - name: Your First Drawn App
       href: first-app.md
     - name: Drawn Cards Tutorial
       href: interactive-cards.md
     - name: News Feed Tutorial
       href: news-feed-tutorial.md
-    - name: Porting Native to Drawn
-      href: porting-maui.md
-
-- name: Samples
-  href: samples.md
 
 - name: Controls
   href: controls/index.md

@@ -25,11 +25,7 @@
 
     /* Strings */
     .hljs-string,
-    .hljs-literal {
-        color: #edf5a0 ;
-    }
-
-    /* String interpolation/templates */
+    .hljs-literal,
     .hljs-template-string,
     .hljs-template-variable {
         color: #fb7773 ;
@@ -136,12 +132,11 @@
         color: #dfdfdf ;
     }
 
-    /* Ensure proper contrast for inline code */
+    /* contrast for inline code */
     code {
-        background-color: #111111 ;
+        background-color: #292929 ;
         color: #dfdfdf ;
         padding: 2px 4px ;
-        border-radius: 3px ;
     }
 
     /* Line numbers (if enabled) */
@@ -155,7 +150,7 @@
 /* ===== CUSTOM SPACING AND TYPOGRAPHY ===== */
 
 code{
-    padding: 1rem;
+ 
 }
 
 /* Main content area spacing */
@@ -215,29 +210,7 @@ ul ul, ol ol, ul ol, ol ul {
     margin-top: 0.25rem ;
     margin-bottom: 0.5rem ;
 }
-
-/* Code block spacing and styling */
-pre {
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-    border-radius: 4px;
-}
-
-/* Rounded corners for code blocks */
-pre,
-code.hljs {
-    border-radius: 4px ;
-    padding: 1 rem;
-}
-
-/* Blockquote spacing */
-blockquote {
-    margin-top: 1rem ;
-    margin-bottom: 1.5rem ;
-    padding-left: 1rem ;
-    border-left: 4px solid #ddd ;
-}
-
+ 
 /* Table spacing */
 table {
     margin-top: 1rem ;

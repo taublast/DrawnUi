@@ -1,10 +1,31 @@
-# Samples
+# Sample Apps
 
-Explore real-world examples and code snippets to help you get started and master DrawnUi.Maui.
+Explore tutorials, real-world examples and code snippets to help you get started and master DrawnUi.Maui.
 
-## Example Apps
+## 📚 Step-by-Step Tutorials
 
-### Learning Projects
+### Beginner Tutorials
+- **[Your First DrawnUI App](first-app.md)** 🚀 - Perfect starting point for beginners:
+  - Complete setup from scratch
+  - Basic controls and layouts
+  - Simple animations
+  - Cross-platform deployment
+
+### Intermediate Tutorials
+- **[Interactive Card Gallery](interactive-cards.md)** ✨ - Build impressive animations and effects:
+  - Advanced gesture handling
+  - Visual effects and shadows
+  - Performance optimization
+  - Professional UI patterns
+
+### Advanced Tutorials
+- **[News Feed Tutorial](news-feed-tutorial.md)** 📱 - Complex real-world application:
+  - Data binding and MVVM
+  - Custom controls development
+  - Advanced layouts and virtualization
+  - Production-ready patterns
+
+## 🎮 Learning Projects
 
 - **[Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox)** 🧪 - Experiment with:
   - Pre-built drawn controls
@@ -19,7 +40,7 @@ Explore real-world examples and code snippets to help you get started and master
   - Custom controls showcase
   - Updated with latest NuGet package
 
-### Complete Demo Applications
+## ⭐️ Demo Applications
 
 - **[Space Shooter Game](https://github.com/taublast/AppoMobi.Maui.DrawnUi.SpaceShooter)** 🎮 - Dynamic arcade game demonstrating:
   - Full keyboard support implementation
