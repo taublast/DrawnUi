@@ -1,0 +1,3209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class Canvas | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class Canvas | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Views_Canvas.md&amp;value=---%0Auid%3A%20DrawnUi.Views.Canvas%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="DrawnUi.Views.Canvas">
+
+
+
+  <h1 id="DrawnUi_Views_Canvas" data-uid="DrawnUi.Views.Canvas" class="text-break">
+Class Canvas  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Views.html">Views</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Optimized DrawnView having only one child inside Content property. Can autosize to to children size.
+For all drawn app put this directly inside the ContentPage as root view.
+If you put this inside some Maui control like Grid whatever expect more GC collections during animations making them somewhat less fluid.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ContentProperty(&quot;Content&quot;)]
+public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IGestureListener</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject">BindableObject</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element">Element</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.styleableelement">StyleableElement</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.navigableelement">NavigableElement</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement">VisualElement</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view">View</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout">Layout</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview">TemplatedView</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.contentview">ContentView</a></div>
+      <div><a class="xref" href="DrawnUi.Views.DrawnView.html">DrawnView</a></div>
+      <div><span class="xref">Canvas</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.ieffectcontrolprovider">IEffectControlProvider</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.itooltipelement">IToolTipElement</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.icontextflyoutelement">IContextFlyoutElement</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.ianimatable">IAnimatable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.iviewcontroller">IViewController</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.ivisualelementcontroller">IVisualElementController</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.ielementcontroller">IElementController</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.internals.igesturecontroller">IGestureController</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.igesturerecognizers">IGestureRecognizers</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.ipropertymapperview">IPropertyMapperView</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.hotreload.ihotreloadableview">IHotReloadableView</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.ireplaceableview">IReplaceableView</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.ilayout">ILayout</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.ilayoutcontroller">ILayoutController</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.icontentview">IContentView</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.iview">IView</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.ielement">IElement</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.itransform">ITransform</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.ipadding">IPadding</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.icrossplatformlayout">ICrossPlatformLayout</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdatedWithContext.html">ICanBeUpdatedWithContext</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html">ICanBeUpdated</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.IAnimatorsManager.html">IAnimatorsManager</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.ivisualtreeelement">IVisualTreeElement</a></div>
+      <div><span class="xref">IGestureListener</span></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DumpLayersTree_DrawnUi_Draw_VisualLayer_System_String_System_Boolean_System_Int32_">DrawnView.DumpLayersTree(VisualLayer, string, bool, int)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Diagnostics">DrawnView.Diagnostics</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Update">DrawnView.Update()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsUsingHardwareAcceleration">DrawnView.IsUsingHardwareAcceleration</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedRedraw">DrawnView.NeedRedraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsDirty">DrawnView.IsDirty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsVisibleInViewTree">DrawnView.IsVisibleInViewTree()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_TakeScreenShot_System_Action_SkiaSharp_SKImage__">DrawnView.TakeScreenShot(Action&lt;SKImage&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidateByChild_DrawnUi_Draw_SkiaControl_">DrawnView.InvalidateByChild(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UpdateByChild_DrawnUi_Draw_SkiaControl_">DrawnView.UpdateByChild(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetOnScreenVisibleArea_DrawnUi_Draw_DrawingContext_System_Numerics_Vector2_">DrawnView.GetOnScreenVisibleArea(DrawingContext, Vector2)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnHandlerChanging_Microsoft_Maui_Controls_HandlerChangingEventArgs_">DrawnView.OnHandlerChanging(HandlerChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_HandlerWasSet">DrawnView.HandlerWasSet</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_TakeScreenShotInternal_SkiaSharp_SKSurface_">DrawnView.TakeScreenShotInternal(SKSurface)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_">DrawnView.PostponeExecutionBeforeDraw(Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionAfterDraw_System_Action_">DrawnView.PostponeExecutionAfterDraw(Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ExecuteBeforeDraw">DrawnView.ExecuteBeforeDraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ExecuteAfterDraw">DrawnView.ExecuteAfterDraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CallbackScreenshot">DrawnView.CallbackScreenshot</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RenderingSubscribers">DrawnView.RenderingSubscribers</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SubscribeToRenderingFinished_DrawnUi_Draw_SkiaControl_">DrawnView.SubscribeToRenderingFinished(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UsubscribeFromRenderingFinished_DrawnUi_Draw_SkiaControl_">DrawnView.UsubscribeFromRenderingFinished(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RegisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_">DrawnView.RegisterGestureListener(ISkiaGestureListener)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UnregisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_">DrawnView.UnregisterGestureListener(ISkiaGestureListener)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_LockIterateListeners">DrawnView.LockIterateListeners</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GestureListeners">DrawnView.GestureListeners</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DrawingRect">DrawnView.DrawingRect</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_AddAnimator_DrawnUi_Draw_ISkiaAnimator_">DrawnView.AddAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RemoveAnimator_System_Guid_">DrawnView.RemoveAnimator(Guid)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">DrawnView.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UnregisterAnimator_System_Guid_">DrawnView.UnregisterAnimator(Guid)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UnregisterAllAnimatorsByType_System_Type_">DrawnView.UnregisterAllAnimatorsByType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UnregisterAllAnimatorsByParent_DrawnUi_Draw_SkiaControl_">DrawnView.UnregisterAllAnimatorsByParent(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SetViewTreeVisibilityByParent_DrawnUi_Draw_SkiaControl_System_Boolean_">DrawnView.SetViewTreeVisibilityByParent(SkiaControl, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SetPauseStateOfAllAnimatorsByParent_DrawnUi_Draw_SkiaControl_System_Boolean_">DrawnView.SetPauseStateOfAllAnimatorsByParent(SkiaControl, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ExecutePostAnimators_DrawnUi_Draw_DrawingContext_">DrawnView.ExecutePostAnimators(DrawingContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostAnimators">DrawnView.PostAnimators</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_AnimatingControls">DrawnView.AnimatingControls</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FrameTimeInterpolator">DrawnView.FrameTimeInterpolator</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_mLastFrameTime">DrawnView.mLastFrameTime</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ExecuteAnimators_System_Int64_">DrawnView.ExecuteAnimators(long)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnCanvasViewChanged">DrawnView.OnCanvasViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanvasView">DrawnView.CanvasView</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SetDeviceOrientation_System_Int32_">DrawnView.SetDeviceOrientation(int)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DeviceRotationChanged">DrawnView.DeviceRotationChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisplayRotationProperty">DrawnView.DisplayRotationProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DeviceRotation">DrawnView.DeviceRotation</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_HasHandler">DrawnView.HasHandler</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisconnectedHandler">DrawnView.DisconnectedHandler()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedGlobalRefreshCount">DrawnView.NeedGlobalRefreshCount</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UpdateGlobal">DrawnView.UpdateGlobal()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedMeasureDrawn">DrawnView.NeedMeasureDrawn</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnCanRenderChanged_System_Boolean_">DrawnView.OnCanRenderChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ConnectedHandler">DrawnView.ConnectedHandler()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FixDensity">DrawnView.FixDensity()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_StopDrawingWhenUpdateIsLocked">DrawnView.StopDrawingWhenUpdateIsLocked</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_TimeDrawingStarted">DrawnView.TimeDrawingStarted</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_TimeDrawingComplete">DrawnView.TimeDrawingComplete</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidateViewport">DrawnView.InvalidateViewport()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Repaint">DrawnView.Repaint()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OrderedDraw">DrawnView.OrderedDraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ResetUpdate">DrawnView.ResetUpdate()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidatedCanvas">DrawnView.InvalidatedCanvas</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsRendering">DrawnView.IsRendering</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Delayed">DrawnView.Delayed</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetDensity">DrawnView.GetDensity()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateSkiaView">DrawnView.CreateSkiaView()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DestroySkiaView">DrawnView.DestroySkiaView()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsDisposing">DrawnView.IsDisposing</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Dispose">DrawnView.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ViewDisposing">DrawnView.ViewDisposing</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_WillDispose">DrawnView.WillDispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnDispose">DrawnView.OnDispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidateParents">DrawnView.InvalidateParents()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnSuperviewShouldRenderChanged_System_Boolean_">DrawnView.OnSuperviewShouldRenderChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidateChildren">DrawnView.InvalidateChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PrintDebug_System_String_">DrawnView.PrintDebug(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedAutoSize">DrawnView.NeedAutoSize</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedAutoHeight">DrawnView.NeedAutoHeight</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedAutoWidth">DrawnView.NeedAutoWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ShouldInvalidateByChildren">DrawnView.ShouldInvalidateByChildren</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UpdateLocksProperty">DrawnView.UpdateLocksProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UpdateLocks">DrawnView.UpdateLocks</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Uid">DrawnView.Uid</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_LinearGradientAngleToPoints_System_Double_">DrawnView.LinearGradientAngleToPoints(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsGhost">DrawnView.IsGhost</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Clipping">DrawnView.Clipping</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_">DrawnView.CreateClip(object, bool, SKPath)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Tag">DrawnView.Tag</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsRootView_System_Single_System_Single_SkiaSharp_SKRect_">DrawnView.IsRootView(float, float, SKRect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CalculateLayout_SkiaSharp_SKRect_System_Double_System_Double_System_Double_">DrawnView.CalculateLayout(SKRect, double, double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Arrange_SkiaSharp_SKRect_System_Double_System_Double_System_Double_">DrawnView.Arrange(SKRect, double, double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_MeasuredSize">DrawnView.MeasuredSize</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedMeasure">DrawnView.NeedMeasure</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SetMeasured_System_Single_System_Single_System_Single_">DrawnView.SetMeasured(float, float, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnMeasured">DrawnView.OnMeasured()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Measured">DrawnView.Measured</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsDisposed">DrawnView.IsDisposed</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DrawingThreadId">DrawnView.DrawingThreadId</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_WasRendered">DrawnView.WasRendered</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_WasDrawn">DrawnView.WasDrawn</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_WillDraw">DrawnView.WillDraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_WillFirstTimeDraw">DrawnView.WillFirstTimeDraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_LastDrawnRect">DrawnView.LastDrawnRect</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnStartRendering_SkiaSharp_SKCanvas_">DrawnView.OnStartRendering(SKCanvas)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnFinalizeRendering">DrawnView.OnFinalizeRendering()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_AvailableDestination">DrawnView.AvailableDestination</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetOrderedSubviews">DrawnView.GetOrderedSubviews()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidateViewsList">DrawnView.InvalidateViewsList()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView__fps">DrawnView._fps</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FrameTime">DrawnView.FrameTime</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanvasFps">DrawnView.CanvasFps</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FPS">DrawnView.FPS</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_LockDraw">DrawnView.LockDraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FrameNumber">DrawnView.FrameNumber</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisposeObject_System_IDisposable_">DrawnView.DisposeObject(IDisposable)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisposeManager">DrawnView.DisposeManager</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeInvalidation_DrawnUi_Draw_SkiaControl_System_Action_">DrawnView.PostponeInvalidation(SkiaControl, Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidationActionsA">DrawnView.InvalidationActionsA</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidationActionsB">DrawnView.InvalidationActionsB</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetFrontInvalidations">DrawnView.GetFrontInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetBackInvalidations">DrawnView.GetBackInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SwapInvalidations">DrawnView.SwapInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DrawingThreads">DrawnView.DrawingThreads</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DirtyChildrenTracker">DrawnView.DirtyChildrenTracker</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SetChildAsDirty_DrawnUi_Draw_SkiaControl_">DrawnView.SetChildAsDirty(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CommitInvalidations">DrawnView.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_LockStartOffscreenQueue">DrawnView.LockStartOffscreenQueue</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_semaphoreOffscreenProcess">DrawnView.semaphoreOffscreenProcess</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_KickOffscreenCacheRendering">DrawnView.KickOffscreenCacheRendering()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PushToOffscreenRendering_DrawnUi_Draw_SkiaControl_System_Threading_CancellationToken_">DrawnView.PushToOffscreenRendering(SkiaControl, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ProcessOffscreenCacheRenderingAsync">DrawnView.ProcessOffscreenCacheRenderingAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RenderingScaleProperty">DrawnView.RenderingScaleProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnDensityChanged">DrawnView.OnDensityChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RenderingScale">DrawnView.RenderingScale</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RenderingModeProperty">DrawnView.RenderingModeProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RenderingMode">DrawnView.RenderingMode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanRenderOffScreenProperty">DrawnView.CanRenderOffScreenProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanRenderOffScreen">DrawnView.CanRenderOffScreen</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanDraw">DrawnView.CanDraw</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsHiddenInViewTree">DrawnView.IsHiddenInViewTree</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedCheckParentVisibility">DrawnView.NeedCheckParentVisibility</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_StreamFromString_System_String_">DrawnView.StreamFromString(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PaintSystem">DrawnView.PaintSystem</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Destination">DrawnView.Destination</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PaintTintBackground_SkiaSharp_SKCanvas_">DrawnView.PaintTintBackground(SKCanvas)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RedrawCanvas_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">DrawnView.RedrawCanvas(BindableObject, object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnBindingContextChanged">DrawnView.OnBindingContextChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Views">DrawnView.Views</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ClearChildren">DrawnView.ClearChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_AddSubView_DrawnUi_Draw_SkiaControl_">DrawnView.AddSubView(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ReportHotreloadChildAdded_DrawnUi_Draw_SkiaControl_">DrawnView.ReportHotreloadChildAdded(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RemoveSubView_DrawnUi_Draw_SkiaControl_">DrawnView.RemoveSubView(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ReportHotreloadChildRemoved_DrawnUi_Draw_SkiaControl_">DrawnView.ReportHotreloadChildRemoved(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnChildRemoved_DrawnUi_Draw_SkiaControl_">DrawnView.OnChildRemoved(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ChildrenProperty">DrawnView.ChildrenProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Children">DrawnView.Children</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_AddOrRemoveView_DrawnUi_Draw_SkiaControl_System_Boolean_">DrawnView.AddOrRemoveView(SkiaControl, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UpdateModeProperty">DrawnView.UpdateModeProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_UpdateMode">DrawnView.UpdateMode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ClipEffectsProperty">DrawnView.ClipEffectsProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ClipEffects">DrawnView.ClipEffects</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value1Property">DrawnView.Value1Property</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value1">DrawnView.Value1</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value2Property">DrawnView.Value2Property</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value2">DrawnView.Value2</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value3Property">DrawnView.Value3Property</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value3">DrawnView.Value3</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value4Property">DrawnView.Value4Property</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Value4">DrawnView.Value4</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FocusLocked">DrawnView.FocusLocked</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FocusedItemChanged">DrawnView.FocusedItemChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ReportFocus_DrawnUi_Draw_ISkiaGestureListener_DrawnUi_Draw_ISkiaGestureListener_">DrawnView.ReportFocus(ISkiaGestureListener, ISkiaGestureListener)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ResetFocusWithDelay_System_Int32_">DrawnView.ResetFocusWithDelay(int)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FocusedChild">DrawnView.FocusedChild</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InvalidateCanvas">DrawnView.InvalidateCanvas()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnParentSet">DrawnView.OnParentSet()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetIsVisibleWithParent_Microsoft_Maui_Controls_VisualElement_">DrawnView.GetIsVisibleWithParent(VisualElement)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CheckElementVisibility_Microsoft_Maui_Controls_VisualElement_">DrawnView.CheckElementVisibility(VisualElement)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ClipSmart_SkiaSharp_SKCanvas_SkiaSharp_SKPath_SkiaSharp_SKClipOperation_">DrawnView.ClipSmart(SKCanvas, SKPath, SKClipOperation)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnHotReload">DrawnView.OnHotReload()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_InitFramework_System_Boolean_">DrawnView.InitFramework(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.controltemplateproperty">TemplatedView.ControlTemplateProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.layoutchildren">TemplatedView.LayoutChildren(double, double, double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.onmeasure">TemplatedView.OnMeasure(double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.onapplytemplate">TemplatedView.OnApplyTemplate()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.onchildremoved">TemplatedView.OnChildRemoved(Element, int)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.gettemplatechild">TemplatedView.GetTemplateChild(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.resolvecontroltemplate">TemplatedView.ResolveControlTemplate()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.templatedview.controltemplate">TemplatedView.ControlTemplate</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.isclippedtoboundsproperty">Layout.IsClippedToBoundsProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.cascadeinputtransparentproperty">Layout.CascadeInputTransparentProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.paddingproperty">Layout.PaddingProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.forcelayout">Layout.ForceLayout()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.measure">Layout.Measure(double, double, MeasureFlags)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.layoutchildintoboundingregion">Layout.LayoutChildIntoBoundingRegion(VisualElement, Rect)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.lowerchild">Layout.LowerChild(View)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.raisechild">Layout.RaiseChild(View)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.invalidatelayout">Layout.InvalidateLayout()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.onchildmeasureinvalidated#microsoft-maui-controls-compatibility-layout-onchildmeasureinvalidated(system-object-system-eventargs)">Layout.OnChildMeasureInvalidated(object, EventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.onchildmeasureinvalidated#microsoft-maui-controls-compatibility-layout-onchildmeasureinvalidated">Layout.OnChildMeasureInvalidated()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.onsizeallocated">Layout.OnSizeAllocated(double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.shouldinvalidateonchildadded">Layout.ShouldInvalidateOnChildAdded(View)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.shouldinvalidateonchildremoved">Layout.ShouldInvalidateOnChildRemoved(View)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.updatechildrenlayout">Layout.UpdateChildrenLayout()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.crossplatformmeasure">Layout.CrossPlatformMeasure(double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.crossplatformarrange">Layout.CrossPlatformArrange(Rect)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.isclippedtobounds">Layout.IsClippedToBounds</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.padding">Layout.Padding</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.cascadeinputtransparent">Layout.CascadeInputTransparent</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.compatibility.layout.layoutchanged">Layout.LayoutChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.verticaloptionsproperty">View.VerticalOptionsProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.horizontaloptionsproperty">View.HorizontalOptionsProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.marginproperty">View.MarginProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.propertymapper">View.propertyMapper</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.changevisualstate">View.ChangeVisualState()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.getchildelements">View.GetChildElements(Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.getrendereroverrides">View.GetRendererOverrides&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.gesturecontroller">View.GestureController</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.gesturerecognizers">View.GestureRecognizers</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.horizontaloptions">View.HorizontalOptions</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.margin">View.Margin</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.view.verticaloptions">View.VerticalOptions</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.navigationproperty">VisualElement.NavigationProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.styleproperty">VisualElement.StyleProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.inputtransparentproperty">VisualElement.InputTransparentProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isenabledproperty">VisualElement.IsEnabledProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.xproperty">VisualElement.XProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.yproperty">VisualElement.YProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.anchorxproperty">VisualElement.AnchorXProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.anchoryproperty">VisualElement.AnchorYProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.translationxproperty">VisualElement.TranslationXProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.translationyproperty">VisualElement.TranslationYProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.widthproperty">VisualElement.WidthProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.heightproperty">VisualElement.HeightProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.rotationproperty">VisualElement.RotationProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.rotationxproperty">VisualElement.RotationXProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.rotationyproperty">VisualElement.RotationYProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.scaleproperty">VisualElement.ScaleProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.scalexproperty">VisualElement.ScaleXProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.scaleyproperty">VisualElement.ScaleYProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.clipproperty">VisualElement.ClipProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.visualproperty">VisualElement.VisualProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isvisibleproperty">VisualElement.IsVisibleProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.opacityproperty">VisualElement.OpacityProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.backgroundcolorproperty">VisualElement.BackgroundColorProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.backgroundproperty">VisualElement.BackgroundProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.behaviorsproperty">VisualElement.BehaviorsProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.triggersproperty">VisualElement.TriggersProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.widthrequestproperty">VisualElement.WidthRequestProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.heightrequestproperty">VisualElement.HeightRequestProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.minimumwidthrequestproperty">VisualElement.MinimumWidthRequestProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.minimumheightrequestproperty">VisualElement.MinimumHeightRequestProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.maximumwidthrequestproperty">VisualElement.MaximumWidthRequestProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.maximumheightrequestproperty">VisualElement.MaximumHeightRequestProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isfocusedproperty">VisualElement.IsFocusedProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.flowdirectionproperty">VisualElement.FlowDirectionProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.windowproperty">VisualElement.WindowProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.shadowproperty">VisualElement.ShadowProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.zindexproperty">VisualElement.ZIndexProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.batchbegin">VisualElement.BatchBegin()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.batchcommit">VisualElement.BatchCommit()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.focus">VisualElement.Focus()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.measure#microsoft-maui-controls-visualelement-measure(system-double-system-double)">VisualElement.Measure(double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.unfocus">VisualElement.Unfocus()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.onchildadded">VisualElement.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.onchildrenreordered">VisualElement.OnChildrenReordered()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.sizeallocated">VisualElement.SizeAllocated(double, double)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.refreshisenabledproperty">VisualElement.RefreshIsEnabledProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.arrange">VisualElement.Arrange(Rect)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.layout">VisualElement.Layout(Rect)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.invalidatemeasureoverride">VisualElement.InvalidateMeasureOverride()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.mapbackgroundcolor">VisualElement.MapBackgroundColor(IViewHandler, IView)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.mapbackgroundimagesource">VisualElement.MapBackgroundImageSource(IViewHandler, IView)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.visual">VisualElement.Visual</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.flowdirection">VisualElement.FlowDirection</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.window">VisualElement.Window</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.anchorx">VisualElement.AnchorX</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.anchory">VisualElement.AnchorY</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.backgroundcolor">VisualElement.BackgroundColor</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.background">VisualElement.Background</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.behaviors">VisualElement.Behaviors</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.bounds">VisualElement.Bounds</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.height">VisualElement.Height</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.heightrequest">VisualElement.HeightRequest</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.inputtransparent">VisualElement.InputTransparent</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isenabled">VisualElement.IsEnabled</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isenabledcore">VisualElement.IsEnabledCore</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isfocused">VisualElement.IsFocused</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isvisible">VisualElement.IsVisible</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.minimumheightrequest">VisualElement.MinimumHeightRequest</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.minimumwidthrequest">VisualElement.MinimumWidthRequest</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.maximumheightrequest">VisualElement.MaximumHeightRequest</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.maximumwidthrequest">VisualElement.MaximumWidthRequest</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.opacity">VisualElement.Opacity</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.rotation">VisualElement.Rotation</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.rotationx">VisualElement.RotationX</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.rotationy">VisualElement.RotationY</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.scale">VisualElement.Scale</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.scalex">VisualElement.ScaleX</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.scaley">VisualElement.ScaleY</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.translationx">VisualElement.TranslationX</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.translationy">VisualElement.TranslationY</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.triggers">VisualElement.Triggers</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.width">VisualElement.Width</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.widthrequest">VisualElement.WidthRequest</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.x">VisualElement.X</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.y">VisualElement.Y</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.clip">VisualElement.Clip</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.resources">VisualElement.Resources</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.frame">VisualElement.Frame</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.handler">VisualElement.Handler</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.shadow">VisualElement.Shadow</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.zindex">VisualElement.ZIndex</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.desiredsize">VisualElement.DesiredSize</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.isloaded">VisualElement.IsLoaded</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.childrenreordered">VisualElement.ChildrenReordered</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.focused">VisualElement.Focused</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.measureinvalidated">VisualElement.MeasureInvalidated</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.sizechanged">VisualElement.SizeChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.unfocused">VisualElement.Unfocused</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.loaded">VisualElement.Loaded</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement.unloaded">VisualElement.Unloaded</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.navigableelement.navigation">NavigableElement.Navigation</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.styleableelement.style">StyleableElement.Style</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.styleableelement.styleclass">StyleableElement.StyleClass</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.styleableelement.class">StyleableElement.class</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.automationidproperty">Element.AutomationIdProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.classidproperty">Element.ClassIdProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.insertlogicalchild">Element.InsertLogicalChild(int, Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.addlogicalchild">Element.AddLogicalChild(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.removelogicalchild">Element.RemoveLogicalChild(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.clearlogicalchildren">Element.ClearLogicalChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.findbyname">Element.FindByName(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.removedynamicresource">Element.RemoveDynamicResource(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.setdynamicresource">Element.SetDynamicResource(BindableProperty, string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onparentchanging">Element.OnParentChanging(ParentChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.mapautomationpropertiesisinaccessibletree">Element.MapAutomationPropertiesIsInAccessibleTree(IElementHandler, Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.mapautomationpropertiesexcludedwithchildren">Element.MapAutomationPropertiesExcludedWithChildren(IElementHandler, Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.automationid">Element.AutomationId</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.classid">Element.ClassId</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.effects">Element.Effects</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.id">Element.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.styleid">Element.StyleId</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.parent">Element.Parent</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.childadded">Element.ChildAdded</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.childremoved">Element.ChildRemoved</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.descendantadded">Element.DescendantAdded</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.descendantremoved">Element.DescendantRemoved</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.parentchanging">Element.ParentChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.parentchanged">Element.ParentChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.handlerchanging">Element.HandlerChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.handlerchanged">Element.HandlerChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextproperty">BindableObject.BindingContextProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)">BindableObject.ClearValue(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)">BindableObject.ClearValue(BindablePropertyKey)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue">BindableObject.GetValue(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset">BindableObject.IsSet(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding">BindableObject.RemoveBinding(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding">BindableObject.SetBinding(BindableProperty, BindingBase)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings">BindableObject.ApplyBindings()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging">BindableObject.OnPropertyChanging(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings">BindableObject.UnapplyBindings()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)">BindableObject.SetValue(BindableProperty, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)">BindableObject.SetValue(BindablePropertyKey, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)">BindableObject.CoerceValue(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)">BindableObject.CoerceValue(BindablePropertyKey)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.dispatcher">BindableObject.Dispatcher</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontext">BindableObject.BindingContext</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanged">BindableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanging">BindableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextchanged">BindableObject.BindingContextChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_">DrawnExtensions.GetVelocityRatioForChild(IDrawnBase, ISkiaControl)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_AssignNative__1___0___0__">FluentExtensions.AssignNative&lt;T&gt;(T, out T)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.StaticResourcesExtensions.html#DrawnUi_Draw_StaticResourcesExtensions_FindParent__1_Microsoft_Maui_Controls_Element_">StaticResourcesExtensions.FindParent&lt;T&gt;(Element)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FindMauiContext_Microsoft_Maui_Controls_Element_System_Boolean_">InternalExtensions.FindMauiContext(Element, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_GetParentsPath_Microsoft_Maui_Controls_Element_">InternalExtensions.GetParentsPath(Element)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.StaticResourcesExtensions.html#DrawnUi_Draw_StaticResourcesExtensions_GetAllWithMyselfParents_Microsoft_Maui_Controls_VisualElement_">StaticResourcesExtensions.GetAllWithMyselfParents(VisualElement)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_DisposeControlAndChildren_Microsoft_Maui_IView_">InternalExtensions.DisposeControlAndChildren(IView)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_">InternalExtensions.FromPlatform(object)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="DrawnUi_Views_Canvas__ctor_" data-uid="DrawnUi.Views.Canvas.#ctor*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas__ctor" data-uid="DrawnUi.Views.Canvas.#ctor">
+  Canvas()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L820"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Canvas()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_ContentProperty" data-uid="DrawnUi.Views.Canvas.ContentProperty">
+  ContentProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L924"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty ContentProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_Context" data-uid="DrawnUi.Views.Canvas.Context">
+  Context
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L466"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected DrawingContext Context</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_FirstPanThreshold" data-uid="DrawnUi.Views.Canvas.FirstPanThreshold">
+  FirstPanThreshold
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L664"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>To filter micro-gestures on super sensitive screens, start passing panning only when threshold is once overpassed</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static float FirstPanThreshold</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_GesturesDebugColorProperty" data-uid="DrawnUi.Views.Canvas.GesturesDebugColorProperty">
+  GesturesDebugColorProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L878"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty GesturesDebugColorProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_GesturesProperty" data-uid="DrawnUi.Views.Canvas.GesturesProperty">
+  GesturesProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L910"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty GesturesProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_LineBreaks" data-uid="DrawnUi.Views.Canvas.LineBreaks">
+  LineBreaks
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L818"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected List&lt;int&gt; LineBreaks</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_ReserveSpaceAroundProperty" data-uid="DrawnUi.Views.Canvas.ReserveSpaceAroundProperty">
+  ReserveSpaceAroundProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L890"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty ReserveSpaceAroundProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="DrawnUi_Views_Canvas_Content_" data-uid="DrawnUi.Views.Canvas.Content*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_Content" data-uid="DrawnUi.Views.Canvas.Content">
+  Content
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L940"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISkiaControl Content { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_ContentSize_" data-uid="DrawnUi.Views.Canvas.ContentSize*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_ContentSize" data-uid="DrawnUi.Views.Canvas.ContentSize">
+  ContentSize
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L365"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ScaledSize ContentSize { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_DebugPointer_" data-uid="DrawnUi.Views.Canvas.DebugPointer*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_DebugPointer" data-uid="DrawnUi.Views.Canvas.DebugPointer">
+  DebugPointer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L456"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SkiaSvg DebugPointer { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaSvg.html">SkiaSvg</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_DelayNanosBetweenGC_" data-uid="DrawnUi.Views.Canvas.DelayNanosBetweenGC*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_DelayNanosBetweenGC" data-uid="DrawnUi.Views.Canvas.DelayNanosBetweenGC">
+  DelayNanosBetweenGC
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L846"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static long DelayNanosBetweenGC { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_Gestures_" data-uid="DrawnUi.Views.Canvas.Gestures*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_Gestures" data-uid="DrawnUi.Views.Canvas.Gestures">
+  Gestures
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L916"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GesturesMode Gestures { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.GesturesMode.html">GesturesMode</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_GesturesDebugColor_" data-uid="DrawnUi.Views.Canvas.GesturesDebugColor*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_GesturesDebugColor" data-uid="DrawnUi.Views.Canvas.GesturesDebugColor">
+  GesturesDebugColor
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L884"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Color GesturesDebugColor { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color">Color</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_HadInput_" data-uid="DrawnUi.Views.Canvas.HadInput*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_HadInput" data-uid="DrawnUi.Views.Canvas.HadInput">
+  HadInput
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L481"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Have consumed input in previous or current pass. To notify them about UP (release) even if they don't get it via touch.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;Guid, ISkiaGestureListener&gt; HadInput { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a>, <a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_ReceivedInput_" data-uid="DrawnUi.Views.Canvas.ReceivedInput*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_ReceivedInput" data-uid="DrawnUi.Views.Canvas.ReceivedInput">
+  ReceivedInput
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L476"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Got input during current pass</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConcurrentBag&lt;ISkiaGestureListener&gt; ReceivedInput { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1">ConcurrentBag</a>&lt;<a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_ReserveSpaceAround_" data-uid="DrawnUi.Views.Canvas.ReserveSpaceAround*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_ReserveSpaceAround" data-uid="DrawnUi.Views.Canvas.ReserveSpaceAround">
+  ReserveSpaceAround
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L896"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Thickness ReserveSpaceAround { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_TimeLastGC_" data-uid="DrawnUi.Views.Canvas.TimeLastGC*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_TimeLastGC" data-uid="DrawnUi.Views.Canvas.TimeLastGC">
+  TimeLastGC
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L845"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static long TimeLastGC { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="DrawnUi_Views_Canvas_AdaptHeightContraintToContentRequest_" data-uid="DrawnUi.Views.Canvas.AdaptHeightContraintToContentRequest*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_AdaptHeightContraintToContentRequest_System_Single_DrawnUi_Draw_ScaledSize_System_Double_" data-uid="DrawnUi.Views.Canvas.AdaptHeightContraintToContentRequest(System.Single,DrawnUi.Draw.ScaledSize,System.Double)">
+  AdaptHeightContraintToContentRequest(float, ScaledSize, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L328"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float AdaptHeightContraintToContentRequest(float heightConstraintUnits, ScaledSize measuredContent, double sideConstraintsUnits)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>heightConstraintUnits</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>measuredContent</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+    <dt><code>sideConstraintsUnits</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_AdaptHeightContraintToRequest_" data-uid="DrawnUi.Views.Canvas.AdaptHeightContraintToRequest*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_AdaptHeightContraintToRequest_System_Double_" data-uid="DrawnUi.Views.Canvas.AdaptHeightContraintToRequest(System.Double)">
+  AdaptHeightContraintToRequest(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float AdaptHeightContraintToRequest(double heightConstraint)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>heightConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_AdaptSizeRequestToContent_" data-uid="DrawnUi.Views.Canvas.AdaptSizeRequestToContent*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_AdaptSizeRequestToContent_System_Double_System_Double_" data-uid="DrawnUi.Views.Canvas.AdaptSizeRequestToContent(System.Double,System.Double)">
+  AdaptSizeRequestToContent(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L347"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>In UNITS</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Size AdaptSizeRequestToContent(double widthRequest, double heightRequest)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>widthRequest</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>heightRequest</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.size">Size</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_AdaptSizeToContentIfNeeded_" data-uid="DrawnUi.Views.Canvas.AdaptSizeToContentIfNeeded*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_AdaptSizeToContentIfNeeded_System_Double_System_Double_System_Boolean_" data-uid="DrawnUi.Views.Canvas.AdaptSizeToContentIfNeeded(System.Double,System.Double,System.Boolean)">
+  AdaptSizeToContentIfNeeded(double, double, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Size AdaptSizeToContentIfNeeded(double widthConstraint, double heightConstraint, bool force = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>widthConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>heightConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>force</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.size">Size</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_AdaptWidthContraintToContentRequest_" data-uid="DrawnUi.Views.Canvas.AdaptWidthContraintToContentRequest*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_AdaptWidthContraintToContentRequest_System_Single_DrawnUi_Draw_ScaledSize_System_Double_" data-uid="DrawnUi.Views.Canvas.AdaptWidthContraintToContentRequest(System.Single,DrawnUi.Draw.ScaledSize,System.Double)">
+  AdaptWidthContraintToContentRequest(float, ScaledSize, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L315"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float AdaptWidthContraintToContentRequest(float widthConstraintUnits, ScaledSize measuredContent, double sideConstraintsUnits)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>widthConstraintUnits</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>measuredContent</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+    <dt><code>sideConstraintsUnits</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_AdaptWidthContraintToRequest_" data-uid="DrawnUi.Views.Canvas.AdaptWidthContraintToRequest*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_AdaptWidthContraintToRequest_System_Double_" data-uid="DrawnUi.Views.Canvas.AdaptWidthContraintToRequest(System.Double)">
+  AdaptWidthContraintToRequest(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L214"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float AdaptWidthContraintToRequest(double widthConstraint)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>widthConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_ArrangeOverride_" data-uid="DrawnUi.Views.Canvas.ArrangeOverride*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_ArrangeOverride_Microsoft_Maui_Graphics_Rect_" data-uid="DrawnUi.Views.Canvas.ArrangeOverride(Microsoft.Maui.Graphics.Rect)">
+  ArrangeOverride(Rect)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>We need this mainly to autosize inside grid cells
+This is also called when parent visibilty changes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Size ArrangeOverride(Rect bounds)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bounds</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.rect">Rect</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.size">Size</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_BreakLine_" data-uid="DrawnUi.Views.Canvas.BreakLine*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_BreakLine" data-uid="DrawnUi.Views.Canvas.BreakLine">
+  BreakLine()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L813"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void BreakLine()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_Clear_" data-uid="DrawnUi.Views.Canvas.Clear*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_Clear" data-uid="DrawnUi.Views.Canvas.Clear">
+  Clear()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L824"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clear()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_CollectGarbage_" data-uid="DrawnUi.Views.Canvas.CollectGarbage*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_CollectGarbage_System_Int64_" data-uid="DrawnUi.Views.Canvas.CollectGarbage(System.Int64)">
+  CollectGarbage(long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L848"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void CollectGarbage(long timeNanos)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>timeNanos</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_CreateDebugPointer_" data-uid="DrawnUi.Views.Canvas.CreateDebugPointer*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_CreateDebugPointer" data-uid="DrawnUi.Views.Canvas.CreateDebugPointer">
+  CreateDebugPointer()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L443"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual SkiaSvg CreateDebugPointer()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaSvg.html">SkiaSvg</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_DetachGestures_" data-uid="DrawnUi.Views.Canvas.DetachGestures*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_DetachGestures" data-uid="DrawnUi.Views.Canvas.DetachGestures">
+  DetachGestures()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L408"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void DetachGestures()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_DisableUpdates_" data-uid="DrawnUi.Views.Canvas.DisableUpdates*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_DisableUpdates" data-uid="DrawnUi.Views.Canvas.DisableUpdates">
+  DisableUpdates()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L970"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Disable invalidating and drawing on the canvas</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void DisableUpdates()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_Draw_" data-uid="DrawnUi.Views.Canvas.Draw*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_Draw_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Views.Canvas.Draw(DrawnUi.Draw.DrawingContext)">
+  Draw(DrawingContext)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L975"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Draw(DrawingContext context)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>context</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_DumpDebug_" data-uid="DrawnUi.Views.Canvas.DumpDebug*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_DumpDebug" data-uid="DrawnUi.Views.Canvas.DumpDebug">
+  DumpDebug()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DumpDebug()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_EnableUpdates_" data-uid="DrawnUi.Views.Canvas.EnableUpdates*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_EnableUpdates" data-uid="DrawnUi.Views.Canvas.EnableUpdates">
+  EnableUpdates()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L960"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Enable canvas rendering itsself</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void EnableUpdates()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_GetMeasuringRectForChildren_" data-uid="DrawnUi.Views.Canvas.GetMeasuringRectForChildren*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_GetMeasuringRectForChildren_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Views.Canvas.GetMeasuringRectForChildren(System.Single,System.Single,System.Single)">
+  GetMeasuringRectForChildren(float, float, float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L300"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>All in in UNITS, OUT in PIXELS</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKRect GetMeasuringRectForChildren(float widthConstraint, float heightConstraint, float scale)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>widthConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>heightConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>scale</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_Invalidate_" data-uid="DrawnUi.Views.Canvas.Invalidate*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_Invalidate" data-uid="DrawnUi.Views.Canvas.Invalidate">
+  Invalidate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes the control dirty, in need to be remeasured and rendered but this doesn't call Update, it's up yo you</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Invalidate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_InvalidateMeasure_" data-uid="DrawnUi.Views.Canvas.InvalidateMeasure*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_InvalidateMeasure" data-uid="DrawnUi.Views.Canvas.InvalidateMeasure">
+  InvalidateMeasure()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Marks the current measure of an element as invalidated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void InvalidateMeasure()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_IsSavedGesture_" data-uid="DrawnUi.Views.Canvas.IsSavedGesture*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_IsSavedGesture_AppoMobi_Maui_Gestures_TouchActionResult_" data-uid="DrawnUi.Views.Canvas.IsSavedGesture(AppoMobi.Maui.Gestures.TouchActionResult)">
+  IsSavedGesture(TouchActionResult)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L488"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Define if consuming this gesture will register child inside <code>HadInput</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool IsSavedGesture(TouchActionResult type)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <span class="xref">TouchActionResult</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_Measure_" data-uid="DrawnUi.Views.Canvas.Measure*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_Measure_System_Single_System_Single_" data-uid="DrawnUi.Views.Canvas.Measure(System.Single,System.Single)">
+  Measure(float, float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ScaledSize Measure(float widthConstraintPts, float heightConstraintPts)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>widthConstraintPts</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>heightConstraintPts</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_MeasureChild_" data-uid="DrawnUi.Views.Canvas.MeasureChild*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_MeasureChild_DrawnUi_Draw_SkiaControl_System_Double_System_Double_System_Double_" data-uid="DrawnUi.Views.Canvas.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Double)">
+  MeasureChild(SkiaControl, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L386"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>PIXELS</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ScaledSize MeasureChild(SkiaControl child, double availableWidth, double availableHeight, double scale)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>child</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd></dd>
+    <dt><code>availableWidth</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>availableHeight</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>scale</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_MeasureOverride_" data-uid="DrawnUi.Views.Canvas.MeasureOverride*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_MeasureOverride_System_Double_System_Double_" data-uid="DrawnUi.Views.Canvas.MeasureOverride(System.Double,System.Double)">
+  MeasureOverride(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Allows subclasses to implement custom Measure logic during a controls measure pass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Size MeasureOverride(double widthConstraint, double heightConstraint)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>widthConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The width constraint to request.</p>
+</dd>
+    <dt><code>heightConstraint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The height constraint to request.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.size">Size</a></dt>
+    <dd><p>The requested size that an element wants in order to be displayed on the device.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnChildAdded_" data-uid="DrawnUi.Views.Canvas.OnChildAdded*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnChildAdded_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Views.Canvas.OnChildAdded(DrawnUi.Draw.SkiaControl)">
+  OnChildAdded(SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnChildAdded(SkiaControl child)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>child</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnDestroyingVew_" data-uid="DrawnUi.Views.Canvas.OnDestroyingVew*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnDestroyingVew" data-uid="DrawnUi.Views.Canvas.OnDestroyingVew">
+  OnDestroyingVew()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L413"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnDestroyingVew()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnDisposing_" data-uid="DrawnUi.Views.Canvas.OnDisposing*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnDisposing" data-uid="DrawnUi.Views.Canvas.OnDisposing">
+  OnDisposing()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L458"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnDisposing()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnGestureEvent_" data-uid="DrawnUi.Views.Canvas.OnGestureEvent*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnGestureEvent_AppoMobi_Maui_Gestures_TouchActionType_AppoMobi_Maui_Gestures_TouchActionEventArgs_AppoMobi_Maui_Gestures_TouchActionResult_" data-uid="DrawnUi.Views.Canvas.OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)">
+  OnGestureEvent(TouchActionType, TouchActionEventArgs, TouchActionResult)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L677"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>IGestureListener implementation</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnGestureEvent(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <span class="xref">TouchActionType</span></dt>
+    <dd></dd>
+    <dt><code>args1</code> <span class="xref">TouchActionEventArgs</span></dt>
+    <dd></dd>
+    <dt><code>touchAction</code> <span class="xref">TouchActionResult</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnGesturesAttachChanged_" data-uid="DrawnUi.Views.Canvas.OnGesturesAttachChanged*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnGesturesAttachChanged" data-uid="DrawnUi.Views.Canvas.OnGesturesAttachChanged">
+  OnGesturesAttachChanged()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L420"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnGesturesAttachChanged()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnHandlerChanged_" data-uid="DrawnUi.Views.Canvas.OnHandlerChanged*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnHandlerChanged" data-uid="DrawnUi.Views.Canvas.OnHandlerChanged">
+  OnHandlerChanged()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L399"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>When overridden in a derived class, should raise the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.handlerchanged">HandlerChanged</a> event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnHandlerChanged()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h4 class="section" id="DrawnUi_Views_Canvas_OnHandlerChanged_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>It is the implementor's responsibility to raise the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.handlerchanged">HandlerChanged</a> event.</p>
+</div>
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnParentChanged_" data-uid="DrawnUi.Views.Canvas.OnParentChanged*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnParentChanged" data-uid="DrawnUi.Views.Canvas.OnParentChanged">
+  OnParentChanged()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L950"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>When overridden in a derived class, should raise the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.parentchanged">ParentChanged</a> event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnParentChanged()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h4 class="section" id="DrawnUi_Views_Canvas_OnParentChanged_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>It is the implementor's responsibility to raise the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.parentchanged">ParentChanged</a> event.</p>
+</div>
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnPropertyChanged_" data-uid="DrawnUi.Views.Canvas.OnPropertyChanged*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnPropertyChanged_System_String_" data-uid="DrawnUi.Views.Canvas.OnPropertyChanged(System.String)">
+  OnPropertyChanged(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L865"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Method that is called when a bound property is changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnPropertyChanged(string propertyName = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the bound property that changed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_OnSizeChanged_" data-uid="DrawnUi.Views.Canvas.OnSizeChanged*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_OnSizeChanged" data-uid="DrawnUi.Views.Canvas.OnSizeChanged">
+  OnSizeChanged()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnSizeChanged()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_PlayRippleAnimation_" data-uid="DrawnUi.Views.Canvas.PlayRippleAnimation*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_PlayRippleAnimation_Microsoft_Maui_Graphics_Color_System_Double_System_Double_System_Boolean_" data-uid="DrawnUi.Views.Canvas.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)">
+  PlayRippleAnimation(Color, double, double, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L829"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PlayRippleAnimation(Color color, double x, double y, bool removePrevious = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>color</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color">Color</a></dt>
+    <dd></dd>
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>removePrevious</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_PlayShimmerAnimation_" data-uid="DrawnUi.Views.Canvas.PlayShimmerAnimation*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_PlayShimmerAnimation_Microsoft_Maui_Graphics_Color_System_Single_System_Single_System_Int32_System_Boolean_" data-uid="DrawnUi.Views.Canvas.PlayShimmerAnimation(Microsoft.Maui.Graphics.Color,System.Single,System.Single,System.Int32,System.Boolean)">
+  PlayShimmerAnimation(Color, float, float, int, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L835"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PlayShimmerAnimation(Color color, float shimmerWidth, float shimmerAngle, int speedMs = 1000, bool removePrevious = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>color</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color">Color</a></dt>
+    <dd></dd>
+    <dt><code>shimmerWidth</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>shimmerAngle</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>speedMs</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>removePrevious</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_ProcessGestures_" data-uid="DrawnUi.Views.Canvas.ProcessGestures*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_" data-uid="DrawnUi.Views.Canvas.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters)">
+  ProcessGestures(SkiaGesturesParameters)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L498"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void ProcessGestures(SkiaGesturesParameters args)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>args</code> <a class="xref" href="DrawnUi.Draw.SkiaGesturesParameters.html">SkiaGesturesParameters</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_SetChildren_" data-uid="DrawnUi.Views.Canvas.SetChildren*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_SetChildren_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__" data-uid="DrawnUi.Views.Canvas.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})">
+  SetChildren(IEnumerable&lt;SkiaControl&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void SetChildren(IEnumerable&lt;SkiaControl&gt; views)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>views</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_SetContent_" data-uid="DrawnUi.Views.Canvas.SetContent*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_SetContent_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Views.Canvas.SetContent(DrawnUi.Draw.SkiaControl)">
+  SetContent(SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Use Content property for direct access</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void SetContent(SkiaControl view)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Views_Canvas_SignalInput_" data-uid="DrawnUi.Views.Canvas.SignalInput*"></a>
+
+  <h3 id="DrawnUi_Views_Canvas_SignalInput_DrawnUi_Draw_ISkiaGestureListener_AppoMobi_Maui_Gestures_TouchActionResult_" data-uid="DrawnUi.Views.Canvas.SignalInput(DrawnUi.Draw.ISkiaGestureListener,AppoMobi.Maui.Gestures.TouchActionResult)">
+  SignalInput(ISkiaGestureListener, TouchActionResult)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L644"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets signal from a listener that in has processed gestures. Return false if should not rpocess gestures.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SignalInput(ISkiaGestureListener listener, TouchActionResult gestureType)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>listener</code> <a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></dt>
+    <dd></dd>
+    <dt><code>gestureType</code> <span class="xref">TouchActionResult</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="DrawnUi_Views_Canvas_Tapped" data-uid="DrawnUi.Views.Canvas.Tapped">
+  Tapped
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L659"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler Tapped</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/Canvas.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

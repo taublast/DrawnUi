@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Image Controls | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Image Controls | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/images.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="image-controls">Image Controls</h1>
+
+<p>DrawnUi.Maui provides powerful image controls for high-performance image rendering with advanced features like effects, transformations, and sophisticated caching. This article covers the image components available in the framework.</p>
+<h2 id="skiaimage">SkiaImage</h2>
+<p>SkiaImage is the core image control in DrawnUi.Maui, providing efficient image loading, rendering, and manipulation capabilities with direct SkiaSharp rendering. It supports multiple image sources, advanced rescaling algorithms, built-in effects, and comprehensive caching strategies.</p>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    Aspect=&quot;AspectCover&quot;
+    HorizontalOptions=&quot;Center&quot;
+    VerticalOptions=&quot;Center&quot;
+    WidthRequest=&quot;200&quot;
+    HeightRequest=&quot;200&quot; /&gt;
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> The default <code>Aspect</code> is <code>AspectCover</code>, which maintains aspect ratio while filling the entire space.</p>
+</blockquote>
+<h3 id="key-properties">Key Properties</h3>
+<h4 id="core-properties">Core Properties</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Source</code></td>
+<td>ImageSource</td>
+<td>null</td>
+<td>Source of the image (URL, file, resource, stream)</td>
+</tr>
+<tr>
+<td><code>Aspect</code></td>
+<td>TransformAspect</td>
+<td>AspectCover</td>
+<td>How the image scales to fit (AspectFit, AspectFill, etc.)</td>
+</tr>
+<tr>
+<td><code>HorizontalAlignment</code></td>
+<td>DrawImageAlignment</td>
+<td>Center</td>
+<td>Horizontal positioning of the image</td>
+</tr>
+<tr>
+<td><code>VerticalAlignment</code></td>
+<td>DrawImageAlignment</td>
+<td>Center</td>
+<td>Vertical positioning of the image</td>
+</tr>
+<tr>
+<td><code>UseAssembly</code></td>
+<td>object</td>
+<td>null</td>
+<td>Assembly to load embedded resources from</td>
+</tr>
+</tbody>
+</table>
+<h4 id="loading--performance">Loading &amp; Performance</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LoadSourceOnFirstDraw</code></td>
+<td>bool</td>
+<td>false</td>
+<td>Whether to defer loading until first render</td>
+</tr>
+<tr>
+<td><code>PreviewBase64</code></td>
+<td>string</td>
+<td>null</td>
+<td>Base64 encoded preview image to show while loading</td>
+</tr>
+<tr>
+<td><code>RescalingQuality</code></td>
+<td>SKFilterQuality</td>
+<td>None</td>
+<td>Quality of image rescaling (None, Low, Medium, High)</td>
+</tr>
+<tr>
+<td><code>RescalingType</code></td>
+<td>RescalingType</td>
+<td>Default</td>
+<td>Rescaling algorithm (Default, MultiPass, GammaCorrection, EdgePreserving)</td>
+</tr>
+<tr>
+<td><code>EraseChangedContent</code></td>
+<td>bool</td>
+<td>false</td>
+<td>Erase existing image when new source is set but not loaded yet</td>
+</tr>
+<tr>
+<td><code>DrawWhenEmpty</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Whether to draw when no source is set</td>
+</tr>
+</tbody>
+</table>
+<h4 id="effects--adjustments">Effects &amp; Adjustments</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AddEffect</code></td>
+<td>SkiaImageEffect</td>
+<td>None</td>
+<td>Built-in image effect (None, Sepia, Tint, BlackAndWhite, etc.)</td>
+</tr>
+<tr>
+<td><code>ColorTint</code></td>
+<td>Color</td>
+<td>Transparent</td>
+<td>Tint color for image effect</td>
+</tr>
+<tr>
+<td><code>EffectBlendMode</code></td>
+<td>SKBlendMode</td>
+<td>SrcIn</td>
+<td>Blend mode for effects</td>
+</tr>
+<tr>
+<td><code>Brightness</code></td>
+<td>double</td>
+<td>1.0</td>
+<td>Adjusts image brightness (≥1.0)</td>
+</tr>
+<tr>
+<td><code>Contrast</code></td>
+<td>double</td>
+<td>1.0</td>
+<td>Adjusts image contrast (≥1.0)</td>
+</tr>
+<tr>
+<td><code>Saturation</code></td>
+<td>double</td>
+<td>0.0</td>
+<td>Adjusts image saturation (≥0)</td>
+</tr>
+<tr>
+<td><code>Blur</code></td>
+<td>double</td>
+<td>0.0</td>
+<td>Applies blur effect</td>
+</tr>
+<tr>
+<td><code>Gamma</code></td>
+<td>double</td>
+<td>1.0</td>
+<td>Adjusts gamma (≥0)</td>
+</tr>
+<tr>
+<td><code>Darken</code></td>
+<td>double</td>
+<td>0.0</td>
+<td>Darkens the image</td>
+</tr>
+<tr>
+<td><code>Lighten</code></td>
+<td>double</td>
+<td>0.0</td>
+<td>Lightens the image</td>
+</tr>
+</tbody>
+</table>
+<h4 id="transformations">Transformations</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZoomX</code>/<code>ZoomY</code></td>
+<td>double</td>
+<td>1.0</td>
+<td>Zoom/scaling factors</td>
+</tr>
+<tr>
+<td><code>HorizontalOffset</code>/<code>VerticalOffset</code></td>
+<td>double</td>
+<td>0.0</td>
+<td>Offset for image position</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sprite-sheets">Sprite Sheets</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SpriteWidth</code>/<code>SpriteHeight</code></td>
+<td>double</td>
+<td>0.0</td>
+<td>Sprite sheet cell size</td>
+</tr>
+<tr>
+<td><code>SpriteIndex</code></td>
+<td>int</td>
+<td>-1</td>
+<td>Index of sprite to display</td>
+</tr>
+</tbody>
+</table>
+<h4 id="gradient-overlay">Gradient Overlay</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UseGradient</code></td>
+<td>bool</td>
+<td>false</td>
+<td>Whether to apply gradient overlay</td>
+</tr>
+<tr>
+<td><code>StartColor</code></td>
+<td>Color</td>
+<td>DarkGray</td>
+<td>Start color for gradient</td>
+</tr>
+<tr>
+<td><code>EndColor</code></td>
+<td>Color</td>
+<td>Gray</td>
+<td>End color for gradient</td>
+</tr>
+</tbody>
+</table>
+<h4 id="state-properties-read-only">State Properties (Read-only)</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LoadedSource</code></td>
+<td>LoadedImageSource</td>
+<td>Currently loaded image source</td>
+</tr>
+<tr>
+<td><code>IsLoading</code></td>
+<td>bool</td>
+<td>Whether image is currently loading</td>
+</tr>
+<tr>
+<td><code>HasError</code></td>
+<td>bool</td>
+<td>Whether last load attempt failed</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> Caching is handled by the SkiaControl base class. You can set <code>Cache</code> on SkiaImage for caching strategies (e.g., <code>Cache=&quot;Image&quot;</code>).</p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> The <code>VisualEffects</code> property is inherited from SkiaControl. You can use <code>&lt;draw:SkiaControl.VisualEffects&gt;</code> in XAML to apply effects like drop shadow or color presets.</p>
+</blockquote>
+<h3 id="aspect-modes">Aspect Modes</h3>
+<p>The <code>Aspect</code> property controls how the image is sized and positioned within its container. This is a critical property for ensuring that your images display correctly while maintaining their proportions when appropriate.</p>
+<h4 id="available-aspect-modes">Available Aspect Modes</h4>
+<table>
+<thead>
+<tr>
+<th>Aspect Mode</th>
+<th>Description</th>
+<th>Visual Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>None</code></td>
+<td>No scaling or positioning</td>
+<td>Image displayed at original size</td>
+</tr>
+<tr>
+<td><code>Fill</code></td>
+<td>Enlarges to fill the viewport without maintaining aspect ratio if smaller, but does not scale down if larger</td>
+<td>May distort proportions</td>
+</tr>
+<tr>
+<td><code>Fit</code></td>
+<td>Fit without maintaining aspect ratio and without enlarging if smaller</td>
+<td>May distort proportions</td>
+</tr>
+<tr>
+<td><code>AspectFit</code></td>
+<td>Fit inside viewport respecting aspect without enlarging if smaller</td>
+<td>May leave empty space around</td>
+</tr>
+<tr>
+<td><code>AspectFill</code></td>
+<td>Covers viewport respecting aspect without scaling down if bigger</td>
+<td>May crop portions of the image</td>
+</tr>
+<tr>
+<td><code>FitFill</code></td>
+<td>Enlarges to fill the viewport if smaller and reduces size if larger, all without respecting aspect ratio</td>
+<td>May distort proportions</td>
+</tr>
+<tr>
+<td><code>AspectFitFill</code></td>
+<td>Enlarges to fit the viewport if smaller and reduces size if larger, all while respecting aspect ratio</td>
+<td>Maintains proportions</td>
+</tr>
+<tr>
+<td><code>Cover</code></td>
+<td>Enlarges to cover the viewport if smaller and reduces size if larger, all without respecting aspect ratio. Same as AspectFitFill but will crop the image to fill entire viewport</td>
+<td>May crop image</td>
+</tr>
+<tr>
+<td><code>AspectCover</code></td>
+<td><strong>Default.</strong> Covers viewport respecting aspect, scales both up and down as needed</td>
+<td>May crop portions, maintains aspect</td>
+</tr>
+<tr>
+<td><code>Tile</code></td>
+<td>Tiles the image to fill the viewport</td>
+<td>Repeats image pattern</td>
+</tr>
+</tbody>
+</table>
+<h4 id="rescaling-types">Rescaling Types</h4>
+<p>The <code>RescalingType</code> property determines the algorithm used for image rescaling:</p>
+<table>
+<thead>
+<tr>
+<th>Rescaling Type</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Default</code></td>
+<td>Standard SkiaSharp rescaling: &quot;I just need it to work fast&quot;</td>
+<td>Minor size adjustments, performance-focused</td>
+</tr>
+<tr>
+<td><code>MultiPass</code></td>
+<td>Multi-pass progressive rescaling for superior quality on significant size changes: &quot;I want good quality&quot;</td>
+<td>Icons, logos, transparent graphics with sharp edges, large size reductions (2x smaller)</td>
+</tr>
+<tr>
+<td><code>GammaCorrection</code></td>
+<td>Gamma-corrected rescaling that processes in linear color space for photographic quality: &quot;I'm working with photos professionally&quot;</td>
+<td>Professional photography and color-critical work, color accuracy, gradients and smooth color transitions</td>
+</tr>
+<tr>
+<td><code>EdgePreserving</code></td>
+<td>Edge-preserving rescaling optimized for sharp graphics and pixel-perfect content: &quot;I'm working with pixel art/UI graphics&quot;</td>
+<td>Pixel art, very small icons (16x16, 32x32), screenshots, text graphics</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> <code>GammaCorrection</code> is slower than other methods but provides the best quality for photographic content.</p>
+</blockquote>
+<h4 id="examples-and-visual-guide">Examples and Visual Guide</h4>
+<pre><code class="lang-xml">&lt;!-- Maintain aspect ratio, fit within bounds --&gt;
+&lt;draw:SkiaImage Source=&quot;image.png&quot; Aspect=&quot;AspectFit&quot; /&gt;
+</code></pre>
+<p>This ensures the entire image is visible, possibly with letterboxing (empty space) on the sides or top/bottom.</p>
+<pre><code class="lang-xml">&lt;!-- Maintain aspect ratio, fill bounds (may crop) - DEFAULT --&gt;
+&lt;draw:SkiaImage Source=&quot;image.png&quot; Aspect=&quot;AspectCover&quot; /&gt;
+</code></pre>
+<p>This fills the entire control with the image, possibly cropping parts that don't fit. Great for background images or thumbnails. This is the default behavior.</p>
+<pre><code class="lang-xml">&lt;!-- Stretch to fill bounds (may distort) --&gt;
+&lt;draw:SkiaImage Source=&quot;image.png&quot; Aspect=&quot;Fill&quot; /&gt;
+</code></pre>
+<p>This stretches the image to fill the control exactly, potentially distorting the image proportions.</p>
+<pre><code class="lang-xml">&lt;!-- Tile the image --&gt;
+&lt;draw:SkiaImage Source=&quot;pattern.png&quot; Aspect=&quot;Tile&quot; /&gt;
+</code></pre>
+<p>This repeats the image to fill the entire control. Perfect for background patterns.</p>
+<pre><code class="lang-xml">&lt;!-- High-quality rescaling for photos --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;photo.jpg&quot;
+    Aspect=&quot;AspectCover&quot;
+    RescalingType=&quot;GammaCorrection&quot;
+    RescalingQuality=&quot;Medium&quot; /&gt;
+</code></pre>
+<p>This provides the best quality for photographic content with gamma-corrected rescaling.</p>
+<h4 id="combining-aspect-and-alignment">Combining Aspect and Alignment</h4>
+<p>You can combine <code>Aspect</code> with <code>HorizontalAlignment</code> and <code>VerticalAlignment</code> for precise control:</p>
+<pre><code class="lang-xml">&lt;!-- AspectFit with custom alignment --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    Aspect=&quot;AspectFit&quot;
+    HorizontalAlignment=&quot;Start&quot;
+    VerticalAlignment=&quot;End&quot; /&gt;
+</code></pre>
+<p>This would fit the image within bounds while aligning it to the bottom-left corner of the available space.</p>
+<h4 id="choosing-the-right-aspect-mode">Choosing the Right Aspect Mode</h4>
+<ul>
+<li><strong>For user photos or content images</strong>: <code>AspectFit</code> ensures the entire image is visible</li>
+<li><strong>For backgrounds or covers</strong>: <code>AspectCover</code> (default) ensures no empty space is visible</li>
+<li><strong>For thumbnails and cards</strong>: <code>AspectCover</code> provides consistent sizing</li>
+<li><strong>For patterns and textures</strong>: <code>Tile</code> repeats the image seamlessly</li>
+<li><strong>For icons that need exact sizing</strong>: <code>Fill</code> stretches to exact dimensions</li>
+<li><strong>For pixel-perfect graphics</strong>: <code>None</code> maintains original size and quality</li>
+</ul>
+<h4 id="choosing-the-right-rescaling-type">Choosing the Right Rescaling Type</h4>
+<ul>
+<li><strong>For general use</strong>: <code>Default</code> provides good performance</li>
+<li><strong>For icons and logos</strong>: <code>MultiPass</code> provides superior quality for significant size changes</li>
+<li><strong>For professional photography</strong>: <code>GammaCorrection</code> provides color-accurate results</li>
+<li><strong>For pixel art and UI graphics</strong>: <code>EdgePreserving</code> maintains sharp edges</li>
+</ul>
+<h3 id="image-alignment">Image Alignment</h3>
+<p>Control the alignment of the image within its container:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    Aspect=&quot;AspectFit&quot;
+    HorizontalAlignment=&quot;End&quot;
+    VerticalAlignment=&quot;Start&quot; /&gt;
+</code></pre>
+<p>This will position the image at the top-right of its container.</p>
+<h3 id="image-effects">Image Effects</h3>
+<p>SkiaImage supports various built-in effects through the <code>AddEffect</code> property. Effects can be combined with blend modes for advanced visual results.</p>
+<h4 id="available-effects">Available Effects</h4>
+<table>
+<thead>
+<tr>
+<th>Effect</th>
+<th>Description</th>
+<th>Additional Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>None</code></td>
+<td>No effect applied</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>BlackAndWhite</code></td>
+<td>Converts to grayscale</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>Pastel</code></td>
+<td>Applies pastel color effect</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>Tint</code></td>
+<td>Applies color tint</td>
+<td><code>ColorTint</code>, <code>EffectBlendMode</code></td>
+</tr>
+<tr>
+<td><code>Darken</code></td>
+<td>Darkens the image</td>
+<td><code>Darken</code> (amount)</td>
+</tr>
+<tr>
+<td><code>Lighten</code></td>
+<td>Lightens the image</td>
+<td><code>Lighten</code> (amount)</td>
+</tr>
+<tr>
+<td><code>Sepia</code></td>
+<td>Applies sepia tone</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>InvertColors</code></td>
+<td>Inverts all colors</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>Contrast</code></td>
+<td>Adjusts contrast</td>
+<td><code>Contrast</code> (≥1.0)</td>
+</tr>
+<tr>
+<td><code>Saturation</code></td>
+<td>Adjusts saturation</td>
+<td><code>Saturation</code> (≥0)</td>
+</tr>
+<tr>
+<td><code>Brightness</code></td>
+<td>Adjusts brightness</td>
+<td><code>Brightness</code> (≥1.0)</td>
+</tr>
+<tr>
+<td><code>Gamma</code></td>
+<td>Adjusts gamma correction</td>
+<td><code>Gamma</code> (≥0)</td>
+</tr>
+<tr>
+<td><code>TSL</code></td>
+<td>Tint with Saturation and Lightness</td>
+<td><code>BackgroundColor</code>, <code>Saturation</code>, <code>Brightness</code>, <code>EffectBlendMode</code></td>
+</tr>
+<tr>
+<td><code>HSL</code></td>
+<td>Hue, Saturation, Lightness adjustment</td>
+<td><code>Gamma</code> (hue), <code>Saturation</code>, <code>Brightness</code>, <code>EffectBlendMode</code></td>
+</tr>
+<tr>
+<td><code>Custom</code></td>
+<td>Use custom effects via VisualEffects</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="basic-effects-examples">Basic Effects Examples</h4>
+<pre><code class="lang-xml">&lt;!-- Apply a sepia effect --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    AddEffect=&quot;Sepia&quot; /&gt;
+
+&lt;!-- Apply a tint effect with custom blend mode --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    AddEffect=&quot;Tint&quot;
+    ColorTint=&quot;Red&quot;
+    EffectBlendMode=&quot;Multiply&quot; /&gt;
+
+&lt;!-- Apply grayscale effect --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    AddEffect=&quot;BlackAndWhite&quot; /&gt;
+
+&lt;!-- Invert colors --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    AddEffect=&quot;InvertColors&quot; /&gt;
+</code></pre>
+<h3 id="image-adjustments">Image Adjustments</h3>
+<p>Fine-tune image appearance with various adjustment properties. These work independently of the <code>AddEffect</code> property:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    Brightness=&quot;1.2&quot;
+    Contrast=&quot;1.1&quot;
+    Saturation=&quot;0.8&quot;
+    Blur=&quot;2&quot;
+    Gamma=&quot;1.1&quot; /&gt;
+</code></pre>
+<h4 id="advanced-effect-combinations">Advanced Effect Combinations</h4>
+<pre><code class="lang-xml">&lt;!-- HSL effect with custom values --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    AddEffect=&quot;HSL&quot;
+    Gamma=&quot;0.8&quot;
+    Saturation=&quot;1.2&quot;
+    Brightness=&quot;1.1&quot;
+    EffectBlendMode=&quot;Overlay&quot; /&gt;
+
+&lt;!-- TSL effect with background color --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    AddEffect=&quot;TSL&quot;
+    BackgroundColor=&quot;Blue&quot;
+    Saturation=&quot;0.7&quot;
+    Brightness=&quot;1.3&quot;
+    EffectBlendMode=&quot;SoftLight&quot; /&gt;
+</code></pre>
+<h3 id="advanced-effects">Advanced Effects</h3>
+<p>For more complex effects, use the VisualEffects collection:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaImage Source=&quot;image.png&quot;&gt;
+    &lt;draw:SkiaControl.VisualEffects&gt;
+        &lt;draw:DropShadowEffect
+            Blur=&quot;8&quot;
+            X=&quot;2&quot;
+            Y=&quot;2&quot;
+            Color=&quot;#80000000&quot; /&gt;
+        &lt;draw:ChainColorPresetEffect Preset=&quot;Sepia&quot; /&gt;
+    &lt;/draw:SkiaControl.VisualEffects&gt;
+&lt;/draw:SkiaImage&gt;
+</code></pre>
+<h3 id="gradient-overlays">Gradient Overlays</h3>
+<p>Apply gradient overlays to images for enhanced visual effects:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    UseGradient=&quot;True&quot;
+    StartColor=&quot;#80000000&quot;
+    EndColor=&quot;#00000000&quot; /&gt;
+</code></pre>
+<p>This applies a gradient from semi-transparent black to fully transparent, creating a fade effect.</p>
+<h3 id="sprite-sheets-1">Sprite Sheets</h3>
+<p>SkiaImage supports sprite sheets for displaying a single sprite from a larger image:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;sprite-sheet.png&quot;
+    SpriteWidth=&quot;64&quot;
+    SpriteHeight=&quot;64&quot;
+    SpriteIndex=&quot;2&quot; /&gt;
+</code></pre>
+<p>This shows the third sprite (index 2) from the sprite sheet, assuming each sprite is 64x64 pixels.</p>
+<h4 id="animated-sprites">Animated Sprites</h4>
+<pre><code class="lang-xml">&lt;!-- Animate through sprites --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;character-walk.png&quot;
+    SpriteWidth=&quot;32&quot;
+    SpriteHeight=&quot;32&quot;
+    SpriteIndex=&quot;{Binding CurrentFrame}&quot; /&gt;
+</code></pre>
+<h3 id="preview-images">Preview Images</h3>
+<p>Show a low-resolution placeholder while loading the main image:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaImage
+    Source=&quot;https://example.com/large-image.jpg&quot;
+    PreviewBase64=&quot;data:image/png;base64,iVBORw0KGgoAA...&quot;
+    Aspect=&quot;AspectFit&quot; /&gt;
+</code></pre>
+<h3 id="loading-options">Loading Options</h3>
+<p>Control how and when images are loaded:</p>
+<pre><code class="lang-xml">&lt;!-- Immediate loading (default) --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    LoadSourceOnFirstDraw=&quot;False&quot; /&gt;
+
+&lt;!-- Deferred loading (load when first rendered) --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    LoadSourceOnFirstDraw=&quot;True&quot; /&gt;
+
+&lt;!-- Erase content when source changes --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;{Binding ImageUrl}&quot;
+    EraseChangedContent=&quot;True&quot; /&gt;
+</code></pre>
+<h4 id="loading-from-different-sources">Loading from Different Sources</h4>
+<pre><code class="lang-xml">&lt;!-- From URL --&gt;
+&lt;draw:SkiaImage Source=&quot;https://example.com/image.jpg&quot; /&gt;
+
+&lt;!-- From file --&gt;
+&lt;draw:SkiaImage Source=&quot;Images/local-image.png&quot; /&gt;
+
+&lt;!-- From embedded resource --&gt;
+&lt;draw:SkiaImage
+    Source=&quot;MyApp.Images.embedded-image.png&quot;
+    UseAssembly=&quot;{x:Static local:App.CurrentAssembly}&quot; /&gt;
+
+&lt;!-- From stream (in code-behind) --&gt;
+</code></pre>
+<pre><code class="lang-csharp">// Load from stream
+myImage.SetSource(async (cancellationToken) =&gt;
+{
+    var stream = await GetImageStreamAsync();
+    return stream;
+});
+</code></pre>
+<h3 id="caching-strategies">Caching Strategies</h3>
+<p>Optimize performance with various caching options:</p>
+<pre><code class="lang-xml">&lt;!-- Use double-buffered image caching (good for changing content) --&gt;
+&lt;DrawUi:SkiaImage
+    Source=&quot;image.png&quot;
+    UseCache=&quot;ImageDoubleBuffered&quot; /&gt;
+
+&lt;!-- Use simple image caching (good for static content) --&gt;
+&lt;DrawUi:SkiaImage
+    Source=&quot;image.png&quot;
+    UseCache=&quot;Image&quot; /&gt;
+
+&lt;!-- Cache drawing operations rather than bitmap (memory efficient) --&gt;
+&lt;DrawUi:SkiaImage
+    Source=&quot;image.png&quot;
+    UseCache=&quot;Operations&quot; /&gt;
+
+&lt;!-- No caching (for frequently changing images) --&gt;
+&lt;DrawUi:SkiaImage
+    Source=&quot;image.png&quot;
+    UseCache=&quot;None&quot; /&gt;
+</code></pre>
+<h3 id="handling-load-events">Handling Load Events</h3>
+<p>You can respond to image load success or failure in code-behind:</p>
+<pre><code class="lang-csharp">public MainPage()
+{
+    InitializeComponent();
+
+    MyImage.Success += (sender, e) =&gt; {
+        // Image loaded successfully
+        Console.WriteLine($&quot;Loaded: {e.Source}&quot;);
+    };
+
+    MyImage.Error += (sender, e) =&gt; {
+        // Image failed to load
+        Console.WriteLine($&quot;Failed to load: {e.Source}&quot;);
+    };
+
+    MyImage.OnCleared += (sender, e) =&gt; {
+        // Image was cleared/unloaded
+    };
+}
+</code></pre>
+<h4 id="monitoring-load-state">Monitoring Load State</h4>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;{Binding ImageUrl}&quot;
+    IsLoading=&quot;{Binding IsImageLoading, Mode=OneWayToSource}&quot;
+    HasError=&quot;{Binding HasImageError, Mode=OneWayToSource}&quot; /&gt;
+</code></pre>
+<h4 id="manual-loading-control">Manual Loading Control</h4>
+<pre><code class="lang-csharp">// Stop current loading
+myImage.StopLoading();
+
+// Reload the current source
+myImage.ReloadSource();
+
+// Clear the current image
+myImage.ClearBitmap();
+</code></pre>
+<h2 id="image-management">Image Management</h2>
+<h3 id="skiaimagemanager">SkiaImageManager</h3>
+<p>DrawnUi.Maui includes a powerful image management system through the <code>SkiaImageManager</code> class. This provides centralized image loading, caching, and resource management.</p>
+<h4 id="preloading-images">Preloading Images</h4>
+<p>Preload images to ensure they're ready when needed:</p>
+<pre><code class="lang-csharp">// Preload a single image
+await SkiaImageManager.Instance.PreloadImage(&quot;Images/my-image.jpg&quot;);
+
+// Preload multiple images
+await SkiaImageManager.Instance.PreloadImages(new List&lt;string&gt; 
+{
+    &quot;Images/image1.jpg&quot;,
+    &quot;Images/image2.jpg&quot;,
+    &quot;Images/image3.jpg&quot;
+});
+</code></pre>
+<h4 id="managing-memory-usage">Managing Memory Usage</h4>
+<p>Configure the image manager for optimal memory usage:</p>
+<pre><code class="lang-csharp">// Enable bitmap reuse for better memory usage
+SkiaImageManager.ReuseBitmaps = true;
+
+// Set cache longevity (in seconds)
+SkiaImageManager.CacheLongevitySecs = 1800; // 30 minutes
+
+// Enable async loading for local images
+SkiaImageManager.LoadLocalAsync = true;
+
+// Clear unused cached images
+SkiaImageManager.Instance.ClearUnusedImages();
+
+// Clear all cached images
+SkiaImageManager.Instance.ClearAll();
+
+// Add image to cache manually
+SkiaImageManager.Instance.AddToCache(&quot;my-key&quot;, bitmap, 3600); // 1 hour
+
+// Get image from cache
+var cachedBitmap = SkiaImageManager.Instance.GetFromCache(&quot;my-key&quot;);
+</code></pre>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="loading-from-base64">Loading from Base64</h3>
+<p>Load images directly from base64 strings:</p>
+<pre><code class="lang-csharp">var base64String = &quot;data:image/png;base64,iVBORw0KGgoAA...&quot;;
+myImage.SetFromBase64(base64String);
+</code></pre>
+<h3 id="applying-transformations">Applying Transformations</h3>
+<p>Apply transformations to the displayed image:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaImage
+    Source=&quot;image.png&quot;
+    ZoomX=&quot;1.2&quot;
+    ZoomY=&quot;1.2&quot;
+    HorizontalOffset=&quot;10&quot;
+    VerticalOffset=&quot;-5&quot; /&gt;
+</code></pre>
+<h3 id="creating-images-in-code">Creating Images in Code</h3>
+<p>Create and configure SkiaImage controls programmatically:</p>
+<pre><code class="lang-csharp">var image = new SkiaImage
+{
+    Source = &quot;Images/my-image.jpg&quot;,
+    LoadSourceOnFirstDraw = false,
+    Aspect = TransformAspect.AspectCover,
+    RescalingQuality = SKFilterQuality.Medium,
+    RescalingType = RescalingType.MultiPass,
+    AddEffect = SkiaImageEffect.Sepia,
+    ColorTint = Colors.Brown,
+    EffectBlendMode = SKBlendMode.Multiply,
+    Brightness = 1.1,
+    Contrast = 1.05,
+    WidthRequest = 200,
+    HeightRequest = 200,
+    HorizontalOptions = LayoutOptions.Center,
+    VerticalOptions = LayoutOptions.Center
+};
+
+// Subscribe to events
+image.Success += (s, e) =&gt; Console.WriteLine(&quot;Image loaded&quot;);
+image.Error += (s, e) =&gt; Console.WriteLine(&quot;Image failed to load&quot;);
+
+myLayout.Children.Add(image);
+</code></pre>
+<h4 id="advanced-programmatic-usage">Advanced Programmatic Usage</h4>
+<pre><code class="lang-csharp">// Create image with gradient overlay
+var heroImage = new SkiaImage
+{
+    Source = &quot;hero-background.jpg&quot;,
+    Aspect = TransformAspect.AspectCover,
+    UseGradient = true,
+    StartColor = Color.FromArgb(&quot;#80000000&quot;),
+    EndColor = Color.FromArgb(&quot;#00000000&quot;),
+    RescalingType = RescalingType.GammaCorrection
+};
+
+// Create sprite animation
+var spriteImage = new SkiaImage
+{
+    Source = &quot;character-sprites.png&quot;,
+    SpriteWidth = 32,
+    SpriteHeight = 32,
+    SpriteIndex = 0
+};
+
+// Animate sprites
+var timer = new Timer(100);
+timer.Elapsed += (s, e) =&gt;
+{
+    spriteImage.SpriteIndex = (spriteImage.SpriteIndex + 1) % 8;
+};
+timer.Start();
+</code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="optimization-tips">Optimization Tips</h3>
+<ol>
+<li><p><strong>Image Size</strong></p>
+<ul>
+<li>Resize images to their display size before including in your app</li>
+<li>Use compressed formats (WebP, optimized PNG/JPEG) when possible</li>
+<li>Consider providing different image sizes for different screen densities</li>
+</ul>
+</li>
+<li><p><strong>Caching</strong></p>
+<ul>
+<li>Use <code>UseCache=&quot;Image&quot;</code> for static images that don't change</li>
+<li>Use <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> for images that change occasionally</li>
+<li>Use <code>UseCache=&quot;Operations&quot;</code> for images with effects but static content</li>
+<li>Use <code>UseCache=&quot;None&quot;</code> only for frequently changing images</li>
+</ul>
+</li>
+<li><p><strong>Loading Strategy</strong></p>
+<ul>
+<li>Use <code>LoadSourceOnFirstDraw=&quot;True&quot;</code> for off-screen images</li>
+<li>Preload important images with SkiaImageManager.PreloadImages()</li>
+<li>Provide preview images with <code>PreviewBase64</code> for large remote images</li>
+</ul>
+</li>
+<li><p><strong>Rendering Quality</strong></p>
+<ul>
+<li>Set appropriate <code>RescalingQuality</code> based on your needs:
+<ul>
+<li><code>None</code>: Fastest but lowest quality (default)</li>
+<li><code>Low</code>: Good balance for scrolling content</li>
+<li><code>Medium</code>: Good for static content</li>
+<li><code>High</code>: Best quality but slowest (use sparingly)</li>
+</ul>
+</li>
+<li>Choose the right <code>RescalingType</code>:
+<ul>
+<li><code>Default</code>: Standard performance</li>
+<li><code>MultiPass</code>: Better quality for significant size changes</li>
+<li><code>GammaCorrection</code>: Best for photos (slower)</li>
+<li><code>EdgePreserving</code>: Best for pixel art and UI graphics</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Memory Management</strong></p>
+<ul>
+<li>Enable bitmap reuse with <code>SkiaImageManager.ReuseBitmaps = true</code></li>
+<li>Set reasonable cache longevity with <code>SkiaImageManager.CacheLongevitySecs</code></li>
+<li>Call <code>ClearUnusedImages()</code> when appropriate</li>
+<li>Use <code>EraseChangedContent=&quot;True&quot;</code> for dynamic image sources</li>
+</ul>
+</li>
+</ol>
+<h3 id="examples-of-optimized-image-loading">Examples of Optimized Image Loading</h3>
+<h4 id="for-listscarousels">For Lists/Carousels</h4>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;{Binding ImageUrl}&quot;
+    LoadSourceOnFirstDraw=&quot;True&quot;
+    Cache=&quot;ImageDoubleBuffered&quot;
+    RescalingQuality=&quot;Low&quot;
+    RescalingType=&quot;Default&quot;
+    Aspect=&quot;AspectCover&quot; /&gt;
+</code></pre>
+<h4 id="for-herocover-images">For Hero/Cover Images</h4>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;{Binding CoverImage}&quot;
+    PreviewBase64=&quot;{Binding CoverImagePreview}&quot;
+    LoadSourceOnFirstDraw=&quot;False&quot;
+    Cache=&quot;Image&quot;
+    RescalingQuality=&quot;Medium&quot;
+    RescalingType=&quot;GammaCorrection&quot;
+    Aspect=&quot;AspectCover&quot; /&gt;
+</code></pre>
+<h4 id="for-professional-photography">For Professional Photography</h4>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;{Binding HighResPhoto}&quot;
+    RescalingType=&quot;GammaCorrection&quot;
+    RescalingQuality=&quot;High&quot;
+    Aspect=&quot;AspectFit&quot;
+    Cache=&quot;Image&quot; /&gt;
+</code></pre>
+<h4 id="for-icons-and-ui-graphics">For Icons and UI Graphics</h4>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;icon.png&quot;
+    RescalingType=&quot;EdgePreserving&quot;
+    RescalingQuality=&quot;None&quot;
+    Aspect=&quot;None&quot;
+    Cache=&quot;Operations&quot; /&gt;
+</code></pre>
+<h4 id="for-image-galleries">For Image Galleries</h4>
+<pre><code class="lang-xml">&lt;draw:SkiaScroll Orientation=&quot;Horizontal&quot;&gt;
+    &lt;draw:SkiaLayout LayoutType=&quot;Row&quot; Spacing=&quot;10&quot;&gt;
+        &lt;!-- Images that are initially visible --&gt;
+        &lt;draw:SkiaImage
+            Source=&quot;{Binding Images[0]}&quot;
+            LoadSourceOnFirstDraw=&quot;False&quot;
+            Cache=&quot;Image&quot;
+            RescalingType=&quot;MultiPass&quot;
+            Aspect=&quot;AspectCover&quot;
+            WidthRequest=&quot;300&quot;
+            HeightRequest=&quot;200&quot; /&gt;
+
+        &lt;!-- Images that may be scrolled to --&gt;
+        &lt;draw:SkiaImage
+            Source=&quot;{Binding Images[1]}&quot;
+            LoadSourceOnFirstDraw=&quot;True&quot;
+            Cache=&quot;Image&quot;
+            RescalingType=&quot;MultiPass&quot;
+            Aspect=&quot;AspectCover&quot;
+            WidthRequest=&quot;300&quot;
+            HeightRequest=&quot;200&quot; /&gt;
+
+        &lt;!-- More images... --&gt;
+    &lt;/draw:SkiaLayout&gt;
+&lt;/draw:SkiaScroll&gt;
+</code></pre>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3 id="custom-image-rendering">Custom Image Rendering</h3>
+<p>Get a rendered version of the image with all effects applied:</p>
+<pre><code class="lang-csharp">// Get the image with all effects and transformations applied
+var renderedImage = mySkiaImage.GetRenderedSource();
+if (renderedImage != null)
+{
+    // Use the rendered image
+    // Remember to dispose when done
+    renderedImage.Dispose();
+}
+</code></pre>
+<h3 id="image-transformations-and-offsets">Image Transformations and Offsets</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaImage
+    Source=&quot;image.png&quot;
+    ZoomX=&quot;1.5&quot;
+    ZoomY=&quot;1.2&quot;
+    HorizontalOffset=&quot;20&quot;
+    VerticalOffset=&quot;-10&quot;
+    Aspect=&quot;AspectCover&quot; /&gt;
+</code></pre>
+<h3 id="working-with-image-sources">Working with Image Sources</h3>
+<pre><code class="lang-csharp">// Check if image is currently loading
+if (myImage.IsLoading)
+{
+    // Show loading indicator
+}
+
+// Check for errors
+if (myImage.HasError)
+{
+    // Show error state
+}
+
+// Access the loaded source
+var loadedSource = myImage.LoadedSource;
+if (loadedSource != null)
+{
+    var width = loadedSource.Width;
+    var height = loadedSource.Height;
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-choose-the-right-aspect-mode">1. Choose the Right Aspect Mode</h3>
+<ul>
+<li>Use <code>AspectCover</code> (default) for most scenarios</li>
+<li>Use <code>AspectFit</code> when you need to see the entire image</li>
+<li>Use <code>Tile</code> for patterns and backgrounds</li>
+<li>Use <code>None</code> for pixel-perfect icons</li>
+</ul>
+<h3 id="2-optimize-rescaling">2. Optimize Rescaling</h3>
+<ul>
+<li>Use <code>Default</code> rescaling for general performance</li>
+<li>Use <code>MultiPass</code> for icons and graphics with significant size changes</li>
+<li>Use <code>GammaCorrection</code> for professional photography</li>
+<li>Use <code>EdgePreserving</code> for pixel art and small UI elements</li>
+</ul>
+<h3 id="3-manage-memory-efficiently">3. Manage Memory Efficiently</h3>
+<ul>
+<li>Enable <code>SkiaImageManager.ReuseBitmaps = true</code> for shared images</li>
+<li>Set appropriate cache longevity with <code>CacheLongevitySecs</code></li>
+<li>Use <code>EraseChangedContent=&quot;True&quot;</code> for dynamic content</li>
+<li>Clear unused images periodically</li>
+</ul>
+<h3 id="4-handle-loading-states">4. Handle Loading States</h3>
+<ul>
+<li>Use <code>LoadSourceOnFirstDraw=&quot;True&quot;</code> for off-screen images</li>
+<li>Provide preview images for large remote images</li>
+<li>Subscribe to <code>Success</code> and <code>Error</code> events for user feedback</li>
+<li>Monitor <code>IsLoading</code> and <code>HasError</code> properties</li>
+</ul>
+<h3 id="5-apply-effects-wisely">5. Apply Effects Wisely</h3>
+<ul>
+<li>Use built-in effects for common adjustments</li>
+<li>Combine effects with appropriate blend modes</li>
+<li>Use <code>Custom</code> effect type with VisualEffects for complex scenarios</li>
+<li>Consider performance impact of multiple effects</li>
+</ul>
+<p>This comprehensive guide covers all aspects of using SkiaImage in DrawnUi.Maui, from basic usage to advanced optimization techniques. The control provides powerful image handling capabilities while maintaining excellent performance through intelligent caching and rendering strategies.</p>
+<h2 id="skiagif">SkiaGif</h2>
+<p>SkiaGif is a dedicated control for displaying animated GIF files with playback control and optimization features.</p>
+<h3 id="basic-usage-1">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaGif
+    Source=&quot;animation.gif&quot;
+    IsPlaying=&quot;True&quot;
+    RepeatCount=&quot;0&quot;
+    WidthRequest=&quot;200&quot;
+    HeightRequest=&quot;200&quot; /&gt;
+</code></pre>
+<h3 id="key-properties-1">Key Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IsPlaying</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Whether the animation is playing</td>
+</tr>
+<tr>
+<td><code>RepeatCount</code></td>
+<td>int</td>
+<td>0</td>
+<td>Number of times to repeat (0 = infinite)</td>
+</tr>
+<tr>
+<td><code>Speed</code></td>
+<td>double</td>
+<td>1.0</td>
+<td>Playback speed multiplier</td>
+</tr>
+<tr>
+<td><code>CurrentFrame</code></td>
+<td>int</td>
+<td>0</td>
+<td>Current frame index</td>
+</tr>
+<tr>
+<td><code>FrameCount</code></td>
+<td>int</td>
+<td>0</td>
+<td>Total number of frames (read-only)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<pre><code class="lang-xml">&lt;!-- Auto-playing GIF --&gt;
+&lt;draw:SkiaGif
+    Source=&quot;loading.gif&quot;
+    IsPlaying=&quot;True&quot;
+    RepeatCount=&quot;0&quot; /&gt;
+
+&lt;!-- Controlled GIF playback --&gt;
+&lt;draw:SkiaGif
+    Source=&quot;animation.gif&quot;
+    IsPlaying=&quot;{Binding IsAnimating}&quot;
+    Speed=&quot;0.5&quot;
+    RepeatCount=&quot;3&quot; /&gt;
+</code></pre>
+<h2 id="skiamediaimage">SkiaMediaImage</h2>
+<p>SkiaMediaImage is a versatile control that can display various types of media including static images, animated GIFs, and other supported formats. It automatically detects the media type and uses the appropriate rendering method.</p>
+<h3 id="basic-usage-2">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaMediaImage
+    Source=&quot;{Binding MediaUrl}&quot;
+    AutoPlay=&quot;True&quot;
+    WidthRequest=&quot;300&quot;
+    HeightRequest=&quot;200&quot; /&gt;
+</code></pre>
+<h3 id="key-properties-2">Key Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AutoPlay</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Whether to auto-play animated content</td>
+</tr>
+<tr>
+<td><code>MediaType</code></td>
+<td>MediaType</td>
+<td>Auto</td>
+<td>Force specific media type handling</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples-1">Examples</h3>
+<pre><code class="lang-xml">&lt;!-- Auto-detecting media type --&gt;
+&lt;draw:SkiaMediaImage
+    Source=&quot;{Binding MediaSource}&quot;
+    AutoPlay=&quot;True&quot;
+    Aspect=&quot;AspectCover&quot; /&gt;
+
+&lt;!-- Force GIF handling --&gt;
+&lt;draw:SkiaMediaImage
+    Source=&quot;image.gif&quot;
+    MediaType=&quot;Gif&quot;
+    AutoPlay=&quot;False&quot; /&gt;
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/images.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

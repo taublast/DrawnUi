@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Drawer Controls | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Drawer Controls | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/drawers.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="drawer-controls">Drawer Controls</h1>
+
+<p>DrawnUi.Maui provides powerful drawer controls for creating sliding panels that can appear from any edge of the screen. This article covers the drawer components available in the framework.</p>
+<h2 id="skiadrawer">SkiaDrawer</h2>
+<p>SkiaDrawer is a versatile control that provides a sliding panel (drawer) with animated transitions and gesture support. It can slide in from any edge, making it perfect for navigation menus, filter panels, property drawers, and more.</p>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaDrawer
+    Direction=&quot;FromBottom&quot;
+    HeaderSize=&quot;60&quot;
+    IsOpen=&quot;False&quot;
+    HeightRequest=&quot;500&quot;
+    HorizontalOptions=&quot;Fill&quot;
+    VerticalOptions=&quot;End&quot;&gt;
+    
+    &lt;DrawUi:SkiaLayout
+        HorizontalOptions=&quot;Fill&quot;
+        VerticalOptions=&quot;Fill&quot;&gt;
+        
+        &lt;!-- Header (visible when drawer is closed) --&gt;
+        &lt;DrawUi:SkiaShape
+            BackgroundColor=&quot;Blue&quot;
+            CornerRadius=&quot;20,20,0,0&quot;
+            HeightRequest=&quot;60&quot;
+            HorizontalOptions=&quot;Fill&quot;&gt;
+            
+            &lt;DrawUi:SkiaLabel
+                Text=&quot;Drag Me&quot;
+                TextColor=&quot;White&quot;
+                HorizontalOptions=&quot;Center&quot;
+                VerticalOptions=&quot;Center&quot; /&gt;
+                
+        &lt;/DrawUi:SkiaShape&gt;
+        
+        &lt;!-- Content (scrolls within drawer) --&gt;
+        &lt;DrawUi:SkiaLayout
+            BackgroundColor=&quot;White&quot;
+            Padding=&quot;20&quot;
+            Type=&quot;Column&quot;
+            Spacing=&quot;16&quot;
+            AddMarginTop=&quot;60&quot;&gt;
+            
+            &lt;DrawUi:SkiaLabel
+                Text=&quot;Drawer Content&quot;
+                FontSize=&quot;20&quot;
+                TextColor=&quot;Black&quot; /&gt;
+                
+            &lt;!-- Additional content --&gt;
+                
+        &lt;/DrawUi:SkiaLayout&gt;
+        
+    &lt;/DrawUi:SkiaLayout&gt;
+    
+&lt;/DrawUi:SkiaDrawer&gt;
+</code></pre>
+<h3 id="key-properties">Key Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Direction</code></td>
+<td>DrawerDirection</td>
+<td>Direction from which the drawer appears</td>
+</tr>
+<tr>
+<td><code>HeaderSize</code></td>
+<td>double</td>
+<td>Size of the area that remains visible when drawer is closed</td>
+</tr>
+<tr>
+<td><code>IsOpen</code></td>
+<td>bool</td>
+<td>Controls whether the drawer is open or closed</td>
+</tr>
+<tr>
+<td><code>AmplitudeSize</code></td>
+<td>double</td>
+<td>Optional override for drawer movement calculation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="drawer-direction">Drawer Direction</h3>
+<p>The <code>Direction</code> property controls the edge from which the drawer appears:</p>
+<pre><code class="lang-xml">&lt;!-- Bottom drawer --&gt;
+&lt;DrawUi:SkiaDrawer
+    Direction=&quot;FromBottom&quot;
+    VerticalOptions=&quot;End&quot;&gt;
+    &lt;!-- Content --&gt;
+&lt;/DrawUi:SkiaDrawer&gt;
+
+&lt;!-- Top drawer --&gt;
+&lt;DrawUi:SkiaDrawer
+    Direction=&quot;FromTop&quot;
+    VerticalOptions=&quot;Start&quot;&gt;
+    &lt;!-- Content --&gt;
+&lt;/DrawUi:SkiaDrawer&gt;
+
+&lt;!-- Left drawer --&gt;
+&lt;DrawUi:SkiaDrawer
+    Direction=&quot;FromLeft&quot;
+    HorizontalOptions=&quot;Start&quot;&gt;
+    &lt;!-- Content --&gt;
+&lt;/DrawUi:SkiaDrawer&gt;
+
+&lt;!-- Right drawer --&gt;
+&lt;DrawUi:SkiaDrawer
+    Direction=&quot;FromRight&quot;
+    HorizontalOptions=&quot;End&quot;&gt;
+    &lt;!-- Content --&gt;
+&lt;/DrawUi:SkiaDrawer&gt;
+</code></pre>
+<p>Note that you should set the appropriate alignment options (<code>VerticalOptions</code> and <code>HorizontalOptions</code>) to match the drawer direction.</p>
+<h3 id="header-and-content">Header and Content</h3>
+<p>The drawer typically consists of two main parts:</p>
+<ul>
+<li><strong>Header</strong>: Remains partially or fully visible when the drawer is closed</li>
+<li><strong>Content</strong>: The main body of the drawer that slides in and out</li>
+</ul>
+<p>The <code>HeaderSize</code> property determines how much of the drawer remains visible when closed.</p>
+<h3 id="programmatic-control">Programmatic Control</h3>
+<p>SkiaDrawer provides multiple ways to control the drawer programmatically through bindable properties and built-in commands.</p>
+<h4 id="bindable-properties">Bindable Properties</h4>
+<p>All key properties support data binding for dynamic control:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaDrawer
+    x:Name=&quot;Drawer&quot;
+    Direction=&quot;FromBottom&quot;
+    HeaderSize=&quot;{Binding DrawerHeaderSize}&quot;
+    HeightRequest=&quot;500&quot;
+    HorizontalOptions=&quot;Fill&quot;
+    IsOpen=&quot;{Binding IsOpen, Mode=TwoWay}&quot;
+    VerticalOptions=&quot;End&quot;&gt;
+    &lt;!-- Content --&gt;
+&lt;/draw:SkiaDrawer&gt;
+</code></pre>
+<p><strong>ViewModel Example:</strong></p>
+<pre><code class="lang-csharp">public class DrawerViewModel : INotifyPropertyChanged
+{
+    private bool _isOpen;
+    private double _drawerHeaderSize = 60;
+
+    public bool IsOpen
+    {
+        get =&gt; _isOpen;
+        set
+        {
+            _isOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public double DrawerHeaderSize
+    {
+        get =&gt; _drawerHeaderSize;
+        set
+        {
+            _drawerHeaderSize = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Toggle drawer from code
+    public void ToggleDrawer()
+    {
+        IsOpen = !IsOpen;
+    }
+}
+</code></pre>
+<h4 id="built-in-commands">Built-in Commands</h4>
+<p>SkiaDrawer provides convenient commands for common operations:</p>
+<pre><code class="lang-xml">&lt;!-- Command buttons --&gt;
+&lt;draw:SkiaButton
+    Text=&quot;Open Drawer&quot;
+    CommandTapped=&quot;{Binding Source={x:Reference Drawer}, Path=CommandOpen}&quot; /&gt;
+
+&lt;draw:SkiaButton
+    Text=&quot;Close Drawer&quot;
+    CommandTapped=&quot;{Binding Source={x:Reference Drawer}, Path=CommandClose}&quot; /&gt;
+
+&lt;draw:SkiaButton
+    Text=&quot;Toggle Drawer&quot;
+    CommandTapped=&quot;{Binding Source={x:Reference Drawer}, Path=CommandToggle}&quot; /&gt;
+</code></pre>
+<p><strong>Available Commands:</strong></p>
+<ul>
+<li><code>CommandOpen</code> - Opens the drawer</li>
+<li><code>CommandClose</code> - Closes the drawer</li>
+<li><code>CommandToggle</code> - Toggles the drawer state</li>
+</ul>
+<h4 id="code-behind-control">Code-Behind Control</h4>
+<p>You can also control the drawer directly from code-behind:</p>
+<pre><code class="lang-csharp">// Direct property access
+Drawer.IsOpen = true;
+Drawer.HeaderSize = 80;
+
+// Using commands
+Drawer.CommandOpen.Execute(null);
+Drawer.CommandClose.Execute(null);
+Drawer.CommandToggle.Execute(null);
+</code></pre>
+<h3 id="skiascroll-inside-skiadrawer-pattern">SkiaScroll inside SkiaDrawer Pattern</h3>
+<p>A common and powerful pattern is embedding a <code>SkiaScroll</code> inside a <code>SkiaDrawer</code>. This allows for scrollable content within the drawer while maintaining proper gesture handling. When the scroll reaches its bounds, the drawer responds to gestures.</p>
+<p><strong>Key Benefits:</strong></p>
+<ul>
+<li>Smooth gesture coordination between scroll and drawer</li>
+<li>Non-bouncing scroll setup allows drawer to respond when scroll reaches limits</li>
+<li>Perfect for content that exceeds drawer height</li>
+</ul>
+<pre><code class="lang-xml">&lt;draw:SkiaDrawer
+    x:Name=&quot;Drawer&quot;
+    Direction=&quot;FromBottom&quot;
+    HeaderSize=&quot;60&quot;
+    HeightRequest=&quot;500&quot;
+    HorizontalOptions=&quot;Fill&quot;
+    IsOpen=&quot;{Binding IsOpen, Mode=TwoWay}&quot;
+    VerticalOptions=&quot;End&quot;&gt;
+
+    &lt;draw:SkiaLayout
+        HorizontalOptions=&quot;Fill&quot;
+        VerticalOptions=&quot;Fill&quot;&gt;
+
+        &lt;!-- Header (drag handle area) --&gt;
+        &lt;draw:SkiaShape
+            BackgroundColor=&quot;Red&quot;
+            CornerRadius=&quot;20,20,0,0&quot;
+            HeightRequest=&quot;60&quot;
+            HorizontalOptions=&quot;Fill&quot;&gt;
+
+            &lt;draw:SkiaLabel
+                Margin=&quot;16,0&quot;
+                FontSize=&quot;14&quot;
+                HorizontalOptions=&quot;Center&quot;
+                Text=&quot;Drag Me&quot;
+                TextColor=&quot;White&quot;
+                VerticalOptions=&quot;Center&quot; /&gt;
+
+        &lt;/draw:SkiaShape&gt;
+
+        &lt;!-- Scrollable content area --&gt;
+        &lt;draw:SkiaScroll
+            AddMarginTop=&quot;60&quot;
+            BackgroundColor=&quot;Gainsboro&quot;
+            Bounces=&quot;False&quot;
+            HorizontalOptions=&quot;Fill&quot;
+            VerticalOptions=&quot;Fill&quot;&gt;
+
+            &lt;draw:SkiaLayout
+                Margin=&quot;2&quot;
+                HorizontalOptions=&quot;Fill&quot;
+                Spacing=&quot;24&quot;
+                Type=&quot;Column&quot;&gt;
+
+                &lt;draw:SkiaLabel
+                    Margin=&quot;24&quot;
+                    HorizontalOptions=&quot;Center&quot;
+                    Text=&quot;A SkiaScroll can be embedded inside a SkiaDrawer, in case of a non-bouncing setup the drawer would respond to gestures and scroll when the internal scroll reaches its bounds.&quot; /&gt;
+
+                &lt;draw:SkiaShape
+                    BackgroundColor=&quot;LightGoldenrodYellow&quot;
+                    HeightRequest=&quot;80&quot;
+                    HorizontalOptions=&quot;Center&quot;
+                    LockRatio=&quot;1&quot;
+                    Type=&quot;Circle&quot; /&gt;
+
+                &lt;draw:SkiaShape
+                    BackgroundColor=&quot;Aquamarine&quot;
+                    HeightRequest=&quot;300&quot;
+                    HorizontalOptions=&quot;Center&quot;
+                    WidthRequest=&quot;50&quot; /&gt;
+
+                &lt;draw:SkiaShape
+                    BackgroundColor=&quot;Goldenrod&quot;
+                    HeightRequest=&quot;80&quot;
+                    HorizontalOptions=&quot;Center&quot;
+                    LockRatio=&quot;1&quot;
+                    Type=&quot;Circle&quot; /&gt;
+
+                &lt;!-- Add more content to demonstrate scrolling --&gt;
+
+            &lt;/draw:SkiaLayout&gt;
+
+        &lt;/draw:SkiaScroll&gt;
+    &lt;/draw:SkiaLayout&gt;
+
+&lt;/draw:SkiaDrawer&gt;
+</code></pre>
+<p><strong>Important Notes:</strong></p>
+<ul>
+<li>Set <code>Bounces=&quot;False&quot;</code> on SkiaScroll for proper gesture coordination</li>
+<li>Use <code>AddMarginTop</code> to account for header space</li>
+<li>The drawer will respond to gestures when scroll reaches its bounds</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="bottom-sheet-with-form">Bottom Sheet with Form</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaDrawer
+    Direction=&quot;FromBottom&quot;
+    HeaderSize=&quot;60&quot;
+    IsOpen=&quot;False&quot;
+    HeightRequest=&quot;400&quot;
+    VerticalOptions=&quot;End&quot;
+    HorizontalOptions=&quot;Fill&quot;&gt;
+    
+    &lt;DrawUi:SkiaLayout&gt;
+        &lt;!-- Header --&gt;
+        &lt;DrawUi:SkiaShape
+            BackgroundColor=&quot;#3498DB&quot;
+            CornerRadius=&quot;20,20,0,0&quot;
+            HeightRequest=&quot;60&quot;&gt;
+            
+            &lt;DrawUi:SkiaLayout
+                HorizontalOptions=&quot;Fill&quot;
+                VerticalOptions=&quot;Fill&quot;&gt;
+                
+                &lt;DrawUi:SkiaLabel
+                    Text=&quot;Settings&quot;
+                    TextColor=&quot;White&quot;
+                    FontSize=&quot;18&quot;
+                    HorizontalOptions=&quot;Center&quot;
+                    VerticalOptions=&quot;Center&quot; /&gt;
+                    
+                &lt;DrawUi:SkiaShape
+                    Type=&quot;Rectangle&quot;
+                    WidthRequest=&quot;40&quot;
+                    HeightRequest=&quot;4&quot;
+                    CornerRadius=&quot;2&quot;
+                    BackgroundColor=&quot;White&quot;
+                    Margin=&quot;0,10,0,0&quot;
+                    HorizontalOptions=&quot;Center&quot;
+                    VerticalOptions=&quot;Start&quot; /&gt;
+                    
+            &lt;/DrawUi:SkiaLayout&gt;
+            
+        &lt;/DrawUi:SkiaShape&gt;
+        
+        &lt;!-- Content --&gt;
+        &lt;DrawUi:SkiaScroll
+            AddMarginTop=&quot;60&quot;
+            BackgroundColor=&quot;White&quot;&gt;
+            
+            &lt;DrawUi:SkiaLayout
+                Type=&quot;Column&quot;
+                Padding=&quot;20&quot;
+                Spacing=&quot;16&quot;&gt;
+                
+                &lt;!-- Form fields --&gt;
+                &lt;DrawUi:SkiaLabel
+                    Text=&quot;Username&quot;
+                    FontSize=&quot;14&quot;
+                    TextColor=&quot;#333333&quot; /&gt;
+                    
+                &lt;DrawUi:SkiaMauiEntry
+                    PlaceholderText=&quot;Enter your username&quot;
+                    HeightRequest=&quot;50&quot;
+                    BackgroundColor=&quot;#F5F5F5&quot;
+                    TextColor=&quot;#333333&quot; /&gt;
+                    
+                &lt;DrawUi:SkiaLabel
+                    Text=&quot;Email&quot;
+                    FontSize=&quot;14&quot;
+                    TextColor=&quot;#333333&quot; /&gt;
+                    
+                &lt;DrawUi:SkiaMauiEntry
+                    PlaceholderText=&quot;Enter your email&quot;
+                    HeightRequest=&quot;50&quot;
+                    BackgroundColor=&quot;#F5F5F5&quot;
+                    TextColor=&quot;#333333&quot; /&gt;
+                    
+                &lt;DrawUi:SkiaButton
+                    Text=&quot;SAVE&quot;
+                    BackgroundColor=&quot;#2ECC71&quot;
+                    TextColor=&quot;White&quot;
+                    HeightRequest=&quot;50&quot;
+                    Margin=&quot;0,20,0,0&quot; /&gt;
+                    
+            &lt;/DrawUi:SkiaLayout&gt;
+            
+        &lt;/DrawUi:SkiaScroll&gt;
+    &lt;/DrawUi:SkiaLayout&gt;
+    
+&lt;/DrawUi:SkiaDrawer&gt;
+</code></pre>
+<h3 id="navigation-drawer">Navigation Drawer</h3>
+<pre><code class="lang-xml">&lt;Grid&gt;
+    &lt;!-- Main content --&gt;
+    &lt;DrawUi:Canvas
+        HorizontalOptions=&quot;Fill&quot;
+        VerticalOptions=&quot;Fill&quot;&gt;
+        
+        &lt;DrawUi:SkiaLayout
+            BackgroundColor=&quot;White&quot;
+            HorizontalOptions=&quot;Fill&quot;
+            VerticalOptions=&quot;Fill&quot;&gt;
+            
+            &lt;!-- Main app content here --&gt;
+            
+            &lt;DrawUi:SkiaButton
+                Text=&quot;Open Menu&quot;
+                CommandTapped=&quot;{Binding Source={x:Reference SideDrawer}, Path=CommandOpen}&quot;
+                HorizontalOptions=&quot;Start&quot;
+                VerticalOptions=&quot;Start&quot;
+                Margin=&quot;20&quot; /&gt;
+                
+        &lt;/DrawUi:SkiaLayout&gt;
+        
+    &lt;/DrawUi:Canvas&gt;
+    
+    &lt;!-- Left side drawer --&gt;
+    &lt;DrawUi:SkiaDrawer
+        x:Name=&quot;SideDrawer&quot;
+        Direction=&quot;FromLeft&quot;
+        HeaderSize=&quot;0&quot;
+        IsOpen=&quot;False&quot;
+        WidthRequest=&quot;280&quot;
+        HorizontalOptions=&quot;Start&quot;
+        VerticalOptions=&quot;Fill&quot;&gt;
+        
+        &lt;DrawUi:SkiaLayout
+            BackgroundColor=&quot;#2C3E50&quot;
+            HorizontalOptions=&quot;Fill&quot;
+            VerticalOptions=&quot;Fill&quot;&gt;
+            
+            &lt;DrawUi:SkiaScroll&gt;
+                &lt;DrawUi:SkiaLayout
+                    Type=&quot;Column&quot;
+                    Padding=&quot;0,40,0,0&quot;&gt;
+                    
+                    &lt;!-- User info --&gt;
+                    &lt;DrawUi:SkiaLayout
+                        Type=&quot;Column&quot;
+                        Padding=&quot;20&quot;
+                        Spacing=&quot;8&quot;&gt;
+                        
+                        &lt;DrawUi:SkiaShape
+                            Type=&quot;Circle&quot;
+                            WidthRequest=&quot;80&quot;
+                            HeightRequest=&quot;80&quot;
+                            BackgroundColor=&quot;#3498DB&quot;&gt;
+                            
+                            &lt;DrawUi:SkiaLabel
+                                Text=&quot;JD&quot;
+                                FontSize=&quot;36&quot;
+                                TextColor=&quot;White&quot;
+                                HorizontalOptions=&quot;Center&quot;
+                                VerticalOptions=&quot;Center&quot; /&gt;
+                                
+                        &lt;/DrawUi:SkiaShape&gt;
+                        
+                        &lt;DrawUi:SkiaLabel
+                            Text=&quot;John Doe&quot;
+                            FontSize=&quot;18&quot;
+                            TextColor=&quot;White&quot;
+                            Margin=&quot;0,10,0,0&quot; /&gt;
+                            
+                        &lt;DrawUi:SkiaLabel
+                            Text=&quot;john.doe@example.com&quot;
+                            FontSize=&quot;14&quot;
+                            TextColor=&quot;#BBBBBB&quot; /&gt;
+                            
+                    &lt;/DrawUi:SkiaLayout&gt;
+                    
+                    &lt;!-- Menu items --&gt;
+                    &lt;DrawUi:SkiaShape
+                        Type=&quot;Rectangle&quot;
+                        HeightRequest=&quot;1&quot;
+                        BackgroundColor=&quot;#405060&quot;
+                        Margin=&quot;0,20,0,20&quot; /&gt;
+                        
+                    &lt;!-- Menu item 1 --&gt;
+                    &lt;DrawUi:SkiaHotspot Tapped=&quot;OnMenuItemTapped&quot;&gt;
+                        &lt;DrawUi:SkiaLayout
+                            Type=&quot;Row&quot;
+                            Padding=&quot;20,15&quot;
+                            Spacing=&quot;16&quot;&gt;
+                            
+                            &lt;DrawUi:SkiaShape
+                                Type=&quot;Rectangle&quot;
+                                WidthRequest=&quot;24&quot;
+                                HeightRequest=&quot;24&quot;
+                                BackgroundColor=&quot;#3498DB&quot; /&gt;
+                                
+                            &lt;DrawUi:SkiaLabel
+                                Text=&quot;Home&quot;
+                                FontSize=&quot;16&quot;
+                                TextColor=&quot;White&quot; /&gt;
+                                
+                        &lt;/DrawUi:SkiaLayout&gt;
+                    &lt;/DrawUi:SkiaHotspot&gt;
+                    
+                    &lt;!-- Additional menu items --&gt;
+                    
+                &lt;/DrawUi:SkiaLayout&gt;
+            &lt;/DrawUi:SkiaScroll&gt;
+            
+        &lt;/DrawUi:SkiaLayout&gt;
+        
+    &lt;/DrawUi:SkiaDrawer&gt;
+&lt;/Grid&gt;
+</code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<ul>
+<li>For complex drawers, consider using <code>Cache=&quot;Operations&quot;</code> on content that doesn't change often</li>
+<li>Use appropriate header size to ensure smooth gestures in the grabbable area</li>
+<li>For large drawers with many child elements, enable virtualization in nested scrolling content</li>
+<li>Avoid doing heavy work in <code>IsOpen</code> change handlers as this can cause animation stuttering</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/drawers.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

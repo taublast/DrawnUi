@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>News Feed Tutorial: One Cell to Rule Them All | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="News Feed Tutorial: One Cell to Rule Them All | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/news-feed-tutorial.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="news-feed-tutorial-one-cell-to-rule-them-all">News Feed Tutorial: One Cell to Rule Them All</h1>
+
+<p>Building a news feed with mixed content types (text posts, images, videos, articles, ads) is a common requirement. With DrawnUI, you get the freedom to <strong>just draw what you need</strong> using one smart cell that adapts to any content type.</p>
+<h2 id="the-drawnui-way-one-universal-cell">The DrawnUI Way: One Universal Cell</h2>
+<p>With DrawnUI, we use one smart cell that simply shows or hides elements based on content type, not using any <code>DataTemplateSelector</code>. All recycling and height calculation happens automatically:</p>
+<h3 id="1-define-content-types">1. Define Content Types</h3>
+<pre><code class="lang-csharp">public enum NewsType
+{
+    Text,
+    Image, 
+    Video,
+    Article,
+    Ad
+}
+
+public class NewsItem
+{
+    public NewsType Type { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public string ImageUrl { get; set; }
+    public string VideoUrl { get; set; }
+    public string ArticleUrl { get; set; }
+    public string AuthorName { get; set; }
+    public DateTime PublishedAt { get; set; }
+    public int LikesCount { get; set; }
+    public int CommentsCount { get; set; }
+}
+</code></pre>
+<h3 id="2-create-a-universal-cell">2. Create A Universal Cell</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaDynamicDrawnCell
+    x:Class=&quot;YourApp.Views.NewsCell&quot;
+    BackgroundColor=&quot;White&quot;
+    Margin=&quot;0,4&quot;
+    Padding=&quot;16&quot;&gt;
+    
+    &lt;draw:SkiaLayout Type=&quot;Column&quot; Spacing=&quot;12&quot;&gt;
+        
+        &lt;!-- Author Header --&gt;
+        &lt;draw:SkiaLayout Type=&quot;Row&quot; Spacing=&quot;8&quot; HorizontalOptions=&quot;Fill&quot;&gt;
+            &lt;draw:SkiaShape
+                x:Name=&quot;AvatarFrame&quot;
+                Type=&quot;Circle&quot;
+                WidthRequest=&quot;40&quot;
+                HeightRequest=&quot;40&quot;
+                Fill=&quot;LightGray&quot; /&gt;
+                
+            &lt;draw:SkiaLayout Type=&quot;Column&quot; HorizontalOptions=&quot;Fill&quot;&gt;
+                &lt;draw:SkiaLabel
+                    x:Name=&quot;AuthorLabel&quot;
+                    FontSize=&quot;14&quot;
+                    FontWeight=&quot;Bold&quot;
+                    TextColor=&quot;Black&quot; /&gt;
+                &lt;draw:SkiaLabel
+                    x:Name=&quot;TimeLabel&quot;
+                    FontSize=&quot;12&quot;
+                    TextColor=&quot;Gray&quot; /&gt;
+            &lt;/draw:SkiaLayout&gt;
+        &lt;/draw:SkiaLayout&gt;
+        
+        &lt;!-- Content Title --&gt;
+        &lt;draw:SkiaLabel
+            x:Name=&quot;TitleLabel&quot;
+            FontSize=&quot;16&quot;
+            FontWeight=&quot;Bold&quot;
+            TextColor=&quot;Black&quot;
+            IsVisible=&quot;False&quot; /&gt;
+            
+        &lt;!-- Text Content --&gt;
+        &lt;draw:SkiaLabel
+            x:Name=&quot;ContentLabel&quot;
+            FontSize=&quot;14&quot;
+            TextColor=&quot;#333&quot;
+            LineBreakMode=&quot;WordWrap&quot;
+            IsVisible=&quot;False&quot; /&gt;
+            
+        &lt;!-- Image Content --&gt;
+        &lt;draw:SkiaImage
+            x:Name=&quot;ContentImage&quot;
+            CornerRadius=&quot;8&quot;
+            Aspect=&quot;AspectFill&quot;
+            HeightRequest=&quot;200&quot;
+            IsVisible=&quot;False&quot; /&gt;
+            
+        &lt;!-- Video Thumbnail with Play Button --&gt;
+        &lt;draw:SkiaLayout
+            x:Name=&quot;VideoLayout&quot;
+            Type=&quot;Absolute&quot;
+            HeightRequest=&quot;200&quot;
+            IsVisible=&quot;False&quot;&gt;
+            
+            &lt;draw:SkiaImage
+                x:Name=&quot;VideoThumbnail&quot;
+                CornerRadius=&quot;8&quot;
+                Aspect=&quot;AspectFill&quot;
+                HorizontalOptions=&quot;Fill&quot;
+                VerticalOptions=&quot;Fill&quot; /&gt;
+                
+            &lt;draw:SkiaShape
+                Type=&quot;Circle&quot;
+                WidthRequest=&quot;60&quot;
+                HeightRequest=&quot;60&quot;
+                Fill=&quot;Black&quot;
+                Opacity=&quot;0.7&quot;
+                HorizontalOptions=&quot;Center&quot;
+                VerticalOptions=&quot;Center&quot;&gt;
+                &lt;draw:SkiaShape.Shadow&gt;
+                    &lt;draw:SkiaShadow Color=&quot;Black&quot; BlurRadius=&quot;10&quot; /&gt;
+                &lt;/draw:SkiaShape.Shadow&gt;
+            &lt;/draw:SkiaShape&gt;
+            
+            &lt;draw:SkiaSvg
+                Source=&quot;play_icon.svg&quot;
+                WidthRequest=&quot;24&quot;
+                HeightRequest=&quot;24&quot;
+                TintColor=&quot;White&quot;
+                HorizontalOptions=&quot;Center&quot;
+                VerticalOptions=&quot;Center&quot; /&gt;
+        &lt;/draw:SkiaLayout&gt;
+        
+        &lt;!-- Article Preview --&gt;
+        &lt;draw:SkiaLayout
+            x:Name=&quot;ArticleLayout&quot;
+            Type=&quot;Row&quot;
+            Spacing=&quot;12&quot;
+            IsVisible=&quot;False&quot;&gt;
+            
+            &lt;draw:SkiaImage
+                x:Name=&quot;ArticleThumbnail&quot;
+                WidthRequest=&quot;80&quot;
+                HeightRequest=&quot;80&quot;
+                CornerRadius=&quot;4&quot;
+                Aspect=&quot;AspectFill&quot; /&gt;
+                
+            &lt;draw:SkiaLayout Type=&quot;Column&quot; HorizontalOptions=&quot;Fill&quot;&gt;
+                &lt;draw:SkiaLabel
+                    x:Name=&quot;ArticleTitle&quot;
+                    FontSize=&quot;14&quot;
+                    FontWeight=&quot;Bold&quot;
+                    TextColor=&quot;Black&quot;
+                    LineBreakMode=&quot;TailTruncation&quot;
+                    MaxLines=&quot;2&quot; /&gt;
+                &lt;draw:SkiaLabel
+                    x:Name=&quot;ArticleDescription&quot;
+                    FontSize=&quot;12&quot;
+                    TextColor=&quot;Gray&quot;
+                    LineBreakMode=&quot;TailTruncation&quot;
+                    MaxLines=&quot;3&quot; /&gt;
+            &lt;/draw:SkiaLayout&gt;
+        &lt;/draw:SkiaLayout&gt;
+        
+        &lt;!-- Ad Content --&gt;
+        &lt;draw:SkiaLayout
+            x:Name=&quot;AdLayout&quot;
+            Type=&quot;Column&quot;
+            Spacing=&quot;8&quot;
+            IsVisible=&quot;False&quot;&gt;
+            
+            &lt;draw:SkiaLabel
+                Text=&quot;Sponsored&quot;
+                FontSize=&quot;10&quot;
+                TextColor=&quot;Gray&quot;
+                HorizontalOptions=&quot;End&quot; /&gt;
+                
+            &lt;draw:SkiaImage
+                x:Name=&quot;AdImage&quot;
+                CornerRadius=&quot;8&quot;
+                Aspect=&quot;AspectFill&quot;
+                HeightRequest=&quot;150&quot; /&gt;
+                
+            &lt;draw:SkiaLabel
+                x:Name=&quot;AdTitle&quot;
+                FontSize=&quot;14&quot;
+                FontWeight=&quot;Bold&quot;
+                TextColor=&quot;Black&quot; /&gt;
+        &lt;/draw:SkiaLayout&gt;
+        
+        &lt;!-- Interaction Bar --&gt;
+        &lt;draw:SkiaLayout Type=&quot;Row&quot; Spacing=&quot;16&quot; HorizontalOptions=&quot;Fill&quot;&gt;
+            &lt;draw:SkiaButton
+                x:Name=&quot;LikeButton&quot;
+                Text=&quot;👍&quot;
+                BackgroundColor=&quot;Transparent&quot;
+                TextColor=&quot;Gray&quot;
+                FontSize=&quot;14&quot; /&gt;
+                
+            &lt;draw:SkiaButton
+                x:Name=&quot;CommentButton&quot;
+                Text=&quot;💬&quot;
+                BackgroundColor=&quot;Transparent&quot;
+                TextColor=&quot;Gray&quot;
+                FontSize=&quot;14&quot; /&gt;
+                
+            &lt;draw:SkiaButton
+                x:Name=&quot;ShareButton&quot;
+                Text=&quot;📤&quot;
+                BackgroundColor=&quot;Transparent&quot;
+                TextColor=&quot;Gray&quot;
+                FontSize=&quot;14&quot;
+                HorizontalOptions=&quot;End&quot; /&gt;
+        &lt;/draw:SkiaLayout&gt;
+        
+    &lt;/draw:SkiaLayout&gt;
+&lt;/draw:SkiaDynamicDrawnCell&gt;
+</code></pre>
+<h3 id="3-smart-cell-logic---content-driven-behavior">3. Smart Cell Logic - Content-Driven Behavior</h3>
+<pre><code class="lang-csharp">public partial class NewsCell : SkiaDynamicDrawnCell
+{
+    public NewsCell()
+    {
+        InitializeComponent();
+    }
+
+    protected override void OnItemSet()
+    {
+        base.OnItemSet();
+        
+        if (ItemData is NewsItem news)
+        {
+            ConfigureForContentType(news);
+        }
+    }
+
+    private void ConfigureForContentType(NewsItem news)
+    {
+        // Reset all content visibility
+        HideAllContent();
+        
+        // Configure common elements
+        AuthorLabel.Text = news.AuthorName;
+        TimeLabel.Text = GetRelativeTime(news.PublishedAt);
+        LikeButton.Text = $&quot;👍 {news.LikesCount}&quot;;
+        CommentButton.Text = $&quot;💬 {news.CommentsCount}&quot;;
+        
+        // Configure based on content type
+        switch (news.Type)
+        {
+            case NewsType.Text:
+                ConfigureTextPost(news);
+                break;
+                
+            case NewsType.Image:
+                ConfigureImagePost(news);
+                break;
+                
+            case NewsType.Video:
+                ConfigureVideoPost(news);
+                break;
+                
+            case NewsType.Article:
+                ConfigureArticlePost(news);
+                break;
+                
+            case NewsType.Ad:
+                ConfigureAdPost(news);
+                break;
+        }
+    }
+
+    private void HideAllContent()
+    {
+        TitleLabel.IsVisible = false;
+        ContentLabel.IsVisible = false;
+        ContentImage.IsVisible = false;
+        VideoLayout.IsVisible = false;
+        ArticleLayout.IsVisible = false;
+        AdLayout.IsVisible = false;
+    }
+
+    private void ConfigureTextPost(NewsItem news)
+    {
+        if (!string.IsNullOrEmpty(news.Title))
+        {
+            TitleLabel.Text = news.Title;
+            TitleLabel.IsVisible = true;
+        }
+        
+        ContentLabel.Text = news.Content;
+        ContentLabel.IsVisible = true;
+    }
+
+    private void ConfigureImagePost(NewsItem news)
+    {
+        ContentImage.Source = news.ImageUrl;
+        ContentImage.IsVisible = true;
+        
+        if (!string.IsNullOrEmpty(news.Content))
+        {
+            ContentLabel.Text = news.Content;
+            ContentLabel.IsVisible = true;
+        }
+    }
+
+    private void ConfigureVideoPost(NewsItem news)
+    {
+        VideoThumbnail.Source = ExtractVideoThumbnail(news.VideoUrl);
+        VideoLayout.IsVisible = true;
+        
+        if (!string.IsNullOrEmpty(news.Content))
+        {
+            ContentLabel.Text = news.Content;
+            ContentLabel.IsVisible = true;
+        }
+    }
+
+    private void ConfigureArticlePost(NewsItem news)
+    {
+        ArticleThumbnail.Source = news.ImageUrl;
+        ArticleTitle.Text = news.Title;
+        ArticleDescription.Text = news.Content;
+        ArticleLayout.IsVisible = true;
+    }
+
+    private void ConfigureAdPost(NewsItem news)
+    {
+        AdImage.Source = news.ImageUrl;
+        AdTitle.Text = news.Title;
+        AdLayout.IsVisible = true;
+    }
+
+    private string GetRelativeTime(DateTime publishedAt)
+    {
+        var delta = DateTime.Now - publishedAt;
+        return delta.TotalDays &gt;= 1 
+            ? publishedAt.ToString(&quot;MMM dd&quot;)
+            : delta.TotalHours &gt;= 1 
+                ? $&quot;{(int)delta.TotalHours}h&quot;
+                : $&quot;{(int)delta.TotalMinutes}m&quot;;
+    }
+
+    private string ExtractVideoThumbnail(string videoUrl)
+    {
+        // Extract thumbnail from video URL or use placeholder
+        return &quot;video_placeholder.jpg&quot;;
+    }
+}
+</code></pre>
+<h3 id="4-real-internet-images-data-provider">4. Real Internet Images Data Provider</h3>
+<pre><code class="lang-csharp">// Services/NewsDataProvider.cs
+public class NewsDataProvider
+{
+    private static Random random = new Random();
+    private long index = 0;
+    
+    private static string[] authorNames = new string[]
+    {
+        &quot;Alex Chen&quot;, &quot;Sarah Williams&quot;, &quot;Mike Johnson&quot;, &quot;Emma Davis&quot;, &quot;Chris Brown&quot;,
+        &quot;Lisa Martinez&quot;, &quot;David Wilson&quot;, &quot;Amy Garcia&quot;, &quot;Tom Anderson&quot;, &quot;Maya Patel&quot;
+    };
+    
+    private static string[] postTexts = new string[]
+    {
+        &quot;Just finished an amazing project! 🚀 Feeling accomplished and ready for the next challenge.&quot;,
+        &quot;Beautiful morning coffee and some deep thoughts about technology's future ☕️&quot;,
+        &quot;Working on something exciting. Can't wait to share it with everyone soon! 🎉&quot;,
+        &quot;Loved this book recommendation from a friend. Anyone else read it? 📚&quot;,
+        &quot;Amazing sunset from my balcony today. Nature never fails to inspire 🌅&quot;
+    };
+    
+    private static string[] articleTitles = new string[]
+    {
+        &quot;Breaking: Revolutionary AI Technology Unveiled&quot;,
+        &quot;Climate Scientists Make Groundbreaking Discovery&quot;,
+        &quot;Tech Giants Announce Major Collaboration&quot;, 
+        &quot;New Study Reveals Surprising Health Benefits&quot;,
+        &quot;Space Mission Returns with Fascinating Data&quot;
+    };
+    
+    private static string[] articleDescriptions = new string[]
+    {
+        &quot;Researchers have developed a new method that could change everything we know...&quot;,
+        &quot;The implications of this discovery could reshape our understanding of...&quot;,
+        &quot;Industry experts are calling this the most significant development in...&quot;,
+        &quot;Scientists from leading universities collaborated to uncover...&quot;,
+        &quot;This breakthrough opens up possibilities that were previously unimaginable...&quot;
+    };
+
+    public List&lt;NewsItem&gt; GetNewsFeed(int count)
+    {
+        var items = new List&lt;NewsItem&gt;();
+        
+        for (int i = 0; i &lt; count; i++)
+        {
+            index++;
+            var newsType = GetRandomNewsType();
+            
+            var item = new NewsItem
+            {
+                Id = index,
+                Type = newsType,
+                AuthorName = GetRandomAuthor(),
+                PublishedAt = DateTime.Now.AddMinutes(-random.Next(1, 1440)) // Random time within last day
+            };
+            
+            ConfigureItemByType(item);
+            items.Add(item);
+        }
+        
+        return items;
+    }
+    
+    private void ConfigureItemByType(NewsItem item)
+    {
+        switch (item.Type)
+        {
+            case NewsType.Text:
+                item.Content = postTexts[random.Next(postTexts.Length)];
+                break;
+                
+            case NewsType.Image:
+                item.Content = postTexts[random.Next(postTexts.Length)];
+                // High-quality random images from Picsum
+                item.ImageUrl = $&quot;https://picsum.photos/seed/{index}/600/400&quot;;
+                break;
+                
+            case NewsType.Video:
+                item.Title = &quot;Amazing Video Content&quot;;
+                item.Content = &quot;Check out this incredible footage!&quot;;
+                // Video thumbnail from Picsum
+                item.VideoUrl = $&quot;https://picsum.photos/seed/{index}/600/400&quot;;
+                break;
+                
+            case NewsType.Article:
+                item.Title = articleTitles[random.Next(articleTitles.Length)];
+                item.Content = articleDescriptions[random.Next(articleDescriptions.Length)];
+                item.ImageUrl = $&quot;https://picsum.photos/seed/{index}/400/300&quot;;
+                item.ArticleUrl = &quot;https://example.com/article&quot;;
+                break;
+                
+            case NewsType.Ad:
+                item.Title = &quot;Special Offer - Don't Miss Out!&quot;;
+                item.Content = &quot;Limited time offer on premium features&quot;;
+                item.ImageUrl = $&quot;https://picsum.photos/seed/{index}/600/200&quot;;
+                break;
+        }
+        
+        // Random engagement numbers
+        item.LikesCount = random.Next(0, 1000);
+        item.CommentsCount = random.Next(0, 150);
+    }
+    
+    private NewsType GetRandomNewsType()
+    {
+        // Weighted distribution for realistic feed
+        var typeWeights = new (NewsType type, int weight)[]
+        {
+            (NewsType.Text, 30),    // 30% text posts
+            (NewsType.Image, 40),   // 40% image posts  
+            (NewsType.Video, 15),   // 15% videos
+            (NewsType.Article, 10), // 10% articles
+            (NewsType.Ad, 5)        // 5% ads
+        };
+        
+        var totalWeight = typeWeights.Sum(x =&gt; x.weight);
+        var randomValue = random.Next(totalWeight);
+        
+        var currentWeight = 0;
+        foreach (var (type, weight) in typeWeights)
+        {
+            currentWeight += weight;
+            if (randomValue &lt; currentWeight)
+                return type;
+        }
+        
+        return NewsType.Text;
+    }
+    
+    private string GetRandomAuthor()
+    {
+        return authorNames[random.Next(authorNames.Length)];
+    }
+}
+</code></pre>
+<h3 id="5-feed-implementation-with-real-data-and-image-preloading">5. Feed Implementation with Real Data and Image Preloading</h3>
+<pre><code class="lang-xml">&lt;!-- MainPage.xaml --&gt;
+&lt;draw:Canvas&gt;
+    &lt;draw:SkiaScroll
+        x:Name=&quot;NewsScroll&quot;
+        Orientation=&quot;Vertical&quot;
+        RefreshCommand=&quot;{Binding RefreshCommand}&quot;
+        LoadMoreCommand=&quot;{Binding LoadMoreCommand}&quot;
+        LoadMoreOffset=&quot;200&quot;
+        RefreshEnabled=&quot;True&quot;
+        HorizontalOptions=&quot;Fill&quot;
+        VerticalOptions=&quot;Fill&quot;&gt;
+        
+        &lt;!-- Dynamic height cells using SkiaLayout with ItemTemplate --&gt;
+        &lt;draw:SkiaLayout
+            x:Name=&quot;NewsStack&quot;
+            Type=&quot;Column&quot;
+            ItemsSource=&quot;{Binding NewsItems}&quot;
+            ItemTemplate=&quot;{x:Type views:NewsCell}&quot;
+            Spacing=&quot;8&quot;
+            HorizontalOptions=&quot;Fill&quot; /&gt;
+            
+    &lt;/draw:SkiaScroll&gt;
+&lt;/draw:Canvas&gt;
+</code></pre>
+<pre><code class="lang-csharp">// NewsViewModel.cs
+public class NewsViewModel : BaseViewModel
+{
+    private readonly NewsDataProvider _dataProvider;
+    private CancellationTokenSource _preloadCancellation;
+    
+    public NewsViewModel()
+    {
+        _dataProvider = new NewsDataProvider();
+        NewsItems = new ObservableRangeCollection&lt;NewsItem&gt;();
+        
+        RefreshCommand = new Command(async () =&gt; await RefreshFeed());
+        LoadMoreCommand = new Command(async () =&gt; await LoadMore());
+        
+        // Load initial data
+        _ = RefreshFeed();
+    }
+    
+    public ObservableRangeCollection&lt;NewsItem&gt; NewsItems { get; }
+    
+    public ICommand RefreshCommand { get; }
+    public ICommand LoadMoreCommand { get; }
+    
+    private async Task RefreshFeed()
+    {
+        if (IsBusy) return;
+        
+        IsBusy = true;
+        
+        try
+        {
+            // Cancel previous preloading
+            _preloadCancellation?.Cancel();
+            
+            // Generate fresh content
+            var newItems = _dataProvider.GetNewsFeed(20);
+            
+            // Preload images in background (DrawnUI's SkiaImageManager)
+            _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            _ = PreloadImages(newItems, _preloadCancellation.Token);
+            
+            // Update UI
+            MainThread.BeginInvokeOnMainThread(() =&gt;
+            {
+                NewsItems.Clear();
+                NewsItems.AddRange(newItems);
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($&quot;Error refreshing feed: {ex.Message}&quot;);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+    
+    private async Task LoadMore()
+    {
+        if (IsBusy) return;
+        
+        IsBusy = true;
+        
+        try
+        {
+            var newItems = _dataProvider.GetNewsFeed(15);
+            
+            // Preload new images
+            _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            _ = PreloadImages(newItems, _preloadCancellation.Token);
+            
+            MainThread.BeginInvokeOnMainThread(() =&gt;
+            {
+                NewsItems.AddRange(newItems);
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($&quot;Error loading more: {ex.Message}&quot;);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+    
+    private async Task PreloadImages(List&lt;NewsItem&gt; items, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var imageUrls = items
+                .Where(x =&gt; !string.IsNullOrEmpty(x.ImageUrl))
+                .Select(x =&gt; x.ImageUrl)
+                .ToList();
+                
+            // Use DrawnUI's image manager for efficient preloading
+            await SkiaImageManager.Instance.PreloadImages(imageUrls, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected when cancelled
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($&quot;Error preloading images: {ex.Message}&quot;);
+        }
+    }
+}
+
+// MainPage.xaml.cs
+public partial class MainPage : ContentPage
+{
+    public MainPage()
+    {
+        InitializeComponent();
+        BindingContext = new NewsViewModel();
+    }
+}
+</code></pre>
+<h2 id="key-advantages">Key Advantages</h2>
+<h3 id="1-perfect-recycling">1. <strong>Perfect Recycling</strong></h3>
+<ul>
+<li>Single cell type = maximum recycling efficiency</li>
+<li>No template switching overhead</li>
+<li>Consistent memory usage</li>
+</ul>
+<h3 id="2-dynamic-height-calculation">2. <strong>Dynamic Height Calculation</strong></h3>
+<p>DrawnUI automatically calculates heights based on visible content:</p>
+<pre><code class="lang-csharp">// Height adjusts automatically based on:
+// - Visible content elements (some hidden, some shown)
+// - Text wrapping and line counts
+// - Image aspect ratios and sizes
+// - Content type variations
+// - No manual height calculations needed!
+
+// Example: Text post = ~120dp, Image post = ~320dp, Video = ~320dp, Article = ~180dp
+// All calculated automatically by the layout system
+</code></pre>
+<h3 id="3-simplified-maintenance">3. <strong>Simplified Maintenance</strong></h3>
+<ul>
+<li>One cell to maintain vs 5+ templates</li>
+<li>Consistent styling across all content types</li>
+<li>Easy to add new content types</li>
+</ul>
+<h3 id="4-performance-benefits">4. <strong>Performance Benefits</strong></h3>
+<ul>
+<li>Efficient SkiaSharp rendering with hardware acceleration</li>
+<li>Real internet image loading with background preloading</li>
+<li>Minimal GC pressure during scrolling (no allocations in hot path)</li>
+<li>Perfect cell recycling = consistent 60fps scrolling</li>
+</ul>
+<h3 id="5-real-world-ready">5. <strong>Real-World Ready</strong></h3>
+<ul>
+<li>Uses <code>https://picsum.photos/</code> for high-quality random images</li>
+<li>Includes <code>SkiaImageManager.Instance.PreloadImages()</code> for smooth scrolling</li>
+<li>Pull-to-refresh and infinite scrolling support</li>
+<li>Realistic weighted content distribution (40% images, 30% text, etc.)</li>
+</ul>
+<h2 id="conclusion-just-draw-what-you-want">Conclusion: Just Draw What You Want</h2>
+<p>DrawnUI gives you the freedom to <strong>just draw what you need</strong>. One cell handles everything:</p>
+<ul>
+<li><strong>One universal cell</strong> that adapts to any content type</li>
+<li><strong>Real internet images</strong> loaded efficiently with preloading</li>
+<li><strong>Automatic height calculation</strong> without manual measurement</li>
+<li><strong>Seamless recycling</strong> handled automatically</li>
+<li><strong>Consistent styling</strong> across all content types</li>
+<li><strong>Smooth scrolling</strong> even with dynamic heights</li>
+</ul>
+<p>Adding a new content type? Simply add an enum value and a configuration method. No new templates needed.</p>
+<p>The result? A smooth, efficient news feed that loads real images from the internet and gives you the freedom to just draw what you want. 🚀</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/news-feed-tutorial.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

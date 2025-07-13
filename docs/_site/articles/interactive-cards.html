@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interactive Cards Tutorial | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interactive Cards Tutorial | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/interactive-cards.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="interactive-cards-tutorial">Interactive Cards Tutorial</h1>
+
+<p>Ready for something <strong>impressive</strong>? Let's build an animated, interactive card gallery that showcases the true power of DrawnUI! You'll create smooth animations, beautiful visual effects, and responsive touch interactions - all with better performance than native controls.</p>
+<p>This example is using XAML! If you want to see how to do the same in code, check out the <a href="interactive-cards-code.md">Cards with C#</a> version of this article.</p>
+<blockquote>
+<p>💡 <strong>Prerequisites</strong>: Complete <a href="first-app.html">Your First DrawnUI App</a> before starting this tutorial.</p>
+</blockquote>
+<h2 id="what-were-building">What We're Building</h2>
+<p>An interactive card gallery featuring:</p>
+<ul>
+<li>🎨 <strong>Beautiful gradient cards</strong> with unicode text, controls and gradients</li>
+<li>✨ <strong>Smooth animations</strong> (scale, rotation, color changing)</li>
+<li>👆 <strong>Gesture interactions</strong> (tap, pan)</li>
+<li>💫 <strong>Visual effects</strong> for shadows and glow</li>
+</ul>
+<img src="../images/cards.png" alt="Interactive Cards Demo" width="350" style="margin-top: 16px;">
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><strong>.NET 9</strong> or later</li>
+<li><strong>MAUI 9.0.70+</strong></li>
+<li><strong>Visual Studio 2022</strong> or <strong>VS Code</strong> with MAUI extension</li>
+</ul>
+<h2 id="step-1-create--setup-project">Step 1: Create &amp; Setup Project</h2>
+<h3 id="create-new-maui-project">Create New MAUI Project</h3>
+<pre><code class="lang-bash">dotnet new maui -n InteractiveCardsTutorial
+cd InteractiveCardsTutorial
+</code></pre>
+<h3 id="add-drawnui-package">Add DrawnUI Package</h3>
+<pre><code class="lang-bash">dotnet add package DrawnUi.Maui
+</code></pre>
+<h3 id="initialize-drawnui-in-mauiprogramcs">Initialize DrawnUI in MauiProgram.cs</h3>
+<p>Replace your <code>MauiProgram.cs</code> with this enhanced setup:</p>
+<pre><code class="lang-csharp">using DrawnUi.Maui.Infrastructure;
+
+public static class MauiProgram
+{
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp&lt;App&gt;()
+            .UseDrawnUi(new DrawnUiStartupSettings
+            {
+                UseDesktopKeyboard = true,
+                DesktopWindow = new()
+                {
+                    Width = 400,
+                    Height = 700
+                }
+            })
+            .ConfigureFonts(fonts =&gt;
+            {
+                fonts.AddFont(&quot;OpenSans-Regular.ttf&quot;, &quot;FontText&quot;);
+                fonts.AddFont(&quot;OpenSans-Semibold.ttf&quot;, &quot;FontSemibold&quot;);
+            });
+
+        return builder.Build();
+    }
+}
+</code></pre>
+<blockquote>
+<p>💡 <strong>Why this setup?</strong> We're enabling desktop keyboard support and setting an optimal window size for testing. The DrawnUi startup settings give us better control over rendering performance.</p>
+</blockquote>
+<hr>
+<h2 id="step-2-create-the-ui-in-xaml">Step 2: Create the UI in XAML</h2>
+<p>Replace <code>MainPage.xaml</code> with our card gallery:</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage x:Class=&quot;InteractiveCardsTutorial.MainPage&quot;
+             xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
+             Title=&quot;Interactive Cards&quot;&gt;
+
+    &lt;draw:Canvas
+        RenderingMode=&quot;Accelerated&quot;
+        Gestures=&quot;Enabled&quot;
+        BackgroundColor=&quot;#f0f0f5&quot;
+        HorizontalOptions=&quot;Fill&quot;
+        VerticalOptions=&quot;Fill&quot;&gt;
+
+        &lt;!-- Main Container --&gt;
+        &lt;draw:SkiaStack
+            Spacing=&quot;0&quot;
+            VerticalOptions=&quot;Fill&quot;&gt;
+
+            &lt;!-- Title Section --&gt;
+            &lt;draw:SkiaLayout Type=&quot;Column&quot;
+                             HorizontalOptions=&quot;Center&quot;
+                             Margin=&quot;16&quot;
+                             UseCache=&quot;Operations&quot;
+                             Spacing=&quot;8&quot;&gt;
+
+                &lt;draw:SkiaLabel
+                    Text=&quot;Interactive Cards&quot;
+                    FontSize=&quot;32&quot;
+                    FontAttributes=&quot;Bold&quot;
+                    TextColor=&quot;#2c3e50&quot;
+                    HorizontalOptions=&quot;Center&quot; /&gt;
+
+                &lt;draw:SkiaLabel
+                    Text=&quot;Tap and drag to interact!&quot;
+                    FontSize=&quot;16&quot;
+                    TextColor=&quot;#7f8c8d&quot;
+                    HorizontalOptions=&quot;Center&quot; /&gt;
+            &lt;/draw:SkiaLayout&gt;
+
+            &lt;!-- Card Gallery --&gt;
+            &lt;draw:SkiaScroll
+                IgnoreWrongDirection=&quot;True&quot;
+                VerticalOptions=&quot;Fill&quot;
+                Orientation=&quot;Vertical&quot;
+                Spacing=&quot;20&quot;&gt;
+
+                &lt;draw:SkiaStack Type=&quot;Column&quot;
+                                Tag=&quot;Cells&quot;
+                                Padding=&quot;0,5&quot;
+                                Spacing=&quot;0&quot;&gt;
+
+                    &lt;!-- Card 1: Gradient Glow Card --&gt;
+                    &lt;draw:SkiaLayer
+                        Padding=&quot;20,8&quot;
+                        UseCache=&quot;Image&quot;&gt;
+                        &lt;draw:SkiaShape
+                            x:Name=&quot;Card1&quot;
+                            Type=&quot;Rectangle&quot;
+                            CornerRadius=&quot;20&quot;
+                            WidthRequest=&quot;300&quot;
+                            HeightRequest=&quot;180&quot;
+                            HorizontalOptions=&quot;Center&quot;
+
+                            ConsumeGestures=&quot;OnCardGestures&quot;&gt;
+
+                            &lt;!-- Gradient Background --&gt;
+                            &lt;draw:SkiaControl.FillGradient&gt;
+                                &lt;draw:SkiaGradient
+                                    Type=&quot;Linear&quot;
+                                    Angle=&quot;45&quot;&gt;
+                                    &lt;draw:SkiaGradient.Colors&gt;
+                                        &lt;Color&gt;#667eea&lt;/Color&gt;
+                                        &lt;Color&gt;#764ba2&lt;/Color&gt;
+                                    &lt;/draw:SkiaGradient.Colors&gt;
+                                &lt;/draw:SkiaGradient&gt;
+                            &lt;/draw:SkiaControl.FillGradient&gt;
+
+                            &lt;!-- Glow Effect --&gt;
+                            &lt;draw:SkiaShape.VisualEffects&gt;
+                                &lt;draw:DropShadowEffect
+                                    Color=&quot;#667eea&quot;
+                                    Blur=&quot;3&quot;
+                                    X=&quot;1&quot;
+                                    Y=&quot;1&quot; /&gt;
+                            &lt;/draw:SkiaShape.VisualEffects&gt;
+
+                            &lt;!-- Card Content --&gt;
+                            &lt;draw:SkiaLayout Type=&quot;Column&quot; Margin=&quot;24&quot; Spacing=&quot;12&quot;&gt;
+                                &lt;draw:SkiaRichLabel
+                                    Text=&quot;🎨 Gradient Card&quot;
+                                    FontSize=&quot;20&quot;
+                                    FontAttributes=&quot;Bold&quot;
+                                    TextColor=&quot;White&quot; /&gt;
+                                &lt;draw:SkiaLabel
+                                    Text=&quot;Beautiful gradients with glow effects&quot;
+                                    FontSize=&quot;14&quot;
+                                    TextColor=&quot;#e8e8ff&quot; /&gt;
+                                &lt;draw:SkiaLabel
+                                    Text=&quot;Tap to animate!&quot;
+                                    FontSize=&quot;12&quot;
+                                    TextColor=&quot;#ccccff&quot;
+                                    Margin=&quot;0,8,0,0&quot; /&gt;
+                            &lt;/draw:SkiaLayout&gt;
+                        &lt;/draw:SkiaShape&gt;
+                    &lt;/draw:SkiaLayer&gt;
+
+                    &lt;!-- Card 2: Interactive Gaming Card --&gt;
+                    &lt;draw:SkiaLayer
+                        Padding=&quot;20,8&quot;
+                        ZIndex=&quot;10&quot;
+                        x:Name=&quot;Pannable&quot;
+                        ConsumeGestures=&quot;OnCardGestures&quot;
+                        UseCache=&quot;Image&quot;&gt;
+
+                        &lt;draw:SkiaShape
+                            x:Name=&quot;Card2&quot;
+                            Type=&quot;Rectangle&quot;
+                            CornerRadius=&quot;20&quot;
+                            WidthRequest=&quot;300&quot;
+                            HeightRequest=&quot;180&quot;
+                            HorizontalOptions=&quot;Center&quot;&gt;
+
+                            &lt;!-- Gaming Theme Background --&gt;
+                            &lt;draw:SkiaShape.FillGradient&gt;
+                                &lt;draw:SkiaGradient
+                                    StartXRatio=&quot;0.85&quot;
+                                    StartYRatio=&quot;0.25&quot;
+                                    Type=&quot;Circular&quot;&gt;
+                                    &lt;draw:SkiaGradient.Colors&gt;
+                                        &lt;Color&gt;#ff6b6b&lt;/Color&gt;
+                                        &lt;Color&gt;#c44569&lt;/Color&gt;
+                                    &lt;/draw:SkiaGradient.Colors&gt;
+                                &lt;/draw:SkiaGradient&gt;
+                            &lt;/draw:SkiaShape.FillGradient&gt;
+
+                            &lt;!-- Gaming Glow --&gt;
+                            &lt;draw:SkiaShape.VisualEffects&gt;
+                                &lt;draw:DropShadowEffect
+                                    Color=&quot;#ff6b6b&quot;
+                                    Blur=&quot;5&quot;
+                                    X=&quot;0&quot;
+                                    Y=&quot;0&quot; /&gt;
+                            &lt;/draw:SkiaShape.VisualEffects&gt;
+
+                            &lt;!-- Gaming Content --&gt;
+                            &lt;draw:SkiaLayout Type=&quot;Column&quot; Margin=&quot;24&quot; Spacing=&quot;12&quot;&gt;
+                                &lt;draw:SkiaRichLabel
+                                    Text=&quot;🎮 Gaming Card&quot;
+                                    FontSize=&quot;20&quot;
+                                    FontAttributes=&quot;Bold&quot;
+                                    TextColor=&quot;White&quot; /&gt;
+                                &lt;draw:SkiaLabel
+                                    Text=&quot;Drag me around! Smooth movement&quot;
+                                    FontSize=&quot;14&quot;
+                                    TextColor=&quot;#ffe8e8&quot; /&gt;
+                                &lt;draw:SkiaLabel
+                                    Text=&quot;Pan gesture enabled&quot;
+                                    FontSize=&quot;12&quot;
+                                    TextColor=&quot;#ffcccc&quot;
+                                    Margin=&quot;0,8,0,0&quot; /&gt;
+                            &lt;/draw:SkiaLayout&gt;
+                        &lt;/draw:SkiaShape&gt;
+                    &lt;/draw:SkiaLayer&gt;
+
+                    &lt;!-- Card 3: Data Visualization Card --&gt;
+                    &lt;draw:SkiaLayer
+                        Padding=&quot;20,8&quot;
+                        UseCache=&quot;Image&quot;&gt;
+
+                        &lt;draw:SkiaShape
+                        Type=&quot;Rectangle&quot;
+                        CornerRadius=&quot;20&quot;
+                        WidthRequest=&quot;300&quot;
+                        HeightRequest=&quot;200&quot;
+                        HorizontalOptions=&quot;Center&quot;
+                        ConsumeGestures=&quot;OnCardGestures&quot;&gt;
+
+                        &lt;!-- Tech Background --&gt;
+                        &lt;draw:SkiaShape.FillGradient&gt;
+                            &lt;draw:SkiaGradient
+                                Type=&quot;Linear&quot;
+                                Angle=&quot;135&quot;&gt;
+                                &lt;draw:SkiaGradient.Colors&gt;
+                                    &lt;Color&gt;#004400&lt;/Color&gt;
+                                    &lt;Color&gt;#009900&lt;/Color&gt;
+                                &lt;/draw:SkiaGradient.Colors&gt;
+                            &lt;/draw:SkiaGradient&gt;
+                        &lt;/draw:SkiaShape.FillGradient&gt;
+
+                        &lt;!-- Tech Glow --&gt;
+                        &lt;draw:SkiaShape.VisualEffects&gt;
+                            &lt;draw:DropShadowEffect
+                                Color=&quot;#99ff0000&quot;
+                                Blur=&quot;5&quot;
+                                X=&quot;0&quot;
+                                Y=&quot;0&quot; /&gt;
+                        &lt;/draw:SkiaShape.VisualEffects&gt;
+
+                        &lt;!-- Progress Bars --&gt;
+                        &lt;draw:SkiaLayout Type=&quot;Column&quot; Margin=&quot;24&quot; Spacing=&quot;16&quot;&gt;
+                                &lt;draw:SkiaRichLabel
+                                Text=&quot;📊 Data Card&quot;
+                                FontSize=&quot;20&quot;
+                                FontAttributes=&quot;Bold&quot;
+                                TextColor=&quot;White&quot; /&gt;
+
+                            &lt;!-- Progress Bars --&gt;
+                            &lt;draw:SkiaLayout Type=&quot;Column&quot; Spacing=&quot;8&quot;&gt;
+                                &lt;draw:SkiaLabel Text=&quot;Performance: 87%&quot; FontSize=&quot;12&quot; TextColor=&quot;#e8f4ff&quot; /&gt;
+                                &lt;draw:SkiaShape
+                                    Type=&quot;Rectangle&quot;
+                                    CornerRadius=&quot;4&quot;
+                                    WidthRequest=&quot;200&quot;
+                                    HeightRequest=&quot;6&quot;
+                                    BackgroundColor=&quot;#50ffffff&quot;&gt;
+                                    &lt;draw:SkiaShape Type=&quot;Rectangle&quot;
+                                                    CornerRadius=&quot;4&quot;
+                                                    WidthRequest=&quot;174&quot;
+                                                    HeightRequest=&quot;6&quot;
+                                                    BackgroundColor=&quot;White&quot;
+                                                    HorizontalOptions=&quot;Start&quot; /&gt;
+                                &lt;/draw:SkiaShape&gt;
+
+                                &lt;draw:SkiaLabel Text=&quot;Memory: 64%&quot; FontSize=&quot;12&quot; TextColor=&quot;#e8f4ff&quot; /&gt;
+                                &lt;draw:SkiaShape
+                                    Type=&quot;Rectangle&quot;
+                                    CornerRadius=&quot;4&quot;
+                                    WidthRequest=&quot;200&quot;
+                                    HeightRequest=&quot;6&quot;
+                                    BackgroundColor=&quot;#50ffffff&quot;&gt;
+                                    &lt;draw:SkiaShape
+                                        Type=&quot;Rectangle&quot;
+                                        CornerRadius=&quot;4&quot;
+                                        WidthRequest=&quot;128&quot;
+                                        HeightRequest=&quot;6&quot;
+                                        BackgroundColor=&quot;White&quot;
+                                        HorizontalOptions=&quot;Start&quot; /&gt;
+                                &lt;/draw:SkiaShape&gt;
+                            &lt;/draw:SkiaLayout&gt;
+                        &lt;/draw:SkiaLayout&gt;
+                    &lt;/draw:SkiaShape&gt;
+                    &lt;/draw:SkiaLayer&gt;
+
+                &lt;/draw:SkiaStack&gt;
+            &lt;/draw:SkiaScroll&gt;
+
+        &lt;/draw:SkiaStack&gt;
+    &lt;/draw:Canvas&gt;    
+    
+&lt;/ContentPage&gt;
+</code></pre>
+<blockquote>
+<p>🎯 <strong>Key Features Demonstrated:</strong></p>
+<ul>
+<li><strong>Gradients</strong>: Linear, radial, and angled gradients</li>
+<li><strong>Visual Effects</strong>: Drop shadows with custom colors and blur</li>
+<li><strong>Caching</strong>: Different strategies for optimal performance</li>
+<li><strong>Layouts</strong>: Nested layouts with proper spacing</li>
+<li><strong>Gestures</strong>: Tap and pan gesture handling</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="step-3-add-interactive-code">Step 3: Add Interactive Code</h2>
+<p>Replace <code>MainPage.xaml.cs</code> with the interaction logic:</p>
+<pre><code class="lang-csharp">using DrawnUi.Maui.Draw;
+using DrawnUi.Maui.Infrastructure;
+
+namespace InteractiveCardsTutorial;
+
+public partial class MainPage : ContentPage
+{
+    public MainPage()
+    {
+        try
+        {
+            InitializeComponent();
+        }
+        catch (Exception e)
+        {
+            Super.DisplayException(this, e);
+        }
+    }
+
+    private void OnCardGestures(object sender, SkiaGesturesInfo e)
+    {
+        if (sender is SkiaControl control)
+        {
+            if (e.Args.Type == TouchActionResult.Tapped)
+            {
+                e.Consumed = true; //could consume
+
+                Task.Run(async () =&gt;
+                {
+                    // Color pulse effect
+                    if (control is SkiaShape shape &amp;&amp; shape.FillGradient is SkiaGradient gradient)
+                    {
+                        var originalStart = gradient.Colors[0];
+                        var originalEnd = gradient.Colors[1];
+                        var lighter = 1.5;
+
+                        // Brighten colors
+                        var gradientStartColor = Color.FromRgba(
+                            Math.Min(1, originalStart.Red * lighter),
+                            Math.Min(1, originalStart.Green * lighter),
+                            Math.Min(1, originalStart.Blue * lighter),
+                            originalStart.Alpha);
+
+                        var gradientEndColor = Color.FromRgba(
+                            Math.Min(1, originalEnd.Red * lighter),
+                            Math.Min(1, originalEnd.Green * lighter),
+                            Math.Min(1, originalEnd.Blue * lighter),
+                            originalEnd.Alpha);
+
+                        gradient.Colors = new List&lt;Color&gt;() { gradientStartColor, gradientEndColor };
+
+                        // Restore original colors
+                        await Task.Delay(200);
+                        gradient.Colors = new List&lt;Color&gt;() { originalStart, originalEnd };
+                    }
+                });
+
+                Task.Run(async () =&gt;
+                {
+                    // Smooth scale animation with bounce effect
+                    control.ScaleToAsync(1.1, 1.1, 150, Easing.CubicOut);
+                    await Task.Delay(100);
+                    control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
+
+                    // Rotate animation for fun
+                    control.RotateToAsync(control.Rotation + 5, 200, Easing.SpringOut);
+                    await Task.Delay(150);
+                    control.RotateToAsync(0, 300, Easing.SpringOut);
+                });
+
+            }
+
+            if (sender == Pannable)
+            {
+                // Smooth drag following with momentum
+                if (e.Args.Type == TouchActionResult.Panning)
+                {
+                    e.Consumed = true;
+
+                    control.TranslationX += e.Args.Event.Distance.Delta.X / control.RenderingScale;
+                    control.TranslationY += e.Args.Event.Distance.Delta.Y / control.RenderingScale;
+
+                    // Add subtle rotation based on pan direction
+                    var deltaX = e.Args.Event.Distance.Total.X / control.RenderingScale;
+                    var rotationAmount = deltaX * 0.1;
+                    control.Rotation = Math.Max(-15, Math.Min(15, rotationAmount));
+                }
+                else if (e.Args.Type == TouchActionResult.Up)
+                {
+                    // Snap back to original position
+                    control.TranslateToAsync(0, 0, 100, Easing.SpringOut);
+                    control.RotateToAsync(0, 75, Easing.SpringOut);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<blockquote>
+<p>⚡ <strong>Animation Highlights:</strong></p>
+<ul>
+<li><strong>Scale bounce</strong>: Professional elastic scaling effect</li>
+<li><strong>Color pulsing</strong>: Dynamic color changes during interaction</li>
+<li><strong>Drag with momentum</strong>: Smooth real-time position updates</li>
+<li><strong>Auto snap-back</strong>: Spring animations return to rest position</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="step-4-understanding-the-technical-details">Step 4: Understanding the Technical Details</h2>
+<p>Let's dive into why certain technical choices were made in this tutorial:</p>
+<h3 id="skiarichlabel-for-unicode-emoji-support">SkiaRichLabel for Unicode Emoji Support</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaRichLabel
+    Text=&quot;🎨 Gradient Card&quot;
+    FontSize=&quot;20&quot;
+    FontAttributes=&quot;Bold&quot;
+    TextColor=&quot;White&quot; /&gt;
+</code></pre>
+<p><strong>Why SkiaRichLabel?</strong> Unlike regular <code>SkiaLabel</code>, <code>SkiaRichLabel</code> (formerly <code>SkiaMarkdownLabel</code>) provides:</p>
+<ul>
+<li><strong>Unicode emoji rendering</strong> with fallback font support</li>
+<li><strong>Automatic font detection</strong> for complex characters like 🎨🖌❤</li>
+<li><strong>Rich text capabilities</strong> including markdown formatting</li>
+</ul>
+<p>When the font you are using for the <code>FontFamily</code> property doesn't have emoji glyphs, <code>SkiaRichLabel</code> automatically finds and uses appropriate fallback fonts, ensuring your emojis display correctly.</p>
+<h3 id="strategic-caching-with-usecache">Strategic Caching with UseCache</h3>
+<p>Each container uses specific caching strategies for optimal performance:</p>
+<pre><code class="lang-xml">&lt;!-- Static title section - cache the drawing operations --&gt;
+&lt;draw:SkiaLayout UseCache=&quot;Operations&quot; ... &gt;
+    &lt;draw:SkiaLabel Text=&quot;Interactive Cards&quot; ... /&gt;
+&lt;/draw:SkiaLayout&gt;
+
+&lt;!-- Cards with shadows - cache the entire visual result --&gt;
+&lt;draw:SkiaLayer UseCache=&quot;Image&quot; ... &gt;
+    &lt;draw:SkiaShape&gt;
+        &lt;draw:SkiaShape.VisualEffects&gt;
+            &lt;draw:DropShadowEffect ... /&gt;
+        &lt;/draw:SkiaShape.VisualEffects&gt;
+    &lt;/draw:SkiaShape&gt;
+&lt;/draw:SkiaLayer&gt;
+</code></pre>
+<p><strong>Cache Strategy Explained:</strong></p>
+<ul>
+<li><p><strong><code>UseCache=&quot;Operations&quot;</code></strong> - Caches drawing operations (shapes, text, paths) as SKPicture objects</p>
+<ul>
+<li>Perfect for vector-based content</li>
+<li>Very memory efficient</li>
+</ul>
+</li>
+<li><p><strong><code>UseCache=&quot;Image&quot;</code></strong> - Caches the entire visual result as a bitmap</p>
+<ul>
+<li>Essential for <strong>shadow effects</strong> - shadows are expensive to recalculate every frame</li>
+<li>Used on card containers instead of cards to avoid clipping shadows</li>
+</ul>
+</li>
+</ul>
+<p><strong>Why Cache Shadows?</strong><br>
+Drop shadows require complex blur calculations on every frame. Without caching, animating a card with shadows would:</p>
+<ol>
+<li>Recalculate the blur effect for every frame</li>
+<li>Re-render all shadow pixels each frame</li>
+<li>Cause visible stuttering and frame drops</li>
+</ol>
+<p>With <code>UseCache=&quot;Image&quot;</code>, the shadow is calculated once and stored as a bitmap, giving you smooth animations.</p>
+<h3 id="z-index-and-layer-management">Z-Index and Layer Management</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaLayer
+    Padding=&quot;20,8&quot;
+    ZIndex=&quot;10&quot;
+    x:Name=&quot;Pannable&quot;
+    ConsumeGestures=&quot;OnCardGestures&quot;&gt;
+</code></pre>
+<p><strong>Why ZIndex=&quot;10&quot;?</strong> The draggable card gets higher z-index so it appears above other cards when moved. This creates a natural layering effect during interactions.</p>
+<h3 id="gesture-consumption-strategy">Gesture Consumption Strategy</h3>
+<pre><code class="lang-xml">ConsumeGestures=&quot;OnCardGestures&quot;
+</code></pre>
+<pre><code class="lang-csharp">if (e.Args.Type == TouchActionResult.Tapped)
+{
+    e.Consumed = true; // Prevents gesture bubbling
+    // ... animation code
+}
+</code></pre>
+<p><strong>Gesture Management:</strong><br>
+Notice <code>IgnoreWrongDirection=&quot;True&quot;</code> on the <code>SkiaScroll</code> so that it passes horizontal panning to children.
+Cards consume their touch events to prevent:</p>
+<ul>
+<li>Scroll interference during card interactions</li>
+<li>Multiple cards responding to the same touch</li>
+</ul>
+<h3 id="gradient-configuration">Gradient Configuration</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaGradient
+    Type=&quot;Linear&quot;
+    Angle=&quot;45&quot;&gt;
+    &lt;draw:SkiaGradient.Colors&gt;
+        &lt;Color&gt;#667eea&lt;/Color&gt;
+        &lt;Color&gt;#764ba2&lt;/Color&gt;
+    &lt;/draw:SkiaGradient.Colors&gt;
+&lt;/draw:SkiaGradient&gt;
+</code></pre>
+<p><strong>Gradient Types Used:</strong></p>
+<ul>
+<li><strong>Linear with Angle</strong> - Traditional diagonal gradients</li>
+<li><strong>Circular with StartXRatio/StartYRatio</strong> - Radial gradients positioned off-center for dynamic effects</li>
+</ul>
+<h3 id="animation-performance-patterns">Animation Performance Patterns</h3>
+<pre><code class="lang-csharp">private void OnCardGestures(object sender, SkiaGesturesInfo e)
+{
+    if (e.Args.Type == TouchActionResult.Tapped)
+    {
+        e.Consumed = true; // MUST happen synchronously!
+        
+        Task.Run(async () =&gt;
+        {
+            // Scale animation runs on background thread
+            control.ScaleToAsync(1.1, 1.1, 150, Easing.CubicOut);
+            await Task.Delay(100);
+            control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
+        });
+    }
+}
+</code></pre>
+<p><strong>Why Task.Run for animations?</strong></p>
+<p>The gesture event handler <strong>must remain synchronous</strong> so that <code>e.Consumed = true</code> is processed correctly by the gesture system. If we made the event handler <code>async</code>, the gesture processing would exit the thread before <code>e.Consumed</code> is evaluated, leaving it as <code>false</code>.</p>
+<p><strong>The Pattern:</strong></p>
+<ol>
+<li><strong>Synchronous gesture handling</strong> - Set <code>e.Consumed = true</code> immediately</li>
+<li><strong>Background animations</strong> - Use <code>Task.Run</code> for time-consuming animations</li>
+<li><strong>Non-blocking UI</strong> - Gesture system gets immediate response, animations run separately</li>
+</ol>
+<p>This ensures:</p>
+<ul>
+<li>Gesture consumption works correctly</li>
+<li>Multiple animations can run simultaneously</li>
+<li>No gesture conflicts or scroll interference</li>
+</ul>
+<p><strong>Easing Functions:</strong></p>
+<ul>
+<li><code>CubicOut</code> - Smooth deceleration for professional feel</li>
+<li><code>BounceOut</code> - Playful bounce effect that feels responsive</li>
+<li><code>SpringOut</code> - Natural spring physics for snap-back behaviors</li>
+</ul>
+<h3 id="error-handling-pattern">Error Handling Pattern</h3>
+<pre><code class="lang-csharp">public MainPage()
+{
+    try
+    {
+        InitializeComponent();
+    }
+    catch (Exception e)
+    {
+        Super.DisplayException(this, e);
+    }
+}
+</code></pre>
+<p><strong>Why wrap InitializeComponent in try-catch?</strong></p>
+<p>DrawnUI provides developer-friendly error handling through <code>Super.DisplayException()</code>. Instead of your app crashing when you make XAML design mistakes, the error gets displayed <strong>directly on the canvas</strong> with full stack trace so you can see the issue immediately.</p>
+<hr>
+<h2 id="step-5-run-your-app">Step 5: Run Your App!</h2>
+<p>Build and run the app:</p>
+<pre><code class="lang-bash">dotnet build
+dotnet run
+</code></pre>
+<h3 id="what-youll-experience">What You'll Experience:</h3>
+<ol>
+<li><strong>🎨 Beautiful Cards</strong>: Gradient backgrounds with glowing shadows</li>
+<li><strong>✨ Smooth Animations</strong>: interactions that feel native</li>
+<li><strong>👆 Responsive Touch</strong>: Immediate feedback to every gesture</li>
+<li><strong>🚀 Nice Performance</strong>: Cached shadows enable smooth animations</li>
+</ol>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues:</h3>
+<p><strong>App won't start:</strong></p>
+<ul>
+<li>Ensure you called <code>.UseDrawnUi()</code> in MauiProgram.cs</li>
+<li>Verify .NET 9 is installed</li>
+<li>Check that MAUI workload is installed: <code>dotnet workload install maui</code></li>
+</ul>
+<p><strong>App not animating:</strong></p>
+<ul>
+<li>Verify gestures are enabled on the Canvas</li>
+</ul>
+<p><strong>Performance issues:</strong></p>
+<ul>
+<li>Check that hardware acceleration is enabled</li>
+<li>Use appropriate <code>UseCache</code> for your content</li>
+<li>Avoid nested animations during heavy interactions</li>
+<li>Profile with platform tools to identify bottlenecks</li>
+</ul>
+<hr>
+<h2 id="-congratulations">🎉 Congratulations!</h2>
+<p>You've built an <strong>mpressive</strong> first DrawnUI app that demonstrates:</p>
+<ul>
+<li>✅ <strong>Beautiful, pixel-perfect UI</strong></li>
+<li>✅ <strong>Smooth animations</strong></li>
+<li>✅ <strong>Professional visual effects</strong></li>
+<li>✅ <strong>Nice performance</strong></li>
+<li>✅ <strong>Cross-platform consistency</strong></li>
+</ul>
+<p><strong>This isn't just &quot;Hello World&quot; - this is what DrawnUI enables you to build!</strong></p>
+<p>Ready to create your next amazing app? The DrawnUI community is excited to see what you build! 🚀</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/interactive-cards.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

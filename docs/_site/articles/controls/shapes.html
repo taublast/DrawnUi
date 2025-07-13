@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>SkiaShape | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SkiaShape | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/shapes.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="skiashape">SkiaShape</h1>
+
+<p>SkiaShape is a versatile control for rendering various geometric shapes in DrawnUi.Maui. Unlike traditional shape controls, SkiaShape offers high-performance rendering through SkiaSharp while supporting advanced features like custom paths, shadows, gradients, and content hosting.</p>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>SkiaShape supports various shape types through its <code>Type</code> property:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Rectangle&quot; 
+    WidthRequest=&quot;200&quot; 
+    HeightRequest=&quot;100&quot;
+    BackgroundColor=&quot;Blue&quot; 
+    StrokeColor=&quot;White&quot; 
+    StrokeWidth=&quot;2&quot; 
+    CornerRadius=&quot;10&quot; /&gt;
+</code></pre>
+<h2 id="shape-types">Shape Types</h2>
+<p>SkiaShape supports the following shape types:</p>
+<ul>
+<li><strong>Rectangle</strong>: A basic rectangle, optionally with rounded corners</li>
+<li><strong>Circle</strong>: A perfect circle that maintains 1:1 aspect ratio</li>
+<li><strong>Ellipse</strong>: An oval shape that can have different width and height</li>
+<li><strong>Path</strong>: A custom shape defined by SVG path data</li>
+<li><strong>Polygon</strong>: A shape defined by a collection of points</li>
+<li><strong>Line</strong>: A series of connected line segments</li>
+<li><strong>Arc</strong>: A circular arc segment</li>
+</ul>
+<h2 id="common-properties">Common Properties</h2>
+<h3 id="visual-properties">Visual Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BackgroundColor</code></td>
+<td>Color</td>
+<td>Fill color of the shape</td>
+</tr>
+<tr>
+<td><code>StrokeColor</code></td>
+<td>Color</td>
+<td>Outline color of the shape</td>
+</tr>
+<tr>
+<td><code>StrokeWidth</code></td>
+<td>float</td>
+<td>Width of the outline stroke</td>
+</tr>
+<tr>
+<td><code>CornerRadius</code></td>
+<td>float</td>
+<td>Rounded corner radius for rectangles</td>
+</tr>
+<tr>
+<td><code>StrokeCap</code></td>
+<td>StrokeCap</td>
+<td>End cap style for lines (Round, Butt, Square)</td>
+</tr>
+<tr>
+<td><code>StrokePath</code></td>
+<td>string</td>
+<td>Dash pattern for creating dashed lines</td>
+</tr>
+<tr>
+<td><code>StrokeBlendMode</code></td>
+<td>BlendMode</td>
+<td>Controls how strokes blend with underlying content</td>
+</tr>
+<tr>
+<td><code>ClipBackgroundColor</code></td>
+<td>bool</td>
+<td>If true, creates a &quot;hollow&quot; shape with just shadows and strokes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="shape-specific-properties">Shape-Specific Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PathData</code></td>
+<td>string</td>
+<td>SVG path data for Path type shapes</td>
+</tr>
+<tr>
+<td><code>Points</code></td>
+<td>Collection&lt;SkiaPoint&gt;</td>
+<td>Collection of points for Polygon or Line shapes</td>
+</tr>
+<tr>
+<td><code>SmoothPoints</code></td>
+<td>float</td>
+<td>Level of smoothing for Polygon/Line shapes (0.0-1.0)</td>
+</tr>
+<tr>
+<td><code>StartAngle</code></td>
+<td>float</td>
+<td>Starting angle for Arc shapes</td>
+</tr>
+<tr>
+<td><code>SweepAngle</code></td>
+<td>float</td>
+<td>Sweep angle for Arc shapes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3 id="shadow-effects">Shadow Effects</h3>
+<p>SkiaShape supports multiple shadows through the <code>Shadows</code> collection property:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Rectangle&quot; 
+    BackgroundColor=&quot;White&quot; 
+    CornerRadius=&quot;20&quot;&gt;
+    &lt;DrawUi:SkiaShape.Shadows&gt;
+        &lt;DrawUi:SkiaShadow 
+            Color=&quot;#80000000&quot; 
+            BlurRadius=&quot;10&quot; 
+            Offset=&quot;0,4&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.Shadows&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="gradients">Gradients</h3>
+<p>SkiaShape supports gradient fills via the <code>BackgroundGradient</code> and <code>StrokeGradient</code> properties:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape Type=&quot;Rectangle&quot;&gt;
+    &lt;DrawUi:SkiaShape.BackgroundGradient&gt;
+        &lt;DrawUi:SkiaGradient 
+            Type=&quot;Linear&quot; 
+            StartColor=&quot;Red&quot; 
+            EndColor=&quot;Blue&quot; 
+            StartPoint=&quot;0,0&quot; 
+            EndPoint=&quot;1,1&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.BackgroundGradient&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="custom-paths">Custom Paths</h3>
+<p>For complex shapes, you can use SVG path data:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Path&quot; 
+    PathData=&quot;M0,0L15.825,8.0 31.65,15.99 15.82,23.99 0,32 0,15.99z&quot; 
+    BackgroundColor=&quot;Red&quot; /&gt;
+</code></pre>
+<p>The PathData property follows standard SVG path notation:</p>
+<ul>
+<li>M: Move to (absolute)</li>
+<li>m: Move to (relative)</li>
+<li>L: Line to (absolute)</li>
+<li>l: Line to (relative)</li>
+<li>H/h: Horizontal line</li>
+<li>V/v: Vertical line</li>
+<li>C/c: Cubic bezier curve</li>
+<li>S/s: Smooth cubic bezier</li>
+<li>Q/q: Quadratic bezier curve</li>
+<li>T/t: Smooth quadratic bezier</li>
+<li>A/a: Elliptical arc</li>
+<li>Z/z: Close path</li>
+</ul>
+<h3 id="as-a-content-container">As a Content Container</h3>
+<p>SkiaShape can function as a container, clipping child elements to its shape boundaries:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Circle&quot; 
+    BackgroundColor=&quot;Green&quot; 
+    WidthRequest=&quot;200&quot; 
+    HeightRequest=&quot;200&quot;&gt;
+    &lt;DrawUi:SkiaImage 
+        Source=&quot;background.jpg&quot; 
+        VerticalOptions=&quot;Fill&quot; 
+        HorizontalOptions=&quot;Fill&quot; /&gt;
+    &lt;DrawUi:SkiaLabel 
+        Text=&quot;Circular Content&quot; 
+        TextColor=&quot;White&quot; 
+        HorizontalOptions=&quot;Center&quot; 
+        VerticalOptions=&quot;Center&quot; /&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<p>The <code>LayoutChildren</code> property controls how children are arranged (Absolute, Column, Row, Grid).</p>
+<h2 id="creating-polygons">Creating Polygons</h2>
+<p>For polygon shapes, you can define points in various ways:</p>
+<h3 id="using-skiapoint-collection">Using SkiaPoint Collection</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Polygon&quot; 
+    BackgroundColor=&quot;Purple&quot;&gt;
+    &lt;DrawUi:SkiaShape.Points&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;0&quot; Y=&quot;0&quot; /&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;100&quot; Y=&quot;0&quot; /&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;100&quot; Y=&quot;100&quot; /&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;0&quot; Y=&quot;100&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.Points&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="using-relative-coordinates">Using Relative Coordinates</h3>
+<p>You can define points using relative coordinates (0.0-1.0) that automatically scale to the shape's dimensions:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Polygon&quot; 
+    BackgroundColor=&quot;CornflowerBlue&quot;&gt;
+    &lt;DrawUi:SkiaShape.Points&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;0.0&quot; Y=&quot;0.8&quot; /&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;0.0&quot; Y=&quot;0.7&quot; /&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;1.0&quot; Y=&quot;0.2&quot; /&gt;
+        &lt;DrawUi:SkiaPoint X=&quot;1.0&quot; Y=&quot;0.3&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.Points&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="using-string-definition">Using String Definition</h3>
+<p>You can also use a converter for inline point definitions:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Polygon&quot; 
+    BackgroundColor=&quot;Purple&quot;
+    Points=&quot;0,0 100,0 100,100 0,100&quot; /&gt;
+</code></pre>
+<h3 id="predefined-shapes">Predefined Shapes</h3>
+<p>SkiaShape provides predefined point collections for common shapes:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Polygon&quot; 
+    BackgroundColor=&quot;Yellow&quot;
+    Points=&quot;{x:Static DrawUi:SkiaShape.PolygonStar}&quot; /&gt;
+</code></pre>
+<h3 id="smooth-curves">Smooth Curves</h3>
+<p>For smoother, curved polygons, adjust the <code>SmoothPoints</code> property (0.0-1.0):</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Polygon&quot; 
+    BackgroundColor=&quot;#220000FF&quot; 
+    SmoothPoints=&quot;0.9&quot;
+    Points=&quot;0.0,0.8 0.0,0.7 1.0,0.2 1.0,0.3&quot; /&gt;
+</code></pre>
+<p>A value of 0 creates sharp corners, while a value of 1.0 creates maximally smooth curves.</p>
+<h2 id="creating-lines">Creating Lines</h2>
+<p>Lines can be created using the same point collection approach:</p>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Line&quot; 
+    StrokeColor=&quot;Black&quot; 
+    StrokeWidth=&quot;2&quot;
+    Points=&quot;0,0 50,50 100,0 150,50&quot; /&gt;
+</code></pre>
+<p>Customize line appearance with:</p>
+<ul>
+<li><code>StrokeCap</code>: Controls how line ends appear</li>
+<li><code>StrokePath</code>: Define dash patterns (&quot;5,5&quot; creates 5px dashes with 5px gaps)</li>
+</ul>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="card-with-shadow">Card with Shadow</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Rectangle&quot; 
+    BackgroundColor=&quot;White&quot; 
+    CornerRadius=&quot;12&quot; 
+    Padding=&quot;16&quot;
+    WidthRequest=&quot;300&quot; 
+    HeightRequest=&quot;150&quot;
+    LayoutChildren=&quot;Column&quot;&gt;
+    
+    &lt;DrawUi:SkiaShape.Shadows&gt;
+        &lt;DrawUi:SkiaShadow 
+            Color=&quot;#22000000&quot; 
+            BlurRadius=&quot;20&quot; 
+            Offset=&quot;0,4&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.Shadows&gt;
+    
+    &lt;DrawUi:SkiaLabel 
+        Text=&quot;Card Title&quot; 
+        FontSize=&quot;18&quot; 
+        FontWeight=&quot;Bold&quot; /&gt;
+    
+    &lt;DrawUi:SkiaLabel 
+        Text=&quot;This is a card with rounded corners and a shadow effect. SkiaShape makes it easy to create modern UI components.&quot; 
+        TextColor=&quot;#666666&quot; 
+        Margin=&quot;0,10,0,0&quot; /&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="progress-indicator">Progress Indicator</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Arc&quot; 
+    StrokeColor=&quot;#EEEEEE&quot; 
+    StrokeWidth=&quot;10&quot; 
+    BackgroundColor=&quot;Transparent&quot;
+    StartAngle=&quot;0&quot; 
+    SweepAngle=&quot;360&quot; 
+    WidthRequest=&quot;100&quot; 
+    HeightRequest=&quot;100&quot;&gt;
+    
+    &lt;DrawUi:SkiaShape 
+        Type=&quot;Arc&quot; 
+        StrokeColor=&quot;Blue&quot; 
+        StrokeWidth=&quot;10&quot; 
+        BackgroundColor=&quot;Transparent&quot;
+        StartAngle=&quot;0&quot; 
+        SweepAngle=&quot;{Binding Progress}&quot; 
+        WidthRequest=&quot;100&quot; 
+        HeightRequest=&quot;100&quot; /&gt;
+    
+    &lt;DrawUi:SkiaLabel 
+        Text=&quot;{Binding ProgressText}&quot; 
+        HorizontalOptions=&quot;Center&quot; 
+        VerticalOptions=&quot;Center&quot; /&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h3 id="custom-button">Custom Button</h3>
+<pre><code class="lang-xml">&lt;DrawUi:SkiaShape 
+    Type=&quot;Path&quot; 
+    PathData=&quot;M10,0 L90,0 C95,0 100,5 100,10 L100,40 C100,45 95,50 90,50 L10,50 C5,50 0,45 0,40 L0,10 C0,5 5,0 10,0 Z&quot; 
+    BackgroundColor=&quot;Blue&quot; 
+    WidthRequest=&quot;100&quot; 
+    HeightRequest=&quot;50&quot;&gt;
+    
+    &lt;DrawUi:SkiaShape.GestureRecognizers&gt;
+        &lt;TapGestureRecognizer Command=&quot;{Binding ButtonCommand}&quot; /&gt;
+    &lt;/DrawUi:SkiaShape.GestureRecognizers&gt;
+    
+    &lt;DrawUi:SkiaLabel 
+        Text=&quot;SUBMIT&quot; 
+        TextColor=&quot;White&quot; 
+        FontWeight=&quot;Bold&quot;
+        HorizontalOptions=&quot;Center&quot; 
+        VerticalOptions=&quot;Center&quot; /&gt;
+&lt;/DrawUi:SkiaShape&gt;
+</code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<ul>
+<li>For static shapes, set <code>Cache=&quot;Image&quot;</code> to render once and cache as bitmap</li>
+<li>For frequently animated shapes, use <code>Cache=&quot;Operations&quot;</code> for best performance</li>
+<li>Avoid excessive shadows or complex paths in performance-critical UI</li>
+<li>For very complex paths, pre-process SVG data when possible rather than computing at runtime</li>
+</ul>
+<h2 id="skiahovermask">SkiaHoverMask</h2>
+<p><code>SkiaHoverMask</code> is a control deriving from SkiaShape that can be used to create hover effects. It will render a mask over its children when hovered, think of it as an inverted shape.</p>
+<h3 id="basic-usage-1">Basic Usage</h3>
+<pre><code class="lang-xml">&lt;draw:SkiaHoverMask
+    Type=&quot;Rectangle&quot;
+    CornerRadius=&quot;8&quot;
+    MaskColor=&quot;#40000000&quot;
+    WidthRequest=&quot;200&quot;
+    HeightRequest=&quot;100&quot;&gt;
+
+    &lt;draw:SkiaLabel
+        Text=&quot;Hover over me&quot;
+        HorizontalOptions=&quot;Center&quot;
+        VerticalOptions=&quot;Center&quot;
+        TextColor=&quot;White&quot; /&gt;
+&lt;/draw:SkiaHoverMask&gt;
+</code></pre>
+<h3 id="properties">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MaskColor</code></td>
+<td>Color</td>
+<td>Color of the hover mask overlay</td>
+</tr>
+<tr>
+<td><code>IsHovered</code></td>
+<td>bool</td>
+<td>Whether the control is currently hovered</td>
+</tr>
+<tr>
+<td><code>HoverAnimationDuration</code></td>
+<td>int</td>
+<td>Duration of hover animation in milliseconds</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events">Events</h3>
+<ul>
+<li><code>HoverStarted</code>: Raised when hover begins</li>
+<li><code>HoverEnded</code>: Raised when hover ends</li>
+</ul>
+<h2 id="platform-specific-notes">Platform Specific Notes</h2>
+<p>SkiaShape renders consistently across all platforms supported by MAUI, ensuring that your UI maintains the same appearance on Android, iOS, Windows, and macOS.</p>
+<hr>
+<h1 id="skiasvg">SkiaSvg</h1>
+<p>SkiaSvg is a specialized control for rendering SVG (Scalable Vector Graphics) files with high performance and quality. As a vector graphics control, it shares many characteristics with SkiaShape but is specifically designed for displaying complex SVG artwork, icons, and illustrations.</p>
+<h2 id="why-svg-in-drawnui">Why SVG in DrawnUi?</h2>
+<p>SVG (Scalable Vector Graphics) offers several advantages for modern mobile applications:</p>
+<ul>
+<li><strong>Resolution Independence</strong>: SVGs scale perfectly to any size without pixelation</li>
+<li><strong>Small File Sizes</strong>: Vector data is typically much smaller than equivalent raster images</li>
+<li><strong>Dynamic Styling</strong>: SVG elements can be styled, tinted, and modified at runtime</li>
+<li><strong>Performance</strong>: Hardware-accelerated vector rendering through SkiaSharp</li>
+<li><strong>Accessibility</strong>: SVG content can include semantic information</li>
+</ul>
+<h2 id="basic-usage-2">Basic Usage</h2>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg
+    Source=&quot;icon.svg&quot;
+    TintColor=&quot;Blue&quot;
+    WidthRequest=&quot;64&quot;
+    HeightRequest=&quot;64&quot; /&gt;
+</code></pre>
+<h2 id="key-properties">Key Properties</h2>
+<h3 id="core-properties">Core Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Source</code></td>
+<td>string</td>
+<td>null</td>
+<td>Path to the SVG file (local or web URL)</td>
+</tr>
+<tr>
+<td><code>TintColor</code></td>
+<td>Color</td>
+<td>Transparent</td>
+<td>Color to tint the entire SVG</td>
+</tr>
+<tr>
+<td><code>LockRatio</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Whether to maintain original aspect ratio</td>
+</tr>
+<tr>
+<td><code>Aspect</code></td>
+<td>Aspect</td>
+<td>AspectFit</td>
+<td>How to scale the SVG within bounds</td>
+</tr>
+</tbody>
+</table>
+<h3 id="styling-properties">Styling Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FillColor</code></td>
+<td>Color</td>
+<td>null</td>
+<td>Override fill color for all SVG elements</td>
+</tr>
+<tr>
+<td><code>StrokeColor</code></td>
+<td>Color</td>
+<td>null</td>
+<td>Override stroke color for all SVG elements</td>
+</tr>
+<tr>
+<td><code>StrokeWidth</code></td>
+<td>float</td>
+<td>-1</td>
+<td>Override stroke width (-1 uses original)</td>
+</tr>
+<tr>
+<td><code>Opacity</code></td>
+<td>float</td>
+<td>1.0</td>
+<td>Overall opacity of the SVG</td>
+</tr>
+</tbody>
+</table>
+<h3 id="loading-properties">Loading Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CacheType</code></td>
+<td>SkiaCacheType</td>
+<td>Operations</td>
+<td>How to cache the rendered SVG</td>
+</tr>
+<tr>
+<td><code>LoadPriority</code></td>
+<td>LoadPriority</td>
+<td>Normal</td>
+<td>Priority for loading the SVG file</td>
+</tr>
+<tr>
+<td><code>UseHardwareAcceleration</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Enable GPU acceleration for rendering</td>
+</tr>
+</tbody>
+</table>
+<h2 id="svg-source-options">SVG Source Options</h2>
+<h3 id="local-files">Local Files</h3>
+<p>Place SVG files in your project's <code>Resources/Raw</code> folder:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg Source=&quot;icons/home.svg&quot; /&gt;
+</code></pre>
+<h3 id="web-urls">Web URLs</h3>
+<p>Load SVG files from the internet:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg Source=&quot;https://example.com/logo.svg&quot; /&gt;
+</code></pre>
+<h3 id="embedded-resources">Embedded Resources</h3>
+<p>Reference SVG files embedded in assemblies:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg Source=&quot;MyAssembly.Icons.star.svg&quot; /&gt;
+</code></pre>
+<h2 id="styling-and-tinting">Styling and Tinting</h2>
+<h3 id="simple-tinting">Simple Tinting</h3>
+<p>Apply a single color tint to the entire SVG:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg
+    Source=&quot;heart.svg&quot;
+    TintColor=&quot;Red&quot;
+    WidthRequest=&quot;32&quot;
+    HeightRequest=&quot;32&quot; /&gt;
+</code></pre>
+<h3 id="override-fill-and-stroke">Override Fill and Stroke</h3>
+<p>Override the original SVG colors:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg
+    Source=&quot;icon.svg&quot;
+    FillColor=&quot;Navy&quot;
+    StrokeColor=&quot;White&quot;
+    StrokeWidth=&quot;2&quot; /&gt;
+</code></pre>
+<h3 id="dynamic-color-changes">Dynamic Color Changes</h3>
+<p>Change colors based on state or themes:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg
+    Source=&quot;star.svg&quot;
+    TintColor=&quot;{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}&quot; /&gt;
+</code></pre>
+<h2 id="advanced-examples">Advanced Examples</h2>
+<h3 id="svg-with-visual-effects">SVG with Visual Effects</h3>
+<p>Add shadows, glows, and other effects:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg Source=&quot;logo.svg&quot; TintColor=&quot;DarkBlue&quot;&gt;
+    &lt;draw:SkiaControl.VisualEffects&gt;
+        &lt;draw:DropShadowEffect 
+            Blur=&quot;8&quot; 
+            X=&quot;4&quot; 
+            Y=&quot;4&quot; 
+            Color=&quot;#40000000&quot; /&gt;
+        &lt;draw:GlowEffect 
+            Color=&quot;CornflowerBlue&quot; 
+            Blur=&quot;6&quot; 
+            X=&quot;0&quot; 
+            Y=&quot;0&quot; /&gt;
+    &lt;/draw:SkiaControl.VisualEffects&gt;
+&lt;/draw:SkiaSvg&gt;
+</code></pre>
+<h3 id="animated-svg-icon">Animated SVG Icon</h3>
+<p>Create hover effects and animations:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg 
+    x:Name=&quot;AnimatedIcon&quot;
+    Source=&quot;heart.svg&quot;
+    TintColor=&quot;Gray&quot;
+    WidthRequest=&quot;48&quot;
+    HeightRequest=&quot;48&quot;&gt;
+    
+    &lt;draw:SkiaSvg.Triggers&gt;
+        &lt;EventTrigger RoutingEvent=&quot;PointerPressed&quot;&gt;
+            &lt;BeginStoryboard&gt;
+                &lt;Storyboard&gt;
+                    &lt;ColorAnimation 
+                        Storyboard.TargetProperty=&quot;TintColor&quot;
+                        To=&quot;Red&quot;
+                        Duration=&quot;0:0:0.2&quot; /&gt;
+                    &lt;DoubleAnimation
+                        Storyboard.TargetProperty=&quot;Scale&quot;
+                        To=&quot;1.2&quot;
+                        Duration=&quot;0:0:0.1&quot;
+                        AutoReverse=&quot;True&quot; /&gt;
+                &lt;/Storyboard&gt;
+            &lt;/BeginStoryboard&gt;
+        &lt;/EventTrigger&gt;
+    &lt;/draw:SkiaSvg.Triggers&gt;
+&lt;/draw:SkiaSvg&gt;
+</code></pre>
+<h3 id="svg-in-lists-and-grids">SVG in Lists and Grids</h3>
+<p>Optimize SVG rendering in collections:</p>
+<pre><code class="lang-xml">&lt;CollectionView ItemsSource=&quot;{Binding MenuItems}&quot;&gt;
+    &lt;CollectionView.ItemTemplate&gt;
+        &lt;DataTemplate&gt;
+            &lt;draw:SkiaLayout Type=&quot;Row&quot; Spacing=&quot;12&quot;&gt;
+                &lt;draw:SkiaSvg 
+                    Source=&quot;{Binding IconPath}&quot;
+                    TintColor=&quot;{Binding IconColor}&quot;
+                    WidthRequest=&quot;24&quot;
+                    HeightRequest=&quot;24&quot;
+                    CacheType=&quot;Image&quot; /&gt;
+                &lt;draw:SkiaLabel 
+                    Text=&quot;{Binding Title}&quot;
+                    VerticalOptions=&quot;Center&quot; /&gt;
+            &lt;/draw:SkiaLayout&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/CollectionView.ItemTemplate&gt;
+&lt;/CollectionView&gt;
+</code></pre>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="caching-strategies">Caching Strategies</h3>
+<p>Choose the right caching strategy for your use case:</p>
+<pre><code class="lang-xml">&lt;!-- For static icons (best memory efficiency) --&gt;
+&lt;draw:SkiaSvg CacheType=&quot;Operations&quot; Source=&quot;static-icon.svg&quot; /&gt;
+
+&lt;!-- For frequently changing colors/effects --&gt;
+&lt;draw:SkiaSvg CacheType=&quot;Image&quot; Source=&quot;dynamic-icon.svg&quot; /&gt;
+
+&lt;!-- For complex animations --&gt;
+&lt;draw:SkiaSvg CacheType=&quot;GPU&quot; Source=&quot;animated-icon.svg&quot; /&gt;
+</code></pre>
+<h3 id="loading-optimization">Loading Optimization</h3>
+<p>Optimize loading for better user experience:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaSvg 
+    Source=&quot;large-illustration.svg&quot;
+    LoadPriority=&quot;High&quot;
+    UseHardwareAcceleration=&quot;true&quot;
+    CacheType=&quot;Image&quot; /&gt;
+</code></pre>
+<h2 id="svg-compatibility">SVG Compatibility</h2>
+<h3 id="supported-svg-features">Supported SVG Features</h3>
+<ul>
+<li><strong>Paths</strong>: All path commands (M, L, C, Q, A, Z, etc.)</li>
+<li><strong>Basic Shapes</strong>: rect, circle, ellipse, line, polyline, polygon</li>
+<li><strong>Styling</strong>: fill, stroke, stroke-width, opacity</li>
+<li><strong>Transforms</strong>: translate, rotate, scale, matrix</li>
+<li><strong>Groups</strong>: <code>&lt;g&gt;</code> elements with nested content</li>
+<li><strong>Text</strong>: Basic text rendering (limited font support)</li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li><strong>Animations</strong>: SVG animations are not supported (use DrawnUi animations instead)</li>
+<li><strong>Scripting</strong>: JavaScript in SVG is ignored</li>
+<li><strong>External References</strong>: External image/font references may not work</li>
+<li><strong>Complex Filters</strong>: Some SVG filter effects are not supported</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<p><strong>SVG not displaying:</strong></p>
+<ul>
+<li>Verify the file path is correct</li>
+<li>Check that the SVG file is valid</li>
+<li>Ensure the file is in <code>Resources/Raw</code> folder</li>
+</ul>
+<p><strong>Colors not working:</strong></p>
+<ul>
+<li>Some SVGs have <code>fill=&quot;currentColor&quot;</code> which requires explicit styling</li>
+<li>Use <code>TintColor</code> for simple color changes</li>
+<li>Use <code>FillColor</code>/<code>StrokeColor</code> for more control</li>
+</ul>
+<p><strong>Performance issues:</strong></p>
+<ul>
+<li>Use appropriate <code>CacheType</code> for your scenario</li>
+<li>Avoid very complex SVGs with thousands of paths</li>
+<li>Consider simplifying SVG artwork for mobile use</li>
+</ul>
+<p><strong>Sizing problems:</strong></p>
+<ul>
+<li>Set explicit <code>WidthRequest</code>/<code>HeightRequest</code></li>
+<li>Use <code>LockRatio=&quot;true&quot;</code> to maintain proportions</li>
+<li>Check the original SVG viewBox dimensions</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-svg-optimization">1. SVG Optimization</h3>
+<ul>
+<li>Use tools like SVGO to optimize SVG files</li>
+<li>Remove unnecessary metadata and comments</li>
+<li>Simplify complex paths where possible</li>
+<li>Use appropriate precision for coordinates</li>
+</ul>
+<h3 id="2-color-management">2. Color Management</h3>
+<ul>
+<li>Design SVGs with <code>currentColor</code> for easy theming</li>
+<li>Use consistent color naming in your design system</li>
+<li>Test with different <code>TintColor</code> values during design</li>
+</ul>
+<h3 id="3-performance">3. Performance</h3>
+<ul>
+<li>Cache frequently used icons with <code>CacheType=&quot;Operations&quot;</code></li>
+<li>Use <code>CacheType=&quot;Image&quot;</code> for icons that change colors often</li>
+<li>Preload critical SVGs during app startup</li>
+</ul>
+<h3 id="4-accessibility">4. Accessibility</h3>
+<ul>
+<li>Include meaningful descriptions in SVG metadata</li>
+<li>Use semantic naming for SVG files</li>
+<li>Ensure sufficient color contrast when tinting</li>
+</ul>
+<h3 id="5-responsive-design">5. Responsive Design</h3>
+<ul>
+<li>Design SVGs to work at multiple sizes</li>
+<li>Test icon legibility at small sizes (16x16, 24x24)</li>
+<li>Use consistent visual weight across icon sets</li>
+</ul>
+<p>This comprehensive guide covers all aspects of using SkiaSvg in DrawnUi.Maui, from basic usage to advanced optimization techniques. The control provides powerful SVG rendering capabilities while maintaining excellent performance through intelligent caching and hardware acceleration.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/shapes.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

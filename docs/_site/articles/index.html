@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>DrawnUI for .NET MAUI | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="DrawnUI for .NET MAUI | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="drawnui-for-net-maui">DrawnUI for .NET MAUI</h1>
+
+<p><img src="https://img.shields.io/github/license/taublast/DrawnUi.svg" alt="License">
+<img src="https://img.shields.io/nuget/v/DrawnUi.Maui.svg" alt="NuGet Version">
+<img src="https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg" alt="NuGet Downloads"></p>
+<p><a href="https://github.com/taublast/DrawnUi.Maui">Source Code</a> 👈</p>
+<p><strong>A rendering engine for .NET MAUI built on top of SkiaSharp</strong></p>
+<p><strong>Hardware-accelerated rendering engine</strong> for <strong>iOS</strong>, <strong>MacCatalyst</strong>, <strong>Android</strong>, <strong>Windows</strong> with enhanced WPF-like layout system, gestures and animations, powered by <a href="https://github.com/mono/SkiaSharp">SkiaSharp</a>.</p>
+<hr>
+<h2 id="-quick-install">📦 Quick Install</h2>
+<p><strong>Install from nuget:</strong></p>
+<pre><code class="lang-bash">dotnet add package DrawnUi.Maui
+</code></pre>
+<p><strong>Initialize in MauiProgram.cs:</strong></p>
+<pre><code class="lang-csharp">builder.UseDrawnUi();
+</code></pre>
+<p>👉 More in the <a href="getting-started.html">Getting Started Guide</a>.</p>
+<hr>
+<h2 id="purpose">Purpose</h2>
+<ul>
+<li><strong>Easy canvas drawing</strong> with high-level helpers</li>
+<li><strong>Smart creation of controls</strong> by compositing different components</li>
+<li><strong>Custom layout system</strong> to create, layout and render your drawn controls with gestures and animations</li>
+<li><strong>Hardware-accelerated</strong> rendering on iOS • MacCatalyst • Android • Windows</li>
+<li><strong>Free to use</strong> under the MIT license, stable NuGet package available</li>
+<li><strong>Hybrid approach</strong>: Use inside existing MAUI apps by wrapping drawn controls in <code>Canvas</code> views</li>
+<li><strong>Fully drawn apps</strong>: Create totally drawn apps with just one Canvas as root view</li>
+<li><strong>Virtual controls</strong>: No native views/handlers created, UI-thread not required for access</li>
+<li><strong>To have the tools to create and use your own controls</strong> to expand the limits of the predefined</li>
+</ul>
+<h2 id="features">Features</h2>
+<h3 id="-rendering--graphics">🎨 <strong>Rendering &amp; Graphics</strong></h3>
+<ul>
+<li><strong>Hardware-accelerated</strong> SkiaSharp rendering with max performance</li>
+<li><strong>Pixel-perfect controls</strong> with complete visual customization</li>
+<li><strong>2D and 3D transforms</strong> for advanced visual effects</li>
+<li><strong>Visual effects</strong> for every control: filters, shaders, shadows, blur</li>
+<li><strong>Caching system</strong> for optimized re-drawing performance</li>
+</ul>
+<h3 id="-development-experience">😍 <strong>Development Experience</strong></h3>
+<ul>
+<li><strong>Design in XAML or code-behind</strong> - choose your preferred approach</li>
+<li><strong>Fluent C# syntax</strong> for programmatic UI creation</li>
+<li><strong>Hot Reload compatible</strong> for rapid development iteration</li>
+<li><strong>Virtual controls</strong> - no native views/handlers, background thread accessible</li>
+</ul>
+<h3 id="-performance--optimization">🚀 <strong>Performance &amp; Optimization</strong></h3>
+<ul>
+<li><strong>Optimized rendering</strong> - only visible elements drawn</li>
+<li><strong>Template recycling</strong> for efficient memory usage</li>
+<li><strong>Hardware acceleration</strong> on all supported platforms</li>
+<li><strong>Smooth animations</strong> targeting maximum FPS</li>
+</ul>
+<h3 id="-interaction--input">👆 <strong>Interaction &amp; Input</strong></h3>
+<ul>
+<li><strong>Advanced gesture support</strong> - panning, scrolling, zooming, custom gestures</li>
+<li><strong>Keyboard support</strong> - track any key combination</li>
+<li><strong>Touch and mouse</strong> input handling</li>
+<li><strong>Multi-platform input</strong> normalization</li>
+</ul>
+<h3 id="-navigation--layout">🧭 <strong>Navigation &amp; Layout</strong></h3>
+<ul>
+<li><strong>Familiar MAUI Shell</strong> navigation techniques on canvas</li>
+<li><strong>SkiaShell + SkiaViewSwitcher</strong> for fully drawn app navigation</li>
+<li><strong>Modals, popups, toasts</strong> and custom overlays</li>
+<li><strong>Enhanced layout system</strong> with advanced positioning</li>
+</ul>
+<hr>
+<h2 id="-onboarding">🤔 Onboarding</h2>
+<p><strong>Q: What is the difference between DrawnUi and other drawn frameworks?</strong><br>
+A: Not really comparable since DrawnUI is just a library for <strong>.NET MAUI</strong>, to let you draw UI instead of using native views.</p>
+<p><strong>Q: Why choose drawn over native UI?</strong><br>
+A: Rather a freedom choice to draw what you want and how you see it.<br>
+It also can bemore performant to draw a complex UI on just one canvas instead of composing it with many native views.</p>
+<p><strong>Q: Do I need to know how to draw on a canvas??</strong><br>
+A: No, you can start by using prebuilt drawn controls and customize them. All controls are initially designed to be subclassed, customized, and almost every method is virtual.</p>
+<p><strong>Q: Can I still use XAML?</strong><br>
+A: Yes you can use both XAML and code-behind to create your UI.</p>
+<p><strong>Q: Can I avoid using XAML at all costs?</strong><br>
+A: Yes feel free to use code-behind to create your UI, up to using background thread to access and modify drawn controls properties.</p>
+<p><strong>Q: How do I create custom controls with DrawnUI?</strong><br>
+A: Inherit from <code>SkiaControl</code> for basic controls or <code>SkiaLayout</code> for containers etc. Override the <code>Paint</code> method to draw with SkiaSharp.</p>
+<p><strong>Q: Can I embed native MAUI controls inside DrawnUI?</strong><br>
+A: Yes! Use <code>SkiaMauiElement</code> to embed native MAUI controls like WebView inside your DrawnUI canvas. This allows you to combine the best of both worlds.</p>
+<p><strong>Q: Possible to create a game with DrawnUI?</strong><br>
+A: Well, since you draw, why not just draw a game instead of a business app. DrawnUI comes with gaming helpers and custom accelerated platform views to assure a smooth display-synched rendering.</p>
+<h2 id="-knowledge-base">📚 Knowledge Base</h2>
+<h3 id="documentation--guides">Documentation &amp; Guides</h3>
+<ul>
+<li><strong><a href="getting-started.html">Getting Started Guide</a></strong> - Complete installation and setup</li>
+<li><strong><a href="samples.html">Sample Apps</a></strong> - Tutorials and example projects</li>
+<li><strong><a href="faq.html">FAQ</a></strong> - Frequently asked questions and answers</li>
+<li><strong><a href="controls/index.html">Controls Documentation</a></strong> - Complete controls reference</li>
+<li><strong><a href="advanced/index.html">Advanced Features</a></strong> - Performance and platform topics</li>
+</ul>
+<h3 id="community--support">Community &amp; Support</h3>
+<ul>
+<li><strong><a href="https://github.com/taublast/DrawnUi/discussions">GitHub Discussions</a></strong> - Community help and discussions</li>
+<li><strong><a href="https://github.com/taublast/DrawnUi.Maui/issues">GitHub Issues</a></strong> - Report bugs or ask questions</li>
+</ul>
+<h3 id="additional-resources">Additional Resources</h3>
+<ul>
+<li><strong><a href="fluent-extensions.html">Fluent Extensions</a></strong> - Code-behind UI creation patterns</li>
+<li><strong><a href="whats-new.html">What's New</a></strong> - Latest updates and features</li>
+<li><strong><a href="https://taublast.github.io/posts/MauiJuly/">How DrawnUI was created</a></strong> - article by the creator</li>
+</ul>
+<p><strong>Can't find what you're looking for?</strong> → <strong><a href="https://github.com/taublast/DrawnUi/discussions">Ask in GitHub Discussions</a></strong> - The community is here to help!</p>
+<hr>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IDrawnBase | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IDrawnBase | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Draw_IDrawnBase.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.IDrawnBase%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="DrawnUi.Draw.IDrawnBase">
+
+
+
+  <h1 id="DrawnUi_Draw_IDrawnBase" data-uid="DrawnUi.Draw.IDrawnBase" class="text-break">
+Interface IDrawnBase  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L5"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Draw.html">Draw</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDrawnBase : IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated</code></pre>
+  </div>
+
+
+
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable.dispose">IDisposable.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.ICanBeUpdatedWithContext.html#DrawnUi_Draw_ICanBeUpdatedWithContext_BindingContext">ICanBeUpdatedWithContext.BindingContext</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html#DrawnUi_Draw_ICanBeUpdated_Update">ICanBeUpdated.Update()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_">DrawnExtensions.GetVelocityRatioForChild(IDrawnBase, ISkiaControl)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_">InternalExtensions.FromPlatform(object)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_ClipEffects_" data-uid="DrawnUi.Draw.IDrawnBase.ClipEffects*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_ClipEffects" data-uid="DrawnUi.Draw.IDrawnBase.ClipEffects">
+  ClipEffects
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ClipEffects { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Destination_" data-uid="DrawnUi.Draw.IDrawnBase.Destination*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Destination" data-uid="DrawnUi.Draw.IDrawnBase.Destination">
+  Destination
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SKRect Destination { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_DrawingRect_" data-uid="DrawnUi.Draw.IDrawnBase.DrawingRect*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_DrawingRect" data-uid="DrawnUi.Draw.IDrawnBase.DrawingRect">
+  DrawingRect
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SKRect DrawingRect { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Height_" data-uid="DrawnUi.Draw.IDrawnBase.Height*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Height" data-uid="DrawnUi.Draw.IDrawnBase.Height">
+  Height
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double Height { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_HeightRequest_" data-uid="DrawnUi.Draw.IDrawnBase.HeightRequest*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_HeightRequest" data-uid="DrawnUi.Draw.IDrawnBase.HeightRequest">
+  HeightRequest
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double HeightRequest { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_InputTransparent_" data-uid="DrawnUi.Draw.IDrawnBase.InputTransparent*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_InputTransparent" data-uid="DrawnUi.Draw.IDrawnBase.InputTransparent">
+  InputTransparent
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool InputTransparent { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_IsClippedToBounds_" data-uid="DrawnUi.Draw.IDrawnBase.IsClippedToBounds*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_IsClippedToBounds" data-uid="DrawnUi.Draw.IDrawnBase.IsClippedToBounds">
+  IsClippedToBounds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsClippedToBounds { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_IsDisposed_" data-uid="DrawnUi.Draw.IDrawnBase.IsDisposed*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_IsDisposed" data-uid="DrawnUi.Draw.IDrawnBase.IsDisposed">
+  IsDisposed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsDisposed { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_IsDisposing_" data-uid="DrawnUi.Draw.IDrawnBase.IsDisposing*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_IsDisposing" data-uid="DrawnUi.Draw.IDrawnBase.IsDisposing">
+  IsDisposing
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsDisposing { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_IsVisible_" data-uid="DrawnUi.Draw.IDrawnBase.IsVisible*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_IsVisible" data-uid="DrawnUi.Draw.IDrawnBase.IsVisible">
+  IsVisible
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsVisible { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_MeasuredSize_" data-uid="DrawnUi.Draw.IDrawnBase.MeasuredSize*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_MeasuredSize" data-uid="DrawnUi.Draw.IDrawnBase.MeasuredSize">
+  MeasuredSize
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ScaledSize MeasuredSize { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_PostAnimators_" data-uid="DrawnUi.Draw.IDrawnBase.PostAnimators*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_PostAnimators" data-uid="DrawnUi.Draw.IDrawnBase.PostAnimators">
+  PostAnimators
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Executed after the rendering</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;IOverlayEffect&gt; PostAnimators { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="DrawnUi.Draw.IOverlayEffect.html">IOverlayEffect</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_RenderingScale_" data-uid="DrawnUi.Draw.IDrawnBase.RenderingScale*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_RenderingScale" data-uid="DrawnUi.Draw.IDrawnBase.RenderingScale">
+  RenderingScale
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">float RenderingScale { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_ShouldInvalidateByChildren_" data-uid="DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_ShouldInvalidateByChildren" data-uid="DrawnUi.Draw.IDrawnBase.ShouldInvalidateByChildren">
+  ShouldInvalidateByChildren
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ShouldInvalidateByChildren { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Tag_" data-uid="DrawnUi.Draw.IDrawnBase.Tag*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Tag" data-uid="DrawnUi.Draw.IDrawnBase.Tag">
+  Tag
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Tag { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_TranslationX_" data-uid="DrawnUi.Draw.IDrawnBase.TranslationX*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_TranslationX" data-uid="DrawnUi.Draw.IDrawnBase.TranslationX">
+  TranslationX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double TranslationX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_TranslationY_" data-uid="DrawnUi.Draw.IDrawnBase.TranslationY*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_TranslationY" data-uid="DrawnUi.Draw.IDrawnBase.TranslationY">
+  TranslationY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double TranslationY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_UpdateLocks_" data-uid="DrawnUi.Draw.IDrawnBase.UpdateLocks*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_UpdateLocks" data-uid="DrawnUi.Draw.IDrawnBase.UpdateLocks">
+  UpdateLocks
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int UpdateLocks { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Views_" data-uid="DrawnUi.Draw.IDrawnBase.Views*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Views" data-uid="DrawnUi.Draw.IDrawnBase.Views">
+  Views
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>For code-behind access of children, XAML is using Children property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;SkiaControl&gt; Views { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Width_" data-uid="DrawnUi.Draw.IDrawnBase.Width*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Width" data-uid="DrawnUi.Draw.IDrawnBase.Width">
+  Width
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double Width { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_WidthRequest_" data-uid="DrawnUi.Draw.IDrawnBase.WidthRequest*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_WidthRequest" data-uid="DrawnUi.Draw.IDrawnBase.WidthRequest">
+  WidthRequest
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double WidthRequest { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_X_" data-uid="DrawnUi.Draw.IDrawnBase.X*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_X" data-uid="DrawnUi.Draw.IDrawnBase.X">
+  X
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double X { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Y_" data-uid="DrawnUi.Draw.IDrawnBase.Y*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Y" data-uid="DrawnUi.Draw.IDrawnBase.Y">
+  Y
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double Y { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_AddSubView_" data-uid="DrawnUi.Draw.IDrawnBase.AddSubView*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_AddSubView_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.IDrawnBase.AddSubView(DrawnUi.Draw.SkiaControl)">
+  AddSubView(SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Directly adds a view to the control, without any layouting. Use this instead of Views.Add() to avoid memory leaks etc</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void AddSubView(SkiaControl view)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_ClipSmart_" data-uid="DrawnUi.Draw.IDrawnBase.ClipSmart*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_ClipSmart_SkiaSharp_SKCanvas_SkiaSharp_SKPath_SkiaSharp_SKClipOperation_" data-uid="DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)">
+  ClipSmart(SKCanvas, SKPath, SKClipOperation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Clip using internal custom settings of the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ClipSmart(SKCanvas canvas, SKPath path, SKClipOperation operation = SKClipOperation.Intersect)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>canvas</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas">SKCanvas</a></dt>
+    <dd></dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpath">SKPath</a></dt>
+    <dd></dd>
+    <dt><code>operation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skclipoperation">SKClipOperation</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_CreateClip_" data-uid="DrawnUi.Draw.IDrawnBase.CreateClip*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_" data-uid="DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)">
+  CreateClip(object, bool, SKPath)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a new disposable SKPath for clipping content according to the control shape and size.
+Create this control clip for painting content.
+Pass arguments if you want to use some time-frozen data for painting at any time from any thread..
+If applyPosition is false will create clip without using drawing posiition, like if was drawing at 0,0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SKPath CreateClip(object arguments, bool usePosition, SKPath path = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>arguments</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+    <dt><code>usePosition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpath">SKPath</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpath">SKPath</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_DisposeObject_" data-uid="DrawnUi.Draw.IDrawnBase.DisposeObject*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_" data-uid="DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)">
+  DisposeObject(IDisposable)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void DisposeObject(IDisposable value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_GetOnScreenVisibleArea_" data-uid="DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_GetOnScreenVisibleArea_DrawnUi_Draw_DrawingContext_System_Numerics_Vector2_" data-uid="DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)">
+  GetOnScreenVisibleArea(DrawingContext, Vector2)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>For virtualization. For this method to be conditional we introduced the <code>pixelsDestination</code>
+parameter so that the Parent could return different visible areas upon context.
+Normally pass your current destination you are drawing into as this parameter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ScaledRect GetOnScreenVisibleArea(DrawingContext context, Vector2 inflateByPixels = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>context</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+    <dt><code>inflateByPixels</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.vector2">Vector2</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.ScaledRect.html">ScaledRect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Invalidate_" data-uid="DrawnUi.Draw.IDrawnBase.Invalidate*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Invalidate" data-uid="DrawnUi.Draw.IDrawnBase.Invalidate">
+  Invalidate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Invalidates the measured size. May or may not call Update() inside, depends on control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Invalidate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_InvalidateByChild_" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateByChild*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_InvalidateByChild_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)">
+  InvalidateByChild(SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This is needed by layout to track which child changed to sometimes avoid recalculating other children</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void InvalidateByChild(SkiaControl skiaControl)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>skiaControl</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_InvalidateParents_" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateParents*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_InvalidateParents" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateParents">
+  InvalidateParents()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>If need the re-measure all parents because child-auto-size has changed</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void InvalidateParents()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_InvalidateViewport_" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateViewport*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_InvalidateViewport" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateViewport">
+  InvalidateViewport()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L137"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void InvalidateViewport()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_InvalidateViewsList_" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateViewsList*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_InvalidateViewsList" data-uid="DrawnUi.Draw.IDrawnBase.InvalidateViewsList">
+  InvalidateViewsList()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void InvalidateViewsList()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_IsVisibleInViewTree_" data-uid="DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_IsVisibleInViewTree" data-uid="DrawnUi.Draw.IDrawnBase.IsVisibleInViewTree">
+  IsVisibleInViewTree()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsVisibleInViewTree()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_RegisterAnimator_" data-uid="DrawnUi.Draw.IDrawnBase.RegisterAnimator*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_" data-uid="DrawnUi.Draw.IDrawnBase.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)">
+  RegisterAnimator(ISkiaAnimator)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool RegisterAnimator(ISkiaAnimator animator)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>animator</code> <a class="xref" href="DrawnUi.Draw.ISkiaAnimator.html">ISkiaAnimator</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_RegisterGestureListener_" data-uid="DrawnUi.Draw.IDrawnBase.RegisterGestureListener*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_RegisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_" data-uid="DrawnUi.Draw.IDrawnBase.RegisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)">
+  RegisterGestureListener(ISkiaGestureListener)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RegisterGestureListener(ISkiaGestureListener gestureListener)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>gestureListener</code> <a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_RemoveSubView_" data-uid="DrawnUi.Draw.IDrawnBase.RemoveSubView*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_RemoveSubView_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.IDrawnBase.RemoveSubView(DrawnUi.Draw.SkiaControl)">
+  RemoveSubView(SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Directly removes a view from the control, without any layouting.
+Use this instead of Views.Remove() to avoid memory leaks etc</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RemoveSubView(SkiaControl view)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_Repaint_" data-uid="DrawnUi.Draw.IDrawnBase.Repaint*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_Repaint" data-uid="DrawnUi.Draw.IDrawnBase.Repaint">
+  Repaint()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L139"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Repaint()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_UnregisterAllAnimatorsByType_" data-uid="DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_UnregisterAllAnimatorsByType_System_Type_" data-uid="DrawnUi.Draw.IDrawnBase.UnregisterAllAnimatorsByType(System.Type)">
+  UnregisterAllAnimatorsByType(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;ISkiaAnimator&gt; UnregisterAllAnimatorsByType(Type type)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="DrawnUi.Draw.ISkiaAnimator.html">ISkiaAnimator</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_UnregisterAnimator_" data-uid="DrawnUi.Draw.IDrawnBase.UnregisterAnimator*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_UnregisterAnimator_System_Guid_" data-uid="DrawnUi.Draw.IDrawnBase.UnregisterAnimator(System.Guid)">
+  UnregisterAnimator(Guid)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void UnregisterAnimator(Guid uid)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uid</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_UnregisterGestureListener_" data-uid="DrawnUi.Draw.IDrawnBase.UnregisterGestureListener*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_UnregisterGestureListener_DrawnUi_Draw_ISkiaGestureListener_" data-uid="DrawnUi.Draw.IDrawnBase.UnregisterGestureListener(DrawnUi.Draw.ISkiaGestureListener)">
+  UnregisterGestureListener(ISkiaGestureListener)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void UnregisterGestureListener(ISkiaGestureListener gestureListener)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>gestureListener</code> <a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_IDrawnBase_UpdateByChild_" data-uid="DrawnUi.Draw.IDrawnBase.UpdateByChild*"></a>
+
+  <h3 id="DrawnUi_Draw_IDrawnBase_UpdateByChild_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.IDrawnBase.UpdateByChild(DrawnUi.Draw.SkiaControl)">
+  UpdateByChild(SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>To track dirty area when Updating parent</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void UpdateByChild(SkiaControl skiaControl)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>skiaControl</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs/#L5" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

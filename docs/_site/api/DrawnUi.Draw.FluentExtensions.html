@@ -1,0 +1,4214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class FluentExtensions | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class FluentExtensions | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Draw_FluentExtensions.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.FluentExtensions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="DrawnUi.Draw.FluentExtensions">
+
+
+
+  <h1 id="DrawnUi_Draw_FluentExtensions" data-uid="DrawnUi.Draw.FluentExtensions" class="text-break">
+Class FluentExtensions  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Draw.html">Draw</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Provides extension methods for fluent API design pattern with DrawnUI controls</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class FluentExtensions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">FluentExtensions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Adapt_" data-uid="DrawnUi.Draw.FluentExtensions.Adapt*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Adapt__1___0_System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.Adapt``1(``0,System.Action{``0})">
+  Adapt&lt;T&gt;(T, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Performs an action on the control and returns it to continue the fluent chain</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Adapt&lt;T&gt;(this T view, Action&lt;T&gt; action) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to act upon</p>
+</dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd><p>The action to perform</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_AssignNative_" data-uid="DrawnUi.Draw.FluentExtensions.AssignNative*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_AssignNative__1___0___0__" data-uid="DrawnUi.Draw.FluentExtensions.AssignNative``1(``0,``0@)">
+  AssignNative&lt;T&gt;(T, out T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T AssignNative&lt;T&gt;(this T control, out T variable) where T : VisualElement</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>variable</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_AssignParent_" data-uid="DrawnUi.Draw.FluentExtensions.AssignParent*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_AssignParent__1___0_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.FluentExtensions.AssignParent``1(``0,DrawnUi.Draw.SkiaControl)">
+  AssignParent&lt;T&gt;(T, SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Assigns the control to a parent and returns the control for fluent chaining.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T AssignParent&lt;T&gt;(this T control, SkiaControl parent) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control to assign</p>
+</dd>
+    <dt><code>parent</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd><p>The parent control to add to</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Assign_" data-uid="DrawnUi.Draw.FluentExtensions.Assign*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Assign__1___0___0__" data-uid="DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)">
+  Assign&lt;T&gt;(T, out T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Assigns the control to a variable and returns the control to continue the fluent chain</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Assign&lt;T&gt;(this T control, out T variable) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control to assign</p>
+</dd>
+    <dt><code>variable</code> <span class="xref">T</span></dt>
+    <dd><p>The out variable to store the reference</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_BindProperty_" data-uid="DrawnUi.Draw.FluentExtensions.BindProperty*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_BindProperty__1___0_Microsoft_Maui_Controls_BindableProperty_System_ComponentModel_INotifyPropertyChanged_System_String_Microsoft_Maui_Controls_BindingMode_" data-uid="DrawnUi.Draw.FluentExtensions.BindProperty``1(``0,Microsoft.Maui.Controls.BindableProperty,System.ComponentModel.INotifyPropertyChanged,System.String,Microsoft.Maui.Controls.BindingMode)">
+  BindProperty&lt;T&gt;(T, BindableProperty, INotifyPropertyChanged, string, BindingMode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Binds a property of a view to a source property using a specified path and binding mode.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T BindProperty&lt;T&gt;(this T view, BindableProperty targetProperty, INotifyPropertyChanged source, string path, BindingMode mode = BindingMode.Default) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The UI element that will have its property bound to a source property.</p>
+</dd>
+    <dt><code>targetProperty</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd><p>The property of the view that will receive the binding.</p>
+</dd>
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></dt>
+    <dd><p>The object that implements property change notifications and serves as the data source.</p>
+</dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The path to the property on the source object that will be bound to the target property.</p>
+</dd>
+    <dt><code>mode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindingmode">BindingMode</a></dt>
+    <dd><p>Specifies the binding mode, determining how the source and target properties interact.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>Returns the view after setting up the binding.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Represents a type that extends SkiaControl, allowing for binding operations on UI elements.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_BindProperty_" data-uid="DrawnUi.Draw.FluentExtensions.BindProperty*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_BindProperty__1___0_Microsoft_Maui_Controls_BindableProperty_System_String_Microsoft_Maui_Controls_BindingMode_" data-uid="DrawnUi.Draw.FluentExtensions.BindProperty``1(``0,Microsoft.Maui.Controls.BindableProperty,System.String,Microsoft.Maui.Controls.BindingMode)">
+  BindProperty&lt;T&gt;(T, BindableProperty, string, BindingMode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets up a simple non-compiled binding for a property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T BindProperty&lt;T&gt;(this T view, BindableProperty property, string path, BindingMode mode = BindingMode.Default) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the binding for</p>
+</dd>
+    <dt><code>property</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The binding path</p>
+</dd>
+    <dt><code>mode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindingmode">BindingMode</a></dt>
+    <dd><p>The binding mode</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_BindProperty_" data-uid="DrawnUi.Draw.FluentExtensions.BindProperty*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_BindProperty__2___0_Microsoft_Maui_Controls_BindableProperty_System_String_Microsoft_Maui_Controls_IValueConverter_System_Object_Microsoft_Maui_Controls_BindingMode_" data-uid="DrawnUi.Draw.FluentExtensions.BindProperty``2(``0,Microsoft.Maui.Controls.BindableProperty,System.String,Microsoft.Maui.Controls.IValueConverter,System.Object,Microsoft.Maui.Controls.BindingMode)">
+  BindProperty&lt;T, TProperty&gt;(T, BindableProperty, string, IValueConverter, object, BindingMode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets up a simple binding for a property with a converter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T BindProperty&lt;T, TProperty&gt;(this T view, BindableProperty targetProperty, string path, IValueConverter converter, object converterParameter = null, BindingMode mode = BindingMode.Default) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the binding for</p>
+</dd>
+    <dt><code>targetProperty</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd><p>The target property</p>
+</dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The binding path</p>
+</dd>
+    <dt><code>converter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.ivalueconverter">IValueConverter</a></dt>
+    <dd><p>The value converter</p>
+</dd>
+    <dt><code>converterParameter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The converter parameter</p>
+</dd>
+    <dt><code>mode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindingmode">BindingMode</a></dt>
+    <dd><p>The binding mode</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+    <dt><code>TProperty</code></dt>
+    <dd><p>Type of the property</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_CenterX_" data-uid="DrawnUi.Draw.FluentExtensions.CenterX*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_CenterX__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.CenterX``1(``0)">
+  CenterX&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L788"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the control's horizontal options to center</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T CenterX&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to center horizontally</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_CenterY_" data-uid="DrawnUi.Draw.FluentExtensions.CenterY*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_CenterY__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.CenterY``1(``0)">
+  CenterY&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L800"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the control's vertical options to center</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T CenterY&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to center vertically</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Center_" data-uid="DrawnUi.Draw.FluentExtensions.Center*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Center__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.Center``1(``0)">
+  Center&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L874"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Centers the control both horizontally and vertically</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Center&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to center</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_EndX_" data-uid="DrawnUi.Draw.FluentExtensions.EndX*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_EndX__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.EndX``1(``0)">
+  EndX&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L831"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T EndX&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_EndY_" data-uid="DrawnUi.Draw.FluentExtensions.EndY*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_EndY__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.EndY``1(``0)">
+  EndY&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L837"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T EndY&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_FillX_" data-uid="DrawnUi.Draw.FluentExtensions.FillX*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_FillX__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.FillX``1(``0)">
+  FillX&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L825"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Fills horizontally</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T FillX&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_FillY_" data-uid="DrawnUi.Draw.FluentExtensions.FillY*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_FillY__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.FillY``1(``0)">
+  FillY&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L862"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Fills vertically</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T FillY&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Fill_" data-uid="DrawnUi.Draw.FluentExtensions.Fill*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Fill__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.Fill``1(``0)">
+  Fill&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L812"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Fills in both directions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Fill&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Initialize_" data-uid="DrawnUi.Draw.FluentExtensions.Initialize*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Initialize__1___0_System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.Initialize``1(``0,System.Action{``0})">
+  Initialize&lt;T&gt;(T, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a callback to be executed after the control is added to the view tree and initialized.
+Use for setup that requires the control to be part of the visual tree.
+This is called after the control default content was created and all variables have been assigned inside the fluent chain.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Initialize&lt;T&gt;(this T view, Action&lt;T&gt; action) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to initialize</p>
+</dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd><p>Initialization logic to run</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObserveBindingContextOn_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveBindingContextOn*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObserveBindingContextOn__3___0___1_System_Action___0___1___2_System_String__System_Boolean_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveBindingContextOn``3(``0,``1,System.Action{``0,``1,``2,System.String},System.Boolean)">
+  ObserveBindingContextOn&lt;T, TTarget, TSource&gt;(T, TTarget, Action&lt;T, TTarget, TSource, string&gt;, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L617"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Watches for property changes on another control's BindingContext of type TSource.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObserveBindingContextOn&lt;T, TTarget, TSource&gt;(this T control, TTarget target, Action&lt;T, TTarget, TSource, string&gt; callback, bool debugTypeMismatch = true) where T : SkiaControl where TTarget : SkiaControl where TSource : INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control to extend</p>
+</dd>
+    <dt><code>target</code> <span class="xref">TTarget</span></dt>
+    <dd><p>The target control whose BindingContext to watch</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-4">Action</a>&lt;T, TTarget, TSource, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback executed when properties change, receiving the control, the target control, the typed BindingContext, and the property name</p>
+</dd>
+    <dt><code>debugTypeMismatch</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>Whether to log a warning when the actual BindingContext type doesn't match TSource (default: true)</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The original control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the control being extended</p>
+</dd>
+    <dt><code>TTarget</code></dt>
+    <dd><p>Type of the target control whose BindingContext we're watching</p>
+</dd>
+    <dt><code>TSource</code></dt>
+    <dd><p>Expected type of the target control's BindingContext</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="DrawnUi_Draw_FluentExtensions_ObserveBindingContextOn__3___0___1_System_Action___0___1___2_System_String__System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method handles two scenarios:</p>
+<ol>
+<li>The target's BindingContext is already set when the method is called</li>
+<li>The target's BindingContext will be set sometime after the method is called</li>
+</ol>
+</div>
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObserveBindingContext_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveBindingContext*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObserveBindingContext__2___0_System_Action___0___1_System_String__System_Boolean_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveBindingContext``2(``0,System.Action{``0,``1,System.String},System.Boolean)">
+  ObserveBindingContext&lt;T, TSource&gt;(T, Action&lt;T, TSource, string&gt;, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L533"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Watches for property changes on the control's BindingContext of type TSource.
+Works with both immediate and delayed BindingContext assignment scenarios.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObserveBindingContext&lt;T, TSource&gt;(this T control, Action&lt;T, TSource, string&gt; callback, bool debugTypeMismatch = true) where T : SkiaControl where TSource : INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control to watch</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-3">Action</a>&lt;T, TSource, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback executed when properties change, receiving the control, the typed BindingContext, and the property name</p>
+</dd>
+    <dt><code>debugTypeMismatch</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>Whether to log a warning when the actual BindingContext type doesn't match TSource (default: true)</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the control</p>
+</dd>
+    <dt><code>TSource</code></dt>
+    <dd><p>Expected type of the BindingContext</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="DrawnUi_Draw_FluentExtensions_ObserveBindingContext__2___0_System_Action___0___1_System_String__System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method handles two scenarios:</p>
+<ol>
+<li>The BindingContext is already set when the method is called</li>
+<li>The BindingContext will be set sometime after the method is called</li>
+</ol>
+<p>The callback will be invoked immediately after subscription with an empty property name,
+allowing initialization based on the current state.</p>
+</div>
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObserveOn_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveOn*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObserveOn__3___0___1_System_Func___2__System_String_System_Action___0_System_String__System_String___" data-uid="DrawnUi.Draw.FluentExtensions.ObserveOn``3(``0,``1,System.Func{``2},System.String,System.Action{``0,System.String},System.String[])">
+  ObserveOn&lt;T, TParent, TTarget&gt;(T, TParent, Func&lt;TTarget&gt;, string, Action&lt;T, string&gt;, string[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L302"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Observes a dynamically resolved target object using a function selector.
+When the parent's properties change, re-evaluates the selector and automatically
+unsubscribes from old target and subscribes to new one.
+AOT-compatible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObserveOn&lt;T, TParent, TTarget&gt;(this T control, TParent parent, Func&lt;TTarget&gt; targetSelector, string parentPropertyName, Action&lt;T, string&gt; callback, string[] propertyFilter = null) where T : SkiaControl where TParent : INotifyPropertyChanged where TTarget : class, INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control subscribing to changes</p>
+</dd>
+    <dt><code>parent</code> <span class="xref">TParent</span></dt>
+    <dd><p>The parent object that contains the dynamic property</p>
+</dd>
+    <dt><code>targetSelector</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TTarget&gt;</dt>
+    <dd><p>Function that selects the target object (e.g., () =&gt; CurrentTimer)</p>
+</dd>
+    <dt><code>parentPropertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Name of the property on parent that affects the target selector</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback that receives the control and property name when target's properties change</p>
+</dd>
+    <dt><code>propertyFilter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p>Optional filter to only trigger on specific properties</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the control being extended</p>
+</dd>
+    <dt><code>TParent</code></dt>
+    <dd><p>Type of the parent object that contains the dynamic property</p>
+</dd>
+    <dt><code>TTarget</code></dt>
+    <dd><p>Type of the target object to observe</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObservePropertiesOn_" data-uid="DrawnUi.Draw.FluentExtensions.ObservePropertiesOn*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObservePropertiesOn__3___0___1_System_Func___2__System_String_System_Collections_Generic_IEnumerable_System_String__System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.ObservePropertiesOn``3(``0,``1,System.Func{``2},System.String,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})">
+  ObservePropertiesOn&lt;T, TParent, TTarget&gt;(T, TParent, Func&lt;TTarget&gt;, string, IEnumerable&lt;string&gt;, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Observes specific properties on a dynamically resolved target object using a function selector.
+When the parent's properties change, re-evaluates the selector and automatically
+unsubscribes from old target and subscribes to new one.
+You can omit BindingContext as it will be added at all times.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObservePropertiesOn&lt;T, TParent, TTarget&gt;(this T control, TParent parent, Func&lt;TTarget&gt; targetSelector, string parentPropertyName, IEnumerable&lt;string&gt; propertyNames, Action&lt;T&gt; callback) where T : SkiaControl where TParent : INotifyPropertyChanged where TTarget : class, INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control subscribing to changes</p>
+</dd>
+    <dt><code>parent</code> <span class="xref">TParent</span></dt>
+    <dd><p>The parent object that contains the dynamic property</p>
+</dd>
+    <dt><code>targetSelector</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TTarget&gt;</dt>
+    <dd><p>Function that selects the target object (e.g., () =&gt; CurrentTimer)</p>
+</dd>
+    <dt><code>parentPropertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Name of the property on parent that affects the target selector</p>
+</dd>
+    <dt><code>propertyNames</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Names of the properties to observe on the target</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd><p>Callback that receives the control when target's specified properties change</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the control being extended</p>
+</dd>
+    <dt><code>TParent</code></dt>
+    <dd><p>Type of the parent object that contains the dynamic property</p>
+</dd>
+    <dt><code>TTarget</code></dt>
+    <dd><p>Type of the target object to observe</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObserveProperties_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveProperties*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0___1_System_Collections_Generic_IEnumerable_System_String__System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,``1,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})">
+  ObserveProperties&lt;T, TSource&gt;(T, TSource, IEnumerable&lt;string&gt;, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L438"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subscribes to specific properties changes on a source control and executes a callback when they occur.</p>
+<p>Will unsubscribe upon control disposal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObserveProperties&lt;T, TSource&gt;(this T control, TSource target, IEnumerable&lt;string&gt; propertyNames, Action&lt;T&gt; callback) where T : SkiaControl where TSource : INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>target</code> <span class="xref">TSource</span></dt>
+    <dd></dd>
+    <dt><code>propertyNames</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+    <dt><code>TSource</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObservePropertyOn_" data-uid="DrawnUi.Draw.FluentExtensions.ObservePropertyOn*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObservePropertyOn__3___0___1_System_Func___2__System_String_System_String_System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.ObservePropertyOn``3(``0,``1,System.Func{``2},System.String,System.String,System.Action{``0})">
+  ObservePropertyOn&lt;T, TParent, TTarget&gt;(T, TParent, Func&lt;TTarget&gt;, string, string, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L260"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Observes a specific property on a dynamically resolved target object using a function selector.
+When the parent's properties change, re-evaluates the selector and automatically
+unsubscribes from old target and subscribes to new one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObservePropertyOn&lt;T, TParent, TTarget&gt;(this T control, TParent parent, Func&lt;TTarget&gt; targetSelector, string parentPropertyName, string propertyName, Action&lt;T&gt; callback) where T : SkiaControl where TParent : INotifyPropertyChanged where TTarget : class, INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>parent</code> <span class="xref">TParent</span></dt>
+    <dd></dd>
+    <dt><code>targetSelector</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TTarget&gt;</dt>
+    <dd></dd>
+    <dt><code>parentPropertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+    <dt><code>TParent</code></dt>
+    <dd></dd>
+    <dt><code>TTarget</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObserveProperty_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveProperty*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0___1_System_String_System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,``1,System.String,System.Action{``0})">
+  ObserveProperty&lt;T, TSource&gt;(T, TSource, string, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L412"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subscribes to one specific property changes on a source control and executes a callback when they occur.
+Will unsubscribe upon control disposal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObserveProperty&lt;T, TSource&gt;(this T control, TSource target, string propertyName, Action&lt;T&gt; callback) where T : SkiaControl where TSource : INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>target</code> <span class="xref">TSource</span></dt>
+    <dd></dd>
+    <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+    <dt><code>TSource</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_ObserveSelf_" data-uid="DrawnUi.Draw.FluentExtensions.ObserveSelf*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_ObserveSelf__1___0_System_Action___0_System_String__" data-uid="DrawnUi.Draw.FluentExtensions.ObserveSelf``1(``0,System.Action{``0,System.String})">
+  ObserveSelf&lt;T&gt;(T, Action&lt;T, string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subscribes to PropertyChanged of this control, will unsubscribe upon control disposal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T ObserveSelf&lt;T&gt;(this T view, Action&lt;T, string&gt; action) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The target control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the target control (the one being extended)</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Observe_" data-uid="DrawnUi.Draw.FluentExtensions.Observe*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0_System_String__System_String___" data-uid="DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0,System.String},System.String[])">
+  Observe&lt;T, TSource&gt;(T, Func&lt;TSource&gt;, Action&lt;T, string&gt;, string[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L463"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Observes a control that will be assigned later in the initialization process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Observe&lt;T, TSource&gt;(this T control, Func&lt;TSource&gt; sourceFetcher, Action&lt;T, string&gt; callback, string[] propertyFilter = null) where T : SkiaControl where TSource : SkiaControl, INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control subscribing to changes</p>
+</dd>
+    <dt><code>sourceFetcher</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TSource&gt;</dt>
+    <dd><p>Function that will retrieve the source control when needed</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback that receives the control instance and property name when changed</p>
+</dd>
+    <dt><code>propertyFilter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p>Optional filter to only trigger on specific properties</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The target control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the target control (the one being extended)</p>
+</dd>
+    <dt><code>TSource</code></dt>
+    <dd><p>Type of the source control (the one that will be observed)</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Observe_" data-uid="DrawnUi.Draw.FluentExtensions.Observe*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0_System_String__System_String___" data-uid="DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])">
+  Observe&lt;T, TSource&gt;(T, TSource, Action&lt;T, string&gt;, string[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subscribes to property changes on a source control and executes a callback when they occur.
+Will unsubscribe upon control disposal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Observe&lt;T, TSource&gt;(this T control, TSource target, Action&lt;T, string&gt; callback, string[] propertyFilter = null) where T : SkiaControl where TSource : INotifyPropertyChanged</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control subscribing to changes</p>
+</dd>
+    <dt><code>target</code> <span class="xref">TSource</span></dt>
+    <dd><p>The control being observed</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback that receives the property name when changed</p>
+</dd>
+    <dt><code>propertyFilter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p>Optional filter to only trigger on specific properties</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The target control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the target control (the one being extended)</p>
+</dd>
+    <dt><code>TSource</code></dt>
+    <dd><p>Type of the source control (the one being observed)</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_OnBindingContextSet_" data-uid="DrawnUi.Draw.FluentExtensions.OnBindingContextSet*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___" data-uid="DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])">
+  OnBindingContextSet&lt;T&gt;(T, Action&lt;T, object&gt;, string[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a callback to be executed when the control's BindingContext was set/changed.
+Called inside base.ApplyBindingContext().</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T OnBindingContextSet&lt;T&gt;(this T control, Action&lt;T, object&gt; callback, string[] propertyFilter = null) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd><p>The control to observe</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;</dt>
+    <dd><p>Callback to execute when BindingContext is set</p>
+</dd>
+    <dt><code>propertyFilter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p>Optional property filter</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_OnLongPressing_" data-uid="DrawnUi.Draw.FluentExtensions.OnLongPressing*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_OnLongPressing__1___0_System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})">
+  OnLongPressing&lt;T&gt;(T, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L719"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T OnLongPressing&lt;T&gt;(this T view, Action&lt;T&gt; action) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_OnPaint_" data-uid="DrawnUi.Draw.FluentExtensions.OnPaint*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__" data-uid="DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})">
+  OnPaint&lt;T&gt;(T, Action&lt;T, DrawingContext&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a callback to be executed during the paint phase of the control's rendering.
+Called inside the base.Paint(..).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T OnPaint&lt;T&gt;(this T view, Action&lt;T, DrawingContext&gt; action) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to attach paint logic to</p>
+</dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a>&gt;</dt>
+    <dd><p>Paint logic to run</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_OnTapped_" data-uid="DrawnUi.Draw.FluentExtensions.OnTapped*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0__" data-uid="DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0})">
+  OnTapped&lt;T&gt;(T, Action&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L705"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Uses an <code>AddGestures.SetCommandTapped</code> with this control, will invoke code in passed callback when tapped.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T OnTapped&lt;T&gt;(this T view, Action&lt;T&gt; action) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_OnTextChanged_" data-uid="DrawnUi.Draw.FluentExtensions.OnTextChanged*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_OnTextChanged_DrawnUi_Controls_SkiaMauiEditor_System_Action_DrawnUi_Controls_SkiaMauiEditor_System_String__" data-uid="DrawnUi.Draw.FluentExtensions.OnTextChanged(DrawnUi.Controls.SkiaMauiEditor,System.Action{DrawnUi.Controls.SkiaMauiEditor,System.String})">
+  OnTextChanged(SkiaMauiEditor, Action&lt;SkiaMauiEditor, string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a callback to be executed when the text of a SkiaMauiEditor changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaMauiEditor OnTextChanged(this SkiaMauiEditor control, Action&lt;SkiaMauiEditor, string&gt; action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Controls.SkiaMauiEditor.html">SkiaMauiEditor</a></dt>
+    <dd><p>The editor control to observe</p>
+</dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="DrawnUi.Controls.SkiaMauiEditor.html">SkiaMauiEditor</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback receiving the editor and new text</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Controls.SkiaMauiEditor.html">SkiaMauiEditor</a></dt>
+    <dd><p>The editor control for chaining</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_OnTextChanged_" data-uid="DrawnUi.Draw.FluentExtensions.OnTextChanged*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_OnTextChanged_DrawnUi_Controls_SkiaMauiEntry_System_Action_DrawnUi_Controls_SkiaMauiEntry_System_String__" data-uid="DrawnUi.Draw.FluentExtensions.OnTextChanged(DrawnUi.Controls.SkiaMauiEntry,System.Action{DrawnUi.Controls.SkiaMauiEntry,System.String})">
+  OnTextChanged(SkiaMauiEntry, Action&lt;SkiaMauiEntry, string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1185"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a callback to be executed when the text of a SkiaMauiEntry changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaMauiEntry OnTextChanged(this SkiaMauiEntry control, Action&lt;SkiaMauiEntry, string&gt; action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Controls.SkiaMauiEntry.html">SkiaMauiEntry</a></dt>
+    <dd><p>The entry control to observe</p>
+</dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="DrawnUi.Controls.SkiaMauiEntry.html">SkiaMauiEntry</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback receiving the entry and new text</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Controls.SkiaMauiEntry.html">SkiaMauiEntry</a></dt>
+    <dd><p>The entry control for chaining</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_OnTextChanged_" data-uid="DrawnUi.Draw.FluentExtensions.OnTextChanged*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_OnTextChanged_DrawnUi_Draw_SkiaLabel_System_Action_DrawnUi_Draw_SkiaLabel_System_String__" data-uid="DrawnUi.Draw.FluentExtensions.OnTextChanged(DrawnUi.Draw.SkiaLabel,System.Action{DrawnUi.Draw.SkiaLabel,System.String})">
+  OnTextChanged(SkiaLabel, Action&lt;SkiaLabel, string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1213"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a callback to be executed when the text of a SkiaLabel changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaLabel OnTextChanged(this SkiaLabel control, Action&lt;SkiaLabel, string&gt; action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <a class="xref" href="DrawnUi.Draw.SkiaLabel.html">SkiaLabel</a></dt>
+    <dd><p>The label control to observe</p>
+</dd>
+    <dt><code>action</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaLabel.html">SkiaLabel</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Callback receiving the label and new text</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaLabel.html">SkiaLabel</a></dt>
+    <dd><p>The label control for chaining</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_SetGrid_" data-uid="DrawnUi.Draw.FluentExtensions.SetGrid*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_SetGrid__1___0_System_Int32_System_Int32_" data-uid="DrawnUi.Draw.FluentExtensions.SetGrid``1(``0,System.Int32,System.Int32)">
+  SetGrid&lt;T&gt;(T, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Grid row and column in a single call</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T SetGrid&lt;T&gt;(this T view, int column, int row) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the grid position for</p>
+</dd>
+    <dt><code>column</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The column index</p>
+</dd>
+    <dt><code>row</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The row index</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_SetGrid_" data-uid="DrawnUi.Draw.FluentExtensions.SetGrid*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_SetGrid__1___0_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="DrawnUi.Draw.FluentExtensions.SetGrid``1(``0,System.Int32,System.Int32,System.Int32,System.Int32)">
+  SetGrid&lt;T&gt;(T, int, int, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L164"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Grid row, column, rowspan and columnspan in a single call</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T SetGrid&lt;T&gt;(this T view, int column, int row, int columnSpan, int rowSpan) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the grid position for</p>
+</dd>
+    <dt><code>column</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The column index</p>
+</dd>
+    <dt><code>row</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The row index</p>
+</dd>
+    <dt><code>columnSpan</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of columns to span</p>
+</dd>
+    <dt><code>rowSpan</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of rows to span</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_Shape_" data-uid="DrawnUi.Draw.FluentExtensions.Shape*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_Shape__1___0_DrawnUi_Draw_ShapeType_" data-uid="DrawnUi.Draw.FluentExtensions.Shape``1(``0,DrawnUi.Draw.ShapeType)">
+  Shape&lt;T&gt;(T, ShapeType)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the shape type for SkiaShape (shorter alias)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Shape&lt;T&gt;(this T shape, ShapeType shapeType) where T : SkiaShape</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>shape</code> <span class="xref">T</span></dt>
+    <dd><p>The shape to set type for</p>
+</dd>
+    <dt><code>shapeType</code> <a class="xref" href="DrawnUi.Draw.ShapeType.html">ShapeType</a></dt>
+    <dd><p>The shape type</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The shape for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaShape</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_StartX_" data-uid="DrawnUi.Draw.FluentExtensions.StartX*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_StartX__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.StartX``1(``0)">
+  StartX&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L843"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T StartX&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_StartY_" data-uid="DrawnUi.Draw.FluentExtensions.StartY*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_StartY__1___0_" data-uid="DrawnUi.Draw.FluentExtensions.StartY``1(``0)">
+  StartY&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L849"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T StartY&lt;T&gt;(this T view) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithAspect_" data-uid="DrawnUi.Draw.FluentExtensions.WithAspect*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithAspect__1___0_DrawnUi_Draw_TransformAspect_" data-uid="DrawnUi.Draw.FluentExtensions.WithAspect``1(``0,DrawnUi.Draw.TransformAspect)">
+  WithAspect&lt;T&gt;(T, TransformAspect)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the aspect for SkiaImage</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithAspect&lt;T&gt;(this T image, TransformAspect aspect) where T : SkiaImage</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <span class="xref">T</span></dt>
+    <dd><p>The image to set aspect for</p>
+</dd>
+    <dt><code>aspect</code> <a class="xref" href="DrawnUi.Draw.TransformAspect.html">TransformAspect</a></dt>
+    <dd><p>The transform aspect</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The image for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaImage</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithBackgroundColor_" data-uid="DrawnUi.Draw.FluentExtensions.WithBackgroundColor*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithBackgroundColor__1___0_Microsoft_Maui_Graphics_Color_" data-uid="DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)">
+  WithBackgroundColor&lt;T&gt;(T, Color)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1008"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the background color for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithBackgroundColor&lt;T&gt;(this T view, Color color) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set background color for</p>
+</dd>
+    <dt><code>color</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color">Color</a></dt>
+    <dd><p>The background color</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithBottom_" data-uid="DrawnUi.Draw.FluentExtensions.WithBottom*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithBottom_Microsoft_Maui_Thickness_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithBottom(Microsoft.Maui.Thickness,System.Double)">
+  WithBottom(Thickness, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Thickness WithBottom(this Thickness existing, double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>existing</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithCache_" data-uid="DrawnUi.Draw.FluentExtensions.WithCache*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithCache__1___0_DrawnUi_Draw_SkiaCacheType_" data-uid="DrawnUi.Draw.FluentExtensions.WithCache``1(``0,DrawnUi.Draw.SkiaCacheType)">
+  WithCache&lt;T&gt;(T, SkiaCacheType)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L995"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the cache type for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithCache&lt;T&gt;(this T view, SkiaCacheType cacheType) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set cache for</p>
+</dd>
+    <dt><code>cacheType</code> <a class="xref" href="DrawnUi.Draw.SkiaCacheType.html">SkiaCacheType</a></dt>
+    <dd><p>The cache type</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithChildren_" data-uid="DrawnUi.Draw.FluentExtensions.WithChildren*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithChildren__1___0_DrawnUi_Draw_SkiaControl___" data-uid="DrawnUi.Draw.FluentExtensions.WithChildren``1(``0,DrawnUi.Draw.SkiaControl[])">
+  WithChildren&lt;T&gt;(T, params SkiaControl[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L744"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds multiple child controls to a layout</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithChildren&lt;T&gt;(this T view, params SkiaControl[] children) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The layout to add children to</p>
+</dd>
+    <dt><code>children</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a>[]</dt>
+    <dd><p>The children to add</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The layout for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLayout</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithColumnDefinitions_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumnDefinitions*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithColumnDefinitions_DrawnUi_Draw_SkiaLayout_System_String_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumnDefinitions(DrawnUi.Draw.SkiaLayout,System.String)">
+  WithColumnDefinitions(SkiaLayout, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a string representation of column definitions and sets them on the grid</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaLayout WithColumnDefinitions(this SkiaLayout grid, string columnDefinitions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>grid</code> <a class="xref" href="DrawnUi.Draw.SkiaLayout.html">SkiaLayout</a></dt>
+    <dd><p>The grid to set column definitions for</p>
+</dd>
+    <dt><code>columnDefinitions</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>String in format like &quot;Auto,<em>,2</em>,100&quot;</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaLayout.html">SkiaLayout</a></dt>
+    <dd><p>The grid for chaining</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></dt>
+    <dd><p>Thrown if conversion fails</p>
+</dd>
+  </dl>
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithColumnSpacing_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumnSpacing*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(``0,System.Double)">
+  WithColumnSpacing&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1315"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the ColumnSpacing property for SkiaGrid</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithColumnSpacing&lt;T&gt;(this T grid, double spacing) where T : SkiaGrid</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>grid</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>spacing</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithColumnSpan_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumnSpan*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithColumnSpan__1___0_System_Int32_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(``0,System.Int32)">
+  WithColumnSpan&lt;T&gt;(T, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Grid.ColumnSpan attached property for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithColumnSpan&lt;T&gt;(this T view, int columnSpan) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the column span for</p>
+</dd>
+    <dt><code>columnSpan</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of columns to span</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithColumn_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumn*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithColumn__1___0_System_Int32_" data-uid="DrawnUi.Draw.FluentExtensions.WithColumn``1(``0,System.Int32)">
+  WithColumn&lt;T&gt;(T, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Grid.Column attached property for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithColumn&lt;T&gt;(this T view, int column) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the column for</p>
+</dd>
+    <dt><code>column</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The column index</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithContent_" data-uid="DrawnUi.Draw.FluentExtensions.WithContent*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithContent__1___0_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.FluentExtensions.WithContent``1(``0,DrawnUi.Draw.SkiaControl)">
+  WithContent&lt;T&gt;(T, SkiaControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L761"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the content of a container that implements IWithContent</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithContent&lt;T&gt;(this T view, SkiaControl child) where T : IWithContent</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The container</p>
+</dd>
+    <dt><code>child</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
+    <dd><p>The content to set</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The container for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type implementing IWithContent</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithEnabled_" data-uid="DrawnUi.Draw.FluentExtensions.WithEnabled*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithEnabled__1___0_System_Boolean_" data-uid="DrawnUi.Draw.FluentExtensions.WithEnabled``1(``0,System.Boolean)">
+  WithEnabled&lt;T&gt;(T, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1251"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the IsEnabled property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithEnabled&lt;T&gt;(this T control, bool enabled) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>enabled</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithFontSize_" data-uid="DrawnUi.Draw.FluentExtensions.WithFontSize*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithFontSize__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithFontSize``1(``0,System.Double)">
+  WithFontSize&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the font size for SkiaLabel</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithFontSize&lt;T&gt;(this T label, double fontSize) where T : SkiaLabel</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>label</code> <span class="xref">T</span></dt>
+    <dd><p>The label to set font size for</p>
+</dd>
+    <dt><code>fontSize</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The font size</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The label for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLabel</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithGestures_" data-uid="DrawnUi.Draw.FluentExtensions.WithGestures*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithGestures__1___0_System_Func___0_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_DrawnUi_Draw_ISkiaGestureListener__" data-uid="DrawnUi.Draw.FluentExtensions.WithGestures``1(``0,System.Func{``0,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,DrawnUi.Draw.ISkiaGestureListener})">
+  WithGestures&lt;T&gt;(T, Func&lt;T, SkiaGesturesParameters, GestureEventProcessingInfo, ISkiaGestureListener&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attaches a gesture handler to a SkiaLayout, allowing custom gesture processing.
+You must return this control if you consumed a gesture, return null if not.
+The UP gesture should be marked as consumed ONLY for specific scenarios, return null for it if unsure.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithGestures&lt;T&gt;(this T view, Func&lt;T, SkiaGesturesParameters, GestureEventProcessingInfo, ISkiaGestureListener&gt; func) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The layout to attach gestures to</p>
+</dd>
+    <dt><code>func</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;T, <a class="xref" href="DrawnUi.Draw.SkiaGesturesParameters.html">SkiaGesturesParameters</a>, <a class="xref" href="DrawnUi.Draw.GestureEventProcessingInfo.html">GestureEventProcessingInfo</a>, <a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a>&gt;</dt>
+    <dd><p>A function that returns a gesture listener for the layout</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The layout for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLayout</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithHeight_" data-uid="DrawnUi.Draw.FluentExtensions.WithHeight*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithHeight__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithHeight``1(``0,System.Double)">
+  WithHeight&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1047"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the height request for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithHeight&lt;T&gt;(this T view, double height) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set height for</p>
+</dd>
+    <dt><code>height</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The height request</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithHorizontalOptions_" data-uid="DrawnUi.Draw.FluentExtensions.WithHorizontalOptions*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithHorizontalOptions__1___0_Microsoft_Maui_Controls_LayoutOptions_" data-uid="DrawnUi.Draw.FluentExtensions.WithHorizontalOptions``1(``0,Microsoft.Maui.Controls.LayoutOptions)">
+  WithHorizontalOptions&lt;T&gt;(T, LayoutOptions)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1021"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the horizontal options for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithHorizontalOptions&lt;T&gt;(this T view, LayoutOptions options) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set horizontal options for</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.layoutoptions">LayoutOptions</a></dt>
+    <dd><p>The horizontal layout options</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithHorizontalTextAlignment_" data-uid="DrawnUi.Draw.FluentExtensions.WithHorizontalTextAlignment*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithHorizontalTextAlignment__1___0_DrawnUi_Draw_DrawTextAlignment_" data-uid="DrawnUi.Draw.FluentExtensions.WithHorizontalTextAlignment``1(``0,DrawnUi.Draw.DrawTextAlignment)">
+  WithHorizontalTextAlignment&lt;T&gt;(T, DrawTextAlignment)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1169"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the horizontal text alignment for SkiaLabel</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithHorizontalTextAlignment&lt;T&gt;(this T label, DrawTextAlignment alignment) where T : SkiaLabel</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>label</code> <span class="xref">T</span></dt>
+    <dd><p>The label to set alignment for</p>
+</dd>
+    <dt><code>alignment</code> <a class="xref" href="DrawnUi.Draw.DrawTextAlignment.html">DrawTextAlignment</a></dt>
+    <dd><p>The horizontal text alignment</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The label for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLabel</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithItemsSource_" data-uid="DrawnUi.Draw.FluentExtensions.WithItemsSource*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithItemsSource__1___0_System_Collections_IList_" data-uid="DrawnUi.Draw.FluentExtensions.WithItemsSource``1(``0,System.Collections.IList)">
+  WithItemsSource&lt;T&gt;(T, IList)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1239"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the ItemsSource property for controls that have it</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithItemsSource&lt;T&gt;(this T control, IList itemsSource) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>itemsSource</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ilist">IList</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithLeft_" data-uid="DrawnUi.Draw.FluentExtensions.WithLeft*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithLeft_Microsoft_Maui_Thickness_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithLeft(Microsoft.Maui.Thickness,System.Double)">
+  WithLeft(Thickness, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Thickness WithLeft(this Thickness existing, double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>existing</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithMargin_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithMargin__1___0_Microsoft_Maui_Thickness_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin``1(``0,Microsoft.Maui.Thickness)">
+  WithMargin&lt;T&gt;(T, Thickness)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1073"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the margin for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithMargin&lt;T&gt;(this T view, Thickness margin) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set margin for</p>
+</dd>
+    <dt><code>margin</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd><p>The margin thickness</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithMargin_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithMargin__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin``1(``0,System.Double)">
+  WithMargin&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L890"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the margin for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithMargin&lt;T&gt;(this T view, double uniformMargin) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set margin for</p>
+</dd>
+    <dt><code>uniformMargin</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The uniform margin to apply to all sides</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithMargin_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithMargin__1___0_System_Double_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin``1(``0,System.Double,System.Double)">
+  WithMargin&lt;T&gt;(T, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L904"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the margin for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithMargin&lt;T&gt;(this T view, double horizontal, double vertical) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set margin for</p>
+</dd>
+    <dt><code>horizontal</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The left and right margin</p>
+</dd>
+    <dt><code>vertical</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The top and bottom margin</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithMargin_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithMargin__1___0_System_Double_System_Double_System_Double_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithMargin``1(``0,System.Double,System.Double,System.Double,System.Double)">
+  WithMargin&lt;T&gt;(T, double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L920"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the margin for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithMargin&lt;T&gt;(this T view, double left, double top, double right, double bottom) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set margin for</p>
+</dd>
+    <dt><code>left</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The left margin</p>
+</dd>
+    <dt><code>top</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The top margin</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The right margin</p>
+</dd>
+    <dt><code>bottom</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The bottom margin</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithOpacity_" data-uid="DrawnUi.Draw.FluentExtensions.WithOpacity*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithOpacity__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithOpacity``1(``0,System.Double)">
+  WithOpacity&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1260"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Opacity property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithOpacity&lt;T&gt;(this T control, double opacity) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>opacity</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithPadding_" data-uid="DrawnUi.Draw.FluentExtensions.WithPadding*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithPadding__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithPadding``1(``0,System.Double)">
+  WithPadding&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L934"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the padding for a layout control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithPadding&lt;T&gt;(this T view, double uniformPadding) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The layout to set padding for</p>
+</dd>
+    <dt><code>uniformPadding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The uniform padding to apply to all sides</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The layout for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLayout</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithPadding_" data-uid="DrawnUi.Draw.FluentExtensions.WithPadding*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithPadding__1___0_System_Double_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithPadding``1(``0,System.Double,System.Double)">
+  WithPadding&lt;T&gt;(T, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L948"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the padding for a layout control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithPadding&lt;T&gt;(this T view, double horizontal, double vertical) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The layout to set padding for</p>
+</dd>
+    <dt><code>horizontal</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The left and right padding</p>
+</dd>
+    <dt><code>vertical</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The top and bottom padding</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The layout for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLayout</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithPadding_" data-uid="DrawnUi.Draw.FluentExtensions.WithPadding*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithPadding__1___0_System_Double_System_Double_System_Double_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithPadding``1(``0,System.Double,System.Double,System.Double,System.Double)">
+  WithPadding&lt;T&gt;(T, double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L964"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the padding for a layout control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithPadding&lt;T&gt;(this T view, double left, double top, double right, double bottom) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The layout to set padding for</p>
+</dd>
+    <dt><code>left</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The left padding</p>
+</dd>
+    <dt><code>top</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The top padding</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The right padding</p>
+</dd>
+    <dt><code>bottom</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The bottom padding</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The layout for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLayout</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithParent_" data-uid="DrawnUi.Draw.FluentExtensions.WithParent*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithParent__1___0_DrawnUi_Draw_IDrawnBase_" data-uid="DrawnUi.Draw.FluentExtensions.WithParent``1(``0,DrawnUi.Draw.IDrawnBase)">
+  WithParent&lt;T&gt;(T, IDrawnBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L774"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds the control to a parent and returns the control for further chaining</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithParent&lt;T&gt;(this T view, IDrawnBase parent) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to add</p>
+</dd>
+    <dt><code>parent</code> <a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></dt>
+    <dd><p>The parent to add the control to</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithPoints_" data-uid="DrawnUi.Draw.FluentExtensions.WithPoints*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithPoints_DrawnUi_Draw_SkiaShape_System_String_" data-uid="DrawnUi.Draw.FluentExtensions.WithPoints(DrawnUi.Draw.SkiaShape,System.String)">
+  WithPoints(SkiaShape, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a string representation of points and sets them on the shape</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaShape WithPoints(this SkiaShape shape, string columnDefinitions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>shape</code> <a class="xref" href="DrawnUi.Draw.SkiaShape.html">SkiaShape</a></dt>
+    <dd></dd>
+    <dt><code>columnDefinitions</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaShape.html">SkiaShape</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithRight_" data-uid="DrawnUi.Draw.FluentExtensions.WithRight*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithRight_Microsoft_Maui_Thickness_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithRight(Microsoft.Maui.Thickness,System.Double)">
+  WithRight(Thickness, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L271"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Thickness WithRight(this Thickness existing, double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>existing</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithRotation_" data-uid="DrawnUi.Draw.FluentExtensions.WithRotation*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithRotation__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithRotation``1(``0,System.Double)">
+  WithRotation&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1269"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Rotation property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithRotation&lt;T&gt;(this T control, double rotation) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>rotation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithRowDefinitions_" data-uid="DrawnUi.Draw.FluentExtensions.WithRowDefinitions*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithRowDefinitions_DrawnUi_Draw_SkiaLayout_System_String_" data-uid="DrawnUi.Draw.FluentExtensions.WithRowDefinitions(DrawnUi.Draw.SkiaLayout,System.String)">
+  WithRowDefinitions(SkiaLayout, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a string representation of row definitions and sets them on the grid</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaLayout WithRowDefinitions(this SkiaLayout grid, string definitions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>grid</code> <a class="xref" href="DrawnUi.Draw.SkiaLayout.html">SkiaLayout</a></dt>
+    <dd><p>The grid to set row definitions for</p>
+</dd>
+    <dt><code>definitions</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>String in format like &quot;Auto,<em>,2</em>,100&quot;</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaLayout.html">SkiaLayout</a></dt>
+    <dd><p>The grid for chaining</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></dt>
+    <dd><p>Thrown if conversion fails</p>
+</dd>
+  </dl>
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithRowSpacing_" data-uid="DrawnUi.Draw.FluentExtensions.WithRowSpacing*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(``0,System.Double)">
+  WithRowSpacing&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1324"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the RowSpacing property for SkiaGrid</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithRowSpacing&lt;T&gt;(this T grid, double spacing) where T : SkiaGrid</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>grid</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>spacing</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithRowSpan_" data-uid="DrawnUi.Draw.FluentExtensions.WithRowSpan*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithRowSpan__1___0_System_Int32_" data-uid="DrawnUi.Draw.FluentExtensions.WithRowSpan``1(``0,System.Int32)">
+  WithRowSpan&lt;T&gt;(T, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Grid.RowSpan attached property for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithRowSpan&lt;T&gt;(this T view, int rowSpan) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the row span for</p>
+</dd>
+    <dt><code>rowSpan</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of rows to span</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithRow_" data-uid="DrawnUi.Draw.FluentExtensions.WithRow*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithRow__1___0_System_Int32_" data-uid="DrawnUi.Draw.FluentExtensions.WithRow``1(``0,System.Int32)">
+  WithRow&lt;T&gt;(T, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Grid.Row attached property for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithRow&lt;T&gt;(this T view, int row) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the row for</p>
+</dd>
+    <dt><code>row</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The row index</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithScale_" data-uid="DrawnUi.Draw.FluentExtensions.WithScale*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithScale__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithScale``1(``0,System.Double)">
+  WithScale&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Scale property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithScale&lt;T&gt;(this T control, double scale) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>scale</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithScale_" data-uid="DrawnUi.Draw.FluentExtensions.WithScale*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithScale__1___0_System_Double_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithScale``1(``0,System.Double,System.Double)">
+  WithScale&lt;T&gt;(T, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1287"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets separate X and Y scale values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithScale&lt;T&gt;(this T control, double scaleX, double scaleY) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>control</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>scaleX</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>scaleY</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithShapeType_" data-uid="DrawnUi.Draw.FluentExtensions.WithShapeType*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithShapeType__1___0_DrawnUi_Draw_ShapeType_" data-uid="DrawnUi.Draw.FluentExtensions.WithShapeType``1(``0,DrawnUi.Draw.ShapeType)">
+  WithShapeType&lt;T&gt;(T, ShapeType)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1096"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the shape type for SkiaShape</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithShapeType&lt;T&gt;(this T shape, ShapeType shapeType) where T : SkiaShape</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>shape</code> <span class="xref">T</span></dt>
+    <dd><p>The shape to set type for</p>
+</dd>
+    <dt><code>shapeType</code> <a class="xref" href="DrawnUi.Draw.ShapeType.html">ShapeType</a></dt>
+    <dd><p>The shape type</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The shape for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaShape</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithSpacing_" data-uid="DrawnUi.Draw.FluentExtensions.WithSpacing*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithSpacing__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithSpacing``1(``0,System.Double)">
+  WithSpacing&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1306"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Spacing property for SkiaLayout</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithSpacing&lt;T&gt;(this T layout, double spacing) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>layout</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>spacing</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithTag_" data-uid="DrawnUi.Draw.FluentExtensions.WithTag*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithTag__1___0_System_String_" data-uid="DrawnUi.Draw.FluentExtensions.WithTag``1(``0,System.String)">
+  WithTag&lt;T&gt;(T, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L978"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Tag property for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithTag&lt;T&gt;(this T view, string tag) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set the Tag for</p>
+</dd>
+    <dt><code>tag</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The tag value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithTextColor_" data-uid="DrawnUi.Draw.FluentExtensions.WithTextColor*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithTextColor__1___0_Microsoft_Maui_Graphics_Color_" data-uid="DrawnUi.Draw.FluentExtensions.WithTextColor``1(``0,Microsoft.Maui.Graphics.Color)">
+  WithTextColor&lt;T&gt;(T, Color)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1156"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the text color for SkiaLabel</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithTextColor&lt;T&gt;(this T label, Color color) where T : SkiaLabel</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>label</code> <span class="xref">T</span></dt>
+    <dd><p>The label to set text color for</p>
+</dd>
+    <dt><code>color</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color">Color</a></dt>
+    <dd><p>The text color</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The label for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaLabel</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithText_" data-uid="DrawnUi.Draw.FluentExtensions.WithText*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithText__1___0_System_String_" data-uid="DrawnUi.Draw.FluentExtensions.WithText``1(``0,System.String)">
+  WithText&lt;T&gt;(T, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1230"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Text property for SkiaLabel</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithText&lt;T&gt;(this T label, string text) where T : SkiaLabel</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>label</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>text</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithTop_" data-uid="DrawnUi.Draw.FluentExtensions.WithTop*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithTop_Microsoft_Maui_Thickness_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithTop(Microsoft.Maui.Thickness,System.Double)">
+  WithTop(Thickness, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs/#L241"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Thickness WithTop(this Thickness existing, double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>existing</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithType_" data-uid="DrawnUi.Draw.FluentExtensions.WithType*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithType__1___0_DrawnUi_Draw_LayoutType_" data-uid="DrawnUi.Draw.FluentExtensions.WithType``1(``0,DrawnUi.Draw.LayoutType)">
+  WithType&lt;T&gt;(T, LayoutType)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1297"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the Type property for SkiaLayout</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithType&lt;T&gt;(this T layout, LayoutType type) where T : SkiaLayout</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>layout</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>type</code> <a class="xref" href="DrawnUi.Draw.LayoutType.html">LayoutType</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithVerticalOptions_" data-uid="DrawnUi.Draw.FluentExtensions.WithVerticalOptions*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithVerticalOptions__1___0_Microsoft_Maui_Controls_LayoutOptions_" data-uid="DrawnUi.Draw.FluentExtensions.WithVerticalOptions``1(``0,Microsoft.Maui.Controls.LayoutOptions)">
+  WithVerticalOptions&lt;T&gt;(T, LayoutOptions)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1034"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the vertical options for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithVerticalOptions&lt;T&gt;(this T view, LayoutOptions options) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set vertical options for</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.layoutoptions">LayoutOptions</a></dt>
+    <dd><p>The vertical layout options</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithVisibility_" data-uid="DrawnUi.Draw.FluentExtensions.WithVisibility*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithVisibility__1___0_System_Boolean_" data-uid="DrawnUi.Draw.FluentExtensions.WithVisibility``1(``0,System.Boolean)">
+  WithVisibility&lt;T&gt;(T, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1079"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithVisibility&lt;T&gt;(this T view, bool value) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_FluentExtensions_WithWidth_" data-uid="DrawnUi.Draw.FluentExtensions.WithWidth*"></a>
+
+  <h3 id="DrawnUi_Draw_FluentExtensions_WithWidth__1___0_System_Double_" data-uid="DrawnUi.Draw.FluentExtensions.WithWidth``1(``0,System.Double)">
+  WithWidth&lt;T&gt;(T, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L1060"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the width request for the control</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WithWidth&lt;T&gt;(this T view, double width) where T : SkiaControl</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">T</span></dt>
+    <dd><p>The control to set width for</p>
+</dd>
+    <dt><code>width</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The width request</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The control for chaining</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of SkiaControl</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Extensions/FluentExtensions.Shared.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
