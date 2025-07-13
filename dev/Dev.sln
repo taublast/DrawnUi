@@ -81,6 +81,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Preview", "Preview", "{1554
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawUITest", "..\..\UserTestCells\DrawUITest.csproj", "{E0E2F816-023B-FE02-535D-26919DB9705F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{0C6C7C5D-8C32-4A9B-9A97-03D0A0A50517}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\api\index.md = ..\docs\api\index.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +187,7 @@ Global
 		{BABDD4D3-A890-3B5B-AC6F-91B57F198702} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{DA3890E5-27F6-AFA3-CE6A-B32052050764} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{E0E2F816-023B-FE02-535D-26919DB9705F} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
+		{0C6C7C5D-8C32-4A9B-9A97-03D0A0A50517} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}
