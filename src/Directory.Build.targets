@@ -3,9 +3,9 @@
     <!--For All Post-Build Stuff -->
 
     <PropertyGroup>
-        <Version>1.5.1.4</Version>
+        <Version>1.6.1.1-pre</Version>
         <Authors>Nick Kovalsky aka AppoMobi and contributors</Authors>
-        <Copyright>(c) AppoMobi and  and contributors 2023 - present day</Copyright>
+        <Copyright>(c) AppoMobi and contributors 2023 - present day</Copyright>
         <PackageProjectUrl>https://github.com/taublast/DrawnUi</PackageProjectUrl>
         <RepositoryUrl>https://github.com/taublast/DrawnUi</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>

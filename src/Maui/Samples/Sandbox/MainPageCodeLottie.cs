@@ -3,9 +3,9 @@ using Sandbox.Views;
 
 namespace Sandbox
 {
-    public class VStack : SkiaLayout
+    public class SkiaStack : SkiaLayout
     {
-        public VStack()
+        public SkiaStack()
         {
             Type = LayoutType.Column;
             HorizontalOptions = LayoutOptions.Fill;
@@ -51,7 +51,7 @@ namespace Sandbox
                             Padding = 8,
                             Children = new List<SkiaControl>()
                             {
-                                new VStack()
+                                new SkiaStack()
                                 {
                                     new SkiaLottie()
                                     {

@@ -64,11 +64,8 @@ public partial class DebugImage : SkiaShape
         set { SetValue(TextProperty, value); }
     }
 
-    public override ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+    public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
     {
-        if (IsDisposed || IsDisposing)
-            return ScaledSize.Default;
-
         if (Display == null)
         {
             Display = CreatePreview();
@@ -79,10 +76,13 @@ public partial class DebugImage : SkiaShape
                     VerticalOptions = LayoutOptions.Fill
                 }
                 .WithChildren(Display, Caption);
-            Content = layout;
+            Children = new List<SkiaControl>()
+            {
+                layout
+            };
         }
 
-        return base.Measure(widthConstraint, heightConstraint, scale);
+        return base.OnMeasuring(widthConstraint, heightConstraint, scale);
     }
 
     private Guid _lastFrame;

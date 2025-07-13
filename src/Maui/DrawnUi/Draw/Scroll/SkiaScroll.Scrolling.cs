@@ -880,6 +880,15 @@ public partial class SkiaScroll
 
     public void ScrollToBottom(float maxTimeSecs)
     {
+        // For virtualized lists with unmeasured items, use estimated bottom position
+        if (UseVirtual && Content is SkiaLayout layout && layout.IsTemplated && 
+            layout.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+        {
+            ScrollToEstimatedBottom(maxTimeSecs);
+            return;
+        }
+
+        // Standard scroll to bottom using measured content
         if (Orientation == ScrollOrientation.Vertical)
         {
             ScrollTo(InternalViewportOffset.Units.X, _scrollMinY, maxTimeSecs);
@@ -892,6 +901,48 @@ public partial class SkiaScroll
         else
         {
             ScrollTo(_scrollMinX, _scrollMinY, maxTimeSecs);
+        }
+    }
+
+    /// <summary>
+    /// Scrolls to estimated bottom position for virtualized lists with unmeasured items
+    /// </summary>
+    private void ScrollToEstimatedBottom(float maxTimeSecs)
+    {
+        if (!(Content is SkiaLayout layout) || !layout.IsTemplated)
+            return;
+
+        var estimatedSize = layout.GetEstimatedContentSize(RenderingScale);
+        
+        Debug.WriteLine($"[ScrollToEstimatedBottom] Current content size: {ContentSize.Pixels.Width}x{ContentSize.Pixels.Height}, estimated: {estimatedSize.Pixels.Width}x{estimatedSize.Pixels.Height}");
+
+        if (Orientation == ScrollOrientation.Vertical)
+        {
+            // Calculate estimated bottom position
+            var estimatedContentHeight = estimatedSize.Pixels.Height;
+            var viewportHeight = Viewport.Pixels.Height;
+            var estimatedScrollY = -(estimatedContentHeight - viewportHeight);
+            
+            // Clamp to reasonable bounds
+            var minScrollY = Math.Min(0, estimatedScrollY);
+            
+            Debug.WriteLine($"[ScrollToEstimatedBottom] Scrolling to estimated Y: {minScrollY} (content: {estimatedContentHeight}, viewport: {viewportHeight})");
+            
+            ScrollTo(InternalViewportOffset.Units.X, minScrollY, maxTimeSecs);
+        }
+        else if (Orientation == ScrollOrientation.Horizontal)
+        {
+            // Calculate estimated right position
+            var estimatedContentWidth = estimatedSize.Pixels.Width;
+            var viewportWidth = Viewport.Pixels.Width;
+            var estimatedScrollX = -(estimatedContentWidth - viewportWidth);
+            
+            // Clamp to reasonable bounds
+            var minScrollX = Math.Min(0, estimatedScrollX);
+            
+            Debug.WriteLine($"[ScrollToEstimatedBottom] Scrolling to estimated X: {minScrollX} (content: {estimatedContentWidth}, viewport: {viewportWidth})");
+            
+            ScrollTo(minScrollX, InternalViewportOffset.Units.Y, maxTimeSecs);
         }
     }
 

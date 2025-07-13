@@ -6,12 +6,16 @@
 /// </summary>
 public class DrawnUiBasePage : ContentPage
 {
+    public DrawnUiBasePage()
+    {
+        NavigationPage.SetHasNavigationBar(this, false);
+    }
+
     public void KeyboardResized(double keyboardSize)
     {
         Debug.WriteLine($"[DrawnUiBasePage] Keyboard {keyboardSize}");
         OnKeyboardResized(keyboardSize);
     }
-    
 
     public virtual double OnKeyboardResized(double size)
     {

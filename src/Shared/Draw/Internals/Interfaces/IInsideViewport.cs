@@ -2,6 +2,10 @@
 
 public interface IInsideViewport : IVisibilityAware, IDisposable
 {
+    /// <summary>
+    /// Will be called when viewport containing this view has changed
+    /// </summary>
+    /// <param name="viewport"></param>
     public void OnViewportWasChanged(ScaledRect viewport);
 
     /// <summary>

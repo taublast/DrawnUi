@@ -27,6 +27,7 @@
 
                 if (measuredEnd - currentOffset < MeasurementTriggerDistance)
                 {
+                    Debug.WriteLine($"[SkiaScrollCells] TRIGGERING incremental measurement: measuredEnd={measuredEnd:F1}, currentOffset={currentOffset:F1}, distance={measuredEnd - currentOffset:F1}");
                     TriggerIncrementalMeasurement(layout);
                     return true;
                 }
@@ -42,6 +43,7 @@
 
         protected void TriggerIncrementalMeasurement(SkiaLayout layout)
         {
+            Debug.WriteLine($"[TriggerIncrementalMeasurement] Starting background measurement batch (BatchSize: {IncrementalMeasureBatchSize}, AheadCount: {IncrementalMeasureAheadCount})");
             _incrementalMeasurementInProgress = true;
 
             async Task DoMeasure()
@@ -54,6 +56,8 @@
                 _lockAdditionalMeasurement.Release();
 
                 _incrementalMeasurementInProgress = false;
+                
+                Debug.WriteLine($"[TriggerIncrementalMeasurement] Background measurement completed, measured {measuredCount} items");
 
                 Update();
 

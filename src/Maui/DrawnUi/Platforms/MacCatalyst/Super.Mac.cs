@@ -93,12 +93,6 @@ namespace DrawnUi.Draw
             }
         }
 
-
-
-
-
-
-
         #region Thread
         static bool PlatformIsMainThread
         {
@@ -114,12 +108,24 @@ namespace DrawnUi.Draw
         }
 
         #endregion
+
+        public static int GetDisplayRefreshRate(int fallback)
+        {
+            return (int)UIScreen.MainScreen.MaximumFramesPerSecond;
+        }
+
+        public static int RefreshRate { get; protected set; }
+
+
         public static void Init()
         {
             if (Initialized)
                 return;
 
             Initialized = true;
+
+
+            RefreshRate = GetDisplayRefreshRate(60);
 
             Super.Screen.Density = UIScreen.MainScreen.Scale;
             Super.Screen.WidthDip = UIScreen.MainScreen.Bounds.Width;
@@ -264,6 +270,23 @@ namespace DrawnUi.Draw
                 return bytes;
             }
 
+        }
+
+        private static bool _keepScreenOn;
+        /// <summary>
+        /// Prevents display from auto-turning off  Everytime you set this the setting will be applied.
+        /// </summary>
+        public static bool KeepScreenOn
+        {
+            get
+            {
+                return _keepScreenOn;
+            }
+            set
+            {
+                UIApplication.SharedApplication.IdleTimerDisabled = value;
+                _keepScreenOn = value;
+            }
         }
 
     }

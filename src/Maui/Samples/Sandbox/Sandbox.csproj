@@ -1,16 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst;</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0;</TargetFrameworks>
-      <ApplicationId>com.companyname.sandbox3</ApplicationId>
+        <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+        
+        <ApplicationId>com.companyname.sandbox3</ApplicationId>
         <ApplicationIdGuid>330e07b0-ebc2-4fde-9ac8-074d5c3269b3</ApplicationIdGuid>
-      <ApplicationTitle>Sandbox v3</ApplicationTitle>
+        <ApplicationTitle>Sandbox v3</ApplicationTitle>
         <OutputType>Exe</OutputType>
         <RootNamespace>Sandbox</RootNamespace>
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
+
     </PropertyGroup>
 
 	<PropertyGroup>
@@ -97,20 +99,6 @@
 
     <None Remove="Resources\Raw\Markdown.md" />
 
-    <None Remove="Resources\raw\Shaders2\blit.sksl" />
-
-    <None Remove="Resources\raw\Shaders2\blur.sksl" />
-
-    <None Remove="Resources\raw\Shaders2\blurmasked.sksl" />
-
-    <None Remove="Resources\raw\Shaders2\curl.glsl" />
-
-    <None Remove="Resources\raw\Shaders2\curl.sksl" />
-
-    <None Remove="Resources\raw\Shaders2\glowblur.glsl" />
-
-    <None Remove="Resources\raw\Shaders2\glowblur.sksl" />
-
     <None Remove="Resources\Raw\Shaders\apple.sksl" />
 
     <None Remove="Resources\Raw\Shaders\invert.sksl" />
@@ -171,6 +159,11 @@
 
     <ItemGroup>
  
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+ 
     <EmbeddedResource Update="Resources\Strings\ResStrings.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>ResStrings.Designer.cs</LastGenOutput>
@@ -195,31 +188,10 @@
     <MauiAsset Update="Resources\Raw\Lottie\ok.json">
       <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders2\blit.sksl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders2\blurmasked.sksl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders2\curl.glsl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders2\blur.sksl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders2\glowblur.glsl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders2\glowblur.sksl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
     <MauiAsset Update="Resources\Raw\Shaders\ripples.sksl">
       <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </MauiAsset>
     <MauiAsset Update="Resources\Raw\Shaders\apple.sksl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders\invert.sksl">
       <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </MauiAsset>
     <MauiAsset Update="Resources\Raw\Shaders\transfade.sksl">
@@ -269,32 +241,66 @@
     </MauiAsset>
   </ItemGroup>
 
- 
-
+    
   <ItemGroup>
     <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
     <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Game\DrawnUi.Maui.Game.csproj" />
     <ProjectReference Include="..\..\Addons\DrawnUi.Maui.MapsUi\DrawnUi.Maui.MapsUi.csproj" />
     <ProjectReference Include="..\..\Addons\DrawnUi.MauiGraphics\DrawnUi.MauiGraphics.csproj" />
-    <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
   </ItemGroup>
 
- 
-
+    
   <ItemGroup>
-    <Compile Update="Views\MainPageCamera.xaml.cs">
-      <DependentUpon>MainPageCamera.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\MainPageCarouselTabs.xaml.cs">
-      <DependentUpon>MainPageCarouselTabs.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\MainPageUnevenRows.xaml.cs">
-      <DependentUpon>MainPageUnevenRows.xaml</DependentUpon>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
+    
  
- 
+    
+        <!-- Exclude NuGet native assets to avoid conflicts -->
+        <!--<ItemGroup>
+        <PackageReference Include="HarfBuzzSharp.NativeAssets.Win32" Version="8.3.0.1">
+            <ExcludeAssets>native</ExcludeAssets>
+        </PackageReference>
+    </ItemGroup>-->
+
+    <!-- Windows x64 files -->
+    <!--<ItemGroup>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\windows\x64\*.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\windows\x64\*.pdb">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+    </ItemGroup>-->
+
+    <!-- WinUI x64 files -->
+    <!--<ItemGroup>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\winui\x64\*.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\winui\x64\*.pdb">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="SkiaSharp.Views.WinUI.Native.Projection">
+        <HintPath>..\..\..\..\..\SkiaSharpFork\output\native\winui\any\SkiaSharp.Views.WinUI.Native.Projection.dll</HintPath>
+      </Reference>
+    </ItemGroup>-->
+
 
  
 </Project>

@@ -10,15 +10,49 @@ public partial class SkiaLayout
     #region GRID
 
 
+    /// <summary>
+    /// Measures the grid layout and ensures columns fill available width when NeedAutoWidth is false
+    /// </summary>
+    /// <param name="rectForChildrenPixels">Available rectangle in pixels</param>
+    /// <param name="scale">Rendering scale</param>
+    /// <returns>Measured size of the grid</returns>
     public virtual ScaledSize MeasureGrid(SKRect rectForChildrenPixels, float scale)
     {
-        //Trace.WriteLine($"MeasureGrid inside {rectForChildrenPixels}");
-
         var constraints = GetSizeInPoints(rectForChildrenPixels.Size, scale);
 
         BuildGridLayout(constraints);
 
         GridStructureMeasured.DecompressStars(constraints);
+
+        // Fix for Auto columns not filling available width when NeedAutoWidth is false
+        if (!NeedAutoWidth && GridStructureMeasured.Columns.Length > 0)
+        {
+            var currentGridWidth = GridStructureMeasured.GridWidth() - GridStructureMeasured.Padding.HorizontalThickness;
+            var availableContentWidth = constraints.Width - GridStructureMeasured.Padding.HorizontalThickness;
+
+            if (currentGridWidth < availableContentWidth)
+            {
+                var extraSpace = availableContentWidth - currentGridWidth;
+                // Add the extra space to the last column
+                var lastColumnIndex = GridStructureMeasured.Columns.Length - 1;
+                GridStructureMeasured.Columns[lastColumnIndex].Size += extraSpace;
+            }
+        }
+
+        // Fix for Auto rows not filling available height when NeedAutoHeight is false  
+        if (!NeedAutoHeight && GridStructureMeasured.Rows.Length > 0)
+        {
+            var currentGridHeight = GridStructureMeasured.GridHeight() - GridStructureMeasured.Padding.VerticalThickness;
+            var availableContentHeight = constraints.Height - GridStructureMeasured.Padding.VerticalThickness;
+
+            if (currentGridHeight < availableContentHeight)
+            {
+                var extraSpace = availableContentHeight - currentGridHeight;
+                // Add the extra space to the last row
+                var lastRowIndex = GridStructureMeasured.Rows.Length - 1;
+                GridStructureMeasured.Rows[lastRowIndex].Size += extraSpace;
+            }
+        }
 
         var maxHeight = 0.0f;
         var maxWidth = 0.0f;
@@ -100,7 +134,7 @@ public partial class SkiaLayout
                     DrawChild(context.WithDestination(cellRect), child);
                 }
 
-                tree.Add(new SkiaControlWithRect(child, cellRect, child.LastDrawnAt, drawn));
+                tree.Add(new SkiaControlWithRect(child, cellRect, child.DrawingRect, drawn, -1, child.BindingContext));
 
                 drawn++;
             }

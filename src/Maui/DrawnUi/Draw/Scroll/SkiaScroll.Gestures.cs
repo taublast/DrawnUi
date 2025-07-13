@@ -68,7 +68,7 @@ public partial class SkiaScroll
         return forChild;
     }
 
-    private bool inContact;
+    protected bool InContact;
 
     protected bool LockGesturesUntilDown;
 
@@ -159,6 +159,54 @@ public partial class SkiaScroll
         _pannedVelocityRemaining = Vector2.Zero;
     }
 
+    #region MOUSE WHEEL
+
+    /// <summary>
+    /// How many points (not pixels) we want to scroll for 1 wheel line
+    /// </summary>
+    public static float WheelLineSize = 150;
+
+    /// <summary>
+    /// Scroll "like in Windows" by lines. No bouncing here.
+    /// Mouse wheel UP gives positive value, mouse wheel DOWN give negative.
+    /// </summary>
+    /// <param name="value">In point how much to scroll</param>
+    /// <param name="position">Reserved</param>
+    void ApplyWheelScroll(float value, SKPoint position)
+    {
+        var offsetY = ViewportOffsetY;
+        var offsetX = ViewportOffsetX;
+
+        if (this.Orientation == ScrollOrientation.Vertical)
+        {
+            offsetY += WheelLineSize * Math.Sign(value);
+        }
+        else if (this.Orientation == ScrollOrientation.Horizontal)
+        {
+            offsetX += WheelLineSize * Math.Sign(value);
+        }
+
+        var clamped = ClampOffsetHard(offsetX, offsetY);
+
+        ScrollTo(clamped.X, clamped.Y, AutoScrollingSpeedMs);
+    }
+
+    /// <summary>
+    /// "Just clamp". Currently used for wheel scroll.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    protected virtual Vector2 ClampOffsetHard(float x, float y)
+    {
+        var clampedX = Math.Max(ContentOffsetBounds.Left, Math.Min(ContentOffsetBounds.Right, x));
+        var clampedY = Math.Max(ContentOffsetBounds.Top, Math.Min(ContentOffsetBounds.Bottom, y));
+
+        return new Vector2(clampedX, clampedY);
+    }
+
+    #endregion
+
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
         var consumedDefault = BlockGesturesBelow ? this : null;
@@ -175,14 +223,14 @@ public partial class SkiaScroll
         if (args.Type == TouchActionResult.Down)
         {
             lockHeader = false;
-            inContact = true;
+            InContact = true;
             HadDown = true;
         }
         else if (args.Type == TouchActionResult.Up)
         {
             lockHeader = false;
             HadDown = false;
-            inContact = false;
+            InContact = false;
         }
 
         var preciseStop = false;
@@ -211,6 +259,13 @@ public partial class SkiaScroll
         ISkiaGestureListener PassToChildren()
         {
             passedToChildren = true;
+            
+            // Use plane-aware gesture processing for 3-plane virtualization
+            if (UseVirtual && PlaneCurrent != null)
+            {
+                return ProcessGesturesForPlanes(args, apply);
+            }
+            
             return base.ProcessGestures(args, apply);
         }
 
@@ -253,6 +308,11 @@ public partial class SkiaScroll
                                || args.Type == TouchActionResult.Tapped || !RespondsToGestures))
         {
             var childConsumed = PassToChildren();
+            if (childConsumed == this)
+            {
+                //BlockGesturesBelow fired
+                childConsumed = null;
+            }
             if (childConsumed != null)
             {
                 if (args.Type == TouchActionResult.Panning)
@@ -306,6 +366,11 @@ public partial class SkiaScroll
                         ResetPan();
                         //_panningStartOffsetPts = new(InternalViewportOffset.Units.X, InternalViewportOffset.Units.Y);
                         consumed = PassToChildren();
+                        if (consumed == this)
+                        {
+                            //BlockGesturesBelow fired
+                            consumed = null;
+                        }
                     }
 
                     break;
@@ -575,6 +640,19 @@ public partial class SkiaScroll
                     }
 
                     break;
+
+                case TouchActionResult.Wheel:
+
+                    Debug.WriteLine($"Wheel {args.Event.Wheel.Delta}");
+
+                    //just in case you might want to know where is the mouse cursor
+                    var point = TranslateInputOffsetToPixels(args.Event.Wheel.Center, apply.ChildOffset);
+                    var position = new SKPoint((point.X - DrawingRect.Left) / RenderingScale,
+                        (point.Y - DrawingRect.Top) / RenderingScale);
+
+                    ApplyWheelScroll(args.Event.Wheel.Delta, position);
+                    consumed = this;
+                    break;
             }
         }
 
@@ -590,18 +668,65 @@ public partial class SkiaScroll
 
         if (!passedToChildren) //will not pass when panning
         {
-            consumed = PassToChildren();
-            if (consumed == null)
-                return consumedDefault;
-            return consumed;
+            return PassToChildren();
         }
 
         return consumedDefault;
     }
 
-    public virtual bool OnFocusChanged(bool focus)
+    /// <summary>
+    /// Process gestures across all visible planes in correct Z-order
+    /// </summary>
+    protected virtual ISkiaGestureListener ProcessGesturesForPlanes(
+        SkiaGesturesParameters args,
+        GestureEventProcessingInfo apply)
     {
-        return false;
+        var gestureLocation = args.Event.Location;
+        
+        // Process planes in Z-order (top to bottom): Forward -> Current -> Backward
+        // Check Forward plane first (top layer)
+        if (PlaneForward?.IsReady == true && PlaneForward.RenderTree != null)
+        {
+            if (IsGestureInPlane(PlaneForward, gestureLocation))
+            {
+                var consumed = ProcessGesturesForPlane(PlaneForward, args, apply);
+                if (consumed != null)
+                {
+                    Debug.WriteLine($"Gesture consumed by Forward plane ({PlaneForward.Id})");
+                    return consumed;
+                }
+            }
+        }
+
+        // Check Current plane (middle layer)
+        if (PlaneCurrent?.IsReady == true && PlaneCurrent.RenderTree != null)
+        {
+            if (IsGestureInPlane(PlaneCurrent, gestureLocation))
+            {
+                var consumed = ProcessGesturesForPlane(PlaneCurrent, args, apply);
+                if (consumed != null)
+                {
+                    Debug.WriteLine($"Gesture consumed by Current plane ({PlaneCurrent.Id})");
+                    return consumed;
+                }
+            }
+        }
+
+        // Check Backward plane (bottom layer)
+        if (PlaneBackward?.IsReady == true && PlaneBackward.RenderTree != null)
+        {
+            if (IsGestureInPlane(PlaneBackward, gestureLocation))
+            {
+                var consumed = ProcessGesturesForPlane(PlaneBackward, args, apply);
+                if (consumed != null)
+                {
+                    Debug.WriteLine($"Gesture consumed by Backward plane ({PlaneBackward.Id})");
+                    return consumed;
+                }
+            }
+        }
+        
+        return null;
     }
 
     private long _lastVelocitySetTime = 0;
@@ -652,4 +777,6 @@ public partial class SkiaScroll
             _lastVelocitySetTime = ctx.FrameTimeNanos;
         }
     }
+
+
 }

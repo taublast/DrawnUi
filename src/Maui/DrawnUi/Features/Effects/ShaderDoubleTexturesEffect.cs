@@ -12,6 +12,21 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
         return !(Parent == null || Parent.DrawingRect.Width <= 0 || Parent.DrawingRect.Height <= 0);
     }
 
+    protected override bool ShouldDisposePreviousTexture(SKImage image)
+    {
+        if (image == null) return false;
+
+        // base check, don't dispose parent's cached image
+        if (image == Parent?.CachedImage) return false;
+
+        // Don't dispose images from other controls
+        if (image == _controlFrom?.RenderObject?.Image) return false;
+        if (image == AssignedControlTo?.RenderObject?.Image) return false;
+
+        // It's a snapshot we created, safe to dispose
+        return true;
+    }
+
     protected override void OnDisposing()
     {
         base.OnDisposing();
@@ -201,7 +216,7 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
     /// Loading from local files only
     /// </summary>
     /// <param name="fileName"></param>
-    /// <returns>
+    /// <returns></returns>
     public async Task LoadPrimarySource(string fileName)
     {
         if (string.IsNullOrEmpty(fileName))
@@ -360,7 +375,7 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
     /// Loading from local files only
     /// </summary>
     /// <param name="fileName"></param>
-    /// <returns>
+    /// <returns></returns>
     public async Task LoadSecondarySource(string fileName)
     {
         if (string.IsNullOrEmpty(fileName))
@@ -466,8 +481,5 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
     #endregion
 
     #endregion
-
-
-
 
 }

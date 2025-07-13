@@ -24,7 +24,7 @@ public class SkiaHoverMask : SkiaShape
                     var saved = ctx.Context.Canvas.Save();
 
                     ShapePaintArguments? arguments = null;
-                    if (ctx.GetArgument("ShapePaintArguments") is ShapePaintArguments defined)
+                    if (ctx.GetArgument(nameof(ContextArguments.ShapePaint)) is ShapePaintArguments defined)
                     {
                         arguments = defined;
                     }

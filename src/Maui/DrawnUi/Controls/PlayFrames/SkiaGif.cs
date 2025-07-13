@@ -8,11 +8,6 @@ public class SkiaGif : AnimatedFramesRenderer
 {
     public SkiaImage Display { get; protected set; }
 
-    //public override bool CanUseCacheDoubleBuffering => false;
-    public override ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
-    {
-        return base.Measure(widthConstraint, heightConstraint, scale);
-    }
 
     /// <summary>
     /// For standalone use
@@ -192,6 +187,16 @@ public class SkiaGif : AnimatedFramesRenderer
 
     private object lockSource = new();
 
+    /// <summary>
+    /// Happens when loaded fine from `Source`. Will pass source as string.
+    /// </summary>
+    public event EventHandler<string> Success;
+
+    /// <summary>
+    /// Happens when loaded with error from `Source`. Will pass exception.
+    /// </summary>
+    public event EventHandler<Exception> Error;
+
     public virtual void ReloadSource()
     {
         if (string.IsNullOrEmpty(Source))
@@ -211,7 +216,12 @@ public class SkiaGif : AnimatedFramesRenderer
                         var a = await LoadSource(Source);
                         if (a != null)
                         {
+                            Success?.Invoke(this, Source);
                             SetAnimation(a, true);
+                        }
+                        else
+                        {
+                            Error?.Invoke(this, new Exception($"Failed to load source {Source}"));
                         }
                     });
                     break;
@@ -237,12 +247,18 @@ public class SkiaGif : AnimatedFramesRenderer
                         }
                         if (animation != null)
                         {
+                            Success?.Invoke(this, Source);
                             SetAnimation(animation, true);
+                        }
+                        else
+                        {
+                            Error?.Invoke(this, new Exception($"Failed to load source {Source}"));
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        Super.Log(e);
+                        Error?.Invoke(this, new Exception($"Failed to load source {Source}"));
                     }
                     break;
             }
@@ -257,7 +273,7 @@ public class SkiaGif : AnimatedFramesRenderer
     /// This is not replacing current animation, only pre-loading! Use SetAnimation after that if needed.
     /// </summary>
     /// <param name="fileName"></param>
-    /// <returns>
+    /// <returns></returns>
     public async Task<GifAnimation> LoadSource(string fileName)
     {
         if (string.IsNullOrEmpty(fileName))

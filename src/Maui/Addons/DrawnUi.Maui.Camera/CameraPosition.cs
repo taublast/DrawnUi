@@ -3,5 +3,6 @@
 public enum CameraPosition
 {
 	Default,
-	Selfie
+	Selfie,
+	Manual
 }

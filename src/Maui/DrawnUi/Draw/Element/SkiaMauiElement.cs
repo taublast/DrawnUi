@@ -39,7 +39,7 @@
             }
             set
             {
-                Debug.WriteLine($"[SkiaMauiElement] NeedMeasure {value}");
+                //Debug.WriteLine($"[SkiaMauiElement] NeedMeasure {value}");
                 base.NeedMeasure = value;
             }
         }
@@ -54,7 +54,7 @@
                     var measured = mauiNativeView.Measure(rectForChildrenPixels.Width / scale,
                         rectForChildrenPixels.Height / scale);
 
-                    Debug.WriteLine($"[SkiaMauiElement] Calling native measure for pixels {rectForChildrenPixels}");
+                    //Debug.WriteLine($"[SkiaMauiElement] Calling native measure for pixels {rectForChildrenPixels}");
 
                     //var arranged = view.Arrange(new Rect(0, 0, ptsWidth, ptsHeight));
                     return ScaledSize.FromUnits((float)measured.Width, (float)measured.Height, scale);
@@ -89,7 +89,7 @@
 
                     var measured = view.Measure(ptsWidth, ptsHeight);
 
-                    Debug.WriteLine($"[SkiaMauiElement] Calling native measure {ptsWidth} x {ptsHeight}");
+                    //Debug.WriteLine($"[SkiaMauiElement] Calling native measure {ptsWidth} x {ptsHeight}");
 
                     //var arranged = view.Arrange(new Rect(0, 0, ptsWidth, ptsHeight));
                     return measured;
@@ -651,6 +651,11 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the native MAUI VisualElement to embed within the DrawnUI canvas.
+        /// This can be any MAUI control like WebView, MediaElement, Entry, Picker, etc.
+        /// The control will be rendered using platform-specific optimizations.
+        /// </summary>
         public VisualElement Content
         {
             get { return (VisualElement)GetValue(ContentProperty); }

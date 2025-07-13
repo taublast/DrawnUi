@@ -37,7 +37,7 @@
                         AddMarginBottom="16"
                         BackgroundColor="Gainsboro"
                         FallbackCharacter="?"
-                        FontFamily="OpenSansRegular"
+                        FontFamily="FontText"
                         FontSize="15"
                         HorizontalOptions="Fill"
                         HorizontalTextAlignment="Start"

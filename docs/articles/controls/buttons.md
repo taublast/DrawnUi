@@ -56,16 +56,6 @@ Platform-specific styles are selected automatically or can be set in code via th
 
 > **Note:** There is no `ControlStyle` bindable property. Platform style is set internally or in code.
 
-### Elevation
-
-Buttons can have elevation (shadow) effects:
-
-```xml
-<draw:SkiaButton
-    Text="Elevated Button"
-    ElevationEnabled="True" />
-```
-
 ### Properties
 
 | Property | Type | Description |

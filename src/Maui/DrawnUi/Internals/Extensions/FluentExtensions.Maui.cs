@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows.Input;
+using DrawnUi.Infrastructure.Xaml;
 
 namespace DrawnUi.Draw
 {
@@ -89,6 +90,28 @@ namespace DrawnUi.Draw
                 throw new InvalidOperationException("ColumnDefinitionCollectionTypeConverter cannot convert from string.");
             }
             return grid;
+        }
+
+        /// <summary>
+        /// Parses a string representation of points and sets them on the shape
+        /// </summary>
+        /// <param name="shape"></param>
+        /// <param name="columnDefinitions"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static SkiaShape WithPoints(this SkiaShape shape, string columnDefinitions)
+        {
+            var converter = new SkiaPointCollectionConverter();
+            if (converter.CanConvertFrom(typeof(string)))
+            {
+                var points = (IList<SkiaPoint>)converter.ConvertFromInvariantString(columnDefinitions);
+                shape.Points = points;
+            }
+            else
+            {
+                throw new InvalidOperationException("SkiaPointCollectionConverter cannot convert from string.");
+            }
+            return shape;
         }
 
         /// <summary>

@@ -13,11 +13,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
+        <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="8.0.40" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="8.0.40" />
+      <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
     </ItemGroup>
 
 

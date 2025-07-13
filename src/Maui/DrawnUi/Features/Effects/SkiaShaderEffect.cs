@@ -26,7 +26,8 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         propertyChanged: NeedUpdate);
 
     /// <summary>
-    /// Should create a texture from the current drawing to pass to shader as uniform shader iImage1, default is True. You need this set to False only if your shader is output-only.
+    /// Should create a texture from the current drawing to pass to shader as uniform shader iImage1, default is True.
+    /// You need this set to False only if your shader is output-only.
     /// </summary>
     public bool AutoCreateInputTexture
     {
@@ -37,140 +38,182 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     /// <summary>
     /// Create snapshot from the current parent control drawing state to use as input texture for the shader
     /// </summary>
-    /// <param name="ctx"></param>
-    /// <param name="destination"></param>
-    /// <returns></returns>
     protected virtual SKImage CreateSnapshot(SkiaDrawingContext ctx, SKRect destination)
     {
-        SKImage snapshot;
         if (UseContext)
         {
             ctx.Canvas.Flush();
-            snapshot = ctx.Surface.Snapshot(new((int)destination.Left, (int)destination.Top,
+            return ctx.Surface.Snapshot(new((int)destination.Left, (int)destination.Top,
                 (int)destination.Right, (int)destination.Bottom));
         }
         else
         {
             //notice we read from the real canvas and we write to ctx.Canvas which can be cache
             ctx.Superview.CanvasView.Surface.Flush();
-            snapshot = ctx.Superview.CanvasView.Surface.Snapshot(new((int)destination.Left,
+            return ctx.Superview.CanvasView.Surface.Snapshot(new((int)destination.Left,
                 (int)destination.Top, (int)destination.Right, (int)destination.Bottom));
         }
-        return snapshot;
     }
 
+    void Flush(SkiaDrawingContext ctx)
+    {
+        if (UseContext)
+        {
+            ctx.Canvas.Flush();
+        }
+        else
+        {
+            ctx.Superview.CanvasView.Surface.Flush();
+        }
+    }
 
     protected virtual SKImage GetPrimaryTextureImage(SkiaDrawingContext ctx, SKRect destination)
     {
-        if (Parent?.RenderObject?.Image == null && AutoCreateInputTexture)
+        if (Parent?.CachedImage == null && AutoCreateInputTexture)
         {
             return CreateSnapshot(ctx, destination);
         }
 
-        return Parent?.RenderObject?.Image;
+        return Parent?.CachedImage;
     }
 
     /// <summary>
     /// EffectPostRenderer
     /// </summary>
-    /// <param name="ctx"></param>
-    /// <param name="destination"></param>
     public virtual void Render(DrawingContext ctx)
     {
         if (PaintWithShader == null)
         {
-            PaintWithShader = new SKPaint()
-            {
-                //todo check how if this affect anything after upcoming skiasharp3 fix
-                //FilterQuality = SKFilterQuality.High,
-                //IsDither = true
-            };
+            PaintWithShader = new SKPaint();
         }
 
-        SKImage source = GetPrimaryTextureImage(ctx.Context, ctx.Destination);
+        var image = GetPrimaryTextureImage(ctx.Context, ctx.Destination);
+        bool shouldDisposeImage = ShouldDisposePreviousTexture(image);
+        SKShader shader = null;
 
-        PaintWithShader.Shader = CreateShader(ctx, source);
-
-        ctx.Context.Canvas.DrawRect(ctx.Destination, PaintWithShader);
-    }
-
-    protected SKShader PrimaryTexture;
-    private SKImage _lastSource;
-
-    protected virtual SKShader CompilePrimaryTexture(SKImage source)
-    {
-        //if (_lastSource == null && source != null) //snapshot changed
-        if (source != _lastSource && source != null) //snapshot changed
+        try
         {
-            _lastSource = source;
-            var dispose = PrimaryTexture;
-            PrimaryTexture = source.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp);
-            if (dispose != PrimaryTexture)
-                dispose?.Dispose();
+            shader = CreateShader(ctx, image);
+            if (shader != null)
+            {
+                PaintWithShader.Shader = shader;
+                ctx.Context.Canvas.DrawRect(ctx.Destination, PaintWithShader);
+            }
         }
-        return PrimaryTexture;
+        finally
+        {
+            // Dispose the image if we created it
+            if (shouldDisposeImage && image != null)
+            {
+                image.Dispose();
+            }
+
+            // Dispose the shader we created this frame
+            shader?.Dispose();
+
+            // Clear shader from paint to avoid holding reference
+            if (PaintWithShader != null)
+                PaintWithShader.Shader = null;
+        }
     }
 
+    /// <summary>
+    /// Checks if image is a new snapshot that needs disposal
+    /// </summary>
+    protected virtual bool ShouldDisposePreviousTexture(SKImage image)
+    {
+        // Don't dispose if it's the cached image from parent
+        return image != null && image != Parent?.CachedImage;
+    }
+
+    /// <summary>
+    /// Creates shader fresh each time - no caching of GPU resources
+    /// </summary>
     public virtual SKShader CreateShader(DrawingContext ctx, SKImage source)
     {
         SKRect destination = ctx.Destination;
+        SKImage sourceToDispose = null;
 
-        //we need to
-        //step 1: compile shader
-        //step 2: prepare textures to pass
-        //step 3: prepare uniforms to pass, including those textures
-        //step 4: with all above create an SKShader to use in SKPaint
-
+        // Step 1: Ensure shader is compiled (only CPU-side compilation is cached)
         if (CompiledShader == null || _hasNewShader)
         {
-            CompileShader();
+            try
+            {
+                if (string.IsNullOrEmpty(_customCode))
+                {
+                    CompileShader();
+                }
+                else
+                {
+                    CompileShader(_customCode, false);
+                }
+            }
+            catch (Exception e)
+            {
+                Super.Log($"[SkiaShaderEffect] Failed to compile shader {e}");
+                return null;
+            }
             _hasNewShader = false;
         }
 
-        if (NeedApply)
+        if (CompiledShader == null)
+            return null;
+
+        try
         {
+            // Step 2: Get or create source image
             if (source == null && AutoCreateInputTexture)
             {
                 source = CreateSnapshot(ctx.Context, destination);
+                sourceToDispose = source;
             }
 
-            var killTextures = TexturesUniforms;
-            TexturesUniforms = CreateTexturesUniforms(ctx.Context, destination, CompilePrimaryTexture(source));
+            if (source == null)
+                return null;
 
-            if (Parent != null && killTextures != null)
-                Parent.DisposeObject(killTextures);
+            // Step 3: Create everything fresh (no caching)
+            var samplingOptions = new SKSamplingOptions(FilterMode, MipmapMode);
+            using var primaryTexture = source.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp, samplingOptions);
 
-            var kill = Shader;
+            using var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTexture);
+            using var uniforms = CreateUniforms(destination);
 
-            var uniforms = CreateUniforms(destination);
-
-            Shader = CompiledShader.ToShader(uniforms, TexturesUniforms);
-
-            if (kill != null && NeedDisposeShader)
-                Parent?.DisposeObject(kill);
+            // Step 4: Create final shader
+            return CompiledShader.ToShader(uniforms, textureUniforms);
         }
-
-        return Shader;
+        finally
+        {
+            // Dispose any snapshot we created
+            if (sourceToDispose != null)
+            {
+                Parent?.DisposeObject(sourceToDispose);// ?? sourceToDispose.Dispose();
+            }
+        }
     }
+
+    // ✅ KEEP: Only CPU-side compiled shader
+    protected SKRuntimeEffect CompiledShader;
+    private bool _hasNewShader;
+    private string _customCode;
+    private string _lastSource;
 
     public override bool NeedApply
     {
         get
         {
-            return base.NeedApply && CompiledShader != null;// && Shader == null;
+            return base.NeedApply && CompiledShader != null;
         }
     }
 
-    protected SKRuntimeEffectChildren TexturesUniforms;
-    protected SKRuntimeEffect CompiledShader;
-    public SKShader Shader { get; set; }
-
+    /// <summary>
+    /// Creates uniforms fresh each time
+    /// </summary>
     protected virtual SKRuntimeEffectUniforms CreateUniforms(SKRect destination)
     {
         var viewport = destination;
 
         SKSize iResolution = new(viewport.Width, viewport.Height);
-        SKSize iImageResolution = iResolution; //since we have no textures in base its same
+        SKSize iImageResolution = iResolution;
         var uniforms = new SKRuntimeEffectUniforms(CompiledShader);
 
         uniforms["iOffset"] = new[] { viewport.Left, viewport.Top };
@@ -180,56 +223,73 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         return uniforms;
     }
 
+    /// <summary>
+    /// Creates texture uniforms fresh each time
+    /// </summary>
     protected virtual SKRuntimeEffectChildren CreateTexturesUniforms(SkiaDrawingContext ctx, SKRect destination, SKShader primaryTexture)
     {
         if (primaryTexture != null)
         {
-            //.ToShader(SKShaderTileMode.Repeat, SKShaderTileMode.Repeat);
             return new SKRuntimeEffectChildren(CompiledShader)
             {
-                { "iImage1", primaryTexture },
-                //{ "iImage2", _texture2 }
+                { "iImage1", primaryTexture }
             };
         }
         else
         {
-            return new SKRuntimeEffectChildren(CompiledShader)
-            {
-            };
+            return new SKRuntimeEffectChildren(CompiledShader);
         }
     }
 
     protected string _template = null;
     protected string _templatePlacehodler = "//script-goes-here";
 
+    /// <summary>
+    /// Compiles the shader code - only CPU-side compilation
+    /// </summary>
     protected virtual void CompileShader()
     {
+        string shaderCode = SkSl.LoadFromResources(ShaderSource);
+        CompileShader(shaderCode);
+    }
+
+    public string NormalizeShaderCode(string shaderText)
+    {
+        return shaderText.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
+    }
+
+    protected virtual void CompileShader(string shaderCode, bool useCache=true)
+    {
+        shaderCode = NormalizeShaderCode(shaderCode);
+        LoadedCode = shaderCode;
         if (!string.IsNullOrEmpty(ShaderTemplate))
         {
             if (string.IsNullOrEmpty(_template))
                 _template = SkSl.LoadFromResources(ShaderTemplate);
         }
-        string shaderCode = SkSl.LoadFromResources(ShaderSource);
         if (!string.IsNullOrEmpty(_template))
         {
             shaderCode = _template.Replace(_templatePlacehodler, shaderCode);
         }
-
-        NeedDisposeShader = string.IsNullOrEmpty(ShaderSource);
-
-        CompiledShader = SkSl.Compile(shaderCode, ShaderSource, true);
+        CompiledShader = SkSl.Compile(shaderCode, ShaderSource, useCache);
     }
 
-    public bool NeedDisposeShader { get; set; }
+    public string LoadedCode { get; set; }
 
     protected virtual void ApplyShaderSource()
     {
+        if (_lastSource != ShaderSource || string.IsNullOrEmpty(ShaderSource))
+        {
+            _customCode = ShaderCode;
+        }
+        else
+        {
+            _customCode = "";
+        }
         _hasNewShader = true;
         _template = null;
         Update();
     }
-
-    private bool _hasNewShader;
 
     protected static void NeedChangeSource(BindableObject bindable, object oldvalue, object newvalue)
     {
@@ -237,6 +297,17 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         {
             control.ApplyShaderSource();
         }
+    }
+
+    public static readonly BindableProperty ShaderCodeProperty = BindableProperty.Create(nameof(ShaderCode),
+        typeof(string),
+        typeof(SkiaShaderEffect),
+        string.Empty, propertyChanged: NeedChangeSource);
+
+    public string ShaderCode
+    {
+        get { return (string)GetValue(ShaderCodeProperty); }
+        set { SetValue(ShaderCodeProperty, value); }
     }
 
     public static readonly BindableProperty ShaderSourceProperty = BindableProperty.Create(nameof(ShaderSource),
@@ -250,7 +321,6 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         set { SetValue(ShaderSourceProperty, value); }
     }
 
-
     public static readonly BindableProperty ShaderTemplateProperty = BindableProperty.Create(nameof(ShaderTemplate),
         typeof(string),
         typeof(SkiaShaderEffect),
@@ -262,35 +332,53 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         set { SetValue(ShaderTemplateProperty, value); }
     }
 
+    public static readonly BindableProperty FilterModeProperty = BindableProperty.Create(
+        nameof(FilterMode),
+        typeof(SKFilterMode),
+        typeof(SkiaControl),
+        SKFilterMode.Linear,
+        propertyChanged: NeedChangeSource);
+
+    public static readonly BindableProperty MipmapModeProperty = BindableProperty.Create(
+        nameof(MipmapMode),
+        typeof(SKMipmapMode),
+        typeof(SkiaControl),
+        SKMipmapMode.None,
+        propertyChanged: NeedChangeSource);
+
+    public SKFilterMode FilterMode
+    {
+        get => (SKFilterMode)GetValue(FilterModeProperty);
+        set => SetValue(FilterModeProperty, value);
+    }
+
+    public SKMipmapMode MipmapMode
+    {
+        get => (SKMipmapMode)GetValue(MipmapModeProperty);
+        set => SetValue(MipmapModeProperty, value);
+    }
+
+    /// <summary>
+    /// Simplified update - no GPU resources to dispose
+    /// </summary>
     public override void Update()
     {
-        var kill = Shader;
-        Shader = null;
-        if (Parent != null && kill != null)
-        {
-            Parent.DisposeObject(kill);
-        }
-        else
-            kill?.Dispose();
-
-        //Parent?.Repaint();
-
+        // Nothing to dispose - we don't cache GPU resources!
         base.Update();
     }
 
+    /// <summary>
+    /// Simplified dispose - only CPU-side resources
+    /// </summary>
     protected override void OnDisposing()
     {
-        Shader?.Dispose();
-        Shader = null;
-        _lastSource = null;
-
+        // Only dispose CPU-side compiled shader
         CompiledShader?.Dispose();
-        TexturesUniforms?.Dispose();
-        PaintWithShader?.Dispose();
+        CompiledShader = null;
 
-        PrimaryTexture?.Dispose();
+        PaintWithShader?.Dispose();
+        PaintWithShader = null;
 
         base.OnDisposing();
     }
-
 }

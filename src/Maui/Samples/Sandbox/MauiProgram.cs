@@ -31,11 +31,14 @@ namespace Sandbox
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "FontTextTitle");
-                    fonts.AddFont("OpenSans-Regular.ttf", "FontText");
                     fonts.AddFont("NotoColorEmoji-Regular.ttf", "FontEmoji");
+
+                    fonts.AddFont("OpenSans-Regular.ttf", "FontText");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "FontTextBol");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "FontTextTitle");
+
+                    fonts.AddFont("DOM.TTF", "FontBrand");
+                    fonts.AddFont("DOMB.TTF", "FontBrandBold");
 
                     fonts.AddFont("Orbitron-Regular.ttf", "FontGame"); //400
                     fonts.AddFont("Orbitron-Medium.ttf", "FontGameMedium"); //500
@@ -55,15 +58,6 @@ namespace Sandbox
                 }
             });
 
-            if (Super.SkiaGeneration == 2)
-            {
-                ShadersFolder = "Shaders2";
-            }
-
-#if ANDROID
-            var t = 1;
-#endif
-
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
@@ -71,6 +65,6 @@ namespace Sandbox
             return builder.Build();
         }
 
-        public static string ShadersFolder = "Shaders";
+        public static readonly string ShadersFolder = "Shaders";
     }
 }

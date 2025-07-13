@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+             x:Class="Sandbox.TutorialCards"
+             Title="Tutorial Cards">
+
+    <draw:Canvas
+        RenderingMode="Accelerated"
+        Gestures="Enabled"
+        BackgroundColor="#f0f0f5"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
+        <!-- Main Container -->
+        <draw:SkiaStack
+            Spacing="0"
+            VerticalOptions="Fill">
+
+            <!-- Title Section -->
+            <draw:SkiaLayout Type="Column"
+                             HorizontalOptions="Center"
+                             Margin="16"
+                             UseCache="Operations"
+                             Spacing="8">
+
+                <draw:SkiaLabel
+                    Text="Interactive Cards"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    TextColor="#2c3e50"
+                    HorizontalOptions="Center" />
+
+                <draw:SkiaLabel
+                    Text="Tap and drag to interact!"
+                    FontSize="16"
+                    TextColor="#7f8c8d"
+                    HorizontalOptions="Center" />
+            </draw:SkiaLayout>
+
+            <!-- Card Gallery -->
+            <draw:SkiaScroll
+                IgnoreWrongDirection="True"
+                VerticalOptions="Fill"
+                Orientation="Vertical"
+                Spacing="20">
+
+                <draw:SkiaStack Type="Column"
+                                Tag="Cells"
+                                Padding="0,5"
+                                Spacing="0">
+
+                    <!-- Card 1: Gradient Glow Card -->
+                    <draw:SkiaLayer
+                        Padding="20,8"
+                        UseCache="Image">
+                        <draw:SkiaShape
+                            x:Name="Card1"
+                            Type="Rectangle"
+                            CornerRadius="20"
+                            WidthRequest="300"
+                            HeightRequest="180"
+                            HorizontalOptions="Center"
+
+                            ConsumeGestures="OnCardGestures">
+
+                            <!-- Gradient Background -->
+                            <draw:SkiaControl.FillGradient>
+                                <draw:SkiaGradient
+                                    Type="Linear"
+                                    Angle="45">
+                                    <draw:SkiaGradient.Colors>
+                                        <Color>#667eea</Color>
+                                        <Color>#764ba2</Color>
+                                    </draw:SkiaGradient.Colors>
+                                </draw:SkiaGradient>
+                            </draw:SkiaControl.FillGradient>
+
+                            <!-- Glow Effect -->
+                            <draw:SkiaShape.VisualEffects>
+                                <draw:DropShadowEffect
+                                    Color="#667eea"
+                                    Blur="3"
+                                    X="1"
+                                    Y="1" />
+                            </draw:SkiaShape.VisualEffects>
+
+                            <!-- Card Content -->
+                            <draw:SkiaLayout Type="Column" Margin="24" Spacing="12">
+                                <draw:SkiaRichLabel
+                                    Text="🎨 Gradient Card"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    TextColor="White" />
+                                <draw:SkiaLabel
+                                    Text="Beautiful gradients with glow effects"
+                                    FontSize="14"
+                                    TextColor="#e8e8ff" />
+                                <draw:SkiaLabel
+                                    Text="Tap to animate!"
+                                    FontSize="12"
+                                    TextColor="#ccccff"
+                                    Margin="0,8,0,0" />
+                            </draw:SkiaLayout>
+                        </draw:SkiaShape>
+                    </draw:SkiaLayer>
+
+                    <!-- Card 2: Interactive Gaming Card -->
+                    <draw:SkiaLayer
+                        Padding="20,8"
+                        ZIndex="10"
+                        x:Name="Pannable"
+                        ConsumeGestures="OnCardGestures"
+                        UseCache="Image">
+
+                        <draw:SkiaShape
+                            x:Name="Card2"
+                            Type="Rectangle"
+                            CornerRadius="20"
+                            WidthRequest="300"
+                            HeightRequest="180"
+                            HorizontalOptions="Center">
+
+                            <!-- Gaming Theme Background -->
+                            <draw:SkiaShape.FillGradient>
+                                <draw:SkiaGradient
+                                    StartXRatio="0.85"
+                                    StartYRatio="0.25"
+                                    Type="Circular">
+                                    <draw:SkiaGradient.Colors>
+                                        <Color>#ff6b6b</Color>
+                                        <Color>#c44569</Color>
+                                    </draw:SkiaGradient.Colors>
+                                </draw:SkiaGradient>
+                            </draw:SkiaShape.FillGradient>
+
+                            <!-- Gaming Glow -->
+                            <draw:SkiaShape.VisualEffects>
+                                <draw:DropShadowEffect
+                                    Color="#ff6b6b"
+                                    Blur="5"
+                                    X="0"
+                                    Y="0" />
+                            </draw:SkiaShape.VisualEffects>
+
+                            <!-- Gaming Content -->
+                            <draw:SkiaLayout Type="Column" Margin="24" Spacing="12">
+                                <draw:SkiaRichLabel
+                                    Text="🎮 Gaming Card"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    TextColor="White" />
+                                <draw:SkiaLabel
+                                    Text="Drag me around! Smooth movement"
+                                    FontSize="14"
+                                    TextColor="#ffe8e8" />
+                                <draw:SkiaLabel
+                                    Text="Pan gesture enabled"
+                                    FontSize="12"
+                                    TextColor="#ffcccc"
+                                    Margin="0,8,0,0" />
+                            </draw:SkiaLayout>
+                        </draw:SkiaShape>
+                    </draw:SkiaLayer>
+
+                    <!-- Card 3: Data Visualization Card -->
+                    <draw:SkiaLayer
+                        Padding="20,8"
+                        UseCache="Image">
+
+                        <draw:SkiaShape
+                        Type="Rectangle"
+                        CornerRadius="20"
+                        WidthRequest="300"
+                        HeightRequest="200"
+                        HorizontalOptions="Center"
+                        ConsumeGestures="OnCardGestures">
+
+                        <!-- Tech Background -->
+                        <draw:SkiaShape.FillGradient>
+                            <draw:SkiaGradient
+                                Type="Linear"
+                                Angle="135">
+                                <draw:SkiaGradient.Colors>
+                                    <Color>#004400</Color>
+                                    <Color>#009900</Color>
+                                </draw:SkiaGradient.Colors>
+                            </draw:SkiaGradient>
+                        </draw:SkiaShape.FillGradient>
+
+                        <!-- Tech Glow -->
+                        <draw:SkiaShape.VisualEffects>
+                            <draw:DropShadowEffect
+                                Color="#99ff0000"
+                                Blur="5"
+                                X="0"
+                                Y="0" />
+                        </draw:SkiaShape.VisualEffects>
+
+                        <!-- Progress Bars -->
+                        <draw:SkiaLayout Type="Column" Margin="24" Spacing="16">
+                                <draw:SkiaRichLabel
+                                Text="📊 Data Card"
+                                FontSize="20"
+                                FontAttributes="Bold"
+                                TextColor="White" />
+
+                            <!-- Progress Bars -->
+                            <draw:SkiaLayout Type="Column" Spacing="8">
+                                <draw:SkiaLabel Text="Performance: 87%" FontSize="12" TextColor="#e8f4ff" />
+                                <draw:SkiaShape
+                                    Type="Rectangle"
+                                    CornerRadius="4"
+                                    WidthRequest="200"
+                                    HeightRequest="6"
+                                    BackgroundColor="#50ffffff">
+                                    <draw:SkiaShape Type="Rectangle"
+                                                    CornerRadius="4"
+                                                    WidthRequest="174"
+                                                    HeightRequest="6"
+                                                    BackgroundColor="White"
+                                                    HorizontalOptions="Start" />
+                                </draw:SkiaShape>
+
+                                <draw:SkiaLabel Text="Memory: 64%" FontSize="12" TextColor="#e8f4ff" />
+                                <draw:SkiaShape
+                                    Type="Rectangle"
+                                    CornerRadius="4"
+                                    WidthRequest="200"
+                                    HeightRequest="6"
+                                    BackgroundColor="#50ffffff">
+                                    <draw:SkiaShape
+                                        Type="Rectangle"
+                                        CornerRadius="4"
+                                        WidthRequest="128"
+                                        HeightRequest="6"
+                                        BackgroundColor="White"
+                                        HorizontalOptions="Start" />
+                                </draw:SkiaShape>
+                            </draw:SkiaLayout>
+                        </draw:SkiaLayout>
+                    </draw:SkiaShape>
+                    </draw:SkiaLayer>
+
+                </draw:SkiaStack>
+            </draw:SkiaScroll>
+
+        </draw:SkiaStack>
+    </draw:Canvas>
+
+</ContentPage>

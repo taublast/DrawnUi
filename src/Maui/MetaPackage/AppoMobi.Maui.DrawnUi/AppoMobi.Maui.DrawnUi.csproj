@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!--Meta-package for backward compatibility-->
+    <!--This package references DrawnUi.Maui to maintain compatibility with existing code-->
+
+    <PropertyGroup>
+        <Title>DrawnUI for .NET MAUI (Meta-package)</Title>
+        <PackageId>AppoMobi.Maui.DrawnUi</PackageId>
+        <Description>For backward compatibility, please use DrawnUi.Maui package instead.</Description>
+        <PackageTags>maui drawnui skia skiasharp draw ui legacy meta-package</PackageTags>
+        <PackageIcon>icon128.png</PackageIcon>
+        <CreatePackage>false</CreatePackage>
+        
+        <!-- Mark as deprecated to encourage migration -->
+        <PackageDeprecated>true</PackageDeprecated>
+        <PackageDeprecationMessage>This package is deprecated. Please use DrawnUi.Maui instead.</PackageDeprecationMessage>
+    </PropertyGroup>
+
+    <!-- Include the icon from the root -->
+    <ItemGroup>
+        <None Include="..\..\..\..\icon128.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\..\..\..\README.md" Link="README.md">
+            <PackagePath>\</PackagePath>
+            <Pack>True</Pack>
+        </None>
+    </ItemGroup>
+
+    <!-- Reference the new DrawnUi.Maui package -->
+    <ItemGroup>
+        <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
+    </ItemGroup>
+
+</Project>

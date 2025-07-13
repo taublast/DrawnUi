@@ -38,11 +38,11 @@ public partial class SkiaLayout
         readonly ISkiaControl[] _childrenToLayOut;
         Cell[] _cells { get; }
 
-        readonly Thickness _padding;
-        readonly double _rowSpacing;
-        readonly double _columnSpacing;
-        readonly IReadOnlyList<IGridRowDefinition> _rowDefinitions;
-        readonly IReadOnlyList<IGridColumnDefinition> _columnDefinitions;
+        public readonly Thickness Padding;
+        public readonly double RowSpacing;
+        public readonly double ColumnSpacing;
+        public readonly IReadOnlyList<IGridRowDefinition> RowDefinitions;
+        public readonly IReadOnlyList<IGridColumnDefinition> ColumnDefinitions;
 
         readonly Dictionary<SpanKey, GridSpan> _spans = new();
 
@@ -68,11 +68,11 @@ public partial class SkiaLayout
 
             // Cache these GridLayout properties so we don't have to keep looking them up via _grid
             // (Property access via _grid may have performance implications for some SDKs.)
-            _padding = parentGrid.Padding;
-            _columnSpacing = parentGrid.ColumnSpacing;
-            _rowSpacing = parentGrid.RowSpacing;
-            _rowDefinitions = parentGrid.RowDefinitions;
-            _columnDefinitions = parentGrid.ColumnDefinitions;
+            Padding = parentGrid.Padding;
+            ColumnSpacing = parentGrid.ColumnSpacing;
+            RowSpacing = parentGrid.RowSpacing;
+            RowDefinitions = parentGrid.RowDefinitions;
+            ColumnDefinitions = parentGrid.ColumnDefinitions;
 
 
             var layout = parentGrid as SkiaControl;
@@ -109,7 +109,7 @@ public partial class SkiaLayout
 
         DefinitionInfo[] InitializeRows()
         {
-            int count = _rowDefinitions.Count;
+            int count = RowDefinitions.Count;
 
             if (count == 0)
             {
@@ -121,7 +121,7 @@ public partial class SkiaLayout
 
             for (int n = 0; n < count; n++)
             {
-                var definition = _rowDefinitions[n];
+                var definition = RowDefinitions[n];
                 rows[n] = new DefinitionInfo(definition.Height);
             }
 
@@ -130,7 +130,7 @@ public partial class SkiaLayout
 
         DefinitionInfo[] InitializeColumns()
         {
-            int count = _columnDefinitions.Count;
+            int count = ColumnDefinitions.Count;
 
             if (count == 0)
             {
@@ -142,7 +142,7 @@ public partial class SkiaLayout
 
             for (int n = 0; n < count; n++)
             {
-                var definition = _columnDefinitions[n];
+                var definition = ColumnDefinitions[n];
                 definitions[n] = new DefinitionInfo(definition.Width);
             }
 
@@ -285,8 +285,8 @@ public partial class SkiaLayout
             }
 
             // Account for any space between spanned rows/columns
-            width += (columnSpan - 1) * _columnSpacing;
-            height += (rowSpan - 1) * _rowSpacing;
+            width += (columnSpan - 1) * ColumnSpacing;
+            height += (rowSpan - 1) * RowSpacing;
 
             return new Rect(
                 left + xOffset,
@@ -297,12 +297,12 @@ public partial class SkiaLayout
 
         public double GridHeight()
         {
-            return SumDefinitions(Rows, _rowSpacing) + _padding.VerticalThickness;
+            return SumDefinitions(Rows, RowSpacing) + Padding.VerticalThickness;
         }
 
         public double GridWidth()
         {
-            return SumDefinitions(Columns, _columnSpacing) + _padding.HorizontalThickness;
+            return SumDefinitions(Columns, ColumnSpacing) + Padding.HorizontalThickness;
         }
 
         public double MeasuredGridHeight()
@@ -477,11 +477,11 @@ public partial class SkiaLayout
             {
                 if (span.IsColumn)
                 {
-                    ResolveSpan(Columns, span.Start, span.Length, _columnSpacing, span.Requested);
+                    ResolveSpan(Columns, span.Start, span.Length, ColumnSpacing, span.Requested);
                 }
                 else
                 {
-                    ResolveSpan(Rows, span.Start, span.Length, _rowSpacing, span.Requested);
+                    ResolveSpan(Rows, span.Start, span.Length, RowSpacing, span.Requested);
                 }
             }
         }
@@ -541,12 +541,12 @@ public partial class SkiaLayout
 
         public double LeftEdgeOfColumn(int column)
         {
-            double left = _padding.Left;
+            double left = Padding.Left;
 
             for (int n = 0; n < column; n++)
             {
                 left += Columns[n].Size;
-                left += _columnSpacing;
+                left += ColumnSpacing;
             }
 
             return left;
@@ -554,12 +554,12 @@ public partial class SkiaLayout
 
         public double TopEdgeOfRow(int row)
         {
-            double top = _padding.Top;
+            double top = Padding.Top;
 
             for (int n = 0; n < row; n++)
             {
                 top += Rows[n].Size;
-                top += _rowSpacing;
+                top += RowSpacing;
             }
 
             return top;
@@ -706,7 +706,7 @@ public partial class SkiaLayout
                 }
             }
 
-            cellColumnsWidth += (cell.ColumnSpan - 1) * _columnSpacing;
+            cellColumnsWidth += (cell.ColumnSpan - 1) * ColumnSpacing;
 
             if (absolute)
             {
@@ -744,7 +744,7 @@ public partial class SkiaLayout
                 }
             }
 
-            cellRowsHeight += (cell.RowSpan - 1) * _rowSpacing;
+            cellRowsHeight += (cell.RowSpan - 1) * RowSpacing;
 
             if (absolute)
             {

@@ -31,13 +31,16 @@ namespace DrawnUi.Views
 
         public static void OnInvalidateSurface(SKGLViewHandlerRetained handler, ISKGLView view, object? args)
         {
+            if (handler?.PlatformView == null)
+                return;
+
             if (!handler.PlatformView.EnableRenderLoop)
                 handler.PlatformView.Invalidate();
         }
 
         public static void MapIgnorePixelScaling(SKGLViewHandlerRetained handler, ISKGLView view)
         {
-            if (handler.PlatformView is not MauiSkSwapChainPanelRetained pv)
+            if (handler?.PlatformView is not MauiSkSwapChainPanelRetained pv)
                 return;
 
             pv.IgnorePixelScaling = view.IgnorePixelScaling;
@@ -46,12 +49,15 @@ namespace DrawnUi.Views
 
         public static void MapHasRenderLoop(SKGLViewHandlerRetained handler, ISKGLView view)
         {
+            if (handler?.PlatformView == null)
+                return;
+
             handler.PlatformView.EnableRenderLoop = view.HasRenderLoop;
         }
 
         public static void MapEnableTouchEvents(SKGLViewHandlerRetained handler, ISKGLView view)
         {
-            if (handler.PlatformView == null)
+            if (handler?.PlatformView == null)
                 return;
 
             //handler.touchHandler ??= new SKTouchHandler(

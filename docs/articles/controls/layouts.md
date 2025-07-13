@@ -52,6 +52,69 @@ A specialized layout for hosting a single content element is `ContentLayout`, `S
 
 Supports snap points for controlled scrolling, ideal for carousels or paginated interfaces. `SkiaDrawer`, `SkiaCarousel` are deriving from it.
 
+### SkiaDecoratedGrid
+
+`SkiaDecoratedGrid` is a specialized grid that can draw shapes between rows and columns, providing visual separation and decoration.
+
+```xml
+<draw:SkiaDecoratedGrid
+    ColumnDefinitions="*,*,*"
+    RowDefinitions="Auto,Auto,Auto"
+    RowSpacing="1"
+    ColumnSpacing="1"
+    SeparatorColor="Gray"
+    SeparatorWidth="1">
+
+    <draw:SkiaLabel Text="Cell 1,1" Column="0" Row="0" />
+    <draw:SkiaLabel Text="Cell 1,2" Column="1" Row="0" />
+    <draw:SkiaLabel Text="Cell 1,3" Column="2" Row="0" />
+    <draw:SkiaLabel Text="Cell 2,1" Column="0" Row="1" />
+    <draw:SkiaLabel Text="Cell 2,2" Column="1" Row="1" />
+    <draw:SkiaLabel Text="Cell 2,3" Column="2" Row="1" />
+</draw:SkiaDecoratedGrid>
+```
+
+### SkiaHotspot
+
+`SkiaHotspot` provides a way to handle gestures in a lazy way, creating invisible touch-sensitive areas.
+
+```xml
+<draw:SkiaLayout Type="Absolute">
+    <draw:SkiaImage Source="background.png" />
+
+    <draw:SkiaHotspot
+        X="100" Y="100"
+        WidthRequest="50" HeightRequest="50"
+        Tapped="OnHotspotTapped" />
+
+    <draw:SkiaHotspot
+        X="200" Y="150"
+        WidthRequest="80" HeightRequest="30"
+        Tapped="OnAnotherHotspotTapped" />
+</draw:SkiaLayout>
+```
+
+### SkiaBackdrop
+
+`SkiaBackdrop` applies effects to the background below, like blur and other visual effects.
+
+```xml
+<draw:SkiaLayout Type="Absolute">
+    <draw:SkiaImage Source="background.png" />
+
+    <draw:SkiaBackdrop
+        X="50" Y="50"
+        WidthRequest="200" HeightRequest="150"
+        BlurRadius="10"
+        BackgroundColor="#80FFFFFF" />
+
+    <draw:SkiaLabel
+        Text="Text over blurred background"
+        X="60" Y="100"
+        TextColor="Black" />
+</draw:SkiaLayout>
+```
+
 ## Example: Creating a Grid Layout
 
 ```xml

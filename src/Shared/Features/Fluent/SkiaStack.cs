@@ -1,14 +1,13 @@
-﻿namespace DrawnUi.Draw
+﻿namespace DrawnUi.Draw;
+
+/// <summary>
+/// Vertical stack, like MAUI VerticalStackLayout
+/// </summary>
+public partial class SkiaStack : SkiaLayout
 {
-    /// <summary>
-    /// A powerful flexible control, a bit like WPF StackPanel, arranges children in a responsive way according available size. Can change the number of Columns to use by default.
-    /// </summary>
-    public class SkiaStack : SkiaLayout
+    public SkiaStack()
     {
-        public SkiaStack()
-        {
-            Type = LayoutType.Wrap;
-            HorizontalOptions = LayoutOptions.Fill;
-        }
+        Type = LayoutType.Column;
+        HorizontalOptions = LayoutOptions.Fill;
     }
 }

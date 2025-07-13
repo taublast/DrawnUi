@@ -72,7 +72,7 @@ public static class Pdf
     }
 
     /// <summary>
-    /// Splits a VStack content into multiple pages based on the provided paper size, considering height only.
+    /// Splits a SkiaStack content into multiple pages based on the provided paper size, considering height only.
     /// </summary>
     /// <param name="content">The size of the content to be split.</param>
     /// <param name="paper">The size of the paper to split the content into.</param>

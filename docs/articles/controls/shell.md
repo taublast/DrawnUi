@@ -230,7 +230,7 @@ await Shell.ClosePopupAsync(animated: true);
 Shell.ShowToast("Operation completed successfully", msShowTime: 3000);
 
 // Show a custom toast
-Shell.ShowToast(new SkiaMarkdownLabel
+Shell.ShowToast(new SkiaRichLabel
 {
     Text = "**Important:** Your data has been saved.",
     TextColor = Colors.White
@@ -509,6 +509,109 @@ public partial class MainShell : DrawnUiBasePage
         return Shell.GoBack(true);
     }
 }
+```
+
+## SkiaTabsSelector
+
+`SkiaTabsSelector` is a control for creating top and bottom tabs with customizable appearance and behavior.
+
+### Basic Usage
+
+```xml
+<draw:SkiaTabsSelector
+    x:Name="TabsSelector"
+    SelectedIndex="0"
+    TabHeight="50"
+    TabsPosition="Bottom"
+    BackgroundColor="White"
+    SelectedTabColor="Blue"
+    UnselectedTabColor="Gray"
+    SelectionChanged="OnTabSelectionChanged">
+
+    <draw:SkiaTabsSelector.Tabs>
+        <draw:SkiaTab Text="Home" Icon="home.png" />
+        <draw:SkiaTab Text="Search" Icon="search.png" />
+        <draw:SkiaTab Text="Profile" Icon="profile.png" />
+        <draw:SkiaTab Text="Settings" Icon="settings.png" />
+    </draw:SkiaTabsSelector.Tabs>
+</draw:SkiaTabsSelector>
+```
+
+### Code-Behind Example
+
+```csharp
+var tabsSelector = new SkiaTabsSelector
+{
+    TabHeight = 60,
+    TabsPosition = TabsPosition.Top,
+    BackgroundColor = Colors.White,
+    SelectedTabColor = Colors.Blue,
+    UnselectedTabColor = Colors.Gray
+};
+
+// Add tabs
+tabsSelector.Tabs.Add(new SkiaTab { Text = "Tab 1", Icon = "icon1.png" });
+tabsSelector.Tabs.Add(new SkiaTab { Text = "Tab 2", Icon = "icon2.png" });
+tabsSelector.Tabs.Add(new SkiaTab { Text = "Tab 3", Icon = "icon3.png" });
+
+// Handle selection changes
+tabsSelector.SelectionChanged += (s, e) => {
+    Console.WriteLine($"Selected tab: {e.SelectedIndex}");
+};
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `SelectedIndex` | int | Index of the currently selected tab |
+| `TabHeight` | double | Height of the tab bar |
+| `TabsPosition` | TabsPosition | Position of tabs (Top, Bottom) |
+| `SelectedTabColor` | Color | Color of the selected tab |
+| `UnselectedTabColor` | Color | Color of unselected tabs |
+| `Tabs` | ObservableCollection<SkiaTab> | Collection of tabs |
+
+### Events
+
+- `SelectionChanged`: Raised when the selected tab changes
+  - Event signature: `EventHandler<TabSelectionChangedEventArgs>`
+
+## SkiaViewSwitcher
+
+`SkiaViewSwitcher` allows you to switch your views with animations like pop, push, and slide transitions.
+
+### Basic Usage
+
+```xml
+<draw:SkiaViewSwitcher
+    x:Name="ViewSwitcher"
+    TransitionType="SlideHorizontal"
+    TransitionDuration="300"
+    HorizontalOptions="Fill"
+    VerticalOptions="Fill">
+
+    <!-- Views will be added programmatically -->
+</draw:SkiaViewSwitcher>
+```
+
+### Code-Behind Example
+
+```csharp
+var viewSwitcher = new SkiaViewSwitcher
+{
+    TransitionType = ViewTransitionType.SlideHorizontal,
+    TransitionDuration = 300
+};
+
+// Switch to a new view
+var newView = new MyCustomView();
+await viewSwitcher.SwitchToAsync(newView, animated: true);
+
+// Push a view (adds to stack)
+await viewSwitcher.PushAsync(newView, animated: true);
+
+// Pop the current view
+await viewSwitcher.PopAsync(animated: true);
 ```
 
 ## Performance Considerations

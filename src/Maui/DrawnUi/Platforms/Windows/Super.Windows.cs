@@ -11,10 +11,74 @@ namespace DrawnUi.Draw
     public partial class Super
     {
 
-        /// <summary>
-        /// When set to true will run loop uponCompositionTarget.Rendering hits instead of a timer looper that targets 120 fps. Default is false because for Windows double buffering we need twice the standart calls..
-        /// </summary>
-        public static bool UseDisplaySync = false;
+        [DllImport("gdi32.dll")]
+        static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("user32.dll")]
+        static extern bool EnumDisplaySettings(string lpszDeviceName, int iModeNum, ref DEVMODE lpDevMode);
+
+        const int VREFRESH = 116;
+        const int ENUM_CURRENT_SETTINGS = -1;
+
+        struct DEVMODE
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string dmDeviceName;
+            public short dmSpecVersion;
+            public short dmDriverVersion;
+            public short dmSize;
+            public short dmDriverExtra;
+            public int dmFields;
+            public int dmPositionX;
+            public int dmPositionY;
+            public int dmDisplayOrientation;
+            public int dmDisplayFixedOutput;
+            public short dmColor;
+            public short dmDuplex;
+            public short dmYResolution;
+            public short dmTTOption;
+            public short dmCollate;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string dmFormName;
+            public short dmLogPixels;
+            public short dmBitsPerPel;
+            public int dmPelsWidth;
+            public int dmPelsHeight;
+            public int dmDisplayFlags;
+            public int dmDisplayFrequency;
+        }
+
+        public static int GetDisplayRefreshRate(int fallback)
+        {
+            // Method 1: GetDeviceCaps
+            IntPtr hdc = GetDC(IntPtr.Zero);
+            int refreshRate = GetDeviceCaps(hdc, VREFRESH);
+            ReleaseDC(IntPtr.Zero, hdc);
+
+            if (refreshRate > 0)
+                return refreshRate;
+
+            // Method 2: EnumDisplaySettings (more precise)
+            DEVMODE devMode = new DEVMODE();
+            devMode.dmSize = (short)Marshal.SizeOf(devMode);
+
+            if (EnumDisplaySettings(null, ENUM_CURRENT_SETTINGS, ref devMode))
+            {
+                return devMode.dmDisplayFrequency;
+            }
+
+            return fallback; 
+        }
+
+        public static int RefreshRate { get; protected set; }
+
+        public static bool UsingDisplaySync { get; protected set; }
 
         static bool _loopStarting = false;
         static bool _loopStarted = false;
@@ -35,7 +99,11 @@ namespace DrawnUi.Draw
             //VisualDiagnostics.VisualTreeChanged += OnVisualTreeChanged;
             InitShared();
 
-            if (UseDisplaySync)
+            RefreshRate = GetDisplayRefreshRate(60);
+
+            UsingDisplaySync = RefreshRate >= 120;
+
+            if (UsingDisplaySync)
             {
                 Tasks.StartDelayed(TimeSpan.FromMilliseconds(250), async () =>
                 {
@@ -136,6 +204,21 @@ namespace DrawnUi.Draw
             }
         }
 
+
+        /// <summary>
+        /// Prevents display from auto-turning off  Everytime you set this the setting will be applied.
+        /// </summary>
+        public static bool KeepScreenOn
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {
+                Console.WriteLine("Not implemented on Windows");
+            }
+        }
     }
 
 

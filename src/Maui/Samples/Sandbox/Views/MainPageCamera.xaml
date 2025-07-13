@@ -27,6 +27,7 @@
                 IsOn="True"
                 CaptureSuccess="OnCaptureSuccess"
                 CaptureFailed="OnCaptureFailed"
+                ConstantUpdate="False"
                 Zoomed="OnZoomed" />
 
             <!-- Controls -->

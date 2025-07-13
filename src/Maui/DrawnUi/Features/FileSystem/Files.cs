@@ -32,7 +32,7 @@ namespace DrawnUi.Infrastructure
 #if WINDOWS
             // Windows
 
-#elif ANDROID || IOS
+#elif ANDROID || IOS || MACCATALYST
 
 
             var status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();

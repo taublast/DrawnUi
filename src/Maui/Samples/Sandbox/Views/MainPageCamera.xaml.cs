@@ -28,18 +28,7 @@ public partial class MainPageCamera : BasePageCodeBehind
         try
         {
             StatusLabel.Text = "Camera Status: Requesting permissions...";
-            
-            // Request camera permissions
-            var hasPermissions = await CameraControl.RequestPermissions();
-            if (hasPermissions)
-            {
-                StatusLabel.Text = "Camera Status: Starting camera...";
-                CameraControl.Startup();
-            }
-            else
-            {
-                StatusLabel.Text = "Camera Status: Permissions denied";
-            }
+            CameraControl.Start();
         }
         catch (Exception ex)
         {
@@ -163,7 +152,7 @@ public partial class MainPageCamera : BasePageCodeBehind
     {
         try
         {
-            CameraControl?.Stop();
+            CameraControl?.StopInternal();
         }
         catch (Exception ex)
         {

@@ -58,7 +58,7 @@ namespace AppoMobi.Forms.Controls
             if (_oldContext != null)
                 _oldContext.PropertyChanged -= OnContextPropertyChanged;
 
-            Banner.OnError -= OnImageError;
+            Banner.Error -= OnImageError;
 
             DetachGestures();
 
@@ -233,7 +233,7 @@ namespace AppoMobi.Forms.Controls
                 HeightRequest = 200,
             }.WithParent(MessageStack).Adapt((c) =>
             {
-                c.OnError += OnImageError;
+                c.Error += OnImageError;
             });
 
             MessageStack.BreakLine();

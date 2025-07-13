@@ -7,7 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace DrawnUi.Draw
 {
     /// <summary>
-    /// Provides a thread-safe pool of MarkdownPipeline instances for SkiaMarkdownLabel.
+    /// Provides a thread-safe pool of MarkdownPipeline instances for SkiaRichLabel.
     /// </summary>
     public static class MarkdownPipelinePool
     {

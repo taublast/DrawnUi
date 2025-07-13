@@ -1,5 +1,6 @@
 ﻿#if IOS || MACCATALYST
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using AppoMobi.Specials;
 using AVFoundation;
@@ -23,7 +24,6 @@ namespace DrawnUi.Camera;
 // Lightweight container for raw frame data - no SKImage creation
 internal class RawFrameData : IDisposable
 {
-    public IntPtr BaseAddress { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
     public int BytesPerRow { get; set; }
@@ -31,12 +31,11 @@ internal class RawFrameData : IDisposable
     public Rotation CurrentRotation { get; set; }
     public CameraPosition Facing { get; set; }
     public int Orientation { get; set; }
-    public SKData Data { get; set; }
+    public byte[] PixelData { get; set; } // Copy pixel data to avoid CVPixelBuffer lifetime issues
 
     public void Dispose()
     {
-        Data?.Dispose();
-        Data = null;
+        PixelData = null; // Let GC handle byte array
     }
 }
 
@@ -61,10 +60,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private int _skippedFrameCount = 0;
     private int _processedFrameCount = 0;
 
-    // Raw frame data for lazy SKImage creation
+    // Raw frame data for lazy SKImage creation - fixed memory leak version
     private readonly object _lockRawFrame = new();
     private RawFrameData _latestRawFrame;
-    private RawFrameData _oldRawFrame;
     
     // Orientation tracking properties
     private UIInterfaceOrientation _uiOrientation;
@@ -95,7 +93,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         SetupOrientationObserver();
 
-        Setup();
+
     }
 
    
@@ -205,6 +203,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         _session.BeginConfiguration();
         _cameraUnitInitialized = false;
 
+#if MACCATALYST
+            _session.SessionPreset = AVCaptureSession.PresetHigh;
+#else
         // Set session preset
         if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
         {
@@ -214,36 +215,59 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             _session.SessionPreset = AVCaptureSession.PresetInputPriority;
         }
-
-        // Configure camera position
-        var cameraPosition = FormsControl.Facing == CameraPosition.Selfie 
-            ? AVCaptureDevicePosition.Front 
-            : AVCaptureDevicePosition.Back;
+#endif
 
         AVCaptureDevice videoDevice = null;
-        
-        if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0) && FormsControl.Type == CameraType.Max)
-        {
-            videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInTripleCamera, AVMediaTypes.Video, cameraPosition);
-        }
 
-        if (videoDevice == null)
+        // Manual camera selection
+        if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
         {
-            if (UIDevice.CurrentDevice.CheckSystemVersion(10, 2) && FormsControl.Type == CameraType.Max)
+            var allDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
+            if (FormsControl.CameraIndex < allDevices.Length)
             {
-                videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInDualCamera, AVMediaTypes.Video, cameraPosition);
+                videoDevice = allDevices[FormsControl.CameraIndex];
+                Console.WriteLine($"[NativeCameraApple] Selected camera by index {FormsControl.CameraIndex}: {videoDevice.LocalizedName}");
+            }
+            else
+            {
+                Console.WriteLine($"[NativeCameraApple] Invalid camera index {FormsControl.CameraIndex}, falling back to default");
+                videoDevice = allDevices.FirstOrDefault();
+            }
+        }
+        else
+        {
+            // Automatic selection based on facing
+            var cameraPosition = FormsControl.Facing == CameraPosition.Selfie
+                ? AVCaptureDevicePosition.Front
+                : AVCaptureDevicePosition.Back;
+
+            if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0) && FormsControl.Type == CameraType.Max)
+            {
+                videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInTripleCamera, AVMediaTypes.Video, cameraPosition);
             }
 
             if (videoDevice == null)
             {
-                var videoDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
-                videoDevice = videoDevices.FirstOrDefault(d => d.Position == cameraPosition);
-                
+                if (UIDevice.CurrentDevice.CheckSystemVersion(10, 2) && FormsControl.Type == CameraType.Max)
+                {
+                    videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInDualCamera, AVMediaTypes.Video, cameraPosition);
+                }
+
                 if (videoDevice == null)
                 {
-                    State = CameraProcessorState.Error;
-                    _session.CommitConfiguration();
-                    return;
+                    var videoDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
+
+#if MACCATALYST
+                    videoDevice = videoDevices.FirstOrDefault();
+#else
+                    videoDevice = videoDevices.FirstOrDefault(d => d.Position == cameraPosition);
+#endif
+                    if (videoDevice == null)
+                    {
+                        State = CameraProcessorState.Error;
+                        _session.CommitConfiguration();
+                        return;
+                    }
                 }
             }
         }
@@ -294,6 +318,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _session.RemoveInput(_session.Inputs[0]);
         }
 
+        // Remove all existing outputs before adding new ones
+        while (_session.Outputs.Any())
+        {
+            _session.RemoveOutput(_session.Outputs[0]);
+        }
+
         _deviceInput = new AVCaptureDeviceInput(videoDevice, out error);
         if (error != null)
         {
@@ -312,10 +342,22 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             OutputSettings = new NSDictionary()
         };
         _stillImageOutput.HighResolutionStillImageOutputEnabled = true;
-        _session.AddOutput(_stillImageOutput);
+
+        if (_session.CanAddOutput(_stillImageOutput))
+        {
+            _session.AddOutput(_stillImageOutput);
+        }
+        else
+        {
+            Console.WriteLine("Could not add still image output to the session");
+            _session.CommitConfiguration();
+            State = CameraProcessorState.Error;
+            return;
+        }
 
         if (_session.CanAddOutput(_videoDataOutput))
         {
+            // Configure video data output BEFORE adding to session
             _session.AddOutput(_videoDataOutput);
             _videoDataOutput.AlwaysDiscardsLateVideoFrames = true;
             _videoDataOutput.WeakVideoSettings = new NSDictionary(CVPixelBuffer.PixelFormatTypeKey, 
@@ -382,6 +424,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         try
         {
+            Setup();
+
             _session.StartRunning();
             State = CameraProcessorState.Enabled;
             
@@ -405,9 +449,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         lock (_lockRawFrame)
         {
             _latestRawFrame?.Dispose();
-            _oldRawFrame?.Dispose();
             _latestRawFrame = null;
-            _oldRawFrame = null;
         }
 
         if (State == CameraProcessorState.None && !force)
@@ -420,7 +462,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             _session.StopRunning();
             State = CameraProcessorState.None;
-            
+
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 DeviceDisplay.Current.KeepScreenOn = false;
@@ -650,6 +692,52 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var sampleBuffer = await _stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
                 var jpegData = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer);
 
+                using var image = CIImage.FromData(jpegData);
+
+                //get metadata
+                var metaData = image.Properties.Dictionary.MutableCopy() as NSMutableDictionary;
+                var orientation = metaData["Orientation"].ToString().ToInteger();
+                var props = image.Properties;
+
+#if DEBUG
+                var exif = image.Properties.Exif;
+                foreach (var key in exif.Dictionary.Keys)
+                {
+                    Debug.WriteLine($"{key}: {exif.Dictionary[key]}");
+                }
+#endif
+
+                var rotation = 0;
+                bool flipHorizontal, flipVertical; //unused
+                switch (orientation)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        flipHorizontal = true; 
+                        break;
+                    case 3:
+                        rotation = 180;
+                        break;
+                    case 4:
+                        flipVertical = true; 
+                        break;
+                    case 5:
+                        rotation = 270;
+                        flipHorizontal = true;
+                        break;
+                    case 6:
+                        rotation = 270;
+                        break;
+                    case 7:
+                        rotation = 90;
+                        flipHorizontal = true;
+                        break;
+                    case 8:
+                        rotation = 90;
+                        break;
+                }
+
                 using var uiImage = UIImage.LoadFromData(jpegData);
                 var skImage = uiImage.ToSKImage();
 
@@ -658,7 +746,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     Facing = FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage,
-                    Orientation = FormsControl.DeviceRotation
+                    Rotation = rotation,
+                    Meta = Metadata.CreateMetadataFromProperties(props, metaData)
                 };
 
                 MainThread.BeginInvokeOnMainThread(() =>
@@ -680,7 +769,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         });
     }
 
-    public CapturedImage GetPreviewImage()
+ 
+    public SKImage GetPreviewImage()
     {
         // First check if we have a ready preview
         lock (_lockPreview)
@@ -690,13 +780,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var get = _preview;
                 _preview = null;
 
-                // If we're returning an image, make sure we don't have it queued for disposal
                 if (_kill == get)
                 {
                     _kill = null;
                 }
-
-                return get;
+                return get.Image;
             }
         }
 
@@ -708,37 +796,25 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             try
             {
-                // Create SKImage on demand from raw data
+                // Create SKImage on main thread from copied pixel data
                 var info = new SKImageInfo(_latestRawFrame.Width, _latestRawFrame.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                using var rawImage = SKImage.FromPixels(info, _latestRawFrame.Data, _latestRawFrame.BytesPerRow);
 
-                // Apply rotation if needed
-                SKImage rotatedImage;
-                if (_latestRawFrame.CurrentRotation != Rotation.rotate0Degrees)
+                // Pin the byte array and create SKImage
+                var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(_latestRawFrame.PixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
                 {
+                    var pinnedPtr = gcHandle.AddrOfPinnedObject();
+                    using var rawImage = SKImage.FromPixels(info, pinnedPtr, _latestRawFrame.BytesPerRow);
+
+                    // Apply rotation if needed
                     using var bitmap = SKBitmap.FromImage(rawImage);
                     using var rotatedBitmap = HandleOrientation(bitmap, (double)_latestRawFrame.CurrentRotation);
-                    rotatedImage = SKImage.FromBitmap(rotatedBitmap);
+                    return SKImage.FromBitmap(rotatedBitmap);
                 }
-                else
+                finally
                 {
-                    rotatedImage = rawImage.Subset(SKRectI.Create(0, 0, _latestRawFrame.Width, _latestRawFrame.Height));
+                    gcHandle.Free();
                 }
-
-                var capturedImage = new CapturedImage()
-                {
-                    Facing = _latestRawFrame.Facing,
-                    Time = _latestRawFrame.Time,
-                    Image = rotatedImage,
-                    Orientation = _latestRawFrame.Orientation
-                };
-
-                // Clear the raw frame since we've used it
-                _oldRawFrame?.Dispose();
-                _oldRawFrame = _latestRawFrame;
-                _latestRawFrame = null;
-
-                return capturedImage;
             }
             catch (Exception e)
             {
@@ -748,7 +824,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    public async Task<string> SaveJpgStreamToGallery(Stream stream, string filename, double cameraSavedRotation, string album)
+    public async Task<string> SaveJpgStreamToGallery(Stream stream, string filename, double cameraSavedRotation, Metadata meta, string album)
     {
         try
         {
@@ -846,6 +922,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Frame stats - Processed: {_processedFrameCount}, Skipped: {_skippedFrameCount}");
         }
 
+        bool hasFrame=false;
         try
         {
             using var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
@@ -885,7 +962,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         focals.Add((float)focal);
                     }
 
-                    //FOV = 2 arctan (x / (2 f)), where x is the diagonal of the film.
+                    // FOV = 2 arctan (x / (2 f)), where x is the diagonal of the film.
                     var unit = FormsControl.CameraDevice;
 
                     unit.Id = name;
@@ -895,11 +972,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     unit.PixelYDimension = exif["PixelYDimension"].ToString().ToFloat();
                     unit.FocalLength = focal;
 
-                    var info = _deviceInput.Device.ActiveFormat;
-                    var pixelsZoom = info.VideoZoomFactorUpscaleThreshold;
+                    var formatInfo = _deviceInput.Device.ActiveFormat;
+                    var pixelsZoom = formatInfo.VideoZoomFactorUpscaleThreshold;
                     float aspectH = unit.PixelXDimension / unit.PixelYDimension;
-                    float aspectV = 1.0f;
-                    float fovH = info.VideoFieldOfView;
+                    float fovH = formatInfo.VideoFieldOfView;
                     float fovV = fovH / aspectH;
 
                     var sensorWidth = (float)(2 * unit.FocalLength * Math.Tan(fovH * Math.PI / 2.0f * 180));
@@ -916,18 +992,35 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 FormsControl.CameraDevice.Meta.Aperture = aperture;
                 FormsControl.CameraDevice.Meta.Shutter = shutterSpeed;
 
-                var width = (int)pixelBuffer.Width;
+                switch ((int)CurrentRotation)
+                {
+                    case 90:
+                        FormsControl.CameraDevice.Meta.Orientation = 6;
+                        break;
+                    case 270:
+                        FormsControl.CameraDevice.Meta.Orientation = 8;
+                        break;
+                    case 180:
+                        FormsControl.CameraDevice.Meta.Orientation = 3;
+                        break;
+                    default:
+                        FormsControl.CameraDevice.Meta.Orientation = 1;
+                        break;
+                }
+
+               var width = (int)pixelBuffer.Width;
                 var height = (int)pixelBuffer.Height;
                 var bytesPerRow = (int)pixelBuffer.BytesPerRow;
                 var baseAddress = pixelBuffer.BaseAddress;
 
+                // Copy pixel data to avoid CVPixelBuffer lifetime issues - minimal memory copy
                 var dataSize = height * bytesPerRow;
-                var data = SKData.Create(baseAddress, dataSize);
+                var pixelData = new byte[dataSize];
+                System.Runtime.InteropServices.Marshal.Copy(baseAddress, pixelData, 0, dataSize);
 
-                // Store raw frame data instead of creating SKImage immediately
+                // Store raw frame data for SKImage creation on main thread
                 var rawFrame = new RawFrameData
                 {
-                    BaseAddress = baseAddress,
                     Width = width,
                     Height = height,
                     BytesPerRow = bytesPerRow,
@@ -935,15 +1028,23 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     CurrentRotation = CurrentRotation,
                     Facing = FormsControl.Facing,
                     Orientation = (int)CurrentRotation,
-                    Data = data
+                    PixelData = pixelData
                 };
 
                 SetRawFrame(rawFrame);
-                FormsControl.UpdatePreview();
+                hasFrame=true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[NativeCameraiOS] pixelBuffer processing error: {e}");
             }
             finally
             {
                 pixelBuffer.Unlock(CVPixelBufferLock.ReadOnly);
+                if (hasFrame)
+                {
+                    FormsControl.UpdatePreview();
+                }
             }
         }
         catch (Exception e)
@@ -963,9 +1064,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         lock (_lockRawFrame)
         {
-            // Dispose old raw frame data
-            _oldRawFrame?.Dispose();
-            _oldRawFrame = _latestRawFrame;
+            // Dispose old raw frame data immediately to prevent memory accumulation
+            _latestRawFrame?.Dispose();
             _latestRawFrame = rawFrame;
         }
     }
@@ -1262,9 +1362,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             lock (_lockRawFrame)
             {
                 _latestRawFrame?.Dispose();
-                _oldRawFrame?.Dispose();
                 _latestRawFrame = null;
-                _oldRawFrame = null;
             }
 
             // Clean up orientation observer

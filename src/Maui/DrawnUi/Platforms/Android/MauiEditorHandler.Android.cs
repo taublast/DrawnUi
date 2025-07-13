@@ -209,7 +209,7 @@ public partial class MauiEditorHandler : EditorHandler
         var cursorPosition = GetCursorPosition(PlatformView);
         var selectedTextLength = GetSelectedTextLength(PlatformView);
 
-        if (VirtualView.CursorPosition != cursorPosition)
+        if (VirtualView.CursorPosition != cursorPosition) 
             VirtualView.CursorPosition = cursorPosition;
 
         if (VirtualView.SelectionLength != selectedTextLength)

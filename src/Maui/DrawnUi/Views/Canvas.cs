@@ -5,8 +5,6 @@ using Size = Microsoft.Maui.Graphics.Size;
 
 namespace DrawnUi.Views;
 
-
-
 /// <summary>
 /// Optimized DrawnView having only one child inside Content property. Can autosize to to children size.
 /// For all drawn app put this directly inside the ContentPage as root view.
@@ -56,6 +54,14 @@ public class Canvas : DrawnView, IGestureListener
             if (oldContent != null)
             {
                 RemoveSubView(oldContent);
+                try
+                {
+                    oldContent.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Super.Log(e);
+                }
             }
 
             if (view != null)
@@ -134,69 +140,72 @@ public class Canvas : DrawnView, IGestureListener
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
     {
-        //Debug.WriteLine($"[Canvas] Measure for {widthConstraint} {heightConstraint}");
-
-        //we need this for NET 9, where we might have `heightConstraint` Infinity
-        //while `HeightRequest` was defined to exact value
-        if (!double.IsFinite(heightConstraint) && double.IsFinite(HeightRequest))
+        lock (lockMeasure)
         {
-            heightConstraint = HeightRequest;
-        }
+            //Debug.WriteLine($"[Canvas] Measure for {widthConstraint} {heightConstraint}");
 
-        if (!double.IsFinite(widthConstraint) && double.IsFinite(WidthRequest))
-        {
-            widthConstraint = WidthRequest;
-        }
+            //we need this for NET 9, where we might have `heightConstraint` Infinity
+            //while `HeightRequest` was defined to exact value
+            if (!double.IsFinite(heightConstraint) && double.IsFinite(HeightRequest))
+            {
+                heightConstraint = HeightRequest;
+            }
+
+            if (!double.IsFinite(widthConstraint) && double.IsFinite(WidthRequest))
+            {
+                widthConstraint = WidthRequest;
+            }
 
 
-        if (!this.NeedMeasure && _lastMeasureConstraints.Width == widthConstraint &&
-            _lastMeasureConstraints.Height == heightConstraint)
-        {
+            if (!this.NeedMeasure && _lastMeasureConstraints.Width == widthConstraint &&
+                _lastMeasureConstraints.Height == heightConstraint)
+            {
+                return _lastMeasureResult;
+            }
+
+            //we are going to receive the size NOT reduced by Maui margins
+            Size ret;
+            NeedCheckParentVisibility = true;
+
+            ret = base.MeasureOverride(widthConstraint, heightConstraint);
+
+            if (NeedAutoSize)
+            {
+                var measured = AdaptSizeToContentIfNeeded(widthConstraint, heightConstraint, NeedMeasure);
+
+                if (double.IsFinite(measured.Width))
+                    ret.Width = measured.Width;
+
+                if (double.IsFinite(measured.Height))
+                    ret.Height = measured.Height;
+            }
+
+            _lastMeasureConstraints = new(widthConstraint, heightConstraint);
+            _lastMeasureResult = ret;
+
             NeedMeasure = false;
-            return _lastMeasureResult;
+            Update();
+
+            return ret;
         }
-
-        //we are going to receive the size NOT reduced by Maui margins
-        Size ret;
-        NeedCheckParentVisibility = true;
-
-        ret = base.MeasureOverride(widthConstraint, heightConstraint);
-        NeedMeasure = false;
-        Update();
-
-        if (NeedAutoSize)
-        {
-            var measured = AdaptSizeToContentIfNeeded(widthConstraint, heightConstraint, NeedMeasure);
-
-            if (double.IsFinite(measured.Width))
-                ret.Width = measured.Width;
-
-            if (double.IsFinite(measured.Height))
-                ret.Height = measured.Height;
-        }
-        else
-        {
-            //ret = base.MeasureOverride(widthConstraint, heightConstraint);
-            //NeedMeasure = false;
-        }
-
-
-        _lastMeasureConstraints = new(widthConstraint, heightConstraint);
-        _lastMeasureResult = ret;
-
-        return ret;
     }
+
+    private object lockMeasure = new();
 
     public override void Invalidate()
     {
         if (NeedAutoSize)
         {
-            //will trigger parent calling our MeasureOverride
-            //this can be called from main thread only !!!
-            MainThread.BeginInvokeOnMainThread(() =>
+            lock (lockMeasure)
             {
-                InvalidateMeasureNonVirtual(InvalidationTrigger.HorizontalOptionsChanged);
-            });
+                //will trigger parent calling our MeasureOverride
+                //this can be called from main thread only !!!
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    NeedMeasure = true;
+                    InvalidateMeasureNonVirtual(InvalidationTrigger.HorizontalOptionsChanged);
+                });
+            }
         }
 
         base.Invalidate();
@@ -385,6 +394,8 @@ public class Canvas : DrawnView, IGestureListener
 
     #endregion
 
+    private bool isEmpty = true;
+
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
@@ -394,17 +405,29 @@ public class Canvas : DrawnView, IGestureListener
 
     #region GESTURES
 
+    protected virtual void DetachGestures()
+    {
+        TouchEffect.SetForceAttach(this, false);
+    }
+
+    protected override void OnDestroyingVew()
+    {
+        base.OnDestroyingVew();
+
+        DetachGestures();
+    }
+
     protected virtual void OnGesturesAttachChanged()
     {
         if (Handler == null)
         {
-            TouchEffect.SetForceAttach(this, false);
+            DetachGestures();
             return;
         }
 
         if (this.Gestures == GesturesMode.Disabled)
         {
-            TouchEffect.SetForceAttach(this, false);
+            DetachGestures();
         }
         else
         {
@@ -414,9 +437,6 @@ public class Canvas : DrawnView, IGestureListener
                 TouchEffect.SetShareTouch(this, TouchHandlingStyle.Default);
             else if (this.Gestures == GesturesMode.Lock)
                 TouchEffect.SetShareTouch(this, TouchHandlingStyle.Lock);
-            //else
-            //if (this.Gestures == GesturesMode.Share)
-            //    TouchEffect.SetShareTouch(this, TouchHandlingStyle.Share);
         }
     }
 
@@ -644,19 +664,51 @@ public class Canvas : DrawnView, IGestureListener
     public static float FirstPanThreshold = 5;
 
     bool _isPanning;
+    bool _blockedPanning;
+    bool _hadTap;
+    bool _hadLong;
 
     /// <summary>
     /// IGestureListener implementation
     /// </summary>
     /// <param name="type"></param>
     /// <param name="args1"></param>
-    /// <param name="args1"></param>
-    /// <param name=""></param>
+    /// <param name="touchAction"></param>
     public virtual void OnGestureEvent(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)
     {
         //Debug.WriteLine($"[Canvas] {touchAction} {type}");
 
-#if ANDROID
+#if ANDROID //todo move all this fun to gestures lib now:
+        // on some devices like galaxy the screen is too sensitive for panning
+        // so it send micro-panning gestures when the finger just went down to screen
+        // like not moving yet so we filter micro-pan
+        // at the same time those screens detect pan instead of tap inside getsure lib
+        // so this is a specific android workaround, to be moved to gestures lib
+        if (touchAction == TouchActionResult.Tapped)
+        {
+            _hadTap = true;
+        }
+        else
+        if (touchAction == TouchActionResult.LongPressing)
+        {
+            _hadLong = true;
+        }
+        else
+        if (touchAction == TouchActionResult.Down)
+        {
+            _hadLong = false;
+            _hadTap = false;
+            _blockedPanning = false;
+        }
+        else
+        if (touchAction == TouchActionResult.Up)
+        {
+            if (_blockedPanning && !_hadTap && !_isPanning && !_hadLong)
+            {
+                touchAction = TouchActionResult.Tapped;
+            }
+        }
+        else
         if (touchAction == TouchActionResult.Panning)
         {
             //filter micro-gestures
@@ -664,6 +716,7 @@ public class Canvas : DrawnView, IGestureListener
                 || (Math.Abs(args1.Distance.Velocity.X / RenderingScale) < 1 &&
                     Math.Abs(args1.Distance.Velocity.Y / RenderingScale) < 1))
             {
+                _blockedPanning = true;
                 return;
             }
 
@@ -675,10 +728,11 @@ public class Canvas : DrawnView, IGestureListener
                 if (Math.Abs(args1.Distance.Total.X) < threshold && Math.Abs(args1.Distance.Total.Y) < threshold)
                 {
                     _panningOffset = SKPoint.Empty;
-                    Debug.WriteLine($"[Canvas] Blocked micro-pan");
+                    //Debug.WriteLine($"[Canvas] Blocked micro-pan");
                     return;
                 }
 
+                //Debug.WriteLine($"[Canvas] pan {args1.Distance.Total.X / RenderingScale:0.0} {args1.Distance.Total.Y / RenderingScale:0.0} pts");
                 if (_panningOffset == SKPoint.Empty)
                 {
                     _panningOffset = args1.Distance.Total.ToSKPoint();
@@ -691,7 +745,6 @@ public class Canvas : DrawnView, IGestureListener
         }
 
 #endif
-
 
         if (touchAction == TouchActionResult.Tapped)
         {
@@ -738,8 +791,7 @@ public class Canvas : DrawnView, IGestureListener
         }
 
         //this is intended to not lose gestures when fps drops and avoid crashes in double-buffering
-        PostponeExecutionBeforeDraw(
-        () =>
+        PostponeExecutionBeforeDraw(() =>
         {
             try
             {
@@ -954,8 +1006,7 @@ public class Canvas : DrawnView, IGestureListener
                     {
                         using (SKPaint paint = new SKPaint
                                {
-                                   Style = SKPaintStyle.StrokeAndFill,
-                                   Color = GesturesDebugColor.ToSKColor()
+                                   Style = SKPaintStyle.StrokeAndFill, Color = GesturesDebugColor.ToSKColor()
                                })
                         {
                             var circleRadius = 10f * RenderingScale; //half size
@@ -971,7 +1022,6 @@ public class Canvas : DrawnView, IGestureListener
                     DebugPointer.Render(Context.WithDestination(new SKRect(_PressedPosition.X + offsetHandX,
                         _PressedPosition.Y + offsetHandY, Context.Context.Width, Context.Context.Height)));
                 }
-
             }
             else
             {
@@ -1009,7 +1059,7 @@ public class Canvas : DrawnView, IGestureListener
                     DebugPointer.Render(Context.WithDestination(new SKRect(_PressedPosition.X + offsetHandX,
                         _PressedPosition.Y + offsetHandY, Context.Context.Width, Context.Context.Height)));
                 }
-           }
+            }
         }
     }
 

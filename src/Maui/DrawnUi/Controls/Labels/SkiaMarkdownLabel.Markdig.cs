@@ -13,7 +13,7 @@ namespace DrawnUi.Draw;
 /// Will internally create spans from markdown.
 /// Spans property must not be set directly.
 /// </summary>
-public partial class SkiaMarkdownLabel : SkiaLabel
+public partial class SkiaRichLabel : SkiaLabel
 {
     
     protected override void SetTextInternal()

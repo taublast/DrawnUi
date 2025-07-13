@@ -6,16 +6,16 @@ namespace DrawnUi.Draw;
 public class FrameTimeInterpolator
 {
     // Default FPS values
-    private const float DEFAULT_TARGET_FPS = 60f;
+    private const int DEFAULT_TARGET_FPS = 60;
     private const float DEFAULT_FPS_BUFFER = 10f;
     private const float MINIMUM_BUFFER = 1f; // Minimum buffer to prevent division issues
 
     // Performance monitoring constants
-    private const int MONITORING_FRAMES = 60; // Monitor over ~1 second at 60fps
+    //private const int MONITORING_FRAMES = 60; // Monitor over ~1 second at 60fps
     private const float QUALITY_CHANGE_THRESHOLD = 0.75f; // 75% of frames must exceed threshold
 
     // Quality reduction ratio from target FPS
-    private const float QUALITY_REDUCTION_RATIO = 0.75f; 
+    private const float QUALITY_REDUCTION_RATIO = 0.75f;
 
     private float _lastFrameTime;
     private float _currentTimeStep;
@@ -136,7 +136,7 @@ public class FrameTimeInterpolator
         ShouldReduceQuality = false;
         IsSkippingFrames = false;
         LastFrameStep = 0;
-        _targetFps = DEFAULT_TARGET_FPS;
+        SetTargetFps();
         _currentTimeStep = 1f / _targetFps;
         _frameHistoryIndex = 0;
         _frameHistoryCount = 0;
@@ -151,21 +151,37 @@ public class FrameTimeInterpolator
         _frameHistoryCount = 0;
     }
 
+    static int _framerate = 60;
+
+    void SetTargetFps()
+    {
+
+#if ONPLATFORM
+        _framerate = Super.GetDisplayRefreshRate(DEFAULT_TARGET_FPS);
+#else
+        _framerate = DEFAULT_TARGET_FPS;
+#endif
+
+        _targetFps = _framerate;
+    }
+
     /// <summary>
     /// Initializes the manager with default settings
     /// </summary>
     /// <param name="currentFrameTime">Current frame time to initialize with</param>
     private void InitializeManager(float currentFrameTime)
     {
+        SetTargetFps();
+
         _lastFrameTime = currentFrameTime;
         IsSkippingFrames = false;
         ShouldReduceQuality = false;
-        _frameTimeHistory = new float[MONITORING_FRAMES];
+        _frameTimeHistory = new float[(int)_framerate];
         _frameHistoryIndex = 0;
         _frameHistoryCount = 0;
-        _targetFps = DEFAULT_TARGET_FPS;
         _currentTimeStep = 1f / _targetFps;
     }
+
 
     /// <summary>
     /// Adds the current frame time to the history buffer
@@ -174,9 +190,9 @@ public class FrameTimeInterpolator
     private void AddToFrameTimeHistory(float frameTime)
     {
         _frameTimeHistory[_frameHistoryIndex] = frameTime;
-        _frameHistoryIndex = (_frameHistoryIndex + 1) % MONITORING_FRAMES;
+        _frameHistoryIndex = (_frameHistoryIndex + 1) % _framerate;
 
-        if (_frameHistoryCount < MONITORING_FRAMES)
+        if (_frameHistoryCount < _framerate)
         {
             _frameHistoryCount++;
         }
@@ -188,7 +204,7 @@ public class FrameTimeInterpolator
     private void UpdateQualitySettings()
     {
         // Only evaluate after collecting enough samples
-        if (_frameHistoryCount < MONITORING_FRAMES)
+        if (_frameHistoryCount < _framerate)
         {
             return;
         }
@@ -199,7 +215,7 @@ public class FrameTimeInterpolator
         int framesWithLowPerformance = 0;
 
         // Count frames that are below the quality threshold
-        for (int i = 0; i < MONITORING_FRAMES; i++)
+        for (int i = 0; i < _framerate; i++)
         {
             if (_frameTimeHistory[i] > qualityThreshold)
             {
@@ -207,7 +223,7 @@ public class FrameTimeInterpolator
             }
         }
 
-        float percentageLowPerformance = (float)framesWithLowPerformance / MONITORING_FRAMES;
+        float percentageLowPerformance = (float)framesWithLowPerformance / _framerate;
         float thresholdFps = 1f / qualityThreshold;
 
         // Update quality settings based on threshold
@@ -231,8 +247,7 @@ public class FrameTimeInterpolator
 
     // Singleton pattern
     private static FrameTimeInterpolator _instance;
+
     public static FrameTimeInterpolator Instance =>
         _instance ??= new FrameTimeInterpolator();
-
- 
 }

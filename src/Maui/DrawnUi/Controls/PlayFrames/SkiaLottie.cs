@@ -142,6 +142,12 @@ public class SkiaLottie : AnimatedFramesRenderer
     typeof(bool),
     typeof(SkiaLottie),
     true);
+
+    /// <summary>
+    /// Gets or sets whether the IsOn state should be applied when the animation is not playing.
+    /// When true (default), changing IsOn will immediately seek to the appropriate frame.
+    /// When false, IsOn state is only applied during animation playback.
+    /// </summary>
     public bool ApplyIsOnWhenNotPlaying
     {
         get { return (bool)GetValue(ApplyIsOnWhenNotPlayingProperty); }
@@ -152,6 +158,13 @@ public class SkiaLottie : AnimatedFramesRenderer
     typeof(bool),
     typeof(SkiaLottie),
     false, propertyChanged: ApplyIsOnProperty);
+
+    /// <summary>
+    /// Gets or sets the toggle state for animations with distinct on/off states.
+    /// When true, displays DefaultFrameWhenOn frame when stopped.
+    /// When false, displays DefaultFrame when stopped.
+    /// Perfect for animated toggles, checkboxes, or switch controls.
+    /// </summary>
     public bool IsOn
     {
         get { return (bool)GetValue(IsOnProperty); }
@@ -178,6 +191,11 @@ public class SkiaLottie : AnimatedFramesRenderer
         typeof(SkiaLottie),
         TransparentColor, propertyChanged: ApplySourceProperty);
 
+    /// <summary>
+    /// Gets or sets a global color tint applied to the entire Lottie animation.
+    /// This provides a quick way to theme animations without modifying the source file.
+    /// For multiple color replacements, use the Colors collection instead.
+    /// </summary>
     public Color ColorTint
     {
         get => (Color)GetValue(ColorTintProperty);
@@ -256,6 +274,11 @@ public class SkiaLottie : AnimatedFramesRenderer
         propertyChanged: ApplySourceProperty);
 
 
+    /// <summary>
+    /// Gets or sets the path or URL to the Lottie JSON file.
+    /// Supports web URLs, native file system paths (file://), and bundled resources from Resources/Raw folder.
+    /// Example: "Lottie/animation.json" loads from Resources/Raw/Lottie/animation.json
+    /// </summary>
     public string Source
     {
         get => (string)GetValue(SourceProperty);
@@ -309,7 +332,7 @@ public class SkiaLottie : AnimatedFramesRenderer
     /// This is not replacing current animation, only pre-loading! Use SetAnimation after that if needed.
     /// </summary>
     /// <param name="fileName"></param>
-    /// <returns>
+    /// <returns></returns>
     public async Task<Animation> LoadSource(string fileName)
     {
         if (string.IsNullOrEmpty(fileName))

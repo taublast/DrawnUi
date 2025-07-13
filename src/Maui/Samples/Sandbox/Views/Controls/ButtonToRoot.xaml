@@ -16,7 +16,6 @@
     <draw:SkiaButton
         BackgroundColor="{StaticResource ColorPrimary}"
         CornerRadius="12"
-        FontFamily="FontGame"
         FontSize="11"
         HeightRequest="40"
         LockRatio="1"

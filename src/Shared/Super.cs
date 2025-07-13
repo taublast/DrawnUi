@@ -11,7 +11,8 @@ public partial class Super
     public static bool UseFrozenVisualLayers = false;
 
     /// <summary>
-    /// Since we removed IHttpClientFactory for faster app startup one can set this delegate to be used to create a custom client that would be used for loading internet sources.
+    /// Since we removed IHttpClientFactory for faster app startup on mobile
+    /// one can set this delegate to be used to create a custom client that would be used for loading internet sources.
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -187,6 +188,11 @@ public partial class Super
     public static double StatusBarHeight { get; set; }
 
     /// <summary>
+    /// In DP, actually Android only
+    /// </summary>
+    public static double NavigationBarHeight { get; set; }
+
+    /// <summary>
     /// In DP
     /// </summary>
     public static double BottomTabsHeight { get; set; } = 56;
@@ -238,10 +244,14 @@ public partial class Super
     public static Action OnMauiAppCreated;
 
 
+    /// <summary>
+    /// This will force recalculate canvas visibility in ViewTree and update those visible. Also when GRContext changes, all references must be cleared to avoid crash on next draw
+    /// </summary>
     public static event EventHandler NeedGlobalRefresh;
 
+
     /// <summary>
-    /// This will force recalculate canvas visibility in ViewTree and update those visible
+    /// This will force recalculate canvas visibility in ViewTree and update those visible. Also when GRContext changes, all references must be cleared to avoid crash on next draw
     /// </summary>
     public static void NeedGlobalUpdate()
     {

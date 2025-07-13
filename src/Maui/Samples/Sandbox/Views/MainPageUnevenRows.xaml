@@ -98,6 +98,8 @@
 
             </draw:SkiaScroll>
 
+            <draw:SkiaButton VerticalOptions="Start" HorizontalOptions="End" Text="Refresh" Tapped="SkiaControl_OnTapped"/>
+
             <controls:ButtonToRoot />
 
             <draw:SkiaLabel

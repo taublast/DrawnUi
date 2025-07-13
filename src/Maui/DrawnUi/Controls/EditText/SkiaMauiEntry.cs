@@ -64,6 +64,7 @@ public class SkiaMauiEntry : SkiaMauiElement, ISkiaGestureListener
 
             Control = new MauiEntry()
             {
+                ReturnType = ReturnType.Done,
                 IsSpellCheckEnabled = this.IsSpellCheckEnabled,
                 BackgroundColor = this.BackgroundColor,
                 Background = null//Colors.Transparent,
@@ -222,7 +223,7 @@ public class SkiaMauiEntry : SkiaMauiElement, ISkiaGestureListener
     /// <param name="e"></param>
     private void OnControlFocused(object sender, FocusEventArgs e)
     {
-        Debug.WriteLine($"[SKiaMauiEntry] Focused by native");
+        Debug.WriteLine($"[SkiaMauiEntry] Focused by native");
         //IsFocused = true;
         lock (lockFocus)
         {
@@ -239,7 +240,7 @@ public class SkiaMauiEntry : SkiaMauiElement, ISkiaGestureListener
     /// <param name="e"></param>
     private void OnControlUnfocused(object sender, FocusEventArgs e)
     {
-        Debug.WriteLine($"[SKiaMauiEntry] Unfocused by native");
+        Debug.WriteLine($"[SkiaMauiEntry] Unfocused by native");
         //IsFocused = false;
         lock (lockFocus)
         {
@@ -258,7 +259,7 @@ public class SkiaMauiEntry : SkiaMauiElement, ISkiaGestureListener
     /// Called by DrawnUi when the focus changes
     /// </summary>
     /// <param name="focus"></param>
-    public bool OnFocusChanged(bool focus)
+    public new bool OnFocusChanged(bool focus)
     {
         lock (lockFocus)
         {
@@ -296,14 +297,11 @@ public class SkiaMauiEntry : SkiaMauiElement, ISkiaGestureListener
         base.OnDisposing();
     }
 
-    public override ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+    public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
     {
-        if (IsDisposed || IsDisposing)
-            return ScaledSize.Default;
-
         GetOrCreateControl();
 
-        return base.Measure(widthConstraint, heightConstraint, scale);
+        return base.OnMeasuring(widthConstraint, heightConstraint, scale);
     }
 
     protected virtual void WhenFocusChanged(bool state)

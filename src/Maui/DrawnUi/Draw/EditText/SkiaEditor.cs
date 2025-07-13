@@ -389,7 +389,7 @@ namespace DrawnUi.Draw
         }
 
 
-        public override ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+        public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
         {
             RenderingScale = scale;
 
@@ -398,7 +398,7 @@ namespace DrawnUi.Draw
                 CreateControl();
             }
 
-            return base.Measure(widthConstraint, heightConstraint, scale);
+            return base.OnMeasuring(widthConstraint, heightConstraint, scale);
         }
 
         protected RestartingTimer<int> TimerUpdateParentCursorPosition;

@@ -9,6 +9,10 @@
         <PackageReference Include="Mapsui.Extensions" Version="5.0.0-beta.4" />
         <PackageReference Include="MapsUi.Maui" Version="5.0.0-beta.4" />
     </ItemGroup>
+ 
+    <ItemGroup>
+      <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
+    </ItemGroup>
 
     <PropertyGroup>
         <Title>MapsUi addon to DrawnUI for .NET MAUI</Title>
@@ -23,10 +27,6 @@
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <WarningsAsErrors>$(WarningsAsErrors);CS0108</WarningsAsErrors>
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
-    </ItemGroup>
 
 
 </Project>

@@ -38,7 +38,7 @@
                             Padding="6"
                             BackgroundColor="Blue"
                             HorizontalOptions="Fill"
-                            Tag="VStack"
+                            Tag="SkiaStack"
                             Type="Column"
                             UseCache="ImageComposite">
 

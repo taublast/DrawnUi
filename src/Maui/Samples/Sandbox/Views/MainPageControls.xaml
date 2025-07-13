@@ -6,8 +6,6 @@
     xmlns:controls="clr-namespace:Sandbox.Views.Controls"
     xmlns:demo="clr-namespace:Sandbox"
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
-    xmlns:gestures="clr-namespace:AppoMobi.Maui.Gestures;assembly=AppoMobi.Maui.Gestures"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:views="clr-namespace:Sandbox.Views"
     x:Name="ThisPage"
     x:DataType="demo:MainPageViewModel">
@@ -83,7 +81,7 @@
                                 CornerRadius="12"
                                 HorizontalOptions="Fill"
                                 StrokeColor="Black"
-                                StrokeWidth="1.0"
+                                StrokeWidth="-1"
                                 VerticalOptions="Fill" />
 
                             <draw:SkiaLabel

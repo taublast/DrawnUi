@@ -62,9 +62,9 @@
                                     Source="Images/8.jpg"
                                     UseCache="Image " />
 
-                                <draw:SkiaMarkdownLabel
+                                <draw:SkiaRichLabel
                                     Margin="16,0"
-                                    FontFamily="OpenSansRegular"
+                                    FontFamily="FontText"
                                     FontSize="14"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center"

@@ -197,7 +197,6 @@ public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
                 }
                 else
                 {
-
                     SKImage snapshot;
                     if (UseContext)
                     {
@@ -218,18 +217,20 @@ public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
                         var kill = Snapshot;
                         ctx.Context.Canvas.DrawImage(snapshot, destination, ImagePaint);
                         Snapshot = snapshot;
-                        kill?.Dispose();
+                        if (kill != null)
+                        {
+                            DisposeObject(kill);
+                        }
                     }
 
                 }
             }
 
             if (kill1 != null && kill1 != ImagePaint.ImageFilter)
-                kill1?.Dispose();
+                DisposeObject(kill1);
 
             if (kill2 != null && kill2 != ImagePaint.ColorFilter)
-                kill2?.Dispose();
-
+                DisposeObject(kill2);
         }
 
     }

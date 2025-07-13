@@ -1,4 +1,5 @@
 ﻿using System.Resources;
+using HarfBuzzSharp;
 using SKBlendMode = SkiaSharp.SKBlendMode;
 using SKCanvas = SkiaSharp.SKCanvas;
 using SKClipOperation = SkiaSharp.SKClipOperation;
@@ -18,12 +19,18 @@ namespace DrawnUi.Draw
 {
     [DebuggerDisplay("{DebugString}")]
     public partial class SkiaControl :
+        ISkiaGestureListener,
         IHasAfterEffects,
         ISkiaControl
     {
         public SkiaControl()
         {
             Init();
+        }
+
+        public virtual bool OnFocusChanged(bool focus)
+        {
+            return false;
         }
 
         public VisualLayer? VisualLayer { get; set; }
@@ -39,6 +46,14 @@ namespace DrawnUi.Draw
             CalculateSizeRequest();
 
             AttachEffects();
+        }
+
+        /// <summary>
+        /// Provides a cached  image if any
+        /// </summary>
+        public virtual SKImage CachedImage
+        {
+            get { return RenderObject?.Image; }
         }
 
         /// <summary>
@@ -302,14 +317,25 @@ namespace DrawnUi.Draw
                 if (!IsVisible || IsDisposed || IsDisposing || SkipRendering)
                     return false;
 
-                if (Superview != null && !Superview.CanDraw)
-                {
-                    return false;
-                }
+                //if (Superview != null && !Superview.CanDraw)
+                //{
+                //    return false;
+                //}
 
                 return true;
             }
         }
+
+        //public virtual bool ShouldMeasure
+        //{
+        //    get
+        //    {
+        //        if (!IsVisible || IsDisposed || IsDisposing || SkipRendering)
+        //            return false;
+
+        //        return true;
+        //    }
+        //}
 
         /// <summary>
         /// Can be set but custom controls while optimizing rendering etc. Will affect CanDraw.
@@ -396,7 +422,11 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Apply all postponed invalidation other logic that was postponed until the first draw for optimization. Use this for special code-behind cases, like tests etc, if you cannot wait until the first Draw(). In this version this affects ItemsSource only.
+        /// Apply all postponed invalidation other logic that was postponed until
+        /// the first draw for optimization.
+        /// Use this for special code-behind cases, like tests etc,
+        /// if you cannot wait until the first Draw().
+        /// In this version this affects ItemsSource only.
         /// </summary>
         public void CommitInvalidations()
         {
@@ -608,10 +638,10 @@ namespace DrawnUi.Draw
             var startScaleY = this.ScaleY;
 
             return AnimateAsync(value =>
-                {
-                    this.ScaleX = startScaleX + (x - startScaleX) * value;
-                    this.ScaleY = startScaleY + (y - startScaleY) * value;
-                },
+            {
+                this.ScaleX = startScaleX + (x - startScaleX) * value;
+                this.ScaleY = startScaleY + (y - startScaleY) * value;
+            },
                 () =>
                 {
                     this.ScaleX = x;
@@ -662,10 +692,10 @@ namespace DrawnUi.Draw
             var startTranslationY = this.TranslationY;
 
             return AnimateAsync(value =>
-                {
-                    this.TranslationX = (float)(startTranslationX + (x - startTranslationX) * value);
-                    this.TranslationY = (float)(startTranslationY + (y - startTranslationY) * value);
-                },
+            {
+                this.TranslationX = (float)(startTranslationX + (x - startTranslationX) * value);
+                this.TranslationY = (float)(startTranslationY + (y - startTranslationY) * value);
+            },
                 () =>
                 {
                     this.TranslationX = x;
@@ -750,13 +780,14 @@ namespace DrawnUi.Draw
 
         /// <summary>
         /// When the animator is cancelled if applyEndValueOnStop is true then the end value will be sent to your callback
+        /// </summary>
         /// <param name="callback"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="length"></param>
         /// <param name="easing"></param>
         /// <param name="cancel"></param>
-        /// <param name="onStopped"></param>
+        /// <param name="applyEndValueOnStop"></param>
         /// <returns></returns>
         public Task AnimateRangeAsync(Action<double> callback, double start, double end, double length = 250,
             Easing easing = null,
@@ -814,37 +845,62 @@ namespace DrawnUi.Draw
         public SKSize SizeRequest { get; protected set; }
 
         /// <summary>
-        /// Apply margins to SizeRequest
+        /// Points
         /// </summary>
-        /// <param name="widthConstraint"></param>
-        /// <param name="scale"></param>
-        /// <returns></returns>
-        public float AdaptWidthConstraintToRequest(float widthConstraint, Thickness constraints, double scale)
+        public double WidthRequestWithMargins
         {
-            var widthPixels = (float)Math.Round(SizeRequest.Width * scale + constraints.HorizontalThickness);
-
-            if (SizeRequest.Width >= 0)
-                widthConstraint = widthPixels;
-
-            return widthConstraint;
+            get
+            {
+                if (WidthRequest >= 0)
+                {
+                    return WidthRequest + Margins.HorizontalThickness;
+                }
+                return WidthRequest;
+            }
         }
 
         /// <summary>
         /// Apply margins to SizeRequest
         /// </summary>
-        /// <param name="heightConstraint"></param>
+        /// <param name="sizeConstraint"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public float AdaptHeightContraintToRequest(float heightConstraint, Thickness constraints, double scale)
+        public float AdaptWidthConstraintToRequest(float sizeConstraint, Thickness constraints, double scale)
         {
-            var thickness = constraints.VerticalThickness;
+            var ret = sizeConstraint;
 
-            var widthPixels = (float)Math.Round(SizeRequest.Height * scale + thickness);
+            if (SizeRequest.Width >= 0)
+            {
+                ret = (float)Math.Round(SizeRequest.Width * scale + constraints.HorizontalThickness);
+                if (sizeConstraint >= 0 && ret > sizeConstraint)
+                {
+                    return sizeConstraint;
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Apply margins to SizeRequest
+        /// </summary>
+        /// <param name="sizeConstraint"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        public float AdaptHeightContraintToRequest(float sizeConstraint, Thickness constraints, double scale)
+        {
+            var ret = sizeConstraint;
 
             if (SizeRequest.Height >= 0)
-                heightConstraint = widthPixels;
+            {
+                ret = (float)Math.Round(SizeRequest.Height * scale + constraints.VerticalThickness);
+                if (sizeConstraint >= 0 && ret > sizeConstraint)
+                {
+                    return sizeConstraint;
+                }
+            }
 
-            return heightConstraint;
+            return ret;
         }
 
         public virtual MeasuringConstraints GetMeasuringConstraints(MeasureRequest request)
@@ -866,6 +922,23 @@ namespace DrawnUi.Draw
                 Content = rectForChildrenPixels
             };
         }
+
+        public bool NeedFillHorizontally
+        {
+            get
+            {
+                return WidthRequest < 0 && HorizontalOptions.Alignment == LayoutAlignment.Fill;
+            }
+        }
+
+        public bool NeedFillVertically
+        {
+            get
+            {
+                return HeightRequest < 0 && VerticalOptions.Alignment == LayoutAlignment.Fill;
+            }
+        }
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float AdaptConstraintToContentRequest(
@@ -1206,7 +1279,7 @@ namespace DrawnUi.Draw
                 !child.Control.InputTransparent && child.Control.CanDraw)
             {
                 var transformed = child.Control.ApplyTransforms(child.HitRect);
-                inside = transformed.ContainsInclusive(point.X, point.Y); // || child.Control == Superview.FocusedChild;
+                inside = transformed.ContainsInclusive(point.X, point.Y); 
             }
 
             return inside;
@@ -1245,12 +1318,6 @@ namespace DrawnUi.Draw
             get { return (ICommand)GetValue(CommandChildTappedProperty); }
             set { SetValue(CommandChildTappedProperty, value); }
         }
-
-        /// <summary>
-        /// Fast usage event handler to handle taps. For more control over gestures use AddGestures or code-behind ProcessGestures override.
-        /// If this is set then the Tapped gesture will be consumed by this control without alternatives.
-        /// </summary>
-        public event EventHandler<ControlTappedEventArgs> Tapped;
 
         public static readonly BindableProperty TouchEffectColorProperty = BindableProperty.Create(
             nameof(TouchEffectColor), typeof(Color),
@@ -1385,7 +1452,40 @@ namespace DrawnUi.Draw
         /// </summary>
         public Func<SkiaGesturesParameters, GestureEventProcessingInfo, ISkiaGestureListener> OnGestures;
 
+        /// <summary>
+        /// Fast usage event handler to handle taps.
+        /// For more control over gestures use AddGestures or code-behind ProcessGestures override.
+        /// If this is set then the Tapped gesture will be consumed by this control without alternatives.
+        /// </summary>
+        public event EventHandler<ControlTappedEventArgs> Tapped;
 
+        /// <summary>
+        /// Gestures event handler for fast access. To mark a gesture as consumed set `e.Consumed` to `true` inside a synchronous (!) event handler.
+        /// Can also use code-behind ProcessGestures override for more control.
+        /// </summary>
+        public event EventHandler<SkiaGesturesInfo> ConsumeGestures;
+
+        /// <summary>
+        /// Layout detected that child was tapped, base used to call callback ChildTapped 
+        /// </summary>
+        /// <param name="child"></param>
+        /// <param name="args"></param>
+        /// <param name="apply"></param>
+        public virtual void OnChildTapped(SkiaControl child, SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        {
+            if (ChildTapped != null)
+            {
+                ChildTapped.Invoke(this, new(child, args, apply));
+            }
+
+            if (CommandChildTapped != null)
+            {
+                CommandChildTapped.Execute(child);
+            }
+        }
+
+ 
+ 
         public virtual ISkiaGestureListener ProcessGestures(
             SkiaGesturesParameters args,
             GestureEventProcessingInfo apply)
@@ -1443,6 +1543,16 @@ namespace DrawnUi.Draw
                 }
             }
 
+            if (ConsumeGestures != null)
+            {
+                var sent = SkiaGesturesInfo.Create(args, apply);
+                ConsumeGestures.Invoke(this, sent);
+                if (args.Type != TouchActionResult.Up && sent.Consumed)
+                {
+                    return this;
+                }
+            }
+
             if (UsesRenderingTree && RenderTree != null)
             {
                 var hadInputConsumed = consumed;
@@ -1452,6 +1562,7 @@ namespace DrawnUi.Draw
                 if (consumed == null || args.Type == TouchActionResult.Up)
                 {
                     var asSpan = CollectionsMarshal.AsSpan(RenderTree);
+
                     for (int i = asSpan.Length - 1; i >= 0; i--)
                     {
                         var child = asSpan[i];
@@ -1477,33 +1588,17 @@ namespace DrawnUi.Draw
                             {
                                 var touchLocationWIthOffset = new SKPoint(apply.MappedLocation.X + thisOffset.X,
                                     apply.MappedLocation.Y + thisOffset.Y);
+
                                 forChild = IsGestureForChild(child, touchLocationWIthOffset);
                             }
-                            //if (forChildOld != forChild)
-                            //{
-                            //    var stop = 1;
-                            //    forChildOld = IsGestureForChild(child, touchLocationWIthOffset);
-                            //    forChild = IsGestureForChild(child.Control, args);
-                            //}
 
                             if (forChild)
                             {
                                 if (args.Type == TouchActionResult.Tapped)
                                 {
-                                    if (ChildTapped != null)
-                                    {
-                                        breakForChild = listener;
-                                        ChildTapped.Invoke(this, new(child.Control, args, apply));
-                                    }
-
-                                    if (CommandChildTapped != null)
-                                    {
-                                        breakForChild = listener;
-                                        CommandChildTapped.Execute(listener);
-                                    }
+                                    OnChildTapped(child.Control, args, apply);
                                 }
 
-                                //Trace.WriteLine($"[HIT] for cell {i} at Y {y:0.0}");
                                 if (manageChildFocus && listener == Superview.FocusedChild)
                                 {
                                     manageChildFocus = false;
@@ -1605,14 +1700,13 @@ namespace DrawnUi.Draw
                                         if (ChildTapped != null)
                                         {
                                             breakForChild = listener;
-                                            ChildTapped.Invoke(this, new(listener, args, apply));
                                         }
-
                                         if (CommandChildTapped != null)
                                         {
                                             breakForChild = listener;
-                                            CommandChildTapped.Execute(listener);
                                         }
+
+                                        OnChildTapped(listener as SkiaControl, args, apply);
                                     }
 
                                     if (manageChildFocus && listener == Superview.FocusedChild)
@@ -1674,6 +1768,7 @@ namespace DrawnUi.Draw
 
             return consumed;
         }
+ 
 
         public static readonly BindableProperty BlockGesturesBelowProperty = BindableProperty.Create(
             nameof(BlockGesturesBelow),
@@ -1695,7 +1790,7 @@ namespace DrawnUi.Draw
             LockUpdate(false);
         }
 
-        public void LockUpdate(bool value)
+        public virtual void LockUpdate(bool value)
         {
             bool fire = UpdateLocks > 0 && !value;
             if (value)
@@ -1968,9 +2063,17 @@ namespace DrawnUi.Draw
         {
             if (bindable is SkiaControl control)
             {
+
+                if (oldvalue is SkiaGradient old)
+                {
+                    old.BindingContext = null;
+                    old.Parent = null;
+                }
+
                 if (newvalue is SkiaGradient gradient)
                 {
                     gradient.BindingContext = control.BindingContext;
+                    gradient.Parent = control;
                 }
 
                 control.Update();
@@ -2328,7 +2431,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Gets or sets Z-perspective translation. This is a bindable property.
         /// </summary>
-        /// <remarks>Rotation is applied relative to <see cref="AnchorX"/> and <see cref="AnchorY" />.</remarks>
+        /// <remarks>Rotation is applied relative to <see cref="Microsoft.Maui.Controls.VisualElement.AnchorX"/> and <see cref="Microsoft.Maui.Controls.VisualElement.AnchorY" />.</remarks>
         public double TranslationZ
         {
             get { return (double)GetValue(TranslationZProperty); }
@@ -2343,7 +2446,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Gets or sets the rotation (in degrees) about the Z-axis (perspective rotation) when the element is rendered. This is a bindable property.
         /// </summary>
-        /// <remarks>Rotation is applied relative to <see cref="AnchorX"/> and <see cref="AnchorY" />.</remarks>
+        /// <remarks>Rotation is applied relative to <see cref="Microsoft.Maui.Controls.VisualElement.AnchorX"/> and <see cref="Microsoft.Maui.Controls.VisualElement.AnchorY" />.</remarks>
         public double RotationZ
         {
             get { return (double)GetValue(RotationZProperty); }
@@ -2438,6 +2541,23 @@ namespace DrawnUi.Draw
         }
 
         public new event EventHandler<IDrawnBase> ParentChanged;
+
+
+        public static readonly BindableProperty FastMeasurementProperty = BindableProperty.Create(
+            nameof(FastMeasurement),
+            typeof(bool),
+            typeof(SkiaControl),
+            false,
+            propertyChanged: NeedInvalidateMeasure);
+
+        /// <summary>
+        /// When true, uses single-pass fast measurement. When false, uses 3-pass measurement with Fill handling.
+        /// </summary>
+        public bool FastMeasurement
+        {
+            get => (bool)GetValue(FastMeasurementProperty);
+            set => SetValue(FastMeasurementProperty, value);
+        }
 
         public static readonly BindableProperty AdjustClippingProperty = BindableProperty.Create(
             nameof(AdjustClipping),
@@ -2922,6 +3042,9 @@ namespace DrawnUi.Draw
         /// </summary>
         public string Hero { get; set; }
 
+        /// <summary>
+        /// For internal use, will be set for recycled/templated views by the ViewFactory to the corresponding index in the data source.
+        /// </summary>
         public int ContextIndex { get; set; } = -1;
 
         public bool IsRootView()
@@ -3039,6 +3162,7 @@ namespace DrawnUi.Draw
 
             var useMaxWidth = rectAvailable.Pixels.Width;
             var useMaxHeight = rectAvailable.Pixels.Height;
+
             var availableWidth = destination.Width;
             var availableHeight = destination.Height;
 
@@ -3054,12 +3178,20 @@ namespace DrawnUi.Draw
             bool snapX = layoutHorizontal.Alignment != LayoutAlignment.Center;
             bool snapY = layoutVertical.Alignment != LayoutAlignment.Center;
 
+            bool useHorizontalThickness = widthRequest > 0;
+            bool useVerticalThickness = heightRequest > 0;
+            float marginHorizontalDelta = (float)((Margins.Left - Margins.Right) * scale);
+            float marginVerticalDelta = (float)((Margins.Top - Margins.Bottom) * scale);
+
+            var realWidth = useHorizontalThickness ? useMaxWidth + marginHorizontalDelta : useMaxWidth;
+            var realHeight = useVerticalThickness ? useMaxHeight + marginVerticalDelta : useMaxWidth;
+
             // layoutHorizontal
             switch (layoutHorizontal.Alignment)
             {
                 case LayoutAlignment.Center when float.IsFinite(availableWidth) && availableWidth > useMaxWidth:
                 {
-                    var half = availableWidth / 2.0f - useMaxWidth / 2.0f;
+                    var half = availableWidth / 2.0f - realWidth / 2.0f;
                     if (RoundCenterAlignment)
                     {
                         left += (float)Math.Ceiling(half);
@@ -3080,6 +3212,12 @@ namespace DrawnUi.Draw
                     if (right > destination.Right)
                     {
                         right = destination.Right;
+                    }
+
+                    if (useHorizontalThickness)
+                    {
+                        left += marginHorizontalDelta;
+                        right += marginHorizontalDelta;
                     }
 
                     break;
@@ -3114,7 +3252,7 @@ namespace DrawnUi.Draw
             {
                 case LayoutAlignment.Center when float.IsFinite(availableHeight) && availableHeight > useMaxHeight:
                 {
-                    var half = availableHeight / 2.0f - useMaxHeight / 2.0f;
+                    var half = availableHeight / 2.0f - realHeight / 2.0f;
                     if (RoundCenterAlignment)
                     {
                         top += (float)Math.Ceiling(half);
@@ -3136,6 +3274,12 @@ namespace DrawnUi.Draw
                     {
                         bottom = destination.Bottom;
                         top = bottom - useMaxHeight;
+                    }
+
+                    if (useVerticalThickness)
+                    {
+                        top += marginVerticalDelta;
+                        bottom += marginVerticalDelta;
                     }
 
                     break;
@@ -3238,10 +3382,10 @@ namespace DrawnUi.Draw
         /// </summary>
         public SKRect DrawingRect
         {
-            get => drawingRect;
+            get => _drawingRect;
             set
             {
-                drawingRect = value;
+                _drawingRect = value;
                 var dirty = value;
                 if (ExpandDirtyRegion != Thickness.Zero)
                 {
@@ -3363,15 +3507,18 @@ namespace DrawnUi.Draw
                 return;
             }
 
-            var moveX = UseTranslationX * RenderingScale;
-            var moveY = UseTranslationY * RenderingScale;
+            var provider = LinkTransforms != null ? LinkTransforms : this;
+
+            var moveX = provider.UseTranslationX * RenderingScale;
+            var moveY = provider.UseTranslationY * RenderingScale;
 
             // Fast path for simple translation
-            if (Rotation == 0 &&
-                ScaleX == 1 && ScaleY == 1 &&
-                SkewX == 0 && SkewY == 0 &&
-                Perspective1 == 0 && Perspective2 == 0 &&
-                RotationX == 0 && RotationY == 0 && RotationZ == 0 && TranslationZ == 0)
+            if (provider.Rotation == 0 &&
+                provider.ScaleX == 1 && provider.ScaleY == 1 &&
+                provider.SkewX == 0 && provider.SkewY == 0 &&
+                provider.Perspective1 == 0 && provider.Perspective2 == 0 &&
+                provider.RotationX == 0 && provider.RotationY == 0 && provider.RotationZ == 0 &&
+                provider.TranslationZ == 0)
             {
                 RenderTransformMatrix = SKMatrix.CreateTranslation((float)moveX, (float)moveY);
                 return;
@@ -3399,21 +3546,22 @@ namespace DrawnUi.Draw
                 SkewX = skewX,
                 SkewY = skewY,
                 Persp2 = 1,
-                ScaleX = (float)ScaleX,
-                ScaleY = (float)ScaleY
+                ScaleX = (float)provider.ScaleX,
+                ScaleY = (float)provider.ScaleY
             };
             matrix = matrix.PostConcat(transformMatrix);
 
             // Apply 3D transformations if needed
-            if (draw3d || RotationX != 0 || RotationY != 0 || RotationZ != 0 || TranslationZ != 0)
+            if (draw3d || provider.RotationX != 0 || provider.RotationY != 0 || provider.RotationZ != 0 ||
+                provider.TranslationZ != 0)
             {
                 draw3d = true;
                 Helper3d ??= new();
                 Helper3d.Reset();
-                Helper3d.RotateXDegrees((float)RotationX);
-                Helper3d.RotateYDegrees((float)RotationY);
-                Helper3d.RotateZDegrees(-(float)RotationZ);
-                Helper3d.Translate(0, 0, (float)TranslationZ);
+                Helper3d.RotateXDegrees((float)provider.RotationX);
+                Helper3d.RotateYDegrees((float)provider.RotationY);
+                Helper3d.RotateZDegrees(-(float)provider.RotationZ);
+                Helper3d.Translate(0, 0, (float)provider.TranslationZ);
                 matrix = matrix.PostConcat(Helper3d.Matrix);
             }
 
@@ -3421,7 +3569,7 @@ namespace DrawnUi.Draw
             matrix = matrix.PostConcat(SKMatrix.CreateTranslation(pivotX, pivotY));
 
             // Apply rotation around center if needed
-            if (Rotation != 0)
+            if (provider.Rotation != 0)
             {
                 SKMatrix rotationMatrix =
                     SKMatrix.CreateRotationDegrees((float)Rotation, (float)centerX, (float)centerY);
@@ -3527,6 +3675,21 @@ namespace DrawnUi.Draw
             return new SKPoint(location.X + thisOffset.X, location.Y + thisOffset.Y);
         }
 
+        public virtual SKRect GetHitBoxOnCanvas()
+        {
+            SKRect hitbox;
+            if (Super.UseFrozenVisualLayers)
+            {
+                hitbox = this.VisualLayer.HitBoxWithTransforms.Pixels;
+            }
+            else
+            {
+                var legacy = this.GetPositionOnCanvas();
+                hitbox = new SKRect(legacy.X, legacy.Y, legacy.X + DrawingRect.Width, legacy.Y + DrawingRect.Height);
+            }
+            return hitbox;
+        }
+
         /// <summary>
         /// Use this to consume gestures in your control only,
         /// do not use result for passing gestures below
@@ -3544,11 +3707,11 @@ namespace DrawnUi.Draw
             {
                 if (RenderObject != null)
                 {
-                    thisOffset.Offset(RenderObject.TranslateInputCoords(LastDrawnAt));
+                    thisOffset.Offset(RenderObject.TranslateInputCoords(DrawingRect));
                 }
                 else if (RenderObjectPrevious != null)
                 {
-                    thisOffset.Offset(RenderObjectPrevious.TranslateInputCoords(LastDrawnAt));
+                    thisOffset.Offset(RenderObjectPrevious.TranslateInputCoords(DrawingRect));
                 }
             }
 
@@ -3556,7 +3719,7 @@ namespace DrawnUi.Draw
 
             //layout is different from real drawing area
             var displaced = LastDrawnAt.Location - DrawingRect.Location;
-            thisOffset.Offset(displaced);
+            //thisOffset.Offset(displaced);
 
             return thisOffset;
         }
@@ -3705,10 +3868,6 @@ namespace DrawnUi.Draw
         /// <param name="scale"></param>
         public virtual void Arrange(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
-            //todo
-            //CreateTransformationMatrix(context.Context, recordingArea);
-            //CreateRenderedNode(recordingArea, context.Scale);
-
             if (!PreArrange(destination, widthRequest, heightRequest, scale))
             {
                 DrawingRect = SKRect.Empty;
@@ -3817,17 +3976,107 @@ namespace DrawnUi.Draw
             SKRect rectForChildrenPixels,
             float scale)
         {
+            // Use FastMeasurement property to conditionally skip multi-pass FILL calculations
+            if (FastMeasurement)
+            {
+                return MeasureContentFast(children, rectForChildrenPixels, scale);
+            }
+            else
+            {
+                return MeasureContentCore(children, rectForChildrenPixels, scale);
+            }
+        }
+
+        /// <summary>
+        /// Fast single-pass measurement for absolute layouts when FastMeasurement=true
+        /// Optimized version that skips FILL handling for maximum performance
+        /// </summary>
+        private ScaledSize MeasureContentFast(
+            IEnumerable<SkiaControl> children,
+            SKRect rectForChildrenPixels,
+            float scale)
+        {
+            var maxHeight = -1.0f;
+            var maxWidth = -1.0f;
+            bool heightCut = false, widthCut = false;
+
+            // Single pass - measure all children directly
+            foreach (var child in children)
+            {
+                if (child == null)
+                    continue;
+
+                child.OnBeforeMeasure();
+                if (!child.CanDraw)
+                    continue;
+
+                var measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
+
+                if (!measured.IsEmpty)
+                {
+                    var measuredHeight = measured.Pixels.Height;
+                    var measuredWidth = measured.Pixels.Width;
+
+                    // Apply viewport limits if set
+                    if (child.ViewportHeightLimit >= 0)
+                    {
+                        float mHeight = (float)(child.ViewportHeightLimit * scale);
+                        if (measuredHeight > mHeight)
+                            measuredHeight = mHeight;
+                    }
+
+                    if (child.ViewportWidthLimit >= 0)
+                    {
+                        float mWidth = (float)(child.ViewportWidthLimit * scale);
+                        if (measuredWidth > mWidth)
+                            measuredWidth = mWidth;
+                    }
+
+                    if (measuredWidth > maxWidth)
+                        maxWidth = measuredWidth;
+
+                    if (measuredHeight > maxHeight)
+                        maxHeight = measuredHeight;
+                }
+
+                widthCut |= measured.WidthCut;
+                heightCut |= measured.HeightCut;
+            }
+
+            // Apply Fill constraints for parent
+            if (NeedFillHorizontally && float.IsFinite(rectForChildrenPixels.Width))
+                maxWidth = rectForChildrenPixels.Width;
+
+            if (NeedFillVertically && float.IsFinite(rectForChildrenPixels.Height))
+                maxHeight = rectForChildrenPixels.Height;
+
+            if (maxWidth < 0) maxWidth = 0;
+            if (maxHeight < 0) maxHeight = 0;
+
+            return ScaledSize.FromPixels(maxWidth, maxHeight, widthCut, heightCut, scale);
+        }
+
+        /// <summary>
+        /// Core 3-pass measurement logic for absolute layouts with full FILL support
+        /// </summary>
+        private ScaledSize MeasureContentCore(
+            IEnumerable<SkiaControl> children,
+            SKRect rectForChildrenPixels,
+            float scale)
+        {
             var maxHeight = -1.0f;
             var maxWidth = -1.0f;
 
             var maxChildHeight = -1.0f;
             var maxChildWidth = -1.0f;
 
-            List<SkiaControl> fill = new();
+            // Optimize: only allocate collections if we'll actually use them
+            List<SkiaControl> fullFill = null;
+            List<(SkiaControl child, ScaledSize measured)> partialFill = null;
             var autosize = this.NeedAutoSize;
             var hadFixedSize = false;
 
-            void PostProcessMeasuredChild(ScaledSize measured, SkiaControl child, bool ignoreFill)
+            void PostProcessMeasuredChild(ScaledSize measured, SkiaControl child)
             {
                 if (!measured.IsEmpty)
                 {
@@ -3839,8 +4088,7 @@ namespace DrawnUi.Draw
                         float mHeight = (float)(child.ViewportHeightLimit * scale);
                         if (measuredHeight > mHeight)
                         {
-                            float excessHeight = measuredHeight - mHeight;
-                            measuredHeight -= excessHeight;
+                            measuredHeight = mHeight; // Optimized: direct assignment
                         }
                     }
 
@@ -3849,29 +4097,15 @@ namespace DrawnUi.Draw
                         float mWidth = (float)(child.ViewportWidthLimit * scale);
                         if (measuredWidth > mWidth)
                         {
-                            float excessWidth = measuredWidth - mWidth;
-                            measuredWidth -= excessWidth;
+                            measuredWidth = mWidth; // Optimized: direct assignment
                         }
                     }
 
-                    if (ignoreFill)
-                    {
-                        if (measuredWidth > maxWidth && (child.HorizontalOptions.Alignment != LayoutAlignment.Fill ||
-                                                         child.WidthRequest >= 0))
-                            maxWidth = measuredWidth;
+                    if (measuredWidth > maxWidth && !child.NeedFillHorizontally)
+                        maxWidth = measuredWidth;
 
-                        if (measuredHeight > maxHeight && (child.VerticalOptions.Alignment != LayoutAlignment.Fill ||
-                                                           child.HeightRequest >= 0))
-                            maxHeight = measuredHeight;
-                    }
-                    else
-                    {
-                        if (measuredWidth > maxWidth)
-                            maxWidth = measuredWidth;
-
-                        if (measuredHeight > maxHeight)
-                            maxHeight = measuredHeight;
-                    }
+                    if (measuredHeight > maxHeight && !child.NeedFillVertically)
+                        maxHeight = measuredHeight;
                 }
             }
 
@@ -3883,81 +4117,128 @@ namespace DrawnUi.Draw
                 if (child == null)
                     continue;
 
-                child.OnBeforeMeasure(); //could set IsVisible or whatever inside
+                child.OnBeforeMeasure();
+                if (!child.CanDraw)
+                    continue;
 
-                if (autosize &&
-                    (child.HorizontalOptions.Alignment == LayoutAlignment.Fill
-                     && child.VerticalOptions.Alignment == LayoutAlignment.Fill)
-                    || (!autosize && (child.HorizontalOptions.Alignment == LayoutAlignment.Fill ||
-                                      child.VerticalOptions.Alignment == LayoutAlignment.Fill))
-                   )
+                var hasHorizontalFill = child.NeedFillHorizontally;
+                var hasVerticalFill = child.NeedFillVertically;
+
+                // Only defer children with Fill in BOTH dimensions
+                bool shouldDefer = hasHorizontalFill && hasVerticalFill;
+
+                if (shouldDefer)
                 {
-                    fill.Add(child); //todo not very correct for the case just 1 dimension is Fill and other one may by bigger that other children!
+                    // Lazy allocation: only create collection when needed
+                    if (fullFill == null)
+                        fullFill = new List<SkiaControl>();
+                    fullFill.Add(child);
                     continue;
                 }
 
                 hadFixedSize = true;
                 var measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
 
-                if (measured.Pixels.Width > maxChildWidth)
+                // Only record dimensions that are NOT Fill
+                if (!hasHorizontalFill && measured.Pixels.Width > maxChildWidth)
                 {
                     maxChildWidth = measured.Pixels.Width;
                 }
 
-                if (measured.Pixels.Height > maxChildHeight)
+                if (!hasVerticalFill && measured.Pixels.Height > maxChildHeight)
                 {
                     maxChildHeight = measured.Pixels.Height;
                 }
 
-                PostProcessMeasuredChild(measured, child, true);
+                // Add to partialFill if has Fill in only one dimension
+                if (hasHorizontalFill != hasVerticalFill) // XOR - only one is true
+                {
+                    // Lazy allocation: only create collection when needed
+                    if (partialFill == null)
+                        partialFill = new List<(SkiaControl child, ScaledSize measured)>();
+                    partialFill.Add((child, measured));
+                }
+
+                PostProcessMeasuredChild(measured, child);
 
                 widthCut |= measured.WidthCut;
                 heightCut |= measured.HeightCut;
             }
 
-            //PASS 2 for those with Fill 
-            foreach (var child in fill)
+            //PASS 2 for those with full Fill (both dimensions) - only if needed
+            if (fullFill != null)
             {
-                ScaledSize measured;
-                if (!hadFixedSize) //we had only children with fill so no fixed dimensions yet
+                foreach (var child in fullFill)
                 {
-                    measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
-                    PostProcessMeasuredChild(measured, child, false);
+                    ScaledSize measured;
+                    if (!hadFixedSize)
+                    {
+                        measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
+                        // Don't process fill children sizes - they adapt to parent, not define it
+                    }
+                    else
+                    {
+                        var provideWidth = rectForChildrenPixels.Width;
+                        if (NeedAutoWidth && maxWidth >= 0)
+                        {
+                            provideWidth = maxWidth;
+                        }
+
+                        var provideHeight = rectForChildrenPixels.Height;
+                        if (NeedAutoHeight && maxHeight >= 0)
+                        {
+                            provideHeight = maxHeight;
+                        }
+
+                        measured = MeasureChild(child, provideWidth, provideHeight, scale);
+                        // Don't call PostProcessMeasuredChild for fill children
+                    }
+
+                    widthCut |= measured.WidthCut;
+                    heightCut |= measured.HeightCut;
                 }
-                else
-                {
-                    var provideWidth = rectForChildrenPixels.Width;
-                    if (NeedAutoWidth && maxWidth >= 0)
-                    {
-                        provideWidth = maxWidth;
-                    }
-
-                    var provideHeight = rectForChildrenPixels.Height;
-                    if (NeedAutoHeight && maxHeight >= 0)
-                    {
-                        provideHeight = maxHeight;
-                    }
-
-                    measured = MeasureChild(child, provideWidth, provideHeight, scale);
-                    if (maxHeight <= 0 || maxWidth <= 0 || float.IsInfinity(provideHeight) ||
-                        float.IsInfinity(provideWidth))
-                    {
-                        PostProcessMeasuredChild(measured, child, false);
-                    }
-                }
-
-                widthCut |= measured.WidthCut;
-                heightCut |= measured.HeightCut;
             }
 
-            if (HorizontalOptions.Alignment == LayoutAlignment.Fill && WidthRequest < 0 &&
-                float.IsFinite(rectForChildrenPixels.Width))
+            //PASS 3 for those with partial Fill (only one dimension) - only if needed
+            if (partialFill != null)
+            {
+                foreach (var (child, originalMeasured) in partialFill)
+                {
+                    var hasHorizontalFill = child.NeedFillHorizontally;
+                    var hasVerticalFill = child.NeedFillVertically;
+
+                    var provideWidth = hasHorizontalFill
+                        ? (NeedAutoWidth && maxWidth >= 0 ? maxWidth : rectForChildrenPixels.Width)
+                        : rectForChildrenPixels.Width;
+
+                    var provideHeight = hasVerticalFill
+                        ? (NeedAutoHeight && maxHeight >= 0 ? maxHeight : rectForChildrenPixels.Height)
+                        : rectForChildrenPixels.Height;
+
+                    var measured = MeasureChild(child, provideWidth, provideHeight, scale);
+
+                    // Only record dimensions that are NOT Fill
+                    if (!hasHorizontalFill && measured.Pixels.Width > maxChildWidth)
+                    {
+                        maxChildWidth = measured.Pixels.Width;
+                    }
+
+                    if (!hasVerticalFill && measured.Pixels.Height > maxChildHeight)
+                    {
+                        maxChildHeight = measured.Pixels.Height;
+                    }
+
+                    widthCut |= measured.WidthCut;
+                    heightCut |= measured.HeightCut;
+                }
+            }
+
+            if (NeedFillHorizontally && float.IsFinite(rectForChildrenPixels.Width))
             {
                 maxWidth = rectForChildrenPixels.Width;
             }
 
-            if (VerticalOptions.Alignment == LayoutAlignment.Fill && HeightRequest < 0 &&
-                float.IsFinite(rectForChildrenPixels.Height))
+            if (NeedFillVertically && float.IsFinite(rectForChildrenPixels.Height))
             {
                 maxHeight = rectForChildrenPixels.Height;
             }
@@ -4064,13 +4345,40 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
+        /// Main method for measuring, override OnMeasuring to plug-in.
+        /// </summary>
+        /// <param name="widthConstraint"></param>
+        /// <param name="heightConstraint"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        public ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+        {
+            if (IsDisposed || IsDisposing)
+                return ScaledSize.Default;
+
+            if (!WasMeasured)
+            {
+                InitializeMeasuring();
+            }
+
+            return OnMeasuring(widthConstraint, heightConstraint, scale);
+        }
+
+        protected virtual void InitializeMeasuring()
+        {
+            CalculateMargins();
+            CalculateSizeRequest();
+            NeedMeasure = true;
+        }
+
+        /// <summary>
         /// Input in POINTS
         /// </summary>
         /// <param name="widthConstraint"></param>
         /// <param name="heightConstraint"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public virtual ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+        public virtual ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
         {
             if (IsDisposed || IsDisposing)
                 return ScaledSize.Default;
@@ -4081,6 +4389,11 @@ namespace DrawnUi.Draw
                 return MeasuredSize;
             }
 
+            if (!IsVisible)
+            {
+                return SetMeasuredAsEmpty(scale);
+            }
+
             try
             {
                 IsMeasuring = true;
@@ -4088,7 +4401,8 @@ namespace DrawnUi.Draw
                 RenderingScale = scale;
 
                 var request = CreateMeasureRequest(widthConstraint, heightConstraint, scale);
-                if (!NeedMeasure && request.IsSame)
+
+                if (AvoidRemeasuring(request))
                 {
                     return MeasuredSize;
                 }
@@ -4101,6 +4415,15 @@ namespace DrawnUi.Draw
             {
                 IsMeasuring = false;
             }
+        }
+
+        public virtual bool AvoidRemeasuring(MeasureRequest request)
+        {
+            if (!NeedMeasure && request.IsSame)
+            {
+                return true;
+            }
+            return false;
         }
 
         public virtual void InitializeDefaultContent(bool force = false)
@@ -4204,7 +4527,7 @@ namespace DrawnUi.Draw
                     widthConstraint *= (float)HorizontalFillRatio;
                 }
 
-                if (MaximumWidthRequest >= 0)
+                if (double.IsFinite(MaximumWidthRequest) && MaximumWidthRequest >= 0)
                 {
                     var maxWidth = (float)(MaximumWidthRequest * scale);
                     if (widthConstraint > maxWidth)
@@ -4221,7 +4544,7 @@ namespace DrawnUi.Draw
                     heightConstraint *= (float)VerticalFillRatio;
                 }
 
-                if (MaximumHeightRequest >= 0)
+                if (double.IsFinite(MaximumHeightRequest) && MaximumHeightRequest >= 0)
                 {
                     var maxHeight = (float)(MaximumHeightRequest * scale);
                     if (widthConstraint > maxHeight)
@@ -4322,6 +4645,16 @@ namespace DrawnUi.Draw
             }
 
             return ScaledSize.FromPixels(width, height, scale);
+        }
+
+        public static SKRect ContractPixelsRect(SKRect rect, float pixels)
+        {
+            return new SKRect(
+                rect.Left + pixels,
+                rect.Top + pixels,
+                rect.Right - pixels,
+                rect.Bottom - pixels
+            );
         }
 
         public static SKRect ContractPixelsRect(SKRect rect, float scale, Thickness amount)
@@ -4485,7 +4818,7 @@ namespace DrawnUi.Draw
             get { return NeedAutoHeight || NeedAutoWidth; }
         }
 
-        public bool NeedAutoHeight
+        public virtual bool NeedAutoHeight
         {
             get
             {
@@ -4493,7 +4826,7 @@ namespace DrawnUi.Draw
             }
         }
 
-        public bool NeedAutoWidth
+        public virtual bool NeedAutoWidth
         {
             get
             {
@@ -4501,8 +4834,23 @@ namespace DrawnUi.Draw
             }
         }
 
-        private bool _isDisposed;
+        public virtual bool NeedFillX
+        {
+            get
+            {
+                return HorizontalOptions.Alignment == LayoutAlignment.Fill && SizeRequest.Width < 0;
+            }
+        }
 
+        public virtual bool NeedFillY
+        {
+            get
+            {
+                return VerticalOptions.Alignment == LayoutAlignment.Fill && SizeRequest.Height < 0;
+            }
+        }
+
+        private bool _isDisposed;
         public bool IsDisposed
         {
             get { return _isDisposed; }
@@ -4825,16 +5173,7 @@ namespace DrawnUi.Draw
 
             if (WillInvalidateMeasure || NeedMeasure)
             {
-                //self measuring
-                //var adjustedDestination = CalculateLayout(destination, widthRequest, heightRequest, scale);
-                //ArrangedDestination = adjustedDestination;
-                //Measure(adjustedDestination.Width, adjustedDestination.Height, scale);
-                //ApplyMeasureResult();
-
-                //self measuring, for top controls and those invalidated-redrawn when parents didn't re-measure them
-                var rectAvailable = DefineAvailableSize(destination, widthRequest, heightRequest, scale, false);
-                Measure(rectAvailable.Pixels.Width, rectAvailable.Pixels.Height, scale);
-                ApplyMeasureResult();
+                MeasureSelf(destination, widthRequest, heightRequest, scale);
             }
             else
             {
@@ -4842,6 +5181,37 @@ namespace DrawnUi.Draw
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Self measuring, for top controls and those invalidated-redrawn when parents didn't re-measure them
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="widthRequest"></param>
+        /// <param name="heightRequest"></param>
+        /// <param name="scale"></param>
+        protected virtual void MeasureSelf(SKRect destination, float widthRequest, float heightRequest, float scale)
+        {
+            if (!WasMeasured)
+            {
+                InitializeMeasuring();
+            }
+
+            var rectAvailable = DefineAvailableSize(destination, widthRequest, heightRequest, scale, false);
+            var width = rectAvailable.Pixels.Width + (float)Margins.HorizontalThickness * scale;
+            var height = rectAvailable.Pixels.Height + (float)Margins.VerticalThickness * scale;
+            if (width > destination.Width)
+            {
+                width = destination.Width;
+            }
+            if (height > destination.Height)
+            {
+                height = destination.Height;
+            }
+
+            Measure(width, height, scale);
+
+            ApplyMeasureResult();
         }
 
         protected bool IsRendering { get; set; }
@@ -4867,12 +5237,16 @@ namespace DrawnUi.Draw
 
         public virtual VisualLayer CreateRenderedNode(SKRect destination, float scale)
         {
-            VisualLayer parentVisualNode = (Parent as SkiaControl)?.VisualLayer;
+            VisualLayer parentVisualNode = null;
+            if (Parent is SkiaControl skia)
+            {
+                parentVisualNode = skia.VisualLayer;
+            }
 
             VisualLayer = new VisualLayer(this, parentVisualNode, destination, scale);
 
             if (parentVisualNode != null)
-                ((SkiaControl)Parent).VisualLayer.Children.Add(VisualLayer);
+                ((SkiaControl)Parent).VisualLayer?.Children.Add(VisualLayer);
 
             NodeAttached = true;
 
@@ -5159,9 +5533,8 @@ namespace DrawnUi.Draw
         /// </summary>
         public virtual void Repaint()
         {
-            if (IsDisposing || NeedUpdate ||
+            if (IsDisposing ||
                 Superview == null
-                //|| IsParentIndependent
                 || IsDisposed || Parent == null)
                 return;
 
@@ -5273,75 +5646,6 @@ namespace DrawnUi.Draw
 
         private bool usePixelSnapping = false;
 
-        /*
-        protected virtual void ApplyTransforms(SkiaDrawingContext ctx, SKRect destination)
-        {
-            var moveX = UseTranslationX * RenderingScale;
-            var moveY = UseTranslationY * RenderingScale;
-
-            if (Rotation == 0 &&
-                ScaleX == 1 && ScaleY == 1 &&
-                SkewX == 0 && SkewY == 0 &&
-                Perspective1 == 0 && Perspective2 == 0 &&
-                RotationX == 0 && RotationY == 0 && RotationZ == 0 && TranslationZ == 0)
-            {
-                // fast translation
-                ctx.Canvas.Translate((float)moveX, (float)moveY);
-                return;
-            }
-
-            float pivotX = (float)(destination.Left + destination.Width * AnchorX);
-            float pivotY = (float)(destination.Top + destination.Height * AnchorY);
-
-            var centerX = moveX + destination.Left + destination.Width * AnchorX;
-            var centerY = moveY + destination.Top + destination.Height * AnchorY;
-
-            var skewX = SkewX > 0 ? (float)Math.Tan(Math.PI * SkewX / 180f) : 0f;
-            var skewY = SkewY > 0 ? (float)Math.Tan(Math.PI * SkewY / 180f) : 0f;
-
-            if (Rotation != 0)
-            {
-                ctx.Canvas.RotateDegrees((float)Rotation, (float)centerX, (float)centerY);
-            }
-
-            var matrixTransforms = new SKMatrix
-            {
-                TransX = (float)moveX,
-                TransY = (float)moveY,
-                Persp0 = Perspective1,
-                Persp1 = Perspective2,
-                SkewX = skewX,
-                SkewY = skewY,
-                Persp2 = 1,
-                ScaleX = (float)ScaleX,
-                ScaleY = (float)ScaleY
-            };
-
-            var drawingMatrix = SKMatrix.CreateTranslation((float)-pivotX, (float)-pivotY).PostConcat(matrixTransforms);
-
-            if (draw3d || RotationX != 0 || RotationY != 0 || RotationZ != 0 || TranslationZ != 0)
-            {
-                draw3d = true;
-
-                Helper3d ??= new();
-                Helper3d.Reset();
-                Helper3d.RotateXDegrees((float)RotationX);
-                Helper3d.RotateYDegrees((float)RotationY);
-                Helper3d.RotateZDegrees(-(float)RotationZ);
-                Helper3d.Translate(0, 0, (float)TranslationZ);
-
-                drawingMatrix = drawingMatrix.PostConcat(Helper3d.Matrix);
-
-                draw3d = !(RotationX != 0 || RotationY != 0 || RotationZ != 0 || TranslationZ != 0);
-            }
-
-
-            drawingMatrix = drawingMatrix.PostConcat(SKMatrix.CreateTranslation(pivotX, pivotY))
-                .PostConcat(ctx.Canvas.TotalMatrix);
-
-            ctx.Canvas.SetMatrix(drawingMatrix);
-        }
-        */
         private bool draw3d;
 
         public static bool IsSimpleRectangle(SKPath path)
@@ -5429,37 +5733,21 @@ namespace DrawnUi.Draw
         private bool _needMeasure = true;
 
         /// <summary>
-        /// If attached to a SuperView and rendering is in progress will run after it. Run now otherwise.
+        /// If attached to a SuperView and rendering is in progress will run before drawing it. Run now otherwise.
         /// </summary>
         /// <param name="action"></param>
-        protected void SafePostAction(Action action)
+        protected void SafeAction(Action action)
         {
             var super = this.Superview;
             if (super != null)
             {
                 Superview.PostponeExecutionBeforeDraw(() => { action(); });
-
                 Repaint();
             }
             else
             {
                 action();
             }
-        }
-
-        /// <summary>
-        /// If attached to a SuperView will run only after draw to avoid memory access conflicts. If not attached will run after 3 secs..
-        /// </summary>
-        /// <param name="action"></param>
-        protected void SafeAction(Action action)
-        {
-            var super = this.Superview;
-            if (super == null || !Superview.IsRendering)
-            {
-                Tasks.StartDelayed(TimeSpan.FromSeconds(3), action);
-            }
-            else
-                Superview.PostponeExecutionAfterDraw(action);
         }
 
         protected bool NeedRemeasuring;
@@ -5635,14 +5923,17 @@ namespace DrawnUi.Draw
             get
             {
                 return
+                    LinkTransforms != null ||
                     UseTranslationY != 0 || UseTranslationX != 0
-                                         || ScaleY != 1f || ScaleX != 1f
-                                         || Perspective1 != 0f || Perspective2 != 0f
-                                         || SkewX != 0 || SkewY != 0
-                                         || Rotation != 0 || TranslationZ != 0
-                                         || RotationX != 0 || RotationY != 0 || RotationZ != 0;
+                    || ScaleY != 1f || ScaleX != 1f
+                    || Perspective1 != 0f || Perspective2 != 0f
+                    || SkewX != 0 || SkewY != 0
+                    || Rotation != 0 || TranslationZ != 0
+                    || RotationX != 0 || RotationY != 0 || RotationZ != 0;
             }
         }
+
+        public SkiaControl LinkTransforms { get; set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool IsDistorted
@@ -5650,6 +5941,7 @@ namespace DrawnUi.Draw
             get
             {
                 return
+                    LinkTransforms != null ||
                     Rotation != 0 || ScaleY != 1f || ScaleX != 1f
                     || Perspective1 != 0f || Perspective2 != 0f
                     || SkewX != 0 || SkewY != 0 || TranslationZ != 0
@@ -5669,7 +5961,8 @@ namespace DrawnUi.Draw
             {
                 if (EffectPostRenderer != null)
                 {
-                    EffectPostRenderer.Render(context);
+                    EffectPostRenderer
+                        .Render(context); //post renderer will use this render object for rendering itsself
                 }
                 else
                 {
@@ -5717,8 +6010,10 @@ namespace DrawnUi.Draw
 
                         tree.Add(new SkiaControlWithRect(child,
                             context.Destination,
-                            child.LastDrawnAt,
-                            count));
+                            child.DrawingRect,
+                            count,
+                            -1, // Default freeze index
+                            child.BindingContext)); // Capture current binding context
 
                         count++;
                     }
@@ -5911,7 +6206,10 @@ namespace DrawnUi.Draw
         public virtual void Update()
         {
             if (NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
+            {
+                //Repaint(); //todo!!!
                 return;
+            }
 
             if (OutputDebug)
             {
@@ -6204,13 +6502,16 @@ namespace DrawnUi.Draw
                 Super.Log($"[SkiaControl] InvalidateWithChildren");
             }
 
-            ;
-
             LockUpdate(true);
 
-            foreach (var view in Views.ToList()) //todo why on earth adapter is not used??
+            foreach (var view in Views.ToList())
             {
                 InvalidateChildren(view as SkiaControl);
+            }
+
+            foreach (var effect in this.VisualEffects.ToList())
+            {
+                effect.Update();
             }
 
             LockUpdate(false);
@@ -6237,6 +6538,12 @@ namespace DrawnUi.Draw
 
         protected bool WillInvalidateMeasure { get; set; }
 
+        /// <summary>
+        /// Need to re-measure and then redraw from scratch
+        /// </summary>
+        /// <param name="bindable"></param>
+        /// <param name="oldvalue"></param>
+        /// <param name="newvalue"></param>
         protected static void NeedInvalidateMeasure(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is SkiaControl control)
@@ -6246,6 +6553,12 @@ namespace DrawnUi.Draw
             }
         }
 
+        /// <summary>
+        /// Need to erase cache and draw from scratch
+        /// </summary>
+        /// <param name="bindable"></param>
+        /// <param name="oldvalue"></param>
+        /// <param name="newvalue"></param>
         protected static void NeedDraw(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is SkiaControl control)
@@ -6256,7 +6569,7 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Just make us repaint to apply new transforms etc
+        /// Just make us repaint to apply new transforms etc keeping existing cache if any
         /// </summary>
         protected static void NeedRepaint(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -6269,9 +6582,15 @@ namespace DrawnUi.Draw
 
         protected override void InvalidateMeasure()
         {
-            InvalidateMeasureInternal();
-
-            Update();
+            if (WasMeasured)
+            {
+                InvalidateMeasureInternal();
+                Update();
+            }
+            else
+            {
+                NeedMeasure = true;
+            }
         }
 
         protected static void NeedInvalidateViewport(BindableObject bindable, object oldvalue, object newvalue)
@@ -6428,7 +6747,10 @@ namespace DrawnUi.Draw
 
             var animation = new ShimmerAnimator(this)
             {
-                Color = color.ToSKColor(), ShimmerWidth = shimmerWidth, ShimmerAngle = shimmerAngle, Speed = speedMs
+                Color = color.ToSKColor(),
+                ShimmerWidth = shimmerWidth,
+                ShimmerAngle = shimmerAngle,
+                Speed = speedMs
             };
             animation.Start();
         }
@@ -6884,6 +7206,15 @@ namespace DrawnUi.Draw
             }
         }
 
+        /// <summary>
+        /// Just a helper to pass children one by one comma separated instead of using a list
+        /// </summary>
+        /// <param name="children"></param>
+        public void SetChildrenAsParameters(params SkiaControl[] children)
+        {
+            SetChildren(children);
+        }
+
         public virtual void SetChildren(IEnumerable<SkiaControl> views)
         {
             ClearChildren();
@@ -7060,16 +7391,7 @@ namespace DrawnUi.Draw
         private Thickness _margins;
         private double _lastArrangedForScale;
         private bool _needUpdateFrontCache;
-        private SKRect drawingRect;
-
-        public static Color GetRandomColor()
-        {
-            byte r = (byte)Random.Next(256);
-            byte g = (byte)Random.Next(256);
-            byte b = (byte)Random.Next(256);
-
-            return Color.FromRgb(r, g, b);
-        }
+        private SKRect _drawingRect;
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         //public static bool CompareRects(SKRect a, SKRect b, float precision)

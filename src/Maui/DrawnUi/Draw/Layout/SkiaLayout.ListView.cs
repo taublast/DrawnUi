@@ -69,9 +69,39 @@ public partial class SkiaLayout
             //left to right, top to bottom
             var index = -1;
             var cellsToRelease = new List<SkiaControl>();
+            
+            // For MeasureVisible strategy, limit initial measurement to visible area + buffer
+            var effectiveRowsCount = rowsCount;
+            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+            {
+                // Estimate how many items we need to measure to fill the visible area
+                // Use a conservative estimate: visible area / estimated item height + buffer
+                var estimatedItemHeight = 60f; // Default estimate for item height
+                var visibleAreaHeight = visibleArea.Pixels.Height;
+                var estimatedVisibleItems = Math.Max(1, (int)Math.Ceiling(visibleAreaHeight / estimatedItemHeight));
+                
+                // Add buffer for smooth scrolling (2-3 screens worth)
+                var bufferMultiplier = 3f;
+                var initialMeasureCount = Math.Min(itemsCount, (int)(estimatedVisibleItems * bufferMultiplier));
+                
+                // Ensure we have a reasonable minimum and maximum
+                initialMeasureCount = Math.Max(20, Math.Min(200, initialMeasureCount));
+                
+                if (Type == LayoutType.Column)
+                {
+                    effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
+                }
+                else if (Type == LayoutType.Row)
+                {
+                    effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
+                }
+                
+                Debug.WriteLine($"[MeasureList] INITIAL MEASURE: {effectiveRowsCount} items out of {itemsCount} total (visible area: {visibleAreaHeight:F1}px, estimated per item: {estimatedItemHeight}px)");
+            }
+            
             try
             {
-                for (var row = 0; row < rowsCount; row++)
+                for (var row = 0; row < effectiveRowsCount; row++)
                 {
                     if (stopMeasuring || index + 2 > itemsCount)
                     {
@@ -187,6 +217,12 @@ public partial class SkiaLayout
                     ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
                 }
             }
+            
+            // Debug: Report actual measurement results
+            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+            {
+                Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px");
+            }
 
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
             {
@@ -268,14 +304,7 @@ public partial class SkiaLayout
             }
 
             var structure = new LayoutStructure(rows);
-            if (InitializeTemplatesInBackgroundDelay > 0)
-            {
-                StackStructure = structure;
-            }
-            else
-            {
-                StackStructureMeasured = structure;
-            }
+            StackStructureMeasured = structure;
 
             FirstVisibleIndex = -1;
             FirstMeasuredIndex = 0;
@@ -288,12 +317,37 @@ public partial class SkiaLayout
                 if (this.Type == LayoutType.Column)
                 {
                     var medium = stackHeight / measuredCount;
-                    stackHeight = medium * itemsCount;
+                    
+                    // For MeasureVisible strategy, we only measured a portion of items
+                    // Use the measured average to estimate total size
+                    if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
+                    {
+                        // Calculate total estimated size based on measured average
+                        var estimatedTotalHeight = medium * itemsCount;
+                        stackHeight = estimatedTotalHeight;
+                    }
+                    else
+                    {
+                        // Original logic for when all items are measured
+                        stackHeight = medium * itemsCount;
+                    }
                 }
                 else if (this.Type == LayoutType.Row)
                 {
                     var medium = stackWidth / measuredCount;
-                    stackWidth = medium * itemsCount;
+                    
+                    // For MeasureVisible strategy, we only measured a portion of items
+                    if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
+                    {
+                        // Calculate total estimated size based on measured average
+                        var estimatedTotalWidth = medium * itemsCount;
+                        stackWidth = estimatedTotalWidth;
+                    }
+                    else
+                    {
+                        // Original logic for when all items are measured
+                        stackWidth = medium * itemsCount;
+                    }
                 }
             }
 
@@ -397,11 +451,6 @@ public partial class SkiaLayout
                         }
                     }
 
-                    if (!ChildrenFactory.TemplatesAvailable && InitializeTemplatesInBackgroundDelay > 0)
-                    {
-                        break; //itemssource was changed by other thread
-                    }
-
                     if (cell.IsVisible)
                     {
                         if (visibleIndex < 0 && currentIndex > visibleIndex)
@@ -468,8 +517,10 @@ public partial class SkiaLayout
                             //gonna use that for gestures and for item inside viewport detection and for hotreload children tree
                             tree.Add(new SkiaControlWithRect(control,
                                 destinationRect,
-                                control.LastDrawnAt,
-                                currentIndex));
+                                control.DrawingRect,
+                                currentIndex,
+                                -1, // Default freeze index
+                                control.BindingContext)); // Capture current binding context
                         }
                     }
 
@@ -540,6 +591,67 @@ public partial class SkiaLayout
         }
 
         return double.PositiveInfinity;
+    }
+
+    /// <summary>
+    /// Gets estimated total content size for virtualized lists with unmeasured items
+    /// </summary>
+    public ScaledSize GetEstimatedContentSize(float scale)
+    {
+        if (!IsTemplated || ItemsSource == null || ItemsSource.Count == 0)
+            return MeasuredSize;
+
+        var itemsCount = ItemsSource.Count;
+        var measuredCount = LastMeasuredIndex + 1;
+        
+        if (measuredCount >= itemsCount)
+            return MeasuredSize; // All items measured, use actual size
+
+        var structure = LatestStackStructure;
+        if (structure == null || measuredCount == 0)
+        {
+            // No items measured yet, use rough estimate
+            var defaultItemHeight = 60f * scale; // Fallback estimate
+            var estimatedHeight = itemsCount * defaultItemHeight;
+            return ScaledSize.FromPixels(MeasuredSize.Pixels.Width, estimatedHeight, scale);
+        }
+
+        if (Type == LayoutType.Column)
+        {
+            // Calculate average height from measured items
+            var measuredHeight = 0f;
+            var measuredItems = structure.GetChildren().Take(measuredCount);
+            foreach (var item in measuredItems)
+            {
+                measuredHeight += item.Measured.Pixels.Height;
+            }
+            
+            var averageHeight = measuredHeight / measuredCount;
+            var estimatedTotalHeight = averageHeight * itemsCount;
+            
+            Debug.WriteLine($"[GetEstimatedContentSize] Measured {measuredCount}/{itemsCount} items, avg height: {averageHeight:F1}px, estimated total: {estimatedTotalHeight:F1}px");
+            
+            return ScaledSize.FromPixels(MeasuredSize.Pixels.Width, estimatedTotalHeight, scale);
+        }
+        else if (Type == LayoutType.Row)
+        {
+            // Calculate average width from measured items
+            var measuredWidth = 0f;
+            var measuredItems = structure.GetChildren().Take(measuredCount);
+            foreach (var item in measuredItems)
+            {
+                measuredWidth += item.Measured.Pixels.Width;
+            }
+            
+            var averageWidth = measuredWidth / measuredCount;
+            var estimatedTotalWidth = averageWidth * itemsCount;
+            
+            Debug.WriteLine($"[GetEstimatedContentSize] Measured {measuredCount}/{itemsCount} items, avg width: {averageWidth:F1}px, estimated total: {estimatedTotalWidth:F1}px");
+            
+            return ScaledSize.FromPixels(estimatedTotalWidth, MeasuredSize.Pixels.Height, scale);
+        }
+
+        return MeasuredSize;
     }
 
 
@@ -628,14 +740,7 @@ public partial class SkiaLayout
     {
         var structure = LatestStackStructure.Clone();
         structure.Append(rows);
-        if (InitializeTemplatesInBackgroundDelay > 0)
-        {
-            StackStructure = structure;
-        }
-        else
-        {
-            StackStructureMeasured = structure;
-        }
+        StackStructureMeasured = structure;
     }
 
     public int MeasureAdditionalItems(int batchSize, int aheadCount, float scale)
@@ -646,6 +751,7 @@ public partial class SkiaLayout
         int startIndex = LastMeasuredIndex + 1;
         int endIndex = Math.Min(startIndex + batchSize + aheadCount, ItemsSource.Count);
 
+        Debug.WriteLine($"[MeasureAdditionalItems] INCREMENTAL: Measuring items {startIndex}-{endIndex - 1} (batch: {batchSize}, ahead: {aheadCount})");
 
         if (startIndex >= endIndex)
             return 0;
@@ -761,14 +867,7 @@ public partial class SkiaLayout
             }
 
             structure.Append(rows);
-            if (InitializeTemplatesInBackgroundDelay > 0)
-            {
-                StackStructure = structure;
-            }
-            else
-            {
-                StackStructureMeasured = structure;
-            }
+            StackStructureMeasured = structure;
 
             LastMeasuredIndex = startIndex + countToMeasure - 1;
 
@@ -812,6 +911,8 @@ public partial class SkiaLayout
             }
 
             _listAdditionalMeasurements++;
+            
+            Debug.WriteLine($"[MeasureAdditionalItems] COMPLETED: Measured {countToMeasure} additional items, now measured up to index {LastMeasuredIndex} of {ItemsSource.Count} total");
 
             return countToMeasure;
         }

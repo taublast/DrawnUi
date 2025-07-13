@@ -170,6 +170,11 @@ public class DrawingRect
                Bottom == rectangle.Bottom;
     }
 
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Left, Top, Right, Bottom);
+    }
+
 
 
 

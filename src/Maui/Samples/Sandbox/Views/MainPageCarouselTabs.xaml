@@ -122,7 +122,7 @@ c80.3-68,187.2-166.1,197.3-168.4c31.4-10.6,62.5,39.2,131.1,93.5C501.2,193.2,568.
                 Type="Grid"
                 VerticalOptions="Fill">
 
-                <!--<draw:SkiaMarkdownLabel
+                <!--<draw:SkiaRichLabel
                     FontSize="20"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
@@ -531,7 +531,7 @@ c80.3-68,187.2-166.1,197.3-168.4c31.4-10.6,62.5,39.2,131.1,93.5C501.2,193.2,568.
                             UseCache="Image"
                             VerticalOptions="Center">
 
-                            <draw:SkiaMarkdownLabel
+                            <draw:SkiaRichLabel
                                 FontSize="24"
                                 HorizontalOptions="Center"
                                 HorizontalTextAlignment="Center"
@@ -539,28 +539,28 @@ c80.3-68,187.2-166.1,197.3-168.4c31.4-10.6,62.5,39.2,131.1,93.5C501.2,193.2,568.
                                 Text="Drawing scrolling tabs in ___.Net Maui___ using ___SkiaSharp___ 🎨🖌❤ ."
                                 TextColor="White" />
 
-                            <draw:SkiaMarkdownLabel
+                            <draw:SkiaRichLabel
                                 FontSize="18"
                                 HorizontalOptions="Center"
                                 HorizontalTextAlignment="Center"
                                 Text="Tabs selector is a totally drawn platform independent custom control build on top of a _SkiaCarousel_ 💖."
                                 TextColor="LightGray" />
 
-                            <draw:SkiaMarkdownLabel
+                            <draw:SkiaRichLabel
                                 FontSize="18"
                                 HorizontalOptions="Center"
                                 HorizontalTextAlignment="Center"
                                 Text="Scrollable content reside inside a _SkiaCarousel_ 💖, there are more drawn controls inside, including drawn recycled cells."
                                 TextColor="LightGray" />
 
-                            <!--<draw:SkiaMarkdownLabel
+                            <!--<draw:SkiaRichLabel
                                 FontSize="14"
                                 HorizontalOptions="Center"
                                 HorizontalTextAlignment="Center"
                                 Text="_Imagine and draw anything wiith __DrawnUi__ for __.Net Maui__ !_"
                                 TextColor="LightGray" />-->
 
-                            <draw:SkiaMarkdownLabel
+                            <draw:SkiaRichLabel
                                 FontSize="14"
                                 HorizontalOptions="Center"
                                 HorizontalTextAlignment="Center"

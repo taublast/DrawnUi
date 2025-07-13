@@ -1,77 +1,26 @@
 ﻿using System.Collections.Concurrent;
-using System.Runtime.InteropServices;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using SkiaSharp;
 using SkiaSharp.Views.Windows;
-using Application = Microsoft.Maui.Controls.Application;
 
 namespace DrawnUi.Views
 {
-    /*
-
-    Initialization (once):
-          ├─ Initialize GRContext
-          └─ Create persistent retained surface
-
-       Every Frame:
-          ├─ Check size changes (resize handling)
-          ├─ Invoke user drawing onto retained surface
-          ├─ Snapshot retained surface
-          └─ Copy snapshot to actual framebuffer for display
-
-       On context destroy:
-          └─ Dispose GPU resources
-
-     */
-
-
+    /// <summary>
+    /// SwapChain panel with retained surface rendering for improved performance
+    /// </summary>
     public class SKSwapChainPanelRetained : AngleSwapChainPanel
     {
         public Guid Uid = Guid.NewGuid();
 
         private const SKColorType ColorType = SKColorType.Rgba8888;
         private const GRSurfaceOrigin SurfaceOrigin = GRSurfaceOrigin.BottomLeft;
+
         private GRGlInterface _glInterface;
         private GRContext _context;
-        private SKSurface _retainedSurface; // Persistent offscreen surface
+        private SKSurface _retainedSurface;
+        private SKSurface _framebufferSurface; // Reuse instead of creating each frame
+        private GRBackendRenderTarget _renderTarget;
         private SKSizeI _lastSize;
-        private bool _needsFullRedraw = true; // For initial frame or size change
-
+        private bool _needsFullRedraw = true;
         private readonly object _surfaceLock = new();
-
-        // Track surfaces with their disposal time
-        private readonly ConcurrentDictionary<SKSurface, DateTime> _trashBag = new();
-        private bool _cleanupRunning;
-        private GRBackendRenderTarget renderTarget;
-
-        public SKSwapChainPanelRetained()
-        {
-            _cleanupRunning = true;
-            Tasks.StartTimerAsync(TimeSpan.FromSeconds(0.5), async () =>
-            {
-                var now = DateTime.Now;
-                var disposalAge = TimeSpan.FromSeconds(2);
-
-                // Get all surfaces older than 2 seconds
-                var oldSurfaces = _trashBag
-                    .Where(kvp => (now - kvp.Value) >= disposalAge)
-                    .Select(kvp => kvp.Key)
-                    .ToList();
-
-                foreach (var surface in oldSurfaces)
-                {
-                    if (_trashBag.TryRemove(surface, out _))
-                    {
-                        surface.Dispose();
-                        Debug.WriteLine($"Disposed pooled surface safely after {disposalAge.TotalSeconds} seconds");
-                    }
-                }
-
-                return _cleanupRunning;
-            });
-        }
 
         public SKSize CanvasSize => _lastSize;
         public GRContext GRContext => _context;
@@ -80,14 +29,17 @@ namespace DrawnUi.Views
         /// <summary>
         /// Raises the PaintSurface event
         /// </summary>
+        /// <param name="e">Paint surface event arguments</param>
         protected virtual void OnPaintSurface(SkiaSharp.Views.Windows.SKPaintGLSurfaceEventArgs e)
         {
             PaintSurface?.Invoke(this, e);
         }
 
+        private bool stopped;
+
         protected override void OnRenderFrame(Windows.Foundation.Rect rect)
         {
-            //lock (_surfaceLock)
+            try
             {
                 if (_context == null)
                 {
@@ -96,20 +48,15 @@ namespace DrawnUi.Views
                 }
 
                 var newSize = new SKSizeI((int)rect.Width, (int)rect.Height);
+                bool sizeChanged = _lastSize != newSize;
+                bool needNewSurfaces = _retainedSurface == null || sizeChanged;
 
-                bool needNewSurfaces = _retainedSurface == null || _lastSize != newSize;
-
-                if (_lastSize != newSize || renderTarget == null || !renderTarget.IsValid)
+                if (sizeChanged || _renderTarget == null || !_renderTarget.IsValid)
                 {
-                    var previousTarget = renderTarget;
-                    if (previousTarget != null)
-                    {
-                        Application.Current?.Dispatcher?.StartTimer(TimeSpan.FromSeconds(2), () =>
-                        {
-                            previousTarget.Dispose();
-                            return false;
-                        });
-                    }
+                    Debug.WriteLine("Creating new render target");
+
+                    // Dispose old render target immediately and synchronously
+                    _renderTarget?.Dispose();
 
                     OpenGles.GetIntegerv(OpenGles.GL_FRAMEBUFFER_BINDING, out var framebuffer);
                     OpenGles.GetIntegerv(OpenGles.GL_STENCIL_BITS, out var stencil);
@@ -118,74 +65,76 @@ namespace DrawnUi.Views
                     samples = Math.Min(samples, maxSamples);
                     var glInfo = new GRGlFramebufferInfo((uint)framebuffer, ColorType.ToGlSizedFormat());
 
-                    renderTarget =
-                        new GRBackendRenderTarget(newSize.Width, newSize.Height, samples, stencil, glInfo);
-
+                    _renderTarget = new GRBackendRenderTarget(newSize.Width, newSize.Height, samples, stencil, glInfo);
                     needNewSurfaces = true;
                 }
 
-                if (needNewSurfaces && newSize.Height>0 && newSize.Width>0)
+                if (needNewSurfaces && newSize.Height > 0 && newSize.Width > 0)
                 {
-                    if (_retainedSurface != null)
-                    {
-                        Debug.WriteLine("Abandon surface to pool");
-                        // Flush commands but defer disposal
-                        _retainedSurface.Canvas.Flush();
-                        _retainedSurface.Flush();
-                        _context.Flush();
+                    // Force context flush before creating new surfaces
+                    _context.Flush();
 
-                        // Add the surface to the trash bag with the current timestamp
-                        _trashBag[_retainedSurface] = DateTime.Now;
-                        Debug.WriteLine("Deferred previous retained surface to pool");
+                    // Dispose old surfaces immediately and synchronously
+                    _retainedSurface?.Dispose();
+                    _framebufferSurface?.Dispose();
 
-                        _retainedSurface = null;
-                    }
+                    _retainedSurface = SKSurface.Create(_context, _renderTarget, SurfaceOrigin, ColorType);
+                    _framebufferSurface = SKSurface.Create(_context, _renderTarget, SurfaceOrigin, ColorType);
 
-                    _retainedSurface = SKSurface.Create(_context, renderTarget, SurfaceOrigin, ColorType);
-                    Debug.WriteLine("Created new retained surface");
+                    Debug.WriteLine("Created new retained and framebuffer surfaces");
 
                     _lastSize = newSize;
                     _needsFullRedraw = true;
                 }
 
-                using (new SKAutoCanvasRestore(_retainedSurface.Canvas, true))
+                if (_retainedSurface == null || _framebufferSurface == null)
+                    return;
+
+                lock (_surfaceLock)
                 {
-                    OnPaintSurface(new(_retainedSurface, renderTarget, SurfaceOrigin, ColorType));
+                    using (new SKAutoCanvasRestoreFixed(_retainedSurface.Canvas, true))
+                    {
+                        OnPaintSurface(new(_retainedSurface, _renderTarget, SurfaceOrigin, ColorType));
+                    }
+
+                    _retainedSurface.Canvas.Flush();
+
+                    //retain result
+                    using var image = _retainedSurface.Snapshot();
+                    _framebufferSurface.Canvas.DrawImage(image, 0, 0);
+                    _framebufferSurface.Canvas.Flush();
+
+                    _context.Flush();
                 }
 
-                using var image = _retainedSurface.Snapshot();
-                using var framebufferSurface = SKSurface.Create(_context, renderTarget, SurfaceOrigin, ColorType);
-
-                framebufferSurface.Canvas.DrawImage(image, 0, 0);
-                framebufferSurface.Canvas.Flush();
-                framebufferSurface.Flush();
-                _context.Flush();
-
                 _needsFullRedraw = false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Render frame error: {ex.Message}");
             }
         }
 
         protected override void OnDestroyingContext()
         {
             base.OnDestroyingContext();
-            foreach (var surface in _trashBag.Keys.ToList())
-            {
-                if (_trashBag.TryRemove(surface, out _))
-                {
-                    surface.Dispose();
-                }
-            }
 
-            //without this we'll fall into gpu backbuffer still using this context
-            Tasks.StartDelayed(TimeSpan.FromMilliseconds(100), () =>
-            {
-                renderTarget?.Dispose();
+            //all controls have to clear any gpu resources they might have cached
+            Super.NeedGlobalUpdate();
 
-                _cleanupRunning = false;
+            lock (_surfaceLock)
+            {
+                // Dispose all GPU resources immediately and synchronously
+                _framebufferSurface?.Dispose();
+                _framebufferSurface = null;
 
                 _retainedSurface?.Dispose();
                 _retainedSurface = null;
 
+                _renderTarget?.Dispose();
+                _renderTarget = null;
+
+                // Abandon context before disposing to prevent validation errors
                 _context?.AbandonContext(false);
                 _context?.Dispose();
                 _context = null;
@@ -195,7 +144,9 @@ namespace DrawnUi.Views
 
                 _lastSize = default;
                 _needsFullRedraw = true;
-            });
+            }
+
         }
     }
+
 }

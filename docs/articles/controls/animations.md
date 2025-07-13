@@ -85,13 +85,33 @@ SkiaLottie is a control for displaying [Lottie animations](https://airbnb.io/lot
 ### Basic Usage
 
 ```xml
-<DrawUi:SkiaLottie
+<draw:SkiaLottie
     Source="animation.json"
     WidthRequest="200"
     HeightRequest="200"
     AutoPlay="True"
     Repeat="-1" />
 ```
+
+### Real-World Example: Robot Animation
+
+From the demo project, here's a practical implementation showing a robot animation with proper styling:
+
+```xml
+<draw:SkiaLottie
+    AutoPlay="True"
+    HorizontalOptions="Center"
+    LockRatio="1"
+    Repeat="-1"
+    Source="Lottie/robot.json"
+    VerticalOptions="Start"
+    WidthRequest="300" />
+```
+
+**Key Features:**
+- `LockRatio="1"` maintains aspect ratio
+- `Repeat="-1"` loops indefinitely
+- Loads from `Resources/Raw/Lottie/robot.json`
 
 ### Toggle State Support
 
@@ -123,17 +143,46 @@ This is perfect for animated toggles, checkboxes, or any other animation with di
 
 ### Customizing Colors
 
-One of the powerful features of SkiaLottie is color customization:
+One of the powerful features of SkiaLottie is color customization without needing external editors:
 
+#### Single Color Tint
 ```xml
-<!-- Apply a global tint -->
-<DrawUi:SkiaLottie
-    Source="animation.json"
-    ColorTint="Red" />
+<!-- Apply a global tint with theme color -->
+<draw:SkiaLottie
+    InputTransparent="True"
+    AutoPlay="True"
+    ColorTint="{StaticResource ColorPrimary}"
+    HorizontalOptions="Center"
+    LockRatio="1"
+    Opacity="0.85"
+    Repeat="-1"
+    Source="Lottie/Loader.json"
+    VerticalOptions="Center"
+    WidthRequest="56" />
 ```
 
-For more granular control, you can replace multiple colors:
+#### Multiple Color Replacement
+For more granular control, you can replace multiple specific colors:
 
+```xml
+<draw:SkiaLottie
+    AutoPlay="True"
+    HorizontalOptions="Center"
+    WidthRequest="50"
+    LockRatio="1"
+    Repeat="-1"
+    Source="Lottie/Loader.json"
+    VerticalOptions="Center">
+
+    <draw:SkiaLottie.Colors>
+        <Color>#FF0000</Color>
+        <Color>#FFFFFF</Color>
+    </draw:SkiaLottie.Colors>
+
+</draw:SkiaLottie>
+```
+
+#### Programmatic Color Changes
 ```csharp
 // Replace specific colors in the animation
 myLottie.Colors.Add(Colors.Blue);
@@ -142,6 +191,12 @@ myLottie.Colors.Add(Colors.Green);
 // Apply changes
 myLottie.ReloadSource();
 ```
+
+**Color Replacement Logic:**
+- Colors are replaced in the order they appear in the original animation
+- First color in `Colors` collection replaces the first unique color found
+- `ColorTint` applies a global tint over the entire animation
+- Use `Colors` for precise color replacement, `ColorTint` for theme integration
 
 ## SkiaSprite
 
@@ -246,17 +301,72 @@ SkiaSprite.RemoveFromCache("character.png");
 - Use `ClearCache()` or `RemoveFromCache()` when spritesheets are no longer needed
 - For complex animations, use frame sequences to avoid redundant frames
 
-## Examples
+## Advanced Examples
 
-### Loading Animation with Lottie
+### Code-Behind Lottie Implementation
+
+For complex scenarios, you can create and control SkiaLottie entirely in code:
+
+```csharp
+public partial class AnimationPage : ContentPage
+{
+    private SkiaLottie crashAnimation;
+
+    public AnimationPage()
+    {
+        InitializeComponent();
+        CreateLottieAnimation();
+    }
+
+    private void CreateLottieAnimation()
+    {
+        crashAnimation = new SkiaLottie()
+        {
+            AutoPlay = false,
+            WidthRequest = 110,
+            LockRatio = 1,
+            SpeedRatio = 0.6f,
+            Repeat = 0,
+            DefaultFrame = -1, // -1 means "last frame" when not playing
+            UseCache = SkiaCacheType.ImageDoubleBuffered,
+            Source = "Space/Lottie/crash.json"
+        };
+
+        // Add to your layout
+        MainLayout.Children.Add(crashAnimation);
+    }
+
+    // Control animation programmatically
+    private void PlayCrashAnimation()
+    {
+        crashAnimation.Play();
+    }
+
+    private void StopAndResetAnimation()
+    {
+        crashAnimation.Stop();
+        // Will automatically seek to DefaultFrame (-1 = last frame)
+    }
+}
+```
+
+**Advanced Properties Explained:**
+- `DefaultFrame = -1` - Shows last frame when stopped (useful for "completed" states)
+- `SpeedRatio = 0.6f` - Plays at 60% of original speed
+- `UseCache = ImageDoubleBuffered` - Optimizes for smooth playback
+- `Repeat = 0` - Plays once (use -1 for infinite loop)
+
+### Loading Animation with Theme Integration
 
 ```xml
-<DrawUi:SkiaLottie
+<draw:SkiaLottie
     Source="loading_spinner.json"
     WidthRequest="48"
     HeightRequest="48"
     AutoPlay="True"
-    Repeat="-1" />
+    Repeat="-1"
+    ColorTint="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+    Opacity="0.8" />
 ```
 
 ### Animated Button with Sprite Sheet

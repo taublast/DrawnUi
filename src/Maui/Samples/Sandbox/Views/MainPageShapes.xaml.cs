@@ -27,7 +27,7 @@ public class DebugCanvas : Canvas
 
     public DebugCanvas()
     {
-
+        RenderingMode = RenderingModeType.Accelerated;
     }
 
     protected override void Draw(DrawingContext context)

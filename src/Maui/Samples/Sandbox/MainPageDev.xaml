@@ -11,58 +11,35 @@
     x:Name="ThisPage"
     x:DataType="mauiNet8:MainPageDev">
 
-    <VerticalStackLayout>
-        <draw:Canvas Gestures="Enabled">
-            <draw:SkiaLayer VerticalOptions="Fill">
+    <draw:Canvas 
+        
+        Gestures="Enabled"
+        BackgroundColor="DarkKhaki"
+        VerticalOptions="Fill" HorizontalOptions="Fill">
+        <draw:SkiaLayer VerticalOptions="Fill">
 
-                <draw:SkiaGrid HorizontalOptions="Fill">
+            <draw:SkiaShape
+                Margin="8"
+                Padding="8"
+                BackgroundColor="White"
+                CornerRadius="12,12,12,0"
+                WidthRequest="150"
+                StrokeColor="Black"
+                StrokeWidth="1"
+                HeightRequest="90"
+                UseCache="Operations"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
 
-                    <!--#region  Grid over Shape-->
-                    <draw:SkiaShape BackgroundColor="LightBlue" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="1"
-                                    HeightRequest="150" WidthRequest="150">
-
-                        <draw:SkiaButton Tapped="SkiaButton_Tapped" 
-                                         BackgroundColor="Black"
-                                         HeightRequest="50" WidthRequest="50" HorizontalOptions="Center" VerticalOptions="Center">
-                        </draw:SkiaButton>
-
-                    </draw:SkiaShape>
-
-                    <draw:SkiaLayout x:Name="TopLayer1" Type="Grid" Grid.Row="0" Grid.Column="1"  
-                                     HorizontalOptions="Center" VerticalOptions="Center"  
-                                     HeightRequest="150" LockRatio="1"
-                                     BlockGesturesBelow="True">
-                        <draw:SkiaShape BackgroundColor="#6600FF00" HeightRequest="150" WidthRequest="150" >
-                            <draw:SkiaLabel Text="Press Here! I'm in a Grid" Margin="10" TextColor="Black" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </draw:SkiaShape>
-                    </draw:SkiaLayout>
-
-                    <!--#endregion-->
-
-                    <!--#region Shape over Shape-->
-                    <draw:SkiaShape BackgroundColor="LightBlue" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Grid.Column="1" HeightRequest="150" WidthRequest="150">
-                        <draw:SkiaButton Tapped="SkiaButton_Tapped" 
-                    BackgroundColor="Red" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center" VerticalOptions="Center">
-                        </draw:SkiaButton>
-                    </draw:SkiaShape>
+                <draw:SkiaLayout Type="Column">
+                    <draw:SkiaLabel Text="Text 10" />
+                    <draw:SkiaLabel Text="Text 2" />
+                </draw:SkiaLayout>
 
 
-                    <draw:SkiaShape
-                        x:Name="TopLayer2" BackgroundColor="#6600FF00" 
-                        HeightRequest="150" LockRatio="1"
-                        Grid.Row="1" Grid.Column="1" 
-                        BlockGesturesBelow="True"  
-                        HorizontalOptions="Center" VerticalOptions="Center">
+            </draw:SkiaShape>
 
-                        <draw:SkiaLabel Text="Press Here! I'm in a shape" Margin="10" TextColor="Black" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    </draw:SkiaShape>
-                    <!--#endregion-->
-
-
-                </draw:SkiaGrid>
-
-            </draw:SkiaLayer>
-        </draw:Canvas>
-    </VerticalStackLayout>
+        </draw:SkiaLayer>
+    </draw:Canvas>
 
 </views:BasePageCodeBehind>

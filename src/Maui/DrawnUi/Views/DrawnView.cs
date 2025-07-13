@@ -4,6 +4,7 @@ using DrawnUi.Infrastructure.Enums;
 
 namespace DrawnUi.Views
 {
+
     public partial class DrawnView : IDrawnBase, IAnimatorsManager, IVisualTreeElement
     {
 
@@ -144,7 +145,7 @@ namespace DrawnUi.Views
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {
 
-            if (args.NewHandler == null)
+            if (args.NewHandler == null || args.OldHandler != null)
             {
                 DestroySkiaView();
 
@@ -274,7 +275,7 @@ namespace DrawnUi.Views
 
         public void AddAnimator(ISkiaAnimator animator)
         {
-            lock (LockAnimatingControls)
+            //lock (LockAnimatingControls)
             {
                 animator.IsDeactivated = false;
                 if (animator.Parent != null && !animator.Parent.IsVisible)
@@ -295,7 +296,7 @@ namespace DrawnUi.Views
 
         public void RemoveAnimator(Guid uid)
         {
-            lock (LockAnimatingControls)
+            //lock (LockAnimatingControls)
             {
                 if (AnimatingControls.TryGetValue(uid, out var animator))
                 {
@@ -324,7 +325,7 @@ namespace DrawnUi.Views
 
         public virtual IEnumerable<ISkiaAnimator> UnregisterAllAnimatorsByType(Type type)
         {
-            lock (LockAnimatingControls)
+            //lock (LockAnimatingControls)
             {
                 var ret = AnimatingControls.Where(x => x.Value.GetType() == type).Select(s => s.Value).ToArray();
                 foreach (var animator in ret)
@@ -345,7 +346,7 @@ namespace DrawnUi.Views
 
         public virtual IEnumerable<ISkiaAnimator> UnregisterAllAnimatorsByParent(SkiaControl parent)
         {
-            lock (LockAnimatingControls)
+            //lock (LockAnimatingControls)
             {
                 var ret = AnimatingControls.Values.Where(x => x.Parent == parent).ToArray();
                 foreach (var animator in ret)
@@ -372,7 +373,7 @@ namespace DrawnUi.Views
         /// <returns></returns>
         public virtual IEnumerable<ISkiaAnimator> SetViewTreeVisibilityByParent(SkiaControl parent, bool state)
         {
-            lock (LockAnimatingControls)
+            //lock (LockAnimatingControls)
             {
                 var ret = AnimatingControls.Values.Where(x => x.Parent == parent).ToArray();
                 foreach (var animator in ret)
@@ -393,7 +394,7 @@ namespace DrawnUi.Views
 
         public virtual IEnumerable<ISkiaAnimator> SetPauseStateOfAllAnimatorsByParent(SkiaControl parent, bool state)
         {
-            lock (LockAnimatingControls)
+            //lock (LockAnimatingControls)
             {
                 var ret = AnimatingControls.Values.Where(x => x.Parent == parent).ToArray();
                 foreach (var animator in ret)
@@ -450,7 +451,7 @@ namespace DrawnUi.Views
             return executed;
         }
 
-        protected object LockAnimatingControls = new();
+        //protected object LockAnimatingControls = new();
 
         /// <summary>
         /// Executed after the rendering
@@ -463,7 +464,7 @@ namespace DrawnUi.Views
         /// Tracking controls that what to be animated right now so we constantly refresh
         /// canvas until there is none left
         /// </summary>
-        public Dictionary<Guid, ISkiaAnimator> AnimatingControls { get; } = new(512);
+        public ConcurrentDictionary<Guid, ISkiaAnimator> AnimatingControls { get; } = new();
 
         protected FrameTimeInterpolator FrameTimeInterpolator = new();
         public long mLastFrameTime { get; set; }
@@ -473,7 +474,7 @@ namespace DrawnUi.Views
             var executed = 0;
 
 
-            lock (LockAnimatingControls)
+            //lock (LockAnimatingControls)
             {
                 try
                 {
@@ -538,7 +539,7 @@ namespace DrawnUi.Views
                     foreach (var key in _listRemoveAnimators)
                     {
                         //Debug.WriteLine($"ANIMATORS - REMOVED {key}");
-                        AnimatingControls.Remove(key);
+                        AnimatingControls.TryRemove(key, out _);
                     }
                 }
                 catch (Exception e)
@@ -562,7 +563,7 @@ namespace DrawnUi.Views
             {
                 if (Equals(value, _canvasView)) return;
                 _canvasView = value;
-                renderedFrames = 0;
+                FrameNumber = 0;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CanvasFps));
                 OnPropertyChanged(nameof(CanDraw));
@@ -586,6 +587,7 @@ namespace DrawnUi.Views
 
                 //bug this creates garbage on aandroid on every frame
                 // DeviceDisplay.Current.MainDisplayInfoChanged += OnMainDisplayInfoChanged;
+                InitFramework(true);
             }
         }
 
@@ -755,6 +757,7 @@ namespace DrawnUi.Views
         /// </summary>
         protected void CreateSkiaView()
         {
+
             DestroySkiaView();
 
 #if ONPLATFORM
@@ -777,6 +780,11 @@ namespace DrawnUi.Views
             Content = CanvasView as View;
         }
 
+        protected virtual void OnDestroyingVew()
+        {
+
+        }
+
         protected void DestroySkiaView()
         {
             lock (LockDraw)
@@ -792,6 +800,7 @@ namespace DrawnUi.Views
                 var kill = CanvasView;
                 if (kill != null)
                 {
+                    OnDestroyingVew();
                     CanvasView = null;
                     kill.OnDraw = null;
                     if (kill is View view)
@@ -848,9 +857,12 @@ namespace DrawnUi.Views
             OnDispose();
         }
 
+        public event EventHandler ViewDisposing;
+
         protected virtual void WillDispose()
         {
             IsDisposing = true;
+            ViewDisposing?.Invoke(this, EventArgs.Empty);
             Parent = null;
             this.SizeChanged -= OnFormsSizeChanged;
         }
@@ -865,6 +877,8 @@ namespace DrawnUi.Views
                 try
                 {
                     IsDisposing = true;
+
+                    InitFramework(false);
 
                     OnDisposing();
 
@@ -1562,7 +1576,8 @@ namespace DrawnUi.Views
         #endregion
 
         protected object LockDraw = new();
-        long renderedFrames;
+
+        public long FrameNumber { get; private set; }
 
         #region DISPOSE STUFF
 
@@ -1571,12 +1586,12 @@ namespace DrawnUi.Views
             if (this.IsDisposed)
                 return;
 
-            resource?.Dispose();
+            //resource?.Dispose();
 
-            //DisposeManager.EnqueueDisposable(resource);
+            DisposeManager.EnqueueDisposable(resource, FrameNumber);
         }
 
-        protected DisposableManager DisposeManager { get; } = new(3.5);
+        protected DisposableManager DisposeManager { get; } = new(2);
 
         public readonly struct TimedDisposable : IDisposable
         {
@@ -1592,165 +1607,6 @@ namespace DrawnUi.Views
             public void Dispose()
             {
                 Disposable.Dispose();
-            }
-        }
-
-        public class DisposableManager : IDisposable
-        {
-            private readonly ConcurrentQueue<TimedDisposable> _toBeDisposed = new ConcurrentQueue<TimedDisposable>();
-            private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-            private readonly Task _disposalTask;
-            private readonly double _disposeDelaySeconds;
-            private bool _disposed = false;
-
-            /// <summary>
-            /// Initializes a new instance of the DisposableManager class.
-            /// </summary>
-            /// <param name="disposeDelaySeconds">The delay in seconds before an IDisposable is disposed after being enqueued. Default is 3.5 seconds.</param>
-            public DisposableManager(double disposeDelaySeconds = 3.5)
-            {
-                if (disposeDelaySeconds <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(disposeDelaySeconds),
-                        "Dispose delay must be positive.");
-
-                _disposeDelaySeconds = disposeDelaySeconds;
-                _disposalTask = Task.Run(() => PeriodicDisposeAsync(_cancellationTokenSource.Token));
-            }
-
-            /// <summary>
-            /// Enqueues an IDisposable object with the current timestamp.
-            /// </summary>
-            /// <param name="disposable">The IDisposable object to enqueue.</param>
-            public void EnqueueDisposable(IDisposable disposable)
-            {
-                if (disposable == null)
-                    return;
-
-                var timedDisposable = new TimedDisposable(disposable);
-                _toBeDisposed.Enqueue(timedDisposable);
-            }
-
-            /// <summary>
-            /// Periodically disposes of eligible disposables.
-            /// </summary>
-            /// <param name="cancellationToken">Cancellation token to stop the disposal loop.</param>
-            private async Task PeriodicDisposeAsync(CancellationToken cancellationToken)
-            {
-                try
-                {
-                    while (!cancellationToken.IsCancellationRequested)
-                    {
-                        DisposeDisposables();
-                        await Task.Delay(500, cancellationToken).ConfigureAwait(false);
-                    }
-                }
-                catch (TaskCanceledException)
-                {
-                    // Expected when cancellationToken is canceled
-                }
-                catch (Exception ex)
-                {
-                    // Log unexpected exceptions
-                    LogError(ex);
-                }
-            }
-
-            /// <summary>
-            /// Disposes of all IDisposable objects that have been in the queue for more than the specified delay.
-            /// </summary>
-            private void DisposeDisposables()
-            {
-                DateTime now = DateTime.UtcNow;
-
-                while (_toBeDisposed.TryPeek(out var timedDisposable))
-                {
-                    var elapsed = now - timedDisposable.EnqueuedTime;
-                    if (elapsed.TotalSeconds >= _disposeDelaySeconds)
-                    {
-                        if (_toBeDisposed.TryDequeue(out var disposableToDispose))
-                        {
-                            try
-                            {
-                                disposableToDispose.Dispose();
-                            }
-                            catch (Exception ex)
-                            {
-                                // Log the exception and continue disposing other items
-                                LogError(ex);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Since the queue is FIFO, no need to check further
-                        break;
-                    }
-                }
-            }
-
-            private void LogError(Exception ex)
-            {
-                Super.Log(ex);
-            }
-
-            /// <summary>
-            /// Disposes all remaining disposables immediately and stops the periodic disposal task.
-            /// </summary>
-            public void Dispose()
-            {
-                if (_disposed)
-                    return;
-
-                _disposed = true;
-
-                // Cancel the disposal loop
-                _cancellationTokenSource.Cancel();
-
-                try
-                {
-                    // Wait for the disposal task to complete
-                    _disposalTask.Wait();
-                }
-                catch (AggregateException ae)
-                {
-                    ae.Handle(ex =>
-                    {
-                        LogError(ex);
-                        return true;
-                    });
-                }
-
-                // Dispose remaining disposables
-                DisposeAllRemaining();
-
-                // Dispose the cancellation token source
-                _cancellationTokenSource.Dispose();
-            }
-
-            /// <summary>
-            /// Disposes all remaining IDisposable objects in the queue.
-            /// </summary>
-            private void DisposeAllRemaining()
-            {
-                List<TimedDisposable> remainingDisposables = new List<TimedDisposable>();
-
-                while (_toBeDisposed.TryDequeue(out var timedDisposable))
-                {
-                    remainingDisposables.Add(timedDisposable);
-                }
-
-                foreach (var disposable in remainingDisposables)
-                {
-                    try
-                    {
-                        disposable.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log the exception and continue disposing other items
-                        LogError(ex);
-                    }
-                }
             }
         }
 
@@ -1932,7 +1788,9 @@ namespace DrawnUi.Views
 
         protected virtual void Draw(DrawingContext context)
         {
-            ++renderedFrames;
+            ++FrameNumber;
+
+            DisposeManager.DisposeDisposables(FrameNumber);
 
             //Debug.WriteLine($"[DRAW] {Tag}");
 
@@ -2156,7 +2014,14 @@ namespace DrawnUi.Views
             set
             {
                 _renderingScale = value;
-                SetValue(RenderingScaleProperty, value);
+                try
+                {
+                    SetValue(RenderingScaleProperty, value);
+                }
+                catch (Exception e)
+                {
+                    Super.Log(e);
+                }
             }
         }
 

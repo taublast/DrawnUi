@@ -116,9 +116,9 @@ public class SkiaImageTiles : SkiaImage
     /// <summary>
     /// Source was loaded, we can create tile
     /// </summary>
-    public override void OnSourceSuccess(string source)
+    public override void OnSuccess(string source)
     {
-        base.OnSourceSuccess(source);
+        base.OnSuccess(source);
 
         SetupTiles();
     }

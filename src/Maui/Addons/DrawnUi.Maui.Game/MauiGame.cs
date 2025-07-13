@@ -13,12 +13,17 @@ namespace DrawnUi.Gaming
     /// </summary>
     public class MauiGame : SkiaLayout, IMauiGame
     {
+        /// <summary>
+        /// Can disable frame time interpolator
+        /// </summary>
+        public static bool FrameInterpolatorDisabled { get; set; }
+
         private ActionOnTickAnimator _appLoop;
         protected long LastFrameTimeNanos;
 
         public MauiGame()
         {
-            Trace.WriteLine("****************** MAUIGAME CREATED **********************");
+            Super.Log("****************** MAUIGAME CREATED **********************");
 
             KeyboardManager.KeyDown += OnKeyboardDownEvent;
             KeyboardManager.KeyUp += OnKeyboardUpEvent;
@@ -53,7 +58,7 @@ namespace DrawnUi.Gaming
         /// </summary>
         public virtual void StopLoop()
         {
-            _appLoop.Stop();
+            _appLoop?.Stop();
         }
 
         /// <summary>
@@ -84,7 +89,8 @@ namespace DrawnUi.Gaming
             float deltaSeconds = (frameTimeNanos - LastFrameTimeNanos) / 1_000_000_000.0f;
 
             // Use stable time
-            deltaSeconds = FrameTimeInterpolator.GetDeltaTime(deltaSeconds);
+            if (!MauiGame.FrameInterpolatorDisabled)
+                deltaSeconds = FrameTimeInterpolator.GetDeltaTime(deltaSeconds);
 
             LastFrameTimeNanos = frameTimeNanos;
 

@@ -39,11 +39,7 @@ namespace Sandbox
                 view.Restore();
 
                 // draw the face
-                var leftFace = new SKPaint
-                {
-                    Color = SKColors.LightGray,
-                    IsAntialias = true
-                };
+                var leftFace = new SKPaint { Color = SKColors.LightGray, IsAntialias = true };
                 canvas.DrawRect(face, leftFace);
             }
 
@@ -57,11 +53,7 @@ namespace Sandbox
                 view.Restore();
 
                 // draw the face
-                var rightFace = new SKPaint
-                {
-                    Color = SKColors.Gray,
-                    IsAntialias = true
-                };
+                var rightFace = new SKPaint { Color = SKColors.Gray, IsAntialias = true };
                 canvas.DrawRect(face, rightFace);
             }
 
@@ -104,7 +96,6 @@ namespace Sandbox
         }
 
 
-
         public override void Build()
         {
             Canvas?.Dispose();
@@ -122,39 +113,38 @@ namespace Sandbox
                     VerticalOptions = LayoutOptions.Fill,
                     Children = new List<SkiaControl>()
                     {
-
                         new SkiaShape()
+                        {
+                            BackgroundColor = Colors.DodgerBlue,
+                            ZIndex = -1,
+                            CornerRadius = 16,
+                            RotationX = 16,
+                            RotationY = 20,
+                            RotationZ = -6,
+                            TranslationZ = 0,
+                            Tag = "Shape",
+                            WidthRequest = 150,
+                            HeightRequest = 150,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center,
+                            Children = new List<SkiaControl>()
                             {
-                                BackgroundColor = Colors.DodgerBlue,
-                                ZIndex=-1,
-                                CornerRadius = 16,
-                                RotationX = 16,
-                                RotationY = 20,
-                                RotationZ = -6,
-                                TranslationZ = 0,
-                                Tag="Shape",
-                                WidthRequest = 150,
-                                HeightRequest = 150,
-                                HorizontalOptions = LayoutOptions.Center,
-                                VerticalOptions = LayoutOptions.Center,
-                                Content = new SkiaLabel()
+                                new SkiaLabel()
                                 {
-                                    Tag="Label",
+                                    Tag = "Label",
                                     TextColor = Colors.White,
                                     HorizontalOptions = LayoutOptions.Center,
                                     VerticalOptions = LayoutOptions.Center,
-                                    Text=$"Overlay {CountReloads}"
+                                    Text = $"Overlay {CountReloads}"
                                 }
                             }
+                        }
                     }
                 }
             };
- 
+
 
             this.Content = Canvas;
         }
-
- 
-
     }
 }

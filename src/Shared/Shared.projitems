@@ -38,8 +38,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\RecycleTemplateType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\RecyclingTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\RelativePositionType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\RescalingType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\ScrollInteractionState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\SelectionPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\ShapeType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\SkiaAnchorBak.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\SkiaImageEffect.cs" />
@@ -164,11 +164,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Features\Animators\SpringWithVelocityAnimator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Animators\SpringWithVelocityVectorAnimator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Animators\VelocitySkiaAnimator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\SkiaFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\SkiaLayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\HStack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\SkiaRow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\SkiaGrid.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\VStack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\SkiaStack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Fluent\SkiaWrap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\3D\Sk3dView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\3D\SkCamera3D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\3D\SkPatch3D.cs" />

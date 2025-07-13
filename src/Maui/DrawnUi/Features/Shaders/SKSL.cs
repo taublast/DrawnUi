@@ -97,7 +97,7 @@ public static class SkSl
         }
         else
         {
-            error = $"Failed to find error line number.";
+            error = errors;
         }
         if (!string.IsNullOrEmpty(error))
         {

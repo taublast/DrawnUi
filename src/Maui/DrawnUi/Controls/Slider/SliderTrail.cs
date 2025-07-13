@@ -4,8 +4,12 @@ namespace DrawnUi.Draw;
 
 public class SliderTrail : SkiaShape
 {
+    public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    {
+        Debug.WriteLine("[SliderTrail] gestures hit");
 
-
+        return base.ProcessGestures(args, apply);
+    }
 
     public static readonly BindableProperty XPosProperty = BindableProperty.Create(nameof(XPos), typeof(double), typeof(SliderTrail), 0.0); //, BindingMode.TwoWay
     public double XPos
@@ -22,8 +26,6 @@ public class SliderTrail : SkiaShape
         get { return (double)GetValue(XPosEndProperty); }
         set { SetValue(XPosEndProperty, value); }
     }
-
-
 
     public static readonly BindableProperty ModifyXPosEndProperty = BindableProperty.Create(nameof(ModifyXPosEnd), typeof(double), typeof(SliderTrail), 0.0); //, BindingMode.TwoWay
     public double ModifyXPosEnd
@@ -57,9 +59,17 @@ public class SliderTrail : SkiaShape
             || propertyName == nameof(XPos)
             || propertyName == nameof(SideOffset))
         {
-            this.Margin = new Thickness(XPos + SideOffset + ModifyXPosStart, 0, ModifyXPosEnd, 0);
-            this.WidthRequest = XPosEnd - XPos + (ModifyXPosEnd + ModifyXPosStart);
-            //Debug.WriteLine($"[DEBUG] {XPos} {XPosEnd} -> {XPosEnd - XPos}");
+
+            var offsetLeft = XPos + SideOffset + ModifyXPosStart;
+            var offsetRight = ModifyXPosEnd;
+
+            this.Margin = new Thickness(
+                offsetLeft,
+                0,
+                offsetRight,
+                0);
+
+            this.WidthRequest = XPosEnd - XPos + (ModifyXPosEnd*2 + ModifyXPosStart*2);
         }
 
     }

@@ -1,13 +1,25 @@
-# Building Game UIs and Interactive Games with DrawnUi.Maui
+# Building Game UIs and Interactive Games with DrawnUI
 
-DrawnUi.Maui is not just for business apps—it’s also a powerful platform for building interactive games and game-like UIs. With direct SkiaSharp rendering, real-time animation, and flexible input handling, you can create everything from simple arcade games to rich, animated dashboards.
+DrawnUi is not just for business apps — with direct SkiaSharp rendering, real-time animation, and flexible input handling, you can create everything from simple arcade games to rich, animated dashboards.
 
-## Why Use DrawnUi.Maui for Games?
-- **High-performance canvas rendering** on all platforms
-- **Frame-based animation** with SkiaSprite, SkiaGif, SkiaLottie, and custom logic
-- **Flexible input**: tap, drag, swipe, and multi-touch
-- **Custom drawing**: draw shapes, sprites, and effects directly
-- **Easy integration** with other DrawnUi controls and layouts
+Mainly tested for  scenarios 
+
+## Why Use DrawnUi for 2D-Games?
+
+- **True cross-platform**  
+   No more Windows-only, your game will look and run the same way on Apple and Android devices along with Windows and Mac desktops, with sound and all the goodies .NET MAUI provides for those platforms. 
+- **High-performance canvas rendering**   
+   On most platforms DrawnUi uses its own hardware-accelerated views handlers to ensure smooth display-synched multi-buffered rendering. They also provide an experimental "retained feature" (Canvas property `RenderingMode=RenderingModeType.AcceleratedRetained`) that on every frame returns to you the previous frame result for you to draw on top, instead of an empty surface. This can be useful for old-shool game engines that save/restore background for moving sprites, and other similar scenarios, for drawing only changed areas and obtain max performance.
+- **Frame-based animation controls**  
+   You can use built-in frame-based contols like SkiaSprite, SkiaLottie, SkiaGif (create your own) to easily use your existing art.
+- **Drawing primitives**  
+   You can use SkiaShape, SkiaLabel, SkiaImage, and other controls to build your game UI in a fast and declarative way.
+- **Flexible input**  
+   Canvas supports all multi-touch gestures, desktop mouse and keyboard. Controllers are on the roadmap.
+- **Custom drawing**  
+   You can override `Paint` inside any control and use all the power of SkiaSharp to draw directly on the canvas.
+- **Easy integration**  
+    with other .NET MAUI native controls and layouts to use-platform-specific features.
 
 ## Game Loop and Real-Time Updates
 
@@ -140,7 +152,7 @@ private void OnTap(object sender, SkiaGesturesParameters e)
 - Use SkiaLabelFps to monitor frame rate
 - For complex games, manage game state and rendering in a dedicated class
 
-## Advanced: Integrating Addons (Camera, Maps, Charts)
+## Integrating Addons (Camera, Maps, Charts)
 - Use DrawnUi.Maui.Camera for AR or camera-based games
 - Overlay charts or live data with DrawnUi.Maui.LiveCharts
 - Add maps or location-based features with DrawnUi.Maui.MapsUi

@@ -26,7 +26,7 @@
                 Tag="ReportTitle"
                 Text="This is a report sample, we will use different controls inside. We are using a localized Markdown text from app resources below:" />
 
-            <draw:SkiaMarkdownLabel
+            <draw:SkiaRichLabel
                 BackgroundColor="Gainsboro"
                 FontSize="13"
                 HorizontalOptions="Fill"
@@ -41,7 +41,7 @@
                 <draw:SkiaImage
                     HeightRequest="71"
                     LoadSourceOnFirstDraw="False"
-                    OnSuccess="SkiaImage_OnOnSuccess"
+                    Success="SkiaImage_OnOnSuccess"
                     Source="Images/8.jpg"
                     WidthRequest="90" />
 

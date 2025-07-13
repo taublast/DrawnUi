@@ -8,7 +8,7 @@ using Microsoft.Maui.Controls;
 
 namespace DrawnUi.Draw
 {
-    public partial class SkiaLayout : SkiaControl, ISkiaGestureListener, ISkiaGridLayout
+    public partial class SkiaLayout : SkiaControl, ISkiaGridLayout
     {
         public override bool PreArrange(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
@@ -23,10 +23,7 @@ namespace DrawnUi.Draw
 
             if (NeedMeasure)
             {
-                //self measuring, for top controls and those invalidated-redrawn when parents didn't re-measure them
-                var rectAvailable = DefineAvailableSize(destination, widthRequest, heightRequest, scale, false);
-                Measure(rectAvailable.Pixels.Width, rectAvailable.Pixels.Height, scale);
-                ApplyMeasureResult();
+                MeasureSelf(destination, widthRequest, heightRequest, scale);
             }
             else
             {
@@ -36,7 +33,6 @@ namespace DrawnUi.Draw
             return true;
         }
 
-
         public override bool IsGestureForChild(SkiaControlWithRect child, SKPoint point)
         {
             if (this.IsStack)
@@ -45,9 +41,14 @@ namespace DrawnUi.Draw
                 if (child.Control != null && !child.Control.IsDisposing && !child.Control.IsDisposed &&
                     !child.Control.InputTransparent && child.Control.CanDraw)
                 {
-                    var transformed = child.Control.ApplyTransforms(child.Rect); //instead of HitRect
+                    var transformed = child.Control.ApplyTransforms(child.HitRect); //instead of HitRect
                     inside = transformed.ContainsInclusive(point.X,
                         point.Y); // || child.Control == Superview.FocusedChild;
+
+                    if (inside)
+                    {
+                        var stop = 1;
+                    }
                 }
 
                 return inside;
@@ -101,11 +102,21 @@ namespace DrawnUi.Draw
         /// When using InitializeTemplatesInBackground this is your callbacl to wait for.  
         /// </summary>
         /// <returns></returns>
+        /// <summary>
+        /// Flag to expand viewport temporarily for initial drawing to pre-create cells with different heights
+        /// </summary>
+        private bool _isInitialDrawingFromFreshSource = false;
+        private int _initialDrawFrameCount = 0;
+
         public virtual void OnTemplatesAvailable()
         {
             _measuredNewTemplates = false;
             NeedMeasure = true;
             InvalidateParent();
+            
+            // Enable initial drawing mode to pre-create more cells
+            _isInitialDrawingFromFreshSource = true;
+            _initialDrawFrameCount = 0;
         }
 
         protected override ScaledSize SetMeasured(float width, float height, bool widthCut, bool heightCut, float scale)
@@ -265,17 +276,12 @@ namespace DrawnUi.Draw
         }
 
 
-        public virtual bool OnFocusChanged(bool focus)
-        {
-            return false;
-        }
-
 
         public SkiaLayout()
         {
             ChildrenFactory = new(this);
 
-            PostponeInvalidation(nameof(ResetItemsSource), ResetItemsSource);
+            PostponeInvalidation(nameof(ApplyItemsSource), ApplyItemsSource);
             //OnItemSourceChanged();
         }
 
@@ -359,6 +365,13 @@ namespace DrawnUi.Draw
 
             if (Virtualisation == VirtualisationType.Managed)
             {
+                // Check if we have a plane-specific viewport for managed virtualization
+                var planeSpecificViewport = context.GetArgument(nameof(ContextArguments.PlaneViewport)) as SKRect?;
+                if (planeSpecificViewport.HasValue)
+                {
+                    return ScaledRect.FromPixels(planeSpecificViewport.Value, RenderingScale);
+                }
+                
                 return onscreen;
             }
 
@@ -615,9 +628,14 @@ namespace DrawnUi.Draw
             if (ChildrenFactory == null)
                 return;
 
-            //todo cannot really spam this if we find out we need this need to find some
-            //more optimizations to minimize the lag from recreating templates
-            //ChildrenFactory.TemplatesInvalidated = true;
+            if (IsTemplated)
+            {
+                //todo cannot really spam this if we find out we need this need to find some
+                //more optimizations to minimize the lag from recreating templates
+                //ChildrenFactory.TemplatesInvalidated = true;
+
+                OnItemSourceChanged();
+            }
 
             base.InvalidateWithChildren();
         }
@@ -724,7 +742,7 @@ namespace DrawnUi.Draw
 
         public override ScaledSize MeasureAbsolute(SKRect rectForChildrenPixels, float scale)
         {
-            var childrenCount = ChildrenFactory.GetChildrenCount();
+            var childrenCount = ChildrenFactory.GetChildrenCount(); // Cache count
             if (childrenCount > 0)
             {
                 if (!IsTemplated)
@@ -753,13 +771,24 @@ namespace DrawnUi.Draw
                             scale);
                         if (!measured.IsEmpty)
                         {
-                            if (measured.Pixels.Width > maxWidth
-                                && child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
-                                maxWidth = measured.Pixels.Width;
+                            // FastMeasurement: skip FILL checks for performance
+                            if (FastMeasurement)
+                            {
+                                if (measured.Pixels.Width > maxWidth)
+                                    maxWidth = measured.Pixels.Width;
+                                if (measured.Pixels.Height > maxHeight)
+                                    maxHeight = measured.Pixels.Height;
+                            }
+                            else
+                            {
+                                if (measured.Pixels.Width > maxWidth
+                                    && child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
+                                    maxWidth = measured.Pixels.Width;
 
-                            if (measured.Pixels.Height > maxHeight
-                                && child.VerticalOptions.Alignment != LayoutAlignment.Fill)
-                                maxHeight = measured.Pixels.Height;
+                                if (measured.Pixels.Height > maxHeight
+                                    && child.VerticalOptions.Alignment != LayoutAlignment.Fill)
+                                    maxHeight = measured.Pixels.Height;
+                            }
                         }
 
                         ChildrenFactory.ReleaseTemplateInstance(template);
@@ -767,13 +796,17 @@ namespace DrawnUi.Draw
                     else if (this.MeasureItemsStrategy == MeasuringStrategy.MeasureAll
                              || RecyclingTemplate == RecyclingTemplate.Disabled)
                     {
-                        var cellsToRelease = new List<SkiaControl>();
+                        // Optimize: only allocate collection if templated
+                        List<SkiaControl> cellsToRelease = null;
+                        if (IsTemplated)
+                            cellsToRelease = new List<SkiaControl>();
+
                         try
                         {
                             for (int index = 0; index < childrenCount; index++)
                             {
                                 var child = ChildrenFactory.GetViewForIndex(index, null, 0, true);
-                                if (IsTemplated) cellsToRelease.Add(child);
+                                if (IsTemplated) cellsToRelease?.Add(child);
 
                                 if (child == null)
                                 {
@@ -784,22 +817,35 @@ namespace DrawnUi.Draw
                                     rectForChildrenPixels.Height, scale);
                                 if (!measured.IsEmpty)
                                 {
-                                    if (measured.Pixels.Width > maxWidth &&
-                                        child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
-                                        maxWidth = measured.Pixels.Width;
-                                    if (measured.Pixels.Height > maxHeight &&
-                                        child.VerticalOptions.Alignment != LayoutAlignment.Fill)
-                                        maxHeight = measured.Pixels.Height;
+                                    // FastMeasurement: skip FILL checks for performance
+                                    if (true)//FastMeasurement)
+                                    {
+                                        if (measured.Pixels.Width > maxWidth)
+                                            maxWidth = measured.Pixels.Width;
+                                        if (measured.Pixels.Height > maxHeight)
+                                            maxHeight = measured.Pixels.Height;
+                                    }
+                                    else
+                                    {
+                                        if (measured.Pixels.Width > maxWidth &&
+                                            child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
+                                            maxWidth = measured.Pixels.Width;
+                                        if (measured.Pixels.Height > maxHeight &&
+                                            child.VerticalOptions.Alignment != LayoutAlignment.Fill)
+                                            maxHeight = measured.Pixels.Height;
+                                    }
                                 }
                             }
                         }
                         finally
                         {
-                            if (IsTemplated)
+                            if (cellsToRelease?.Count > 0)
+                            {
                                 foreach (var cell in cellsToRelease)
                                 {
                                     ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
                                 }
+                            }
                         }
                     }
 
@@ -860,9 +906,14 @@ namespace DrawnUi.Draw
                                     ContentSize = MeasureList(constraints.Content, request.Scale);
                                     break;
                                 }
-                            }
 
-                            ContentSize = MeasureStack(constraints.Content, request.Scale);
+                                ContentSize = MeasureStackTemplated(constraints.Content, request.Scale);
+                            }
+                            else
+                            {
+                                ContentSize = MeasureStackNonTemplated(constraints.Content, request.Scale);
+                            }
+                                
                             break;
 
                         case LayoutType.Wrap:
@@ -901,14 +952,19 @@ namespace DrawnUi.Draw
         /// <param name="heightConstraint"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public override ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+        public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
         {
-            //background measuring or invisible or self measure from draw because layout will never pass -1
-            if (IsMeasuring || !CanDraw || (widthConstraint < 0 || heightConstraint < 0)
+            //background measuring or invisible
+            if (IsMeasuring //|| !CanDraw
                 || (IsTemplated && ChildrenFactory.TemplatesBusy))
             {
                 NeedRemeasuring = true;
                 return MeasuredSize;
+            }
+
+            if (!IsVisible)
+            {
+                return SetMeasuredAsEmpty(scale);
             }
 
             try
@@ -920,10 +976,11 @@ namespace DrawnUi.Draw
                     InitializeDefaultContent();
 
                     var request = CreateMeasureRequest(widthConstraint, heightConstraint, scale);
-                    if (request.IsSame)
-                    {
-                        return MeasuredSize;
-                    }
+                    //this optimization WAS nice (byebye) but not working for Grid inside a recycled cell where request is same but height is different 
+                    //if (request.IsSame)
+                    //{
+                    //    return MeasuredSize;
+                    //}
 
                     if (request.WidthRequest == 0 || request.HeightRequest == 0)
                     {
@@ -1027,11 +1084,11 @@ namespace DrawnUi.Draw
 
             if (!NeedAutoSize && (child.NeedAutoSize || IsTemplated))
             {
-                UpdateByChild(child);
+                UpdateByChild(child); //simple update
                 return;
             }
 
-            base.InvalidateByChild(child);
+            base.InvalidateByChild(child);  //calling Invalidate
         }
 
         bool _trackWasDrawn;
@@ -1252,24 +1309,24 @@ namespace DrawnUi.Draw
 
         #region ItemsSource
 
-        public static readonly BindableProperty InitializeTemplatesInBackgroundDelayProperty = BindableProperty.Create(
-            nameof(InitializeTemplatesInBackgroundDelay),
-            typeof(int),
-            typeof(SkiaLayout),
-            0, propertyChanged: NeedUpdateItemsSource);
+        //public static readonly BindableProperty InitializeTemplatesInBackgroundDelayProperty = BindableProperty.Create(
+        //    nameof(InitializeTemplatesInBackgroundDelay),
+        //    typeof(int),
+        //    typeof(SkiaLayout),
+        //    0, propertyChanged: NeedUpdateItemsSource);
 
-        /// <summary>
-        /// Whether should initialize templates in background instead of blocking UI thread, default is 0.
-        /// Set your delay in Milliseconds to enable.
-        /// When this is enabled and RecyclingTemplate is Disabled will also measure the layout in background
-        /// when templates are available without blocking UI-tread.
-        /// After that OnTemplatesAvailable will be called on parent layout.
-        /// </summary>
-        public int InitializeTemplatesInBackgroundDelay
-        {
-            get { return (int)GetValue(InitializeTemplatesInBackgroundDelayProperty); }
-            set { SetValue(InitializeTemplatesInBackgroundDelayProperty, value); }
-        }
+        ///// <summary>
+        ///// Whether should initialize templates in background instead of blocking UI thread, default is 0.
+        ///// Set your delay in Milliseconds to enable.
+        ///// When this is enabled and RecyclingTemplate is Disabled will also measure the layout in background
+        ///// when templates are available without blocking UI-tread.
+        ///// After that OnTemplatesAvailable will be called on parent layout.
+        ///// </summary>
+        //public int InitializeTemplatesInBackgroundDelay
+        //{
+        //    get { return (int)GetValue(InitializeTemplatesInBackgroundDelayProperty); }
+        //    set { SetValue(InitializeTemplatesInBackgroundDelayProperty, value); }
+        //}
 
         public static readonly BindableProperty MeasureItemsStrategyProperty = BindableProperty.Create(
             nameof(MeasureItemsStrategy),
@@ -1331,6 +1388,7 @@ namespace DrawnUi.Draw
             set => SetValue(ItemsSourceProperty, value);
         }
 
+
         private static void ItemsSourcePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             var skiaControl = (SkiaLayout)bindable;
@@ -1376,23 +1434,26 @@ namespace DrawnUi.Draw
             //skiaControl.PostponeInvalidation(nameof(UpdateItemsSource), skiaControl.UpdateItemsSource);
             //skiaControl.Update();
 
-            skiaControl.ResetItemsSource();
+            skiaControl.ApplyItemsSource();
         }
 
         public override void OnItemTemplateChanged()
         {
             //PostponeInvalidation(nameof(OnItemSourceChanged), OnItemSourceChanged);
-            ResetItemsSource();
+            ApplyItemsSource();
         }
 
         public bool ApplyNewItemsSource { get; set; }
 
         public virtual void OnItemSourceChanged()
         {
-            ResetItemsSource();
+            ApplyItemsSource();
         }
 
-        public virtual void ResetItemsSource()
+        /// <summary>
+        /// Invalidate and re-apply ItemsSource
+        /// </summary>
+        public virtual void ApplyItemsSource()
         {
             //if (!string.IsNullOrEmpty(Tag))
             //    Debug.WriteLine($"OnItemSourceChanged {Tag} {IsTemplated} {IsMeasuring}");
@@ -1450,25 +1511,22 @@ namespace DrawnUi.Draw
                     return;
                 }
 
-                // Fall back to full reset for complex changes
-                if (ViewsAdapter.LogEnabled)
-                {
-                    Trace.WriteLine($"[SkiaLayout] {Tag} Falling back to full reset for {args.Action}");
-                }
-
                 ApplyNewItemsSource = false;
-                ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
-                    GetTemplatesPoolLimit(),
-                    GetTemplatesPoolPrefill());
 
-                if (args.Action == NotifyCollectionChangedAction.Reset)
+                //we could enter here from a different thread:
+                SafeAction(() =>
                 {
-                    ResetScroll();
-                }
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(),
+                        GetTemplatesPoolPrefill());
 
-                Invalidate();
-
-                //CheckAndSetupIfEmpty(); todo
+                    if (args.Action == NotifyCollectionChangedAction.Reset)
+                    {
+                        ResetScroll();
+                        Invalidate();
+                    }
+                });
+                
             }
         }
 

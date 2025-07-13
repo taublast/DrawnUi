@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaRadioButton
+    x:Class="AppoMobi.Maui.DrawnUi.Demo.Views.Controls.DrawnRadioButton"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    x:Name="ThisControl"
+    MinimumHeightRequest="24"
+    UseCache="Image"
+    VerticalOptions="Center">
+
+    <!--  Set HorizontalOptions="Fill" above to catch input on whole row  -->
+
+    <draw:SkiaLayout
+        HeightRequest="24"
+        LockRatio="1"
+        VerticalOptions="Center"
+        WidthRequest="24">
+
+        <draw:SkiaShape
+            BackgroundColor="{x:StaticResource ColorPrimary}"
+            HorizontalOptions="Fill"
+            StrokeColor="{x:StaticResource ColorPrimaryDark}"
+            StrokeWidth="2"
+            Type="Circle"
+            VerticalOptions="Fill" />
+
+        <draw:SkiaShape
+            BackgroundColor="{x:StaticResource ColorAccent}"
+            HorizontalOptions="Center"
+            LockRatio="1"
+            Tag="On"
+            Type="Circle"
+            VerticalOptions="Center"
+            WidthRequest="12" />
+
+    </draw:SkiaLayout>
+
+    <draw:SkiaLabel
+        Margin="32,0,0,0"
+        FontSize="14"
+        LineBreakMode="WordWrap"
+        MaxLines="2"
+        Tag="Text"
+        VerticalOptions="Center" />
+
+</draw:SkiaRadioButton>
+

@@ -10,6 +10,8 @@ public class SkiaLabelFps : SkiaLabel, ISkiaAnimator
         WillNotUpdateParent = true;
 
         Tag = "FPS";
+        Format = "FPS {0}";
+        MonoForDigits = "8";
         MaxLines = 1;
         BackgroundColor = Colors.Black;
         TextColor = Colors.LimeGreen;
@@ -88,7 +90,7 @@ public class SkiaLabelFps : SkiaLabel, ISkiaAnimator
         if (Superview == null)
             return;
 
-        Text = $"FPS: {Superview.FPS:00.0}";
+        Text = $"{Superview.FPS:00.0}";
 
         UpdateForceRefresh();
  

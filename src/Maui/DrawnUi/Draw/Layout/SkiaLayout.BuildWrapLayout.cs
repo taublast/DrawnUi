@@ -107,8 +107,7 @@ public partial class SkiaLayout
                 if (!_layout.IsTemplated)
                 {
                     var layoutMaxHeight = float.IsFinite(rectFitChild.Height) ? rectFitChild.Height : maxHeight;
-                    var layoutHeight = _layout.VerticalOptions == LayoutOptions.Fill
-                        ? layoutMaxHeight : maxHeight;
+                    var layoutHeight = _layout.NeedFillY ? layoutMaxHeight : maxHeight;
 
                     foreach (var controlInStack in CollectionsMarshal.AsSpan(cellsToLayoutLater))
                     {
@@ -269,6 +268,7 @@ public partial class SkiaLayout
 
                 ScaledSize measured;
 
+                //will use dynamically changing rectFitChild
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 ScaledSize MeasureCellInternal()
                 {
@@ -305,6 +305,17 @@ public partial class SkiaLayout
                     //non-templated
                     //return MeasureAndArrangeCell(rectFitChild, cell, child, scale);
                     return MeasureCell(rectFitChild, cell, child, scale);
+                }
+
+                //we know we will not fit in advance
+                if (child.WidthRequestWithMargins * scale > rectFitChild.Width)
+                {
+                    BreakRow();
+                    remainingSize = rectForChild.Width;
+                    if (useFixedSplitSize)
+                    {
+                        remainingSize = rectFitChild.Width;
+                    }
                 }
 
                 measured = MeasureCellInternal();
@@ -349,14 +360,7 @@ public partial class SkiaLayout
                 FinalizeRow(maxHeight);
             }
 
-            if (_layout.InitializeTemplatesInBackgroundDelay > 0)
-            {
-                _layout.StackStructure = structure;
-            }
-            else
-            {
-                _layout.StackStructureMeasured = structure;
-            }
+            _layout.StackStructureMeasured = structure;
 
             if (_layout.HorizontalOptions.Alignment == LayoutAlignment.Fill && _layout.WidthRequest < 0)
             {

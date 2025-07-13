@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
+      <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
       <PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NSubstitute" Version="5.1.0" />

@@ -20,6 +20,32 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         set { SetValue(CornerRadiusProperty, value); }
     }
 
+    public static readonly BindableProperty BevelProperty = BindableProperty.Create(
+    nameof(Bevel),
+    typeof(SkiaBevel),
+    typeof(SkiaButton),
+    null,
+    propertyChanged: NeedApplyProperties);
+
+    public SkiaBevel Bevel
+    {
+        get { return (SkiaBevel)GetValue(BevelProperty); }
+        set { SetValue(BevelProperty, value); }
+    }
+
+    public static readonly BindableProperty BevelTypeProperty = BindableProperty.Create(
+    nameof(BevelType),
+    typeof(BevelType),
+    typeof(SkiaButton),
+    BevelType.None,
+    propertyChanged: NeedApplyProperties);
+
+    public BevelType BevelType
+    {
+        get { return (BevelType)GetValue(BevelTypeProperty); }
+        set { SetValue(BevelTypeProperty, value); }
+    }
+
     protected Color InitialBackgroundColor;
     protected Brush InitialBackground;
 

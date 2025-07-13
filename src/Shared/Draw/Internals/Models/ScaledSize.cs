@@ -17,7 +17,6 @@ public struct RangeF
 }
 
 
-
 public class ScaledSize
 {
     public ScaledSize()

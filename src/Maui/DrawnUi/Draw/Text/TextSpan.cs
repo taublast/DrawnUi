@@ -61,7 +61,9 @@ public class TextSpan : Element, IDisposable //we subclassed Element to be able 
     {
         Glyphs = SkiaLabel.GetGlyphs(Text, TypeFace);
 
-        var sb = new StringBuilder(Text.Length); // Pre-allocate based on input length
+        // Use pooled StringBuilder to avoid allocation
+        var sb = SkiaLabel.ObjectPools.GetStringBuilder();
+        sb.EnsureCapacity(Text.Length); // Pre-allocate based on input length
 
         foreach (var glyph in Glyphs)
         {
@@ -92,6 +94,8 @@ public class TextSpan : Element, IDisposable //we subclassed Element to be able 
         }
 
         TextFiltered = sb.ToString();
+        // Return StringBuilder to pool
+        SkiaLabel.ObjectPools.ReturnStringBuilder(sb);
     }
 
 

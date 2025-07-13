@@ -6,11 +6,16 @@
     /// </summary>
     /// <param name="Control"></param>
     /// <param name="Rect"></param>
+    /// <param name="HitRect"></param>
     /// <param name="Index"></param>
+    /// <param name="FreezeIndex"></param>
+    /// <param name="FreezeBindingContext"></param>
     public record SkiaControlWithRect(SkiaControl Control,
         SKRect Rect,
         SKRect HitRect,
-        int Index);
+        int Index,
+        int FreezeIndex,
+        object FreezeBindingContext);
 
 
     public interface IRenderObject

@@ -4,6 +4,15 @@ namespace DrawnUi.Extensions;
 
 public static partial class InternalExtensions
 {
+    /// <summary>
+    /// Radians to degrees
+    /// </summary>
+    /// <param name="radians"></param>
+    /// <returns></returns>
+    public static float ToDegrees(this float radians)
+    {
+        return radians * 180f / (float)Math.PI;
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IntersectsWith(this SKRect rect, SKRect with, SKPoint offset)

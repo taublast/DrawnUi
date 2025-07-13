@@ -118,6 +118,7 @@
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Fill">
 
+                                <!--CONTENT-->
                                 <draw:SkiaLayout>
 
                                     <draw:SkiaBackdrop

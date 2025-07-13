@@ -22,10 +22,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Compile Remove="Shared/**/*.*pple.cs" />
         <None Include="Shared/**/*.*pple.cs" />
     </ItemGroup>
@@ -44,6 +40,10 @@
 
     <ItemGroup>
       <Folder Include="Platforms\iOS\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
     </ItemGroup>
 
 

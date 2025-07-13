@@ -19,7 +19,7 @@
                 <Setter Property="TextColor" Value="DarkBlue" />
                 <Setter Property="BackgroundColor" Value="#11000000" />
                 <Setter Property="FontSize" Value="20" />
-                <Setter Property="FontFamily" Value="OpenSansRegular" />
+                <Setter Property="FontFamily" Value="FontText" />
                 <Setter Property="Opacity" Value="0.75" />
             </Style>
 
@@ -75,7 +75,7 @@
 
                     <draw:SkiaLabel
                         BackgroundColor="#22000000"
-                        FontFamily="OpenSansRegular"
+                        FontFamily="FontText"
                         FontSize="16"
                         Opacity="0.85"
                         Text=" SkiaLabel "
@@ -93,7 +93,7 @@
                     <!--  SOME SPANS DEFINED  -->
                     <draw:SkiaLabel
                         FallbackCharacter="?"
-                        FontFamily="OpenSansRegular"
+                        FontFamily="FontText"
                         FontSize="15"
                         HorizontalOptions="Fill"
                         HorizontalTextAlignment="Start"
@@ -110,7 +110,7 @@
                         <draw:TextSpan Text="span can be made " />
 
                         <draw:TextSpan
-                            FontFamily="OpenSansRegular"
+                            FontFamily="FontText"
                             FontSize="15"
                             IsItalic="True"
                             Tag="The Tappable One"
@@ -170,30 +170,30 @@
 
                     <draw:SkiaLabel
                         BackgroundColor="#22000000"
-                        FontFamily="OpenSansRegular"
+                        FontFamily="FontText"
                         FontSize="16"
                         Opacity="0.85"
-                        Text=" SkiaMarkdownLabel "
+                        Text=" SkiaRichLabel "
                         TextColor="DarkBlue" />
 
 
                     <!--  AUTO-SPANS  -->
-                    <draw:SkiaMarkdownLabel
+                    <draw:SkiaRichLabel
                         x:Name="TestMarkdown"
                         BackgroundColor="Transparent"
-                        FontFamily="OpenSansRegular"
+                        FontFamily="FontText"
                         FontSize="14"
                         HorizontalOptions="Fill"
                         HorizontalTextAlignment="Start"
                         LineSpacing="1.5"
                         LinkColor="Purple"
                         LinkTapped="HandleLinkTapped"
-                        Text="~~Just put~~ a simple markdown string and this control will ***auto-split*** it into spans. It will recognize links _[a link](https://firstlink.app)_ rendered with ___SkiaMarkdownLabel___ Here it auto-created a span for 🚀🐴🤖👻 and switched back. _[More info..](https://moreinfo.app)_. Subclass this control or consume LinkTappedCommand property or LinkTapped event handler to react to taps."
+                        Text="~~Just put~~ a simple markdown string and this control will ***auto-split*** it into spans. It will recognize links _[a link](https://firstlink.app)_ rendered with ___SkiaRichLabel___ Here it auto-created a span for 🚀🐴🤖👻 and switched back. _[More info..](https://moreinfo.app)_. Subclass this control or consume LinkTappedCommand property or LinkTapped event handler to react to taps."
                         TextColor="Black" />
 
 
                     <!--  WILL ALSO AUTODETECT RTL AND SHAPED  -->
-                    <draw:SkiaMarkdownLabel
+                    <draw:SkiaRichLabel
                         BackgroundColor="#08000000"
                         FontSize="12"
                         HorizontalOptions="Fill"

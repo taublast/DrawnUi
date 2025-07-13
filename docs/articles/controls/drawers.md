@@ -111,89 +111,194 @@ The drawer typically consists of two main parts:
 
 The `HeaderSize` property determines how much of the drawer remains visible when closed.
 
-### Controlling the Drawer
+### Programmatic Control
 
-You can control the drawer programmatically:
+SkiaDrawer provides multiple ways to control the drawer programmatically through bindable properties and built-in commands.
+
+#### Bindable Properties
+
+All key properties support data binding for dynamic control:
+
+```xml
+<draw:SkiaDrawer
+    x:Name="Drawer"
+    Direction="FromBottom"
+    HeaderSize="{Binding DrawerHeaderSize}"
+    HeightRequest="500"
+    HorizontalOptions="Fill"
+    IsOpen="{Binding IsOpen, Mode=TwoWay}"
+    VerticalOptions="End">
+    <!-- Content -->
+</draw:SkiaDrawer>
+```
+
+**ViewModel Example:**
+```csharp
+public class DrawerViewModel : INotifyPropertyChanged
+{
+    private bool _isOpen;
+    private double _drawerHeaderSize = 60;
+
+    public bool IsOpen
+    {
+        get => _isOpen;
+        set
+        {
+            _isOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public double DrawerHeaderSize
+    {
+        get => _drawerHeaderSize;
+        set
+        {
+            _drawerHeaderSize = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Toggle drawer from code
+    public void ToggleDrawer()
+    {
+        IsOpen = !IsOpen;
+    }
+}
+```
+
+#### Built-in Commands
+
+SkiaDrawer provides convenient commands for common operations:
+
+```xml
+<!-- Command buttons -->
+<draw:SkiaButton
+    Text="Open Drawer"
+    CommandTapped="{Binding Source={x:Reference Drawer}, Path=CommandOpen}" />
+
+<draw:SkiaButton
+    Text="Close Drawer"
+    CommandTapped="{Binding Source={x:Reference Drawer}, Path=CommandClose}" />
+
+<draw:SkiaButton
+    Text="Toggle Drawer"
+    CommandTapped="{Binding Source={x:Reference Drawer}, Path=CommandToggle}" />
+```
+
+**Available Commands:**
+- `CommandOpen` - Opens the drawer
+- `CommandClose` - Closes the drawer
+- `CommandToggle` - Toggles the drawer state
+
+#### Code-Behind Control
+
+You can also control the drawer directly from code-behind:
 
 ```csharp
-// Open the drawer
-myDrawer.IsOpen = true;
+// Direct property access
+Drawer.IsOpen = true;
+Drawer.HeaderSize = 80;
 
-// Close the drawer
-myDrawer.IsOpen = false;
-
-// Toggle the drawer
-myDrawer.IsOpen = !myDrawer.IsOpen;
+// Using commands
+Drawer.CommandOpen.Execute(null);
+Drawer.CommandClose.Execute(null);
+Drawer.CommandToggle.Execute(null);
 ```
 
-You can also use binding:
+### SkiaScroll inside SkiaDrawer Pattern
+
+A common and powerful pattern is embedding a `SkiaScroll` inside a `SkiaDrawer`. This allows for scrollable content within the drawer while maintaining proper gesture handling. When the scroll reaches its bounds, the drawer responds to gestures.
+
+**Key Benefits:**
+- Smooth gesture coordination between scroll and drawer
+- Non-bouncing scroll setup allows drawer to respond when scroll reaches limits
+- Perfect for content that exceeds drawer height
 
 ```xml
-<DrawUi:SkiaDrawer
-    IsOpen="{Binding IsDrawerOpen, Mode=TwoWay}">
-    <!-- Content -->
-</DrawUi:SkiaDrawer>
-```
-
-### Commands
-
-SkiaDrawer provides built-in commands for programmatic control:
-
-```xml
-<DrawUi:SkiaButton
-    Text="Open Drawer"
-    CommandTapped="{Binding Source={x:Reference MyDrawer}, Path=CommandOpen}" />
-    
-<DrawUi:SkiaButton
-    Text="Close Drawer"
-    CommandTapped="{Binding Source={x:Reference MyDrawer}, Path=CommandClose}" />
-    
-<DrawUi:SkiaButton
-    Text="Toggle Drawer"
-    CommandTapped="{Binding Source={x:Reference MyDrawer}, Path=CommandToggle}" />
-```
-
-### Scrollable Drawer Content
-
-For scrollable content within the drawer, combine with SkiaScroll:
-
-```xml
-<DrawUi:SkiaDrawer
-    x:Name="BottomDrawer"
+<draw:SkiaDrawer
+    x:Name="Drawer"
     Direction="FromBottom"
     HeaderSize="60"
     HeightRequest="500"
+    HorizontalOptions="Fill"
+    IsOpen="{Binding IsOpen, Mode=TwoWay}"
     VerticalOptions="End">
-    
-    <DrawUi:SkiaLayout>
-        <!-- Header -->
-        <DrawUi:SkiaShape
-            BackgroundColor="Blue"
+
+    <draw:SkiaLayout
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
+        <!-- Header (drag handle area) -->
+        <draw:SkiaShape
+            BackgroundColor="Red"
+            CornerRadius="20,20,0,0"
             HeightRequest="60"
-            CornerRadius="20,20,0,0">
-            <!-- Header content -->
-        </DrawUi:SkiaShape>
-        
-        <!-- Scrollable content -->
-        <DrawUi:SkiaScroll
+            HorizontalOptions="Fill">
+
+            <draw:SkiaLabel
+                Margin="16,0"
+                FontSize="14"
+                HorizontalOptions="Center"
+                Text="Drag Me"
+                TextColor="White"
+                VerticalOptions="Center" />
+
+        </draw:SkiaShape>
+
+        <!-- Scrollable content area -->
+        <draw:SkiaScroll
             AddMarginTop="60"
+            BackgroundColor="Gainsboro"
             Bounces="False"
-            BackgroundColor="White">
-            
-            <DrawUi:SkiaLayout
-                Type="Column"
-                Padding="20"
-                Spacing="16">
-                <!-- Many items here -->
-            </DrawUi:SkiaLayout>
-            
-        </DrawUi:SkiaScroll>
-    </DrawUi:SkiaLayout>
-    
-</DrawUi:SkiaDrawer>
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <draw:SkiaLayout
+                Margin="2"
+                HorizontalOptions="Fill"
+                Spacing="24"
+                Type="Column">
+
+                <draw:SkiaLabel
+                    Margin="24"
+                    HorizontalOptions="Center"
+                    Text="A SkiaScroll can be embedded inside a SkiaDrawer, in case of a non-bouncing setup the drawer would respond to gestures and scroll when the internal scroll reaches its bounds." />
+
+                <draw:SkiaShape
+                    BackgroundColor="LightGoldenrodYellow"
+                    HeightRequest="80"
+                    HorizontalOptions="Center"
+                    LockRatio="1"
+                    Type="Circle" />
+
+                <draw:SkiaShape
+                    BackgroundColor="Aquamarine"
+                    HeightRequest="300"
+                    HorizontalOptions="Center"
+                    WidthRequest="50" />
+
+                <draw:SkiaShape
+                    BackgroundColor="Goldenrod"
+                    HeightRequest="80"
+                    HorizontalOptions="Center"
+                    LockRatio="1"
+                    Type="Circle" />
+
+                <!-- Add more content to demonstrate scrolling -->
+
+            </draw:SkiaLayout>
+
+        </draw:SkiaScroll>
+    </draw:SkiaLayout>
+
+</draw:SkiaDrawer>
 ```
 
-The `AddMarginTop` property on SkiaScroll helps create space for the header.
+**Important Notes:**
+- Set `Bounces="False"` on SkiaScroll for proper gesture coordination
+- Use `AddMarginTop` to account for header space
+- The drawer will respond to gestures when scroll reaches its bounds
 
 ## Examples
 

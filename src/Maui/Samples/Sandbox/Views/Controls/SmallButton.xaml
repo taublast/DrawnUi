@@ -26,13 +26,15 @@
         Tag="MainFrame"
         VerticalOptions="Fill" />
 
-    <!--  we could put text inside shape btw..  -->
+    <!--  we could put text inside shape btw.. fontgame is not vertically aligned by font author so we add margin -->
     <draw:SkiaLabel
         HorizontalOptions="Center"
         Style="{x:StaticResource SkiaLabelDefaultStyle}"
         Tag="MainLabel"
         FontFamily="FontGame"
         TextColor="White"
+        LineHeight="1.0"
+        Margin="0,0,0,2"
         VerticalOptions="Center" />
 
 </draw:SkiaButton>

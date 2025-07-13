@@ -58,20 +58,32 @@ public partial class WinCanvasHandler : ViewHandler<ISKCanvasView, SKXamlCanvas>
     }
 
     // Mapper actions / properties
-
     public static void OnInvalidateSurface(WinCanvasHandler handler, ISKCanvasView canvasView, object? args)
     {
-        handler.PlatformView.Invalidate();
+        if (handler?.PlatformView == null)
+            return;
+
+        try
+        {
+            handler.PlatformView.Invalidate();
+        }
+        catch (Exception e)
+        {
+            Super.Log(e);
+        }
     }
 
     public static void MapIgnorePixelScaling(WinCanvasHandler handler, ISKCanvasView canvasView)
     {
+        if (handler?.PlatformView == null)
+            return;
+
         handler.PlatformView.IgnorePixelScaling = canvasView.IgnorePixelScaling;
     }
 
     public static void MapEnableTouchEvents(WinCanvasHandler handler, ISKCanvasView canvasView)
     {
-        if (handler.PlatformView == null)
+        if (handler?.PlatformView == null)
             return;
 
     }

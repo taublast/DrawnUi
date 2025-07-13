@@ -31,13 +31,13 @@
                     BackgroundColor="DarkSlateGrey"
                     HorizontalOptions="Fill"
                     Spacing="20"
-                    Tag="VStack"
+                    Tag="SkiaStack"
                     Type="Column"
                     UseCache="None">
 
-                    <draw:SkiaMarkdownLabel
+                    <draw:SkiaRichLabel
                         Margin="16,0"
-                        FontFamily="OpenSansRegular"
+                        FontFamily="FontText"
                         FontSize="15"
                         HorizontalOptions="Center"
                         HorizontalTextAlignment="Center"

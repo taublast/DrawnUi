@@ -19,6 +19,7 @@
 		Brightness,
 		Gamma,
 		TSL,
-		HSL
+		HSL,
+        Custom
 	}
 }

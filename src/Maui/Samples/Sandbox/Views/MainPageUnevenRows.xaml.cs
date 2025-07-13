@@ -68,5 +68,18 @@
         {
 
         }
+
+        private void SkiaControl_OnTapped(object sender, SkiaControl.ControlTappedEventArgs e)
+        {
+            //refresh, will not change scroll position
+            //StackCells.ApplyItemsSource();
+
+            if (BindingContext is MockChatViewModel vm)
+            {
+                var items = vm.Items.Skip(2).ToList(); //new "copy"
+                StackCells.ItemsSource = items;
+            }
+
+        }
     }
 }

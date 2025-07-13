@@ -4,6 +4,11 @@ using SkiaControl = DrawnUi.Draw.SkiaControl;
 
 namespace DrawnUi.Controls;
 
+/// <summary>
+/// A specialized scroll control designed for creating swipeable carousels with automatic snapping to items.
+/// Supports data binding through ItemsSource and ItemTemplate, peek effects with SidesOffset, and smooth transitions.
+/// Ideal for image galleries, tab interfaces, and any swipeable content display.
+/// </summary>
 public class SkiaCarousel : SnappingLayout
 {
     public SkiaCarousel()
@@ -288,8 +293,10 @@ public class SkiaCarousel : SnappingLayout
                             cell.Drawn.Bottom);
                         tree.Add(new SkiaControlWithRect(view,
                             destinationRect,
-                            view.LastDrawnAt,
-                            cell.ControlIndex));
+                            view.DrawingRect,
+                            cell.ControlIndex,
+                            -1, // Default freeze index
+                            view.BindingContext)); // Capture current binding context
                     }
                 }
             }
@@ -1306,6 +1313,11 @@ public class SkiaCarousel : SnappingLayout
         if (!IsUserPanning || !RespondsToGestures || args.Type == TouchActionResult.Tapped)
         {
             consumed = PassToChildren();
+            if (consumed == this)
+            {
+                //BlockGesturesBelow fired
+                consumed = null;
+            }
             if (consumed != null)
             {
                 return consumed;
@@ -1433,10 +1445,7 @@ public class SkiaCarousel : SnappingLayout
 
         if (!passedToChildren)
         {
-            consumed = PassToChildren();
-            if (consumed == null)
-                return consumedDefault;
-            return consumed;
+            return PassToChildren();
         }
 
         return consumedDefault;

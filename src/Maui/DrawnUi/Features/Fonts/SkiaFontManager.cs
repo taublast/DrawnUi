@@ -69,7 +69,7 @@ public partial class SkiaFontManager
         }
     }
 
-    public static bool ThrowIfFailedToCreateFont = true;
+    public static bool ThrowIfFailedToCreateFont;
     static SKFontManager _SKFontManager;
 
     public static SKFontManager Manager
@@ -136,7 +136,7 @@ public partial class SkiaFontManager
         return codePoints;
     }
 
-#if (!ANDROID && !IOS && !MACCATALYST && !WINDOWS && !TIZEN)
+#if (!ONPLATFORM)
 
     public SKTypeface GetFont(string alias)
     {

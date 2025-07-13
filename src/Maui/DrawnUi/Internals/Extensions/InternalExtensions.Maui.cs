@@ -4,10 +4,8 @@ namespace DrawnUi.Extensions;
 
 public static partial class InternalExtensions
 {
-
     #region MAUI CONTEXT
 
- 
     public static IMauiContext? FindMauiContext(this Element element, bool fallbackToAppMauiContext = false)
     {
         if (element is IElement fe && fe.Handler?.MauiContext != null)
@@ -38,16 +36,6 @@ public static partial class InternalExtensions
 
     #endregion
 
-    /// <summary>
-    /// Radians to degrees
-    /// </summary>
-    /// <param name="radians"></param>
-    /// <returns></returns>
-    public static float ToDegrees(this float radians)
-    {
-        return radians * 180f / (float)Math.PI;
-    }
-
     public static SkiaShadow FromPlatform(this object platform)
     {
         if (platform is Shadow shadow)
@@ -62,6 +50,7 @@ public static partial class InternalExtensions
                 BindingContext = shadow.BindingContext
             };
         }
+
         return null;
     }
 
@@ -108,8 +97,8 @@ public static partial class InternalExtensions
 
     private static SKPath ConvertEllipseGeometry(EllipseGeometry ellipseGeometry, SKPath path, float scale)
     {
-
-        var rect = new SKRect(0, 0, (float)(ellipseGeometry.RadiusX * 2 * scale), (float)(ellipseGeometry.RadiusY * 2 * scale));
+        var rect = new SKRect(0, 0, (float)(ellipseGeometry.RadiusX * 2 * scale),
+            (float)(ellipseGeometry.RadiusY * 2 * scale));
         path.AddOval(rect);
         return path;
     }
@@ -121,7 +110,6 @@ public static partial class InternalExtensions
 
     private static SKPath ConvertLineGeometry(LineGeometry lineGeometry, SKPath path, float scale)
     {
-
         path.MoveTo(lineGeometry.StartPoint.ToSKPoint(scale));
         path.LineTo(lineGeometry.EndPoint.ToSKPoint(scale));
         return path;
@@ -129,7 +117,6 @@ public static partial class InternalExtensions
 
     private static SKPath ConvertRectangleGeometry(RectangleGeometry rectangleGeometry, SKPath path, float scale)
     {
-
         var rect = rectangleGeometry.Rect.ToSKRect(scale);
         path.AddRect(rect);
         return path;
@@ -137,8 +124,6 @@ public static partial class InternalExtensions
 
     private static SKPath ConvertPathGeometry(PathGeometry pathGeometry, SKPath path, float scale)
     {
-
-
         foreach (var figure in pathGeometry.Figures)
         {
             if (figure.StartPoint != null)
@@ -164,6 +149,7 @@ public static partial class InternalExtensions
                         {
                             path.LineTo(point.ToSKPoint(scale));
                         }
+
                         break;
 
                     case PolyBezierSegment polyBezierSegment:
@@ -174,6 +160,7 @@ public static partial class InternalExtensions
                                 polyBezierSegment.Points[i + 1].ToSKPoint(scale),
                                 polyBezierSegment.Points[i + 2].ToSKPoint(scale));
                         }
+
                         break;
 
                     default:
@@ -189,6 +176,4 @@ public static partial class InternalExtensions
 
         return path;
     }
-
 }
-

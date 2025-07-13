@@ -4,12 +4,15 @@ Normally other partial code definitions should be framework independent.
 */
 
 using System.Collections;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.HotReload;
 using IContainer = Microsoft.Maui.IContainer;
 
 namespace DrawnUi.Draw
 {
     [ContentProperty(nameof(Children))]
     public partial class SkiaControl : VisualElement,
+        //IHotReloadableView, IReloadHandler, // to support New HotReload
         IVisualTreeElement, // to support VS HotReload
         IContainer // to support VS HotReload full page reload mode
     {
@@ -171,6 +174,15 @@ namespace DrawnUi.Draw
         public static Color BlackColor = Colors.Black;
         public static Color RedColor = Colors.Red;
 
+        public static Color GetRandomColor()
+        {
+            byte r = (byte)Random.Next(256);
+            byte g = (byte)Random.Next(256);
+            byte b = (byte)Random.Next(256);
+
+            return Color.FromRgb(r, g, b);
+        }
+
         public virtual PrebuiltControlStyle UsingControlStyle
         {
             get
@@ -279,12 +291,19 @@ namespace DrawnUi.Draw
         {
             if (control == null)
                 return;
+
             control.SetParent(this);
 
             OnChildAdded(control);
 
             if (Debugger.IsAttached)
                 Superview?.PostponeExecutionAfterDraw(() => { ReportHotreloadChildAdded(control); });
+
+            //if (control is IHotReloadableView ihr)
+            //{
+            //    ihr.ReloadHandler = this;
+            //    MauiHotReloadHelper.AddActiveView(ihr);
+            //}
         }
 
         public virtual void RemoveSubView(SkiaControl control)
@@ -426,5 +445,28 @@ namespace DrawnUi.Draw
         {
             return (float)Super.Screen.Density;
         }
+
+        /*
+        #region HotReload
+
+        IView IReplaceableView.ReplacedView =>
+            MauiHotReloadHelper.GetReplacedView(this) ?? this;
+
+        public void TransferState(IView newView)
+        {
+            //TODO: could hotreload the ViewModel
+            if (newView is BindableObject v)
+                v.BindingContext = BindingContext;
+        }
+
+        public virtual void Reload()
+        {
+            Invalidate();
+        }
+
+        public IReloadHandler ReloadHandler { get; set; }
+
+        #endregion
+        */
     }
 }

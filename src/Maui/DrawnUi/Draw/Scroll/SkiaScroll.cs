@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using DrawnUi.Extensions;
 using DrawnUi.Infrastructure.Helpers;
 
 namespace DrawnUi.Draw
@@ -56,8 +57,9 @@ namespace DrawnUi.Draw
         {
             if (LayoutReady && TrackIndexPosition != RelativePositionType.None)
             {
-                CurrentIndexHit = CalculateVisibleIndex(TrackIndexPosition);
-                CurrentIndex = CurrentIndexHit.Index;
+                CalculateVisibleIndexes();
+                //CurrentIndexHit = CalculateVisibleIndex(TrackIndexPosition);
+                //CurrentIndex = CurrentIndexHit.Index;
             }
         }
 
@@ -834,7 +836,10 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Use this to control how fast the scroll will decelerate. Values 0.1 - 0.9 are the best, default is 0.3. Usually you would set higher friction for ScrollView-like scrolls and much lower for CollectionView-like scrolls (0.1 or 0.2).
+        /// Use this to control how fast the scroll will decelerate.
+        /// Values 0.1 - 0.9 are the best, default is 0.3.
+        /// Usually you would set higher friction for ScrollView-like scrolls and much lower for CollectionView-like scrolls (0.1 or 0.2).
+        /// For a picker: 05 - 0.9.
         /// </summary>
         public float FrictionScrolled
         {
@@ -979,6 +984,36 @@ namespace DrawnUi.Draw
             }
         }
 
+        public int FirstVisibleIndex    
+        {
+            get => firstVisibleIndex;
+            set
+            {
+                if (value == firstVisibleIndex)
+                {
+                    return;
+                }
+
+                firstVisibleIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int LastVisibleIndex 
+        {
+            get => lastVisibleIndex;
+            set
+            {
+                if (value == lastVisibleIndex)
+                {
+                    return;
+                }
+
+                lastVisibleIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event EventHandler<int> IndexChanged;
 
         public ContainsPointResult CurrentIndexHit
@@ -1000,7 +1035,9 @@ namespace DrawnUi.Draw
         {
         }
 
-        protected SKPoint DetectIndexChildIndexAt;
+        protected SKPoint DetectIndexChildStartAt;
+        protected SKPoint DetectIndexChildAt;
+        protected SKPoint DetectIndexChildEndAt;
 
         protected virtual void SetDetectIndexChildPoint(RelativePositionType option = RelativePositionType.Start)
         {
@@ -1010,13 +1047,16 @@ namespace DrawnUi.Draw
                 return;
 
             var point = new SKPoint();
-
+            var pointStart = new SKPoint();
+            var pointEnd = new SKPoint();
 
             if (this.Orientation == ScrollOrientation.Vertical)
             {
                 var endY = this.Viewport.Pixels.Height;
-                if (this.Content.MeasuredSize.Pixels.Height < endY)
-                    endY = this.Content.MeasuredSize.Pixels.Height;
+                //if (this.Content.MeasuredSize.Pixels.Height < endY)
+                //    endY = this.Content.MeasuredSize.Pixels.Height;
+
+                pointEnd.Y = endY;
 
                 if (option == RelativePositionType.End)
                 {
@@ -1028,12 +1068,16 @@ namespace DrawnUi.Draw
                 }
 
                 point.X = this.Viewport.Pixels.MidX;
+                pointStart.X = point.X;
+                pointEnd.X = point.X;
             }
             else if (this.Orientation == ScrollOrientation.Horizontal)
             {
                 var endX = this.Viewport.Pixels.Width;
-                if (this.Content.MeasuredSize.Pixels.Width < endX)
-                    endX = this.Content.MeasuredSize.Pixels.Width;
+                //if (this.Content.MeasuredSize.Pixels.Width < endX)
+                //    endX = this.Content.MeasuredSize.Pixels.Width;
+
+                pointEnd.X = endX;
 
                 if (option == RelativePositionType.End)
                 {
@@ -1045,11 +1089,15 @@ namespace DrawnUi.Draw
                 }
 
                 point.Y = this.Viewport.Pixels.MidY;
+                pointStart.Y = point.Y;
+                pointEnd.Y = point.Y;
             }
 
             //Debug.WriteLine($"[POINT] V {Viewport.Pixels.Bottom} P {point.Y}");
 
-            DetectIndexChildIndexAt = point;
+            DetectIndexChildStartAt = pointStart;
+            DetectIndexChildEndAt = pointEnd;
+            DetectIndexChildAt = point;
         }
 
         /// <summary>
@@ -1069,8 +1117,8 @@ namespace DrawnUi.Draw
             else if (Content is ILayoutInsideViewport inside)
             {
                 var point = new SKPoint(
-                    DetectIndexChildIndexAt.X + InternalViewportOffset.Pixels.X + DrawingRect.Left,
-                    DetectIndexChildIndexAt.Y + InternalViewportOffset.Pixels.Y + DrawingRect.Top);
+                    DetectIndexChildAt.X + InternalViewportOffset.Pixels.X + DrawingRect.Left,
+                    DetectIndexChildAt.Y + InternalViewportOffset.Pixels.Y + DrawingRect.Top);
 
                 var found = inside.GetVisibleChildIndexAt(point);
 
@@ -1093,6 +1141,125 @@ namespace DrawnUi.Draw
             }
 
             return ContainsPointResult.NotFound();
+        }
+
+        /// <summary>
+        /// Will calculate first/last visible and current index, if tracked with TrackIndexPosition.
+        /// </summary>
+        /// <param name="option"></param>
+        public virtual void CalculateVisibleIndexes()
+        {
+            if (Content is SkiaLayout layout)
+            {
+                var pixelsOffsetX =
+                    InternalViewportOffset.Pixels.X;  
+                var pixelsOffsetY =
+                    InternalViewportOffset.Pixels.Y; 
+
+                var points = GetVisibleIndexes(layout, pixelsOffsetX, pixelsOffsetY);
+
+                CurrentIndexHit = points.Current;
+                CurrentIndex = points.Current.Index;
+                FirstVisibleIndex = points.Start.Index;
+                LastVisibleIndex = points.End.Index;
+            }
+            else if (Content is ILayoutInsideViewport inside)
+            {
+                var point = new SKPoint(
+                    DetectIndexChildAt.X + InternalViewportOffset.Pixels.X + DrawingRect.Left,
+                    DetectIndexChildAt.Y + InternalViewportOffset.Pixels.Y + DrawingRect.Top);
+
+                var current = inside.GetVisibleChildIndexAt(point);
+
+                if (current.Index != -1)
+                {
+                    //todo translate found
+                    var area = current.Area;
+                    area.Offset(-DrawingRect.Left, -DrawingRect.Top);
+                    point.Offset(-DrawingRect.Left, -DrawingRect.Top);
+                    var currentPoint = new ContainsPointResult()
+                    {
+                        Index = current.Index,
+                        Area = area,
+                        Point = point,
+                        Unmodified = new(InternalViewportOffset.Pixels.X, InternalViewportOffset.Pixels.Y)
+                    };
+                    CurrentIndexHit = currentPoint;
+                    CurrentIndex = currentPoint.Index;
+                }
+            }
+        }
+
+        public virtual (ContainsPointResult Current, ContainsPointResult Start, ContainsPointResult End)
+            GetVisibleIndexes(SkiaLayout layout, float pixelsOffsetX, float pixelsOffsetY)
+        {
+            ContainsPointResult currentResult = ContainsPointResult.NotFound();
+            ContainsPointResult startResult = ContainsPointResult.NotFound();
+            ContainsPointResult endResult = ContainsPointResult.NotFound();
+
+            if (layout.LatestStackStructure != null)
+            {
+                bool trace = false;
+
+
+                var current = this.DetectIndexChildAt;
+                var end = this.DetectIndexChildEndAt;
+                var start = this.DetectIndexChildStartAt;
+
+                var offset = new SKPoint(Math.Abs(pixelsOffsetX), Math.Abs(pixelsOffsetY));
+                current.Offset(offset);
+                start.Offset(offset);
+                end.Offset(offset);
+
+                if (this.Orientation == ScrollOrientation.Vertical || this.Orientation == ScrollOrientation.Horizontal)
+                {
+                    if (layout.Type == LayoutType.Column || layout.Type == LayoutType.Row ||
+                        layout.Type == LayoutType.Wrap && layout.Split > 0) //todo grid
+                    {
+                        var stackStructure = layout.LatestStackStructure;
+                        int index = -1;
+
+                        foreach (var childInfo in stackStructure.GetChildren())
+                        {
+                            index++;
+                            if (childInfo.Destination.ContainsInclusive(current))
+                            {
+                                currentResult = new ContainsPointResult()
+                                {
+                                    Index = index,
+                                    Area = childInfo.Destination,
+                                    Point = current,
+                                    Unmodified = new SKPoint(0, pixelsOffsetY)
+                                };
+                            }
+
+                            if (childInfo.Destination.ContainsInclusive(start))
+                            {
+                                startResult = new ContainsPointResult()
+                                {
+                                    Index = index,
+                                    Area = childInfo.Destination,
+                                    Point = start,
+                                    Unmodified = new SKPoint(0, pixelsOffsetY)
+                                };
+                            }
+
+                            if (childInfo.Destination.ContainsInclusive(end))
+                            {
+                                endResult = new ContainsPointResult()
+                                {
+                                    Index = index,
+                                    Area = childInfo.Destination,
+                                    Point = end,
+                                    Unmodified = new SKPoint(0, pixelsOffsetY)
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+
+            return (currentResult, startResult, endResult);
         }
 
         public virtual ContainsPointResult GetItemIndex(SkiaLayout layout, float pixelsOffsetX, float pixelsOffsetY,
@@ -1235,6 +1402,7 @@ namespace DrawnUi.Draw
 
             return ContainsPointResult.NotFound();
         }
+
 
         protected virtual SKPoint ClampedOrderedScrollOffset(SKPoint scrollTo)
         {
@@ -2643,7 +2811,7 @@ namespace DrawnUi.Draw
         {
             base.ApplyBindingContext();
 
-            if (Content?.BindingContext == null)
+            if (Content != null && Content?.BindingContext == null)
                 Content?.SetInheritedBindingContext(BindingContext);
         }
 
@@ -3002,6 +3170,8 @@ namespace DrawnUi.Draw
         private double _parallaxComputedValue;
         private float _offsetMoved;
         private long _offsetMovedTime;
+        private int firstVisibleIndex;
+        private int lastVisibleIndex;
 
         protected virtual void OnDrawn(DrawingContext context)
         {

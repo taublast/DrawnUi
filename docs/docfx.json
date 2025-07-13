@@ -4,7 +4,7 @@
       "src": [
         {
           "files": [
-            "src/Engine/Maui/DrawnUi.Maui.csproj"
+            "src/Maui/DrawnUi/DrawnUi.Maui.csproj"
           ],
           "src": "../",
           "exclude": [
@@ -17,11 +17,11 @@
       "disableGitFeatures": false,
       "disableDefaultFilter": false,
       "properties": {
-        "TargetFramework": "net7.0"
+        "TargetFramework": "net9.0"
       }
     }
   ],
-  "build": {
+  "build": { 
     "content": [
       {
         "files": [
@@ -61,7 +61,7 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/material"
+      "modern"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
@@ -76,7 +76,7 @@
       "_appFaviconPath": "images/favicon.ico",
       "_disableContribution": false,
       "_gitContribute": {
-        "repo": "https://github.com/taublast/DrawnUi.Maui",
+        "repo": "https://github.com/taublast/DrawnUi",
         "branch": "master"
       }
     }

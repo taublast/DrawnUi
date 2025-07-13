@@ -10,7 +10,9 @@ public class CapturedImage : IDisposable
 {
     public SKImage Image { get; set; }
 
-    public int Orientation { get; set; }
+    public Metadata Meta { get; set; }
+
+    public int Rotation { get; set; }
 
     public CameraPosition Facing { get; set; }
 

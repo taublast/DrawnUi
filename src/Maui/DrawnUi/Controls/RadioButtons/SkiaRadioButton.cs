@@ -6,61 +6,87 @@
 /// </summary>
 public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
 {
+    public SkiaRadioButton()
+    {
+
+    }
+
+    public SkiaRadioButton(string text)
+    {
+        Text = text;
+    }
 
     #region DEFAULT CONTENT
 
     protected override void CreateDefaultContent()
     {
-        // TODO
-        /*
-        //todo can make different upon platform!
-        if (!DefaultChildrenCreated && this.Views.Count == 0)
+        if (this.Views.Count == 0)
         {
-            if (CreateChildren == null)
+            switch (UsingControlStyle)
             {
-                DefaultChildrenCreated = true;
-
-                if (this.WidthRequest < 0)
-                    this.WidthRequest = 50;
-                if (this.HeightRequest < 0)
-                    this.HeightRequest = 32;
-
-                var shape = new SkiaShape
-                {
-                    Tag = "Frame",
-                    Type = ShapeType.Rectangle,
-                    CornerRadius = 20,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Fill,
-                };
-                this.AddSubView(shape);
-
-                this.AddSubView(new SkiaShape()
-                {
-                    UseCache = SkiaCacheType.Operations,
-                    Type = ShapeType.Circle,
-                    Margin = 2,
-                    LockRatio = -1,
-                    Tag = "Thumb",
-                    HorizontalOptions = LayoutOptions.Start,
-                    VerticalOptions = LayoutOptions.Fill,
-                });
-
-                var hotspot = new SkiaHotspot()
-                {
-                    TransformView = this.Thumb,
-                };
-                hotspot.Tapped += (s, e) =>
-                {
-                    IsToggled = !IsToggled;
-                };
-                this.AddSubView(hotspot);
-
-                ApplyProperties();
+                //case PrebuiltControlStyle.Cupertino:
+                //    CreateCupertinoStyleContent();
+                //    break;
+                //case PrebuiltControlStyle.Material:
+                //    CreateMaterialStyleContent();
+                //    break;
+                //case PrebuiltControlStyle.Windows:
+                //    CreateWindowsStyleContent();
+                //    break;
+                default:
+                    CreateDefaultStyleContent();
+                    break;
             }
 
+            ApplyProperties();
         }
-        */
+    }
+
+    protected virtual void CreateDefaultStyleContent()
+    {
+        //SetDefaultContentSize(-1, 24);
+
+        UseCache = SkiaCacheType.Image;
+        MinimumHeightRequest = 24;
+        Children = new List<SkiaControl>()
+        {
+            new SkiaLayout()
+            {
+                HeightRequest = 16,
+                LockRatio = 1,
+                VerticalOptions = LayoutOptions.Center,
+                Children =
+                {
+                    new SkiaShape()
+                    {
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Fill,
+                        StrokeColor = ColorThumbOff,
+                        StrokeWidth = 1.51,
+                        Type = ShapeType.Circle
+                    },
+                    new SkiaShape()
+                    {
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Fill,
+                        BackgroundColor = ColorThumbOn,
+                        Margin = 4,
+                        Type = ShapeType.Circle,
+                        Tag = "On"
+                    },
+                }
+            },
+            new SkiaRichLabel()
+            {
+                Margin = new(24, 0, 0, 0),
+                FontSize = 14,
+                MaxLines = 2,
+                Tag = "Text",
+                //FontFamily = "FontTextTitle",
+                TextColor = ColorThumbOff,
+                VerticalOptions = LayoutOptions.Center
+            }
+        };
     }
 
     #endregion
@@ -183,7 +209,7 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
         UpdateGroup();
     }
 
-    RadioButtonGroupManager Manager => RadioButtonGroupManager.Instance;
+    RadioButtons Manager => RadioButtons.All;
 
     bool _lockIsToggled;
 

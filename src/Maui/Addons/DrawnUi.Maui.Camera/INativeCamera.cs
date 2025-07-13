@@ -12,7 +12,7 @@ public interface INativeCamera : IDisposable
     /// If you get the preview via this method you are now responsible to dispose it yourself to avoid memory leaks.
     /// </summary>
     /// <returns></returns>
-    CapturedImage GetPreviewImage();
+    SKImage GetPreviewImage();
 
     void ApplyDeviceOrientation(int orientation);
 
@@ -36,7 +36,7 @@ public interface INativeCamera : IDisposable
     /// <param name="cameraSavedRotation"></param>
     /// <param name="album"></param>
     /// <returns></returns>
-    Task<string> SaveJpgStreamToGallery(Stream stream, string filename, double cameraSavedRotation, string album);
+    Task<string> SaveJpgStreamToGallery(Stream stream, string filename, double cameraSavedRotation, Metadata meta, string album);
 
     void SetZoom(float value);
 

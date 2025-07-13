@@ -5,6 +5,8 @@
     </Target>
 
     <PropertyGroup>
+
+        <WindowsEnableDebugging>true</WindowsEnableDebugging>
         <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <!--<DocumentationMarkdown>$(MSBuildProjectDirectory)\Generated.md</DocumentationMarkdown>-->
@@ -24,7 +26,7 @@
 
     <PropertyGroup>
         <Title>DrawnUI for .NET MAUI</Title>
-        <PackageId>AppoMobi.Maui.DrawnUi</PackageId>
+        <PackageId>DrawnUi.Maui</PackageId>
         <Description>Cross-platform rendering engine for .NET MAUI to draw your UI with SkiaSharp</Description>
         <PackageTags>maui drawnui skia skiasharp draw ui</PackageTags>
         <PackageIcon>icon128.png</PackageIcon>
@@ -49,10 +51,6 @@
         <Compile Remove="Platforms\Windows\Controls\**" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(UseSkiaSharp3)' == 'true'">
-        <Compile Remove="Platforms\Windows\SKCanvasViewRenderer.Windows.cs" />
-        <Compile Remove="Platforms\iOS\SKMetalViewRenderer.cs" />
-    </ItemGroup>
 
     <ItemGroup>
         <None Include="..\..\..\icon128.png">
@@ -63,25 +61,22 @@
             <PackagePath>\</PackagePath>
             <Pack>True</Pack>
         </None>
-        <None Include="Platforms\Windows\ViewChainPanel.Windows.cs" />
-        <None Include="Platforms\Windows\Views\AngleSwapChainPanel.cs" />
-        <None Remove="Controls\Extensions\**" />
-        <None Remove="Platforms\Windows\Controls\**" />
     </ItemGroup>
-
-    <!--<ItemGroup>
-      <ProjectReference Include="..\..\..\..\Markdig\src\Markdig\Markdig.csproj" />
-    </ItemGroup>-->
 
     <ItemGroup>
         <!--parsing markdown text-->
+        <!--cannot use due to .net runtime bug still being worked out to be fixed-->
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-        
+
         <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
         <PackageReference Include="SkiaSharp.Skottie" Version="3.119.0" />
-        <PackageReference Include="Svg.Skia" Version="3.0.0" />
+        <PackageReference Include="Svg.Skia" Version="3.0.3" />
 
+        <!--<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.116.1" />
+        <PackageReference Include="SkiaSharp.Skottie" Version="3.116.1" />
+        <PackageReference Include="Svg.Skia" Version="2.0.0.4" />-->
+      
         <!--todo move used code here-->
         <PackageReference Include="AppoMobi.Maui.Navigation" Version="1.9.3-pre" />
 
@@ -93,12 +88,21 @@
         <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
     </ItemGroup>
 
+    <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(TargetFramework.Contains('catalyst')) == true">
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
+    </ItemGroup>
+
+
     <!--ANDROID ONLY-->
     <ItemGroup Condition="$(TargetFramework.Contains('android')) == true">
         <!--fix android bad alignement-->
         <PackageReference Include="HarfBuzzSharp" Version="8.3.1.1" />
-        <!--native interop todo expose source-->
-        <PackageReference Include="AppoMobi.Maui.Native" Version="1.0.1.0-pre" />
+        <!--native interop todo expose source  todo check no more needed? -->
+       <PackageReference Include="AppoMobi.Maui.Native" Version="1.0.1.0-pre" />
     </ItemGroup>
 
     <ItemGroup>
@@ -140,7 +144,6 @@
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
     </ItemGroup>
-
 
     <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
 

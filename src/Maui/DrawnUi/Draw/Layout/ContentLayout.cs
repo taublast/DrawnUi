@@ -1,4 +1,6 @@
-﻿namespace DrawnUi.Draw;
+﻿using Microsoft.Maui.HotReload;
+
+namespace DrawnUi.Draw;
 
 [ContentProperty("Content")]
 public partial class ContentLayout : SkiaLayout, IVisibilityAware, ISkiaGestureListener, IWithContent

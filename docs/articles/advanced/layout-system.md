@@ -218,4 +218,4 @@ For debugging layout issues, use these built-in features:
 
 ## Summary
 
-DrawnUi.Maui's layout system provides a powerful foundation for creating high-performance, visually consistent UIs across platforms. By understanding its architecture, you can leverage its capabilities to create custom layouts and optimize your application's performance.
+DrawnUi.Maui's layout system provides a foundation for creating high-performance, visually consistent UIs across platforms. By understanding its architecture, you can leverage its capabilities to create custom layouts and optimize your application's performance.

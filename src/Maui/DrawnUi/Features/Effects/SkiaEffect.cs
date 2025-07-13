@@ -30,6 +30,9 @@ public class SkiaEffect : BindableObject, IDisposable, ICanBeUpdatedWithContext
         Parent = null;
     }
 
+    /// <summary>
+    /// You MUST clear any cached resources as soon as this is called. Not on next draw!
+    /// </summary>
     public virtual void Update()
     {
         Parent?.Update();

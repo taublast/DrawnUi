@@ -9,6 +9,7 @@ public partial class MauiEditor : Editor, ISmartNative
 {
     public double NeededHeight { get; set; }
 
+    [Obsolete("Use Microsoft.Maui.Size instead.")]
     public override SizeRequest Measure(double widthConstraint, double heightConstraint, MeasureFlags flags = MeasureFlags.None)
     {
         var ret = base.Measure(widthConstraint, heightConstraint, flags);

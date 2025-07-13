@@ -337,11 +337,63 @@ scrollLooped.CurrentIndexChanged += (s, index) => {
 </DrawUi:SkiaScrollLooped>
 ```
 
+## RefreshIndicator
+
+`RefreshIndicator` can use Lottie and anything as ActivityIndicator or for your scroll RefreshView. It provides customizable pull-to-refresh functionality.
+
+### Basic Usage
+
+```xml
+<DrawUi:SkiaScroll>
+    <DrawUi:SkiaScroll.RefreshIndicator>
+        <DrawUi:RefreshIndicator
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshCommand="{Binding RefreshCommand}" />
+    </DrawUi:SkiaScroll.RefreshIndicator>
+
+    <!-- Scroll content -->
+</DrawUi:SkiaScroll>
+```
+
+### Lottie Animation Indicator
+
+```xml
+<DrawUi:RefreshIndicator>
+    <DrawUi:SkiaLottie
+        Source="Lottie/refresh.json"
+        AutoPlay="True"
+        Repeat="-1"
+        WidthRequest="40"
+        HeightRequest="40" />
+</DrawUi:RefreshIndicator>
+```
+
+### Custom Refresh Indicator
+
+```xml
+<DrawUi:RefreshIndicator>
+    <DrawUi:SkiaLayout Type="Row" Spacing="10">
+        <DrawUi:SkiaShape Type="Circle"
+                   BackgroundColor="Blue"
+                   WidthRequest="8"
+                   HeightRequest="8" />
+        <DrawUi:SkiaShape Type="Circle"
+                   BackgroundColor="Blue"
+                   WidthRequest="8"
+                   HeightRequest="8" />
+        <DrawUi:SkiaShape Type="Circle"
+                   BackgroundColor="Blue"
+                   WidthRequest="8"
+                   HeightRequest="8" />
+    </DrawUi:SkiaLayout>
+</DrawUi:RefreshIndicator>
+```
+
 ### Building a Feed with Pull-to-Refresh
 
 ```xml
 <DrawUi:SkiaScroll x:Name="FeedScroll" Refreshing="OnRefreshingFeed">
-    
+
     <DrawUi:SkiaScroll.RefreshIndicator>
         <DrawUi:RefreshIndicator />
     </DrawUi:SkiaScroll.RefreshIndicator>

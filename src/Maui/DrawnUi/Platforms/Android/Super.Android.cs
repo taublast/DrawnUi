@@ -23,11 +23,34 @@ public partial class Super
     public static event EventHandler OnFrame;
     static Looper Looper { get; set; }
 
+    public static int RefreshRate { get; protected set; }
+
+    public static int GetDisplayRefreshRate(int fallback)
+    {
+        var ret = fallback;
+        try
+        {
+            RefreshRate = 60;
+
+            if (Platform.CurrentActivity?.WindowManager?.DefaultDisplay != null)
+            {
+                var display = Platform.CurrentActivity.WindowManager.DefaultDisplay;
+                ret = (int)display.RefreshRate;
+            }
+        }
+        catch
+        {
+        }
+        return ret;
+    }
+    
     public static void Init(Android.App.Activity activity)
     {
         Initialized = true;
 
         MainActivity = activity;
+
+        RefreshRate = GetDisplayRefreshRate(60);
 
         Super.Screen.Density = activity.Resources.DisplayMetrics.Density;
 
@@ -40,6 +63,8 @@ public partial class Super
         //var isFullscreen = (int)activity.Window.DecorView.SystemUiVisibility & (int)SystemUiFlags.LayoutStable;
 
         Super.StatusBarHeight = GetStatusBarHeight(activity) / Super.Screen.Density;
+
+        Super.NavigationBarHeight = GetNavigationHeight(activity) / Super.Screen.Density;
 
         bool isRendering = false;
         object lockFrane = new();
@@ -106,20 +131,21 @@ public partial class Super
         if (_insetsListener == null)
         {
             _insetsListener = new();
-
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
-            {
-                // https://stackoverflow.com/a/33355089/7149454
-                var uiOptions = (int)activity.Window.DecorView.SystemUiVisibility;
-                uiOptions |= (int)SystemUiFlags.LayoutStable;
-                uiOptions |= (int)SystemUiFlags.LayoutFullscreen;
-                activity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
-                activity.Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
-                var contentView = activity.FindViewById(Android.Resource.Id.Content);
-                if (contentView != null)
-                    contentView.SetOnApplyWindowInsetsListener(_insetsListener);
-            }
         }
+
+        if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
+        {
+            // https://stackoverflow.com/a/33355089/7149454
+            var uiOptions = (int)activity.Window.DecorView.SystemUiVisibility;
+            uiOptions |= (int)SystemUiFlags.LayoutStable;
+            uiOptions |= (int)SystemUiFlags.LayoutFullscreen;
+            activity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+            activity.Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+            var contentView = activity.FindViewById(Android.Resource.Id.Content);
+            if (contentView != null)
+                contentView.SetOnApplyWindowInsetsListener(_insetsListener);
+        }
+
     }
 
     static InsetsListener _insetsListener;
@@ -156,6 +182,21 @@ public partial class Super
             }
             return _returnInsets;
         }
+    }
+
+    public static int GetNavigationHeight(Context context)
+    {
+
+        int statusBarHeight = 0, totalHeight = 0, contentHeight = 0;
+        int resourceId = context.Resources.GetIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0)
+        {
+            statusBarHeight = context.Resources.GetDimensionPixelSize(resourceId);
+            totalHeight = context.Resources.DisplayMetrics.HeightPixels;
+            contentHeight = totalHeight - statusBarHeight;
+        }
+
+        return statusBarHeight;
     }
 
     public static int GetStatusBarHeight(Context context)
@@ -264,6 +305,70 @@ public partial class Super
 
             }
         }
+    }
+
+    /// <summary>
+    /// Completely hides the status bar on Android
+    /// </summary>
+    public static void HideStatusBar()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            var activity = Platform.CurrentActivity as AndroidX.AppCompat.App.AppCompatActivity;
+            if (activity?.Window != null)
+            {
+                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R)
+                {
+                    // Android 11+ (API 30+)
+                    var windowInsetsController = activity.Window.InsetsController;
+                    if (windowInsetsController != null)
+                    {
+                        windowInsetsController.Hide(AndroidX.Core.View.WindowInsetsCompat.Type.StatusBars());
+                        windowInsetsController.SystemBarsBehavior = AndroidX.Core.View.WindowInsetsControllerCompat.BehaviorShowTransientBarsBySwipe;
+                    }
+                }
+                else
+                {
+                    // Android 10 and below
+                    var decorView = activity.Window.DecorView;
+                    var uiOptions = (int)decorView.SystemUiVisibility;
+                    uiOptions |= (int)Android.Views.SystemUiFlags.Fullscreen;
+                    uiOptions |= (int)Android.Views.SystemUiFlags.HideNavigation;
+                    decorView.SystemUiVisibility = (Android.Views.StatusBarVisibility)uiOptions;
+                }
+            }
+        });
+    }
+
+    /// <summary>
+    /// Shows the status bar on Android
+    /// </summary>
+    public static void ShowStatusBar()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+          
+
+            var activity = Platform.CurrentActivity as AndroidX.AppCompat.App.AppCompatActivity;
+            if (activity?.Window != null)
+            {
+                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R)
+                {
+                    // Android 11+ (API 30+)
+                    var windowInsetsController = activity.Window.InsetsController;
+                    windowInsetsController?.Show(AndroidX.Core.View.WindowInsetsCompat.Type.StatusBars());
+                }
+                else
+                {
+                    // Android 10 and below
+                    var decorView = activity.Window.DecorView;
+                    var uiOptions = (int)decorView.SystemUiVisibility;
+                    uiOptions &= ~(int)Android.Views.SystemUiFlags.Fullscreen;
+                    uiOptions &= ~(int)Android.Views.SystemUiFlags.HideNavigation;
+                    decorView.SystemUiVisibility = (Android.Views.StatusBarVisibility)uiOptions;
+                }
+            }
+        });
     }
 
     public static void SetWhiteTextStatusBar()
@@ -548,4 +653,27 @@ public partial class Super
 
     #endregion
 
+    private static bool _keepScreenOn;
+    /// <summary>
+    /// Prevents display from auto-turning off  Everytime you set this the setting will be applied.
+    /// </summary>
+    public static bool KeepScreenOn
+    {
+        get
+        {
+            return _keepScreenOn;
+        }
+        set
+        {
+            if (value)
+            {
+                Platform.CurrentActivity.Window.AddFlags(WindowManagerFlags.KeepScreenOn);
+            }
+            else
+            {
+                Platform.CurrentActivity.Window.ClearFlags(WindowManagerFlags.KeepScreenOn);
+            }
+            _keepScreenOn = value;
+        }
+    }
 }

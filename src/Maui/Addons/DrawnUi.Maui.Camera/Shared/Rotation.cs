@@ -1,4 +1,4 @@
-﻿#if IOS || MACCATALYST
+﻿ 
 namespace DrawnUi.Camera
 {
     public enum Rotation
@@ -9,4 +9,3 @@ namespace DrawnUi.Camera
         rotate270Degrees = 270,
     }
 }
-#endif

@@ -3,55 +3,58 @@
 ![NuGet Version](https://img.shields.io/nuget/v/AppoMobi.Maui.DrawnUi.svg)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 
-Supports **iOS**, **MacCatalyst**, **Android**, **Windows**.
 
-To replace native controls with with just one native view - the Canvas! 🤩
+✏️ To replace native controls with a Skia Canvas! 🤩 On **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
-Rendering engine to draw your UI on a Skia canvas, with gestures and animations, designed to draw pixel-perfect custom controls instead of using native ones, powered by [SkiaSharp](https://github.com/mono/SkiaSharp)😍. 
-Create and render your custom controls on a hardware-accelerated Skia canvas with an improved MAUI/WPF-like layout system.
+Rendering engine with an enhanced layout system, gestures and animations powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
-* To use inside a usual MAUI app, consume drawn controls here and there inside `Canvas` views.
-* Create a totally drawn app with just one `Canvas` as root view, `SkiaShell` is provided for navigation.
-* Drawn controls are totally virtual, these are commands for the engine on what and how to draw on a skia canvas.
-* Design in XAML or with [Fluent C#](Fluent.md)
-* Free to use and modify under the MIT license, a nuget package is available.
+* To use inside a usual MAUI app, consume drawn controls by wrapping inside `Canvas` views.
+* To create a totally drawn app with just one `Canvas` as root view, use `SkiaShell` + `SkiaViewSwitcher` for navigation between screens with modals, popups, toasts etc.
+* Drawn controls are totally virtual, no native views/handlers.
+* Design in XAML or [code-behind](Fluent.md)
+* Free to use under the MIT license, a nuget package is available.
 
-_The current development state is __ALPHA__, features remain to be implemented, documentation is being worked on._
+Current development state is _ALPHA for prod_.
 
-## Features
+>This is a rendering engine you can use to create, layout and render your drawn controls, 
+NOT a development framework with pre-defined elements. Shipped controls are here for a quick start convenience.
 
-* __Draw your UI using SkiaSharp with hardware acceleration__
-* __Easily create your controls and animations__
-* __Design in MAUI XAML or code-behind__
+
+## 🎯 Features
+
+* __Draw with helpers using SkiaSharp with hardware acceleration__
+* __Create your own animated pixel-perfect controls__
+* __Port existing native controls to be drawn__
+* __Design in XAML or code-behind__
 * __2D and 3D Transforms__
-* __Animations__ targeting max fps
-* __Visual effects__ for every control
-* __Gestures__ support for panning, scrolling and zooming (_rotation on the roadmap_)
-* __Caching system__ for elements and images
+* __Visual effects__ for every control, filters and shaders
+* __Animations__ targeting max FPS
+* __Caching system__ for faster re-drawing
 * __Optimized for performance__, rendering only visible elements, recycling templates etc
-* __Navigate__ on canvas using MAUI familiar Shell techniques 
-* __Designed for YOU to create your drawn controls__ with ease !
-* __Port existing native controls to be drawn!__
+* __Gestures__ support for anything, panning, scrolling, zooming etc
+* __Keyboard support__, track any key
+* __Navigate__ on canvas with familiar MAUI Shell techniques 
+
+## 📢 What's new
+
+* The nuget package `DrawnUi.Maui` replaces the old package Id, you can still use the old one kept for compatibility for some time.
+* Docs, first appearence inside `/docs`! To teach LMs use `/aidocs` subfolder.
+* `SkiaCamera` inside DrawnUi.Maui.Camera: iOS, MacCatalyst, Windows, Android implementations.
+* `SkiaShape` now can contain many `Children` instead of one `Content`. Plus fixes for stroke and other for pixel-perfect rendering.
+* `SkiaImage` rescaling quality fix after for skia v3.
+* `SkiaScroll` added additional mouse wheel support for scrolling on windows, added FirstVisibleIndex, LastVisibleIndex props
+* Stack and absolute layouts now correctly apply one-directional `Fill` of children, might break some legacy UIs (or might not). `Margins` and `Padding` now work properly everywhere.
+* Can override virtual `OnMeasuring`, while `Measure` is not virtual anymore to assure faster screen creation and avoid re-measurements when initializing for the first time.
+* Important performance optimizations and fixes for layouts and SkiaLabel.
+* Performance and safety optimizations for accelerated rendering handlers (`SkiaViewAccelerated:SKGLView`) on all platforms.
+* Windows accelerated handler is now synched with display when its refresh rate is >=120.
+* Frame time interpolator adjustments for DrawnUi.Maui.Game.
+* Many other silent fixes and new properties/features.
+* Example apps updated to align with changes.
 
 ___Please star ⭐ if you like it!___
-
-## What's new
-
-* More fluent extensions for C# UI creation.
-* Recycling views optimisations.
-* Apple Metal renderer made more fluid, noticeable in games scenarios.
-* SkiaScroll gestures and smooth scrolling noticeable fixes.
-* SkiaDrawer fixes for open/close and snapping.
-* Fixes for SkiaMauiEditor, SkiaMauiEntry, SkiaMauiElement: positionning, lock focus and other.
-* SkiaMarkdownLabel now uses CommonMark.NET, Markdig temporarily removed.
-* Invalidation optimizations, now correctly updating views while avoiding unnesessary measurements.
-* DrawnUiBasePage now "keyboard-aware" on iOS.
-* New BlockGesturesBelow base property to stop gestures propagation below if needed.
-* New VisualLayer base property to track rendered layers.
-* Rive went to "backlog".
-* Other fixes and features.
  
-## Shipped With
+## 📁 Shipped With
 
 * __Base drawn controls__
 	* __SkiaControl__ Your lego brick to create anything
@@ -65,23 +68,30 @@ ___Please star ⭐ if you like it!___
 	* __SkiaBackdrop__ to apply effects to background below, like blur etc
 	* __SkiaMauiElement__ to embed maui controls in your canvas
 
-* __Derived custom controls__
-	* __SkiaScrollLooped__ a subclassed `SkiaScroll` for neverending scrolls
-	* __RefreshIndicator__ can use lottie and anything for your scroll refresh view
-    * __SkiaDrawer__ to swipe in and out your controls
-	* __SkiaCarousel__ swipe and slide controls inside a carousel
-	* __SkiaDecoratedGrid__ to draw shapes between rows and columns
-	* __ScrollPickerWheel__ for creating wheel pickers
-	* __SkiaTabsSelector__ create top and bottom tabs
-	* __SkiaViewSwitcher__ switch your views, pop, push and slide	
+* __Custom controls derived from base ones__
+	* __SkiaRichLabel__, will find an installed font for any unicode text and auto-create spans for markdown
+    * __SkiaButton__ include anything inside, text, images etc
+	* __SkiaRadioButton__ select something unique from options
+    * __SkiaSwitch__ to be able to toggle anything
+    * __SkiaProgress__ to show that your are actually doing something
+	* __SkiaSlider__ incuding range selection capability
 	* __SkiaLottie__ with tint customization
 	* __SkiaGif__ a dedicated lightweight GIF-player with playback properties
 	* __SkiaMediaImage__ a subclassed `SkiaImage` for displaying any kind of images (image/animated gif/more..)
-	* __SkiaRive__ (actually Windows only)
-	* __SkiaButton__ include anything inside, text, images etc
-	* __SkiaSlider__ incuding range selction capability
+    * __SkiaCamera__ that day we draw it on the canvas has finally come
+	* __SkiaScrollLooped__ a subclassed `SkiaScroll` for neverending scrolls
+	* __SkiaDecoratedGrid__ to draw shapes between rows and columns
+	* __RefreshIndicator__ can use Lottie and anything as ActivityIndicator or for your scroll RefreshView
+    * __SkiaDrawer__ to swipe in and out your controls
+	* __SkiaCarousel__ swipe and slide controls inside a carousel
+	* __SkiaWheelPicker__ your iOS-look picker wheel
+	* __SkiaSpinner__ to test your luck
 	* __SkiaHoverMask__ to overlay a clipping shape
+	* __SkiaShell__ for navigation inside a drawn app
+	* __SkiaViewSwitcher__ switch your views, pop, push and slide	
+	* __SkiaTabsSelector__ create top and bottom tabs
 	* __SkiaLabelFps__ for developement
+    * __Other__ we hidden deep but still public
 	* __Create your own!__      
 
 * Animated Effects
@@ -108,7 +118,7 @@ ___Please star ⭐ if you like it!___
 * Keyboard support for desktop platforms.
   	* Not just accelerators, but full keyboard support, usage example inside __SpaceShooter__ game below. :)
 
-## Demo Apps
+## 💥 Demo Apps
 
 * This repo includes a Sandbox project for some custom controls, with playground examples, custom controls, maps etc
 * More creating custom controls examples inside the [Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo) 🤩 __Updated with latest nuget!__
@@ -123,14 +133,14 @@ V3 preview: subclassed `SkiaShaderEffect`, implementing `ISkiaGestureProcessor`,
 
  ## Development Notes
 
- * .NET 9 only, Maui.Controls 9.0.30 minimum.
+ * .NET 9 only, Maui.Controls 9.0.70 minimum.
 * All files to be consumed (images etc) must be placed inside the MAUI app Resources/Raw folder, subfolders allowed. If you need to load from the native app folder use prefix "file://".
 * By default the main branch should be targeting NET 9 and use SkiaSharp v3.
  * To be able to use hardware accelerated Windows canvas with NET 9 you need to [pack your Windows project as MSIX](https://learn.microsoft.com/en-us/dotnet/maui/windows/setup?view=net-maui-9.0). In visua studio this might create a situation (until it's fixed) when you need to hit Build every time you change your code and only then hit Run, otherwise VS will run the previous package.
 * The `<UseSkiaSharp3>true</UseSkiaSharp3>` inside `Directory.Build.props` file controls where we build for v3 net9 or v2 net8. 
 * Accessibility support is compatible and is on the roadmap.
 
-## Installation
+## 📦 Installation
 
 Install the package __AppoMobi.Maui.DrawnUi__ from NuGet, please install stable versions only.  
 For NET 9 you need versions not lower than 1.3.x. For legacy NET 8 and SkiaSharp v2 versions use 1.2.x. but they are not updated any more, we stick with .NET 9, looking at upcoming .NET 10.
@@ -148,8 +158,8 @@ You might also need at least the following MAUI setup inside your csproj:
 	</PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.30" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.70" />
     </ItemGroup>
 
 ```
@@ -162,7 +172,7 @@ builder.UseDrawnUi();
 
 ## ___Docs are under construction, already working on!___
 
-## Quick Start
+## ⚡️ Quick Start
 
 You will be mainly using Maui view `Canvas` that will wrap your SkiaControls.
 Anywhere in your existing Maui app you can include a `Canvas` and start drawing your UI.

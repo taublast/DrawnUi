@@ -13,12 +13,21 @@ namespace DrawnUi.Draw
     public partial class Super
     {
 
+        public static int GetDisplayRefreshRate(int fallback)
+        {
+            return (int)UIScreen.MainScreen.MaximumFramesPerSecond;
+        }
+
+        public static int RefreshRate { get; protected set; }
+
         public static void Init()
         {
             if (Initialized)
                 return;
 
             Initialized = true;
+
+            RefreshRate = GetDisplayRefreshRate(60);
 
             Super.Screen.Density = UIScreen.MainScreen.Scale;
             Super.Screen.WidthDip = UIScreen.MainScreen.Bounds.Width;
@@ -165,6 +174,69 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
+        /// Completely hides the status bar
+        /// </summary>
+        public static void HideStatusBar()
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Debug.WriteLine("[StatusBar] HIDDEN");
+                var controller = Platform.GetCurrentUIViewController();
+
+                UIApplication.SharedApplication.SetStatusBarHidden(true, UIStatusBarAnimation.Fade);
+                controller?.SetNeedsStatusBarAppearanceUpdate();
+            });
+        }
+
+        /// <summary>
+        /// Shows the status bar
+        /// </summary>
+        public static void ShowStatusBar()
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Debug.WriteLine("[StatusBar] VISIBLE");
+                var controller = Platform.GetCurrentUIViewController();
+
+                UIApplication.SharedApplication.SetStatusBarHidden(false, UIStatusBarAnimation.Fade);
+                controller?.SetNeedsStatusBarAppearanceUpdate();
+            });
+        }
+
+        /// <summary>
+        /// Makes status bar text invisible by using black text on black background
+        /// </summary>
+        public static void MakeStatusBarInvisible()
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Debug.WriteLine("[StatusBar] INVISIBLE (black on black)");
+                var controller = Platform.GetCurrentUIViewController();
+
+                if (controller == null || controller.NavigationController == null)
+                {
+                    OrderedStyle = UIStatusBarStyle.DarkContent; // Black text
+                    UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.DarkContent, false);
+                    controller?.SetNeedsStatusBarAppearanceUpdate();
+                }
+                else
+                {
+                    OrderedStyle = null;
+                    controller.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
+                    // Set navigation bar background to black to hide black text
+                    controller.NavigationController.NavigationBar.BackgroundColor = UIColor.Black;
+                    controller.NavigationController.NavigationBar.BarTintColor = UIColor.Black;
+                }
+
+                // Ensure your page background is black where status bar area is
+                if (controller?.View != null)
+                {
+                    controller.View.BackgroundColor = UIColor.Black;
+                }
+            });
+        }
+
+        /// <summary>
         /// Opens web link in native browser
         /// </summary>
         /// <param name="link"></param>
@@ -235,6 +307,23 @@ namespace DrawnUi.Draw
                 return bytes;
             }
 
+        }
+
+        private static bool _keepScreenOn;
+        /// <summary>
+        /// Prevents display from auto-turning off  Everytime you set this the setting will be applied.
+        /// </summary>
+        public static bool KeepScreenOn
+        {
+            get
+            {
+                return _keepScreenOn;
+            }
+            set
+            {
+                UIApplication.SharedApplication.IdleTimerDisabled = value;
+                _keepScreenOn = value;
+            }
         }
 
     }

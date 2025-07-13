@@ -1,5 +1,21 @@
 ﻿namespace DrawnUi.Draw;
 
+public class SkiaGesturesInfo
+{
+    public SkiaGesturesParameters Args { get; set; }
+    public GestureEventProcessingInfo Info { get; set; }
+    public bool Consumed { get; set; }
+
+    public static SkiaGesturesInfo Create(SkiaGesturesParameters args, GestureEventProcessingInfo info)
+    {
+        return new ()
+        {
+            Args = args,
+            Info = info
+        };
+    }
+}
+
 public class SkiaGesturesParameters
 {
     //public SKPoint PanningOffset { get; set; }

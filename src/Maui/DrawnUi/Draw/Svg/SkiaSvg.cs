@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using DrawnUi.Features.Images;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Storage;
 using Svg.Skia;
 
 namespace DrawnUi.Draw
@@ -9,11 +12,11 @@ namespace DrawnUi.Draw
     [ContentProperty("SvgString")]
     public class SkiaSvg : SkiaControl
     {
- 
-
-        public static readonly BindableProperty TintColorProperty = BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(SkiaSvg),
+        public static readonly BindableProperty TintColorProperty = BindableProperty.Create(nameof(TintColor),
+            typeof(Color), typeof(SkiaSvg),
             Colors.Transparent,
             propertyChanged: NeedDraw);
+
         public Color TintColor
         {
             get { return (Color)GetValue(TintColorProperty); }
@@ -26,9 +29,12 @@ namespace DrawnUi.Draw
         // ShadowColor
         //-------------------------------------------------------------
         private const string nameShadowColor = "ShadowColor";
-        public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameShadowColor, typeof(Color), typeof(SkiaSvg),
+
+        public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameShadowColor,
+            typeof(Color), typeof(SkiaSvg),
             Colors.Transparent,
             propertyChanged: NeedDraw);
+
         public Color ShadowColor
         {
             get { return (Color)GetValue(ShadowColorProperty); }
@@ -39,9 +45,12 @@ namespace DrawnUi.Draw
         // ShadowX
         //-------------------------------------------------------------
         private const string nameShadowX = "ShadowX";
-        public static readonly BindableProperty ShadowXProperty = BindableProperty.Create(nameShadowX, typeof(double), typeof(SkiaSvg),
+
+        public static readonly BindableProperty ShadowXProperty = BindableProperty.Create(nameShadowX, typeof(double),
+            typeof(SkiaSvg),
             2.0,
             propertyChanged: NeedDraw);
+
         public double ShadowX
         {
             get { return (double)GetValue(ShadowXProperty); }
@@ -52,9 +61,12 @@ namespace DrawnUi.Draw
         // ShadowY
         //-------------------------------------------------------------
         private const string nameShadowY = "ShadowY";
-        public static readonly BindableProperty ShadowYProperty = BindableProperty.Create(nameShadowY, typeof(double), typeof(SkiaSvg),
+
+        public static readonly BindableProperty ShadowYProperty = BindableProperty.Create(nameShadowY, typeof(double),
+            typeof(SkiaSvg),
             2.0,
             propertyChanged: NeedDraw);
+
         public double ShadowY
         {
             get { return (double)GetValue(ShadowYProperty); }
@@ -65,16 +77,17 @@ namespace DrawnUi.Draw
         // ShadowBlur
         //-------------------------------------------------------------
         private const string nameShadowBlur = "ShadowBlur";
-        public static readonly BindableProperty ShadowBlurProperty = BindableProperty.Create(nameShadowBlur, typeof(double), typeof(SkiaSvg),
+
+        public static readonly BindableProperty ShadowBlurProperty = BindableProperty.Create(nameShadowBlur,
+            typeof(double), typeof(SkiaSvg),
             5.0,
             propertyChanged: NeedDraw);
+
         public double ShadowBlur
         {
             get { return (double)GetValue(ShadowBlurProperty); }
             set { SetValue(ShadowBlurProperty, value); }
         }
-
-
 
         #endregion
 
@@ -83,7 +96,8 @@ namespace DrawnUi.Draw
             if (ShadowColor != Colors.Transparent)
             {
                 paint.ImageFilter = SKImageFilter.CreateDropShadow(
-                    (float)Math.Round(ShadowX * scale), (float)Math.Round(ShadowY * scale), (float)(ShadowBlur), (float)(ShadowBlur),
+                    (float)Math.Round(ShadowX * scale), (float)Math.Round(ShadowY * scale), (float)(ShadowBlur),
+                    (float)(ShadowBlur),
                     ShadowColor.ToSKColor());
             }
         }
@@ -92,11 +106,10 @@ namespace DrawnUi.Draw
         {
             UseCache = SkiaCacheType.Operations;
 
-            _assembly = Application.Current?.GetType()?.Assembly;//(); //Assembly.GetExecutingAssembly();
+            _assembly = Application.Current?.GetType()?.Assembly; //(); //Assembly.GetExecutingAssembly();
 
             if (_assembly == null)
             {
-
             }
 
             _part1 = _assembly.GetName().Name + $".Resources.Images.";
@@ -105,7 +118,6 @@ namespace DrawnUi.Draw
 
         protected static void NeedUpdateIcon(BindableObject bindable, object oldvalue, object newvalue)
         {
-
             var control = bindable as SkiaSvg;
             {
                 if (control != null && !control.IsDisposed)
@@ -129,20 +141,6 @@ namespace DrawnUi.Draw
             get { return (TransformAspect)GetValue(AspectProperty); }
             set { SetValue(AspectProperty, value); }
         }
-
-        public static readonly BindableProperty UseGradientProperty = BindableProperty.Create(
-            nameof(UseGradient),
-            typeof(bool),
-            typeof(SkiaSvg),
-            false,
-            propertyChanged: NeedDraw);
-
-        public bool UseGradient
-        {
-            get { return (bool)GetValue(UseGradientProperty); }
-            set { SetValue(UseGradientProperty, value); }
-        }
-
 
         public static readonly BindableProperty FontAwesomePrimaryColorProperty = BindableProperty.Create(
             nameof(FontAwesomePrimaryColor),
@@ -169,32 +167,6 @@ namespace DrawnUi.Draw
         }
 
 
-        public static readonly BindableProperty StartColorProperty = BindableProperty.Create(
-    nameof(StartColor),
-    typeof(Color),
-    typeof(SkiaSvg),
-    Colors.DarkGray,
-    propertyChanged: NeedDraw);
-
-        public Color StartColor
-        {
-            get { return (Color)GetValue(StartColorProperty); }
-            set { SetValue(StartColorProperty, value); }
-        }
-
-        public static readonly BindableProperty EndColorProperty = BindableProperty.Create(
-            nameof(EndColor),
-            typeof(Color),
-            typeof(SkiaSvg),
-            Colors.Gray,
-            propertyChanged: NeedDraw);
-
-        public Color EndColor
-        {
-            get { return (Color)GetValue(EndColorProperty); }
-            set { SetValue(EndColorProperty, value); }
-        }
-
         public static readonly BindableProperty GradientBlendModeProperty = BindableProperty.Create(
             nameof(GradientBlendMode),
             typeof(SKBlendMode),
@@ -202,64 +174,14 @@ namespace DrawnUi.Draw
             SKBlendMode.SrcIn,
             propertyChanged: NeedDraw);
 
+        /// <summary>
+        /// When FIllGradient is set this will override its blend mode for drawing SVG with gradient
+        /// </summary>
         public SKBlendMode GradientBlendMode
         {
             get { return (SKBlendMode)GetValue(GradientBlendModeProperty); }
             set { SetValue(GradientBlendModeProperty, value); }
         }
-
-        public static readonly BindableProperty StartXRatioProperty = BindableProperty.Create(
-            nameof(StartXRatio),
-            typeof(float),
-            typeof(SkiaSvg),
-            0.1f,
-            propertyChanged: NeedDraw);
-
-        public float StartXRatio
-        {
-            get { return (float)GetValue(StartXRatioProperty); }
-            set { SetValue(StartXRatioProperty, value); }
-        }
-
-        public static readonly BindableProperty StartYRatioProperty = BindableProperty.Create(
-            nameof(StartYRatio),
-            typeof(float),
-            typeof(SkiaSvg),
-            1.0f,
-            propertyChanged: NeedDraw);
-
-        public float StartYRatio
-        {
-            get { return (float)GetValue(StartYRatioProperty); }
-            set { SetValue(StartYRatioProperty, value); }
-        }
-
-        public static readonly BindableProperty EndXRatioProperty = BindableProperty.Create(
-            nameof(EndXRatio),
-            typeof(float),
-            typeof(SkiaSvg),
-            0.9f,
-            propertyChanged: NeedDraw);
-
-        public float EndXRatio
-        {
-            get { return (float)GetValue(EndXRatioProperty); }
-            set { SetValue(EndXRatioProperty, value); }
-        }
-
-        public static readonly BindableProperty EndYRatioProperty = BindableProperty.Create(
-            nameof(EndYRatio),
-            typeof(float),
-            typeof(SkiaSvg),
-            0.1f,
-            propertyChanged: NeedDraw);
-
-        public float EndYRatio
-        {
-            get { return (float)GetValue(EndYRatioProperty); }
-            set { SetValue(EndYRatioProperty, value); }
-        }
-
 
         public static readonly BindableProperty SvgHorizontalOptionsProperty = BindableProperty.Create(
             nameof(SvgHorizontalOptions),
@@ -406,6 +328,7 @@ namespace DrawnUi.Draw
         }
 
         private const string nameHasContent = "HasContent";
+
         public static readonly BindableProperty HasContentProperty = BindableProperty.Create(
             nameHasContent,
             typeof(bool),
@@ -435,7 +358,6 @@ namespace DrawnUi.Draw
         }
 
 
-
         //public static SKTypeface GetTypeface(string fullFontName)
         //{
         //    SKTypeface result;
@@ -452,17 +374,13 @@ namespace DrawnUi.Draw
         #endregion
 
 
-
         private string _loadedString;
 
         private readonly Assembly _assembly;
 
         protected string LoadedString
         {
-            get
-            {
-                return _loadedString;
-            }
+            get { return _loadedString; }
             set
             {
                 if (_loadedString != value)
@@ -489,6 +407,9 @@ namespace DrawnUi.Draw
             base.OnDisposing();
         }
 
+        /// <summary>
+        /// Protected SKSvg container
+        /// </summary>
         public SKSvg Svg { get; protected set; }
 
         //protected SKMatrix DrawingMatrix;
@@ -549,12 +470,10 @@ namespace DrawnUi.Draw
             //    AnchorX = Width / 2.0f;
             //    AnchorY = Height / 2.0f;
             //}
-
         }
 
         protected void UpdateImageFromString(string source)
         {
-
             if (string.IsNullOrEmpty(source))
             {
                 LoadedString = "";
@@ -566,13 +485,13 @@ namespace DrawnUi.Draw
             {
                 source = source.Replace("class=\"fa-primary\"", $"fill=\"{FontAwesomePrimaryColor.ToHex()}\"");
             }
+
             if (FontAwesomeSecondaryColor != Colors.Gray)
             {
                 source = source.Replace("class=\"fa-secondary\"", $"fill=\"{FontAwesomeSecondaryColor.ToHex()}\"");
             }
 
             LoadedString = source;
-
         }
 
         private static void ApplySourceProperty(BindableObject bindable, object oldvalue, object newvalue)
@@ -583,13 +502,9 @@ namespace DrawnUi.Draw
                 {
                     control.SvgString = null;
                     control.Update();
-
                 }
                 else
-                    Task.Run(async () =>
-                    {
-                        await control.LoadSource(control.Source);
-                    });
+                    Task.Run(async () => { await control.LoadSource(control.Source); });
             }
         }
 
@@ -639,11 +554,14 @@ namespace DrawnUi.Draw
 
                 UpdateImageFromString(json);
                 UpdateIcon();
+
+                Success?.Invoke(this, fileName);
             }
             catch (Exception e)
             {
                 Trace.WriteLine($"[SkiaSvg] LoadSource failed to load {fileName}");
                 Trace.WriteLine(e);
+                Error?.Invoke(this, e);
             }
             finally
             {
@@ -651,9 +569,18 @@ namespace DrawnUi.Draw
             }
         }
 
+        /// <summary>
+        /// Happens when loaded fine from `Source`. Will pass source as string.
+        /// </summary>
+        public event EventHandler<string> Success;
+
+        /// <summary>
+        /// Happens when loaded with error from `Source`. Will pass exception.
+        /// </summary>
+        public event EventHandler<Exception> Error;
+
         protected void UpdateImageFromFile()
         {
-
             SvgString = "";
 
             if (string.IsNullOrEmpty(IconFilePath))
@@ -679,7 +606,6 @@ namespace DrawnUi.Draw
                     UpdateImageFromString(content);
                 }
             }
-
         }
 
         /*
@@ -813,7 +739,6 @@ namespace DrawnUi.Draw
                 //    StreamReader reader = new StreamReader(stream);
                 //    SvgString = reader.ReadToEnd();
                 //}
-
             }
             catch (Exception e)
             {
@@ -862,14 +787,11 @@ namespace DrawnUi.Draw
         }
 
         protected void DrawPicture(SKCanvas canvas, SKPicture picture, SKRect dest,
-        TransformAspect stretch,
-        DrawImageAlignment horizontal = DrawImageAlignment.Center,
-        DrawImageAlignment vertical = DrawImageAlignment.Center,
-        SKPaint paint = null)
+            TransformAspect stretch,
+            DrawImageAlignment horizontal = DrawImageAlignment.Center,
+            DrawImageAlignment vertical = DrawImageAlignment.Center,
+            SKPaint paint = null)
         {
-
-
-
             var pxWidth = picture.CullRect.Width;
             var pxHeight = picture.CullRect.Height;
 
@@ -894,7 +816,6 @@ namespace DrawnUi.Draw
             {
                 using (SKPath path = new SKPath())
                 {
-
                     if (Clipping != null)
                     {
                         Clipping.Invoke(path, dest);
@@ -933,26 +854,31 @@ namespace DrawnUi.Draw
             {
                 canvas.DrawPicture(picture, display.Left, display.Top, paint);
             }
-
         }
-
 
 
         //-------------------------------------------------------------
         // Zoom
         //-------------------------------------------------------------
         private const string nameZoom = "Zoom";
-        public static readonly BindableProperty ZoomProperty = BindableProperty.Create(nameZoom, typeof(double), typeof(SkiaSvg), 1.0,
+
+        public static readonly BindableProperty ZoomProperty = BindableProperty.Create(nameZoom, typeof(double),
+            typeof(SkiaSvg), 1.0,
             propertyChanged: NeedDraw);
+
         public double Zoom
         {
             get { return (double)GetValue(ZoomProperty); }
             set { SetValue(ZoomProperty, value); }
         }
 
-        protected bool CreateSvg(string loadedString)
+        /// <summary>
+        /// Directly loads svg from bytes array into container
+        /// </summary>
+        /// <param name="byteArray"></param>
+        /// <returns></returns>
+        public virtual bool LoadSvgFromBytes(byte[] byteArray)
         {
-            byte[] byteArray = Encoding.ASCII.GetBytes(loadedString);
             using (Stream stream = new MemoryStream(byteArray))
             {
                 var svg = new SKSvg();
@@ -969,21 +895,31 @@ namespace DrawnUi.Draw
                 }
                 catch (Exception e)
                 {
-                    Trace.WriteLine(e);
+                    Super.Log($"Failed to load {e}");
                 }
                 return false;
             }
         }
 
+        /// <summary>
+        /// Loads svg into container from string. For public access use SvgString property instead.
+        /// </summary>
+        /// <param name="loadedString"></param>
+        /// <returns></returns>
+        protected virtual bool CreateSvg(string loadedString)
+        {
+            byte[] byteArray = Encoding.ASCII.GetBytes(loadedString);
+            return LoadSvgFromBytes(byteArray);
+        }
+
 
         SKMatrix CreateSvgMatrix(SKRect destination, double scale)
         {
-
             #region Layout
 
             SKRect contentSize = Svg.Picture.CullRect;
-            float scaledContentWidth = (float)(contentSize.Width);// * Density);
-            float scaledContentHeight = (float)(contentSize.Height);// * Density);
+            float scaledContentWidth = (float)(contentSize.Width); // * Density);
+            float scaledContentHeight = (float)(contentSize.Height); // * Density);
 
             //multipliers to reduce
             float xRatio = destination.Width / scaledContentWidth;
@@ -996,12 +932,12 @@ namespace DrawnUi.Draw
 
             if (Aspect == TransformAspect.Fill)
             {
-
                 //multipliers to enlarge
                 if (destination.Width > scaledContentWidth && aspectX < 1)
                 {
                     aspectX = 1 + (1 - aspectX);
                 }
+
                 if (destination.Height > scaledContentHeight && aspectY < 1)
                 {
                     aspectY = 1 + (1 - aspectY);
@@ -1010,10 +946,8 @@ namespace DrawnUi.Draw
                 //todo can add property ResizeAnchor, actually its Center
                 adjustX = (destination.Width - scaledContentWidth * aspectX) / 2.0f;
                 adjustY = (destination.Height - scaledContentHeight * aspectY) / 2.0f;
-
             }
-            else
-            if (Aspect == TransformAspect.AspectFill)
+            else if (Aspect == TransformAspect.AspectFill)
             {
                 var needMoreY = destination.Height - scaledContentHeight * xRatio;
                 var needMoreX = destination.Width - scaledContentWidth * yRatio;
@@ -1039,8 +973,6 @@ namespace DrawnUi.Draw
 
                 adjustX = (destination.Width - scaledContentWidth * aspectX) / 2.0f;
                 adjustY = (destination.Height - scaledContentHeight * aspectY) / 2.0f;
-
-
             }
             else //FIT
             {
@@ -1054,7 +986,7 @@ namespace DrawnUi.Draw
                 {
                     adjustX = (destination.Width - scaledContentWidth * aspectFitX) / 2.0f;
                 }
-                else// was fit for by width, need to center y
+                else // was fit for by width, need to center y
                 {
                     adjustY = (destination.Height - scaledContentHeight * aspectFitY) / 2.0f;
                 }
@@ -1079,14 +1011,11 @@ namespace DrawnUi.Draw
             return matrix;
 
             #endregion
-
         }
 
         protected override void Paint(DrawingContext ctx)
         {
-            base.Paint(ctx); //paint background color
-
-            if (Svg != null)// !string.IsNullOrEmpty(LoadedString))
+            if (Svg != null)
             {
                 var scale = ctx.Scale;
                 var area = ContractPixelsRect(ctx.Destination, ctx.Scale, Padding);
@@ -1095,10 +1024,7 @@ namespace DrawnUi.Draw
                 area = new SKRect((float)Math.Round(area.Left), (float)Math.Round(area.Top),
                     (float)Math.Round(area.Right), (float)Math.Round(area.Bottom));
 
-                RenderingPaint ??= new SKPaint()
-                {
-                    IsAntialias = true
-                };
+                RenderingPaint ??= new SKPaint() { IsAntialias = true };
                 RenderingPaint.IsDither = IsDistorted;
                 RenderingPaint.BlendMode = DefaultBlendMode;
 
@@ -1106,49 +1032,76 @@ namespace DrawnUi.Draw
 
                 SKPath clipPath = null;
 
-                if (TintColor != Colors.Transparent && !UseGradient)
+                if (TintColor != Colors.Transparent
+                    && FillGradient == null)
                 {
-                    RenderingPaint.Shader = null;//todo dispose
+                    base.Paint(ctx);
+
+                    var kill1 = RenderingPaint.Shader;
+                    RenderingPaint.Shader = null;
+                    if (kill1 != null)
+                        DisposeObject(kill1);
 
                     AddShadow(RenderingPaint, scale);
-                    RenderingPaint.ColorFilter = SKColorFilter.CreateBlendMode(TintColor.ToSKColor(), SKBlendMode.SrcIn);
+                    RenderingPaint.ColorFilter =
+                        SKColorFilter.CreateBlendMode(TintColor.ToSKColor(), SKBlendMode.SrcIn);
 
                     ctx.Context.Canvas.DrawPicture(Svg.Picture, ref matrix, RenderingPaint);
                 }
-                else
-                if (UseGradient) //todo use standart gradient property instead
+                else if (FillGradient != null)
                 {
-                    RenderingPaint.ColorFilter = null; //todo dispose
+                    var kill1 = RenderingPaint.ColorFilter;
+                    RenderingPaint.ColorFilter = null;
+                    if (kill1 != null)
+                        DisposeObject(kill1);
 
-                    ctx.Context.Canvas.DrawPicture(Svg.Picture, ref matrix);
+                    var destination = ctx.Destination;
+                    var info = new SKImageInfo((int)destination.Width, (int)destination.Height,
+                        SKColorType.Rgba8888,
+                        SKAlphaType.Premul);
 
-                    //will draw gradient rectangle above
+                    using var intermediateSurface = SKSurface.Create(info);
+                    using var intermediateCanvas = intermediateSurface.Canvas;
+                    intermediateCanvas.Clear(SKColors.Transparent);
 
-                    //drop shadow
-                    AddShadow(RenderingPaint, scale);
-                    RenderingPaint.Shader = SKShader.CreateLinearGradient(
-                        new SKPoint(Destination.Width * StartXRatio, Destination.Height * StartYRatio),
-                        new SKPoint(Destination.Width * EndXRatio, Destination.Height * EndYRatio),
-                        new SKColor[]
-                        {
-                                    StartColor.ToSKColor(),
-                                    EndColor.ToSKColor()
-                        },
-                        null,
-                        SKShaderTileMode.Clamp);
+                    var adjustedMatrix = matrix;
+                    adjustedMatrix =
+                        adjustedMatrix.PostConcat(SKMatrix.CreateTranslation(-destination.Left, -destination.Top));
 
+                    intermediateCanvas.DrawPicture(Svg.Picture, ref adjustedMatrix);
+
+                    var rect = new SKRect(0, 0, destination.Width, destination.Height);
+                    SetupGradient(RenderingPaint, FillGradient, rect);
                     RenderingPaint.BlendMode = GradientBlendMode;
-                    ctx.Context.Canvas.DrawRect(Destination, RenderingPaint);
+
+                    intermediateCanvas.DrawRect(new SKRect(0, 0, destination.Width, destination.Height),
+                        RenderingPaint);
+
+                    var kill = RenderingPaint.Shader;
+                    RenderingPaint.Shader = null;
+                    if (kill != null)
+                        DisposeObject(kill);
+                    RenderingPaint.BlendMode = this.FillBlendMode;
+
+                    AddShadow(RenderingPaint, scale);
+                    ctx.Context.Canvas.DrawSurface(intermediateSurface, new(destination.Left, destination.Top),
+                        RenderingPaint);
                 }
                 else
                 {
-                    RenderingPaint.Shader = null;//todo dispose
-                    RenderingPaint.ColorFilter = null; //todo dispose
+                    base.Paint(ctx);
+
+                    var kill1 = RenderingPaint.Shader;
+                    var kill2 = RenderingPaint.ColorFilter;
+                    RenderingPaint.Shader = null;
+                    RenderingPaint.ColorFilter = null;
+                    if (kill1 != null)
+                        DisposeObject(kill1);
+                    if (kill2 != null)
+                        DisposeObject(kill2);
 
                     //drop shadow
                     AddShadow(RenderingPaint, scale);
-
-                    //                            paint.ColorFilter = SKColorFilter.CreateBlendMode(BackgroundColors.ToSKColor(), SKBlendMode.SrcIn);
 
                     if (Clipping != null)
                     {
@@ -1165,7 +1118,7 @@ namespace DrawnUi.Draw
 
                         ctx.Context.Canvas.RestoreToCount(saved);
 
-                        clipPath.Dispose();
+                        DisposeObject(clipPath);
                     }
                     else
                     {
@@ -1173,11 +1126,10 @@ namespace DrawnUi.Draw
                     }
                 }
             }
-
+            else
+            {
+                base.Paint(ctx);
+            }
         }
-
-
-
     }
-
 }

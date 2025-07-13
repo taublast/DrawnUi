@@ -1,9 +1,5 @@
 ﻿using System.Buffers;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text;
+using System.Collections.Concurrent;
 using SkiaSharp.HarfBuzz;
 using Color = Microsoft.Maui.Graphics.Color;
 using Font = Microsoft.Maui.Font;
@@ -176,7 +172,9 @@ namespace DrawnUi.Draw
             {
                 if (Spans.Count > 0)
                 {
-                    var sb = new StringBuilder();
+                    // Use pooled StringBuilder to avoid allocation
+                    using var pooledSb = PooledStringBuilder.Get();
+                    var sb = pooledSb.StringBuilder;
                     foreach (var span in Spans)
                     {
                         sb.Append(span.Text);
@@ -210,22 +208,21 @@ namespace DrawnUi.Draw
         /// Spans are rendered in the order they appear in the collection.
         /// 
         /// Example XAML usage:
-        /// ```xml
-        /// <draw:SkiaLabel>
-        ///     <draw:SkiaLabel.Spans>
-        ///         <draw:TextSpan Text="This is " />
-        ///         <draw:TextSpan Text="bold" FontAttributes="Bold" TextColor="Red" />
-        ///         <draw:TextSpan Text=" text" />
-        ///     </draw:SkiaLabel.Spans>
-        /// </draw:SkiaLabel>
-        /// ```
+        /// <code>
+        /// &lt;draw:SkiaLabel&gt;
+        ///     &lt;draw:SkiaLabel.Spans&gt;
+        ///         &lt;draw:TextSpan Text="This is " /&gt;
+        ///         &lt;draw:TextSpan Text="bold" FontAttributes="Bold" TextColor="Red" /&gt;
+        ///         &lt;draw:TextSpan Text=" text" /&gt;
+        ///     &lt;/draw:SkiaLabel.Spans&gt;
+        /// &lt;/draw:SkiaLabel&gt;
+        /// </code>
         /// 
         /// When spans are used, the Text property is ignored. To reset to using
         /// the Text property, clear the Spans collection.
         /// </remarks>
         public IList<TextSpan> Spans => _spans;
 
- 
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -271,7 +268,7 @@ namespace DrawnUi.Draw
 
         void OnItemPropertyChanging(object sender, PropertyChangingEventArgs e) => OnPropertyChanging(nameof(Spans));
 
-        protected readonly SpanCollection _spans = new ();
+        protected readonly SpanCollection _spans = new();
 
         public event NotifyCollectionChangedEventHandler SpansCollectionChanged;
 
@@ -360,7 +357,10 @@ namespace DrawnUi.Draw
             using (var blob = SKTextBlob.Create(characters, font))
             {
                 if (blob != null)
-                    canvas.DrawText(blob, x, y, paint);
+                {
+                    //canvas.DrawText(blob, x, y, paint);
+                    canvas.DrawText(blob, (int)Math.Round(x), (int)Math.Round(y), paint);
+                }
             }
 
             //canvas.DrawText(text, (int)Math.Round(x), (int)Math.Round(y), paint);
@@ -393,6 +393,7 @@ namespace DrawnUi.Draw
                 characters,
                 paint, paintStroke, paintDropShadow, scale);
         }
+
 
         public void DrawLines(
             DrawingContext ctx,
@@ -514,7 +515,10 @@ namespace DrawnUi.Draw
                         else
                         {
                             useLineHeight = MeasuredLineHeight;
-                            moveToBaseline = useLineHeight - FontMetrics.Descent;
+
+                            var add = useLineHeight - useLineHeight / LineHeight;
+                            var move = useLineHeight - add / 2.0;
+                            moveToBaseline = (float)(move - FontMetrics.Descent);
                             baselineY = PositionBaseline(moveToBaseline + rectDraw.Top);
                             baseLineCalculated = true;
                         }
@@ -891,7 +895,7 @@ namespace DrawnUi.Draw
             SKPaint paint)
         {
             if (string.IsNullOrEmpty(text) || Shaper == null || paint == null || paint.Typeface == null)
-            return;
+                return;
 
             SetupShaper(paint.Typeface);
             DrawShapedText(canvas, Shaper, text, x, y, paint);
@@ -906,7 +910,7 @@ namespace DrawnUi.Draw
             float y,
             SKPaint paint)
         {
-            if (string.IsNullOrEmpty(text) || shaper==null || paint==null || paint.Typeface==null)
+            if (string.IsNullOrEmpty(text) || shaper == null || paint == null || paint.Typeface == null)
                 return;
 
             using var font = paint.ToFont();
@@ -992,11 +996,8 @@ namespace DrawnUi.Draw
 
         #region MEASURE
 
-        public override ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+        public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
         {
-            if (IsDisposed || IsDisposing)
-                return ScaledSize.Default;
-
             lock (LockSetup)
             {
                 // If measuring in a background context, or control can't draw, or constraints are invalid, return cached
@@ -1006,8 +1007,6 @@ namespace DrawnUi.Draw
                 }
 
                 IsMeasuring = true;
-
-
 
                 try
                 {
@@ -1062,13 +1061,20 @@ namespace DrawnUi.Draw
                         }
                         else if (Glyphs.Count > 0)
                         {
-                            // Replace unprintable symbols with fallback using StringBuilder to reduce allocations
-                            var sb = new StringBuilder(Glyphs.Count);
+                            // Replace unprintable symbols with fallback using pooled StringBuilder
+                            using var pooledSb = PooledStringBuilder.Get();
+                            var sb = pooledSb.StringBuilder;
+                            sb.EnsureCapacity(Glyphs.Count); // Pre-allocate capacity
                             for (int i = 0; i < Glyphs.Count; i++)
                             {
-                                sb.Append(Glyphs[i].IsAvailable
-                                    ? Glyphs[i].GetGlyphText()
-                                    : FallbackCharacter.ToString());
+                                if (Glyphs[i].IsAvailable)
+                                {
+                                    SpanMeasurement.AppendSpan(sb, Glyphs[i].GetGlyphText());
+                                }
+                                else
+                                {
+                                    SpanMeasurement.AppendChar(sb, FallbackCharacter);
+                                }
                             }
 
                             text = sb.ToString();
@@ -1090,7 +1096,9 @@ namespace DrawnUi.Draw
                     else
                     {
                         // Measure multiple spans
-                        var mergedLines = new List<TextLine>();
+                        // Use pooled list to avoid allocation
+                        using var pooledMergedLines = PooledTextLineList.Get();
+                        var mergedLines = pooledMergedLines.List;
                         SKPoint offset = SKPoint.Empty;
                         TextLine previousSpanLastLine = null;
 
@@ -1275,9 +1283,45 @@ namespace DrawnUi.Draw
         protected float MeasurePartialTextWidth(SKPaint paint, ReadOnlySpan<char> textSpan,
             bool needsShaping, float scale)
         {
-            string text = textSpan.ToString();
-            var (w, _) = MeasureLineGlyphs(paint, text, needsShaping, scale);
-            return w;
+            // Use optimized span-based measurement to avoid string allocation
+            return MeasurePartialTextWidthOptimized(paint, textSpan, needsShaping, scale);
+        }
+
+        /// <summary>
+        /// Optimized version of MeasurePartialTextWidth that uses span-based operations
+        /// </summary>
+        public float MeasurePartialTextWidthOptimized(SKPaint paint, ReadOnlySpan<char> textSpan,
+            bool needsShaping, float scale)
+        {
+            var paintTypeface = paint.Typeface ?? SkiaFontManager.DefaultTypeface;
+
+            // For simple cases, measure directly with span
+            if (!needsShaping && textSpan.Length <= 32) // Small text threshold
+            {
+                return SpanMeasurement.MeasureTextWidthWithAdvanceSpan(paint, textSpan);
+            }
+
+            // For complex cases or cache lookup, we need string conversion
+            // This is the controlled fallback to maintain cache compatibility
+            string text = SpanMeasurement.SpanToStringForCache(textSpan);
+
+            // Check cache first
+            if (GlyphMeasurementCache.TryGetValue(paintTypeface, needsShaping, text, out var cachedResult))
+            {
+                return cachedResult.Width;
+            }
+
+            // Measure using instance method and cache result
+            var (width, _) = MeasureLineGlyphs(paint, text, needsShaping, scale);
+            return width;
+        }
+
+        /// <summary>
+        /// Optimized version of LastNonSpaceIndex that works with spans
+        /// </summary>
+        public static int LastNonSpaceIndexOptimized(ReadOnlySpan<char> textSpan)
+        {
+            return SpanMeasurement.LastNonSpaceIndexSpan(textSpan);
         }
 
         protected (float Width, LineGlyph[] Glyphs) MeasureLineGlyphs(SKPaint paint, string text, bool needsShaping,
@@ -1295,7 +1339,9 @@ namespace DrawnUi.Draw
 
             var glyphs = GetGlyphs(text, paintTypeface);
 
-            var positions = new List<LineGlyph>();
+            // Use pooled list to avoid allocation
+            using var pooledPositions = PooledLineGlyphList.Get();
+            var positions = pooledPositions.List;
             float value = 0.0f;
             float offsetX = 0f;
 
@@ -1366,12 +1412,12 @@ namespace DrawnUi.Draw
 
                 if (paint.TextSkewX != 0)
                 {
-                    addAtIndex = LastNonSpaceIndex(text);
+                    addAtIndex = LastNonSpaceIndexOptimized(text.AsSpan());
                 }
 
                 foreach (var g in glyphs)
                 {
-                    var thisWidth = MeasureTextWidthWithAdvance(paint, g.GetGlyphText());
+                    var thisWidth = SpanMeasurement.MeasureTextWidthWithAdvanceSpan(paint, g.GetGlyphText());
                     if (pos == addAtIndex)
                     {
                         var additionalWidth = (int)Math.Round(Math.Abs(paint.TextSkewX) * paint.TextSize / 2f);
@@ -1410,7 +1456,9 @@ namespace DrawnUi.Draw
             TextSpan span, float scale)
         {
             var ret = new DecomposedText();
-            var result = new List<TextLine>();
+            // Use pooled list to avoid allocation
+            using var pooledResult = PooledTextLineList.Get();
+            var result = pooledResult.List;
 
             if (span != null)
             {
@@ -2009,7 +2057,9 @@ namespace DrawnUi.Draw
                     lastSpan.End + 1,
                     lastSpan.End + line.Glyphs.Length));
 
-                var characterPositions = new List<LineGlyph>();
+                // Use pooled list to avoid allocation
+                using var pooledCharacterPositions = PooledLineGlyphList.Get();
+                var characterPositions = pooledCharacterPositions.List;
                 characterPositions.AddRange(previousSpanLastLine.Glyphs);
                 var startAt = previousSpanLastLine.Width;
                 foreach (var glyph in line.Glyphs)
@@ -2071,23 +2121,14 @@ namespace DrawnUi.Draw
             return bounds;
         }
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float MeasureTextWidth(SKPaint paint, string text)
-        {
-            var rect = SKRect.Empty;
-            MeasureText(paint, text, ref rect);
-            return rect.Width;
-        }
-
         /// <summary>
-        /// Accounts paint transforms like skew etc
+        /// Returns text taken size in pixels. Accounts paint transforms like skew etc.
         /// </summary>
         /// <param name="paint"></param>
         /// <param name="text"></param>
         /// <param name="bounds"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void MeasureText(SKPaint paint, string text, ref SKRect bounds)
+        public void MeasureText(SKPaint paint, string text, ref SKRect bounds)
         {
             paint.MeasureText(text, ref bounds);
 
@@ -2096,6 +2137,32 @@ namespace DrawnUi.Draw
                 float additionalWidth = Math.Abs(paint.TextSkewX) * paint.TextSize;
                 bounds.Right += additionalWidth; //notice passed by ref struct will be modified
             }
+
+
+
+            //if (StrokeWidth > 0 && StrokeColor != TransparentColor)
+            //{
+            //    float additionalWidth = (float)(StrokeWidth * 2 * RenderingScale);
+            //    bounds.Right += additionalWidth;
+            //    bounds.Left -= additionalWidth;
+            //    bounds.Bottom += additionalWidth * 2;
+            //}
+
+            //if (DropShadowSize > 0 && DropShadowColor != TransparentColor)
+            //{
+            //    float additionalWidth = (float)(DropShadowSize * RenderingScale + DropShadowOffsetX * RenderingScale);
+            //    bounds.Right += additionalWidth;
+            //    float additionalHeight = (float)(DropShadowSize * RenderingScale + DropShadowOffsetY * RenderingScale);
+            //    bounds.Bottom += additionalHeight;
+            //}
+
+
+            bounds = new SKRect(
+                (float)Math.Floor(bounds.Left),
+                (float)Math.Floor(bounds.Top),
+                (float)Math.Ceiling(bounds.Right),
+                (float)Math.Ceiling(bounds.Bottom)
+            );
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2454,7 +2521,8 @@ namespace DrawnUi.Draw
         void UpdateFontMetrics(SKPaint paint)
         {
             FontMetrics = paint.FontMetrics;
-            LineHeightPixels = (float)Math.Round(-FontMetrics.Ascent + FontMetrics.Descent); //PaintText.FontSpacing;
+            LineHeightPixels =
+                (float)Math.Round((-FontMetrics.Ascent + FontMetrics.Descent) * LineHeight); //PaintText.FontSpacing;
             fontUnderline = FontMetrics.UnderlinePosition.GetValueOrDefault();
 
             if (!string.IsNullOrEmpty(this.MonoForDigits))
@@ -2558,12 +2626,13 @@ namespace DrawnUi.Draw
 
         void CleanAllocations()
         {
-            if (PaintDefault!=null)
+            if (PaintDefault != null)
             {
                 PaintDefault.Typeface = null;
                 PaintDefault.Dispose();
                 PaintDefault = null;
             }
+
             PaintStroke?.Dispose();
             PaintStroke = null;
             PaintShadow?.Dispose();
@@ -2623,7 +2692,7 @@ namespace DrawnUi.Draw
         protected float fontUnderline;
 
         private DecomposedText _lastDecomposed;
- 
+
         private int _fontWeight;
         private static float _scaleResampleText = 1.0f;
         private SKTypeface _replaceFont;
@@ -2803,26 +2872,14 @@ namespace DrawnUi.Draw
             propertyChanged: NeedUpdateFont);
 
         /// <summary>
-        /// Gets or sets the line height as a multiple of the font size.
+        /// Gets or sets the line height as a multiple of the font size, multiplier of how much space will be allocated for a line.
+        /// Note that this is different from LineSpacing.
         /// </summary>
-        /// <remarks>
-        /// This property controls the spacing between lines of text:
-        /// - 1.0 (default): Normal line height (equivalent to the font's built-in line height)
-        /// - Less than 1.0: Compressed line height, lines are closer together
-        /// - Greater than 1.0: Expanded line height, lines are further apart
-        /// 
-        /// For example, a value of 1.5 will make each line 50% taller than the default,
-        /// creating more space between lines of text.
-        /// 
-        /// This is different from LineSpacing, which adds a fixed amount of space between lines.
-        /// LineHeight scales proportionally with the font size.
-        /// </remarks>
         public double LineHeight
         {
             get { return (double)GetValue(LineHeightProperty); }
             set { SetValue(LineHeightProperty, value); }
         }
-
 
         public static readonly BindableProperty SensorRotationProperty = BindableProperty.Create(
             nameof(SensorRotation),
@@ -2977,6 +3034,9 @@ namespace DrawnUi.Draw
             typeof(double), typeof(SkiaLabel), 0.25,
             propertyChanged: NeedInvalidateMeasure);
 
+        /// <summary>
+        /// Default is 0.25
+        /// </summary>
         public double ParagraphSpacing
         {
             get { return (double)GetValue(ParagraphSpacingProperty); }
@@ -3039,6 +3099,18 @@ namespace DrawnUi.Draw
         {
             get { return (FormattedString)GetValue(FormattedTextProperty); }
             set { SetValue(FormattedTextProperty, value); }
+        }
+
+
+        public static readonly BindableProperty FormatProperty = BindableProperty.Create(
+            nameof(Format), typeof(string), typeof(SkiaLabel),
+            string.Empty,
+            propertyChanged: TextWasChanged);
+
+        public string Format
+        {
+            get { return (string)GetValue(FormatProperty); }
+            set { SetValue(FormatProperty, value); }
         }
 
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
@@ -3116,7 +3188,16 @@ namespace DrawnUi.Draw
             if (IsDisposed || IsDisposing)
                 return;
 
-            var text = Text;
+            var text = string.Empty;
+            if (!string.IsNullOrEmpty(Format))
+            {
+                text = string.Format(Format, Text);
+            }
+            else
+            {
+                text = Text;
+            }
+
             if (text != null)
             {
                 switch (TextTransform)

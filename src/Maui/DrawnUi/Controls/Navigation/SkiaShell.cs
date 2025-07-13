@@ -676,6 +676,7 @@ namespace DrawnUi.Controls
                 EffectBlendMode = SKBlendMode.SrcATop,
                 //Darken = FrozenBackgroundDim,
                 Opacity = 0,
+                RescalingQuality = SKFilterQuality.None,
                 BackgroundColor = Colors.Black,
             };
 
@@ -752,8 +753,11 @@ namespace DrawnUi.Controls
                 try
                 {
                     var content = page as SkiaControl;
-                    modalWrapper.SetInheritedBindingContext(content.BindingContext);
-                    modalWrapper.WrapContent(content);
+                    if (content != null)
+                    {
+                        modalWrapper.SetInheritedBindingContext(content.BindingContext);
+                        modalWrapper.WrapContent(content);
+                    }
 
                     if (modalWrapper.Content is SkiaDrawer drawer)
                     {
@@ -1720,7 +1724,7 @@ namespace DrawnUi.Controls
         public virtual void ShowToast(string text,
             int msShowTime = 4000)
         {
-            var content = new SkiaMarkdownLabel()
+            var content = new SkiaRichLabel()
             {
                 TextColor = ToastTextColor,
                 Text = text,

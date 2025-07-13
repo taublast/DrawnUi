@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<draw:DrawnUiBasePage
+    x:Class="Sandbox.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:sandbox="clr-namespace:Sandbox"
+    x:Name="ThisPage">
+
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+
+        <draw:Canvas
+            BackgroundColor="DarkSlateBlue"
+            Gestures="Enabled"
+            HorizontalOptions="Fill"
+            RenderingMode="Accelerated"
+            Tag="Main"
+            VerticalOptions="Fill">
+
+            <draw:SkiaLayout
+                HorizontalOptions="Fill"
+                Tag="Wrapper"
+                VerticalOptions="Fill">
+
+                <draw:SkiaScroll HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                    <draw:SkiaLayout
+                        HorizontalOptions="Fill"
+                        Spacing="1"
+                        Tag="ScrollContent"
+                        Type="Column"
+                        UseCache="ImageComposite">
+
+                
+ 
+
+                    </draw:SkiaLayout>
+
+                </draw:SkiaScroll>
+
+            
+                <draw:SkiaLabelFps
+                    Margin="0,0,4,24"
+                    BackgroundColor="DarkRed"
+                    HorizontalOptions="End"
+                    Rotation="-45"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    ZIndex="100">
+
+                </draw:SkiaLabelFps>
+
+            </draw:SkiaLayout>
+
+        </draw:Canvas>
+    </Grid>
+
+</draw:DrawnUiBasePage>

@@ -20,9 +20,15 @@
         /// </summary>
         public virtual void Invalidate()
         {
-            InvalidateInternal();
-
             InvalidateParent();
+            if (WasMeasured)
+            {
+                InvalidateInternal();
+            }
+            else
+            {
+                NeedMeasure = true;
+            }
         }
 
         public virtual bool ShouldInvalidateByChildren
@@ -56,16 +62,16 @@
             if (IsParentIndependent)
                 return;
 
-            if (InvalidatedParent)
-            {
-                if (IsRendering)
-                    _invalidatedParentPostponed = true;
-                else
-                {
-                    Superview?.SetChildAsDirty(this);
-                }
-                return;
-            }
+            //if (InvalidatedParent)
+            //{
+            //    if (IsRendering)
+            //        _invalidatedParentPostponed = true;
+            //    else
+            //    {
+            //        Superview?.SetChildAsDirty(this);
+            //    }
+            //    return;
+            //}
 
             InvalidatedParent = true;
 
@@ -125,7 +131,7 @@
             }
         }
 
-        protected readonly ControlsTracker DirtyChildrenTracker = new();
+        public readonly ControlsTracker DirtyChildrenTracker = new();
 
         protected HashSet<SkiaControl> DirtyChildrenInternal { get; set; } = new();
 

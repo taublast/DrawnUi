@@ -854,7 +854,7 @@ public partial class SkiaImageManager : IDisposable
         }
         catch (Exception e)
         {
-            Super.Log(e);
+            Super.Log($"LoadFromFile \"{filename}\" {e}");
         }
 
         return null;

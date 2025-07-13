@@ -38,13 +38,16 @@ namespace DrawnUi.Views
 
         public static void OnInvalidateSurface(SKGLViewHandlerRetained handler, ISKGLView view, object? args)
         {
+            if (handler?.PlatformView == null)
+                return;
+
             if (handler.PlatformView.ManualRefresh)
                 handler.PlatformView.SetNeedsDisplay();
         }
 
         public static void MapIgnorePixelScaling(SKGLViewHandlerRetained handler, ISKGLView view)
         {
-            if (handler.PlatformView is MauiSkMetalViewRetained pv)
+            if (handler?.PlatformView is MauiSkMetalViewRetained pv)
             {
                 pv.IgnorePixelScaling = view.IgnorePixelScaling;
                 handler.PlatformView.SetNeedsDisplay();
@@ -53,6 +56,9 @@ namespace DrawnUi.Views
 
         public static void MapHasRenderLoop(SKGLViewHandlerRetained handler, ISKGLView view)
         {
+            if (handler?.PlatformView == null)
+                return;
+
             handler.PlatformView.Paused = !view.HasRenderLoop;
             handler.PlatformView.EnableSetNeedsDisplay = !view.HasRenderLoop;
         }

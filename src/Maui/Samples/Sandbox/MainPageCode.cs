@@ -9,9 +9,10 @@ namespace Sandbox
 
     public class TrackCell : SkiaShape
     {
-        public override ScaledSize Measure(float widthConstraint, float heightConstraint, float scale)
+        public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
         {
-            var ret = base.Measure(widthConstraint, heightConstraint, scale);
+            var ret = base.OnMeasuring(widthConstraint, heightConstraint, scale);
+
             Debug.WriteLine($"[CELL] {BindingContext} measured {ret.Pixels}");
             return ret;
         }
@@ -103,20 +104,17 @@ namespace Sandbox
                                         HorizontalOptions = LayoutOptions.Fill,
                                         HeightRequest = 80,
                                         Margin = 0,
-                                        Content = new SkiaLayout()
+                                        Children = new List<SkiaControl>()
                                         {
-                                            Children = new List<SkiaControl>()
+                                            new SkiaLabel()
                                             {
-                                                new SkiaLabel()
-                                                {
-                                                    UseCache = SkiaCacheType.Operations,
-                                                }.Adapt((
-                                                    label) =>
-                                                {
-                                                    label.SetBinding(SkiaLabel.TextProperty, ".");
-                                                })
-                                            }
-                                        }.Fill()
+                                                UseCache = SkiaCacheType.Operations,
+                                            }.Adapt((
+                                                label) =>
+                                            {
+                                                label.SetBinding(SkiaLabel.TextProperty, ".");
+                                            })
+                                        }
                                     };
 
                                     cell.Tapped += (sender, args) =>

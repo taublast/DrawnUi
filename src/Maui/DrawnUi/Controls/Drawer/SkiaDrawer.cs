@@ -7,15 +7,17 @@ namespace DrawnUi.Controls
     [ContentProperty("Content")]
     public class SkiaDrawer : SnappingLayout, IVisibilityAware
     {
-
         public override void ApplyBindingContext()
         {
-            if (Content.BindingContext == null)
+            if (Content != null && Content.BindingContext == null)
                 Content?.SetInheritedBindingContext(this.BindingContext);
 
             base.ApplyBindingContext();
         }
 
+        /// <summary>
+        /// Command to close the drawer programmatically. Sets IsOpen to false.
+        /// </summary>
         public ICommand CommandClose
         {
             get
@@ -30,6 +32,9 @@ namespace DrawnUi.Controls
             }
         }
 
+        /// <summary>
+        /// Command to open the drawer programmatically. Sets IsOpen to true.
+        /// </summary>
         public ICommand CommandOpen
         {
             get
@@ -44,6 +49,9 @@ namespace DrawnUi.Controls
             }
         }
 
+        /// <summary>
+        /// Command to toggle the drawer state programmatically. Inverts the current IsOpen value.
+        /// </summary>
         public ICommand CommandToggle
         {
             get
@@ -470,7 +478,8 @@ namespace DrawnUi.Controls
                 if (SnapPoints[1] == CurrentSnap)
                     isOpen = false;
             }
-            Debug.WriteLine($"[SkiaDrawer] SetIsOpen: open {isOpen} moving {InTransition}");
+
+            //Debug.WriteLine($"[SkiaDrawer] SetIsOpen: open {isOpen} moving {InTransition}");
             IsOpen = isOpen;
         }
 
@@ -571,6 +580,7 @@ namespace DrawnUi.Controls
                     {
                         IsOpen = false;
                     }
+
                     return null;
                 }
             }
@@ -579,7 +589,7 @@ namespace DrawnUi.Controls
                 var passed = true;
             }
 
-                bool passedToChildren = false;
+            bool passedToChildren = false;
 
             ISkiaGestureListener PassToChildren()
             {
@@ -600,19 +610,28 @@ namespace DrawnUi.Controls
                 || !RespondsToGestures)
             {
                 consumed = PassToChildren();
+                if (consumed == this)
+                {
+                    //BlockGesturesBelow fired
+                    consumed = null;
+                }
+
                 if (consumed != null && args.Type != TouchActionResult.Up)
                 {
+                    if (TouchEffect.LogEnabled)
+                        Super.Log($"[DRAWER] {this.Tag} {args.Type} CONSUMED by {consumed}");
+
                     if (args.Type == TouchActionResult.Tapped)
                     {
                         ChildWasTapped = true;
                     }
+
                     return consumed;
                 }
             }
 
             if (!RespondsToGestures)
                 return consumed;
-
 
 
             // todo
@@ -631,6 +650,9 @@ namespace DrawnUi.Controls
 
                 _panningOffset = new((float)TranslationX, (float)TranslationY);
             }
+
+            Vector2 velocity;
+            float useVelocity = 0;
 
             if (true)
             {
@@ -714,8 +736,6 @@ namespace DrawnUi.Controls
 
                         if (IsUserPanning)
                         {
-                            Vector2 velocity;
-                            float useVelocity = 0;
                             if (direction == DirectionType.Horizontal)
                             {
                                 useVelocity = (float)(args.Event.Distance.Velocity.X / RenderingScale);
@@ -783,9 +803,21 @@ namespace DrawnUi.Controls
                         direction = DirectionType.None;
                         var Velocity = Vector2.Zero;
 
-                        Velocity = VelocityAccumulator.CalculateFinalVelocity(500);
-                        //Velocity = new((float)(args.Event.Distance.Velocity.X / RenderingScale), (float)(args.Event.Distance.Velocity.Y / RenderingScale));
+                        if (direction == DirectionType.Horizontal)
+                        {
+                            useVelocity = (float)(args.Event.Distance.Velocity.X / RenderingScale);
+                            velocity = new(useVelocity, 0);
+                        }
+                        else
+                        {
+                            useVelocity = (float)(args.Event.Distance.Velocity.Y / RenderingScale);
+                            velocity = new(0, useVelocity);
+                        }
 
+                        VelocityAccumulator.CaptureVelocity(velocity);
+
+                        Velocity = VelocityAccumulator.CalculateFinalVelocity(3000);
+                        //Debug.WriteLine($"[SkiaDrawer] Velocity: {Velocity}");
 
                         bool rightDirection = false;
 
@@ -838,7 +870,7 @@ namespace DrawnUi.Controls
 
                 if (consumed != null || IsUserPanning) // || args.Event.NumberOfTouches > 1)
                 {
-                    if (consumed==null &&  args.Type != TouchActionResult.Up)
+                    if (consumed == null && args.Type != TouchActionResult.Up)
                     {
                         return this;
                     }
@@ -848,10 +880,7 @@ namespace DrawnUi.Controls
 
                 if (!passedToChildren)
                 {
-                    consumed = PassToChildren();
-                    if (consumed == null)
-                        return consumedDefault;
-                    return consumed;
+                    return PassToChildren();
                 }
             }
 

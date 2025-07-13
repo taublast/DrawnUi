@@ -1,4 +1,6 @@
-﻿namespace DrawnUi.Draw;
+﻿using System.Threading.Tasks.Dataflow;
+
+namespace DrawnUi.Draw;
 
 public class ControlsTracker
 {
@@ -14,6 +16,12 @@ public class ControlsTracker
             _isDirty = true;
         }
     }
+
+    public bool HasItems => _dic.Count > 0;
+
+    public bool IsEmpty => _dic.Count < 1;
+
+    public int Count => _dic.Count;
 
     public List<SkiaControl> GetList()
     {
@@ -33,6 +41,7 @@ public class ControlsTracker
     {
         lock (_dic)
         {
+            //_dic.TryAdd(item.Uid,item);
             _dic[item.Uid] = item;
             _isDirty = true;
         }

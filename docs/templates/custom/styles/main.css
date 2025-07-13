@@ -1,0 +1,147 @@
+/* Custom DocFX Syntax Highlighting - Matching VSCode Theme */
+
+/* Code block background */
+pre, code {
+    background-color: #000000 !important;
+    color: #dfdfdf !important;
+}
+
+/* Comments */
+.hljs-comment,
+.hljs-quote {
+    color: #4fe34f !important;
+}
+
+/* XML Documentation Comments */
+.hljs-doctag,
+.hljs-meta .hljs-doctag {
+    color: #0ab90A !important;
+}
+
+/* Strings */
+.hljs-string,
+.hljs-literal {
+    color: #edf5a0 !important;
+}
+
+/* String interpolation/templates */
+.hljs-template-string,
+.hljs-template-variable {
+    color: #fb7773 !important;
+}
+
+/* Keywords (if, else, for, while, etc.) */
+.hljs-keyword {
+    color: #e2dc29 !important;
+}
+
+/* Control flow keywords */
+.hljs-keyword.hljs-control,
+.hljs-keyword.hljs-flow {
+    color: #ea97e5 !important;
+}
+
+/* Types, classes, interfaces */
+.hljs-type,
+.hljs-class,
+.hljs-title.class_,
+.hljs-built_in {
+    color: #edf5a0 !important;
+}
+
+/* Enums */
+.hljs-enum {
+    color: #74c88f !important;
+}
+
+/* Method/Function names */
+.hljs-title.function_,
+.hljs-function .hljs-title,
+.hljs-method {
+    color: #f9ffb4 !important;
+}
+
+/* Variables, properties */
+.hljs-variable,
+.hljs-property,
+.hljs-attr {
+    color: #9CDCFE !important;
+}
+
+/* Constants, enum members */
+.hljs-variable.constant_,
+.hljs-constant {
+    color: #dfdfdf !important;
+}
+
+/* Numbers */
+.hljs-number {
+    color: #dfdfdf !important;
+}
+
+/* Operators */
+.hljs-operator {
+    color: #e2dc29 !important;
+}
+
+/* Punctuation */
+.hljs-punctuation {
+    color: #cfcfcf !important;
+}
+
+/* Preprocessor directives */
+.hljs-meta,
+.hljs-preprocessor {
+    color: #b8b8b8 !important;
+}
+
+/* Attributes */
+.hljs-attribute,
+.hljs-meta-string {
+    color: #dfdfdf !important;
+}
+
+/* Namespaces */
+.hljs-namespace {
+    color: #dfdfdf !important;
+}
+
+/* C# specific */
+.hljs-keyword.hljs-type {
+    color: #e2dc29 !important;
+}
+
+.hljs-keyword.hljs-modifier {
+    color: #e2dc29 !important;
+}
+
+/* Generic type parameters */
+.hljs-title.class_.generic_ {
+    color: #edf5a0 !important;
+}
+
+/* LINQ keywords */
+.hljs-keyword.hljs-linq {
+    color: #ea97e5 !important;
+}
+
+/* Override default code block styling */
+.hljs {
+    background: #000000 !important;
+    color: #dfdfdf !important;
+}
+
+/* Ensure proper contrast for inline code */
+code {
+    background-color: #111111 !important;
+    color: #dfdfdf !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+}
+
+/* Line numbers (if enabled) */
+.hljs-ln-numbers {
+    color: #666666 !important;
+    border-right: 1px solid #333333 !important;
+    padding-right: 8px !important;
+}

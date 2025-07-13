@@ -3,8 +3,6 @@ using Canvas = DrawnUi.Views.Canvas;
 
 namespace Sandbox
 {
-
-
     public class MainPageTestImage : BasePageCodeBehind, IDisposable
     {
         Canvas Canvas;
@@ -27,11 +25,9 @@ namespace Sandbox
             Canvas = new Canvas()
             {
                 Gestures = GesturesMode.Enabled,
-
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 BackgroundColor = Colors.LightGray,
-
                 Content = new SkiaLayout()
                 {
                     VerticalOptions = LayoutOptions.Fill,
@@ -42,43 +38,39 @@ namespace Sandbox
                         {
                             Children = new List<SkiaControl>()
                             {
-                              new SkiaShape()
-                              {
-                                  VerticalOptions = LayoutOptions.Center,
-                                  HorizontalOptions = LayoutOptions.Center,
-                                  WidthRequest = 150,
-                                  HeightRequest = 150,
-                                  Type = ShapeType.Polygon,
-                                  StrokeColor = Colors.Black,
-                                  StrokeWidth = 3,
-                                  BackgroundColor = Colors.Red,
-                                  Points = new List<SkiaPoint>()
-                                  {
-                                      new (0.1f, 0.1f),
-                                      new (0.9f, 0.1f),
-                                      new (0.1f, 0.5f),
-                                  },
-                                  Content = new SkiaImage()
-                                  {
-                                      Source = "cap.png",
-                                      Aspect = TransformAspect.AspectFit,
-                                      VerticalOptions = LayoutOptions.Center,
-                                      HorizontalOptions = LayoutOptions.Center
-                                  }
-                              }
+                                new SkiaShape()
+                                {
+                                    VerticalOptions = LayoutOptions.Center,
+                                    HorizontalOptions = LayoutOptions.Center,
+                                    WidthRequest = 150,
+                                    HeightRequest = 150,
+                                    Type = ShapeType.Polygon,
+                                    StrokeColor = Colors.Black,
+                                    StrokeWidth = 3,
+                                    BackgroundColor = Colors.Red,
+                                    Points = new List<SkiaPoint>()
+                                    {
+                                        new(0.1f, 0.1f), new(0.9f, 0.1f), new(0.1f, 0.5f),
+                                    },
+                                    Children = new List<SkiaControl>()
+                                    {
+                                        new SkiaImage()
+                                        {
+                                            Source = "cap.png",
+                                            Aspect = TransformAspect.AspectFit,
+                                            VerticalOptions = LayoutOptions.Center,
+                                            HorizontalOptions = LayoutOptions.Center
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
-
-
             };
- 
+
 
             this.Content = Canvas;
         }
-
- 
-
     }
 }

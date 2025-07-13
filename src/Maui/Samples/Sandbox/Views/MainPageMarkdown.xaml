@@ -40,17 +40,10 @@
                             Padding="6"
                             BackgroundColor="Black"
                             HorizontalOptions="Fill"
-                            Tag="VStack"
+                            Tag="SkiaStack"
                             Type="Column">
 
-
-                            <!--<draw:SkiaLabel
-                            HorizontalOptions="Center"
-                            Tag="Warning"
-                            Text="SkiaMarkdownLabel"
-                            TextColor="White" />-->
-
-                            <draw:SkiaMarkdownLabel
+                            <draw:SkiaRichLabel
                                 x:Name="LabelMarkdown"
                                 FontSize="13"
                                 HorizontalOptions="Center"

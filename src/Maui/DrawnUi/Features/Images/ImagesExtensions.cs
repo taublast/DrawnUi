@@ -1,19 +1,25 @@
-﻿using Microsoft.Extensions.DependencyInjection.Extensions;
-//using Microsoft.Extensions.Http;
-//using Polly;
-//using Polly.Timeout;
+﻿#if WINDOWS || MACCATALYST
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Http;
+using Polly;
+using Polly.Timeout;
 using System.Net;
+#endif
 
 namespace DrawnUi.Features.Images
 {
     public static class ImagesExtensions
     {
-        const string HttpClientKey = "drawnui";
+        /// <summary>
+        /// Can customize this to your needs
+        /// </summary>
+        public static string HttpClientKey = "drawnui";
 
-        /*
+#if WINDOWS || MACCATALYST
 
         public static IServiceCollection AddUriImageSourceHttpClient(this IServiceCollection services,
-            Action<HttpClient>? configureDelegate = null, Func<IHttpClientBuilder, IHttpClientBuilder>? delegateBuilder = null)
+            Action<HttpClient>? configureDelegate = null,
+            Func<IHttpClientBuilder, IHttpClientBuilder>? delegateBuilder = null)
         {
             IHttpClientBuilder clientBuilder;
 
@@ -29,16 +35,10 @@ namespace DrawnUi.Features.Images
                         || r.StatusCode == HttpStatusCode.RequestTimeout)
                     .Or<HttpRequestException>()
                     .Or<TimeoutRejectedException>()
-                    .WaitAndRetryAsync(new[]
-                    {
-                    TimeSpan.FromSeconds(2),
-                    TimeSpan.FromSeconds(3),
-                    });
+                    .WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(3), });
 
-                clientBuilder = services.AddHttpClient(HttpClientKey, client =>
-                    {
-                        client.DefaultRequestHeaders.Add("User-Agent", Super.UserAgent);
-                    })
+                clientBuilder = services.AddHttpClient(HttpClientKey,
+                        client => { client.DefaultRequestHeaders.Add("User-Agent", Super.UserAgent); })
                     .ConfigurePrimaryHttpMessageHandler(() =>
                     {
                         var handler = new HttpClientHandler();
@@ -61,7 +61,7 @@ namespace DrawnUi.Features.Images
             return services;
         }
 
-        */
+#endif
 
         /// <summary>
         /// Will create a HttpClient with a UserAgent in headers defined by `Super.UserAgent`.
@@ -72,17 +72,19 @@ namespace DrawnUi.Features.Images
         /// <returns></returns>
         public static HttpClient? CreateHttpClient(this IServiceProvider services)
         {
-            if (Super.CreateHttpClient != null) 
+            if (Super.CreateHttpClient != null)
             {
                 return Super.CreateHttpClient(services);
             }
 
+#if WINDOWS || MACCATALYST
+            return services.GetService<IHttpClientFactory>()?.CreateClient(HttpClientKey);
+#else
+            // on mobile removed IHttpClientFactory for faster app startup
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.UserAgent.ParseAdd(Super.UserAgent);
             return client;
-
-            //return services.GetService<IHttpClientFactory>()?.CreateClient(HttpClientKey); :( we removed IHttpClientFactory for faster app startup
+#endif
         }
-
     }
 }

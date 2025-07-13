@@ -1,5 +1,4 @@
-﻿using System;
-using DrawnUi.Infrastructure.Xaml;
+﻿using DrawnUi.Infrastructure.Xaml;
 
 namespace DrawnUi.Draw;
 
@@ -28,6 +27,18 @@ public class SkiaImage : SkiaControl
         }
     }
 
+    public override SKImage CachedImage
+    {
+        get
+        {
+            if (RenderObject == null && ScaledSource != null)
+            {
+                return ScaledSource.Image;
+            }
+            return base.CachedImage;
+        }
+    }
+
     public override void OnScaleChanged()
     {
         InvalidateImageFilter();
@@ -49,7 +60,7 @@ public class SkiaImage : SkiaControl
     {
         if (loaded == null)
         {
-            OnCleared?.Invoke(this, null);
+            Cleared?.Invoke(this, null);
             _needClearBitmap = true;
         }
 
@@ -58,13 +69,13 @@ public class SkiaImage : SkiaControl
             return loaded;
         }
 
-        var kill = ApplyNewSource;
+        var killApplyNewSource = ApplyNewSource;
         ApplyNewSource = loaded;
-        if (kill != null)
+        if (killApplyNewSource != null)
         {
             if (SkiaImageManager.ReuseBitmaps)
-                kill.ProtectBitmapFromDispose = true; //do not dispose shared cached image
-            DisposeObject(kill);
+                killApplyNewSource.ProtectBitmapFromDispose = true; //do not dispose shared cached image
+            DisposeObject(killApplyNewSource);
         }
 
         // see HasUnstableSize help for explanation
@@ -266,12 +277,11 @@ public class SkiaImage : SkiaControl
         nameof(RescalingQuality),
         typeof(SKFilterQuality),
         typeof(SkiaImage),
-        SKFilterQuality.None,
+        SKFilterQuality.Medium,
         propertyChanged: NeedDraw);
 
     /// <summary>
-    /// Default value is None.
-    /// You might want to set this to Medium for static images for better quality.
+    /// Default value is Medium.
     /// </summary>
     public SKFilterQuality RescalingQuality
     {
@@ -279,21 +289,6 @@ public class SkiaImage : SkiaControl
         set { SetValue(RescalingQualityProperty, value); }
     }
 
-    public static readonly BindableProperty RescalingTypeProperty = BindableProperty.Create(
-        nameof(RescalingType),
-        typeof(RescalingType),
-        typeof(SkiaImage),
-        RescalingType.Default,
-        propertyChanged: NeedDraw);
-
-    /// <summary>
-    /// Use SkiaSharp default or other custom..
-    /// </summary>
-    public RescalingType RescalingType
-    {
-        get { return (RescalingType)GetValue(RescalingTypeProperty); }
-        set { SetValue(RescalingTypeProperty, value); }
-    }
 
     private static void OnLoadSourceChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
@@ -320,9 +315,9 @@ public class SkiaImage : SkiaControl
     {
         CancelLoading?.Cancel();
 
-        OnCleared = null;
-        OnError = null;
-        OnSuccess = null;
+        Cleared = null;
+        Error = null;
+        Success = null;
 
         base.OnWillDisposeWithChildren();
     }
@@ -443,7 +438,7 @@ public class SkiaImage : SkiaControl
             SetImageSource(LastSource);
     }
 
-    public event EventHandler OnCleared;
+    public event EventHandler Cleared;
 
     protected virtual async Task<SKBitmap> LoadImageManagedAsync(ImageSource source, CancellationTokenSource cancel,
         LoadPriority priority = LoadPriority.Normal)
@@ -463,7 +458,7 @@ public class SkiaImage : SkiaControl
         {
             TraceLog($"[SkiaImage] source is null");
             ClearBitmap();
-            OnSourceSuccess(null);
+            OnSuccess(null);
         }
         else
         {
@@ -494,7 +489,7 @@ public class SkiaImage : SkiaControl
                         //{
                         //    ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
                         //};
-                        OnSourceSuccess(uri);
+                        OnSuccess(uri);
                         return;
                     }
                 }
@@ -510,8 +505,16 @@ public class SkiaImage : SkiaControl
                     if (source is StreamImageSource || source is FileImageSource)
                     {
                         //load in sync mode
-                        var bitmap = SkiaImageManager.Instance.LoadImageManagedAsync(source, cancel).GetAwaiter()
-                            .GetResult();
+                        SKBitmap bitmap = null;
+                        try
+                        {
+                            bitmap = SkiaImageManager.Instance.LoadImageManagedAsync(source, cancel).GetAwaiter()
+                                .GetResult();
+                        }
+                        catch (Exception e)
+                        {
+                            Super.Log(e);
+                        }
                         if (bitmap != null)
                         {
                             //ImageBitmap = new LoadedImageSource(bitmap)
@@ -519,13 +522,12 @@ public class SkiaImage : SkiaControl
                             //    ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
                             //};
                             SetImageInternal(SKImage.FromBitmap(bitmap), SkiaImageManager.ReuseBitmaps);
-                            OnSourceSuccess(uri);
+                            OnSuccess(uri);
                         }
                         else
                         {
-                            OnSourceError(url);
+                            OnError(url);
                         }
-
                         return;
                     }
                 }
@@ -575,7 +577,9 @@ public class SkiaImage : SkiaControl
                                         IsLoading = false;
                                         TraceLog($"[SkiaImage] Canceled already loaded {source}");
                                         if (bitmap != null && !SkiaImageManager.ReuseBitmaps)
-                                            SafeAction(() => { bitmap.Dispose(); });
+                                        {
+                                            DisposeObject(bitmap);
+                                        }
                                         return;
                                     }
 
@@ -588,7 +592,7 @@ public class SkiaImage : SkiaControl
                                         }; //at the end will use SetImage(new InstancedBitmap(bitmap));
 
                                         //TraceLog($"[SkiaImage] Loaded {source}");
-                                        OnSourceSuccess(uri);
+                                        OnSuccess(uri);
                                         return;
                                     }
 
@@ -613,12 +617,12 @@ public class SkiaImage : SkiaControl
                             await LoadAction();
                         }
 
-                        OnSourceError(url);
+                        OnError(url);
                     }
                     catch (Exception e)
                     {
                         TraceLog(e.Message);
-                        OnSourceError(url);
+                        OnError(url);
                     }
                 };
 
@@ -644,7 +648,7 @@ public class SkiaImage : SkiaControl
             {
                 TraceLog($"[SkiaImage] Source already loaded {source}");
 
-                OnSourceSuccess(null);
+                OnSuccess(null);
             }
         }
     }
@@ -995,16 +999,16 @@ public class SkiaImage : SkiaControl
         _needClearBitmap = true;
     }
 
-    public virtual void OnSourceError(string source)
+    public virtual void OnError(string source)
     {
         HasError = true;
-        OnError?.Invoke(this, new ContentLoadedEventArgs(source));
+        Error?.Invoke(this, new ContentLoadedEventArgs(source));
     }
 
-    public virtual void OnSourceSuccess(string source)
+    public virtual void OnSuccess(string source)
     {
         HasError = false;
-        OnSuccess?.Invoke(this, new ContentLoadedEventArgs(source));
+        Success?.Invoke(this, new ContentLoadedEventArgs(source));
     }
 
     protected virtual void SubscribeToCanReload()
@@ -1029,8 +1033,8 @@ public class SkiaImage : SkiaControl
         }
     }
 
-    public event EventHandler<ContentLoadedEventArgs> OnError;
-    public event EventHandler<ContentLoadedEventArgs> OnSuccess;
+    public event EventHandler<ContentLoadedEventArgs> Error;
+    public event EventHandler<ContentLoadedEventArgs> Success;
 
     #region RENDERiNG
 
@@ -1042,7 +1046,7 @@ public class SkiaImage : SkiaControl
     /// <summary>
     /// Reusing this
     /// </summary>
-    protected SKImageFilter PaintImageFilter;
+    public SKImageFilter PaintImageFilter;
 
     //will reuse
     SKPath _preparedClipBounds = null;
@@ -1317,260 +1321,54 @@ public class SkiaImage : SkiaControl
     public class RescaledBitmap : IDisposable
     {
         public SKBitmap Bitmap { get; set; }
+
+        public SKImage _image;
+
+        public SKImage Image
+        {
+            get
+            {
+                if (_image == null && Bitmap != null)
+                {
+                    _image = SKImage.FromBitmap(Bitmap);
+                }
+                return _image;
+            }
+        }
+
         public SKFilterQuality Quality { get; set; }
         public Guid Source { get; set; }
 
         public void Dispose()
         {
             Bitmap?.Dispose();
+            _image?.Dispose();
         }
     }
-
-
-
+ 
+ 
     /// <summary>
-    /// Gamma-corrected image resizing that matches Photoshop quality
+    /// Gets sampling options based on quality level
     /// </summary>
-    private SKBitmap CreateGammaCorrectedResize(SKBitmap source, SKSizeI targetSize, SKFilterQuality quality = SKFilterQuality.High)
+    /// <param name="quality">Quality level from user selection</param>
+    /// <param name="isUpscaling">Whether the operation is upscaling</param>
+    /// <returns>Appropriate SKSamplingOptions</returns>
+    public static SKSamplingOptions GetSamplingOptions(SKFilterQuality quality, bool isUpscaling)
     {
-        // Step 1: Convert to linear color space for proper scaling
-        var linearBitmap = ConvertToLinearSpace(source);
-
-        // Step 2: Resize in linear space
-        var resizedLinear = linearBitmap.Resize(targetSize, quality);
-        linearBitmap.Dispose();
-
-        // Step 3: Convert back to sRGB
-        var result = ConvertToSRGB(resizedLinear);
-        resizedLinear.Dispose();
-
-        return result;
-    }
-
-    /// <summary>
-    /// Multi-pass rescaling for best quality on large size changes with customizable steps
-    /// </summary>
-    private SKBitmap CreateMultiPassResize(SKBitmap source, SKSizeI targetSize, SKFilterQuality quality,
-        float stepFactor = 0.5f, float thresholdMultiplier = 2.0f, int maxSteps = 10)
-    {
-        var currentBitmap = source;
-        var currentWidth = source.Width;
-        var currentHeight = source.Height;
-        var targetWidth = targetSize.Width;
-        var targetHeight = targetSize.Height;
-
-        var intermediates = new List<SKBitmap>();
-        var stepCount = 0;
-
-        try
+        return quality switch
         {
-            while ((currentWidth > targetWidth * thresholdMultiplier || currentHeight > targetHeight * thresholdMultiplier)
-                   && stepCount < maxSteps)
-            {
-                currentWidth = (int)Math.Max(currentWidth * stepFactor, targetWidth);
-                currentHeight = (int)Math.Max(currentHeight * stepFactor, targetHeight);
+            SKFilterQuality.None => new SKSamplingOptions(SKFilterMode.Nearest, SKMipmapMode.None),
 
-                var intermediate = currentBitmap.Resize(new SKSizeI(currentWidth, currentHeight), quality);
-                intermediates.Add(intermediate);
-                currentBitmap = intermediate;
-                stepCount++;
-            }
+            SKFilterQuality.Low => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None),
 
-            var result = currentBitmap.Resize(targetSize, quality);
+            SKFilterQuality.Medium => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Nearest),
 
-            foreach (var intermediate in intermediates)
-            {
-                if (intermediate != source)
-                    intermediate.Dispose();
-            }
+            SKFilterQuality.High => isUpscaling
+                ? new SKSamplingOptions(SKCubicResampler.Mitchell)  // Bicubic for upscaling
+                : new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear), // Better for downscaling
 
-            return result;
-        }
-        catch
-        {
-            foreach (var intermediate in intermediates)
-            {
-                if (intermediate != source)
-                    intermediate.Dispose();
-            }
-            throw;
-        }
-    }
-    /// <summary>
-    /// Convert sRGB bitmap to linear color space
-    /// </summary>
-    private SKBitmap ConvertToLinearSpace(SKBitmap source)
-    {
-        var linear = new SKBitmap(source.Width, source.Height, SKColorType.RgbaF16, source.AlphaType);
-
-        var sourcePixels = source.GetPixelSpan();
-        var linearPixels = linear.GetPixelSpan();
-
-        for (int i = 0; i < sourcePixels.Length; i += 4)
-        {
-            // Get original RGBA values (0-255)
-            float r = sourcePixels[i] / 255.0f;
-            float g = sourcePixels[i + 1] / 255.0f;
-            float b = sourcePixels[i + 2] / 255.0f;
-            float a = sourcePixels[i + 3] / 255.0f;
-
-            // Handle premultiplied alpha properly
-            if (source.AlphaType == SKAlphaType.Premul && a > 0)
-            {
-                r /= a;
-                g /= a;
-                b /= a;
-            }
-
-            // Convert sRGB to linear
-            r = SRGBToLinear(r);
-            g = SRGBToLinear(g);
-            b = SRGBToLinear(b);
-
-            // Re-apply premultiplied alpha if needed
-            if (source.AlphaType == SKAlphaType.Premul)
-            {
-                r *= a;
-                g *= a;
-                b *= a;
-            }
-
-            // Store as 16-bit float values
-            var linearSpan = MemoryMarshal.Cast<byte, Half>(linearPixels.Slice(i * 2, 8));
-            linearSpan[0] = (Half)r;
-            linearSpan[1] = (Half)g;
-            linearSpan[2] = (Half)b;
-            linearSpan[3] = (Half)a;
-        }
-
-        return linear;
-    }
-
-    /// <summary>
-    /// Convert linear space bitmap back to sRGB
-    /// </summary>
-    private SKBitmap ConvertToSRGB(SKBitmap linear)
-    {
-        var srgb = new SKBitmap(linear.Width, linear.Height, SKColorType.Rgba8888, linear.AlphaType);
-
-        var linearPixels = linear.GetPixelSpan();
-        var srgbPixels = srgb.GetPixelSpan();
-
-        for (int i = 0; i < srgbPixels.Length; i += 4)
-        {
-            // Read 16-bit float values
-            var linearSpan = MemoryMarshal.Cast<byte, Half>(linearPixels.Slice(i * 2, 8));
-            float r = (float)linearSpan[0];
-            float g = (float)linearSpan[1];
-            float b = (float)linearSpan[2];
-            float a = (float)linearSpan[3];
-
-            // Handle premultiplied alpha
-            if (linear.AlphaType == SKAlphaType.Premul && a > 0)
-            {
-                r /= a;
-                g /= a;
-                b /= a;
-            }
-
-            // Convert linear to sRGB
-            r = LinearToSRGB(r);
-            g = LinearToSRGB(g);
-            b = LinearToSRGB(b);
-
-            // Re-apply premultiplied alpha
-            if (linear.AlphaType == SKAlphaType.Premul)
-            {
-                r *= a;
-                g *= a;
-                b *= a;
-            }
-
-            // Clamp and convert to bytes
-            srgbPixels[i] = (byte)Math.Clamp(r * 255, 0, 255);
-            srgbPixels[i + 1] = (byte)Math.Clamp(g * 255, 0, 255);
-            srgbPixels[i + 2] = (byte)Math.Clamp(b * 255, 0, 255);
-            srgbPixels[i + 3] = (byte)Math.Clamp(a * 255, 0, 255);
-        }
-
-        return srgb;
-    }
-
-    /// <summary>
-    /// Convert sRGB to linear color space (gamma removal)
-    /// </summary>
-    private float SRGBToLinear(float srgb)
-    {
-        if (srgb <= 0.04045f)
-            return srgb / 12.92f;
-        else
-            return MathF.Pow((srgb + 0.055f) / 1.055f, 2.4f);
-    }
-
-    /// <summary>
-    /// Convert linear to sRGB color space (gamma application)
-    /// </summary>
-    private float LinearToSRGB(float linear)
-    {
-        if (linear <= 0.0031308f)
-            return linear * 12.92f;
-        else
-            return 1.055f * MathF.Pow(linear, 1.0f / 2.4f) - 0.055f;
-    }
-
-    /// <summary>
-    /// Alternative approach: Edge-preserving resize for icons with transparency
-    /// </summary>
-    private SKBitmap CreateEdgePreservingResize(SKBitmap source, SKSizeI targetSize)
-    {
-        // Create result bitmap
-        var result = new SKBitmap(targetSize.Width, targetSize.Height, source.ColorType, source.AlphaType);
-
-        using var canvas = new SKCanvas(result);
-        using var paint = new SKPaint
-        {
-            IsAntialias = false, // Critical for sharp edges!
-            FilterQuality = SKFilterQuality.None,
-            IsDither = false,
-            BlendMode = SKBlendMode.Src // Preserve exact alpha values
+            _ => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None)
         };
-
-        // Clear with transparent
-        canvas.Clear(SKColors.Transparent);
-
-        // For very small target sizes, use nearest neighbor
-        if (targetSize.Width <= 64 || targetSize.Height <= 64)
-        {
-            var destRect = new SKRect(0, 0, targetSize.Width, targetSize.Height);
-            canvas.DrawBitmap(source, destRect, paint);
-            return result;
-        }
-
-        // For larger sizes, use multiple passes for better quality
-        var intermediateSize = new SKSizeI(
-            Math.Max(targetSize.Width, source.Width / 2),
-            Math.Max(targetSize.Height, source.Height / 2)
-        );
-
-        if (intermediateSize.Width != targetSize.Width || intermediateSize.Height != targetSize.Height)
-        {
-            // First pass: resize to intermediate size
-            using var intermediate = source.Resize(intermediateSize, SKFilterQuality.Medium);
-
-            // Second pass: resize to target
-            paint.FilterQuality = SKFilterQuality.Medium;
-            var destRect = new SKRect(0, 0, targetSize.Width, targetSize.Height);
-            canvas.DrawBitmap(intermediate, destRect, paint);
-        }
-        else
-        {
-            // Single pass
-            paint.FilterQuality = SKFilterQuality.Medium;
-            var destRect = new SKRect(0, 0, targetSize.Width, targetSize.Height);
-            canvas.DrawBitmap(source, destRect, paint);
-        }
-
-        return result;
     }
 
     /// <summary>
@@ -1629,7 +1427,7 @@ public class SkiaImage : SkiaControl
 
                 if (ScaledSource == null
                     || ScaledSource.Source != source.Id
-                    || ScaledSource.Quality != this.RescalingQuality
+                    || ScaledSource.Quality != this.RescalingQuality 
                     || ScaledSource.Bitmap.Width != targetWidth
                     || ScaledSource.Bitmap.Height != targetHeight)
                 {
@@ -1649,36 +1447,10 @@ public class SkiaImage : SkiaControl
                     if (bitmapToResize != null)
                     {
                         var targetSize = new SKSizeI(targetWidth, targetHeight);
+                        bool isUpscaling = targetWidth > source.Width || targetHeight > source.Height;
 
-                        SKBitmap resizedBmp = this.RescalingType switch
-                        {
-                            RescalingType.GammaCorrection => CreateGammaCorrectedResize(bitmapToResize, targetSize, RescalingQuality),
-
-                            RescalingType.EdgePreserving => CreateEdgePreservingResize(bitmapToResize, targetSize),
-
-                            RescalingType.MultiPass => RescalingQuality switch
-                            {
-                                // Fast and aggressive - fewer steps for performance
-                                SKFilterQuality.None => CreateMultiPassResize(bitmapToResize, targetSize, RescalingQuality,
-                                    stepFactor: 0.3f, thresholdMultiplier: 1.5f, maxSteps: 5),
-
-                                // Basic quality - moderate steps
-                                SKFilterQuality.Low => CreateMultiPassResize(bitmapToResize, targetSize, RescalingQuality,
-                                    stepFactor: 0.4f, thresholdMultiplier: 2.0f, maxSteps: 7),
-
-                                // Balanced quality vs performance - default behavior
-                                SKFilterQuality.Medium => CreateMultiPassResize(bitmapToResize, targetSize, RescalingQuality),
-
-                                // Maximum quality - more gradual steps for best results
-                                SKFilterQuality.High => CreateMultiPassResize(bitmapToResize, targetSize, RescalingQuality, 0.7f),
-
-                                _ => CreateMultiPassResize(bitmapToResize, targetSize, RescalingQuality)
-                            },
-
-                           
-
-                            RescalingType.Default or _ => bitmapToResize.Resize(targetSize, RescalingQuality)
-                        };
+                        SKBitmap resizedBmp = bitmapToResize.Resize(targetSize,
+                            GetSamplingOptions(RescalingQuality, isUpscaling));
 
                         var kill = ScaledSource;
                         ScaledSource = new() { Source = source.Id, Bitmap = resizedBmp, Quality = RescalingQuality };
@@ -1750,7 +1522,7 @@ public class SkiaImage : SkiaControl
     //    base.Arrange(destination, MeasuredSize.Units.Width, MeasuredSize.Units.Height, scale);
     //}
 
-    public override ScaledSize Measure(float widthRequest, float heightRequest, float dscale)
+    public override ScaledSize OnMeasuring(float widthRequest, float heightRequest, float dscale)
     {
         //background measuring or invisible or self measure from draw because layout will never pass -1
         if (IsMeasuring || !CanDraw)

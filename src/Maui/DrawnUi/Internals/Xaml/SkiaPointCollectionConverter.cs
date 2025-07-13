@@ -30,7 +30,7 @@ namespace DrawnUi.Infrastructure.Xaml
                 return points;
 
             // Split the string into individual point representations
-            var pointStrings = str.Split(';');
+            var pointStrings = str.Split(new char[] { ';'}, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var pointString in pointStrings)
             {

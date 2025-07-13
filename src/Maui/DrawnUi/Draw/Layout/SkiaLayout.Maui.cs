@@ -60,6 +60,7 @@ namespace DrawnUi.Draw
 			}
 		}
 
+		/// <summary>
 		/// For Xaml HotReload. This is semetimes not called when we add and remove views.
 		/// </summary>
 		/// <returns></returns>

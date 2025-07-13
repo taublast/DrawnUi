@@ -42,7 +42,7 @@
             CornerRadius="6"
             HeightRequest="10"
             HorizontalOptions="Start"
-            ModifyXPosEnd="20"
+            ModifyXPosEnd="10"
             SideOffset="0"
             StrokeBlendMode="Color"
             StrokeColor="{StaticResource ColorPrimaryDark}"

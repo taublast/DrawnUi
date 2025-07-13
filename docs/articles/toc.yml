@@ -1,16 +1,63 @@
-- name: Introduction
+- name: Home
   href: index.md
+
 - name: Getting Started
   items:
     - name: Installation and Setup
       href: getting-started.md
     - name: Your First DrawnUi App
       href: first-app.md
+    - name: Interactive Card Gallery
+      href: interactive-cards.md
+    - name: News Feed Tutorial
+      href: news-feed-tutorial.md
+    - name: Porting Native to Drawn
+      href: porting-maui.md
+
+- name: Samples
+  href: samples.md
+
 - name: Controls
   href: controls/index.md
+  items:
+    - name: Controls Overview
+      href: controls/index.md
+    - name: Buttons
+      href: controls/buttons.md
+    - name: Switches and Toggles
+      href: controls/switches.md
+    - name: Input Controls
+      href: controls/input.md
+    - name: Layout Controls
+      href: controls/layouts.md
+    - name: Scroll Views
+      href: controls/scroll.md
+    - name: Carousels
+      href: controls/carousels.md
+    - name: Drawers
+      href: controls/drawers.md
+    - name: Native Integration
+      href: controls/native-integration.md
+    - name: Shapes
+      href: controls/shapes.md
+    - name: Text and Labels
+      href: controls/text.md
+    - name: Images
+      href: controls/images.md
+    - name: Sprites
+      href: controls/sprites.md
+    - name: Animations
+      href: controls/animations.md
+    - name: Navigation Shell
+      href: controls/shell.md
+
 - name: Advanced
   href: advanced/index.md
   items:
+    - name: Drawing Pipeline
+      href: drawing-pipeline.md
+    - name: Fluent C# Extensions
+      href: fluent-extensions.md
     - name: Platform-Specific Styling
       href: advanced/platform-styling.md
     - name: Layout System Architecture
@@ -23,3 +70,6 @@
       href: advanced/skiascroll.md
     - name: Gestures & Touch Input
       href: advanced/gestures.md
+
+- name: FAQ
+  href: faq.md

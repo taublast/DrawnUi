@@ -35,6 +35,25 @@ Set the `ControlStyle` property to apply platform-specific styling:
     IsToggled="true" />
 ```
 
+### Code-Behind Example
+
+```csharp
+private void OnSwitchToggled(object sender, bool isToggled)
+{
+    // Handle the toggle state change
+    if (isToggled)
+    {
+        // Switch is ON
+        DisplayAlert("Switch", "Turned ON", "OK");
+    }
+    else
+    {
+        // Switch is OFF
+        DisplayAlert("Switch", "Turned OFF", "OK");
+    }
+}
+```
+
 ### Properties
 
 | Property | Type | Description |
@@ -46,10 +65,13 @@ Set the `ControlStyle` property to apply platform-specific styling:
 | `ColorThumbOff` | Color | The color of the thumb when toggled off |
 | `ControlStyle` | PrebuiltControlStyle | The platform-specific style |
 | `IsAnimated` | bool | Whether state changes are animated |
+| `AnimationSpeed` | uint | Animation duration in milliseconds (default: 200) |
 
 ### Events
 
 - `Toggled`: Raised when the switch is toggled on or off
+  - Event signature: `EventHandler<bool>`
+  - The bool parameter indicates the new toggle state (true = on, false = off)
 
 ## SkiaCheckbox
 
@@ -94,3 +116,48 @@ SkiaCheckbox shares most properties with SkiaSwitch, both inheriting from SkiaTo
 ### Events
 
 - `Toggled`: Raised when the toggle state changes
+  - Event signature: `EventHandler<bool>`
+  - The bool parameter indicates the new toggle state
+
+## SkiaRadioButton
+
+`SkiaRadioButton` is a specialized toggle control for selecting one option from a group of mutually exclusive options. It's subclassed from SkiaToggle and provides radio button functionality.
+
+### Basic Usage
+
+```xml
+<draw:SkiaLayout Type="Column" Spacing="10">
+    <draw:SkiaRadioButton
+        GroupName="Options"
+        Text="Option 1"
+        IsToggled="true"
+        WidthRequest="150"
+        HeightRequest="30" />
+    <draw:SkiaRadioButton
+        GroupName="Options"
+        Text="Option 2"
+        IsToggled="false"
+        WidthRequest="150"
+        HeightRequest="30" />
+    <draw:SkiaRadioButton
+        GroupName="Options"
+        Text="Option 3"
+        IsToggled="false"
+        WidthRequest="150"
+        HeightRequest="30" />
+</draw:SkiaLayout>
+```
+
+### Key Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `GroupName` | string | Name of the radio button group for mutual exclusion |
+| `Text` | string | Text label for the radio button |
+| `IsToggled` | bool | Whether this radio button is selected |
+
+### Behavior
+
+- Only one radio button in a group (same `GroupName`) can be selected at a time
+- Selecting one radio button automatically deselects others in the same group
+- Inherits all properties and events from SkiaToggle

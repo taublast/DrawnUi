@@ -12,11 +12,12 @@ echo Batch directory: %batch_dir%
 
 REM Define source directories relative to the batch file location
 set "source_dir1=%batch_dir%\..\src\Maui\DrawnUi\bin\Release"
-set "source_dir2=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Camera\bin\Release"
-set "source_dir3=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Game\bin\Release"
-set "source_dir4=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.MapsUi\src\bin\Release"
-set "source_dir5=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Rive\bin\Release"
-set "source_dir6=%batch_dir%\..\src\Maui\Addons\DrawnUi.MauiGraphics\bin\Release"
+set "source_dir2=%batch_dir%\..\src\Maui\MetaPackage\AppoMobi.Maui.DrawnUi\bin\Release"
+set "source_dir3=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Camera\bin\Release"
+set "source_dir4=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Game\bin\Release"
+set "source_dir5=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.MapsUi\bin\Release"
+set "source_dir6=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Rive\bin\Release"
+set "source_dir7=%batch_dir%\..\src\Maui\Addons\DrawnUi.MauiGraphics\bin\Release"
 set "destination_dir=C:\Nugets"
 
 REM Define file masks
@@ -24,7 +25,7 @@ set "file_mask1=*.nupkg"
 set "file_mask2=*.snupkg"
 
 REM Define array of source directories
-set source_dirs=source_dir1 source_dir2 source_dir3 source_dir4 source_dir5 source_dir6
+set source_dirs=source_dir1 source_dir2 source_dir3 source_dir4 source_dir5 source_dir6 source_dir7
 
 REM Define array of file masks
 set file_masks=file_mask1 file_mask2

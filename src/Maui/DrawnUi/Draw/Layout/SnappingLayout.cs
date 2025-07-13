@@ -215,8 +215,13 @@ public class SnappingLayout : SkiaLayout
 
             var displacement = start - end;
 
+            //Debug.WriteLine($"[SkiaDrawer] will scroll, v: {velocity}");
+
             if (velocity == Vector2.Zero)
+            {
                 velocity = GetAutoVelocity(displacement);
+                //Debug.WriteLine($"[SkiaDrawer] auto-velocity: {velocity}");
+            }
 
             //if (Math.Abs(displacement.Length()) >= 0.5) //todo move threshold to options
 
@@ -233,26 +238,33 @@ public class SnappingLayout : SkiaLayout
                 }
                 else
                 {
-                    var direction = GetDirectionType(start, end, 0.8f);
-                    var speed = 0.3;
-                    if (direction == DirectionType.Vertical)
+                    var velocityMagnitude = velocity.Length();
+                    var speed = 0.3; // default duration in seconds
+                    if (velocityMagnitude > 10.0f) // threshold to use velocity-based calculation
                     {
-                        speed *= (Math.Abs(end.Y - start.Y) / Height);
+                        // Higher velocity = shorter duration (faster animation)
+                        speed = 0.7 * Math.Max(0.1f, Math.Min(0.8f, 300.0f / velocityMagnitude)); // clamp between 0.1s and 0.8s
                     }
                     else
-                    if (direction == DirectionType.Horizontal)
                     {
-                        speed *= (Math.Abs(end.X - start.X) / Height);
+                        var direction = GetDirectionType(start, end, 0.8f);
+                        if (direction == DirectionType.Vertical)
+                        {
+                            speed *= (Math.Abs(end.Y - start.Y) / Height);
+                        }
+                        else
+                        if (direction == DirectionType.Horizontal)
+                        {
+                            speed *= (Math.Abs(end.X - start.X) / Height);
+                        }
                     }
 
+                    //Debug.WriteLine($"[SkiaDrawer] calculated speed {speed} for velocity: {velocity}");
                     AnimatorRange.Initialize(start, end, (float)speed, Easing.CubicInOut);
                     AnimatorRange.Start();
                 }
             }
 
-            //_animatorFling.Stop();
-            //var contentOffset = new Vector2((float)TranslationX, (float)TranslationY);
-            //FlingTo(contentOffset, targetOffset, 0.200f);
         }
         else
         if (CanDraw)

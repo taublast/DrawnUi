@@ -137,7 +137,7 @@ namespace DrawnUi.Controls
 
             base.OnChildAdded(view);
 
-            var previous = Views.Count - 1;
+            var previous = Views.Count - 2;
             if (previous >= 0)
                 HideView(view as SkiaControl, Views.Count - 1, false);
         }
@@ -234,6 +234,9 @@ namespace DrawnUi.Controls
                     var index = tab;
                     if (index < 0)
                         index = SelectedIndex;
+
+                    if (index < 0)
+                        index = 0;
 
                     var stack = GetNavigationStack(index);
                     stack.Add(new NavigationStackEntry(view, animated, preserve));

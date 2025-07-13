@@ -20,7 +20,6 @@ global using SkiaSharp.Views.Maui.Controls;
 global using Microsoft.Maui.Controls;
 global using Microsoft.Maui.Devices;
 global using Microsoft.Maui.Graphics;
-using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 
 [assembly: XmlnsDefinition("http://schemas.appomobi.com/drawnUi/2023/draw",

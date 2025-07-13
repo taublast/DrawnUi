@@ -196,6 +196,14 @@ public class SkiaScrollLooped : SkiaScroll
         return ContainsPointResult.NotFound();
     }
 
+    public override void UpdateVisibleIndex()
+    {
+        if (LayoutReady && TrackIndexPosition != RelativePositionType.None)
+        {
+            CurrentIndexHit = CalculateVisibleIndex(TrackIndexPosition);
+            CurrentIndex = CurrentIndexHit.Index;
+        }
+    }
 
     public override ContainsPointResult CalculateVisibleIndex(RelativePositionType option = RelativePositionType.Start)
     {
