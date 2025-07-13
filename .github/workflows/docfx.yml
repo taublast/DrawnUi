@@ -23,8 +23,8 @@ jobs:
       with:
         dotnet-version: '9.x'
 
-    - name: Install .NET MAUI workloads
-      run: dotnet workload restore
+    - name: Restore MAUI workload
+      run: dotnet workload restore ./src/Maui/DrawnUi/DrawnUi.Maui.csproj
   
     - name: Install DocFX
       run: dotnet tool install -g docfx
