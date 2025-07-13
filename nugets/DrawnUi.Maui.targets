@@ -1,0 +1,11 @@
+<Project>
+    <!-- Auto-replace SkiaSharp native DLLs when DrawnUi is installed via NuGet -->
+    <Target Name="DrawnUiReplaceNativeDLLs" BeforeTargets="Build" Condition="$(TargetFramework.Contains('windows')) == true">
+        <Copy SourceFiles="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libEGL.dll" 
+              DestinationFiles="$(OutDir)libEGL.dll" 
+              OverwriteReadOnlyFiles="true" />
+        <Copy SourceFiles="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libGLESv2.dll" 
+              DestinationFiles="$(OutDir)libGLESv2.dll" 
+              OverwriteReadOnlyFiles="true" />
+    </Target>
+</Project>

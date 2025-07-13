@@ -49,6 +49,7 @@
         <Compile Remove="Platforms\Windows\Views\AngleSwapChainPanel.cs" />
         <Compile Remove="Controls\Extensions\**" />
         <Compile Remove="Platforms\Windows\Controls\**" />
+        <Compile Remove="Platforms\Windows\NewFolder\**" />
     </ItemGroup>
 
 
@@ -95,6 +96,36 @@
     <ItemGroup Condition="$(TargetFramework.Contains('catalyst')) == true">
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
     </ItemGroup>
+    
+    <!-- FIX for Windows unpackaged mode when library is referenced directly -->
+    <Target Name="DrawnUiReplaceNativeDLLs" BeforeTargets="Build" Condition="$(TargetFramework.Contains('windows')) == true">
+        <Copy SourceFiles="$(MSBuildThisFileDirectory)Platforms\Windows\Natives\libEGL.dll"
+              DestinationFiles="$(OutDir)libEGL.dll"
+              OverwriteReadOnlyFiles="true" />
+        <Copy SourceFiles="$(MSBuildThisFileDirectory)Platforms\Windows\Natives\libGLESv2.dll"
+              DestinationFiles="$(OutDir)libGLESv2.dll"
+              OverwriteReadOnlyFiles="true" />
+    </Target>
+
+    <!-- FIX for Windows unpackaged mode when consumed from nuget package -->
+    <ItemGroup>
+        <Content Include="Platforms/Windows/Natives/libEGL.dll">
+            <Pack>true</Pack>
+            <PackagePath>runtimes/win-x64/native/libEGL.dll</PackagePath>
+        </Content>
+        <Content Include="Platforms/Windows/Natives/libGLESv2.dll">
+            <Pack>true</Pack>
+            <PackagePath>runtimes/win-x64/native/libGLESv2.dll</PackagePath>
+        </Content>
+    </ItemGroup>
+
+    <!-- Include targets file for NuGet package -->
+    <ItemGroup>
+        <None Include="../../../nugets/DrawnUi.Maui.targets">
+            <Pack>true</Pack>
+            <PackagePath>build/DrawnUi.Maui.targets</PackagePath>
+        </None>
+    </ItemGroup>
 
 
     <!--ANDROID ONLY-->
@@ -108,19 +139,23 @@
     <ItemGroup>
         <EmbeddedResource Remove="Controls\Extensions\**" />
         <EmbeddedResource Remove="Platforms\Windows\Controls\**" />
+        <EmbeddedResource Remove="Platforms\Windows\NewFolder\**" />
     </ItemGroup>
 
     <ItemGroup>
         <MauiXaml Remove="Controls\Extensions\**" />
         <MauiXaml Remove="Platforms\Windows\Controls\**" />
+        <MauiXaml Remove="Platforms\Windows\NewFolder\**" />
     </ItemGroup>
 
     <ItemGroup>
         <MauiCss Remove="Controls\Extensions\**" />
         <MauiCss Remove="Platforms\Windows\Controls\**" />
+        <MauiCss Remove="Platforms\Windows\NewFolder\**" />
     </ItemGroup>
     <ItemGroup>
         <AndroidAarLibrary Remove="Controls\Extensions\**" />
+        <None Remove="Platforms\Windows\NewFolder\**" />
     </ItemGroup>
 
     <ItemGroup>

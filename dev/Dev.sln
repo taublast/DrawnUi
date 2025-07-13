@@ -23,8 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\src\Maui\Directory.Build.props = ..\src\Maui\Directory.Build.props
 		..\src\Directory.Build.props = ..\src\Directory.Build.props
 		..\src\Directory.Build.targets = ..\src\Directory.Build.targets
-		..\nugets\github_uploadnugets.bat = ..\nugets\github_uploadnugets.bat
-		..\nugets\nuget_uploadnugets.bat = ..\nugets\nuget_uploadnugets.bat
+		..\nugets\DrawnUi.Maui.targets = ..\nugets\DrawnUi.Maui.targets
+		..\nugets\githubupload.bat = ..\nugets\githubupload.bat
+		..\nugets\makenugets.bat = ..\nugets\makenugets.bat
+		..\nugets\movenugets.bat = ..\nugets\movenugets.bat
+		..\nugets\nugetupload.bat = ..\nugets\nugetupload.bat
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
