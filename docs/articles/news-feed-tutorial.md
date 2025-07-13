@@ -1,40 +1,10 @@
 # News Feed Tutorial: One Cell to Rule Them All
 
 Building a news feed with mixed content types (text posts, images, videos, articles, ads) is a common requirement. With DrawnUI, you get the freedom to **just draw what you need** using one smart cell that adapts to any content type.
-
-<details>
-<summary>📖 For developers familiar with MAUI DataTemplateSelector</summary>
-
-Traditional MAUI approaches typically use DataTemplateSelector with multiple templates:
-
-```csharp
-public class NewsDataTemplateSelector : DataTemplateSelector
-{
-    public DataTemplate TextPostTemplate { get; set; }
-    public DataTemplate ImagePostTemplate { get; set; }  
-    public DataTemplate VideoPostTemplate { get; set; }
-    public DataTemplate ArticleTemplate { get; set; }
-    public DataTemplate AdTemplate { get; set; }
-    
-    protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
-    {
-        return news.Type switch
-        {
-            NewsType.Text => TextPostTemplate,
-            NewsType.Image => ImagePostTemplate,
-            // ... etc
-        };
-    }
-}
-```
-
-This involves multiple XAML templates, template selection logic, and different cell types that can't share recycling pools.
-
-</details>
-
+ 
 ## The DrawnUI Way: One Universal Cell
 
-With DrawnUI, we use one smart cell that simply shows or hides elements based on content type. All recycling and height calculation happens automatically:
+With DrawnUI, we use one smart cell that simply shows or hides elements based on content type, not using any `DataTemplateSelector`. All recycling and height calculation happens automatically:
 
 ### 1. Define Content Types
 
@@ -63,7 +33,7 @@ public class NewsItem
 }
 ```
 
-### 2. Create Universal News Cell
+### 2. Create A Universal Cell
 
 ```xml
 <draw:SkiaDynamicDrawnCell

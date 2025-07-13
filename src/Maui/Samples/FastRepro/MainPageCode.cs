@@ -61,9 +61,17 @@ namespace Sandbox
                                 Content = new SkiaWrap()
                                 {
                                     UseCache = SkiaCacheType.ImageComposite,
-                                    Spacing = 100,
+                                    Spacing = 0,
                                     Children =
                                     {
+
+                                        new SkiaRichLabel("LIVES: 1")
+                                        {
+                                            FontSize = 40,
+                                            BackgroundColor = Colors.Red,
+                                            TextColor = Colors.White
+                                        },
+
                                         new SkiaShape()
                                         {
                                             HeightRequest = 40,
@@ -71,8 +79,7 @@ namespace Sandbox
                                             BackgroundColor = Colors.White,
                                         }.OnTapped(me =>
                                         {
-                                            me.Update();
-                                            Debug.WriteLine("WHITE");
+                                            me.BackgroundColor = SkiaControl.GetRandomColor();
                                         }),
                                         new SkiaShape()
                                         {
@@ -81,8 +88,7 @@ namespace Sandbox
                                             BackgroundColor = Colors.Red,
                                         }.OnTapped(me =>
                                         {
-                                            me.Update();
-                                            Debug.WriteLine("RED");
+                                            me.BackgroundColor = SkiaControl.GetRandomColor();
                                         }),
                                         new SkiaShape()
                                         {
@@ -91,8 +97,7 @@ namespace Sandbox
                                             BackgroundColor = Colors.Green,
                                         }.OnTapped(me =>
                                         {
-                                            me.Update();
-                                            Debug.WriteLine("GREEN");
+                                            me.BackgroundColor = SkiaControl.GetRandomColor();
                                         }),
                                         new SkiaShape()
                                         {
@@ -101,8 +106,7 @@ namespace Sandbox
                                             BackgroundColor = Colors.Blue,
                                         }.OnTapped(me =>
                                         {
-                                            me.Update();
-                                            Debug.WriteLine("BLUE");
+                                            me.BackgroundColor = SkiaControl.GetRandomColor();
                                         }),
                                     }
                                 },

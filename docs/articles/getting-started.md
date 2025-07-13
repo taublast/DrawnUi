@@ -12,7 +12,6 @@ To make everything compile from first attempt You might also need at least the f
 
 ```
 	<PropertyGroup>
-        <WindowsPackageType>MSIX</WindowsPackageType>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
@@ -27,7 +26,6 @@ To make everything compile from first attempt You might also need at least the f
 
 ```
 
-For Windows to overcome an existing restriction in SkiaSharp you would need to enable MSIX packaging for your Windows project. This limitation will be resolved.
 ### Add the NuGet Package
 
 Install the **DrawnUi.Maui** NuGet package in your .NET MAUI project:
@@ -177,19 +175,41 @@ private void OnButtonClicked(SkiaButton sender, SkiaGesturesParameters e)
 
 > **Important**: DrawnUi button events use `Action<SkiaButton, SkiaGesturesParameters>` instead of the standard EventHandler pattern. The first parameter is the specific control type (SkiaButton), and the second contains gesture information.
 
+## Using Styles
+
+DrawnUi supports MAUI styling, You can set default properties for drawn controls all like you would do it for MAUI controls.
+Add this to `Resources/Styles.xaml` to set default fonts for all SkiaLabel and SkiaRichLabel controls:
+
+```xml
+ ...
+
+ <ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw">
+
+    <Style ApplyToDerivedTypes="True" TargetType="draw:SkiaLabel">
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="FontText" />
+    </Style>
+
+...
+```
+
 ## Using Platform-Specific Styles
 
-DrawnUi controls support platform-specific styling:
+Some of DrawnUi controls support platform-specific styling:
 
 ```xml
 <draw:SkiaButton
     Text="Platform Style"
-    ControlStyle="Platform"
+    ControlStyle="Material"
     WidthRequest="150"
     HeightRequest="40" />
     
 <draw:SkiaSwitch
-    ControlStyle="Platform"
+    ControlStyle="Cupertino"
     IsToggled="true"
     Margin="0,20,0,0" />
 ```
@@ -199,7 +219,8 @@ DrawnUi controls support platform-specific styling:
 When working with DrawnUI, keep these key differences in mind:
 
 * **Layout Options**: `HorizontalOptions` and `VerticalOptions` defaults are `Start`, not `Fill`. Request size explicitly or set options to `Fill`, otherwise your control will take zero space.
-* **Grid Spacing**: `Grid` layout type default Row- and ColumnSpacing are 1, not 8.
+* **Grid Defaults**: `Grid` layout type default Row- and Column are "Auto" and not "*".
+* **Grid Spacing**: `Grid` layout type default col/row Spacing is 1, not 8.
 * **Canvas Behavior**: The `Canvas` control is aware of its children's size and will resize accordingly. You can also set a fixed size for the `Canvas` and its children will adapt to it.
 
 ## Quick Examples
@@ -255,6 +276,7 @@ Canvas = new Canvas()
 
 ## Next Steps
 
+- Create [Your First DrawnUI App](first-app.md)
 - Explore the [Controls documentation](controls/index.md) to learn about available controls
 - See [Platform-Specific Styling](advanced/platform-styling.md) for more styling options
 - Check out the [Sample Applications](samples.md) for complete examples

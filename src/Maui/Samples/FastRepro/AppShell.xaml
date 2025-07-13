@@ -7,14 +7,19 @@
     Title="DrawnUI for .NET MAUI"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
+    <!--<ShellContent
         Title="Drawn UI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:PlanesTest}"
-        Route="MainPage" />
+        Route="MainPage" />-->
 
     <!--<ShellContent
         Title="Drawn UI for .NET MAUI"
-        ContentTemplate="{DataTemplate sandbox:MainPage}"
+        ContentTemplate="{DataTemplate sandbox:MainPageCode}"
         Route="MainPage" />-->
+
+    <ShellContent
+        Title="Drawn UI for .NET MAUI"
+        ContentTemplate="{DataTemplate sandbox:TutorialCards}"
+        Route="MainPage" />
 
 </Shell>

@@ -1,42 +1,82 @@
 # DrawnUI for .NET MAUI
 
-**A lightweight library for .NET MAUI built on top of SkiaSharp, to layout and draw your UI on a Skia canvas.**
+![License](https://img.shields.io/github/license/taublast/DrawnUi.svg)
+![NuGet Version](https://img.shields.io/nuget/v/DrawnUi.Maui.svg)
+![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
+
+⭐️ [View on GitHub](https://github.com/taublast/DrawnUi.Maui)
+
+**A rendering engine for .NET MAUI built on top of SkiaSharp**
+
+**Hardware-accelerated rendering engine** for **iOS**, **MacCatalyst**, **Android**, **Windows** with enhanced WPF-like layout system, gestures and animations, powered by [SkiaSharp](https://github.com/mono/SkiaSharp) 🤩.
 
 ---
 
-## 🎯 Purpose
+## 🌞 The Purpose
 
-* Provides infrastructure to create and render drawn controls with gestures and animations, comes with some pre-built controls.
-* Profits from hardware-accelerated rendering on iOS • MacCatalyst • Android • Windows
-* Free to use under the MIT license, a nuget package is available.
-* To consume inside a usual MAUI app - wrap drawn controls inside `Canvas` views.
-* To create a totally drawn apps with just one `Canvas` as root view - `SkiaShell`, `SkiaViewSwitcher` are provided for navigation with modals, popups, toasts etc.
-
-**Drawn controls are virtual: no native views/handlers created, UI-thread is not required to accessed and modify them.**
+* **Easy canvas drawing** with high-level helpers 
+* **Smart creation of controls** by compositing different components
+* **Custom layout system** to create, layout and render your drawn controls with gestures and animations
+* **Hardware-accelerated** rendering on iOS • MacCatalyst • Android • Windows
+* **Free to use** under the MIT license, stable NuGet package available
+* **Hybrid approach**: Use inside existing MAUI apps by wrapping drawn controls in `Canvas` views
+* **Fully drawn apps**: Create totally drawn apps with just one Canvas as root view 
+* **Virtual controls**: No native views/handlers created, UI-thread not required for access
+* **To have the tools to create and use your own controls** to expand the limits of the predefined
 
 ## ⚡ Features
 
-* __Draws using SkiaSharp with hardware acceleration__
-* __Create your own animated pixel-perfect controls__
-* __Port existing native controls to be drawn__
-* __Design in XAML or code-behind__
-* __2D and 3D Transforms__
-* __Visual effects__ for every control, filters and shaders
-* __Animations__ targeting max FPS
-* __Caching system__ for faster re-drawing
-* __Optimized for performance__, rendering only visible elements, recycling templates etc
-* __Gestures__ support for anything, panning, scrolling, zooming etc
-* __Keyboard support__, track any key
-* __Navigate__ on canvas with familiar MAUI Shell techniques 
-* __Shipped with pre-built controls__ consume, customize and get inspired to create your own!
+### 🎨 **Rendering & Graphics**
+* **Hardware-accelerated** SkiaSharp rendering with max performance
+* **Pixel-perfect controls** with complete visual customization
+* **2D and 3D transforms** for advanced visual effects
+* **Visual effects** for every control: filters, shaders, shadows, blur
+* **Caching system** for optimized re-drawing performance
 
-## 🎮 Live Examples
+### 😍 **Development Experience**
+* **Design in XAML or code-behind** - choose your preferred approach
+* **Fluent C# syntax** for programmatic UI creation
+* **Hot Reload compatible** for rapid development iteration
+* **Virtual controls** - no native views/handlers, background thread accessible
 
-- **[Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo)** - A totally drawn app demo with recycled cells, camera etc
-- **[Space Shooter Game](https://github.com/taublast/AppoMobi.Maui.DrawnUi.SpaceShooter)** - Arcade game etude built with DrawnUI
-- **[Shaders Carousel](https://github.com/taublast/ShadersCarousel/)** - A totally drawn app with making use of SkiaSharp v3 shaders
-- **[Sandbox project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox)** - Experiment with pre-built drawn controls and more
+### 🚀 **Performance & Optimization**
+* **Optimized rendering** - only visible elements drawn
+* **Template recycling** for efficient memory usage
+* **Hardware acceleration** on all supported platforms
+* **Smooth animations** targeting maximum FPS
 
+### 👆 **Interaction & Input**
+* **Advanced gesture support** - panning, scrolling, zooming, custom gestures
+* **Keyboard support** - track any key combination
+* **Touch and mouse** input handling
+* **Multi-platform input** normalization
+
+### 🧭 **Navigation & Layout**
+* **Familiar MAUI Shell** navigation techniques on canvas
+* **SkiaShell + SkiaViewSwitcher** for fully drawn app navigation
+* **Modals, popups, toasts** and custom overlays
+* **Enhanced layout system** with advanced positioning
+
+
+## 📦 Quick Installation
+
+**Install the NuGet package:**
+```bash
+dotnet add package DrawnUi.Maui
+```
+
+**Initialize in MauiProgram.cs:**
+```csharp
+builder.UseDrawnUi();
+```
+
+**Version Requirements:**
+- **.NET 9**: Use DrawnUi.Maui 1.3.x+ (recommended)
+- **.NET 8**: Use DrawnUi.Maui 1.2.x (legacy, no longer updated)
+
+> **Note**: Install stable versions only. For detailed setup instructions, see [Getting Started Guide](getting-started.md).
+
+---
 
 ## 🤔 Onboarding
 
@@ -67,12 +107,28 @@ A: Well, since you draw, why not just draw a game instead of a business app. Dra
 
 ## 📚 Knowledge Base
 
+### Documentation & Guides
+- **[Getting Started Guide](getting-started.md)** - Complete installation and setup
+- **[Sample Apps](samples.md)** - Tutorials and example projects
 - **[FAQ](faq.md)** - Frequently asked questions and answers
-- **[GitHub Issues](https://github.com/taublast/DrawnUi.Maui/issues)** - Report bugs or ask questions
-- **[Background Article](https://taublast.github.io/posts/MauiJuly/)** - Why DrawnUi was created
+- **[Controls Documentation](controls/index.md)** - Complete controls reference
+- **[Advanced Features](advanced/index.md)** - Performance and platform topics
 
-**Can't find the answer to your question?** → **[Ask in GitHub Discussions](https://github.com/taublast/DrawnUi/discussions)** - The community is here to help!
+### Community & Support
+- **[GitHub Issues](https://github.com/taublast/DrawnUi.Maui/issues)** - Report bugs or ask questions
+- **[GitHub Discussions](https://github.com/taublast/DrawnUi/discussions)** - Community help and discussions
+- **[Background Article](https://taublast.github.io/posts/MauiJuly/)** - Why DrawnUI was created
+
+### Additional Resources
+- **[Fluent Extensions](fluent-extensions.md)** - Code-behind UI creation patterns
+- **[What's New](whats-new.md)** - Latest updates and features
+
+**Can't find what you're looking for?** → **[Ask in GitHub Discussions](https://github.com/taublast/DrawnUi/discussions)** - The community is here to help!
 
 ---
 
-**Ready to get started?** → **[Install and Setup Guide](getting-started.md)**
+## 🚀 Ready to Start?
+
+**Need setup help?** → **[Getting Started Guide](getting-started.md)** - Complete installation and setup
+**Ready to build?** → **[Sample Apps](samples.md)** - Tutorials and example projects
+**Want something impressive?** → **[Interactive Card Gallery](interactive-cards.md)** - Build animations and effects!

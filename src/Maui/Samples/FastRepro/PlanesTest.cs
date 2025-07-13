@@ -159,8 +159,6 @@ namespace Sandbox
                         }),
                         
                         // Content column - UNCOMMENT for UNEVEN ROWS
-
-                 
                         new SkiaLayout
                         {
                             Type = LayoutType.Column,
@@ -548,12 +546,12 @@ namespace Sandbox
                     if (MainScroll?.UseVirtual == true)
                     {
                         // Access plane information if available
-                        var planeInfo = "3-Plane System Active";
+                        var planeInfo = "3 Planes";
 
                         if (VirtualizedLayout != null)
                         {
-                            planeInfo += $" Measured: {VirtualizedLayout.LastMeasuredIndex + 1}/{ItemsSource.Count}";
-                            planeInfo += $" | Visible: {VirtualizedLayout.FirstVisibleIndex}-{VirtualizedLayout.LastVisibleIndex}";
+                            //planeInfo += $" Measured: {VirtualizedLayout.LastMeasuredIndex + 1}/{ItemsSource.Count}";
+                            //planeInfo += $" | Visible: {VirtualizedLayout.FirstVisibleIndex}-{VirtualizedLayout.LastVisibleIndex}";
                         }
 
                         PlaneInfoLabel.Text = planeInfo;

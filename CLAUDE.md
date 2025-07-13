@@ -81,7 +81,6 @@ builder.UseDrawnUi(new()
 ```
 
 **Platform Requirements:**
-- Windows: Package as MSIX for hardware acceleration (`<WindowsPackageType>MSIX</WindowsPackageType>`)
 - Minimum OS versions defined in project files
 - Resources must be in `Resources/Raw` folder with subfolders allowed
 
