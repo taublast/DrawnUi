@@ -98,14 +98,18 @@
     </ItemGroup>
     
     <!-- FIX for Windows unpackaged mode when library is referenced directly -->
-    <Target Name="DrawnUiReplaceNativeDLLs" BeforeTargets="Build" Condition="$(TargetFramework.Contains('windows')) == true">
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Platforms\Windows\Natives\libEGL.dll"
-              DestinationFiles="$(OutDir)libEGL.dll"
-              OverwriteReadOnlyFiles="true" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Platforms\Windows\Natives\libGLESv2.dll"
-              DestinationFiles="$(OutDir)libGLESv2.dll"
-              OverwriteReadOnlyFiles="true" />
-    </Target>
+    <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
+        <None Include="Platforms/Windows/Natives/libEGL.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <TargetPath>libEGL.dll</TargetPath>
+            <Visible>false</Visible>
+        </None>
+        <None Include="Platforms/Windows/Natives/libGLESv2.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <TargetPath>libGLESv2.dll</TargetPath>
+            <Visible>false</Visible>
+        </None>
+    </ItemGroup>
 
     <!-- FIX for Windows unpackaged mode when consumed from nuget package -->
     <ItemGroup>
