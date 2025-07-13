@@ -1,0 +1,25 @@
+name: Publish Docs
+on:
+  push:
+    branches: [ main ]
+jobs:
+  publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.x'
+    - name: Install DocFX
+      run: dotnet tool install -g docfx
+    - name: Build Documentation
+      run: docfx docs/docfx.json
+    - name: Deploy to GitHub Pages
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: docs/_site
+    - name: Deploy
+      id: deployment
+      uses: actions/deploy-pages@v4
