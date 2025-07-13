@@ -16,8 +16,7 @@ Rendering engine with an enhanced layout system, gestures and animations powered
 
 Current development state is _ALPHA for prod_.
 
->This is a rendering engine you can use to create, layout and render your drawn controls, 
-NOT a development framework with pre-defined elements. Shipped controls are here for a quick start convenience.
+>This is a rendering engine for creating and rendering your own controls, pre-shipped are here for a quick start.
 
 
 ## 🎯 Features
