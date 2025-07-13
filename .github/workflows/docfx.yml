@@ -22,10 +22,12 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.x'
-    
+
+    - name: Install .NET MAUI workloads
+      run: dotnet workload restore
+  
     - name: Install DocFX
       run: dotnet tool install -g docfx
-
     
     - name: Build Documentation
       run: |
