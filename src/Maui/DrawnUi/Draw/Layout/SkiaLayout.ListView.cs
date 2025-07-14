@@ -22,6 +22,32 @@ public partial class SkiaLayout
     /// </summary>
     protected float MeasuredItemsPercentage => ItemsSource?.Count > 0 ? (float)(LastMeasuredIndex + 1) / ItemsSource.Count : 0f;
 
+    /// <summary>
+    /// Represents a pending structure change to be applied during rendering
+    /// </summary>
+    public class StructureChange
+    {
+        public StructureChangeType Type { get; set; }
+        public int StartIndex { get; set; }
+        public int Count { get; set; }
+        public List<object> Items { get; set; } // For Add/Replace
+        public int TargetIndex { get; set; } // For Move
+        public List<MeasuredItemInfo> MeasuredItems { get; set; } // For BackgroundMeasurement
+    }
+
+    /// <summary>
+    /// Types of structure changes that can be applied
+    /// </summary>
+    public enum StructureChangeType
+    {
+        Add,
+        Remove,
+        Replace,
+        Move,
+        Reset,
+        BackgroundMeasurement
+    }
+
     // Background measurement support
     private CancellationTokenSource _backgroundMeasurementCts;
     private Task _backgroundMeasurementTask;
@@ -38,14 +64,14 @@ public partial class SkiaLayout
     private readonly ConcurrentDictionary<int, MeasuredItemInfo> _measuredItems = new();
     private volatile int _backgroundMeasurementProgress = 0;
 
-    // Background measurement staging for rendering pipeline integration
-    private readonly object _pendingLock = new();
-    private readonly List<List<MeasuredItemInfo>> _pendingMeasurements = new();
+    // Universal structure changes staging for rendering pipeline integration
+    private readonly object _structureChangesLock = new();
+    private readonly List<StructureChange> _pendingStructureChanges = new();
 
     /// <summary>
     /// Information about a measured item for sliding window management
     /// </summary>
-    private class MeasuredItemInfo
+    public class MeasuredItemInfo
     {
         public ControlInStack Cell { get; set; }
         public DateTime LastAccessed { get; set; } = DateTime.UtcNow;
@@ -447,7 +473,7 @@ public partial class SkiaLayout
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible
                 && measuredCount < itemsCount)
             {
-                if (_pendingMeasurements.Count == 0)
+                if (_pendingStructureChanges.Count == 0)
                 {
                     StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
                 }
@@ -647,9 +673,13 @@ public partial class SkiaLayout
             }
 
             // Stage for rendering pipeline integration
-            lock (_pendingLock)
+            lock (_structureChangesLock)
             {
-                _pendingMeasurements.Add(measuredBatch);
+                _pendingStructureChanges.Add(new StructureChange
+                {
+                    Type = StructureChangeType.BackgroundMeasurement,
+                    MeasuredItems = measuredBatch
+                });
             }
 
             // Recalculate estimated content size
@@ -660,33 +690,73 @@ public partial class SkiaLayout
     }
 
     /// <summary>
-    /// Applies background measurement results to StackStructure - called from rendering pipeline
+    /// Applies all pending structure changes to StackStructure - called from rendering pipeline
     /// </summary>
-    public void ApplyBackgroundMeasurementResult()
+    public void ApplyStructureChanges()
     {
-        List<List<MeasuredItemInfo>> batchesToProcess = null;
+        List<StructureChange> changesToProcess = null;
 
-        // Get all pending batches atomically
-        lock (_pendingLock)
+        // Get all pending changes atomically
+        lock (_structureChangesLock)
         {
-            if (_pendingMeasurements.Count == 0)
+            if (_pendingStructureChanges.Count == 0)
                 return;
 
             // Copy and clear in one atomic operation
-            batchesToProcess = new List<List<MeasuredItemInfo>>(_pendingMeasurements);
-            _pendingMeasurements.Clear();
+            changesToProcess = new List<StructureChange>(_pendingStructureChanges);
+            _pendingStructureChanges.Clear();
         }
 
-        // Process outside the lock for maximum performance
-        var allRows = new List<List<ControlInStack>>();
-        var columnsCount = (Split > 0) ? Split : 1;
-
-        foreach (var batch in batchesToProcess)
+        // Process all changes outside the lock for maximum performance
+        foreach (var change in changesToProcess)
         {
-            // Group batch items into rows based on columnsCount
+            switch (change.Type)
+            {
+                case StructureChangeType.BackgroundMeasurement:
+                    ApplyBackgroundMeasurementChange(change);
+                    break;
+
+                case StructureChangeType.Add:
+                    ApplyAddChange(change);
+                    break;
+
+                case StructureChangeType.Remove:
+                    ApplyRemoveChange(change);
+                    break;
+
+                case StructureChangeType.Replace:
+                    ApplyReplaceChange(change);
+                    break;
+
+                case StructureChangeType.Move:
+                    ApplyMoveChange(change);
+                    break;
+
+                case StructureChangeType.Reset:
+                    ApplyResetChange(change);
+                    break;
+
+                default:
+                    Debug.WriteLine($"[ApplyStructureChanges] Unknown change type: {change.Type}");
+                    break;
+            }
+        }
+
+        Debug.WriteLine($"[ApplyStructureChanges] Applied {changesToProcess.Count} structure changes. Measured: {MeasuredItemsPercentage:P1}");
+    }
+
+    /// <summary>
+    /// Applies background measurement changes to StackStructure
+    /// </summary>
+    private void ApplyBackgroundMeasurementChange(StructureChange change)
+    {
+        if (change.MeasuredItems?.Count > 0)
+        {
+            var allRows = new List<List<ControlInStack>>();
+            var columnsCount = (Split > 0) ? Split : 1;
             var currentRow = new List<ControlInStack>(columnsCount);
 
-            foreach (var item in batch)
+            foreach (var item in change.MeasuredItems)
             {
                 currentRow.Add(item.Cell);
 
@@ -703,25 +773,77 @@ public partial class SkiaLayout
             {
                 allRows.Add(currentRow);
             }
-        }
 
-        // Append to StackStructure if we have rows to add
-        if (allRows.Count > 0)
-        {
-            if (StackStructure == null)
+            // Append to StackStructure
+            if (allRows.Count > 0)
             {
-                StackStructure = new LayoutStructure(allRows);
-            }
-            else
-            {
-                StackStructure.Append(allRows);
-            }
+                if (StackStructure == null)
+                {
+                    StackStructure = new LayoutStructure(allRows);
+                }
+                else
+                {
+                    StackStructure.Append(allRows);
+                }
 
-            // Update content size with progressive accuracy as we approach the end
-            UpdateProgressiveContentSize();
+                // Update content size with progressive accuracy
+                UpdateProgressiveContentSize();
 
-            Debug.WriteLine($"[ApplyBackgroundMeasurementResult] Applied {allRows.Count} rows from {batchesToProcess.Count} batches to StackStructure. Measured: {MeasuredItemsPercentage:P1}");
+                Debug.WriteLine($"[ApplyBackgroundMeasurementChange] Applied {allRows.Count} rows from background measurement");
+            }
         }
+    }
+
+    /// <summary>
+    /// Applies Add changes to StackStructure
+    /// </summary>
+    private void ApplyAddChange(StructureChange change)
+    {
+        Debug.WriteLine($"[ApplyAddChange] Adding {change.Count} items at index {change.StartIndex}");
+        // TODO: Implement add logic that preserves existing structure
+        // For now, just trigger content size update
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies Remove changes to StackStructure
+    /// </summary>
+    private void ApplyRemoveChange(StructureChange change)
+    {
+        Debug.WriteLine($"[ApplyRemoveChange] Removing {change.Count} items at index {change.StartIndex}");
+        // TODO: Implement remove logic that updates indices and structure
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies Replace changes to StackStructure
+    /// </summary>
+    private void ApplyReplaceChange(StructureChange change)
+    {
+        Debug.WriteLine($"[ApplyReplaceChange] Replacing {change.Count} items at index {change.StartIndex}");
+        // TODO: Implement replace logic that invalidates specific items
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies Move changes to StackStructure
+    /// </summary>
+    private void ApplyMoveChange(StructureChange change)
+    {
+        Debug.WriteLine($"[ApplyMoveChange] Moving item from index {change.StartIndex} to {change.TargetIndex}");
+        // TODO: Implement move logic that reorders structure
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies Reset changes to StackStructure
+    /// </summary>
+    private void ApplyResetChange(StructureChange change)
+    {
+        Debug.WriteLine($"[ApplyResetChange] Resetting all structure");
+        // Clear everything for reset
+        StackStructure = null;
+        UpdateProgressiveContentSize();
     }
 
     /// <summary>
@@ -887,9 +1009,9 @@ public partial class SkiaLayout
         while (currentBatchStart < totalItems && !cancellationToken.IsCancellationRequested && iterationCount < maxIterations)
         {
 
-            lock (_pendingLock)
+            lock (_structureChangesLock)
             {
-                if (_pendingMeasurements.Count > 0)
+                if (_pendingStructureChanges.Count > 0)
                 {
                     break;
                 }

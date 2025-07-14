@@ -1093,8 +1093,8 @@ namespace DrawnUi.Draw
 
             LockUpdate(true);
 
-            // Apply background measurement results to StackStructure
-            ApplyBackgroundMeasurementResult();
+            // Apply all pending structure changes to StackStructure
+            ApplyStructureChanges();
 
             if (Type == LayoutType.Grid || IsStack)
             {
@@ -1611,6 +1611,42 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
+        /// Stages a structure change for processing during rendering pipeline
+        /// </summary>
+        protected virtual void StageStructureChange(StructureChange change)
+        {
+            // Access the staging system via reflection for now
+            // TODO: This could be refactored to avoid reflection
+            try
+            {
+                var lockField = this.GetType().GetField("_structureChangesLock",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var listField = this.GetType().GetField("_pendingStructureChanges",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+                if (lockField?.GetValue(this) is object lockObj && listField?.GetValue(this) is IList list)
+                {
+                    lock (lockObj)
+                    {
+                        list.Add(change);
+                    }
+
+                    if (ViewsAdapter.LogEnabled)
+                    {
+                        Trace.WriteLine($"[SkiaLayout] {Tag} Staged structure change: {change.Type}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ViewsAdapter.LogEnabled)
+                {
+                    Trace.WriteLine($"[SkiaLayout] {Tag} Failed to stage structure change: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles Add collection changes while preserving existing structure
         /// </summary>
         protected virtual void HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs args)
@@ -1622,6 +1658,15 @@ namespace DrawnUi.Draw
 
             // Cancel any ongoing background measurement to avoid conflicts
             CancelBackgroundMeasurement();
+
+            // Stage the Add change for rendering pipeline
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.Add,
+                StartIndex = args.NewStartingIndex,
+                Count = args.NewItems?.Count ?? 0,
+                Items = args.NewItems?.Cast<object>().ToList()
+            });
 
             lock (LockMeasure)
             {
