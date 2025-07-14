@@ -117,10 +117,6 @@ ___Please star ⭐ if you like it!___
 * Keyboard support for desktop platforms.
   	* Not just accelerators, but full keyboard support, usage example inside __SpaceShooter__ game below. :)
 
-    📕 [Documentation](https://taublast.github.io/DrawnUi/)
-
-
- 
 
  ## ‼️ Development Notes
 
