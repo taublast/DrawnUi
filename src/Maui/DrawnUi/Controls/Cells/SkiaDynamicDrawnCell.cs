@@ -11,8 +11,7 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
 
         if (WasMeasured && MeasuredSize.Pixels != LastMeasuredSizePixels)
         {
-            Debug.WriteLine($"CELL was {LastMeasuredSizePixels.Height} now {MeasuredSize.Pixels.Height}");
-            var invalidate = LastMeasuredSizePixels.Height>=0 && LastMeasuredSizePixels.Width>=0;
+            var invalidate = LastMeasuredSizePixels.Height >= 0 && LastMeasuredSizePixels.Width >= 0;
             LastMeasuredSizePixels = MeasuredSize.Pixels;
             if (invalidate)
             {
@@ -40,11 +39,8 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
             Context.PropertyChanged += ContextPropertyChanged;
     }
 
-    protected virtual void ContextPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    protected virtual void ContextPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        //if (e.PropertyName == nameof(OptionItem.Selected) || e.PropertyName == nameof(OptionItem.Title))
-        //{
-        //	SetContent();
-        //}
+ 
     }
 }

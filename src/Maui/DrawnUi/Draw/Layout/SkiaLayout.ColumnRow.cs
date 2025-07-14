@@ -2220,6 +2220,7 @@ else
                             var x = offsetOthers.X + cell.Drawn.Left;
                             var y = offsetOthers.Y + cell.Drawn.Top;
 
+                            
                             if (child.NeedMeasure)
                             {
                                 if (!IsTemplated ||
@@ -2247,6 +2248,7 @@ else
                                     }
                                 }
                             }
+                            
 
                             if (child.IsVisible)
                             {

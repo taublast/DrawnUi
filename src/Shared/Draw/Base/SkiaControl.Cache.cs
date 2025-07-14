@@ -147,6 +147,7 @@ public partial class SkiaControl
     public void DestroyRenderingObject()
     {
         RenderObject = null;
+        RenderObjectPreviousNeedsUpdate = true;
     }
 
     /// <summary>
@@ -477,7 +478,6 @@ public partial class SkiaControl
         }
     }
 
-
     protected virtual bool UseRenderingObject(DrawingContext context, SKRect recordArea)
     {
         lock (LockDraw) //prevent conflicts with erasing cache after we decided to use it
@@ -487,6 +487,7 @@ public partial class SkiaControl
 
             if (RenderObjectPrevious != null && RenderObjectPreviousNeedsUpdate)
             {
+                cacheOffscreen = null;
                 var kill = RenderObjectPrevious;
                 RenderObjectPrevious = null;
                 RenderObjectPreviousNeedsUpdate = false;
@@ -554,7 +555,10 @@ public partial class SkiaControl
                         //will be executed on background thread in parallel
                         var oldObject = RenderObjectPreparing;
                         RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
-                            (ctx) => { PaintWithEffects(ctx); });
+                            (ctx) =>
+                            {
+                                PaintWithEffects(ctx);
+                            });
                         RenderObject = RenderObjectPreparing;
                         _renderObjectPreparing = null;
 

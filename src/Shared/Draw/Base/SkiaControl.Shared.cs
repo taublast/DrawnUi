@@ -6208,9 +6208,8 @@ namespace DrawnUi.Draw
         /// </summary>
         public virtual void Update()
         {
-            if (NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
+            if (UpdateLocks>0 || NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
             {
-                //Repaint(); //todo!!!
                 return;
             }
 
@@ -6585,7 +6584,7 @@ namespace DrawnUi.Draw
 
         protected override void InvalidateMeasure()
         {
-            if (WasMeasured)
+            if (WasMeasured && UpdateLocks<1)
             {
                 InvalidateMeasureInternal();
                 Update();

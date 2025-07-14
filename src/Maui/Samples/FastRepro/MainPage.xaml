@@ -14,7 +14,7 @@
     <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
 
         <draw:Canvas
-            BackgroundColor="LightGray"
+            BackgroundColor="Gainsboro"
             Gestures="Enabled"
             HorizontalOptions="Fill"
             RenderingMode="Accelerated"
@@ -57,6 +57,7 @@
                     <draw:SkiaLayout
                         x:Name="NewsStack"
                         Type="Column"
+                        ReserveTemplates="10"
                         ItemsSource="{Binding NewsItems}"
                         RecyclingTemplate="Enabled"
                         MeasureItemsStrategy="MeasureAll"

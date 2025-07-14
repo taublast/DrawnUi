@@ -6,19 +6,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
     HorizontalOptions="Fill"
-    UseCache="ImageDoubleBuffered"
-    Padding="16,6,16,10">
+    UseCache="ImageDoubleBuffered">
+
+    <!--cached background layer with shadow-->
+    <draw:SkiaLayout
+        VerticalOptions="Fill"
+        HorizontalOptions="Fill"
+        UseCache="Image"
+        Padding="16,6,16,10">
+
+        <draw:SkiaShape
+            CornerRadius="0"
+            BackgroundColor="White"
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill">
+            <draw:SkiaShape.VisualEffects>
+                <draw:DropShadowEffect
+                    Color="#33000000" Blur="3" X="3" Y="3" />
+            </draw:SkiaShape.VisualEffects>
+        </draw:SkiaShape>
+    </draw:SkiaLayout>
 
     <draw:SkiaLayout
-        BackgroundColor="White"
+        Margin="16,6,16,10"
         Padding="16"
         Type="Column" Spacing="12"
         HorizontalOptions="Fill">
-
-        <!--<draw:SkiaShape.VisualEffects>
-            <draw:DropShadowEffect 
-                Color="#33000000" Blur="3" X="2" Y="2" />
-        </draw:SkiaShape.VisualEffects>-->
 
         <!-- Author Header -->
         <draw:SkiaLayout Type="Row" Spacing="8"
@@ -27,7 +40,6 @@
 
             <!--avatar image-->
             <draw:SkiaShape
-                UseCache="Image"
                 x:Name="AvatarFrame"
                 Type="Circle"
                 WidthRequest="40"
@@ -218,10 +230,10 @@
 
     </draw:SkiaLayout>
 
-    <draw:SkiaLabel 
+    <draw:SkiaLabel
         Margin="24"
         x:Name="DebugId"
         TextColor="Red"
-        HorizontalOptions="End" UseCache="Operations"/>
+        HorizontalOptions="End" UseCache="Operations" />
 
 </draw:SkiaDynamicDrawnCell>

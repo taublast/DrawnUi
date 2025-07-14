@@ -31,16 +31,6 @@ public partial class NewsCell : SkiaDynamicDrawnCell
         }
     }
 
-    //protected override void OnCacheDestroyed()
-    //{
-    //    base.OnCacheDestroyed();
-
-    //    if (BindingContext is NewsItem item)
-    //    {
-    //        Debug.WriteLine($"Cache KILLED when ID {item.Id} cell {this.Uid}");
-    //    }
-    //}
-
     private void ConfigureForContentType(NewsItem news)
     {
         // Reset all content visibility

@@ -66,8 +66,12 @@ public class SkiaDrawnCell : SkiaLayout, ISkiaCell
 
                 if (Context == null)
                 {
+                    LockUpdate(true);
+
                     SetContent(ctx);
                     AttachContext(ctx);
+
+                    LockUpdate(false);
                 }
                 _isAttaching = false;
             }
