@@ -863,6 +863,8 @@ namespace DrawnUi.Draw
             lock (lockMeasureLayout)
             {
                 _measuredNewTemplates = false;
+                CancelBackgroundMeasurement();
+                _measuredItems.Clear(); 
 
                 var constraints = GetMeasuringConstraints(request);
 
@@ -1122,11 +1124,11 @@ namespace DrawnUi.Draw
                 var structure = LatestStackStructure;
                 if (structure != null && structure.GetCount() > 0)
                 {
-                    if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-                    {
-                        drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
-                    }
-                    else
+                    //if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                    //{
+                    //    drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
+                    //}
+                    //else
                     {
                         drawnChildrenCount = DrawStack(ctx.WithDestination(rectForChildren), structure);
                     }
@@ -1151,6 +1153,9 @@ namespace DrawnUi.Draw
 
         public override void OnDisposing()
         {
+            CancelBackgroundMeasurement();
+            _measuredItems.Clear();
+
             IsEmptyChanged = null;
 
             ChildrenFactory?.Dispose();
@@ -1431,13 +1436,13 @@ namespace DrawnUi.Draw
         {
             var skiaControl = (SkiaLayout)bindable;
 
-#if TMP
-            if (skiaControl.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-            {
-                Super.Log("MeasureVisible is not supported for this property yet, soon.");
-                skiaControl.MeasureItemsStrategy = MeasuringStrategy.MeasureFirst;
-            }
-#endif
+//#if TMP
+//            if (skiaControl.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+//            {
+//                Super.Log("MeasureVisible is not supported for this property yet, soon.");
+//                skiaControl.MeasureItemsStrategy = MeasuringStrategy.MeasureFirst;
+//            }
+//#endif
 
             //skiaControl.PostponeInvalidation(nameof(UpdateItemsSource), skiaControl.UpdateItemsSource);
             //skiaControl.Update();

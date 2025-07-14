@@ -33,7 +33,6 @@
                     LoadMoreCommand="{Binding LoadMoreCommand}"
                     RefreshEnabled="True"
                     HorizontalOptions="Fill"
-                    ResetScrollPositionOnContentSizeChanged="False"
                     VerticalOptions="Fill">
 
                     <draw:SkiaScroll.Header>
@@ -60,7 +59,7 @@
                         ReserveTemplates="10"
                         ItemsSource="{Binding NewsItems}"
                         RecyclingTemplate="Enabled"
-                        MeasureItemsStrategy="MeasureAll"
+                        MeasureItemsStrategy="MeasureVisible"
                         Spacing="0"
                         HorizontalOptions="Fill">
 

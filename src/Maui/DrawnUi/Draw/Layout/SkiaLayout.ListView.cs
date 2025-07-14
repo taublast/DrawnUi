@@ -1,29 +1,126 @@
 ﻿//reusing some code from #dotnetmaui Layout
 
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 
 namespace DrawnUi.Draw;
 
 public partial class SkiaLayout
 {
-    private SKRect _measuredFor;
+
+    public bool IsBackgroundMeasuring => _isBackgroundMeasuring;
+    public int BackgroundMeasurementProgress => _backgroundMeasurementProgress;
+    public int TotalMeasuredItems => _measuredItems.Count;
+
+    public int FirstMeasuredIndex { get; protected set; }
+    public int LastMeasuredIndex { get; protected set; }
+    public int FirstVisibleIndex { get; protected set; }
+    public int LastVisibleIndex { get; protected set; }
+
+    // Background measurement support
+    private CancellationTokenSource _backgroundMeasurementCts;
+    private Task _backgroundMeasurementTask;
+    private readonly object _measurementLock = new object();
+    private volatile bool _isBackgroundMeasuring = false;
+
+    // Sliding window configuration
+    private const int SLIDING_WINDOW_SIZE = 300; // Keep 300 measured items max
+    private const int MEASUREMENT_BATCH_SIZE = 20; // Measure 20 items per batch
+    private const int AHEAD_BUFFER = 100; // Measure 100 items ahead of visible area
+    private const int BEHIND_BUFFER = 50;  // Keep 50 items behind visible area
+
+    // Track measurement state
+    private readonly ConcurrentDictionary<int, MeasuredItemInfo> _measuredItems = new();
+    private volatile int _backgroundMeasurementProgress = 0;
+
+    /// <summary>
+    /// Information about a measured item for sliding window management
+    /// </summary>
+    private class MeasuredItemInfo
+    {
+        public ControlInStack Cell { get; set; }
+        public DateTime LastAccessed { get; set; } = DateTime.UtcNow;
+        public bool IsInViewport { get; set; }
+    }
+
+    /// <summary>
+    /// Cancels any ongoing background measurement
+    /// </summary>
+    public void CancelBackgroundMeasurement()
+    {
+        if (!_isBackgroundMeasuring)
+            return;
+
+        lock (_measurementLock)
+        {
+            _backgroundMeasurementCts?.Cancel();
+            _backgroundMeasurementCts?.Dispose();
+            _backgroundMeasurementCts = null;
+            _isBackgroundMeasuring = false;
+        }
+
+        Debug.WriteLine("[CancelBackgroundMeasurement] Background measurement cancelled");
+    }
+
+    /// <summary>
+    /// Starts background measurement of items beyond the visible area
+    /// </summary>
+    private void StartBackgroundMeasurement(SKRect constraints, float scale, int startFromIndex)
+    {
+        if (!IsTemplated || ItemsSource == null || ItemsSource.Count <= startFromIndex)
+            return;
+
+        // Cancel any existing background measurement
+        CancelBackgroundMeasurement();
+
+        lock (_measurementLock)
+        {
+            _backgroundMeasurementCts = new CancellationTokenSource();
+            _isBackgroundMeasuring = true;
+        }
+
+        var cancellationToken = _backgroundMeasurementCts.Token;
+
+        _backgroundMeasurementTask = Task.Run(async () =>
+        {
+            try
+            {
+                await BackgroundMeasureItems(constraints, scale, startFromIndex, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.WriteLine("[StartBackgroundMeasurement] Background measurement was cancelled");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[StartBackgroundMeasurement] Background measurement error: {ex.Message}");
+            }
+            finally
+            {
+                lock (_measurementLock)
+                {
+                    _isBackgroundMeasuring = false;
+                }
+            }
+        });
+    }
 
     private int _listAdditionalMeasurements;
 
     /// <summary>
-    /// Measuring column/row list with todo MeasureVisible
+    /// Enhanced MeasureList with background measurement support
     /// </summary>
-    /// <param name="rectForChildrenPixels"></param>
-    /// <param name="scale"></param>
-    /// <returns></returns>
     public virtual ScaledSize MeasureList(SKRect rectForChildrenPixels, float scale)
     {
+        // Cancel any ongoing background measurement when starting fresh measurement
+        CancelBackgroundMeasurement();
+
         if (IsTemplated && ItemsSource.Count > 0)
         {
             int measuredCount = 0;
             var itemsCount = ItemsSource.Count;
             ScaledSize measured = ScaledSize.Default;
-            SKRect rectForChild = rectForChildrenPixels; //.Clone();
+            SKRect rectForChild = rectForChildrenPixels;
 
             SkiaControl[] nonTemplated = null;
             bool smartMeasuring = false;
@@ -32,8 +129,7 @@ public partial class SkiaLayout
             var stackWidth = 0.0f;
 
             SkiaControl template = null;
-            bool useOneTemplate = IsTemplated &&
-                                  RecyclingTemplate != RecyclingTemplate.Disabled;
+            bool useOneTemplate = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled;
 
             if (useOneTemplate)
             {
@@ -45,15 +141,12 @@ public partial class SkiaLayout
             bool stopMeasuring = false;
 
             var inflate = (float)this.VirtualisationInflated * scale;
-            var visibleArea =
-                base.GetOnScreenVisibleArea(new(null, rectForChildrenPixels, scale), new(inflate, inflate));
+            var visibleArea = base.GetOnScreenVisibleArea(new(null, rectForChildrenPixels, scale), new(inflate, inflate));
 
             if (visibleArea.Pixels.Height < 1 || visibleArea.Pixels.Width < 1)
             {
                 return ScaledSize.CreateEmpty(scale);
             }
-
-            //ScaledRect visibleArea = _viewport;
 
             var rowsCount = itemsCount;
             var columnsCount = 1;
@@ -66,27 +159,22 @@ public partial class SkiaLayout
             var rows = new List<List<ControlInStack>>();
             var columns = new List<ControlInStack>(columnsCount);
 
-            //left to right, top to bottom
-            var index = -1;
+            int index = -1;
             var cellsToRelease = new List<SkiaControl>();
-            
+
             // For MeasureVisible strategy, limit initial measurement to visible area + buffer
             var effectiveRowsCount = rowsCount;
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
             {
-                // Estimate how many items we need to measure to fill the visible area
-                // Use a conservative estimate: visible area / estimated item height + buffer
-                var estimatedItemHeight = 60f; // Default estimate for item height
+                var estimatedItemHeight = 60f;
                 var visibleAreaHeight = visibleArea.Pixels.Height;
                 var estimatedVisibleItems = Math.Max(1, (int)Math.Ceiling(visibleAreaHeight / estimatedItemHeight));
-                
-                // Add buffer for smooth scrolling (2-3 screens worth)
+
                 var bufferMultiplier = 3f;
                 var initialMeasureCount = Math.Min(itemsCount, (int)(estimatedVisibleItems * bufferMultiplier));
-                
-                // Ensure we have a reasonable minimum and maximum
+
                 initialMeasureCount = Math.Max(20, Math.Min(200, initialMeasureCount));
-                
+
                 if (Type == LayoutType.Column)
                 {
                     effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
@@ -95,23 +183,21 @@ public partial class SkiaLayout
                 {
                     effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
                 }
-                
+
                 Debug.WriteLine($"[MeasureList] INITIAL MEASURE: {effectiveRowsCount} items out of {itemsCount} total (visible area: {visibleAreaHeight:F1}px, estimated per item: {estimatedItemHeight}px)");
             }
-            
+
             try
             {
+                // Initial measurement loop (same as before)
                 for (var row = 0; row < effectiveRowsCount; row++)
                 {
                     if (stopMeasuring || index + 2 > itemsCount)
-                    {
                         break;
-                    }
 
                     var rowMaxHeight = 0.0f;
                     var maxWidth = 0.0f;
 
-                    // Calculate the width for each column
                     float widthPerColumn;
                     if (Type == LayoutType.Column)
                     {
@@ -163,8 +249,7 @@ public partial class SkiaLayout
                             {
                                 var rectFitChild = new SKRect(rectForChild.Left, rectForChild.Top,
                                     rectForChild.Left + widthPerColumn, rectForChild.Bottom);
-                                measured = MeasureAndArrangeCell(rectFitChild, cell, child, rectForChildrenPixels,
-                                    scale);
+                                measured = MeasureAndArrangeCell(rectFitChild, cell, child, rectForChildrenPixels, scale);
 
                                 if (!visibleArea.Pixels.IntersectsWithInclusive(cell.Destination))
                                 {
@@ -175,6 +260,14 @@ public partial class SkiaLayout
                                 cell.Measured = measured;
                                 cell.WasMeasured = true;
 
+                                // Store in sliding window cache
+                                _measuredItems[cell.ControlIndex] = new MeasuredItemInfo
+                                {
+                                    Cell = cell,
+                                    LastAccessed = DateTime.UtcNow,
+                                    IsInViewport = true
+                                };
+
                                 measuredCount++;
 
                                 if (!measured.IsEmpty)
@@ -184,7 +277,6 @@ public partial class SkiaLayout
                                     if (measured.Pixels.Height > rowMaxHeight)
                                         rowMaxHeight = measured.Pixels.Height;
 
-                                    //offset -->
                                     rectForChild.Left += (float)(measured.Pixels.Width);
                                 }
                             }
@@ -196,7 +288,7 @@ public partial class SkiaLayout
                             Super.Log(e);
                             break;
                         }
-                    } //end of iterate columns
+                    }
 
                     rows.Add(columns);
                     columns = new();
@@ -206,9 +298,8 @@ public partial class SkiaLayout
 
                     stackHeight += rowMaxHeight + GetSpacingForIndex(row, scale);
                     rectForChild.Top += (float)(rowMaxHeight);
-
-                    rectForChild.Left = 0; //reset to start
-                } //end of iterate rows
+                    rectForChild.Left = 0;
+                }
             }
             finally
             {
@@ -217,12 +308,9 @@ public partial class SkiaLayout
                     ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
                 }
             }
-            
-            // Debug: Report actual measurement results
-            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-            {
-                Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px");
-            }
+
+            // Rest of the method stays the same until the return...
+            // [Previous layout logic continues here]
 
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
             {
@@ -234,7 +322,7 @@ public partial class SkiaLayout
                 stackHeight = rectForChildrenPixels.Height;
             }
 
-            //second layout pass in some cases
+            // Second layout pass logic stays the same...
             var autoRight = rectForChildrenPixels.Right;
             if (this.HorizontalOptions != LayoutOptions.Fill)
             {
@@ -247,13 +335,11 @@ public partial class SkiaLayout
                 autoBottom = rectForChildrenPixels.Top + stackHeight;
             }
 
-            var autoRect = new SKRect(
-                rectForChildrenPixels.Left, rectForChildrenPixels.Top,
-                autoRight,
-                autoBottom);
+            var autoRect = new SKRect(rectForChildrenPixels.Left, rectForChildrenPixels.Top, autoRight, autoBottom);
 
             foreach (var secondPass in listSecondPass)
             {
+                // Second pass logic stays the same...
                 if (float.IsInfinity(secondPass.Cell.Area.Bottom))
                 {
                     secondPass.Cell.Area = new(secondPass.Cell.Area.Left, secondPass.Cell.Area.Top,
@@ -288,9 +374,7 @@ public partial class SkiaLayout
                         secondPass.Cell.Area.Left + stackWidth, secondPass.Cell.Area.Bottom);
                 }
 
-                LayoutCell(secondPass.Child.MeasuredSize, secondPass.Cell, secondPass.Child,
-                    autoRect,
-                    secondPass.Scale);
+                LayoutCell(secondPass.Child.MeasuredSize, secondPass.Cell, secondPass.Child, autoRect, secondPass.Scale);
             }
 
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill && WidthRequest < 0)
@@ -308,7 +392,6 @@ public partial class SkiaLayout
 
             FirstVisibleIndex = -1;
             FirstMeasuredIndex = 0;
-
             LastVisibleIndex = -1;
             LastMeasuredIndex = measuredCount - 1;
 
@@ -317,35 +400,28 @@ public partial class SkiaLayout
                 if (this.Type == LayoutType.Column)
                 {
                     var medium = stackHeight / measuredCount;
-                    
-                    // For MeasureVisible strategy, we only measured a portion of items
-                    // Use the measured average to estimate total size
+
                     if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
                     {
-                        // Calculate total estimated size based on measured average
                         var estimatedTotalHeight = medium * itemsCount;
                         stackHeight = estimatedTotalHeight;
                     }
                     else
                     {
-                        // Original logic for when all items are measured
                         stackHeight = medium * itemsCount;
                     }
                 }
                 else if (this.Type == LayoutType.Row)
                 {
                     var medium = stackWidth / measuredCount;
-                    
-                    // For MeasureVisible strategy, we only measured a portion of items
+
                     if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
                     {
-                        // Calculate total estimated size based on measured average
                         var estimatedTotalWidth = medium * itemsCount;
                         stackWidth = estimatedTotalWidth;
                     }
                     else
                     {
-                        // Original logic for when all items are measured
                         stackWidth = medium * itemsCount;
                     }
                 }
@@ -358,7 +434,17 @@ public partial class SkiaLayout
                 ChildrenFactory.ReleaseTemplateInstance(template);
             }
 
-            _measuredFor = rectForChildrenPixels;
+            // Start background measurement if using MeasureVisible strategy
+            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
+            {
+                StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
+            }
+
+            // Debug: Report actual measurement results
+            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+            {
+                Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px. Background measurement started for remaining {itemsCount - measuredCount} items.");
+            }
 
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
         }
@@ -366,13 +452,234 @@ public partial class SkiaLayout
         return ScaledSize.FromPixels(rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
     }
 
-    public int FirstMeasuredIndex { get; protected set; }
+    /// <summary>
+    /// Updates estimated content size based on current measurements
+    /// </summary>
+    private void UpdateEstimatedContentSize(float scale)
+    {
+        if (_measuredItems.Count == 0)
+            return;
 
-    public int LastMeasuredIndex { get; protected set; }
+        var totalItems = ItemsSource?.Count ?? 0;
+        if (totalItems == 0)
+            return;
 
-    public int FirstVisibleIndex { get; protected set; }
+        var measuredHeights = _measuredItems.Values
+            .Where(x => x.Cell.WasMeasured)
+            .Select(x => x.Cell.Measured.Pixels.Height)
+            .Where(h => h > 0)
+            .ToList();
 
-    public int LastVisibleIndex { get; protected set; }
+        if (measuredHeights.Count > 0 && Type == LayoutType.Column)
+        {
+            var averageHeight = measuredHeights.Average();
+            var estimatedTotalHeight = averageHeight * totalItems;
+
+            // Update the measured size if estimate is larger
+            if (estimatedTotalHeight > MeasuredSize.Pixels.Height)
+            {
+                SetMeasured(MeasuredSize.Pixels.Width, estimatedTotalHeight, false, false, scale);
+                Debug.WriteLine($"[UpdateEstimatedContentSize] Updated estimated height to {estimatedTotalHeight:F1}px based on {measuredHeights.Count} measured items (avg: {averageHeight:F1}px)");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Measures a batch of items in background thread
+    /// </summary>
+    private List<MeasuredItemInfo> MeasureBatchInBackground(SKRect constraints, float scale, int startIndex, int count, CancellationToken cancellationToken)
+    {
+        var measuredBatch = new List<MeasuredItemInfo>();
+
+        SkiaControl template = null;
+        bool useOneTemplate = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled;
+        var cellsToRelease = new List<SkiaControl>();
+
+        try
+        {
+            if (useOneTemplate)
+            {
+                template = ChildrenFactory.GetTemplateInstance();
+            }
+
+            var structure = LatestStackStructure;
+            var (startX, startY, startRow, startCol) = GetNextItemPositionForIncremental(structure);
+
+            var columnsCount = (Split > 0) ? Split : 1;
+            var columnWidth = ComputeColumnWidth(columnsCount);
+
+            for (int i = 0; i < count && !cancellationToken.IsCancellationRequested; i++)
+            {
+                var itemIndex = startIndex + i;
+
+                // Check if already measured
+                if (_measuredItems.ContainsKey(itemIndex))
+                    continue;
+
+                var child = ChildrenFactory.GetViewForIndex(itemIndex, template, 0, true);
+                if (template == null && child != null)
+                {
+                    cellsToRelease.Add(child);
+                }
+
+                if (child?.CanDraw == true)
+                {
+                    var rectForChild = new SKRect(0, 0, columnWidth, float.PositiveInfinity);
+                    var cell = new ControlInStack
+                    {
+                        ControlIndex = itemIndex,
+                        Column = startCol,
+                        Row = startRow + (i / columnsCount),
+                        Destination = rectForChild
+                    };
+
+                    var measured = MeasureAndArrangeCell(rectForChild, cell, child, constraints, scale);
+                    cell.Measured = measured;
+                    cell.WasMeasured = true;
+
+                    measuredBatch.Add(new MeasuredItemInfo
+                    {
+                        Cell = cell,
+                        LastAccessed = DateTime.UtcNow,
+                        IsInViewport = false
+                    });
+                }
+            }
+        }
+        finally
+        {
+            if (template != null)
+            {
+                ChildrenFactory.ReleaseTemplateInstance(template);
+            }
+            foreach (var cell in cellsToRelease)
+            {
+                ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
+            }
+        }
+
+        return measuredBatch;
+    }
+
+    /// <summary>
+    /// Integrates measured batch into the main structure
+    /// </summary>
+    private void IntegrateMeasuredBatch(List<MeasuredItemInfo> measuredBatch, float scale)
+    {
+        if (measuredBatch?.Count > 0)
+        {
+            foreach (var item in measuredBatch)
+            {
+                _measuredItems[item.Cell.ControlIndex] = item;
+            }
+
+            // Update LastMeasuredIndex
+            var maxIndex = measuredBatch.Max(x => x.Cell.ControlIndex);
+            if (maxIndex > LastMeasuredIndex)
+            {
+                LastMeasuredIndex = maxIndex;
+            }
+
+            // Recalculate estimated content size
+            UpdateEstimatedContentSize(scale);
+
+            Debug.WriteLine($"[IntegrateMeasuredBatch] Integrated {measuredBatch.Count} items, total measured: {_measuredItems.Count}, last index: {LastMeasuredIndex}");
+        }
+    }
+
+    /// <summary>
+    /// Applies sliding window cleanup to maintain memory limits
+    /// </summary>
+    private void ApplySlidingWindowCleanup()
+    {
+        if (_measuredItems.Count <= SLIDING_WINDOW_SIZE)
+            return;
+
+        var currentViewportStart = Math.Max(0, FirstVisibleIndex - BEHIND_BUFFER);
+        var currentViewportEnd = LastVisibleIndex + AHEAD_BUFFER;
+
+        var itemsToRemove = _measuredItems
+            .Where(kvp => kvp.Key < currentViewportStart || kvp.Key > currentViewportEnd)
+            .OrderBy(kvp => kvp.Value.LastAccessed)
+            .Take(_measuredItems.Count - SLIDING_WINDOW_SIZE)
+            .Select(kvp => kvp.Key)
+            .ToList();
+
+        foreach (var indexToRemove in itemsToRemove)
+        {
+            _measuredItems.TryRemove(indexToRemove, out _);
+        }
+
+        if (itemsToRemove.Count > 0)
+        {
+            Debug.WriteLine($"[ApplySlidingWindowCleanup] Removed {itemsToRemove.Count} measured items, kept {_measuredItems.Count} items in memory");
+        }
+    }
+
+
+    /// <summary>
+    /// Background measurement implementation with sliding window
+    /// </summary>
+    private async Task BackgroundMeasureItems(SKRect constraints, float scale, int startIndex, CancellationToken cancellationToken)
+    {
+        var totalItems = ItemsSource.Count;
+        var currentBatchStart = startIndex;
+        var maxIterations = Math.Max(1, (totalItems / MEASUREMENT_BATCH_SIZE) + 10); // Safety limit
+        var iterationCount = 0;
+
+        Debug.WriteLine($"[BackgroundMeasureItems] Starting background measurement from index {startIndex} of {totalItems} total items");
+
+        while (currentBatchStart < totalItems && !cancellationToken.IsCancellationRequested && iterationCount < maxIterations)
+        {
+            iterationCount++;
+            var batchEnd = Math.Min(currentBatchStart + MEASUREMENT_BATCH_SIZE, totalItems);
+            var itemsToMeasure = batchEnd - currentBatchStart;
+
+            // Safety check to prevent infinite loops
+            if (itemsToMeasure <= 0)
+            {
+                Debug.WriteLine($"[BackgroundMeasureItems] WARNING: No items to measure in batch {currentBatchStart}-{batchEnd}, breaking loop");
+                break;
+            }
+
+            Debug.WriteLine($"[BackgroundMeasureItems] Measuring batch {currentBatchStart}-{batchEnd - 1} ({itemsToMeasure} items) [iteration {iterationCount}/{maxIterations}]");
+
+            // Measure batch on background thread
+            var measuredBatch = await Task.Run(() => MeasureBatchInBackground(
+                constraints, scale, currentBatchStart, itemsToMeasure, cancellationToken), cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                Debug.WriteLine($"[BackgroundMeasureItems] Cancellation requested, stopping at batch {currentBatchStart}");
+                break;
+            }
+
+            // Update UI thread with results
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    IntegrateMeasuredBatch(measuredBatch, scale);
+                    ApplySlidingWindowCleanup();
+                }
+            });
+
+            _backgroundMeasurementProgress = batchEnd;
+
+            // Move to next batch - CRITICAL: This was missing!
+            currentBatchStart = batchEnd;
+
+            // Small delay to prevent overwhelming the system
+            await Task.Delay(10, cancellationToken);
+        }
+
+        if (iterationCount >= maxIterations)
+        {
+            Debug.WriteLine($"[BackgroundMeasureItems] WARNING: Hit maximum iteration limit ({maxIterations}), stopping background measurement");
+        }
+
+        Debug.WriteLine($"[BackgroundMeasureItems] Completed background measurement up to index {_backgroundMeasurementProgress}");
+    }
 
     /// <summary>
     /// Renders Templated Column/Row todo in some cases..
