@@ -35,6 +35,7 @@ public partial class SkiaLayout
         public List<MeasuredItemInfo> MeasuredItems { get; set; } // For BackgroundMeasurement
         public int? InsertAtIndex { get; set; } // Where to insert in existing structure
         public bool IsInsertOperation { get; set; } // Flag for insert vs append
+        public bool IsVisible { get; set; } // For VisibilityChange
     }
 
     /// <summary>
@@ -58,7 +59,8 @@ public partial class SkiaLayout
         Replace,
         Move,
         Reset,
-        BackgroundMeasurement
+        BackgroundMeasurement,
+        VisibilityChange
     }
 
     // Background measurement support
@@ -757,6 +759,10 @@ public partial class SkiaLayout
                     ApplyResetChange(change);
                     break;
 
+                case StructureChangeType.VisibilityChange:
+                    ApplyVisibilityChange(change);
+                    break;
+
                 default:
                     Debug.WriteLine($"[ApplyStructureChanges] Unknown change type: {change.Type}");
                     break;
@@ -1073,6 +1079,62 @@ public partial class SkiaLayout
         LastMeasuredIndex = -1;
         FirstMeasuredIndex = -1;
         UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies visibility changes to StackStructure
+    /// </summary>
+    private void ApplyVisibilityChange(StructureChange change)
+    {
+        var structure = LatestMeasuredStackStructure;
+        if (structure == null)
+            return;
+
+        var cell = structure.GetForIndex(change.StartIndex);
+        if (cell == null)
+            return;
+
+        Debug.WriteLine($"[ApplyVisibilityChange] Cell {change.StartIndex} visibility: {change.IsVisible}");
+
+        if (!change.IsVisible && !cell.IsCollapsedForVisibility)
+        {
+            // BECOMING INVISIBLE - Save state and collapse
+            cell.SavedDestination = cell.Destination;
+            cell.SavedMeasured = cell.Measured;
+            cell.HasSavedState = true;
+            cell.IsCollapsedForVisibility = true;
+            cell.IsContentVisible = false;
+
+            // Use existing OffsetSubsequentCells to shift others
+            var deltaWidth = -cell.Destination.Width;
+            var deltaHeight = -cell.Destination.Height;
+            OffsetSubsequentCells(structure, cell, deltaWidth, deltaHeight);
+
+            // Collapse this cell
+            cell.Destination = SKRect.Empty;
+            cell.Measured = ScaledSize.Default;
+
+            Debug.WriteLine($"[ApplyVisibilityChange] Collapsed cell {change.StartIndex}, saved state {cell.SavedDestination}");
+        }
+        else if (change.IsVisible && cell.IsCollapsedForVisibility)
+        {
+            // BECOMING VISIBLE - Restore state and shift others back
+            if (cell.HasSavedState)
+            {
+                // Restore saved dimensions
+                cell.Destination = cell.SavedDestination;
+                cell.Measured = cell.SavedMeasured;
+                cell.IsCollapsedForVisibility = false;
+                cell.IsContentVisible = true;
+
+                // Use existing OffsetSubsequentCells to shift others back
+                var deltaWidth = cell.Destination.Width;
+                var deltaHeight = cell.Destination.Height;
+                OffsetSubsequentCells(structure, cell, deltaWidth, deltaHeight);
+
+                Debug.WriteLine($"[ApplyVisibilityChange] Restored cell {change.StartIndex} to {cell.Destination}");
+            }
+        }
     }
 
     #region Hybrid Measurement Shifting

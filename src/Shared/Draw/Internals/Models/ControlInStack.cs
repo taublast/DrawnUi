@@ -64,4 +64,29 @@ public class ControlInStack
     public int Column { get; set; }
 
     public int Row { get; set; }
+
+    /// <summary>
+    /// Cell's own visibility state (independent of viewport visibility)
+    /// </summary>
+    public bool IsContentVisible { get; set; } = true;
+
+    /// <summary>
+    /// Original position when visible (for fast restoration)
+    /// </summary>
+    public SKRect SavedDestination { get; set; }
+
+    /// <summary>
+    /// Original size when visible (for fast restoration)
+    /// </summary>
+    public ScaledSize SavedMeasured { get; set; }
+
+    /// <summary>
+    /// Whether we have valid saved data for restoration
+    /// </summary>
+    public bool HasSavedState { get; set; }
+
+    /// <summary>
+    /// Currently collapsed due to visibility (not viewport)
+    /// </summary>
+    public bool IsCollapsedForVisibility { get; set; }
 }

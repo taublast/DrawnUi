@@ -2121,8 +2121,13 @@ else
                             }
                             else
                             {
-                                // SOLUTION PART 1: Use normal area for visibility
-                                cell.IsVisible = insideViewport;
+                                // Combine viewport visibility with content visibility
+                                var viewportVisible = insideViewport;
+                                var contentVisible = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled
+                                    ? cell.IsContentVisible && !cell.IsCollapsedForVisibility
+                                    : true;
+
+                                cell.IsVisible = viewportVisible && contentVisible;
 
                                 // for plane virtualization
                                 //if (!string.IsNullOrEmpty(planeId) && cell.ControlIndex < 3)
@@ -2133,7 +2138,12 @@ else
                         }
                         else
                         {
-                            cell.IsVisible = true;
+                            // For non-virtualized, still respect content visibility
+                            var contentVisible = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled
+                                ? cell.IsContentVisible && !cell.IsCollapsedForVisibility
+                                : true;
+
+                            cell.IsVisible = contentVisible;
                         }
 
                         if (firstVisibleIndex < 0)

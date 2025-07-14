@@ -1615,26 +1615,16 @@ namespace DrawnUi.Draw
         /// </summary>
         protected virtual void StageStructureChange(StructureChange change)
         {
-            // Access the staging system via reflection for now
-            // TODO: This could be refactored to avoid reflection
             try
             {
-                var lockField = this.GetType().GetField("_structureChangesLock",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                var listField = this.GetType().GetField("_pendingStructureChanges",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-                if (lockField?.GetValue(this) is object lockObj && listField?.GetValue(this) is IList list)
+                lock (_structureChangesLock)
                 {
-                    lock (lockObj)
-                    {
-                        list.Add(change);
-                    }
+                    _pendingStructureChanges.Add(change);
+                }
 
-                    if (ViewsAdapter.LogEnabled)
-                    {
-                        Trace.WriteLine($"[SkiaLayout] {Tag} Staged structure change: {change.Type}");
-                    }
+                if (ViewsAdapter.LogEnabled)
+                {
+                    Trace.WriteLine($"[SkiaLayout] {Tag} Staged structure change: {change.Type}");
                 }
             }
             catch (Exception ex)
@@ -1643,6 +1633,30 @@ namespace DrawnUi.Draw
                 {
                     Trace.WriteLine($"[SkiaLayout] {Tag} Failed to stage structure change: {ex.Message}");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Called by templated cells to report visibility changes.
+        /// This stages the visibility change to be applied during the next rendering cycle.
+        /// </summary>
+        /// <param name="cellIndex">The index of the cell in the ItemsSource</param>
+        /// <param name="isVisible">The new visibility state</param>
+        public virtual void ReportChildVisibilityChanged(int cellIndex, bool isVisible)
+        {
+            if (!IsTemplated)
+                return;
+
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.VisibilityChange,
+                StartIndex = cellIndex,
+                IsVisible = isVisible
+            });
+
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Staged visibility change for cell {cellIndex}: {isVisible}");
             }
         }
 

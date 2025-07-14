@@ -998,12 +998,13 @@ public class ViewsAdapter : IDisposable
 
                         var context = _dataContexts[index];
 
+                        if (!isMeasuring)
+                        {
+                            view.Parent = _parent;
+                        }
+
                         if (index == 0 || view.ContextIndex != index || view.BindingContext != context)
                         {
-                            if (!isMeasuring)
-                            {
-                                view.Parent = _parent;
-                            }
 
                             view.ContextIndex = index;
                             var ctx = view.BindingContext;
