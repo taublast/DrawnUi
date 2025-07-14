@@ -1696,15 +1696,31 @@ namespace DrawnUi.Draw
                 Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REMOVE: {args.OldItems?.Count ?? 0} items at index {args.OldStartingIndex}");
             }
 
-            // TODO: Implement remove logic that updates StackStructure and _measuredItems
-            // For now, fall back to existing logic
+            // Cancel any ongoing background measurement to avoid conflicts
+            CancelBackgroundMeasurement();
+
+            // Stage the Remove change for rendering pipeline
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.Remove,
+                StartIndex = args.OldStartingIndex,
+                Count = args.OldItems?.Count ?? 0
+            });
+
             lock (LockMeasure)
             {
                 SafeAction(() =>
                 {
-                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
-                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
-                    Invalidate();
+                    // Use InitializeSoft to preserve structure while updating templates
+                    ChildrenFactory.InitializeSoft(false, ItemsSource, GetTemplatesPoolLimit());
+
+                    if (ViewsAdapter.LogEnabled)
+                    {
+                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, remove change staged");
+                    }
+
+                    // Trigger repaint without invalidation to apply staged changes
+                    Update();
                 });
             }
         }
@@ -1719,15 +1735,32 @@ namespace DrawnUi.Draw
                 Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REPLACE: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
             }
 
-            // TODO: Implement replace logic that updates StackStructure and _measuredItems
-            // For now, fall back to existing logic
+            // Cancel any ongoing background measurement to avoid conflicts
+            CancelBackgroundMeasurement();
+
+            // Stage the Replace change for rendering pipeline
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.Replace,
+                StartIndex = args.NewStartingIndex,
+                Count = args.NewItems?.Count ?? 0,
+                Items = args.NewItems?.Cast<object>().ToList()
+            });
+
             lock (LockMeasure)
             {
                 SafeAction(() =>
                 {
-                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
-                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
-                    Invalidate();
+                    // Use InitializeSoft to preserve structure while updating templates
+                    ChildrenFactory.InitializeSoft(false, ItemsSource, GetTemplatesPoolLimit());
+
+                    if (ViewsAdapter.LogEnabled)
+                    {
+                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, replace change staged");
+                    }
+
+                    // Trigger repaint without invalidation to apply staged changes
+                    Update();
                 });
             }
         }

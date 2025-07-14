@@ -33,6 +33,19 @@ public partial class SkiaLayout
         public List<object> Items { get; set; } // For Add/Replace
         public int TargetIndex { get; set; } // For Move
         public List<MeasuredItemInfo> MeasuredItems { get; set; } // For BackgroundMeasurement
+        public int? InsertAtIndex { get; set; } // Where to insert in existing structure
+        public bool IsInsertOperation { get; set; } // Flag for insert vs append
+    }
+
+    /// <summary>
+    /// Context for background measurement operations
+    /// </summary>
+    public class BackgroundMeasurementContext
+    {
+        public int? InsertAtIndex { get; set; }
+        public int? InsertCount { get; set; }
+        public int StartMeasuringFrom { get; set; }
+        public bool IsInsertOperation => InsertAtIndex.HasValue;
     }
 
     /// <summary>
@@ -68,6 +81,11 @@ public partial class SkiaLayout
     private readonly object _structureChangesLock = new();
     private readonly List<StructureChange> _pendingStructureChanges = new();
 
+    // Hybrid shifting system
+    private const int DIRECT_SHIFT_THRESHOLD = 1000;
+    private readonly Dictionary<int, int> _indexOffsets = new();
+    private readonly HashSet<int> _removedIndices = new();
+
     /// <summary>
     /// Information about a measured item for sliding window management
     /// </summary>
@@ -100,7 +118,8 @@ public partial class SkiaLayout
     /// <summary>
     /// Starts background measurement of items beyond the visible area
     /// </summary>
-    private void StartBackgroundMeasurement(SKRect constraints, float scale, int startFromIndex)
+    private void StartBackgroundMeasurement(SKRect constraints, float scale, int startFromIndex,
+        BackgroundMeasurementContext context = null)
     {
         if (!IsTemplated || ItemsSource == null || ItemsSource.Count <= startFromIndex)
             return;
@@ -120,7 +139,7 @@ public partial class SkiaLayout
         {
             try
             {
-                await BackgroundMeasureItems(constraints, scale, startFromIndex, cancellationToken);
+                await BackgroundMeasureItems(constraints, scale, startFromIndex, cancellationToken, context);
             }
             catch (OperationCanceledException)
             {
@@ -656,7 +675,7 @@ public partial class SkiaLayout
     /// <summary>
     /// Integrates measured batch into the main structure
     /// </summary>
-    private void IntegrateMeasuredBatch(List<MeasuredItemInfo> measuredBatch, float scale)
+    private void IntegrateMeasuredBatch(List<MeasuredItemInfo> measuredBatch, float scale, BackgroundMeasurementContext context = null)
     {
         if (measuredBatch?.Count > 0)
         {
@@ -678,7 +697,9 @@ public partial class SkiaLayout
                 _pendingStructureChanges.Add(new StructureChange
                 {
                     Type = StructureChangeType.BackgroundMeasurement,
-                    MeasuredItems = measuredBatch
+                    MeasuredItems = measuredBatch,
+                    InsertAtIndex = context?.InsertAtIndex,
+                    IsInsertOperation = context?.IsInsertOperation ?? false
                 });
             }
 
@@ -752,46 +773,184 @@ public partial class SkiaLayout
     {
         if (change.MeasuredItems?.Count > 0)
         {
-            var allRows = new List<List<ControlInStack>>();
-            var columnsCount = (Split > 0) ? Split : 1;
-            var currentRow = new List<ControlInStack>(columnsCount);
-
-            foreach (var item in change.MeasuredItems)
+            if (change.IsInsertOperation && change.InsertAtIndex.HasValue)
             {
-                currentRow.Add(item.Cell);
-
-                // Complete row when we reach columnsCount
-                if (currentRow.Count >= columnsCount)
-                {
-                    allRows.Add(currentRow);
-                    currentRow = new List<ControlInStack>(columnsCount);
-                }
+                // Insert measurements at specific position
+                InsertMeasurementsAtPosition(change.MeasuredItems, change.InsertAtIndex.Value);
             }
-
-            // Add incomplete row if it has items
-            if (currentRow.Count > 0)
+            else
             {
-                allRows.Add(currentRow);
-            }
-
-            // Append to StackStructure
-            if (allRows.Count > 0)
-            {
-                if (StackStructure == null)
-                {
-                    StackStructure = new LayoutStructure(allRows);
-                }
-                else
-                {
-                    StackStructure.Append(allRows);
-                }
-
-                // Update content size with progressive accuracy
-                UpdateProgressiveContentSize();
-
-                Debug.WriteLine($"[ApplyBackgroundMeasurementChange] Applied {allRows.Count} rows from background measurement");
+                // Append measurements to end (existing behavior)
+                AppendMeasurementsToEnd(change.MeasuredItems);
             }
         }
+    }
+
+    /// <summary>
+    /// Inserts measurements at a specific position in existing structure
+    /// </summary>
+    private void InsertMeasurementsAtPosition(List<MeasuredItemInfo> measuredItems, int insertAtIndex)
+    {
+        var allRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+        var currentRow = new List<ControlInStack>(columnsCount);
+
+        foreach (var item in measuredItems)
+        {
+            currentRow.Add(item.Cell);
+
+            // Complete row when we reach columnsCount
+            if (currentRow.Count >= columnsCount)
+            {
+                allRows.Add(currentRow);
+                currentRow = new List<ControlInStack>(columnsCount);
+            }
+        }
+
+        // Add incomplete row if it has items
+        if (currentRow.Count > 0)
+        {
+            allRows.Add(currentRow);
+        }
+
+        if (allRows.Count > 0)
+        {
+            if (StackStructure == null)
+            {
+                StackStructure = new LayoutStructure(allRows);
+            }
+            else
+            {
+                // Insert rows at the correct position in existing structure
+                InsertRowsAtPosition(allRows, insertAtIndex);
+            }
+
+            UpdateProgressiveContentSize();
+            Debug.WriteLine($"[InsertMeasurementsAtPosition] Inserted {allRows.Count} rows at index {insertAtIndex}");
+        }
+    }
+
+    /// <summary>
+    /// Appends measurements to the end of existing structure
+    /// </summary>
+    private void AppendMeasurementsToEnd(List<MeasuredItemInfo> measuredItems)
+    {
+        var allRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+        var currentRow = new List<ControlInStack>(columnsCount);
+
+        foreach (var item in measuredItems)
+        {
+            currentRow.Add(item.Cell);
+
+            // Complete row when we reach columnsCount
+            if (currentRow.Count >= columnsCount)
+            {
+                allRows.Add(currentRow);
+                currentRow = new List<ControlInStack>(columnsCount);
+            }
+        }
+
+        // Add incomplete row if it has items
+        if (currentRow.Count > 0)
+        {
+            allRows.Add(currentRow);
+        }
+
+        if (allRows.Count > 0)
+        {
+            if (StackStructure == null)
+            {
+                StackStructure = new LayoutStructure(allRows);
+            }
+            else
+            {
+                StackStructure.Append(allRows);
+            }
+
+            UpdateProgressiveContentSize();
+            Debug.WriteLine($"[AppendMeasurementsToEnd] Appended {allRows.Count} rows from background measurement");
+        }
+    }
+
+    /// <summary>
+    /// Inserts rows at a specific position in the StackStructure
+    /// </summary>
+    private void InsertRowsAtPosition(List<List<ControlInStack>> newRows, int insertAtIndex)
+    {
+        // For now, we'll use a simplified approach since DynamicGrid doesn't have direct insert
+        // We'll rebuild the structure with the new rows inserted at the correct position
+
+        var existingCells = StackStructure.GetChildren().ToList();
+        var allCells = new List<ControlInStack>();
+
+        // Add cells before insert position
+        allCells.AddRange(existingCells.Where(c => c.ControlIndex < insertAtIndex));
+
+        // Add new cells
+        foreach (var row in newRows)
+        {
+            allCells.AddRange(row);
+        }
+
+        // Add cells after insert position (with shifted indices)
+        var cellsAfter = existingCells.Where(c => c.ControlIndex >= insertAtIndex).ToList();
+        foreach (var cell in cellsAfter)
+        {
+            cell.ControlIndex += newRows.SelectMany(r => r).Count(); // Shift indices
+        }
+        allCells.AddRange(cellsAfter);
+
+        // Rebuild structure with all cells
+        var rebuiltRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+        var currentRow = new List<ControlInStack>(columnsCount);
+
+        foreach (var cell in allCells.OrderBy(c => c.ControlIndex))
+        {
+            currentRow.Add(cell);
+            if (currentRow.Count >= columnsCount)
+            {
+                rebuiltRows.Add(currentRow);
+                currentRow = new List<ControlInStack>(columnsCount);
+            }
+        }
+
+        if (currentRow.Count > 0)
+        {
+            rebuiltRows.Add(currentRow);
+        }
+
+        // Replace the entire structure
+        StackStructure = new LayoutStructure(rebuiltRows);
+
+        Debug.WriteLine($"[InsertRowsAtPosition] Rebuilt structure with {newRows.Count} rows inserted at index {insertAtIndex}");
+    }
+
+    /// <summary>
+    /// Triggers insert-aware background measurement for new items
+    /// </summary>
+    private void TriggerInsertAwareBackgroundMeasurement(int insertAtIndex, int insertCount)
+    {
+        if (!IsTemplated || ItemsSource == null)
+            return;
+
+        // Create context for insert operation
+        var context = new BackgroundMeasurementContext
+        {
+            InsertAtIndex = insertAtIndex,
+            InsertCount = insertCount,
+            StartMeasuringFrom = insertAtIndex
+        };
+
+        // Get current constraints from last measurement
+        var constraints = new SKRect(0, 0, _lastMeasuredForWidth, _lastMeasuredForHeight);
+        var scale = RenderingScale;
+
+        // Start background measurement with insert context
+        StartBackgroundMeasurement(constraints, scale, insertAtIndex, context);
+
+        Debug.WriteLine($"[TriggerInsertAwareBackgroundMeasurement] Started insert-aware background measurement for {insertCount} items at index {insertAtIndex}");
     }
 
     /// <summary>
@@ -800,8 +959,37 @@ public partial class SkiaLayout
     private void ApplyAddChange(StructureChange change)
     {
         Debug.WriteLine($"[ApplyAddChange] Adding {change.Count} items at index {change.StartIndex}");
-        // TODO: Implement add logic that preserves existing structure
-        // For now, just trigger content size update
+
+        if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+        {
+            if (change.StartIndex <= LastMeasuredIndex)
+            {
+                // Insert in middle of measured items - shift existing measurements
+                ShiftMeasurementIndices(change.StartIndex, change.Count);
+
+                // Trigger insert-aware background measurement for new items
+                TriggerInsertAwareBackgroundMeasurement(change.StartIndex, change.Count);
+
+                Debug.WriteLine($"[ApplyAddChange] MeasureVisible: Shifted measurements and triggered insert-aware background measurement");
+            }
+            else
+            {
+                // Adding at end - normal background measurement will handle it
+                Debug.WriteLine($"[ApplyAddChange] MeasureVisible strategy - background measurement will handle new items at end");
+            }
+        }
+        else
+        {
+            // For sync strategies: Need to shift existing measurements and measure new items
+            if (change.StartIndex <= LastMeasuredIndex)
+            {
+                // Adding in middle of measured items - shift existing measurements
+                ShiftMeasurementIndices(change.StartIndex, change.Count);
+                Debug.WriteLine($"[ApplyAddChange] Shifted measurements for sync strategy");
+            }
+            // Note: New items will be measured on-demand during normal layout
+        }
+
         UpdateProgressiveContentSize();
     }
 
@@ -811,7 +999,23 @@ public partial class SkiaLayout
     private void ApplyRemoveChange(StructureChange change)
     {
         Debug.WriteLine($"[ApplyRemoveChange] Removing {change.Count} items at index {change.StartIndex}");
-        // TODO: Implement remove logic that updates indices and structure
+
+        // Remove items from measurement cache and shift indices
+        for (int i = change.StartIndex; i < change.StartIndex + change.Count; i++)
+        {
+            _measuredItems.TryRemove(i, out _);
+        }
+
+        // Shift remaining measurements
+        ShiftMeasurementIndices(change.StartIndex + change.Count, -change.Count);
+
+        // Remove corresponding rows from StackStructure
+        if (StackStructure != null)
+        {
+            RemoveItemsFromStackStructure(change.StartIndex, change.Count);
+        }
+
+        Debug.WriteLine($"[ApplyRemoveChange] Removed {change.Count} items and shifted measurements");
         UpdateProgressiveContentSize();
     }
 
@@ -821,8 +1025,28 @@ public partial class SkiaLayout
     private void ApplyReplaceChange(StructureChange change)
     {
         Debug.WriteLine($"[ApplyReplaceChange] Replacing {change.Count} items at index {change.StartIndex}");
-        // TODO: Implement replace logic that invalidates specific items
-        UpdateProgressiveContentSize();
+
+        // For Replace: Split into Remove + Add in same frame
+        var removeChange = new StructureChange
+        {
+            Type = StructureChangeType.Remove,
+            StartIndex = change.StartIndex,
+            Count = change.Count
+        };
+
+        var addChange = new StructureChange
+        {
+            Type = StructureChangeType.Add,
+            StartIndex = change.StartIndex,
+            Count = change.Count,
+            Items = change.Items
+        };
+
+        // Apply remove then add
+        ApplyRemoveChange(removeChange);
+        ApplyAddChange(addChange);
+
+        Debug.WriteLine($"[ApplyReplaceChange] Split replace into remove + add operations");
     }
 
     /// <summary>
@@ -843,8 +1067,162 @@ public partial class SkiaLayout
         Debug.WriteLine($"[ApplyResetChange] Resetting all structure");
         // Clear everything for reset
         StackStructure = null;
+        _measuredItems.Clear();
+        _indexOffsets.Clear();
+        _removedIndices.Clear();
+        LastMeasuredIndex = -1;
+        FirstMeasuredIndex = -1;
         UpdateProgressiveContentSize();
     }
+
+    #region Hybrid Measurement Shifting
+
+    /// <summary>
+    /// Shifts measurement indices using hybrid approach based on collection size
+    /// </summary>
+    private void ShiftMeasurementIndices(int startIndex, int offset)
+    {
+        var affectedCount = _measuredItems.Keys.Count(k => k >= startIndex);
+
+        if (affectedCount <= DIRECT_SHIFT_THRESHOLD)
+        {
+            // Small collection - direct shifting (simple & fast)
+            DirectShiftMeasurements(startIndex, offset);
+        }
+        else
+        {
+            // Large collection - offset mapping (scalable)
+            OffsetMapMeasurements(startIndex, offset);
+        }
+
+        // Update measurement indices
+        if (offset < 0) // Removal
+        {
+            if (LastMeasuredIndex >= startIndex)
+            {
+                LastMeasuredIndex = Math.Max(startIndex - 1, LastMeasuredIndex + offset);
+            }
+        }
+        else // Addition
+        {
+            if (LastMeasuredIndex >= startIndex)
+            {
+                LastMeasuredIndex += offset;
+            }
+        }
+
+        Debug.WriteLine($"[ShiftMeasurementIndices] Shifted {affectedCount} items from index {startIndex} by {offset}. LastMeasuredIndex: {LastMeasuredIndex}");
+    }
+
+    /// <summary>
+    /// Direct shifting for small collections
+    /// </summary>
+    private void DirectShiftMeasurements(int startIndex, int offset)
+    {
+        var itemsToShift = _measuredItems
+            .Where(kvp => kvp.Key >= startIndex)
+            .OrderBy(kvp => offset > 0 ? -kvp.Key : kvp.Key) // Avoid conflicts during shifting
+            .ToList();
+
+        foreach (var (oldIndex, item) in itemsToShift)
+        {
+            _measuredItems.TryRemove(oldIndex, out _);
+            var newIndex = oldIndex + offset;
+            if (newIndex >= 0)
+            {
+                item.Cell.ControlIndex = newIndex;
+                _measuredItems[newIndex] = item;
+
+                // Update StackStructure indices
+                if (StackStructure != null)
+                {
+                    UpdateStackStructureIndex(oldIndex, newIndex);
+                }
+            }
+        }
+
+        Debug.WriteLine($"[DirectShiftMeasurements] Directly shifted {itemsToShift.Count} measurements");
+    }
+
+    /// <summary>
+    /// Offset mapping for large collections
+    /// </summary>
+    private void OffsetMapMeasurements(int startIndex, int offset)
+    {
+        if (offset < 0) // Removal
+        {
+            // Mark removed indices
+            for (int i = startIndex; i < startIndex - offset; i++)
+            {
+                _removedIndices.Add(i);
+                _measuredItems.TryRemove(i, out _); // Remove from cache
+            }
+        }
+
+        // Add offset for all subsequent indices
+        var offsetKey = startIndex + Math.Max(0, -offset);
+        _indexOffsets[offsetKey] = _indexOffsets.GetValueOrDefault(offsetKey, 0) + offset;
+
+        Debug.WriteLine($"[OffsetMapMeasurements] Added offset {offset} for indices >= {offsetKey}. Removed: {-Math.Min(0, offset)} indices");
+    }
+
+    /// <summary>
+    /// Updates a specific index in StackStructure
+    /// </summary>
+    private void UpdateStackStructureIndex(int oldIndex, int newIndex)
+    {
+        if (StackStructure == null) return;
+
+        foreach (var cell in StackStructure.GetChildren())
+        {
+            if (cell.ControlIndex == oldIndex)
+            {
+                cell.ControlIndex = newIndex;
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the actual index considering offset mapping
+    /// </summary>
+    private int GetActualIndex(int originalIndex)
+    {
+        if (_removedIndices.Contains(originalIndex)) return -1;
+
+        var offset = 0;
+        foreach (var kvp in _indexOffsets.Where(kvp => originalIndex >= kvp.Key))
+        {
+            offset += kvp.Value;
+        }
+
+        return originalIndex + offset;
+    }
+
+    /// <summary>
+    /// Removes items from StackStructure
+    /// </summary>
+    private void RemoveItemsFromStackStructure(int startIndex, int count)
+    {
+        if (StackStructure == null) return;
+
+        // Find and remove cells with indices in the removal range
+        var cellsToRemove = StackStructure.GetChildren()
+            .Where(cell => cell.ControlIndex >= startIndex && cell.ControlIndex < startIndex + count)
+            .ToList();
+
+        // Remove cells from the grid structure
+        foreach (var cell in cellsToRemove)
+        {
+            // Since DynamicGrid doesn't have a direct remove method, we need to rebuild
+            // For now, we'll mark them as removed by setting ControlIndex to -1
+            cell.ControlIndex = -1;
+        }
+
+        Debug.WriteLine($"[RemoveItemsFromStackStructure] Marked {cellsToRemove.Count} items for removal from structure");
+    }
+
+    #endregion
 
     /// <summary>
     /// Updates content size with progressive accuracy as we approach measuring all items
@@ -997,7 +1375,8 @@ public partial class SkiaLayout
     /// <summary>
     /// Background measurement implementation with sliding window
     /// </summary>
-    private async Task BackgroundMeasureItems(SKRect constraints, float scale, int startIndex, CancellationToken cancellationToken)
+    private async Task BackgroundMeasureItems(SKRect constraints, float scale, int startIndex, CancellationToken cancellationToken,
+        BackgroundMeasurementContext context = null)
     {
         var totalItems = ItemsSource.Count;
         var currentBatchStart = startIndex;
@@ -1047,7 +1426,7 @@ public partial class SkiaLayout
             // Integrate results on background thread (safe for reading/staging)
             if (!cancellationToken.IsCancellationRequested)
             {
-                IntegrateMeasuredBatch(measuredBatch, scale);
+                IntegrateMeasuredBatch(measuredBatch, scale, context);
                 ApplySlidingWindowCleanup();
             }
 
