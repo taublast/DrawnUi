@@ -11,8 +11,13 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
 
         if (WasMeasured && MeasuredSize.Pixels != LastMeasuredSizePixels)
         {
+            Debug.WriteLine($"CELL was {LastMeasuredSizePixels.Height} now {MeasuredSize.Pixels.Height}");
+            var invalidate = LastMeasuredSizePixels.Height>=0 && LastMeasuredSizePixels.Width>=0;
             LastMeasuredSizePixels = MeasuredSize.Pixels;
-            InvalidateChildrenTree();
+            if (invalidate)
+            {
+                InvalidateChildrenTree();
+            }
         }
     }
 

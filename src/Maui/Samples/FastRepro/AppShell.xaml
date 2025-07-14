@@ -17,9 +17,14 @@
         ContentTemplate="{DataTemplate sandbox:MainPageCode}"
         Route="MainPage" />-->
 
-    <ShellContent
+    <!--<ShellContent
         Title="Drawn UI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:TutorialCards}"
+        Route="MainPage" />-->
+
+    <ShellContent
+        Title="Drawn UI for .NET MAUI"
+        ContentTemplate="{DataTemplate sandbox:MainPage}"
         Route="MainPage" />
 
 </Shell>

@@ -1,6 +1,8 @@
 # News Feed Tutorial: One Cell to Rule Them All
 
 Building a news feed with mixed content types (text posts, images, videos, articles, ads) is a common requirement. With DrawnUI, you get the freedom to **just draw what you need** using one smart cell that adapts to any content type.
+
+This tutorial demonstrates a challenging case of **uneven row heights** with real internet images and avatars, proper caching strategies, and performance optimizations including shadows and spacing techniques.
  
 ## The DrawnUI Way: One Universal Cell
 
@@ -9,10 +11,12 @@ With DrawnUI, we use one smart cell that simply shows or hides elements based on
 ### 1. Define Content Types
 
 ```csharp
+namespace Sandbox.Models;
+
 public enum NewsType
 {
     Text,
-    Image, 
+    Image,
     Video,
     Article,
     Ad
@@ -20,6 +24,7 @@ public enum NewsType
 
 public class NewsItem
 {
+    public long Id { get; set; }
     public NewsType Type { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
@@ -27,6 +32,7 @@ public class NewsItem
     public string VideoUrl { get; set; }
     public string ArticleUrl { get; set; }
     public string AuthorName { get; set; }
+    public string AuthorAvatarUrl { get; set; }  // Real avatar from RandomUser.me API
     public DateTime PublishedAt { get; set; }
     public int LikesCount { get; set; }
     public int CommentsCount { get; set; }
@@ -35,29 +41,65 @@ public class NewsItem
 
 ### 2. Create A Universal Cell
 
+> **Caching Strategy Note**: This example uses **uneven row heights** which requires `UseCache="Image"` cache type. If all cells had the same height, we could use `UseCache="ImageDoubleBuffered"` for even smoother performance.
+
+> **Shadow Performance**: Shadows are cached inside cell padding to avoid performance issues. The cell padding creates space for shadows to render properly.
+
+> **Spacing Strategy**: Stack spacing is set to 0 because the cell padding acts as general spacing between items.
+
 ```xml
+<?xml version="1.0" encoding="utf-8"?>
+
 <draw:SkiaDynamicDrawnCell
-    x:Class="YourApp.Views.NewsCell"
-    BackgroundColor="White"
-    Margin="0,4"
-    Padding="16">
-    
-    <draw:SkiaLayout Type="Column" Spacing="12">
-        
+    x:Class="Sandbox.Views.NewsCell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    HorizontalOptions="Fill"
+    UseCache="Image"
+    Padding="16,6,16,10">
+
+    <draw:SkiaLayout
+        BackgroundColor="White"
+        Padding="16"
+        Type="Column" Spacing="12"
+        HorizontalOptions="Fill">
+
+        <draw:SkiaShape.VisualEffects>
+            <draw:DropShadowEffect
+                Color="#33000000" Blur="3" X="2" Y="2" />
+        </draw:SkiaShape.VisualEffects>
+
         <!-- Author Header -->
-        <draw:SkiaLayout Type="Row" Spacing="8" HorizontalOptions="Fill">
+        <draw:SkiaLayout Type="Row" Spacing="8"
+                         UseCache="Image"
+                         HorizontalOptions="Fill">
+
+            <!--avatar image-->
             <draw:SkiaShape
+                UseCache="Image"
                 x:Name="AvatarFrame"
                 Type="Circle"
                 WidthRequest="40"
                 HeightRequest="40"
-                Fill="LightGray" />
+                BackgroundColor="LightGray">
+
+                <draw:SkiaImage
+                    x:Name="AvatarImage"
+                    Aspect="AspectFill"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" />
+
+            </draw:SkiaShape>
                 
-            <draw:SkiaLayout Type="Column" HorizontalOptions="Fill">
+            <!--avatar initials-->
+            <draw:SkiaLayout Type="Column"
+                             UseCache="Operations"
+                             HorizontalOptions="Fill">
                 <draw:SkiaLabel
                     x:Name="AuthorLabel"
                     FontSize="14"
-                    FontWeight="Bold"
+                    FontAttributes="Bold"
                     TextColor="Black" />
                 <draw:SkiaLabel
                     x:Name="TimeLabel"
@@ -65,86 +107,106 @@ public class NewsItem
                     TextColor="Gray" />
             </draw:SkiaLayout>
         </draw:SkiaLayout>
-        
+
         <!-- Content Title -->
-        <draw:SkiaLabel
+        <draw:SkiaRichLabel
+            UseCache="Operations"
             x:Name="TitleLabel"
             FontSize="16"
-            FontWeight="Bold"
+            FontAttributes="Bold"
             TextColor="Black"
             IsVisible="False" />
-            
+
         <!-- Text Content -->
-        <draw:SkiaLabel
+        <draw:SkiaRichLabel
+            UseCache="Operations"
             x:Name="ContentLabel"
             FontSize="14"
             TextColor="#333"
             LineBreakMode="WordWrap"
             IsVisible="False" />
-            
+
+        <!--
+        💡 SkiaLabel vs SkiaRichLabel:
+        - Use SkiaLabel when your font family supports all the symbols you need
+        - Use SkiaRichLabel for complex content with Unicode symbols (emojis, special chars)
+        - SkiaRichLabel auto-finds installed fonts for missing symbols instead of showing "???"
+        - Fallback symbols are customizable via SkiaLabel properties if needed
+        -->
+
         <!-- Image Content -->
         <draw:SkiaImage
             x:Name="ContentImage"
-            CornerRadius="8"
             Aspect="AspectFill"
             HeightRequest="200"
             IsVisible="False" />
             
         <!-- Video Thumbnail with Play Button -->
         <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            UseCache="Image"
             x:Name="VideoLayout"
             Type="Absolute"
             HeightRequest="200"
             IsVisible="False">
-            
+
             <draw:SkiaImage
                 x:Name="VideoThumbnail"
-                CornerRadius="8"
                 Aspect="AspectFill"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill" />
-                
-            <draw:SkiaShape
-                Type="Circle"
-                WidthRequest="60"
-                HeightRequest="60"
-                Fill="Black"
-                Opacity="0.7"
+
+            <!--wrapper to cache shadow-->
+            <draw:SkiaLayout
+                UseCache="Image"
+                Padding="20"
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
-                <draw:SkiaShape.Shadow>
-                    <draw:SkiaShadow Color="Black" BlurRadius="10" />
-                </draw:SkiaShape.Shadow>
-            </draw:SkiaShape>
-            
-            <draw:SkiaSvg
-                Source="play_icon.svg"
-                WidthRequest="24"
-                HeightRequest="24"
-                TintColor="White"
-                HorizontalOptions="Center"
-                VerticalOptions="Center" />
+
+                <draw:SkiaShape
+                    Type="Circle"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    BackgroundColor="Black"
+                    Opacity="0.7"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                </draw:SkiaShape>
+
+                <draw:SkiaRichLabel
+                    Text="▶"
+                    Opacity="0.7"
+                    FontSize="26"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+
+                <!-- 💡 Could be SkiaSvg with a crisp play icon or SkiaLottie with animation! -->
+
+            </draw:SkiaLayout>
+
         </draw:SkiaLayout>
-        
         <!-- Article Preview -->
         <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            UseCache="Image"
             x:Name="ArticleLayout"
             Type="Row"
             Spacing="12"
             IsVisible="False">
-            
+
             <draw:SkiaImage
                 x:Name="ArticleThumbnail"
                 WidthRequest="80"
                 HeightRequest="80"
-                CornerRadius="4"
                 Aspect="AspectFill" />
-                
+
             <draw:SkiaLayout Type="Column" HorizontalOptions="Fill">
                 <draw:SkiaLabel
                     x:Name="ArticleTitle"
                     FontSize="14"
-                    FontWeight="Bold"
+                    FontAttributes="Bold"
                     TextColor="Black"
                     LineBreakMode="TailTruncation"
                     MaxLines="2" />
@@ -156,49 +218,52 @@ public class NewsItem
                     MaxLines="3" />
             </draw:SkiaLayout>
         </draw:SkiaLayout>
-        
+
         <!-- Ad Content -->
         <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            UseCache="Image"
             x:Name="AdLayout"
             Type="Column"
             Spacing="8"
             IsVisible="False">
-            
+
             <draw:SkiaLabel
                 Text="Sponsored"
                 FontSize="10"
                 TextColor="Gray"
                 HorizontalOptions="End" />
-                
+
             <draw:SkiaImage
                 x:Name="AdImage"
-                CornerRadius="8"
                 Aspect="AspectFill"
                 HeightRequest="150" />
-                
+
             <draw:SkiaLabel
                 x:Name="AdTitle"
                 FontSize="14"
-                FontWeight="Bold"
+                FontAttributes="Bold"
                 TextColor="Black" />
         </draw:SkiaLayout>
-        
         <!-- Interaction Bar -->
-        <draw:SkiaLayout Type="Row" Spacing="16" HorizontalOptions="Fill">
+        <draw:SkiaLayout Type="Row"
+                         UseCache="Operations"
+                         Spacing="16" HorizontalOptions="Fill">
+
             <draw:SkiaButton
                 x:Name="LikeButton"
                 Text="👍"
                 BackgroundColor="Transparent"
                 TextColor="Gray"
                 FontSize="14" />
-                
+
             <draw:SkiaButton
                 x:Name="CommentButton"
                 Text="💬"
                 BackgroundColor="Transparent"
                 TextColor="Gray"
                 FontSize="14" />
-                
+
             <draw:SkiaButton
                 x:Name="ShareButton"
                 Text="📤"
@@ -206,15 +271,48 @@ public class NewsItem
                 TextColor="Gray"
                 FontSize="14"
                 HorizontalOptions="End" />
+
+        <!--
+        💡 Pro Tip: You could use SkiaSvg for crisp vector icons (like, share, play button)
+        or even SkiaLottie for awesome animated icons! We're keeping it simple with
+        emoji for this tutorial, but the possibilities are endless!
+        -->
+
+
         </draw:SkiaLayout>
-        
+
     </draw:SkiaLayout>
+
+    <draw:SkiaLabel
+        Margin="24"
+        x:Name="DebugId"
+        TextColor="Red"
+        HorizontalOptions="End" UseCache="Operations"/>
+
 </draw:SkiaDynamicDrawnCell>
 ```
 
-### 3. Smart Cell Logic - Content-Driven Behavior
+### 3. Why SkiaDynamicDrawnCell?
+
+`SkiaDynamicDrawnCell` is optional but we prefer it because it's a lightweight helper that handles context changes smoothly. You could use a regular `SkiaLayout` instead, but then you'd miss out on some nice conveniences.
+
+**What it gives you:**
+- **Easy override methods** like `SetContent()` instead of manually handling item changes
+- **Automatic size refresh** when content changes - it detects when the cell size changes and refreshes any auto-sized controls inside to prevent them from keeping old sizes when new content arrives
+- **Cleaner code** without manual height calculations
+
+The magic happens in just a few lines that check if the measured size changed and refresh everything accordingly. It's simple but saves you from weird sizing bugs when cells get recycled with different content.
+
+*Want to see exactly how it works? Check out the source code in `SkiaDynamicDrawnCell.cs` - it's pretty straightforward!*
+
+### 4. Smart Cell Logic - Content-Driven Behavior
 
 ```csharp
+using DrawnUi.Controls;
+using Sandbox.Models;
+
+namespace Sandbox.Views;
+
 public partial class NewsCell : SkiaDynamicDrawnCell
 {
     public NewsCell()
@@ -222,11 +320,11 @@ public partial class NewsCell : SkiaDynamicDrawnCell
         InitializeComponent();
     }
 
-    protected override void OnItemSet()
+    protected override void SetContent(object ctx)
     {
-        base.OnItemSet();
-        
-        if (ItemData is NewsItem news)
+        base.SetContent(ctx);
+
+        if (ctx is NewsItem news)
         {
             ConfigureForContentType(news);
         }
@@ -236,32 +334,34 @@ public partial class NewsCell : SkiaDynamicDrawnCell
     {
         // Reset all content visibility
         HideAllContent();
-        
+
         // Configure common elements
+        DebugId.Text = $"{news.Id}";
         AuthorLabel.Text = news.AuthorName;
         TimeLabel.Text = GetRelativeTime(news.PublishedAt);
+        AvatarImage.Source = news.AuthorAvatarUrl;
         LikeButton.Text = $"👍 {news.LikesCount}";
         CommentButton.Text = $"💬 {news.CommentsCount}";
-        
+
         // Configure based on content type
         switch (news.Type)
         {
             case NewsType.Text:
                 ConfigureTextPost(news);
                 break;
-                
+
             case NewsType.Image:
                 ConfigureImagePost(news);
                 break;
-                
+
             case NewsType.Video:
                 ConfigureVideoPost(news);
                 break;
-                
+
             case NewsType.Article:
                 ConfigureArticlePost(news);
                 break;
-                
+
             case NewsType.Ad:
                 ConfigureAdPost(news);
                 break;
@@ -285,7 +385,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
             TitleLabel.Text = news.Title;
             TitleLabel.IsVisible = true;
         }
-        
+
         ContentLabel.Text = news.Content;
         ContentLabel.IsVisible = true;
     }
@@ -294,7 +394,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
     {
         ContentImage.Source = news.ImageUrl;
         ContentImage.IsVisible = true;
-        
+
         if (!string.IsNullOrEmpty(news.Content))
         {
             ContentLabel.Text = news.Content;
@@ -306,7 +406,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
     {
         VideoThumbnail.Source = ExtractVideoThumbnail(news.VideoUrl);
         VideoLayout.IsVisible = true;
-        
+
         if (!string.IsNullOrEmpty(news.Content))
         {
             ContentLabel.Text = news.Content;
@@ -332,9 +432,9 @@ public partial class NewsCell : SkiaDynamicDrawnCell
     private string GetRelativeTime(DateTime publishedAt)
     {
         var delta = DateTime.Now - publishedAt;
-        return delta.TotalDays >= 1 
+        return delta.TotalDays >= 1
             ? publishedAt.ToString("MMM dd")
-            : delta.TotalHours >= 1 
+            : delta.TotalHours >= 1
                 ? $"{(int)delta.TotalHours}h"
                 : $"{(int)delta.TotalMinutes}m";
     }
@@ -342,26 +442,41 @@ public partial class NewsCell : SkiaDynamicDrawnCell
     private string ExtractVideoThumbnail(string videoUrl)
     {
         // Extract thumbnail from video URL or use placeholder
-        return "video_placeholder.jpg";
+        return videoUrl; // For now, just use the same URL as it's from Picsum
     }
 }
 ```
 
-### 4. Real Internet Images Data Provider
+### 5. Real Internet Images Data Provider
+
+> **Real Avatar Images**: Uses RandomUser.me API for 100x100px professional avatars
+> **Real Content Images**: Uses Picsum Photos API for high-quality random images
+> **Proper Image Preloading**: Both avatars and content images are preloaded for smooth scrolling
 
 ```csharp
-// Services/NewsDataProvider.cs
+using Sandbox.Models;
+
+namespace Sandbox.Services;
+
 public class NewsDataProvider
 {
     private static Random random = new Random();
     private long index = 0;
-    
-    private static string[] authorNames = new string[]
+
+    private static (string name, string avatarUrl)[] authors = new (string, string)[]
     {
-        "Alex Chen", "Sarah Williams", "Mike Johnson", "Emma Davis", "Chris Brown",
-        "Lisa Martinez", "David Wilson", "Amy Garcia", "Tom Anderson", "Maya Patel"
+        ("Alex Chen", "https://randomuser.me/api/portraits/men/1.jpg"),
+        ("Sarah Williams", "https://randomuser.me/api/portraits/women/2.jpg"),
+        ("Mike Johnson", "https://randomuser.me/api/portraits/men/3.jpg"),
+        ("Emma Davis", "https://randomuser.me/api/portraits/women/4.jpg"),
+        ("Chris Brown", "https://randomuser.me/api/portraits/men/5.jpg"),
+        ("Lisa Martinez", "https://randomuser.me/api/portraits/women/6.jpg"),
+        ("David Wilson", "https://randomuser.me/api/portraits/men/7.jpg"),
+        ("Amy Garcia", "https://randomuser.me/api/portraits/women/8.jpg"),
+        ("Tom Anderson", "https://randomuser.me/api/portraits/men/9.jpg"),
+        ("Maya Patel", "https://randomuser.me/api/portraits/women/10.jpg")
     };
-    
+
     private static string[] postTexts = new string[]
     {
         "Just finished an amazing project! 🚀 Feeling accomplished and ready for the next challenge.",
@@ -370,16 +485,16 @@ public class NewsDataProvider
         "Loved this book recommendation from a friend. Anyone else read it? 📚",
         "Amazing sunset from my balcony today. Nature never fails to inspire 🌅"
     };
-    
+
     private static string[] articleTitles = new string[]
     {
         "Breaking: Revolutionary AI Technology Unveiled",
         "Climate Scientists Make Groundbreaking Discovery",
-        "Tech Giants Announce Major Collaboration", 
+        "Tech Giants Announce Major Collaboration",
         "New Study Reveals Surprising Health Benefits",
         "Space Mission Returns with Fascinating Data"
     };
-    
+
     private static string[] articleDescriptions = new string[]
     {
         "Researchers have developed a new method that could change everything we know...",
@@ -392,27 +507,29 @@ public class NewsDataProvider
     public List<NewsItem> GetNewsFeed(int count)
     {
         var items = new List<NewsItem>();
-        
+
         for (int i = 0; i < count; i++)
         {
             index++;
             var newsType = GetRandomNewsType();
-            
+
+            var author = GetRandomAuthor();
             var item = new NewsItem
             {
                 Id = index,
                 Type = newsType,
-                AuthorName = GetRandomAuthor(),
+                AuthorName = author.name,
+                AuthorAvatarUrl = author.avatarUrl,
                 PublishedAt = DateTime.Now.AddMinutes(-random.Next(1, 1440)) // Random time within last day
             };
-            
+
             ConfigureItemByType(item);
             items.Add(item);
         }
-        
+
         return items;
     }
-    
+
     private void ConfigureItemByType(NewsItem item)
     {
         switch (item.Type)
@@ -420,54 +537,54 @@ public class NewsDataProvider
             case NewsType.Text:
                 item.Content = postTexts[random.Next(postTexts.Length)];
                 break;
-                
+
             case NewsType.Image:
                 item.Content = postTexts[random.Next(postTexts.Length)];
                 // High-quality random images from Picsum
                 item.ImageUrl = $"https://picsum.photos/seed/{index}/600/400";
                 break;
-                
+
             case NewsType.Video:
                 item.Title = "Amazing Video Content";
                 item.Content = "Check out this incredible footage!";
                 // Video thumbnail from Picsum
                 item.VideoUrl = $"https://picsum.photos/seed/{index}/600/400";
                 break;
-                
+
             case NewsType.Article:
                 item.Title = articleTitles[random.Next(articleTitles.Length)];
                 item.Content = articleDescriptions[random.Next(articleDescriptions.Length)];
                 item.ImageUrl = $"https://picsum.photos/seed/{index}/400/300";
                 item.ArticleUrl = "https://example.com/article";
                 break;
-                
+
             case NewsType.Ad:
                 item.Title = "Special Offer - Don't Miss Out!";
                 item.Content = "Limited time offer on premium features";
                 item.ImageUrl = $"https://picsum.photos/seed/{index}/600/200";
                 break;
         }
-        
+
         // Random engagement numbers
         item.LikesCount = random.Next(0, 1000);
         item.CommentsCount = random.Next(0, 150);
     }
-    
+
     private NewsType GetRandomNewsType()
     {
         // Weighted distribution for realistic feed
         var typeWeights = new (NewsType type, int weight)[]
         {
             (NewsType.Text, 30),    // 30% text posts
-            (NewsType.Image, 40),   // 40% image posts  
+            (NewsType.Image, 40),   // 40% image posts
             (NewsType.Video, 15),   // 15% videos
             (NewsType.Article, 10), // 10% articles
             (NewsType.Ad, 5)        // 5% ads
         };
-        
+
         var totalWeight = typeWeights.Sum(x => x.weight);
         var randomValue = random.Next(totalWeight);
-        
+
         var currentWeight = 0;
         foreach (var (type, weight) in typeWeights)
         {
@@ -475,92 +592,122 @@ public class NewsDataProvider
             if (randomValue < currentWeight)
                 return type;
         }
-        
+
         return NewsType.Text;
     }
-    
-    private string GetRandomAuthor()
+
+    private (string name, string avatarUrl) GetRandomAuthor()
     {
-        return authorNames[random.Next(authorNames.Length)];
+        return authors[random.Next(authors.Length)];
     }
 }
 ```
 
-### 5. Feed Implementation with Real Data and Image Preloading
+### 6. Feed Implementation with Real Data and Image Preloading
+
+> **Spacing Strategy**: Stack spacing is 0 because cell padding provides the spacing between items
+> **Recycling**: RecyclingTemplate="Enabled" with MeasureItemsStrategy="MeasureFirst" for optimal performance
 
 ```xml
-<!-- MainPage.xaml -->
-<draw:Canvas>
-    <draw:SkiaScroll
-        x:Name="NewsScroll"
-        Orientation="Vertical"
-        RefreshCommand="{Binding RefreshCommand}"
-        LoadMoreCommand="{Binding LoadMoreCommand}"
-        LoadMoreOffset="200"
-        RefreshEnabled="True"
-        HorizontalOptions="Fill"
-        VerticalOptions="Fill">
-        
-        <!-- Dynamic height cells using SkiaLayout with ItemTemplate -->
-        <draw:SkiaLayout
-            x:Name="NewsStack"
-            Type="Column"
-            ItemsSource="{Binding NewsItems}"
-            ItemTemplate="{x:Type views:NewsCell}"
-            Spacing="8"
-            HorizontalOptions="Fill" />
-            
-    </draw:SkiaScroll>
-</draw:Canvas>
+<!-- MainPage.xaml excerpt -->
+<draw:SkiaScroll
+    x:Name="NewsScroll"
+    Orientation="Vertical"
+    RefreshCommand="{Binding RefreshCommand}"
+    LoadMoreCommand="{Binding LoadMoreCommand}"
+    RefreshEnabled="True"
+    HorizontalOptions="Fill"
+    ResetScrollPositionOnContentSizeChanged="False"
+    VerticalOptions="Fill">
+
+    <draw:SkiaScroll.Header>
+        <draw:SkiaLayer HeightRequest="40" UseCache="Image">
+            <draw:SkiaRichLabel
+                Text="DrawnUI News Feed Tutorial"
+                HorizontalOptions="Center" VerticalOptions="Center" />
+        </draw:SkiaLayer>
+    </draw:SkiaScroll.Header>
+
+    <draw:SkiaScroll.Footer>
+        <draw:SkiaLayer HeightRequest="50" />
+    </draw:SkiaScroll.Footer>
+
+    <!-- Dynamic height cells using SkiaLayout with ItemTemplate -->
+    <draw:SkiaLayout
+        x:Name="NewsStack"
+        Type="Column"
+        ItemsSource="{Binding NewsItems}"
+        RecyclingTemplate="Enabled"
+        MeasureItemsStrategy="MeasureFirst"
+        Spacing="0"
+        HorizontalOptions="Fill">
+
+        <draw:SkiaLayout.ItemTemplate>
+            <DataTemplate>
+                <views:NewsCell />
+            </DataTemplate>
+        </draw:SkiaLayout.ItemTemplate>
+
+    </draw:SkiaLayout>
+
+</draw:SkiaScroll>
 ```
 
 ```csharp
-// NewsViewModel.cs
+using System.Diagnostics;
+using System.Windows.Input;
+using AppoMobi.Specials;
+using Sandbox.Models;
+using Sandbox.Services;
+
+namespace Sandbox.ViewModels;
+
 public class NewsViewModel : BaseViewModel
 {
     private readonly NewsDataProvider _dataProvider;
     private CancellationTokenSource _preloadCancellation;
-    
+
     public NewsViewModel()
     {
         _dataProvider = new NewsDataProvider();
         NewsItems = new ObservableRangeCollection<NewsItem>();
-        
+
         RefreshCommand = new Command(async () => await RefreshFeed());
         LoadMoreCommand = new Command(async () => await LoadMore());
-        
+
         // Load initial data
         _ = RefreshFeed();
     }
-    
+
     public ObservableRangeCollection<NewsItem> NewsItems { get; }
-    
+
     public ICommand RefreshCommand { get; }
     public ICommand LoadMoreCommand { get; }
-    
+
     private async Task RefreshFeed()
     {
         if (IsBusy) return;
-        
+
         IsBusy = true;
-        
+
         try
         {
             // Cancel previous preloading
             _preloadCancellation?.Cancel();
-            
+
+            Debug.WriteLine($"Loading news feed !!!");
+
             // Generate fresh content
             var newItems = _dataProvider.GetNewsFeed(20);
-            
+
             // Preload images in background (DrawnUI's SkiaImageManager)
             _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             _ = PreloadImages(newItems, _preloadCancellation.Token);
-            
-            // Update UI
+
+            // Update UI - Replace all items for refresh
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                NewsItems.Clear();
-                NewsItems.AddRange(newItems);
+                NewsItems.ReplaceRange(newItems);
             });
         }
         catch (Exception ex)
@@ -572,21 +719,23 @@ public class NewsViewModel : BaseViewModel
             IsBusy = false;
         }
     }
-    
+
     private async Task LoadMore()
     {
         if (IsBusy) return;
-        
+
         IsBusy = true;
-        
+
         try
         {
+            Debug.WriteLine("Loading more items !!!");
             var newItems = _dataProvider.GetNewsFeed(15);
-            
+
             // Preload new images
             _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             _ = PreloadImages(newItems, _preloadCancellation.Token);
-            
+
+            // Add new items to the end of the collection
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 NewsItems.AddRange(newItems);
@@ -601,18 +750,25 @@ public class NewsViewModel : BaseViewModel
             IsBusy = false;
         }
     }
-    
+
     private async Task PreloadImages(List<NewsItem> items, CancellationToken cancellationToken)
     {
         try
         {
-            var imageUrls = items
+            var imageUrls = new List<string>();
+
+            // Add content images
+            imageUrls.AddRange(items
                 .Where(x => !string.IsNullOrEmpty(x.ImageUrl))
-                .Select(x => x.ImageUrl)
-                .ToList();
-                
+                .Select(x => x.ImageUrl));
+
+            // Add avatar images
+            imageUrls.AddRange(items
+                .Where(x => !string.IsNullOrEmpty(x.AuthorAvatarUrl))
+                .Select(x => x.AuthorAvatarUrl));
+
             // Use DrawnUI's image manager for efficient preloading
-            await SkiaImageManager.Instance.PreloadImages(imageUrls, cancellationToken);
+            await SkiaImageManager.Instance.PreloadImages(imageUrls, _preloadCancellation);
         }
         catch (OperationCanceledException)
         {
@@ -638,54 +794,80 @@ public partial class MainPage : ContentPage
 
 ## Key Advantages
 
-### 1. **Perfect Recycling**
+### 1. **Perfect Recycling with Smart Caching**
 - Single cell type = maximum recycling efficiency
-- No template switching overhead
-- Consistent memory usage
+- `UseCache="Image"` for uneven row heights (this example)
+- `UseCache="ImageDoubleBuffered"` would be even faster for same-height cells
+- Strategic cache placement: `UseCache="Operations"` for text, `UseCache="Image"` for complex layouts
 
-### 2. **Dynamic Height Calculation**
-DrawnUI automatically calculates heights based on visible content:
+### 2. **Uneven Row Heights Challenge Solved**
+This tutorial demonstrates the challenging case of **uneven row heights**:
 
 ```csharp
-// Height adjusts automatically based on:
-// - Visible content elements (some hidden, some shown)
-// - Text wrapping and line counts
-// - Image aspect ratios and sizes
-// - Content type variations
-// - No manual height calculations needed!
-
-// Example: Text post = ~120dp, Image post = ~320dp, Video = ~320dp, Article = ~180dp
-// All calculated automatically by the layout system
+// Different content types = different heights:
+// - Text post = ~120dp
+// - Image post = ~320dp
+// - Video post = ~320dp
+// - Article preview = ~180dp
+// - Ad content = ~250dp
+// All calculated automatically by DrawnUI's layout system
 ```
 
-### 3. **Simplified Maintenance**
-- One cell to maintain vs 5+ templates
-- Consistent styling across all content types
-- Easy to add new content types
+> **💡 Want to see equal row heights?** Check out the demo engine app (referenced in these docs) where we have another example with equal-sized cells that you can swipe to reveal controls behind them. That example uses `UseCache="ImageDoubleBuffered"` for even smoother performance!
 
-### 4. **Performance Benefits**
-- Efficient SkiaSharp rendering with hardware acceleration
-- Real internet image loading with background preloading
-- Minimal GC pressure during scrolling (no allocations in hot path)
-- Perfect cell recycling = consistent 60fps scrolling
+### 3. **Real Internet Images with Proper Preloading**
+- **Avatars**: RandomUser.me API (100x100px professional portraits)
+- **Content**: Picsum Photos API (high-quality random images)
+- **Preloading**: Both avatars AND content images preloaded for smooth scrolling
+- **Caching**: DrawnUI's SkiaImageManager handles efficient image caching
 
-### 5. **Real-World Ready**
-- Uses `https://picsum.photos/` for high-quality random images  
-- Includes `SkiaImageManager.Instance.PreloadImages()` for smooth scrolling
-- Pull-to-refresh and infinite scrolling support
-- Realistic weighted content distribution (40% images, 30% text, etc.)
+### 4. **Shadow Performance Optimization**
+- Shadows are cached inside cell padding to avoid performance issues
+- Wrapper layouts with `UseCache="Image"` contain shadow effects
+- Cell padding creates space for shadows to render properly
+
+### 5. **Spacing Strategy**
+- Stack `Spacing="0"` because cell padding provides item spacing
+- Cell `Padding="16,6,16,10"` acts as general spacing between items
+- This approach caches shadows inside the padding area
+
+### 6. **LoadMore Implementation**
+- **Refresh**: Uses `ReplaceRange()` to replace all items
+- **LoadMore**: Uses `AddRange()` to append new items (proper infinite scroll)
+- **ObservableRangeCollection**: Efficient bulk operations without individual notifications
+
+### 7. **Smart Text Rendering**
+- **SkiaLabel**: Fast rendering when your font family supports all symbols
+- **SkiaRichLabel**: Auto-finds installed fonts for Unicode symbols (emojis, special characters)
+- **No more "???"**: SkiaRichLabel prevents missing symbol fallbacks by finding the right fonts
+- **Customizable fallbacks**: SkiaLabel lets you customize fallback symbols if needed
+
+### 8. **Icons & Animations (Bonus!)**
+We kept it simple with emoji for this tutorial, but DrawnUI gives you amazing options:
+- **SkiaSvg**: Crisp vector icons for like, share, play buttons that scale perfectly
+- **SkiaLottie**: Animated icons that bring your UI to life (think animated hearts, loading spinners)
+- **Performance**: Both render with hardware acceleration and cache beautifully
 
 ## Conclusion: Just Draw What You Want
 
-DrawnUI gives you the freedom to **just draw what you need**. One cell handles everything:
+DrawnUI gives you the freedom to **just draw what you need**. This tutorial demonstrates a challenging real-world scenario:
 
-- **One universal cell** that adapts to any content type
-- **Real internet images** loaded efficiently with preloading
-- **Automatic height calculation** without manual measurement  
-- **Seamless recycling** handled automatically
-- **Consistent styling** across all content types
-- **Smooth scrolling** even with dynamic heights
+### ✅ **What We Accomplished**
+- **One universal cell** handling 5 different content types with uneven heights
+- **Real internet images** from RandomUser.me (avatars) and Picsum Photos (content)
+- **Proper image preloading** for both avatars and content images
+- **Smart caching strategy** using `UseCache="Image"` for uneven heights
+- **Shadow performance optimization** cached inside cell padding
+- **Proper LoadMore** implementation with `AddRange()` vs `ReplaceRange()`
+- **Strategic spacing** using cell padding instead of stack spacing
 
-Adding a new content type? Simply add an enum value and a configuration method. No new templates needed.
+### 🎯 **Performance Optimizations**
+- **Caching**: `UseCache="Image"` for layouts, `UseCache="Operations"` for text
+- **Shadows**: Wrapped in cached containers to avoid performance issues
+- **Spacing**: Stack spacing = 0, cell padding provides item spacing
+- **Images**: Both avatars and content preloaded with DrawnUI's SkiaImageManager
 
-The result? A smooth, efficient news feed that loads real images from the internet and gives you the freedom to just draw what you want. 🚀
+### 🚀 **The DrawnUI Advantage**
+Adding a new content type? Simply add an enum value and a configuration method. No new templates, no complex selectors, no performance compromises.
+
+The result? A smooth, efficient news feed that handles the challenging case of uneven row heights while loading real images from the internet. **Just draw what you want!** 🎨

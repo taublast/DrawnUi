@@ -1,16 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <draw:DrawnUiBasePage
     x:Class="Sandbox.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
     xmlns:sandbox="clr-namespace:Sandbox"
+    xmlns:views="clr-namespace:Sandbox.Views"
+    xmlns:viewModels="clr-namespace:Sandbox.ViewModels"
+    x:DataType="viewModels:NewsViewModel"
     x:Name="ThisPage">
 
     <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
 
         <draw:Canvas
-            BackgroundColor="DarkSlateBlue"
+            BackgroundColor="LightGray"
             Gestures="Enabled"
             HorizontalOptions="Fill"
             RenderingMode="Accelerated"
@@ -22,23 +26,65 @@
                 Tag="Wrapper"
                 VerticalOptions="Fill">
 
-                <draw:SkiaScroll HorizontalOptions="Fill" VerticalOptions="Fill">
+                <draw:SkiaScroll
+                    x:Name="NewsScroll"
+                    Orientation="Vertical"
+                    RefreshCommand="{Binding RefreshCommand}"
+                    LoadMoreCommand="{Binding LoadMoreCommand}"
+                    RefreshEnabled="True"
+                    HorizontalOptions="Fill"
+                    ResetScrollPositionOnContentSizeChanged="False"
+                    VerticalOptions="Fill">
 
+                    <draw:SkiaScroll.Header>
+
+                        <draw:SkiaLayer HeightRequest="40" UseCache="Image">
+                            <draw:SkiaRichLabel 
+                                Text="DrawnUI News Feed Tutorial" 
+                                HorizontalOptions="Center" VerticalOptions="Center" />
+                        </draw:SkiaLayer>
+
+                    </draw:SkiaScroll.Header>
+
+
+                    <draw:SkiaScroll.Footer>
+
+                        <draw:SkiaLayer HeightRequest="50" />
+
+                    </draw:SkiaScroll.Footer>
+
+                    <!-- Dynamic height cells using SkiaLayout with ItemTemplate -->
                     <draw:SkiaLayout
-                        HorizontalOptions="Fill"
-                        Spacing="1"
-                        Tag="ScrollContent"
+                        x:Name="NewsStack"
                         Type="Column"
-                        UseCache="ImageComposite">
+                        ItemsSource="{Binding NewsItems}"
+                        RecyclingTemplate="Enabled"
+                        MeasureItemsStrategy="MeasureAll"
+                        Spacing="0"
+                        HorizontalOptions="Fill">
 
-                
- 
+                        <draw:SkiaLayout.ItemTemplate>
+                            <DataTemplate>
+                                <views:NewsCell />
+                            </DataTemplate>
+                        </draw:SkiaLayout.ItemTemplate>
 
                     </draw:SkiaLayout>
 
                 </draw:SkiaScroll>
 
-            
+                <draw:SkiaLabel
+                    UseCache="Operations"
+                    Margin="8"
+                    AddMarginBottom="140"
+                    BackgroundColor="Black"
+                    HorizontalOptions="Start"
+                    InputTransparent="True"
+                    Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
+                    TextColor="LawnGreen"
+                    VerticalOptions="End"
+                    ZIndex="100" />
+
                 <draw:SkiaLabelFps
                     Margin="0,0,4,24"
                     BackgroundColor="DarkRed"

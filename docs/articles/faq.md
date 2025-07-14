@@ -41,6 +41,9 @@ A: Sorry, no, drawn resources lives inside `Resources/Raw` and subfolders.
 **Q: How do I change SkiaSvg source not from file/url?**  
 A: set `SvgString` property to svg text string.
 
+**Q: Why my scroll is resetting at all time while Iproperly use ObservableCollection for LoadMore?**  
+A: Check that your custom ObservableRangeCollection is sending Reset event when adding range of items.
+
 **Q: How do I change SkiaImage source not from file/url?**  
 A: set directly: `mySkiaImage.SetImageInternal(skiaImage)`.
 

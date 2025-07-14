@@ -97,16 +97,6 @@ namespace DrawnUi.Draw
 
         bool _measuredNewTemplates;
 
-        /// <summary>
-        /// Will be called by views adapter upot succsessfull execution of InitializeTemplates.
-        /// When using InitializeTemplatesInBackground this is your callbacl to wait for.  
-        /// </summary>
-        /// <returns></returns>
-        /// <summary>
-        /// Flag to expand viewport temporarily for initial drawing to pre-create cells with different heights
-        /// </summary>
-        private bool _isInitialDrawingFromFreshSource = false;
-        private int _initialDrawFrameCount = 0;
 
         public virtual void OnTemplatesAvailable()
         {
@@ -115,8 +105,7 @@ namespace DrawnUi.Draw
             InvalidateParent();
             
             // Enable initial drawing mode to pre-create more cells
-            _isInitialDrawingFromFreshSource = true;
-            _initialDrawFrameCount = 0;
+            WillDrawFromFreshItemssSource = true;
         }
 
         protected override ScaledSize SetMeasured(float width, float height, bool widthCut, bool heightCut, float scale)
@@ -1092,6 +1081,7 @@ namespace DrawnUi.Draw
         }
 
         bool _trackWasDrawn;
+        protected bool WillDrawFromFreshItemssSource;
 
 
         protected override void Paint(DrawingContext ctx)
@@ -1348,12 +1338,30 @@ namespace DrawnUi.Draw
             -1, propertyChanged: NeedUpdateItemsSource);
 
         /// <summary>
-        /// Default is -1, the number od template instances will not be less than data collection count. You can manually set to to a specific number to fill your viewport etc. Beware that if you set this to a number that will not be enough to fill the viewport binding contexts will contasntly be changing triggering screen update.
+        /// Default is -1, the number od template instances will not be less than data collection count.
+        /// You can manually set to ta specific number to fill your viewport etc.
+        /// Beware that if you set this to a number that will not be enough to fill the viewport
+        /// binding contexts will contasntly be changing triggering screen update.
         /// </summary>
         public int ItemTemplatePoolSize
         {
             get { return (int)GetValue(ItemTemplatePoolSizeProperty); }
             set { SetValue(ItemTemplatePoolSizeProperty, value); }
+        }
+
+        public static readonly BindableProperty ReserveTemplatesProperty = BindableProperty.Create(
+            nameof(ReserveTemplates),
+            typeof(int),
+            typeof(SkiaLayout),
+            2, propertyChanged: NeedUpdateItemsSource);
+
+        /// <summary>
+        /// For recycled cells: Default is 2, how many item templates above visible in viewport we must reserve in pool.
+        /// </summary>
+        public int ReserveTemplates
+        {
+            get { return (int)GetValue(ReserveTemplatesProperty); }
+            set { SetValue(ReserveTemplatesProperty, value); }
         }
 
         public static readonly BindableProperty EmptyViewProperty = BindableProperty.Create(

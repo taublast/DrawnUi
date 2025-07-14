@@ -189,10 +189,7 @@ public partial class SkiaControl
         var usingCacheType = asOperations ? SkiaCacheType.Operations : SkiaCacheType.Image;
 
         var renderObject = CreateRenderingObject(ctx, area, null, usingCacheType,
-            (context) =>
-            {
-                PaintWithEffects(context.WithDestination(area));
-            });
+            (context) => { PaintWithEffects(context.WithDestination(area)); });
 
         return renderObject;
     }
@@ -374,7 +371,7 @@ public partial class SkiaControl
                         surface = SKSurface.Create(cacheSurfaceInfo);
                     }
 
-                    if (kill!=null && kill != surface)
+                    if (kill != null && kill != surface)
                         DisposeObject(kill);
 
                     // if (usingCacheType == SkiaCacheType.GPU)
@@ -451,7 +448,7 @@ public partial class SkiaControl
             DrawRenderObject(ctx.WithDestination(destination), cache);
         }
 
-        if (Super.UseFrozenVisualLayers && VisualLayer!=null && cache.Children != null)
+        if (Super.UseFrozenVisualLayers && VisualLayer != null && cache.Children != null)
         {
             this.VisualLayer.AttachFromCache(cache);
         }
@@ -527,33 +524,46 @@ public partial class SkiaControl
 
             if (UsesCacheDoubleBuffering)
             {
+                var needBuild = false;
                 lock (LockDraw)
                 {
                     if (cache == null && cacheOffscreen != null)
                     {
                         DrawRenderObjectInternal(context, cacheOffscreen);
                     }
+                    else
+                    {
+                        needBuild = true;
+                    }
 
                     Monitor.PulseAll(LockDraw);
                 }
 
+                if (NeedUpdateFrontCache)
+                {
+                    needBuild = true;
+                }
+
                 NeedUpdateFrontCache = false;
 
-                var clone = AddPaintArguments(context);
-                PushToOffscreenRendering(() =>
+                if (needBuild)
                 {
-                    //will be executed on background thread in parallel
-                    var oldObject = RenderObjectPreparing;
-                    RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
-                        (ctx) => { PaintWithEffects(ctx); });
-                    RenderObject = RenderObjectPreparing;
-                    _renderObjectPreparing = null;
-
-                    if (Parent != null && Parent.UpdateLocks < 1)
+                    var clone = AddPaintArguments(context);
+                    PushToOffscreenRendering(() =>
                     {
-                        Parent?.UpdateByChild(this); //repaint us
-                    }
-                });
+                        //will be executed on background thread in parallel
+                        var oldObject = RenderObjectPreparing;
+                        RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
+                            (ctx) => { PaintWithEffects(ctx); });
+                        RenderObject = RenderObjectPreparing;
+                        _renderObjectPreparing = null;
+
+                        if (Parent != null && Parent.UpdateLocks < 1)
+                        {
+                            Parent?.UpdateByChild(this); //repaint us
+                        }
+                    });
+                }
 
                 return !NeedUpdateFrontCache;
             }

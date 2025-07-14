@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<draw:SkiaDynamicDrawnCell
+    x:Class="Sandbox.Views.NewsCell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    HorizontalOptions="Fill"
+    UseCache="ImageDoubleBuffered"
+    Padding="16,6,16,10">
+
+    <draw:SkiaLayout
+        BackgroundColor="White"
+        Padding="16"
+        Type="Column" Spacing="12"
+        HorizontalOptions="Fill">
+
+        <!--<draw:SkiaShape.VisualEffects>
+            <draw:DropShadowEffect 
+                Color="#33000000" Blur="3" X="2" Y="2" />
+        </draw:SkiaShape.VisualEffects>-->
+
+        <!-- Author Header -->
+        <draw:SkiaLayout Type="Row" Spacing="8"
+                         UseCache="Image"
+                         HorizontalOptions="Fill">
+
+            <!--avatar image-->
+            <draw:SkiaShape
+                UseCache="Image"
+                x:Name="AvatarFrame"
+                Type="Circle"
+                WidthRequest="40"
+                HeightRequest="40"
+                BackgroundColor="LightGray">
+
+                <draw:SkiaImage
+                    x:Name="AvatarImage"
+                    Aspect="AspectFill"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" />
+
+            </draw:SkiaShape>
+
+            <!--avatar initials-->
+            <draw:SkiaLayout Type="Column"
+                             UseCache="Operations"
+                             HorizontalOptions="Fill">
+                <draw:SkiaLabel
+                    x:Name="AuthorLabel"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="Black" />
+                <draw:SkiaLabel
+                    x:Name="TimeLabel"
+                    FontSize="12"
+                    TextColor="Gray" />
+            </draw:SkiaLayout>
+        </draw:SkiaLayout>
+
+        <!-- Content Title -->
+        <draw:SkiaRichLabel
+            UseCache="Operations"
+            x:Name="TitleLabel"
+            FontSize="16"
+            FontAttributes="Bold"
+            TextColor="Black"
+            IsVisible="False" />
+
+        <!-- Text Content -->
+        <draw:SkiaRichLabel
+            UseCache="Operations"
+            x:Name="ContentLabel"
+            FontSize="14"
+            TextColor="#333"
+            LineBreakMode="WordWrap"
+            IsVisible="False" />
+
+        <!-- Image Content -->
+        <draw:SkiaImage
+            x:Name="ContentImage"
+            Aspect="AspectFill"
+            HeightRequest="200"
+            IsVisible="False" />
+
+        <!-- Video Thumbnail with Play Button -->
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            UseCache="Image"
+            x:Name="VideoLayout"
+            Type="Absolute"
+            HeightRequest="200"
+            IsVisible="False">
+
+            <draw:SkiaImage
+                x:Name="VideoThumbnail"
+                Aspect="AspectFill"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill" />
+
+            <!--wrapper to cache shadow-->
+            <draw:SkiaLayout
+                UseCache="Image"
+                Padding="20"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <draw:SkiaShape
+                    Type="Circle"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    BackgroundColor="Black"
+                    Opacity="0.7"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                </draw:SkiaShape>
+
+                <draw:SkiaRichLabel
+                    Text="▶"
+                    Opacity="0.7"
+                    FontSize="26"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+
+            </draw:SkiaLayout>
+
+        </draw:SkiaLayout>
+
+        <!-- Article Preview -->
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            UseCache="Image"
+            x:Name="ArticleLayout"
+            Type="Row"
+            Spacing="12"
+            IsVisible="False">
+
+            <draw:SkiaImage
+                x:Name="ArticleThumbnail"
+                WidthRequest="80"
+                HeightRequest="80"
+                Aspect="AspectFill" />
+
+            <draw:SkiaLayout Type="Column" HorizontalOptions="Fill">
+                <draw:SkiaLabel
+                    x:Name="ArticleTitle"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="2" />
+                <draw:SkiaLabel
+                    x:Name="ArticleDescription"
+                    FontSize="12"
+                    TextColor="Gray"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="3" />
+            </draw:SkiaLayout>
+        </draw:SkiaLayout>
+
+        <!-- Ad Content -->
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            UseCache="Image"
+            x:Name="AdLayout"
+            Type="Column"
+            Spacing="8"
+            IsVisible="False">
+
+            <draw:SkiaLabel
+                Text="Sponsored"
+                FontSize="10"
+                TextColor="Gray"
+                HorizontalOptions="End" />
+
+            <draw:SkiaImage
+                x:Name="AdImage"
+                Aspect="AspectFill"
+                HeightRequest="150" />
+
+            <draw:SkiaLabel
+                x:Name="AdTitle"
+                FontSize="14"
+                FontAttributes="Bold"
+                TextColor="Black" />
+        </draw:SkiaLayout>
+
+        <!-- Interaction Bar -->
+        <draw:SkiaLayout Type="Row"
+                         UseCache="Operations"
+                         Spacing="16" HorizontalOptions="Fill">
+
+            <draw:SkiaButton
+                x:Name="LikeButton"
+                Text="👍"
+                BackgroundColor="Transparent"
+                TextColor="Gray"
+                FontSize="14" />
+
+            <draw:SkiaButton
+                x:Name="CommentButton"
+                Text="💬"
+                BackgroundColor="Transparent"
+                TextColor="Gray"
+                FontSize="14" />
+
+            <draw:SkiaButton
+                x:Name="ShareButton"
+                Text="📤"
+                BackgroundColor="Transparent"
+                TextColor="Gray"
+                FontSize="14"
+                HorizontalOptions="End" />
+
+        </draw:SkiaLayout>
+
+    </draw:SkiaLayout>
+
+    <draw:SkiaLabel 
+        Margin="24"
+        x:Name="DebugId"
+        TextColor="Red"
+        HorizontalOptions="End" UseCache="Operations"/>
+
+</draw:SkiaDynamicDrawnCell>

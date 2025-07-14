@@ -79,7 +79,8 @@ namespace DrawnUi.Draw
                             area.Right,
                             rectForChildrenPixels.Bottom);
                     }
-                    else if (Type == LayoutType.Row && child.HorizontalOptions != LayoutOptions.Start && !child.NeedFillX)
+                    else if (Type == LayoutType.Row && child.HorizontalOptions != LayoutOptions.Start &&
+                             !child.NeedFillX)
                     {
                         area = new(rectForChildrenPixels.Left,
                             area.Top,
@@ -1085,6 +1086,7 @@ else
                                 cell.Measured = ScaledSize.Default;
                                 cell.WasMeasured = true;
                             }
+
                             continue;
                         }
 
@@ -1167,7 +1169,7 @@ else
             }
         }
 
- 
+
         /// <summary>
         /// Core measurement logic shared between templated and non-templated scenarios
         /// </summary>
@@ -2018,6 +2020,7 @@ else
         {
         }
 
+ 
         /// <summary>
         /// Renders stack/wrap layout.
         /// Returns number of drawn children.
@@ -2037,39 +2040,39 @@ else
                 //var inflate = (float)(this.VirtualisationInflated * ctx.Scale);
 
                 // For managed virtualization, bypass cache to ensure each plane gets its own visibility area
+                ScaledRect visibilityAreaReal;
                 ScaledRect visibilityArea;
+                bool usesExpandedViewport = false;
+
                 if (Virtualisation == VirtualisationType.Managed)
                 {
                     var inflate = (float)(this.VirtualisationInflated * ctx.Scale);
-                    visibilityArea = GetOnScreenVisibleArea(ctx, new(inflate, inflate));
+                    visibilityAreaReal = GetOnScreenVisibleArea(ctx, new(inflate, inflate));
                 }
                 else
                 {
-                    visibilityArea = GetVisibleAreaCached(ctx);
+                    visibilityAreaReal = GetVisibleAreaCached(ctx);
                 }
 
-                // for plane virtualization
-                if (!string.IsNullOrEmpty(planeId))
-                    //{
-                    //    Debug.WriteLine($"[{planeId}] DrawStack visibility area: {visibilityArea.Pixels}");
-                    //}
+                visibilityArea = visibilityAreaReal;
 
-                    // EXPAND DRAWING VIEWPORT during initial drawing to pre-create cells and avoid lagspike at scrolling start
-                    if (Virtualisation != VirtualisationType.Managed && IsTemplated &&
-                        _isInitialDrawingFromFreshSource && _initialDrawFrameCount < 2)
-                    {
-                        if (Type == LayoutType.Column)
-                        {
-                            var expand = visibilityArea.Pixels.Height / 4f;
-                            var expanded = visibilityArea.Pixels;
-                            expanded.Inflate(0, expand);
-                            visibilityArea = ScaledRect.FromPixels(expanded, visibilityArea.Scale);
-                        }
-                        else if (Type == LayoutType.Row)
-                        {
-                        }
-                    }
+                // EXPAND DRAWING VIEWPORT  
 
+                //if (Virtualisation != VirtualisationType.Managed && IsTemplated)
+                //{
+                //    if (Type == LayoutType.Column)
+                //    {
+                //        usesExpandedViewport = true;
+                //        var expand = visibilityArea.Pixels.Height;
+                //        var expanded = visibilityArea.Pixels;
+                //        expanded.Inflate(0, expand);
+                //        visibilityArea = ScaledRect.FromPixels(expanded, visibilityArea.Scale);
+                //    }
+                //    else if (Type == LayoutType.Row)
+                //    {
+                //    }
+                //}
+                
                 var recyclingAreaPixels = visibilityArea.Pixels;
                 var expendRecycle = ((float)RecyclingBuffer * ctx.Scale);
                 recyclingAreaPixels.Inflate(expendRecycle, expendRecycle);
@@ -2136,8 +2139,7 @@ else
                     {
                         ChildrenFactory.MarkViewAsHidden(cell.ControlIndex);
                     }
-                    else
-                    if (Virtualisation != VirtualisationType.Disabled &&
+                    else if (Virtualisation != VirtualisationType.Disabled &&
                              cell.Destination != SKRect.Empty &&
                              !cell.Measured.Pixels.IsEmpty)
                     {
@@ -2177,6 +2179,11 @@ else
 
                 try
                 {
+                    if (WillDrawFromFreshItemssSource && IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled)
+                    {
+                        _ = ChildrenFactory.FillPoolInBackgroundAsync(visibleElements.Count + ReserveTemplates);
+                    }
+
                     foreach (var cell in CollectionsMarshal.AsSpan(visibleElements))
                     {
                         if (!cell.WasMeasured)
@@ -2230,7 +2237,7 @@ else
                                     {
                                         LayoutCell(measured, cell, child, cell.Area, ctx.Scale);
                                     }
-           
+
 
                                     if (oldSize != SKSize.Empty && !CompareSize(oldSize, MeasuredSize.Pixels, 1f))
                                     {
@@ -2243,6 +2250,8 @@ else
 
                             if (child.IsVisible)
                             {
+                                bool willDraw = true;
+
                                 if (child.MeasuredSize.Pixels.Width >= 1 && child.MeasuredSize.Pixels.Height >= 1)
                                 {
                                     if (IsTemplated)
@@ -2265,8 +2274,19 @@ else
 
                                         if (DirtyChildrenInternal.Contains(child) || child.PostAnimators.Count > 0)
                                         {
-                                            DrawChild(ctx.WithDestination(destinationRect), child);
-                                            countRendered++;
+                                            if (usesExpandedViewport)
+                                            {
+                                                if (!cell.Drawn.IntersectsWith(visibilityAreaReal.Pixels))
+                                                {
+                                                    willDraw = false;
+                                                }
+                                            }
+
+                                            if (willDraw)
+                                            {
+                                                DrawChild(ctx.WithDestination(destinationRect), child);
+                                                countRendered++;
+                                            }
                                         }
                                         else
                                         {
@@ -2277,20 +2297,34 @@ else
                                     }
                                     else
                                     {
-                                        DrawChild(ctx.WithDestination(destinationRect), child);
-                                        countRendered++;
+                                        if (usesExpandedViewport)
+                                        {
+                                            if (!cell.Drawn.IntersectsWith(visibilityAreaReal.Pixels))
+                                            {
+                                                willDraw = false;
+                                            }
+                                        }
+
+                                        if (willDraw)
+                                        {
+                                            DrawChild(ctx.WithDestination(destinationRect), child);
+                                            countRendered++;
+                                        }
                                     }
 
-                                    cell.WasLastDrawn = true;
+                                    cell.WasLastDrawn = willDraw;
 
-                                    drawn++;
+                                    if (willDraw)
+                                    {
+                                        drawn++;
 
-                                    tree.Add(new SkiaControlWithRect(control,
-                                        destinationRect,
-                                        control.DrawingRect, 
-                                        index,
-                                        -1, // Default freeze index
-                                        control.BindingContext)); // Capture current binding context
+                                        tree.Add(new SkiaControlWithRect(control,
+                                            destinationRect,
+                                            control.DrawingRect,
+                                            index,
+                                            -1, // Default freeze index
+                                            control.BindingContext)); // Capture current binding context
+                                    }
                                 }
                             }
                             else
@@ -2316,7 +2350,6 @@ else
             }
 
             SetRenderingTree(tree);
-
             if (Parent is IDefinesViewport viewport &&
                 viewport.TrackIndexPosition != RelativePositionType.None)
             {
@@ -2324,28 +2357,12 @@ else
             }
 
             OnPropertyChanged(nameof(DebugString));
-
             if (updateInternal)
             {
                 Update();
             }
 
-            // Turn off initial drawing mode after a few frames to prevent continuous expanded viewport
-            if (_isInitialDrawingFromFreshSource)
-            {
-                _initialDrawFrameCount++;
-                if (_initialDrawFrameCount >= 2)
-                {
-                    _isInitialDrawingFromFreshSource = false;
-                    //Super.Log($"[SkiaLayout] Initial drawing complete, created cells for {drawn} items, returning to normal viewport");
-                }
-            }
-
-            // for plane virtualization
-            //if (!string.IsNullOrEmpty(planeId))
-            //{
-            //    Debug.WriteLine($"[{planeId}] DrawStack result: {drawn} children drawn, {structure.GetCount()} total cells");
-            //}
+            WillDrawFromFreshItemssSource = false;
 
             return drawn;
         }

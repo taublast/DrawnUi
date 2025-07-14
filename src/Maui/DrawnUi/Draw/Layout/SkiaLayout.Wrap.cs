@@ -19,20 +19,6 @@ namespace DrawnUi.Draw
             return measuredLayout;
         }
 
-        protected override void OnFirstDrawn()
-        {
-            if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureFirst &&
-                RecyclingTemplate != RecyclingTemplate.Disabled)
-            {
-                //avoid lag-spike of first scrolling
-                Task.Run(() =>
-                {
-                    ChildrenFactory.FillPool(ChildrenFactory.PoolSize + 2);
-                }).ConfigureAwait(false);
-            }
-            base.OnFirstDrawn();
-        }
-
         protected override void PropagateVisibilityChanged(bool newvalue)
         {
             if (IsTemplated && RenderTree!=null)
