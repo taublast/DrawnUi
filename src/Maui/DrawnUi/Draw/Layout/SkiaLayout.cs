@@ -1644,19 +1644,32 @@ namespace DrawnUi.Draw
         /// <param name="isVisible">The new visibility state</param>
         public virtual void ReportChildVisibilityChanged(int cellIndex, bool isVisible)
         {
+            ReportChildVisibilityChanged(cellIndex, 1, isVisible);
+        }
+
+        /// <summary>
+        /// Called by templated cells to report visibility changes for multiple cells.
+        /// This stages the visibility change to be applied during the next rendering cycle.
+        /// </summary>
+        /// <param name="startIndex">The starting index of cells in the ItemsSource</param>
+        /// <param name="count">The number of cells to change</param>
+        /// <param name="isVisible">The new visibility state</param>
+        public virtual void ReportChildVisibilityChanged(int startIndex, int count, bool isVisible)
+        {
             if (!IsTemplated)
                 return;
 
             StageStructureChange(new StructureChange
             {
                 Type = StructureChangeType.VisibilityChange,
-                StartIndex = cellIndex,
+                StartIndex = startIndex,
+                Count = count,
                 IsVisible = isVisible
             });
 
             if (ViewsAdapter.LogEnabled)
             {
-                Trace.WriteLine($"[SkiaLayout] {Tag} Staged visibility change for cell {cellIndex}: {isVisible}");
+                Trace.WriteLine($"[SkiaLayout] {Tag} Staged visibility change for {count} cells starting at {startIndex}: {isVisible}");
             }
         }
 

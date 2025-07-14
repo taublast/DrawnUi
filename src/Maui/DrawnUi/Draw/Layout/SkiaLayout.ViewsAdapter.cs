@@ -1002,7 +1002,6 @@ public class ViewsAdapter : IDisposable
                         {
                             view.Parent = _parent;
                         }
-
                         if (index == 0 || view.ContextIndex != index || view.BindingContext != context)
                         {
 

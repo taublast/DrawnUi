@@ -2121,13 +2121,11 @@ else
                             }
                             else
                             {
-                                // Combine viewport visibility with content visibility
+                                // For ghost cells: include in visible list but will skip drawing
                                 var viewportVisible = insideViewport;
-                                var contentVisible = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled
-                                    ? cell.IsContentVisible && !cell.IsCollapsedForVisibility
-                                    : true;
 
-                                cell.IsVisible = viewportVisible && contentVisible;
+                                // Ghost cells are considered "visible" for processing but won't be drawn
+                                cell.IsVisible = viewportVisible;
 
                                 // for plane virtualization
                                 //if (!string.IsNullOrEmpty(planeId) && cell.ControlIndex < 3)
@@ -2138,12 +2136,7 @@ else
                         }
                         else
                         {
-                            // For non-virtualized, still respect content visibility
-                            var contentVisible = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled
-                                ? cell.IsContentVisible && !cell.IsCollapsedForVisibility
-                                : true;
-
-                            cell.IsVisible = contentVisible;
+                            cell.IsVisible = true; // Always visible for processing, drawing will be skipped for ghosts
                         }
 
                         if (firstVisibleIndex < 0)
@@ -2243,6 +2236,9 @@ else
 
                     foreach (var cell in CollectionsMarshal.AsSpan(visibleElements))
                     {
+                        if (!cell.IsContentVisible)
+                            continue;
+
                         if (!cell.WasMeasured)
                         {
                             // Check if we have background measured data
@@ -2326,6 +2322,8 @@ else
 
                             if (child.IsVisible)
                             {
+      
+
                                 bool willDraw = true;
 
                                 if (child.MeasuredSize.Pixels.Width >= 1 && child.MeasuredSize.Pixels.Height >= 1)

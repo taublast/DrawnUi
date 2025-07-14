@@ -1090,50 +1090,45 @@ public partial class SkiaLayout
         if (structure == null)
             return;
 
-        var cell = structure.GetForIndex(change.StartIndex);
-        if (cell == null)
-            return;
+        Debug.WriteLine($"[ApplyVisibilityChange] Processing {change.Count} cells starting at {change.StartIndex}, visibility: {change.IsVisible}");
 
-        Debug.WriteLine($"[ApplyVisibilityChange] Cell {change.StartIndex} visibility: {change.IsVisible}");
+        // Calculate total offset from all cells in the batch
+        float totalDeltaWidth = 0;
+        float totalDeltaHeight = 0;
+        ControlInStack lastChangedCell = null;
 
-        if (!change.IsVisible && !cell.IsCollapsedForVisibility)
+        for (int i = change.StartIndex; i < change.StartIndex + change.Count; i++)
         {
-            // BECOMING INVISIBLE - Save state and collapse
-            cell.SavedDestination = cell.Destination;
-            cell.SavedMeasured = cell.Measured;
-            cell.HasSavedState = true;
-            cell.IsCollapsedForVisibility = true;
-            cell.IsContentVisible = false;
+            var cell = structure.GetForIndex(i);
+            if (cell == null) continue;
 
-            // Use existing OffsetSubsequentCells to shift others
-            var deltaWidth = -cell.Destination.Width;
-            var deltaHeight = -cell.Destination.Height;
-            OffsetSubsequentCells(structure, cell, deltaWidth, deltaHeight);
-
-            // Collapse this cell
-            cell.Destination = SKRect.Empty;
-            cell.Measured = ScaledSize.Default;
-
-            Debug.WriteLine($"[ApplyVisibilityChange] Collapsed cell {change.StartIndex}, saved state {cell.SavedDestination}");
-        }
-        else if (change.IsVisible && cell.IsCollapsedForVisibility)
-        {
-            // BECOMING VISIBLE - Restore state and shift others back
-            if (cell.HasSavedState)
+            if (!change.IsVisible && cell.IsContentVisible)
             {
-                // Restore saved dimensions
-                cell.Destination = cell.SavedDestination;
-                cell.Measured = cell.SavedMeasured;
-                cell.IsCollapsedForVisibility = false;
-                cell.IsContentVisible = true;
+                // BECOMING GHOST - accumulate offset
+                totalDeltaWidth += -cell.Destination.Width;
+                totalDeltaHeight += -cell.Destination.Height;
+                cell.IsContentVisible = false;
+                lastChangedCell = cell;
 
-                // Use existing OffsetSubsequentCells to shift others back
-                var deltaWidth = cell.Destination.Width;
-                var deltaHeight = cell.Destination.Height;
-                OffsetSubsequentCells(structure, cell, deltaWidth, deltaHeight);
-
-                Debug.WriteLine($"[ApplyVisibilityChange] Restored cell {change.StartIndex} to {cell.Destination}");
+                Debug.WriteLine($"[ApplyVisibilityChange] Cell {i} became ghost");
             }
+            else if (change.IsVisible && !cell.IsContentVisible)
+            {
+                // BECOMING VISIBLE - accumulate offset
+                totalDeltaWidth += cell.Destination.Width;
+                totalDeltaHeight += cell.Destination.Height;
+                cell.IsContentVisible = true;
+                lastChangedCell = cell;
+
+                Debug.WriteLine($"[ApplyVisibilityChange] Cell {i} became visible from ghost");
+            }
+        }
+
+        // Apply total offset once to all subsequent cells
+        if (lastChangedCell != null && (Math.Abs(totalDeltaWidth) > 0.1f || Math.Abs(totalDeltaHeight) > 0.1f))
+        {
+            OffsetSubsequentCells(structure, lastChangedCell, totalDeltaWidth, totalDeltaHeight);
+            Debug.WriteLine($"[ApplyVisibilityChange] Applied batch offset: ({totalDeltaWidth}, {totalDeltaHeight})");
         }
     }
 
