@@ -1087,7 +1087,7 @@ public partial class SkiaLayout
     private void ApplyVisibilityChange(StructureChange change)
     {
         var structure = LatestMeasuredStackStructure;
-        if (structure == null)
+        if (structure == null || change.Count==0)
             return;
 
         Debug.WriteLine($"[ApplyVisibilityChange] Processing {change.Count} cells starting at {change.StartIndex}, visibility: {change.IsVisible}");
@@ -1102,22 +1102,22 @@ public partial class SkiaLayout
             var cell = structure.GetForIndex(i);
             if (cell == null) continue;
 
-            if (!change.IsVisible && cell.IsContentVisible)
+            if (!change.IsVisible && !cell.IsCollapsed)
             {
                 // BECOMING GHOST - accumulate offset
                 totalDeltaWidth += -cell.Destination.Width;
                 totalDeltaHeight += -cell.Destination.Height;
-                cell.IsContentVisible = false;
+                cell.IsCollapsed = true;
                 lastChangedCell = cell;
 
                 Debug.WriteLine($"[ApplyVisibilityChange] Cell {i} became ghost");
             }
-            else if (change.IsVisible && !cell.IsContentVisible)
+            else if (change.IsVisible && cell.IsCollapsed)
             {
                 // BECOMING VISIBLE - accumulate offset
                 totalDeltaWidth += cell.Destination.Width;
                 totalDeltaHeight += cell.Destination.Height;
-                cell.IsContentVisible = true;
+                cell.IsCollapsed = false;
                 lastChangedCell = cell;
 
                 Debug.WriteLine($"[ApplyVisibilityChange] Cell {i} became visible from ghost");
@@ -1130,6 +1130,11 @@ public partial class SkiaLayout
             OffsetSubsequentCells(structure, lastChangedCell, totalDeltaWidth, totalDeltaHeight);
             Debug.WriteLine($"[ApplyVisibilityChange] Applied batch offset: ({totalDeltaWidth}, {totalDeltaHeight})");
         }
+
+        // Update content size after visibility changes
+        UpdateProgressiveContentSize();
+
+        Repaint();
     }
 
     #region Hybrid Measurement Shifting
@@ -1295,12 +1300,15 @@ public partial class SkiaLayout
 
         if (Type == LayoutType.Column)
         {
-            // Calculate actual measured height from structure
+            // Calculate actual measured height from structure (skip ghost cells)
             var actualMeasuredHeight = 0f;
             var measuredItems = StackStructure.GetChildren().Take(measuredCount);
             foreach (var item in measuredItems)
             {
-                actualMeasuredHeight += item.Measured.Pixels.Height;
+                if (!item.IsCollapsed) // Skip ghost cells
+                {
+                    actualMeasuredHeight += item.Measured.Pixels.Height;
+                }
             }
 
             // Add spacing between items
@@ -1353,12 +1361,15 @@ public partial class SkiaLayout
         }
         else if (Type == LayoutType.Row)
         {
-            // Similar logic for horizontal scrolling
+            // Similar logic for horizontal scrolling (skip ghost cells)
             var actualMeasuredWidth = 0f;
             var measuredItems = StackStructure.GetChildren().Take(measuredCount);
             foreach (var item in measuredItems)
             {
-                actualMeasuredWidth += item.Measured.Pixels.Width;
+                if (!item.IsCollapsed) // Skip ghost cells
+                {
+                    actualMeasuredWidth += item.Measured.Pixels.Width;
+                }
             }
 
             var spacingWidth = (measuredCount - 1) * (float)(Spacing * RenderingScale);

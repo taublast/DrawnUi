@@ -2236,7 +2236,7 @@ else
 
                     foreach (var cell in CollectionsMarshal.AsSpan(visibleElements))
                     {
-                        if (!cell.IsContentVisible)
+                        if (cell.IsCollapsed)
                             continue;
 
                         if (!cell.WasMeasured)

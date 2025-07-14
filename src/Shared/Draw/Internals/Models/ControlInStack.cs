@@ -68,5 +68,5 @@ public class ControlInStack
     /// <summary>
     /// Cell's own visibility state (independent of viewport visibility)
     /// </summary>
-    public bool IsContentVisible { get; set; } = true;
+    public bool IsCollapsed { get; set; }
 }
