@@ -21,15 +21,15 @@ public partial class NewsCell : SkiaDynamicDrawnCell
         }
     }
 
-    protected override void OnCacheCreated()
-    {
-        base.OnCacheCreated();
+    //protected override void OnCacheCreated()
+    //{
+    //    base.OnCacheCreated();
 
-        if (BindingContext is NewsItem item)
-        {
-            Debug.WriteLine($"Cache created for ID {item.Id} cell {this.Uid}");
-        }
-    }
+    //    if (BindingContext is NewsItem item)
+    //    {
+    //        Debug.WriteLine($"Cache created for ID {item.Id} cell {this.Uid}");
+    //    }
+    //}
 
     private void ConfigureForContentType(NewsItem news)
     {

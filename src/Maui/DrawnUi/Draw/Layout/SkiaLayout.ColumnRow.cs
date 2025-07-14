@@ -2056,23 +2056,6 @@ else
 
                 visibilityArea = visibilityAreaReal;
 
-                // EXPAND DRAWING VIEWPORT  
-
-                //if (Virtualisation != VirtualisationType.Managed && IsTemplated)
-                //{
-                //    if (Type == LayoutType.Column)
-                //    {
-                //        usesExpandedViewport = true;
-                //        var expand = visibilityArea.Pixels.Height;
-                //        var expanded = visibilityArea.Pixels;
-                //        expanded.Inflate(0, expand);
-                //        visibilityArea = ScaledRect.FromPixels(expanded, visibilityArea.Scale);
-                //    }
-                //    else if (Type == LayoutType.Row)
-                //    {
-                //    }
-                //}
-                
                 var recyclingAreaPixels = visibilityArea.Pixels;
                 var expendRecycle = ((float)RecyclingBuffer * ctx.Scale);
                 recyclingAreaPixels.Inflate(expendRecycle, expendRecycle);
@@ -2447,16 +2430,11 @@ else
 
             WillDrawFromFreshItemssSource = false;
 
+            //todo move/remove???
             if (_measuredItems.Count > SLIDING_WINDOW_SIZE)
             {
                 // Schedule cleanup on next frame to avoid blocking
                 Task.Run(ApplySlidingWindowCleanup);
-            }
-
-            // Update content size if we have new measurements
-            if (_isBackgroundMeasuring && _measuredItems.Count > visibleElements.Count)
-            {
-                UpdateEstimatedContentSize(ctx.Scale);
             }
 
             return drawn;

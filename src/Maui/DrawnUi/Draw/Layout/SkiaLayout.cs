@@ -317,7 +317,7 @@ namespace DrawnUi.Draw
             nameof(RecyclingBuffer),
             typeof(double),
             typeof(SkiaLayout),
-            500.0);
+            100.0);
 
         /// <summary>
         /// Extra buffer zone for avoiding recycling  

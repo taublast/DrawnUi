@@ -444,9 +444,17 @@ public partial class SkiaLayout
             }
 
             // Start background measurement if using MeasureVisible strategy
-            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
+            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible
+                && measuredCount < itemsCount)
             {
-                StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
+                if (_pendingMeasurements.Count == 0)
+                {
+                    StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
+                }
+                else
+                {
+                    Debug.WriteLine($"[MeasureList] have unapplied measurements, wil not continue measuring in background.");
+                }
             }
 
             // Debug: Report actual measurement results
@@ -878,6 +886,15 @@ public partial class SkiaLayout
 
         while (currentBatchStart < totalItems && !cancellationToken.IsCancellationRequested && iterationCount < maxIterations)
         {
+
+            lock (_pendingLock)
+            {
+                if (_pendingMeasurements.Count > 0)
+                {
+                    break;
+                }
+            }
+
             iterationCount++;
             var batchEnd = Math.Min(currentBatchStart + MEASUREMENT_BATCH_SIZE, totalItems);
             var itemsToMeasure = batchEnd - currentBatchStart;
