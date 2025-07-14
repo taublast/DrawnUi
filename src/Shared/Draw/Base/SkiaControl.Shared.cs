@@ -4315,7 +4315,7 @@ namespace DrawnUi.Draw
 
                 ApplyBindingContext();
 
-                //will apply to maui prps like styles, triggers etc
+                //will apply to maui props like styles, triggers etc
                 base.OnBindingContextChanged();
             }
             catch (Exception e)

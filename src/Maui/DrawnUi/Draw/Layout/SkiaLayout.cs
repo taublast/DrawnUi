@@ -1495,6 +1495,12 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
+        /// Determines if collection changes should preserve existing measurement structure
+        /// </summary>
+        protected virtual bool ShouldPreserveStructureOnCollectionChange =>
+            MeasureItemsStrategy == MeasuringStrategy.MeasureVisible;
+
+        /// <summary>
         /// Enhanced collection change handler with smart handling and fallback
         /// </summary>
         protected virtual void ItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -1507,6 +1513,13 @@ namespace DrawnUi.Draw
                 Trace.WriteLine($"[SkiaLayout] {Tag} Collection changed: {args.Action}, " +
                                 $"OldIndex: {args.OldStartingIndex}, NewIndex: {args.NewStartingIndex}, " +
                                 $"OldCount: {args.OldItems?.Count ?? 0}, NewCount: {args.NewItems?.Count ?? 0}");
+            }
+
+            if (ShouldPreserveStructureOnCollectionChange)
+            {
+                // NEW: Structure-preserving logic for MeasureVisible strategy
+                HandleCollectionChangeWithStructurePreservation(args);
+                return;
             }
 
             lock (LockMeasure)
@@ -1543,6 +1556,180 @@ namespace DrawnUi.Draw
                     }
                 });
                 
+            }
+        }
+
+        /// <summary>
+        /// Handles collection changes while preserving existing measurement structure
+        /// </summary>
+        protected virtual void HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving collection change: {args.Action}");
+            }
+
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    HandleStructurePreservingAdd(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    HandleStructurePreservingRemove(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    HandleStructurePreservingReplace(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    HandleStructurePreservingMove(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    HandleStructurePreservingReset(args);
+                    break;
+
+                default:
+                    // Fallback to existing logic for unknown actions
+                    goto ExistingLogic;
+            }
+
+            return;
+
+            ExistingLogic:
+            // Fall back to existing logic if needed
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Add collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving ADD: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
+            }
+
+            // Cancel any ongoing background measurement to avoid conflicts
+            CancelBackgroundMeasurement();
+
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    // PRESERVE STRUCTURE: Use InitializeSoft which preserves existing structure
+                    // This updates pool size and data contexts without destroying measurements
+                    ChildrenFactory.InitializeSoft(false, ItemsSource, GetTemplatesPoolLimit());
+
+                    if (ViewsAdapter.LogEnabled)
+                    {
+                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft");
+                    }
+
+                    Repaint();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Remove collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REMOVE: {args.OldItems?.Count ?? 0} items at index {args.OldStartingIndex}");
+            }
+
+            // TODO: Implement remove logic that updates StackStructure and _measuredItems
+            // For now, fall back to existing logic
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                    Invalidate();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Replace collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REPLACE: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
+            }
+
+            // TODO: Implement replace logic that updates StackStructure and _measuredItems
+            // For now, fall back to existing logic
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                    Invalidate();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Move collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingMove(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving MOVE: from index {args.OldStartingIndex} to {args.NewStartingIndex}");
+            }
+
+            // TODO: Implement move logic that updates StackStructure and _measuredItems
+            // For now, fall back to existing logic
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                    Invalidate();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Reset collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingReset(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving RESET");
+            }
+
+            // Reset requires full invalidation, but we can still be smarter about it
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                    ResetScroll();
+                    Invalidate();
+                });
             }
         }
 

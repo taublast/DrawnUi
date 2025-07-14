@@ -229,7 +229,7 @@ public class ViewsAdapter : IDisposable
         }
     }
 
-    void InitializeSoft(bool layoutChanged, IList dataContexts, int poolSize)
+    public void InitializeSoft(bool layoutChanged, IList dataContexts, int poolSize)
     {
         if (LogEnabled)
             Super.Log("[ViewsAdapter] InitializeSoft");
@@ -251,7 +251,7 @@ public class ViewsAdapter : IDisposable
             Monitor.PulseAll(_lockTemplates);
         }
 
-        SetTemplatesAvailable(dataContexts);
+        //SetTemplatesAvailable(dataContexts);
     }
 
     void SetTemplatesAvailable(IList dataContexts)

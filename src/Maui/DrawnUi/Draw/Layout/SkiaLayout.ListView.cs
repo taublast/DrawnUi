@@ -944,6 +944,8 @@ public partial class SkiaLayout
         }
 
         Debug.WriteLine($"[BackgroundMeasureItems] Completed background measurement up to index {_backgroundMeasurementProgress}");
+
+        Repaint();
     }
 
     /// <summary>

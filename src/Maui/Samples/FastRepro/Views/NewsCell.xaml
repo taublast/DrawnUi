@@ -90,6 +90,7 @@
 
         <!-- Image Content -->
         <draw:SkiaImage
+            BackgroundColor="LightGray"
             x:Name="ContentImage"
             Aspect="AspectFill"
             HeightRequest="200"
@@ -105,6 +106,7 @@
             IsVisible="False">
 
             <draw:SkiaImage
+                BackgroundColor="LightGray"
                 x:Name="VideoThumbnail"
                 Aspect="AspectFill"
                 HorizontalOptions="Fill"
@@ -150,6 +152,7 @@
             IsVisible="False">
 
             <draw:SkiaImage
+                BackgroundColor="LightGray"
                 x:Name="ArticleThumbnail"
                 WidthRequest="80"
                 HeightRequest="80"
@@ -174,6 +177,7 @@
 
         <!-- Ad Content -->
         <draw:SkiaLayout
+            BackgroundColor="LightGray"
             HorizontalOptions="Fill"
             UseCache="Image"
             x:Name="AdLayout"
