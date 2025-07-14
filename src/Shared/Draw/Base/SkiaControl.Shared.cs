@@ -5159,6 +5159,11 @@ namespace DrawnUi.Draw
         {
         }
 
+        protected virtual bool NeedToMeasureSelf()
+        {
+            return WillInvalidateMeasure || NeedMeasure;
+        } 
+
         /// <summary>
         /// Returns false if should not render
         /// </summary>
@@ -5168,13 +5173,13 @@ namespace DrawnUi.Draw
             if (!CanDraw)
                 return false;
 
-            if (WillInvalidateMeasure)
+            if (NeedToMeasureSelf())
             {
                 WillInvalidateMeasure = false;
                 InvalidateMeasureInternal();
             }
 
-            if (WillInvalidateMeasure || NeedMeasure)
+            if (NeedToMeasureSelf())
             {
                 MeasureSelf(destination, widthRequest, heightRequest, scale);
             }

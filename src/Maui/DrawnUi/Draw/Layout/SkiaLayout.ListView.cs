@@ -17,6 +17,11 @@ public partial class SkiaLayout
     public int FirstVisibleIndex { get; protected set; }
     public int LastVisibleIndex { get; protected set; }
 
+    /// <summary>
+    /// Percentage of items that have been measured (0.0 to 1.0)
+    /// </summary>
+    protected float MeasuredItemsPercentage => ItemsSource?.Count > 0 ? (float)(LastMeasuredIndex + 1) / ItemsSource.Count : 0f;
+
     // Background measurement support
     private CancellationTokenSource _backgroundMeasurementCts;
     private Task _backgroundMeasurementTask;
@@ -32,6 +37,10 @@ public partial class SkiaLayout
     // Track measurement state
     private readonly ConcurrentDictionary<int, MeasuredItemInfo> _measuredItems = new();
     private volatile int _backgroundMeasurementProgress = 0;
+
+    // Background measurement staging for rendering pipeline integration
+    private readonly object _pendingLock = new();
+    private readonly List<List<MeasuredItemInfo>> _pendingMeasurements = new();
 
     /// <summary>
     /// Information about a measured item for sliding window management
@@ -487,7 +496,7 @@ public partial class SkiaLayout
     /// <summary>
     /// Measures a batch of items in background thread
     /// </summary>
-    private List<MeasuredItemInfo> MeasureBatchInBackground(SKRect constraints, float scale, int startIndex, int count, CancellationToken cancellationToken)
+    private List<MeasuredItemInfo> MeasureBatchInBackground(SKRect constraints, float scale, int startIndex, int count, float startX, float startY, int startRow, int startCol, CancellationToken cancellationToken)
     {
         var measuredBatch = new List<MeasuredItemInfo>();
 
@@ -502,11 +511,24 @@ public partial class SkiaLayout
                 template = ChildrenFactory.GetTemplateInstance();
             }
 
-            var structure = LatestStackStructure;
-            var (startX, startY, startRow, startCol) = GetNextItemPositionForIncremental(structure);
-
             var columnsCount = (Split > 0) ? Split : 1;
             var columnWidth = ComputeColumnWidth(columnsCount);
+
+            // Initialize positioning variables from parameters (thread-safe)
+            float currentX = startX;
+            float currentY = startY;
+            int row = startRow;
+            int col = startCol;
+            float rowHeight = 0f;
+
+            float availableWidth = columnWidth;
+            float availableHeight = float.PositiveInfinity;
+
+            if (this.Type == LayoutType.Row)
+            {
+                availableHeight = columnWidth;
+                availableWidth = float.PositiveInfinity;
+            }
 
             for (int i = 0; i < count && !cancellationToken.IsCancellationRequested; i++)
             {
@@ -516,6 +538,12 @@ public partial class SkiaLayout
                 if (_measuredItems.ContainsKey(itemIndex))
                     continue;
 
+                // Add spacing for this position
+                if (Type == LayoutType.Column && i > 0)
+                {
+                    currentY += GetSpacingForIndex(row, scale);
+                }
+
                 var child = ChildrenFactory.GetViewForIndex(itemIndex, template, 0, true);
                 if (template == null && child != null)
                 {
@@ -524,12 +552,19 @@ public partial class SkiaLayout
 
                 if (child?.CanDraw == true)
                 {
-                    var rectForChild = new SKRect(0, 0, columnWidth, float.PositiveInfinity);
+                    // Create proper destination rect with actual positioning
+                    var rectForChild = new SKRect(
+                        currentX,
+                        currentY,
+                        currentX + availableWidth,
+                        currentY + availableHeight
+                    );
+
                     var cell = new ControlInStack
                     {
                         ControlIndex = itemIndex,
-                        Column = startCol,
-                        Row = startRow + (i / columnsCount),
+                        Column = col,
+                        Row = row,
                         Destination = rectForChild
                     };
 
@@ -537,12 +572,35 @@ public partial class SkiaLayout
                     cell.Measured = measured;
                     cell.WasMeasured = true;
 
+                    // Update max row height
+                    if (measured.Pixels.Height > rowHeight)
+                        rowHeight = measured.Pixels.Height;
+
                     measuredBatch.Add(new MeasuredItemInfo
                     {
                         Cell = cell,
                         LastAccessed = DateTime.UtcNow,
                         IsInViewport = false
                     });
+
+                    // Move to next column
+                    col++;
+                    if (col >= columnsCount)
+                    {
+                        // Complete row - move to next row
+                        row++;
+                        col = 0;
+                        currentX = 0f;
+                        currentY += rowHeight + (float)(Spacing * scale);
+                        rowHeight = 0f;
+                    }
+                    else
+                    {
+                        // Move to next column horizontally
+                        currentX += columnWidth + (float)(Spacing * scale);
+                    }
+
+                    Debug.WriteLine($"[MeasureBatchInBackground] Measured item {itemIndex} at ({cell.Destination.Left:F1},{cell.Destination.Top:F1}): {measured.Pixels.Width:F1}x{measured.Pixels.Height:F1}");
                 }
             }
         }
@@ -580,10 +638,199 @@ public partial class SkiaLayout
                 LastMeasuredIndex = maxIndex;
             }
 
+            // Stage for rendering pipeline integration
+            lock (_pendingLock)
+            {
+                _pendingMeasurements.Add(measuredBatch);
+            }
+
             // Recalculate estimated content size
-            UpdateEstimatedContentSize(scale);
+            //UpdateEstimatedContentSize(scale);
 
             Debug.WriteLine($"[IntegrateMeasuredBatch] Integrated {measuredBatch.Count} items, total measured: {_measuredItems.Count}, last index: {LastMeasuredIndex}");
+        }
+    }
+
+    /// <summary>
+    /// Applies background measurement results to StackStructure - called from rendering pipeline
+    /// </summary>
+    public void ApplyBackgroundMeasurementResult()
+    {
+        List<List<MeasuredItemInfo>> batchesToProcess = null;
+
+        // Get all pending batches atomically
+        lock (_pendingLock)
+        {
+            if (_pendingMeasurements.Count == 0)
+                return;
+
+            // Copy and clear in one atomic operation
+            batchesToProcess = new List<List<MeasuredItemInfo>>(_pendingMeasurements);
+            _pendingMeasurements.Clear();
+        }
+
+        // Process outside the lock for maximum performance
+        var allRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+
+        foreach (var batch in batchesToProcess)
+        {
+            // Group batch items into rows based on columnsCount
+            var currentRow = new List<ControlInStack>(columnsCount);
+
+            foreach (var item in batch)
+            {
+                currentRow.Add(item.Cell);
+
+                // Complete row when we reach columnsCount
+                if (currentRow.Count >= columnsCount)
+                {
+                    allRows.Add(currentRow);
+                    currentRow = new List<ControlInStack>(columnsCount);
+                }
+            }
+
+            // Add incomplete row if it has items
+            if (currentRow.Count > 0)
+            {
+                allRows.Add(currentRow);
+            }
+        }
+
+        // Append to StackStructure if we have rows to add
+        if (allRows.Count > 0)
+        {
+            if (StackStructure == null)
+            {
+                StackStructure = new LayoutStructure(allRows);
+            }
+            else
+            {
+                StackStructure.Append(allRows);
+            }
+
+            // Update content size with progressive accuracy as we approach the end
+            UpdateProgressiveContentSize();
+
+            Debug.WriteLine($"[ApplyBackgroundMeasurementResult] Applied {allRows.Count} rows from {batchesToProcess.Count} batches to StackStructure. Measured: {MeasuredItemsPercentage:P1}");
+        }
+    }
+
+    /// <summary>
+    /// Updates content size with progressive accuracy as we approach measuring all items
+    /// </summary>
+    private void UpdateProgressiveContentSize()
+    {
+        if (StackStructure == null || ItemsSource?.Count == 0)
+            return;
+
+        var totalItems = ItemsSource.Count;
+        var measuredCount = LastMeasuredIndex + 1;
+        var progress = MeasuredItemsPercentage;
+
+        if (Type == LayoutType.Column)
+        {
+            // Calculate actual measured height from structure
+            var actualMeasuredHeight = 0f;
+            var measuredItems = StackStructure.GetChildren().Take(measuredCount);
+            foreach (var item in measuredItems)
+            {
+                actualMeasuredHeight += item.Measured.Pixels.Height;
+            }
+
+            // Add spacing between items
+            var spacingHeight = (measuredCount - 1) * (float)(Spacing * RenderingScale);
+            actualMeasuredHeight += spacingHeight;
+
+            float newContentHeight;
+
+            if (progress >= 1.0f)
+            {
+                // 100% measured - use exact size
+                newContentHeight = actualMeasuredHeight;
+                Debug.WriteLine($"[UpdateProgressiveContentSize] 100% measured - exact height: {newContentHeight:F1}px");
+            }
+            else if (progress >= 0.9f)
+            {
+                // 90%+ measured - use precise estimate with small buffer
+                var averageHeight = actualMeasuredHeight / measuredCount;
+                var estimatedTotal = averageHeight * totalItems;
+                var buffer = estimatedTotal * 0.05f; // 5% buffer for final items
+                newContentHeight = estimatedTotal + buffer;
+                Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - precise estimate: {newContentHeight:F1}px (avg: {averageHeight:F1}px)");
+            }
+            else if (progress >= 0.5f)
+            {
+                // 50%+ measured - blend between estimate and large buffer
+                var averageHeight = actualMeasuredHeight / measuredCount;
+                var estimatedTotal = averageHeight * totalItems;
+                var buffer = estimatedTotal * (0.5f - progress * 0.4f); // Decreasing buffer as we approach 90%
+                newContentHeight = estimatedTotal + buffer;
+                Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - blended estimate: {newContentHeight:F1}px (buffer: {buffer:F1}px)");
+            }
+            else
+            {
+                // Less than 50% measured - use large estimate to allow scrolling
+                var averageHeight = actualMeasuredHeight / measuredCount;
+                var estimatedTotal = averageHeight * totalItems;
+                var buffer = estimatedTotal * 1.0f; // 100% buffer for early measurements
+                newContentHeight = estimatedTotal + buffer;
+                Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - early estimate: {newContentHeight:F1}px (large buffer)");
+            }
+
+            // Only update if the new size is different enough to matter
+            var currentHeight = MeasuredSize.Pixels.Height;
+            if (Math.Abs(newContentHeight - currentHeight) > 10f) // 10px threshold
+            {
+                SetMeasured(MeasuredSize.Pixels.Width, newContentHeight, false, false, RenderingScale);
+                Debug.WriteLine($"[UpdateProgressiveContentSize] Updated height from {currentHeight:F1}px to {newContentHeight:F1}px");
+            }
+        }
+        else if (Type == LayoutType.Row)
+        {
+            // Similar logic for horizontal scrolling
+            var actualMeasuredWidth = 0f;
+            var measuredItems = StackStructure.GetChildren().Take(measuredCount);
+            foreach (var item in measuredItems)
+            {
+                actualMeasuredWidth += item.Measured.Pixels.Width;
+            }
+
+            var spacingWidth = (measuredCount - 1) * (float)(Spacing * RenderingScale);
+            actualMeasuredWidth += spacingWidth;
+
+            float newContentWidth;
+
+            if (progress >= 1.0f)
+            {
+                newContentWidth = actualMeasuredWidth;
+            }
+            else if (progress >= 0.9f)
+            {
+                var averageWidth = actualMeasuredWidth / measuredCount;
+                var estimatedTotal = averageWidth * totalItems;
+                newContentWidth = estimatedTotal + (estimatedTotal * 0.05f);
+            }
+            else if (progress >= 0.5f)
+            {
+                var averageWidth = actualMeasuredWidth / measuredCount;
+                var estimatedTotal = averageWidth * totalItems;
+                var buffer = estimatedTotal * (0.5f - progress * 0.4f);
+                newContentWidth = estimatedTotal + buffer;
+            }
+            else
+            {
+                var averageWidth = actualMeasuredWidth / measuredCount;
+                var estimatedTotal = averageWidth * totalItems;
+                newContentWidth = estimatedTotal + (estimatedTotal * 1.0f);
+            }
+
+            var currentWidth = MeasuredSize.Pixels.Width;
+            if (Math.Abs(newContentWidth - currentWidth) > 10f)
+            {
+                SetMeasured(newContentWidth, MeasuredSize.Pixels.Height, false, false, RenderingScale);
+                Debug.WriteLine($"[UpdateProgressiveContentSize] Updated width from {currentWidth:F1}px to {newContentWidth:F1}px");
+            }
         }
     }
 
@@ -644,9 +891,13 @@ public partial class SkiaLayout
 
             Debug.WriteLine($"[BackgroundMeasureItems] Measuring batch {currentBatchStart}-{batchEnd - 1} ({itemsToMeasure} items) [iteration {iterationCount}/{maxIterations}]");
 
+            // Get positioning data on main thread (thread-safe read)
+            var structure = LatestStackStructure;
+            var (startX, startY, startRow, startCol) = GetNextItemPositionForIncremental(structure);
+
             // Measure batch on background thread
             var measuredBatch = await Task.Run(() => MeasureBatchInBackground(
-                constraints, scale, currentBatchStart, itemsToMeasure, cancellationToken), cancellationToken);
+                constraints, scale, currentBatchStart, itemsToMeasure, startX, startY, startRow, startCol, cancellationToken), cancellationToken);
 
             if (cancellationToken.IsCancellationRequested)
             {
@@ -654,15 +905,12 @@ public partial class SkiaLayout
                 break;
             }
 
-            // Update UI thread with results
-            await MainThread.InvokeOnMainThreadAsync(() =>
+            // Integrate results on background thread (safe for reading/staging)
+            if (!cancellationToken.IsCancellationRequested)
             {
-                if (!cancellationToken.IsCancellationRequested)
-                {
-                    IntegrateMeasuredBatch(measuredBatch, scale);
-                    ApplySlidingWindowCleanup();
-                }
-            });
+                IntegrateMeasuredBatch(measuredBatch, scale);
+                ApplySlidingWindowCleanup();
+            }
 
             _backgroundMeasurementProgress = batchEnd;
 

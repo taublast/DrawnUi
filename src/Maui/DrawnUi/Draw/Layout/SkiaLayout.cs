@@ -10,6 +10,7 @@ namespace DrawnUi.Draw
 {
     public partial class SkiaLayout : SkiaControl, ISkiaGridLayout
     {
+     
         public override bool PreArrange(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
             if (!CanDraw)
@@ -1085,13 +1086,15 @@ namespace DrawnUi.Draw
         bool _trackWasDrawn;
         protected bool WillDrawFromFreshItemssSource;
 
-
         protected override void Paint(DrawingContext ctx)
         {
             if (ctx.Destination.Width == 0 || ctx.Destination.Height == 0)
                 return;
 
             LockUpdate(true);
+
+            // Apply background measurement results to StackStructure
+            ApplyBackgroundMeasurementResult();
 
             if (Type == LayoutType.Grid || IsStack)
             {
