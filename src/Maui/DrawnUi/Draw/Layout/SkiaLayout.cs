@@ -1073,11 +1073,11 @@ namespace DrawnUi.Draw
         public override void InvalidateByChild(SkiaControl child)
         {
 
-            //if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-            //{
-            //    RemeasureSingleItemInBackground(child.ContextIndex);
-            //    return;
-            //}
+            if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+            {
+                //RemeasureSingleItemInBackground(child.ContextIndex);
+                return;
+            }
 
             InvalidatedChildren.Add(child);
 

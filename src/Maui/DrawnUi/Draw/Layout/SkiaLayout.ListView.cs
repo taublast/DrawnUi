@@ -35,6 +35,7 @@ public partial class SkiaLayout
     public class StructureChange
     {
         public StructureChangeType Type { get; set; }
+        public Vector2? OffsetOthers { get; set; }
         public int StartIndex { get; set; }
         public int Count { get; set; }
         public List<object> Items { get; set; } // For Add/Replace
@@ -532,18 +533,19 @@ public partial class SkiaLayout
             }
 
             // Start background measurement if using MeasureVisible strategy
-            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible
-                && measuredCount < itemsCount)
-            {
-                if (_pendingStructureChanges.Count == 0)
-                {
-                    StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
-                }
-                else
-                {
-                    Debug.WriteLine($"[MeasureList] have unapplied measurements, wil not continue measuring in background.");
-                }
-            }
+            //todo DISABLED dont need here
+            //if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible
+            //    && measuredCount < itemsCount)
+            //{
+            //    if (_pendingStructureChanges.Count == 0)
+            //    {
+            //        StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
+            //    }
+            //    else
+            //    {
+            //        Debug.WriteLine($"[MeasureList] have unapplied measurements, wil not continue measuring in background.");
+            //    }
+            //}
 
             // Debug: Report actual measurement results
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
@@ -1220,6 +1222,12 @@ public partial class SkiaLayout
                     float deltaWidth = 0;
                     float deltaHeight = 0;
 
+                    if (change.OffsetOthers != null)
+                    {
+                        deltaWidth = change.OffsetOthers.Value.X;
+                        deltaHeight = change.OffsetOthers.Value.Y;
+                    }
+                    else
                     if (oldMeasurement != null)
                     {
                         deltaWidth = newMeasurement.Cell.Measured.Pixels.Width - oldMeasurement.Cell.Measured.Pixels.Width;

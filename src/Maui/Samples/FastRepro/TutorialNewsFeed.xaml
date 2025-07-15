@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <draw:DrawnUiBasePage
-    x:Class="Sandbox.MainPage"
+    x:Class="Sandbox.TutorialNewsFeed"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
@@ -29,6 +29,8 @@
                 <draw:SkiaScroll
                     x:Name="NewsScroll"
                     Orientation="Vertical"
+                    FrictionScrolled="0.2"
+                    ChangeVelocityScrolled="0.9"
                     RefreshCommand="{Binding RefreshCommand}"
                     LoadMoreCommand="{Binding LoadMoreCommand}"
                     RefreshEnabled="True"
@@ -56,7 +58,7 @@
                     <draw:SkiaLayout
                         x:Name="NewsStack"
                         Type="Column"
-                        ReserveTemplates="10"
+                        ReserveTemplates="0"
                         ItemsSource="{Binding NewsItems}"
                         RecyclingTemplate="Enabled"
                         MeasureItemsStrategy="MeasureVisible"
@@ -73,11 +75,14 @@
 
                 </draw:SkiaScroll>
 
+                <!-- uncomment for debug info -->
+
                 <draw:SkiaLabel
                     UseCache="Operations"
                     Margin="8"
-                    AddMarginBottom="140"
-                    BackgroundColor="Black"
+                    Padding="2"
+                    AddMarginBottom="50"
+                    BackgroundColor="#CC000000"
                     HorizontalOptions="Start"
                     InputTransparent="True"
                     Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
@@ -85,16 +90,16 @@
                     VerticalOptions="End"
                     ZIndex="100" />
 
-                <draw:SkiaLabelFps
+                <!-- uncomment for FPS info -->
+
+                <!--<draw:SkiaLabelFps
                     Margin="0,0,4,24"
                     BackgroundColor="DarkRed"
                     HorizontalOptions="End"
                     Rotation="-45"
                     TextColor="White"
                     VerticalOptions="End"
-                    ZIndex="100">
-
-                </draw:SkiaLabelFps>
+                    ZIndex="100"/>-->
 
             </draw:SkiaLayout>
 

@@ -6,6 +6,7 @@ This section covers advanced features and concepts for DrawnUi development.
 
 - [Layout System Architecture](layout-system.md) - Deep dive into how the layout system works
 - [Platform-Specific Styling](platform-styling.md) - Creating platform-specific UI styles
+- [Recycled Cells](recycled-cells.md) - Advanced performance techniques for large lists
 
 ## Visual Features
 

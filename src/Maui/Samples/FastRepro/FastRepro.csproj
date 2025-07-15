@@ -170,6 +170,14 @@
 
 
 
+  <ItemGroup>
+    <Compile Update="TutorialNewsFeed.xaml.cs">
+      <DependentUpon>TutorialNewsFeed.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+
+
  
 </Project>
  

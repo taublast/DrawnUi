@@ -85,7 +85,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
     private void ConfigureImagePost(NewsItem news)
     {
-        ContentImage.Source = news.ImageUrl;
+        ContentImg.Source = news.ImageUrl;
         ContentImage.IsVisible = true;
 
         if (!string.IsNullOrEmpty(news.Content))

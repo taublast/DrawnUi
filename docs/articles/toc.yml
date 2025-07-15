@@ -65,6 +65,8 @@
       href: advanced/platform-styling.md
     - name: Layout System Architecture
       href: advanced/layout-system.md
+    - name: Recycled Cells
+      href: advanced/recycled-cells.md
     - name: Gradients
       href: advanced/gradients.md
     - name: Game UI & Interactive Games

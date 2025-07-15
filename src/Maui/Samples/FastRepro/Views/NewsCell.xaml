@@ -20,10 +20,12 @@
             BackgroundColor="White"
             VerticalOptions="Fill"
             HorizontalOptions="Fill">
+
             <draw:SkiaShape.VisualEffects>
                 <draw:DropShadowEffect
                     Color="#33000000" Blur="3" X="3" Y="3" />
             </draw:SkiaShape.VisualEffects>
+
         </draw:SkiaShape>
     </draw:SkiaLayout>
 
@@ -84,17 +86,22 @@
             UseCache="Operations"
             x:Name="ContentLabel"
             FontSize="14"
-            TextColor="#333"
+            TextColor="#333333"
             LineBreakMode="WordWrap"
             IsVisible="False" />
 
         <!-- Image Content -->
-        <draw:SkiaImage
-            BackgroundColor="LightGray"
-            x:Name="ContentImage"
-            Aspect="AspectFill"
-            HeightRequest="200"
-            IsVisible="False" />
+        <draw:SkiaShape x:Name="ContentImage"
+                        IsVisible="False"
+                        HorizontalOptions="Fill"
+                        HeightRequest="200">
+            <draw:SkiaImage
+                BackgroundColor="LightGray"
+                x:Name="ContentImg"
+                Aspect="AspectCover"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill" />
+        </draw:SkiaShape>
 
         <!-- Video Thumbnail with Play Button -->
         <draw:SkiaLayout
@@ -151,14 +158,20 @@
             Spacing="12"
             IsVisible="False">
 
-            <draw:SkiaImage
-                BackgroundColor="LightGray"
-                x:Name="ArticleThumbnail"
+            <draw:SkiaShape
+                UseCache="Image"
+                CornerRadius="8,0,0,8"
                 WidthRequest="80"
-                HeightRequest="80"
-                Aspect="AspectFill" />
+                HeightRequest="80">
+                <draw:SkiaImage
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    BackgroundColor="LightGray"
+                    x:Name="ArticleThumbnail"
+                    Aspect="AspectCover" />
+            </draw:SkiaShape>
 
-            <draw:SkiaLayout Type="Column" HorizontalOptions="Fill">
+            <draw:SkiaLayout Type="Column" HorizontalOptions="Fill" UseCache="Operations">
                 <draw:SkiaLabel
                     x:Name="ArticleTitle"
                     FontSize="14"
@@ -173,10 +186,12 @@
                     LineBreakMode="TailTruncation"
                     MaxLines="3" />
             </draw:SkiaLayout>
+
         </draw:SkiaLayout>
 
         <!-- Ad Content -->
         <draw:SkiaLayout
+            HeightRequest="150"
             BackgroundColor="LightGray"
             HorizontalOptions="Fill"
             UseCache="Image"
@@ -186,21 +201,27 @@
             IsVisible="False">
 
             <draw:SkiaLabel
+                UseCache="Operations"
                 Text="Sponsored"
                 FontSize="10"
                 TextColor="Gray"
                 HorizontalOptions="End" />
 
             <draw:SkiaImage
+                UseCache="Image"
                 x:Name="AdImage"
-                Aspect="AspectFill"
-                HeightRequest="150" />
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill"
+                Aspect="AspectFill" />
 
             <draw:SkiaLabel
+                UseCache="Operations"
                 x:Name="AdTitle"
                 FontSize="14"
+                Margin="8"
                 FontAttributes="Bold"
                 TextColor="Black" />
+
         </draw:SkiaLayout>
 
         <!-- Interaction Bar -->
@@ -235,7 +256,7 @@
     </draw:SkiaLayout>
 
     <draw:SkiaLabel
-        Margin="24"
+        Margin="32,24"
         x:Name="DebugId"
         TextColor="Red"
         HorizontalOptions="End" UseCache="Operations" />

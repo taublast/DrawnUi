@@ -1002,9 +1002,8 @@ public class ViewsAdapter : IDisposable
                         {
                             view.Parent = _parent;
                         }
-                        if (index == 0 || view.ContextIndex != index || view.BindingContext != context)
+                        if (view.ContextIndex != index || view.BindingContext != context)//index == 0 || 
                         {
-
                             view.ContextIndex = index;
                             var ctx = view.BindingContext;
                             view.BindingContext = context; // ← where crashes could happen

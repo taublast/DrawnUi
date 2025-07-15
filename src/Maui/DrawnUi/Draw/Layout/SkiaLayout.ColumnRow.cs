@@ -2183,8 +2183,9 @@ else
                     ItemsSource != null &&
                     lastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
                     !_isBackgroundMeasuring &&
-                    structure != null)
+                    structure != null && _pendingStructureChanges.Count == 0)
                 {
+
                     // We have unmeasured items beyond visible area
                     var nextUnmeasuredIndex = lastVisibleIndex + 1;
 
@@ -2199,6 +2200,8 @@ else
                     {
                         StartBackgroundMeasurement(ctx.Destination, ctx.Scale, nextUnmeasuredIndex);
                     }
+
+  
                 }
 
                 // Update measured items access time for visible items
@@ -2262,12 +2265,6 @@ else
                                 return countRendered;
                             }
 
-                            //if (child.NeedMeasure)
-                            //{
-                            //    Trace.WriteLine($"NeedMeasure {child.Uid}");
-                            //}
-                            //Trace.WriteLine($"[CELL] DRAW {index} {child.Uid}");
-
                             cellsToRelease.Add(child);
                         }
                         else
@@ -2285,12 +2282,16 @@ else
                             if (child.NeedMeasure)
                             {
                                 if (!IsTemplated ||
-                                    !child.WasMeasured || InvalidatedChildrenInternal.Contains(child) ||
+                                    !child.WasMeasured 
+                                    || InvalidatedChildrenInternal.Contains(child) ||
+                                    //MeasureItemsStrategy == MeasuringStrategy.MeasureVisible ||
                                     GetSizeKey(child.MeasuredSize.Pixels) != GetSizeKey(cell.Measured.Pixels))
                                 {
                                     var oldSize = child.MeasuredSize.Pixels;
                                     var measured = child.Measure((float)cell.Area.Width, (float)cell.Area.Height,
                                         ctx.Scale);
+
+                                    Debug.WriteLine($"[DrawStack] measured {child.ContextIndex}");
 
                                     cell.Measured = measured;
                                     cell.WasMeasured = true;
@@ -2300,12 +2301,34 @@ else
                                         LayoutCell(measured, cell, child, cell.Area, ctx.Scale);
                                     }
 
-
-                                    if (oldSize != SKSize.Empty && !CompareSize(oldSize, MeasuredSize.Pixels, 1f))
+                                    if (oldSize != SKSize.Empty && !CompareSize(oldSize, child.MeasuredSize.Pixels, 1f))
                                     {
                                         //Trace.WriteLine($"[CELL] remeasured {child.Uid}");
                                         var diff = child.MeasuredSize.Pixels - oldSize;
                                         cell.OffsetOthers = new Vector2(diff.Width, diff.Height);
+
+                                        if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                                        {
+                                            Debug.WriteLine($"[DrawStack] OffsetOthers {cell.OffsetOthers}");
+
+                                            var measuredItem = new MeasuredItemInfo
+                                            {
+                                                Cell = cell,
+                                                LastAccessed = DateTime.UtcNow,
+                                                IsInViewport = true,
+                                            };
+                                            _pendingStructureChanges.Add(new StructureChange
+                                            {
+                                                OffsetOthers = cell.OffsetOthers,
+                                                Type = StructureChangeType.SingleItemUpdate,
+                                                StartIndex = child.ContextIndex,
+                                                Count = 1,
+                                                MeasuredItems = new List<MeasuredItemInfo> { measuredItem }
+                                            });
+
+                                            cell.OffsetOthers = Vector2.Zero;
+                                        }
+
                                     }
                                 }
                             }

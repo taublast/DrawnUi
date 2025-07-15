@@ -4,10 +4,10 @@ using Sandbox.ViewModels;
 
 namespace Sandbox;
 
-public partial class MainPage : DrawnUiBasePage
+public partial class TutorialNewsFeed : DrawnUiBasePage
 {
 
-    public MainPage()
+    public TutorialNewsFeed()
     {
         try
         {
