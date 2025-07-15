@@ -218,29 +218,13 @@ public partial class SkiaLayout
             int index = -1;
             var cellsToRelease = new List<SkiaControl>();
 
-            // For MeasureVisible strategy, limit initial measurement to visible area + buffer
+            // For MeasureVisible strategy, skip ALL initial measurement - do everything in background
             var effectiveRowsCount = rowsCount;
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
             {
-                var estimatedItemHeight = 60f;
-                var visibleAreaHeight = visibleArea.Pixels.Height;
-                var estimatedVisibleItems = Math.Max(1, (int)Math.Ceiling(visibleAreaHeight / estimatedItemHeight));
-
-                var bufferMultiplier = 3f;
-                var initialMeasureCount = Math.Min(itemsCount, (int)(estimatedVisibleItems * bufferMultiplier));
-
-                initialMeasureCount = Math.Max(20, Math.Min(200, initialMeasureCount));
-
-                if (Type == LayoutType.Column)
-                {
-                    effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
-                }
-                else if (Type == LayoutType.Row)
-                {
-                    effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
-                }
-
-                Debug.WriteLine($"[MeasureList] INITIAL MEASURE: {effectiveRowsCount} items out of {itemsCount} total (visible area: {visibleAreaHeight:F1}px, estimated per item: {estimatedItemHeight}px)");
+                // NO SYNC MEASUREMENT - measure everything in background
+                effectiveRowsCount = 0;
+                Debug.WriteLine($"[MeasureList] BACKGROUND-ONLY: Skipping all sync measurement, will measure all {itemsCount} items in background");
             }
 
             try
@@ -491,23 +475,46 @@ public partial class SkiaLayout
             }
 
             // Start background measurement if using MeasureVisible strategy
-            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible
-                && measuredCount < itemsCount)
+            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
             {
                 if (_pendingStructureChanges.Count == 0)
                 {
-                    StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
+                    // Start background measurement from index 0 - measure ALL items in background
+                    StartBackgroundMeasurement(rectForChildrenPixels, scale, 0);
+                    Debug.WriteLine($"[MeasureList] Started background measurement from index 0 - no sync measurement");
                 }
                 else
                 {
-                    Debug.WriteLine($"[MeasureList] have unapplied measurements, wil not continue measuring in background.");
+                    Debug.WriteLine($"[MeasureList] have unapplied measurements, will not continue measuring in background.");
                 }
             }
 
             // Debug: Report actual measurement results
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
             {
-                Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px. Background measurement started for remaining {itemsCount - measuredCount} items.");
+                if (measuredCount == 0)
+                {
+                    // No sync measurement - provide estimated size for immediate layout
+                    var estimatedItemHeight = 60f; // Default estimate
+                    var estimatedTotalHeight = itemsCount * estimatedItemHeight;
+
+                    if (Type == LayoutType.Column)
+                    {
+                        stackHeight = estimatedTotalHeight;
+                        stackWidth = rectForChildrenPixels.Width;
+                    }
+                    else
+                    {
+                        stackWidth = estimatedTotalHeight; // For row layout
+                        stackHeight = rectForChildrenPixels.Height;
+                    }
+
+                    Debug.WriteLine($"[MeasureList] BACKGROUND-ONLY: Estimated size {stackWidth}x{stackHeight} for {itemsCount} items. Background measurement will provide accurate sizes.");
+                }
+                else
+                {
+                    Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px. Background measurement started for remaining {itemsCount - measuredCount} items.");
+                }
             }
 
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
