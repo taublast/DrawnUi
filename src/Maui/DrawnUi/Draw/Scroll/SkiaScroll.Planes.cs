@@ -39,6 +39,11 @@ namespace DrawnUi.Draw
             }
             set
             {
+                if (value)
+                {
+                    Debug.WriteLine("Scroll remeasured");
+                }
+
                 base.NeedMeasure = value;
             }
         }

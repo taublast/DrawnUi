@@ -263,6 +263,10 @@ namespace DrawnUi.Draw
             {
                 UpdatePlatformShadow();
             }
+            else if (propertyName == "Shadows")
+            {
+                var stop = 1;
+            }
             else if (propertyName == nameof(Clip))
             {
                 Update();

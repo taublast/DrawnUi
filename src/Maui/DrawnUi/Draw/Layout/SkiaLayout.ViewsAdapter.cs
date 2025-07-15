@@ -12,6 +12,129 @@ public class ViewsAdapter : IDisposable
 {
     public static bool LogEnabled = false;
 
+    #region FILL POOL
+
+    // Add these fields to the ViewsAdapter class:
+    private CancellationTokenSource _backgroundFillCancellation;
+    private readonly object _fillLock = new object();
+
+    /// <summary>
+    /// Safely fills the pool in background with cancellation support. Cancels any previous background filling operation.
+    /// </summary>
+    /// <param name="size">Number of views to pre-create in the pool</param>
+    /// <returns>Task that completes when pool filling is done or cancelled</returns>
+    public Task FillPoolInBackgroundAsync(int size)
+    {
+        if (IsDisposed || _templatedViewsPool == null)
+            return Task.CompletedTask;
+
+        lock (_fillLock)
+        {
+            // Cancel any existing background operation
+            _backgroundFillCancellation?.Cancel();
+            _backgroundFillCancellation?.Dispose();
+
+            // Create new cancellation token for this operation
+            _backgroundFillCancellation = new CancellationTokenSource();
+        }
+
+        var token = _backgroundFillCancellation.Token;
+
+        return Task.Run(() =>
+        {
+            try
+            {
+                FillPoolWithCancellation(size, token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected when cancelled, no need to log
+            }
+            catch (Exception e)
+            {
+                if (LogEnabled)
+                    Super.Log($"[ViewsAdapter] Background pool filling failed: {e}");
+            }
+        }, token);
+    }
+
+    /// <summary>
+    /// Fills the pool with cancellation support
+    /// </summary>
+    /// <param name="size">Target pool size</param>
+    /// <param name="cancellationToken">Token to cancel the operation</param>
+    private void FillPoolWithCancellation(int size, CancellationToken cancellationToken)
+    {
+        if (IsDisposed || _templatedViewsPool == null)
+            return;
+
+        if (size <= 0)
+            return;
+
+        while (_templatedViewsPool.Size < size &&
+               _templatedViewsPool.Size < _templatedViewsPool.MaxSize &&
+               !IsDisposed &&
+               !_templatedViewsPool.IsDisposing)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            try
+            {
+                _templatedViewsPool.Reserve();
+            }
+            catch (Exception e)
+            {
+                if (LogEnabled)
+                    Super.Log($"[ViewsAdapter] Failed to reserve view during background fill: {e}");
+                break;
+            }
+
+            // Small delay to prevent blocking the thread pool
+            if (_templatedViewsPool.Size % 5 == 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Cancels any ongoing background pool filling operation
+    /// </summary>
+    public void CancelBackgroundPoolFilling()
+    {
+        lock (_fillLock)
+        {
+            _backgroundFillCancellation?.Cancel();
+        }
+    }
+
+    // Update the existing FillPool method to support cancellation:
+    /// <summary>
+    /// Use to manually pre-create views from item templates so when we suddenly need more templates they would already be ready, avoiding lag spike,
+    /// This will respect pool MaxSize in order not to overpass it.
+    /// </summary>
+    /// <param name="size">Target pool size</param>
+    /// <param name="cancellationToken">Optional cancellation token</param>
+    public void FillPool(int size, CancellationToken cancellationToken = default)
+    {
+        if (IsDisposed)
+            return;
+
+        if (size > 0)
+        {
+            while (_templatedViewsPool.Size < size &&
+                   _templatedViewsPool.Size < _templatedViewsPool.MaxSize &&
+                   !cancellationToken.IsCancellationRequested)
+            {
+                _templatedViewsPool.Reserve();
+            }
+        }
+    }
+ 
+ 
+
+    #endregion
+
     #region INITIALIZE
 
     /// <summary>
@@ -26,6 +149,7 @@ public class ViewsAdapter : IDisposable
     {
         if (IsDisposed || _parent != null && _parent.IsDisposing)
             return;
+
 
 
         //Debug.WriteLine("[CELLS] InitializeTemplates");
@@ -56,6 +180,8 @@ public class ViewsAdapter : IDisposable
 
         if (needReset)
         {
+            CancelBackgroundPoolFilling();
+
             //temporarily fixed to android until issue found
             lock (_lockTemplates)
             {
@@ -103,7 +229,7 @@ public class ViewsAdapter : IDisposable
         }
     }
 
-    void InitializeSoft(bool layoutChanged, IList dataContexts, int poolSize)
+    public void InitializeSoft(bool layoutChanged, IList dataContexts, int poolSize)
     {
         if (LogEnabled)
             Super.Log("[ViewsAdapter] InitializeSoft");
@@ -125,7 +251,7 @@ public class ViewsAdapter : IDisposable
             Monitor.PulseAll(_lockTemplates);
         }
 
-        SetTemplatesAvailable(dataContexts);
+        //SetTemplatesAvailable(dataContexts);
     }
 
     void SetTemplatesAvailable(IList dataContexts)
@@ -143,6 +269,8 @@ public class ViewsAdapter : IDisposable
 
         lock (_lockTemplates)
         {
+            CancelBackgroundPoolFilling();
+
             var kill = _templatedViewsPool;
 
             lock (lockVisible)
@@ -628,7 +756,7 @@ public class ViewsAdapter : IDisposable
                                 if (LogEnabled)
                                 {
                                     Super.Log(
-                                        $"[ViewsAdapter] {_parent.Tag} for index {index} returned a INUSE view {ready.Uid}  ({ready.ContextIndex})");
+                                        $"[ViewsAdapter] {_parent.Tag} for index {index} returned a IN USE view {ready.Uid}  ({ready.ContextIndex})");
                                 }
 
                                 if (ready != null && !ready.IsDisposing)
@@ -790,6 +918,14 @@ public class ViewsAdapter : IDisposable
 
     public void Dispose()
     {
+        CancelBackgroundPoolFilling();
+
+        lock (_fillLock)
+        {
+            _backgroundFillCancellation?.Dispose();
+            _backgroundFillCancellation = null;
+        }
+
         DisposeViews();
 
         IsDisposed = true;
@@ -862,13 +998,12 @@ public class ViewsAdapter : IDisposable
 
                         var context = _dataContexts[index];
 
-                        if (index == 0 || view.ContextIndex != index || view.BindingContext != context)
+                        if (!isMeasuring)
                         {
-                            if (!isMeasuring)
-                            {
-                                view.Parent = _parent;
-                            }
-
+                            view.Parent = _parent;
+                        }
+                        if (view.ContextIndex != index || view.BindingContext != context)//index == 0 || 
+                        {
                             view.ContextIndex = index;
                             var ctx = view.BindingContext;
                             view.BindingContext = context; // ← where crashes could happen
@@ -1425,7 +1560,7 @@ public class TemplatedViewsPool : IDisposable
     // New: track height-based pools
     // Key: Rounded integer height, Value: Stack of controls for that height
     private Dictionary<int, Stack<SkiaControl>> _heightPools = new();
-    private int _maxDistinctHeights = 10; // or configurable
+    private int _maxDistinctHeights = 24; // or configurable
     private readonly Stack<SkiaControl> _genericPool; // fallback pool for cells without specific height
     private Stack<SkiaControl> _standalonePool = new();
     private readonly object _syncLock = new object();
@@ -1617,6 +1752,13 @@ public class TemplatedViewsPool : IDisposable
                 {
                     stack = new();
                     _heightPools[hKey] = stack;
+                }
+
+                if (_genericPool.Count > 0)
+                {
+                    var generic = _genericPool.Pop();
+                    if (!generic.IsDisposed)
+                        return generic;
                 }
             }
 

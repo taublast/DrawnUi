@@ -36,14 +36,15 @@ dotnet add package DrawnUi.Maui
 
 > **Important**: Please install stable versions only.
 
-Alternatively, you can fork the DrawnUi repo and reference the main project directly.
+Alternatively, you can fork the DrawnUi repo and _reference the main project directly_. In that case if you are on Windows x64 please disable MSIX packaging, but no need to to that when using nuget package.
 
 ### Additional Packages
 
 There are additional packages supporting optional features:
 - **DrawnUi.Maui.Camera** - Camera implementations for all platforms
 - **DrawnUi.Maui.Game** - Gaming helpers and frame time interpolators
-- **DrawnUi.Maui.Maps** - Map integration features
+- **DrawnUi.Maui.MapsUi** - Integration with MapsUi
+- **DrawnUi.MauiGraphics** - Integration with Maui.Graphics
 
 These must be referenced separately if needed.
 

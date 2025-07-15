@@ -1,17 +1,19 @@
 ﻿using DrawnUi.Views;
 using Sandbox;
+using Sandbox.ViewModels;
 
 namespace Sandbox;
 
-public partial class MainPage : DrawnUiBasePage
+public partial class TutorialNewsFeed : DrawnUiBasePage
 {
-    
-    public MainPage()
+
+    public TutorialNewsFeed()
     {
         try
         {
 
             InitializeComponent();
+            BindingContext = new NewsViewModel();
 
         }
         catch (Exception e)

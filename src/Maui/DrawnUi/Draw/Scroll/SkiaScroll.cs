@@ -984,7 +984,7 @@ namespace DrawnUi.Draw
             }
         }
 
-        public int FirstVisibleIndex    
+        public int FirstVisibleIndex
         {
             get => firstVisibleIndex;
             set
@@ -999,7 +999,7 @@ namespace DrawnUi.Draw
             }
         }
 
-        public int LastVisibleIndex 
+        public int LastVisibleIndex
         {
             get => lastVisibleIndex;
             set
@@ -1152,9 +1152,9 @@ namespace DrawnUi.Draw
             if (Content is SkiaLayout layout)
             {
                 var pixelsOffsetX =
-                    InternalViewportOffset.Pixels.X;  
+                    InternalViewportOffset.Pixels.X;
                 var pixelsOffsetY =
-                    InternalViewportOffset.Pixels.Y; 
+                    InternalViewportOffset.Pixels.Y;
 
                 var points = GetVisibleIndexes(layout, pixelsOffsetX, pixelsOffsetY);
 
@@ -1609,7 +1609,7 @@ namespace DrawnUi.Draw
                             _animatorFlingX.Stop();
                             _animatorFlingY.Stop();
 
-                            ScrollTo(ViewportOffsetX, needOffsetY / layout.RenderingScale, AutoScrollingSpeedMs);
+                            ScrollTo(ViewportOffsetX, needOffsetY / layout.RenderingScale, AutoScrollingSpeedMs, true);
 
                             return;
                         }
@@ -1648,7 +1648,7 @@ namespace DrawnUi.Draw
                             _animatorFlingX.Stop();
                             _animatorFlingY.Stop();
 
-                            ScrollTo(needOffsetX / layout.RenderingScale, ViewportOffsetY, AutoScrollingSpeedMs);
+                            ScrollTo(needOffsetX / layout.RenderingScale, ViewportOffsetY, AutoScrollingSpeedMs, true);
 
                             return;
                         }
@@ -1920,11 +1920,11 @@ namespace DrawnUi.Draw
                 var measuredContent = MeasureContent(viewport.Width, viewport.Height, zoomedScale);
 
                 if (ResetScrollPositionOnContentSizeChanged &&
-                    (ContentSize.Pixels.Height != measuredContent.Pixels.Height ||
-                     ContentSize.Pixels.Width != measuredContent.Pixels.Width))
+                    (!CompareFloats(ContentSize.Pixels.Height, measuredContent.Pixels.Height, 1) ||
+                     !CompareFloats(ContentSize.Pixels.Width, measuredContent.Pixels.Width, 1)))
                 {
                     if (ViewportOffsetX != 0 || ViewportOffsetY != 0)
-                        ScrollTo(0, 0, 0);
+                        ScrollTo(0, 0, 0, false);
                 }
 
                 ContentSize = ScaledSize.FromPixels(measuredContent.Pixels.Width, measuredContent.Pixels.Height,
@@ -2115,7 +2115,7 @@ namespace DrawnUi.Draw
                 if (clamped.X == 0 && clamped.Y == 0 && OverScrolled)
                 {
                     HideRefreshIndicator();
-                    ScrollTo(0, 0, 0);
+                    ScrollTo(0, 0, 0, false);
                 }
 
                 forceSyncOffsets = true;
@@ -2458,7 +2458,16 @@ namespace DrawnUi.Draw
                 //content size changed, we need to initialize scroller again at least
                 if (_lastContentSize != this.Content.MeasuredSize)
                 {
-                    NeedMeasure = true;
+                    if (NeedAutoSize)
+                    {
+                        NeedMeasure = true;
+                    }
+                    else
+                    {
+                        ContentSize = this.Content.MeasuredSize;
+                        _lastContentSize = this.Content.MeasuredSize;
+                        ApplyContentSize();
+                    }
                 }
             }
 

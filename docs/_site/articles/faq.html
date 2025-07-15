@@ -110,6 +110,8 @@ A: Yes! Use <code>SkiaMauiElement</code> to embed native MAUI controls like WebV
 A: Sorry, no, drawn resources lives inside <code>Resources/Raw</code> and subfolders.</p>
 <p><strong>Q: How do I change SkiaSvg source not from file/url?</strong><br>
 A: set <code>SvgString</code> property to svg text string.</p>
+<p><strong>Q: Why my scroll is resetting at all time while Iproperly use ObservableCollection for LoadMore?</strong><br>
+A: Check that your custom ObservableRangeCollection is sending Reset event when adding range of items.</p>
 <p><strong>Q: How do I change SkiaImage source not from file/url?</strong><br>
 A: set directly: <code>mySkiaImage.SetImageInternal(skiaImage)</code>.</p>
 <p><strong>Q: How do I prevent touch events from passing through overlapping controls?</strong><br>

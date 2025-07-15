@@ -1,18 +1,38 @@
-﻿namespace DrawnUi.Controls;
+﻿using System.Threading;
+
+namespace DrawnUi.Controls;
 
 /// <summary>
 /// This cell can watch binding context property changing
 /// </summary>
 public class SkiaDynamicDrawnCell : SkiaDrawnCell
 {
+    
+    public void UpdateVisibilityChanged()
+    {
+        if (Parent is SkiaLayout layout)
+        {
+            layout.ReportChildVisibilityChanged(this.ContextIndex, IsVisible);
+        }
+    }
+
+    public override void OnVisibilityChanged(bool value)
+    {
+        UpdateVisibilityChanged();
+    }
+
     protected override void OnMeasured()
     {
         base.OnMeasured();
 
         if (WasMeasured && MeasuredSize.Pixels != LastMeasuredSizePixels)
         {
+            var invalidate = LastMeasuredSizePixels.Height >= 0 && LastMeasuredSizePixels.Width >= 0;
             LastMeasuredSizePixels = MeasuredSize.Pixels;
-            InvalidateChildrenTree();
+            if (invalidate)
+            {
+                InvalidateChildrenTree();
+            }
         }
     }
 
@@ -35,11 +55,8 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
             Context.PropertyChanged += ContextPropertyChanged;
     }
 
-    protected virtual void ContextPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    protected virtual void ContextPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        //if (e.PropertyName == nameof(OptionItem.Selected) || e.PropertyName == nameof(OptionItem.Title))
-        //{
-        //	SetContent();
-        //}
+ 
     }
 }

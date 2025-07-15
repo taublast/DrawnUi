@@ -10,6 +10,7 @@ namespace DrawnUi.Draw
 {
     public partial class SkiaLayout : SkiaControl, ISkiaGridLayout
     {
+     
         public override bool PreArrange(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
             if (!CanDraw)
@@ -97,16 +98,6 @@ namespace DrawnUi.Draw
 
         bool _measuredNewTemplates;
 
-        /// <summary>
-        /// Will be called by views adapter upot succsessfull execution of InitializeTemplates.
-        /// When using InitializeTemplatesInBackground this is your callbacl to wait for.  
-        /// </summary>
-        /// <returns></returns>
-        /// <summary>
-        /// Flag to expand viewport temporarily for initial drawing to pre-create cells with different heights
-        /// </summary>
-        private bool _isInitialDrawingFromFreshSource = false;
-        private int _initialDrawFrameCount = 0;
 
         public virtual void OnTemplatesAvailable()
         {
@@ -115,8 +106,7 @@ namespace DrawnUi.Draw
             InvalidateParent();
             
             // Enable initial drawing mode to pre-create more cells
-            _isInitialDrawingFromFreshSource = true;
-            _initialDrawFrameCount = 0;
+            WillDrawFromFreshItemssSource = true;
         }
 
         protected override ScaledSize SetMeasured(float width, float height, bool widthCut, bool heightCut, float scale)
@@ -327,7 +317,7 @@ namespace DrawnUi.Draw
             nameof(RecyclingBuffer),
             typeof(double),
             typeof(SkiaLayout),
-            500.0);
+            100.0);
 
         /// <summary>
         /// Extra buffer zone for avoiding recycling  
@@ -874,6 +864,8 @@ namespace DrawnUi.Draw
             lock (lockMeasureLayout)
             {
                 _measuredNewTemplates = false;
+                CancelBackgroundMeasurement();
+                _measuredItems.Clear(); 
 
                 var constraints = GetMeasuringConstraints(request);
 
@@ -1080,9 +1072,16 @@ namespace DrawnUi.Draw
 
         public override void InvalidateByChild(SkiaControl child)
         {
+
+            if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+            {
+                //RemeasureSingleItemInBackground(child.ContextIndex);
+                return;
+            }
+
             InvalidatedChildren.Add(child);
 
-            if (!NeedAutoSize && (child.NeedAutoSize || IsTemplated))
+            if ((!NeedAutoSize && (child.NeedAutoSize || IsTemplated)) || (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible))
             {
                 UpdateByChild(child); //simple update
                 return;
@@ -1092,7 +1091,7 @@ namespace DrawnUi.Draw
         }
 
         bool _trackWasDrawn;
-
+        protected bool WillDrawFromFreshItemssSource;
 
         protected override void Paint(DrawingContext ctx)
         {
@@ -1100,6 +1099,9 @@ namespace DrawnUi.Draw
                 return;
 
             LockUpdate(true);
+
+            // Apply all pending structure changes to StackStructure
+            ApplyStructureChanges();
 
             if (Type == LayoutType.Grid || IsStack)
             {
@@ -1132,11 +1134,11 @@ namespace DrawnUi.Draw
                 var structure = LatestStackStructure;
                 if (structure != null && structure.GetCount() > 0)
                 {
-                    if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-                    {
-                        drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
-                    }
-                    else
+                    //if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                    //{
+                    //    drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
+                    //}
+                    //else
                     {
                         drawnChildrenCount = DrawStack(ctx.WithDestination(rectForChildren), structure);
                     }
@@ -1161,6 +1163,9 @@ namespace DrawnUi.Draw
 
         public override void OnDisposing()
         {
+            CancelBackgroundMeasurement();
+            _measuredItems.Clear();
+
             IsEmptyChanged = null;
 
             ChildrenFactory?.Dispose();
@@ -1348,12 +1353,30 @@ namespace DrawnUi.Draw
             -1, propertyChanged: NeedUpdateItemsSource);
 
         /// <summary>
-        /// Default is -1, the number od template instances will not be less than data collection count. You can manually set to to a specific number to fill your viewport etc. Beware that if you set this to a number that will not be enough to fill the viewport binding contexts will contasntly be changing triggering screen update.
+        /// Default is -1, the number od template instances will not be less than data collection count.
+        /// You can manually set to ta specific number to fill your viewport etc.
+        /// Beware that if you set this to a number that will not be enough to fill the viewport
+        /// binding contexts will contasntly be changing triggering screen update.
         /// </summary>
         public int ItemTemplatePoolSize
         {
             get { return (int)GetValue(ItemTemplatePoolSizeProperty); }
             set { SetValue(ItemTemplatePoolSizeProperty, value); }
+        }
+
+        public static readonly BindableProperty ReserveTemplatesProperty = BindableProperty.Create(
+            nameof(ReserveTemplates),
+            typeof(int),
+            typeof(SkiaLayout),
+            2, propertyChanged: NeedUpdateItemsSource);
+
+        /// <summary>
+        /// For recycled cells: Default is 2, how many item templates above visible in viewport we must reserve in pool.
+        /// </summary>
+        public int ReserveTemplates
+        {
+            get { return (int)GetValue(ReserveTemplatesProperty); }
+            set { SetValue(ReserveTemplatesProperty, value); }
         }
 
         public static readonly BindableProperty EmptyViewProperty = BindableProperty.Create(
@@ -1423,13 +1446,13 @@ namespace DrawnUi.Draw
         {
             var skiaControl = (SkiaLayout)bindable;
 
-#if TMP
-            if (skiaControl.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-            {
-                Super.Log("MeasureVisible is not supported for this property yet, soon.");
-                skiaControl.MeasureItemsStrategy = MeasuringStrategy.MeasureFirst;
-            }
-#endif
+//#if TMP
+//            if (skiaControl.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+//            {
+//                Super.Log("MeasureVisible is not supported for this property yet, soon.");
+//                skiaControl.MeasureItemsStrategy = MeasuringStrategy.MeasureFirst;
+//            }
+//#endif
 
             //skiaControl.PostponeInvalidation(nameof(UpdateItemsSource), skiaControl.UpdateItemsSource);
             //skiaControl.Update();
@@ -1474,9 +1497,21 @@ namespace DrawnUi.Draw
         {
             if (Parent is IDefinesViewport viewport)
             {
-                viewport.ScrollTo(0, 0, 0);
+                viewport.ScrollTo(0, 0, 0, false);
             }
         }
+
+        /// <summary>
+        /// Determines if collection changes should preserve existing measurement structure
+        /// </summary>
+        protected virtual bool ShouldPreserveStructureOnCollectionChange
+        {
+            get
+            {
+                return StackStructure != null && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible;
+            }
+        }
+           
 
         /// <summary>
         /// Enhanced collection change handler with smart handling and fallback
@@ -1491,6 +1526,13 @@ namespace DrawnUi.Draw
                 Trace.WriteLine($"[SkiaLayout] {Tag} Collection changed: {args.Action}, " +
                                 $"OldIndex: {args.OldStartingIndex}, NewIndex: {args.NewStartingIndex}, " +
                                 $"OldCount: {args.OldItems?.Count ?? 0}, NewCount: {args.NewItems?.Count ?? 0}");
+            }
+
+            if (ShouldPreserveStructureOnCollectionChange)
+            {
+                // NEW: Structure-preserving logic for MeasureVisible strategy
+                HandleCollectionChangeWithStructurePreservation(args);
+                return;
             }
 
             lock (LockMeasure)
@@ -1525,8 +1567,296 @@ namespace DrawnUi.Draw
                         ResetScroll();
                         Invalidate();
                     }
+                    else
+                    if ((MeasuredSize.Pixels.Height==0 || MeasuredSize.Pixels.Width == 0  || MeasureItemsStrategy != MeasuringStrategy.MeasureVisible) && NeedAutoSize)
+                    {
+                        Invalidate();
+                    }
                 });
                 
+            }
+        }
+
+        /// <summary>
+        /// Handles collection changes while preserving existing measurement structure
+        /// </summary>
+        protected virtual void HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving collection change: {args.Action}");
+            }
+
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    HandleStructurePreservingAdd(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    HandleStructurePreservingRemove(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    HandleStructurePreservingReplace(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    HandleStructurePreservingMove(args);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    HandleStructurePreservingReset(args);
+                    break;
+
+                default:
+                    // Fallback to existing logic for unknown actions
+                    goto ExistingLogic;
+            }
+
+            Repaint();
+
+            return;
+
+            ExistingLogic:
+            // Fall back to existing logic if needed
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                });
+
+                Repaint();
+            }
+        }
+
+        /// <summary>
+        /// Stages a structure change for processing during rendering pipeline
+        /// </summary>
+        protected virtual void StageStructureChange(StructureChange change)
+        {
+            try
+            {
+                lock (_structureChangesLock)
+                {
+                    _pendingStructureChanges.Add(change);
+                }
+
+                if (ViewsAdapter.LogEnabled)
+                {
+                    Trace.WriteLine($"[SkiaLayout] {Tag} Staged structure change: {change.Type}");
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ViewsAdapter.LogEnabled)
+                {
+                    Trace.WriteLine($"[SkiaLayout] {Tag} Failed to stage structure change: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called by templated cells to report visibility changes.
+        /// This stages the visibility change to be applied during the next rendering cycle.
+        /// </summary>
+        /// <param name="cellIndex">The index of the cell in the ItemsSource</param>
+        /// <param name="isVisible">The new visibility state</param>
+        public virtual void ReportChildVisibilityChanged(int cellIndex, bool isVisible)
+        {
+            ReportChildVisibilityChanged(cellIndex, 1, isVisible);
+        }
+
+        /// <summary>
+        /// Called by templated cells to report visibility changes for multiple cells.
+        /// This stages the visibility change to be applied during the next rendering cycle.
+        /// </summary>
+        /// <param name="startIndex">The starting index of cells in the ItemsSource</param>
+        /// <param name="count">The number of cells to change</param>
+        /// <param name="isVisible">The new visibility state</param>
+        public virtual void ReportChildVisibilityChanged(int startIndex, int count, bool isVisible)
+        {
+            if (!IsTemplated)
+                return;
+
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.VisibilityChange,
+                StartIndex = startIndex,
+                Count = count,
+                IsVisible = isVisible
+            });
+
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Staged visibility change for {count} cells starting at {startIndex}: {isVisible}");
+            }
+        }
+
+        /// <summary>
+        /// Handles Add collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving ADD: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
+            }
+
+            // Cancel any ongoing background measurement to avoid conflicts
+            CancelBackgroundMeasurement();
+
+            // Stage the Add change for rendering pipeline
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.Add,
+                StartIndex = args.NewStartingIndex,
+                Count = args.NewItems?.Count ?? 0,
+                Items = args.NewItems?.Cast<object>().ToList()
+            });
+
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    // PRESERVE STRUCTURE: Use InitializeSoft which preserves existing structure
+                    // This updates pool size and data contexts without destroying measurements
+                    ChildrenFactory.InitializeSoft(false, ItemsSource, GetTemplatesPoolLimit());
+
+                    if (ViewsAdapter.LogEnabled)
+                    {
+                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft");
+                    }
+
+                    Repaint();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Remove collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REMOVE: {args.OldItems?.Count ?? 0} items at index {args.OldStartingIndex}");
+            }
+
+            // Cancel any ongoing background measurement to avoid conflicts
+            CancelBackgroundMeasurement();
+
+            // Stage the Remove change for rendering pipeline
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.Remove,
+                StartIndex = args.OldStartingIndex,
+                Count = args.OldItems?.Count ?? 0
+            });
+
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    // Use InitializeSoft to preserve structure while updating templates
+                    ChildrenFactory.InitializeSoft(false, ItemsSource, GetTemplatesPoolLimit());
+
+                    if (ViewsAdapter.LogEnabled)
+                    {
+                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, remove change staged");
+                    }
+
+                    // Trigger repaint without invalidation to apply staged changes
+                    Update();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Replace collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REPLACE: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
+            }
+
+            // Cancel any ongoing background measurement to avoid conflicts
+            CancelBackgroundMeasurement();
+
+            // Stage the Replace change for rendering pipeline
+            StageStructureChange(new StructureChange
+            {
+                Type = StructureChangeType.Replace,
+                StartIndex = args.NewStartingIndex,
+                Count = args.NewItems?.Count ?? 0,
+                Items = args.NewItems?.Cast<object>().ToList()
+            });
+
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    // Use InitializeSoft to preserve structure while updating templates
+                    ChildrenFactory.InitializeSoft(false, ItemsSource, GetTemplatesPoolLimit());
+
+                    if (ViewsAdapter.LogEnabled)
+                    {
+                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, replace change staged");
+                    }
+
+                    // Trigger repaint without invalidation to apply staged changes
+                    Update();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Move collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingMove(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving MOVE: from index {args.OldStartingIndex} to {args.NewStartingIndex}");
+            }
+
+            // TODO: Implement move logic that updates StackStructure and _measuredItems
+            // For now, fall back to existing logic
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                    Invalidate();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Handles Reset collection changes while preserving existing structure
+        /// </summary>
+        protected virtual void HandleStructurePreservingReset(NotifyCollectionChangedEventArgs args)
+        {
+            if (ViewsAdapter.LogEnabled)
+            {
+                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving RESET");
+            }
+
+            // Reset requires full invalidation, but we can still be smarter about it
+            lock (LockMeasure)
+            {
+                SafeAction(() =>
+                {
+                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
+                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
+                    ResetScroll();
+                    Invalidate();
+                });
             }
         }
 

@@ -174,10 +174,10 @@ public class Canvas : DrawnView, IGestureListener
                 var measured = AdaptSizeToContentIfNeeded(widthConstraint, heightConstraint, NeedMeasure);
 
                 if (double.IsFinite(measured.Width))
-                    ret.Width = measured.Width;
+                    ret.Width = Math.Ceiling(measured.Width);
 
                 if (double.IsFinite(measured.Height))
-                    ret.Height = measured.Height;
+                    ret.Height = Math.Ceiling(measured.Height);
             }
 
             _lastMeasureConstraints = new(widthConstraint, heightConstraint);

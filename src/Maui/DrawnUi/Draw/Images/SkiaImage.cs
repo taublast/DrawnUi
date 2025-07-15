@@ -79,8 +79,7 @@ public class SkiaImage : SkiaControl
         }
 
         // see HasUnstableSize help for explanation
-        if (NeedAutoSize && (HasUnstableSize
-                             || MeasuredSize.Pixels.Width < 1 || MeasuredSize.Pixels.Height < 1))
+        if (NeedAutoSize && (HasUnstableSize || MeasuredSize.Pixels.Width < 1 || MeasuredSize.Pixels.Height < 1))
         {
             Invalidate();
         }

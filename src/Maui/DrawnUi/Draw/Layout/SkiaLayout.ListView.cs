@@ -1,29 +1,224 @@
 ﻿//reusing some code from #dotnetmaui Layout
 
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 
 namespace DrawnUi.Draw;
 
 public partial class SkiaLayout
 {
-    private SKRect _measuredFor;
+    public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    {
+        //basically we override to be able to handle recycled cells
+
+
+        return base.ProcessGestures(args, apply);
+    }
+
+    public bool IsBackgroundMeasuring => _isBackgroundMeasuring;
+    public int BackgroundMeasurementProgress => _backgroundMeasurementProgress;
+    public int TotalMeasuredItems => _measuredItems.Count;
+
+    public int FirstMeasuredIndex { get; protected set; }
+    public int LastMeasuredIndex { get; protected set; }
+    public int FirstVisibleIndex { get; protected set; }
+    public int LastVisibleIndex { get; protected set; }
+
+    /// <summary>
+    /// Percentage of items that have been measured (0.0 to 1.0)
+    /// </summary>
+    protected float MeasuredItemsPercentage => ItemsSource?.Count > 0 ? (float)(LastMeasuredIndex + 1) / ItemsSource.Count : 0f;
+
+    /// <summary>
+    /// Represents a pending structure change to be applied during rendering
+    /// </summary>
+    public class StructureChange
+    {
+        public StructureChangeType Type { get; set; }
+        public Vector2? OffsetOthers { get; set; }
+        public int StartIndex { get; set; }
+        public int Count { get; set; }
+        public List<object> Items { get; set; } // For Add/Replace
+        public int TargetIndex { get; set; } // For Move
+        public List<MeasuredItemInfo> MeasuredItems { get; set; } // For BackgroundMeasurement
+        public int? InsertAtIndex { get; set; } // Where to insert in existing structure
+        public bool IsInsertOperation { get; set; } // Flag for insert vs append
+        public bool IsVisible { get; set; } // For VisibilityChange
+    }
+
+    /// <summary>
+    /// Context for background measurement operations
+    /// </summary>
+    public class BackgroundMeasurementContext
+    {
+        public int? InsertAtIndex { get; set; }
+        public int? InsertCount { get; set; }
+        public int StartMeasuringFrom { get; set; }
+        public bool IsInsertOperation => InsertAtIndex.HasValue;
+        public bool IsSingleItemRemeasurement { get; set; }
+        public int? SingleItemIndex { get; set; }
+        public int? EndMeasuringAt { get; set; }
+    }
+
+    /// <summary>
+    /// Types of structure changes that can be applied
+    /// </summary>
+    public enum StructureChangeType
+    {
+        Add,
+        Remove,
+        Replace,
+        Move,
+        Reset,
+        BackgroundMeasurement,
+        VisibilityChange,
+        SingleItemUpdate
+    }
+
+    // Background measurement support
+    private CancellationTokenSource _backgroundMeasurementCts;
+    private Task _backgroundMeasurementTask;
+    private readonly object _measurementLock = new object();
+    private volatile bool _isBackgroundMeasuring = false;
+
+    // Sliding window configuration
+    private const int SLIDING_WINDOW_SIZE = 300; // Keep 300 measured items max
+    private const int MEASUREMENT_BATCH_SIZE = 20; // Measure 20 items per batch
+    private const int AHEAD_BUFFER = 100; // Measure 100 items ahead of visible area
+    private const int BEHIND_BUFFER = 50;  // Keep 50 items behind visible area
+
+    // Track measurement state
+    private readonly ConcurrentDictionary<int, MeasuredItemInfo> _measuredItems = new();
+    private volatile int _backgroundMeasurementProgress = 0;
+
+    // Universal structure changes staging for rendering pipeline integration
+    private readonly object _structureChangesLock = new();
+    private readonly List<StructureChange> _pendingStructureChanges = new();
+
+    // Hybrid shifting system
+    private const int DIRECT_SHIFT_THRESHOLD = 1000;
+    private readonly Dictionary<int, int> _indexOffsets = new();
+    private readonly HashSet<int> _removedIndices = new();
+
+    /// <summary>
+    /// Information about a measured item for sliding window management
+    /// </summary>
+    public class MeasuredItemInfo
+    {
+        public ControlInStack Cell { get; set; }
+        public DateTime LastAccessed { get; set; } = DateTime.UtcNow;
+        public bool IsInViewport { get; set; }
+    }
+
+    /// <summary>
+    /// Cancels any ongoing background measurement
+    /// </summary>
+    public void CancelBackgroundMeasurement()
+    {
+        if (!_isBackgroundMeasuring)
+            return;
+
+        lock (_measurementLock)
+        {
+            _backgroundMeasurementCts?.Cancel();
+            _backgroundMeasurementCts?.Dispose();
+            _backgroundMeasurementCts = null;
+            _isBackgroundMeasuring = false;
+        }
+
+        Debug.WriteLine("[CancelBackgroundMeasurement] Background measurement cancelled");
+    }
+
+    /// <summary>
+    /// Starts background measurement of items beyond the visible area
+    /// </summary>
+    private void StartBackgroundMeasurement(SKRect constraints, float scale, int startFromIndex,
+        BackgroundMeasurementContext context = null)
+    {
+        if (!IsTemplated || ItemsSource == null || ItemsSource.Count <= startFromIndex)
+            return;
+
+        // Cancel any existing background measurement
+        CancelBackgroundMeasurement();
+
+        lock (_measurementLock)
+        {
+            _backgroundMeasurementCts = new CancellationTokenSource();
+            _isBackgroundMeasuring = true;
+        }
+
+        var cancellationToken = _backgroundMeasurementCts.Token;
+
+        _backgroundMeasurementTask = Task.Run(async () =>
+        {
+            try
+            {
+                await BackgroundMeasureItems(constraints, scale, startFromIndex, cancellationToken, context);
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.WriteLine("[StartBackgroundMeasurement] Background measurement was cancelled");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[StartBackgroundMeasurement] Background measurement error: {ex.Message}");
+            }
+            finally
+            {
+                lock (_measurementLock)
+                {
+                    _isBackgroundMeasuring = false;
+                }
+            }
+        });
+    }
+
+    /// <summary>
+    /// Remeasures a single item in the background and updates it in the existing structure
+    /// </summary>
+    public void RemeasureSingleItemInBackground(int itemIndex)
+    {
+        if (!IsTemplated || ItemsSource == null || itemIndex < 0 || itemIndex >= ItemsSource.Count)
+        {
+            Debug.WriteLine($"[RemeasureSingleItemInBackground] Invalid parameters: IsTemplated={IsTemplated}, ItemsSource={ItemsSource?.Count}, itemIndex={itemIndex}");
+            return;
+        }
+
+        // Create context for single-item measurement
+        var context = new BackgroundMeasurementContext
+        {
+            IsSingleItemRemeasurement = true,
+            SingleItemIndex = itemIndex,
+            StartMeasuringFrom = itemIndex,
+            EndMeasuringAt = itemIndex
+        };
+
+        // Get current constraints from last measurement
+        var constraints = new SKRect(0, 0, _lastMeasuredForWidth, _lastMeasuredForHeight);
+        var scale = RenderingScale;
+
+        // Start targeted background measurement
+        StartBackgroundMeasurement(constraints, scale, itemIndex, context);
+
+        Debug.WriteLine($"[RemeasureSingleItemInBackground] Started background remeasurement for item at index {itemIndex}");
+    }
 
     private int _listAdditionalMeasurements;
 
     /// <summary>
-    /// Measuring column/row list with todo MeasureVisible
+    /// Enhanced MeasureList with background measurement support
     /// </summary>
-    /// <param name="rectForChildrenPixels"></param>
-    /// <param name="scale"></param>
-    /// <returns></returns>
     public virtual ScaledSize MeasureList(SKRect rectForChildrenPixels, float scale)
     {
+        // Cancel any ongoing background measurement when starting fresh measurement
+        CancelBackgroundMeasurement();
+
         if (IsTemplated && ItemsSource.Count > 0)
         {
             int measuredCount = 0;
             var itemsCount = ItemsSource.Count;
             ScaledSize measured = ScaledSize.Default;
-            SKRect rectForChild = rectForChildrenPixels; //.Clone();
+            SKRect rectForChild = rectForChildrenPixels;
 
             SkiaControl[] nonTemplated = null;
             bool smartMeasuring = false;
@@ -32,8 +227,7 @@ public partial class SkiaLayout
             var stackWidth = 0.0f;
 
             SkiaControl template = null;
-            bool useOneTemplate = IsTemplated &&
-                                  RecyclingTemplate != RecyclingTemplate.Disabled;
+            bool useOneTemplate = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled;
 
             if (useOneTemplate)
             {
@@ -45,15 +239,12 @@ public partial class SkiaLayout
             bool stopMeasuring = false;
 
             var inflate = (float)this.VirtualisationInflated * scale;
-            var visibleArea =
-                base.GetOnScreenVisibleArea(new(null, rectForChildrenPixels, scale), new(inflate, inflate));
+            var visibleArea = base.GetOnScreenVisibleArea(new(null, rectForChildrenPixels, scale), new(inflate, inflate));
 
             if (visibleArea.Pixels.Height < 1 || visibleArea.Pixels.Width < 1)
             {
                 return ScaledSize.CreateEmpty(scale);
             }
-
-            //ScaledRect visibleArea = _viewport;
 
             var rowsCount = itemsCount;
             var columnsCount = 1;
@@ -66,27 +257,22 @@ public partial class SkiaLayout
             var rows = new List<List<ControlInStack>>();
             var columns = new List<ControlInStack>(columnsCount);
 
-            //left to right, top to bottom
-            var index = -1;
+            int index = -1;
             var cellsToRelease = new List<SkiaControl>();
-            
+
             // For MeasureVisible strategy, limit initial measurement to visible area + buffer
             var effectiveRowsCount = rowsCount;
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
             {
-                // Estimate how many items we need to measure to fill the visible area
-                // Use a conservative estimate: visible area / estimated item height + buffer
-                var estimatedItemHeight = 60f; // Default estimate for item height
+                var estimatedItemHeight = 60f;
                 var visibleAreaHeight = visibleArea.Pixels.Height;
                 var estimatedVisibleItems = Math.Max(1, (int)Math.Ceiling(visibleAreaHeight / estimatedItemHeight));
-                
-                // Add buffer for smooth scrolling (2-3 screens worth)
+
                 var bufferMultiplier = 3f;
                 var initialMeasureCount = Math.Min(itemsCount, (int)(estimatedVisibleItems * bufferMultiplier));
-                
-                // Ensure we have a reasonable minimum and maximum
+
                 initialMeasureCount = Math.Max(20, Math.Min(200, initialMeasureCount));
-                
+
                 if (Type == LayoutType.Column)
                 {
                     effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
@@ -95,23 +281,21 @@ public partial class SkiaLayout
                 {
                     effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
                 }
-                
+
                 Debug.WriteLine($"[MeasureList] INITIAL MEASURE: {effectiveRowsCount} items out of {itemsCount} total (visible area: {visibleAreaHeight:F1}px, estimated per item: {estimatedItemHeight}px)");
             }
-            
+
             try
             {
+                // Initial measurement loop (same as before)
                 for (var row = 0; row < effectiveRowsCount; row++)
                 {
                     if (stopMeasuring || index + 2 > itemsCount)
-                    {
                         break;
-                    }
 
                     var rowMaxHeight = 0.0f;
                     var maxWidth = 0.0f;
 
-                    // Calculate the width for each column
                     float widthPerColumn;
                     if (Type == LayoutType.Column)
                     {
@@ -163,8 +347,7 @@ public partial class SkiaLayout
                             {
                                 var rectFitChild = new SKRect(rectForChild.Left, rectForChild.Top,
                                     rectForChild.Left + widthPerColumn, rectForChild.Bottom);
-                                measured = MeasureAndArrangeCell(rectFitChild, cell, child, rectForChildrenPixels,
-                                    scale);
+                                measured = MeasureAndArrangeCell(rectFitChild, cell, child, rectForChildrenPixels, scale);
 
                                 if (!visibleArea.Pixels.IntersectsWithInclusive(cell.Destination))
                                 {
@@ -175,6 +358,14 @@ public partial class SkiaLayout
                                 cell.Measured = measured;
                                 cell.WasMeasured = true;
 
+                                // Store in sliding window cache
+                                _measuredItems[cell.ControlIndex] = new MeasuredItemInfo
+                                {
+                                    Cell = cell,
+                                    LastAccessed = DateTime.UtcNow,
+                                    IsInViewport = true
+                                };
+
                                 measuredCount++;
 
                                 if (!measured.IsEmpty)
@@ -184,7 +375,6 @@ public partial class SkiaLayout
                                     if (measured.Pixels.Height > rowMaxHeight)
                                         rowMaxHeight = measured.Pixels.Height;
 
-                                    //offset -->
                                     rectForChild.Left += (float)(measured.Pixels.Width);
                                 }
                             }
@@ -196,7 +386,7 @@ public partial class SkiaLayout
                             Super.Log(e);
                             break;
                         }
-                    } //end of iterate columns
+                    }
 
                     rows.Add(columns);
                     columns = new();
@@ -206,9 +396,8 @@ public partial class SkiaLayout
 
                     stackHeight += rowMaxHeight + GetSpacingForIndex(row, scale);
                     rectForChild.Top += (float)(rowMaxHeight);
-
-                    rectForChild.Left = 0; //reset to start
-                } //end of iterate rows
+                    rectForChild.Left = 0;
+                }
             }
             finally
             {
@@ -217,12 +406,9 @@ public partial class SkiaLayout
                     ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
                 }
             }
-            
-            // Debug: Report actual measurement results
-            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-            {
-                Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px");
-            }
+
+            // Rest of the method stays the same until the return...
+            // [Previous layout logic continues here]
 
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
             {
@@ -234,7 +420,7 @@ public partial class SkiaLayout
                 stackHeight = rectForChildrenPixels.Height;
             }
 
-            //second layout pass in some cases
+            // Second layout pass logic stays the same...
             var autoRight = rectForChildrenPixels.Right;
             if (this.HorizontalOptions != LayoutOptions.Fill)
             {
@@ -247,13 +433,11 @@ public partial class SkiaLayout
                 autoBottom = rectForChildrenPixels.Top + stackHeight;
             }
 
-            var autoRect = new SKRect(
-                rectForChildrenPixels.Left, rectForChildrenPixels.Top,
-                autoRight,
-                autoBottom);
+            var autoRect = new SKRect(rectForChildrenPixels.Left, rectForChildrenPixels.Top, autoRight, autoBottom);
 
             foreach (var secondPass in listSecondPass)
             {
+                // Second pass logic stays the same...
                 if (float.IsInfinity(secondPass.Cell.Area.Bottom))
                 {
                     secondPass.Cell.Area = new(secondPass.Cell.Area.Left, secondPass.Cell.Area.Top,
@@ -288,9 +472,7 @@ public partial class SkiaLayout
                         secondPass.Cell.Area.Left + stackWidth, secondPass.Cell.Area.Bottom);
                 }
 
-                LayoutCell(secondPass.Child.MeasuredSize, secondPass.Cell, secondPass.Child,
-                    autoRect,
-                    secondPass.Scale);
+                LayoutCell(secondPass.Child.MeasuredSize, secondPass.Cell, secondPass.Child, autoRect, secondPass.Scale);
             }
 
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill && WidthRequest < 0)
@@ -308,7 +490,6 @@ public partial class SkiaLayout
 
             FirstVisibleIndex = -1;
             FirstMeasuredIndex = 0;
-
             LastVisibleIndex = -1;
             LastMeasuredIndex = measuredCount - 1;
 
@@ -317,35 +498,28 @@ public partial class SkiaLayout
                 if (this.Type == LayoutType.Column)
                 {
                     var medium = stackHeight / measuredCount;
-                    
-                    // For MeasureVisible strategy, we only measured a portion of items
-                    // Use the measured average to estimate total size
+
                     if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
                     {
-                        // Calculate total estimated size based on measured average
                         var estimatedTotalHeight = medium * itemsCount;
                         stackHeight = estimatedTotalHeight;
                     }
                     else
                     {
-                        // Original logic for when all items are measured
                         stackHeight = medium * itemsCount;
                     }
                 }
                 else if (this.Type == LayoutType.Row)
                 {
                     var medium = stackWidth / measuredCount;
-                    
-                    // For MeasureVisible strategy, we only measured a portion of items
+
                     if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
                     {
-                        // Calculate total estimated size based on measured average
                         var estimatedTotalWidth = medium * itemsCount;
                         stackWidth = estimatedTotalWidth;
                     }
                     else
                     {
-                        // Original logic for when all items are measured
                         stackWidth = medium * itemsCount;
                     }
                 }
@@ -358,7 +532,26 @@ public partial class SkiaLayout
                 ChildrenFactory.ReleaseTemplateInstance(template);
             }
 
-            _measuredFor = rectForChildrenPixels;
+            // Start background measurement if using MeasureVisible strategy
+            //todo DISABLED dont need here
+            //if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible
+            //    && measuredCount < itemsCount)
+            //{
+            //    if (_pendingStructureChanges.Count == 0)
+            //    {
+            //        StartBackgroundMeasurement(rectForChildrenPixels, scale, measuredCount);
+            //    }
+            //    else
+            //    {
+            //        Debug.WriteLine($"[MeasureList] have unapplied measurements, wil not continue measuring in background.");
+            //    }
+            //}
+
+            // Debug: Report actual measurement results
+            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+            {
+                Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px. Background measurement started for remaining {itemsCount - measuredCount} items.");
+            }
 
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
         }
@@ -366,13 +559,1189 @@ public partial class SkiaLayout
         return ScaledSize.FromPixels(rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
     }
 
-    public int FirstMeasuredIndex { get; protected set; }
+    /// <summary>
+    /// Updates estimated content size based on current measurements
+    /// </summary>
+    private void UpdateEstimatedContentSize(float scale)
+    {
+        if (_measuredItems.Count == 0)
+            return;
 
-    public int LastMeasuredIndex { get; protected set; }
+        var totalItems = ItemsSource?.Count ?? 0;
+        if (totalItems == 0)
+            return;
 
-    public int FirstVisibleIndex { get; protected set; }
+        var measuredHeights = _measuredItems.Values
+            .Where(x => x.Cell.WasMeasured)
+            .Select(x => x.Cell.Measured.Pixels.Height)
+            .Where(h => h > 0)
+            .ToList();
 
-    public int LastVisibleIndex { get; protected set; }
+        if (measuredHeights.Count > 0 && Type == LayoutType.Column)
+        {
+            var averageHeight = measuredHeights.Average();
+            var estimatedTotalHeight = averageHeight * totalItems;
+
+            // Update the measured size if estimate is larger
+            if (estimatedTotalHeight > MeasuredSize.Pixels.Height)
+            {
+                SetMeasured(MeasuredSize.Pixels.Width, estimatedTotalHeight, false, false, scale);
+                Debug.WriteLine($"[UpdateEstimatedContentSize] Updated estimated height to {estimatedTotalHeight:F1}px based on {measuredHeights.Count} measured items (avg: {averageHeight:F1}px)");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Measures a batch of items in background thread
+    /// </summary>
+    private List<MeasuredItemInfo> MeasureBatchInBackground(SKRect constraints, float scale, int startIndex, int count, float startX, float startY, int startRow, int startCol, CancellationToken cancellationToken)
+    {
+        var measuredBatch = new List<MeasuredItemInfo>();
+
+        SkiaControl template = null;
+        bool useOneTemplate = IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled;
+        var cellsToRelease = new List<SkiaControl>();
+
+        try
+        {
+            if (useOneTemplate)
+            {
+                template = ChildrenFactory.GetTemplateInstance();
+            }
+
+            var columnsCount = (Split > 0) ? Split : 1;
+            var columnWidth = ComputeColumnWidth(columnsCount);
+
+            // Initialize positioning variables from parameters (thread-safe)
+            float currentX = startX;
+            float currentY = startY;
+            int row = startRow;
+            int col = startCol;
+            float rowHeight = 0f;
+
+            float availableWidth = columnWidth;
+            float availableHeight = float.PositiveInfinity;
+
+            if (this.Type == LayoutType.Row)
+            {
+                availableHeight = columnWidth;
+                availableWidth = float.PositiveInfinity;
+            }
+
+            for (int i = 0; i < count && !cancellationToken.IsCancellationRequested; i++)
+            {
+                var itemIndex = startIndex + i;
+
+                // Check if already measured
+                if (_measuredItems.ContainsKey(itemIndex))
+                    continue;
+
+                // Add spacing for this position
+                if (Type == LayoutType.Column && i > 0)
+                {
+                    currentY += GetSpacingForIndex(row, scale);
+                }
+
+                var child = ChildrenFactory.GetViewForIndex(itemIndex, template, 0, true);
+                if (template == null && child != null)
+                {
+                    cellsToRelease.Add(child);
+                }
+
+                if (child?.CanDraw == true)
+                {
+                    // Create proper destination rect with actual positioning
+                    var rectForChild = new SKRect(
+                        currentX,
+                        currentY,
+                        currentX + availableWidth,
+                        currentY + availableHeight
+                    );
+
+                    var cell = new ControlInStack
+                    {
+                        ControlIndex = itemIndex,
+                        Column = col,
+                        Row = row,
+                        Destination = rectForChild
+                    };
+
+                    var measured = MeasureAndArrangeCell(rectForChild, cell, child, constraints, scale);
+                    cell.Measured = measured;
+                    cell.WasMeasured = true;
+
+                    // Update max row height
+                    if (measured.Pixels.Height > rowHeight)
+                        rowHeight = measured.Pixels.Height;
+
+                    measuredBatch.Add(new MeasuredItemInfo
+                    {
+                        Cell = cell,
+                        LastAccessed = DateTime.UtcNow,
+                        IsInViewport = false
+                    });
+
+                    // Move to next column
+                    col++;
+                    if (col >= columnsCount)
+                    {
+                        // Complete row - move to next row
+                        row++;
+                        col = 0;
+                        currentX = 0f;
+                        currentY += rowHeight + (float)(Spacing * scale);
+                        rowHeight = 0f;
+                    }
+                    else
+                    {
+                        // Move to next column horizontally
+                        currentX += columnWidth + (float)(Spacing * scale);
+                    }
+
+                    //Debug.WriteLine($"[MeasureBatchInBackground] Measured item {itemIndex} at ({cell.Destination.Left:F1},{cell.Destination.Top:F1}): {measured.Pixels.Width:F1}x{measured.Pixels.Height:F1}");
+                }
+            }
+        }
+        finally
+        {
+            if (template != null)
+            {
+                ChildrenFactory.ReleaseTemplateInstance(template);
+            }
+            foreach (var cell in cellsToRelease)
+            {
+                ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
+            }
+        }
+
+        return measuredBatch;
+    }
+
+    /// <summary>
+    /// Integrates measured batch into the main structure
+    /// </summary>
+    private void IntegrateMeasuredBatch(List<MeasuredItemInfo> measuredBatch, float scale, BackgroundMeasurementContext context = null)
+    {
+        if (measuredBatch?.Count > 0)
+        {
+            foreach (var item in measuredBatch)
+            {
+                _measuredItems[item.Cell.ControlIndex] = item;
+            }
+
+            // Update LastMeasuredIndex
+            var maxIndex = measuredBatch.Max(x => x.Cell.ControlIndex);
+            if (maxIndex > LastMeasuredIndex)
+            {
+                LastMeasuredIndex = maxIndex;
+            }
+
+            // Stage for rendering pipeline integration
+            lock (_structureChangesLock)
+            {
+                _pendingStructureChanges.Add(new StructureChange
+                {
+                    Type = StructureChangeType.BackgroundMeasurement,
+                    MeasuredItems = measuredBatch,
+                    InsertAtIndex = context?.InsertAtIndex,
+                    IsInsertOperation = context?.IsInsertOperation ?? false
+                });
+            }
+
+            // Recalculate estimated content size
+            //UpdateEstimatedContentSize(scale);
+
+            //Debug.WriteLine($"[IntegrateMeasuredBatch] Integrated {measuredBatch.Count} items, total measured: {_measuredItems.Count}, last index: {LastMeasuredIndex}");
+        }
+    }
+
+    public override bool NeedMeasure
+    {
+        get
+        {
+            return base.NeedMeasure;
+        }
+        set
+        {
+            if (value && IsTemplated)
+            {
+                Debug.WriteLine("Recycled cells stack remeasured");
+            }
+
+            base.NeedMeasure = value;
+        }
+    }
+
+    /// <summary>
+    /// Applies all pending structure changes to StackStructure - called from rendering pipeline
+    /// </summary>
+    public void ApplyStructureChanges()
+    {
+        List<StructureChange> changesToProcess = null;
+
+        // Get all pending changes atomically
+        lock (_structureChangesLock)
+        {
+            if (LatestStackStructure==null || _pendingStructureChanges.Count == 0)
+                return;
+
+            // Copy and clear in one atomic operation
+            changesToProcess = new List<StructureChange>(_pendingStructureChanges);
+            _pendingStructureChanges.Clear();
+        }
+
+        // Process all changes outside the lock for maximum performance
+
+        foreach (var change in changesToProcess)
+        {
+            switch (change.Type)
+            {
+                case StructureChangeType.BackgroundMeasurement:
+                    ApplyBackgroundMeasurementChange(change);
+                    break;
+
+                case StructureChangeType.Add:
+                    ApplyAddChange(change);
+                    break;
+
+                case StructureChangeType.Remove:
+                    ApplyRemoveChange(change);
+                    break;
+
+                case StructureChangeType.Replace:
+                    ApplyReplaceChange(change);
+                    break;
+
+                case StructureChangeType.Move:
+                    ApplyMoveChange(change);
+                    break;
+
+                case StructureChangeType.Reset:
+                    ApplyResetChange(change);
+                    break;
+
+                case StructureChangeType.VisibilityChange:
+                    ApplyVisibilityChange(change);
+                    break;
+
+                case StructureChangeType.SingleItemUpdate:
+                    ApplySingleItemUpdateChange(change);
+                    break;
+
+                default:
+                    Debug.WriteLine($"[ApplyStructureChanges] Unknown change type: {change.Type}");
+                    break;
+            }
+        }
+
+        Debug.WriteLine($"[StackStructure] Applied {changesToProcess.Count} structure changes. Measured: {MeasuredItemsPercentage:P1}");
+    }
+
+    /// <summary>
+    /// Applies background measurement changes to StackStructure
+    /// </summary>
+    private void ApplyBackgroundMeasurementChange(StructureChange change)
+    {
+        if (change.MeasuredItems?.Count > 0)
+        {
+            if (change.IsInsertOperation && change.InsertAtIndex.HasValue)
+            {
+                // Insert measurements at specific position
+                InsertMeasurementsAtPosition(change.MeasuredItems, change.InsertAtIndex.Value);
+            }
+            else
+            {
+                // Append measurements to end (existing behavior)
+                AppendMeasurementsToEnd(change.MeasuredItems);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Inserts measurements at a specific position in existing structure
+    /// </summary>
+    private void InsertMeasurementsAtPosition(List<MeasuredItemInfo> measuredItems, int insertAtIndex)
+    {
+        var allRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+        var currentRow = new List<ControlInStack>(columnsCount);
+
+        foreach (var item in measuredItems)
+        {
+            currentRow.Add(item.Cell);
+
+            // Complete row when we reach columnsCount
+            if (currentRow.Count >= columnsCount)
+            {
+                allRows.Add(currentRow);
+                currentRow = new List<ControlInStack>(columnsCount);
+            }
+        }
+
+        // Add incomplete row if it has items
+        if (currentRow.Count > 0)
+        {
+            allRows.Add(currentRow);
+        }
+
+        if (allRows.Count > 0)
+        {
+            if (StackStructure == null)
+            {
+                StackStructure = new LayoutStructure(allRows);
+            }
+            else
+            {
+                // Insert rows at the correct position in existing structure
+                InsertRowsAtPosition(allRows, insertAtIndex);
+            }
+
+            UpdateProgressiveContentSize();
+            Debug.WriteLine($"[StackStructure] Inserted {allRows.Count} rows at index {insertAtIndex}");
+        }
+    }
+
+    /// <summary>
+    /// Appends measurements to the end of existing structure
+    /// </summary>
+    private void AppendMeasurementsToEnd(List<MeasuredItemInfo> measuredItems)
+    {
+        var allRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+        var currentRow = new List<ControlInStack>(columnsCount);
+
+        foreach (var item in measuredItems)
+        {
+            currentRow.Add(item.Cell);
+
+            // Complete row when we reach columnsCount
+            if (currentRow.Count >= columnsCount)
+            {
+                allRows.Add(currentRow);
+                currentRow = new List<ControlInStack>(columnsCount);
+            }
+        }
+
+        // Add incomplete row if it has items
+        if (currentRow.Count > 0)
+        {
+            allRows.Add(currentRow);
+        }
+
+        if (allRows.Count > 0)
+        {
+            if (StackStructure == null)
+            {
+                StackStructure = new LayoutStructure(allRows);
+            }
+            else
+            {
+                StackStructure.Append(allRows);
+            }
+
+            UpdateProgressiveContentSize();
+            Debug.WriteLine($"[StackStructure] Appended {allRows.Count} rows from background measurement");
+        }
+    }
+
+    /// <summary>
+    /// Inserts rows at a specific position in the StackStructure
+    /// </summary>
+    private void InsertRowsAtPosition(List<List<ControlInStack>> newRows, int insertAtIndex)
+    {
+        // For now, we'll use a simplified approach since DynamicGrid doesn't have direct insert
+        // We'll rebuild the structure with the new rows inserted at the correct position
+
+        var existingCells = StackStructure.GetChildren().ToList();
+        var allCells = new List<ControlInStack>();
+
+        // Add cells before insert position
+        allCells.AddRange(existingCells.Where(c => c.ControlIndex < insertAtIndex));
+
+        // Add new cells
+        foreach (var row in newRows)
+        {
+            allCells.AddRange(row);
+        }
+
+        // Add cells after insert position (with shifted indices)
+        var cellsAfter = existingCells.Where(c => c.ControlIndex >= insertAtIndex).ToList();
+        foreach (var cell in cellsAfter)
+        {
+            cell.ControlIndex += newRows.SelectMany(r => r).Count(); // Shift indices
+        }
+        allCells.AddRange(cellsAfter);
+
+        // Rebuild structure with all cells
+        var rebuiltRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+        var currentRow = new List<ControlInStack>(columnsCount);
+
+        foreach (var cell in allCells.OrderBy(c => c.ControlIndex))
+        {
+            currentRow.Add(cell);
+            if (currentRow.Count >= columnsCount)
+            {
+                rebuiltRows.Add(currentRow);
+                currentRow = new List<ControlInStack>(columnsCount);
+            }
+        }
+
+        if (currentRow.Count > 0)
+        {
+            rebuiltRows.Add(currentRow);
+        }
+
+        // Replace the entire structure
+        StackStructure = new LayoutStructure(rebuiltRows);
+
+        Debug.WriteLine($"[StackStructure] Rebuilt with {newRows.Count} rows inserted at index {insertAtIndex}");
+    }
+
+    /// <summary>
+    /// Triggers insert-aware background measurement for new items
+    /// </summary>
+    private void TriggerInsertAwareBackgroundMeasurement(int insertAtIndex, int insertCount)
+    {
+        if (!IsTemplated || ItemsSource == null)
+            return;
+
+        // Create context for insert operation
+        var context = new BackgroundMeasurementContext
+        {
+            InsertAtIndex = insertAtIndex,
+            InsertCount = insertCount,
+            StartMeasuringFrom = insertAtIndex
+        };
+
+        // Get current constraints from last measurement
+        var constraints = new SKRect(0, 0, _lastMeasuredForWidth, _lastMeasuredForHeight);
+        var scale = RenderingScale;
+
+        // Start background measurement with insert context
+        StartBackgroundMeasurement(constraints, scale, insertAtIndex, context);
+
+        Debug.WriteLine($"[StackStructure] Started insert-aware background measurement for {insertCount} items at index {insertAtIndex}");
+    }
+
+    /// <summary>
+    /// Applies Add changes to StackStructure
+    /// </summary>
+    private void ApplyAddChange(StructureChange change)
+    {
+        Debug.WriteLine($"[StackStructure] Adding {change.Count} items at index {change.StartIndex}");
+
+        if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+        {
+            if (change.StartIndex <= LastMeasuredIndex)
+            {
+                // Insert in middle of measured items - shift existing measurements
+                ShiftMeasurementIndices(change.StartIndex, change.Count);
+
+                // Trigger insert-aware background measurement for new items
+                TriggerInsertAwareBackgroundMeasurement(change.StartIndex, change.Count);
+
+                Debug.WriteLine($"[StackStructure] MeasureVisible: Shifted measurements and triggered insert-aware background measurement");
+            }
+            else
+            {
+                // Adding at end - normal background measurement will handle it
+                Debug.WriteLine($"[StackStructure] MeasureVisible strategy - background measurement will handle new items at end");
+            }
+        }
+        else
+        {
+            // For sync strategies: Need to shift existing measurements and measure new items
+            if (change.StartIndex <= LastMeasuredIndex)
+            {
+                // Adding in middle of measured items - shift existing measurements
+                ShiftMeasurementIndices(change.StartIndex, change.Count);
+                Debug.WriteLine($"[StackStructure] Shifted measurements for sync strategy");
+            }
+            // Note: New items will be measured on-demand during normal layout
+        }
+
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies Remove changes to StackStructure
+    /// </summary>
+    private void ApplyRemoveChange(StructureChange change)
+    {
+        Debug.WriteLine($"[StackStructure] Removing {change.Count} items at index {change.StartIndex}");
+
+        // Remove items from measurement cache and shift indices
+        for (int i = change.StartIndex; i < change.StartIndex + change.Count; i++)
+        {
+            _measuredItems.TryRemove(i, out _);
+        }
+
+        // Shift remaining measurements
+        ShiftMeasurementIndices(change.StartIndex + change.Count, -change.Count);
+
+        // Remove corresponding rows from StackStructure
+        if (StackStructure != null)
+        {
+            RemoveItemsFromStackStructure(change.StartIndex, change.Count);
+        }
+
+        Debug.WriteLine($"[StackStructure] Removed {change.Count} items and shifted measurements");
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies Replace changes to StackStructure
+    /// </summary>
+    private void ApplyReplaceChange(StructureChange change)
+    {
+        Debug.WriteLine($"[StackStructure] Replacing {change.Count} items at index {change.StartIndex}");
+
+        // For Replace: Split into Remove + Add in same frame
+        var removeChange = new StructureChange
+        {
+            Type = StructureChangeType.Remove,
+            StartIndex = change.StartIndex,
+            Count = change.Count
+        };
+
+        var addChange = new StructureChange
+        {
+            Type = StructureChangeType.Add,
+            StartIndex = change.StartIndex,
+            Count = change.Count,
+            Items = change.Items
+        };
+
+        // Apply remove then add
+        ApplyRemoveChange(removeChange);
+        ApplyAddChange(addChange);
+
+        Debug.WriteLine($"[StackStructure] Split replace into remove + add operations");
+    }
+
+    /// <summary>
+    /// Applies Move changes to StackStructure
+    /// </summary>
+    private void ApplyMoveChange(StructureChange change)
+    {
+        Debug.WriteLine($"[StackStructure] Moving item from index {change.StartIndex} to {change.TargetIndex}");
+        // TODO: Implement move logic that reorders structure
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies Reset changes to StackStructure
+    /// </summary>
+    private void ApplyResetChange(StructureChange change)
+    {
+        Debug.WriteLine($"[StackStructure] Resetting all");
+        // Clear everything for reset
+        StackStructure = null;
+        _measuredItems.Clear();
+        _indexOffsets.Clear();
+        _removedIndices.Clear();
+        LastMeasuredIndex = -1;
+        FirstMeasuredIndex = -1;
+        UpdateProgressiveContentSize();
+    }
+
+    /// <summary>
+    /// Applies visibility changes to StackStructure
+    /// </summary>
+    private void ApplyVisibilityChange(StructureChange change)
+    {
+        var structure = LatestMeasuredStackStructure;
+        if (structure == null || change.Count==0)
+            return;
+
+        //Debug.WriteLine($"[ApplyVisibilityChange] Processing {change.Count} cells starting at {change.StartIndex}, visibility: {change.IsVisible}");
+
+        // Calculate total offset from all cells in the batch
+        float totalDeltaWidth = 0;
+        float totalDeltaHeight = 0;
+        ControlInStack lastChangedCell = null;
+
+        for (int i = change.StartIndex; i < change.StartIndex + change.Count; i++)
+        {
+            var cell = structure.GetForIndex(i);
+            if (cell == null) continue;
+
+            if (!change.IsVisible && !cell.IsCollapsed)
+            {
+                // BECOMING GHOST  
+                totalDeltaWidth += -cell.Destination.Width;
+                totalDeltaHeight += -cell.Destination.Height;
+                cell.IsCollapsed = true;
+                lastChangedCell = cell;
+            }
+            else if (change.IsVisible && cell.IsCollapsed)
+            {
+                // BECOMING VISIBLE 
+                totalDeltaWidth += cell.Destination.Width;
+                totalDeltaHeight += cell.Destination.Height;
+                cell.IsCollapsed = false;
+                lastChangedCell = cell;
+            }
+        }
+
+        // Apply total offset once to all subsequent cells
+        if (lastChangedCell != null && (Math.Abs(totalDeltaWidth) > 0.1f || Math.Abs(totalDeltaHeight) > 0.1f))
+        {
+            OffsetSubsequentCells(structure, lastChangedCell, totalDeltaWidth, totalDeltaHeight);
+            UpdateProgressiveContentSize();
+            Repaint();
+        }
+
+    }
+
+    /// <summary>
+    /// Applies a single item update to StackStructure
+    /// </summary>
+    private void ApplySingleItemUpdateChange(StructureChange change)
+    {
+        if (change.MeasuredItems?.Count == 1 && change.StartIndex >= 0)
+        {
+            var newMeasurement = change.MeasuredItems[0];
+            var itemIndex = change.StartIndex;
+
+            // Get old measurement for comparison
+            MeasuredItemInfo oldMeasurement = null;
+            _measuredItems.TryGetValue(itemIndex, out oldMeasurement);
+
+            // Update measurement in dictionary
+            _measuredItems[itemIndex] = newMeasurement;
+
+            // Find and update the cell in StackStructure
+            if (StackStructure != null)
+            {
+                var cell = StackStructure.GetForIndex(itemIndex);
+                if (cell != null)
+                {
+                    // Calculate size difference for shifting
+                    float deltaWidth = 0;
+                    float deltaHeight = 0;
+
+                    if (change.OffsetOthers != null)
+                    {
+                        deltaWidth = change.OffsetOthers.Value.X;
+                        deltaHeight = change.OffsetOthers.Value.Y;
+                    }
+                    else
+                    if (oldMeasurement != null)
+                    {
+                        deltaWidth = newMeasurement.Cell.Measured.Pixels.Width - oldMeasurement.Cell.Measured.Pixels.Width;
+                        deltaHeight = newMeasurement.Cell.Measured.Pixels.Height - oldMeasurement.Cell.Measured.Pixels.Height;
+                    }
+
+                    // Update cell with new measurement
+                    cell.Measured = newMeasurement.Cell.Measured;
+
+                    // CRITICAL: Update the destination rectangle to match the new size
+                    // This is what was missing - we need to resize the cell's destination
+                    cell.Destination = new SKRect(
+                        cell.Destination.Left,
+                        cell.Destination.Top,
+                        cell.Destination.Left + newMeasurement.Cell.Measured.Pixels.Width,
+                        cell.Destination.Top + newMeasurement.Cell.Measured.Pixels.Height
+                    );
+
+                    // Shift subsequent items if size changed significantly
+                    if (Math.Abs(deltaWidth) > 0.1f || Math.Abs(deltaHeight) > 0.1f)
+                    {
+                        // Use the existing OffsetSubsequentCells method
+                        OffsetSubsequentCells(StackStructure, cell, deltaWidth, deltaHeight);
+
+                        Debug.WriteLine($"[StackStructure] changed single item {itemIndex}, shifted cells by {deltaWidth}x{deltaHeight}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"[StackStructure] Could not find cell for index {itemIndex} in structure");
+                }
+            }
+
+            // Update content size
+            UpdateProgressiveContentSize();
+
+            // Trigger repaint to show changes
+            Repaint();
+
+            Debug.WriteLine($"[StackStructure] Updated measurement for item {itemIndex}");
+        }
+    }
+
+    #region Hybrid Measurement Shifting
+
+    /// <summary>
+    /// Shifts measurement indices using hybrid approach based on collection size
+    /// </summary>
+    private void ShiftMeasurementIndices(int startIndex, int offset)
+    {
+        var affectedCount = _measuredItems.Keys.Count(k => k >= startIndex);
+
+        if (affectedCount <= DIRECT_SHIFT_THRESHOLD)
+        {
+            // Small collection - direct shifting (simple & fast)
+            DirectShiftMeasurements(startIndex, offset);
+        }
+        else
+        {
+            // Large collection - offset mapping (scalable)
+            OffsetMapMeasurements(startIndex, offset);
+        }
+
+        // Update measurement indices
+        if (offset < 0) // Removal
+        {
+            if (LastMeasuredIndex >= startIndex)
+            {
+                LastMeasuredIndex = Math.Max(startIndex - 1, LastMeasuredIndex + offset);
+            }
+        }
+        else // Addition
+        {
+            if (LastMeasuredIndex >= startIndex)
+            {
+                LastMeasuredIndex += offset;
+            }
+        }
+
+        Debug.WriteLine($"[ShiftMeasurementIndices] Shifted {affectedCount} items from index {startIndex} by {offset}. LastMeasuredIndex: {LastMeasuredIndex}");
+    }
+
+    /// <summary>
+    /// Direct shifting for small collections
+    /// </summary>
+    private void DirectShiftMeasurements(int startIndex, int offset)
+    {
+        var itemsToShift = _measuredItems
+            .Where(kvp => kvp.Key >= startIndex)
+            .OrderBy(kvp => offset > 0 ? -kvp.Key : kvp.Key) // Avoid conflicts during shifting
+            .ToList();
+
+        foreach (var (oldIndex, item) in itemsToShift)
+        {
+            _measuredItems.TryRemove(oldIndex, out _);
+            var newIndex = oldIndex + offset;
+            if (newIndex >= 0)
+            {
+                item.Cell.ControlIndex = newIndex;
+                _measuredItems[newIndex] = item;
+
+                // Update StackStructure indices
+                if (StackStructure != null)
+                {
+                    UpdateStackStructureIndex(oldIndex, newIndex);
+                }
+            }
+        }
+
+        Debug.WriteLine($"[DirectShiftMeasurements] Directly shifted {itemsToShift.Count} measurements");
+    }
+
+    /// <summary>
+    /// Offset mapping for large collections
+    /// </summary>
+    private void OffsetMapMeasurements(int startIndex, int offset)
+    {
+        if (offset < 0) // Removal
+        {
+            // Mark removed indices
+            for (int i = startIndex; i < startIndex - offset; i++)
+            {
+                _removedIndices.Add(i);
+                _measuredItems.TryRemove(i, out _); // Remove from cache
+            }
+        }
+
+        // Add offset for all subsequent indices
+        var offsetKey = startIndex + Math.Max(0, -offset);
+        _indexOffsets[offsetKey] = _indexOffsets.GetValueOrDefault(offsetKey, 0) + offset;
+
+        Debug.WriteLine($"[OffsetMapMeasurements] Added offset {offset} for indices >= {offsetKey}. Removed: {-Math.Min(0, offset)} indices");
+    }
+
+    /// <summary>
+    /// Updates a specific index in StackStructure
+    /// </summary>
+    private void UpdateStackStructureIndex(int oldIndex, int newIndex)
+    {
+        if (StackStructure == null) return;
+
+        foreach (var cell in StackStructure.GetChildren())
+        {
+            if (cell.ControlIndex == oldIndex)
+            {
+                cell.ControlIndex = newIndex;
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the actual index considering offset mapping
+    /// </summary>
+    private int GetActualIndex(int originalIndex)
+    {
+        if (_removedIndices.Contains(originalIndex)) return -1;
+
+        var offset = 0;
+        foreach (var kvp in _indexOffsets.Where(kvp => originalIndex >= kvp.Key))
+        {
+            offset += kvp.Value;
+        }
+
+        return originalIndex + offset;
+    }
+
+    /// <summary>
+    /// Removes items from StackStructure
+    /// </summary>
+    private void RemoveItemsFromStackStructure(int startIndex, int count)
+    {
+        if (StackStructure == null) return;
+
+        // Find and remove cells with indices in the removal range
+        var cellsToRemove = StackStructure.GetChildren()
+            .Where(cell => cell.ControlIndex >= startIndex && cell.ControlIndex < startIndex + count)
+            .ToList();
+
+        // Remove cells from the grid structure
+        foreach (var cell in cellsToRemove)
+        {
+            // Since DynamicGrid doesn't have a direct remove method, we need to rebuild
+            // For now, we'll mark them as removed by setting ControlIndex to -1
+            cell.ControlIndex = -1;
+        }
+
+        Debug.WriteLine($"[RemoveItemsFromStackStructure] Marked {cellsToRemove.Count} items for removal from structure");
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Updates content size with progressive accuracy as we approach measuring all items
+    /// </summary>
+    private void UpdateProgressiveContentSize()
+    {
+        if (StackStructure == null || ItemsSource?.Count == 0)
+            return;
+
+        var totalItems = ItemsSource.Count;
+        var measuredCount = LastMeasuredIndex + 1;
+        var progress = MeasuredItemsPercentage;
+
+        if (Type == LayoutType.Column)
+        {
+            // Calculate actual measured height from structure (skip ghost cells)
+            var actualMeasuredHeight = 0f;
+            var measuredItems = StackStructure.GetChildren().Take(measuredCount);
+            foreach (var item in measuredItems)
+            {
+                if (!item.IsCollapsed) // Skip ghost cells
+                {
+                    actualMeasuredHeight += item.Measured.Pixels.Height;
+                }
+            }
+
+            // Add spacing between items
+            var spacingHeight = (measuredCount - 1) * (float)(Spacing * RenderingScale);
+            actualMeasuredHeight += spacingHeight;
+
+            float newContentHeight;
+
+            if (progress >= 1.0f)
+            {
+                // 100% measured - use exact size
+                newContentHeight = actualMeasuredHeight;
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] 100% measured - exact height: {newContentHeight:F1}px");
+            }
+            else if (progress >= 0.9f)
+            {
+                // 90%+ measured - use precise estimate with small buffer
+                var averageHeight = actualMeasuredHeight / measuredCount;
+                var estimatedTotal = averageHeight * totalItems;
+                var buffer = estimatedTotal * 0.05f; // 5% buffer for final items
+                newContentHeight = estimatedTotal + buffer;
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - precise estimate: {newContentHeight:F1}px (avg: {averageHeight:F1}px)");
+            }
+            else if (progress >= 0.5f)
+            {
+                // 50%+ measured - blend between estimate and large buffer
+                var averageHeight = actualMeasuredHeight / measuredCount;
+                var estimatedTotal = averageHeight * totalItems;
+                var buffer = estimatedTotal * (0.5f - progress * 0.4f); // Decreasing buffer as we approach 90%
+                newContentHeight = estimatedTotal + buffer;
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - blended estimate: {newContentHeight:F1}px (buffer: {buffer:F1}px)");
+            }
+            else
+            {
+                // Less than 50% measured - use large estimate to allow scrolling
+                var averageHeight = actualMeasuredHeight / measuredCount;
+                var estimatedTotal = averageHeight * totalItems;
+                var buffer = estimatedTotal * 1.0f; // 100% buffer for early measurements
+                newContentHeight = estimatedTotal + buffer;
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - early estimate: {newContentHeight:F1}px (large buffer)");
+            }
+
+            // Only update if the new size is different enough to matter
+            var currentHeight = MeasuredSize.Pixels.Height;
+            if (Math.Abs(newContentHeight - currentHeight) > 10f) // 10px threshold
+            {
+                SetMeasured(MeasuredSize.Pixels.Width, newContentHeight, false, false, RenderingScale);
+                Debug.WriteLine($"[Scroll] Updated content COLUMN {1.0/progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
+            }
+        }
+        else if (Type == LayoutType.Row)
+        {
+            // Similar logic for horizontal scrolling (skip ghost cells)
+            var actualMeasuredWidth = 0f;
+            var measuredItems = StackStructure.GetChildren().Take(measuredCount);
+            foreach (var item in measuredItems)
+            {
+                if (!item.IsCollapsed) // Skip ghost cells
+                {
+                    actualMeasuredWidth += item.Measured.Pixels.Width;
+                }
+            }
+
+            var spacingWidth = (measuredCount - 1) * (float)(Spacing * RenderingScale);
+            actualMeasuredWidth += spacingWidth;
+
+            float newContentWidth;
+
+            if (progress >= 1.0f)
+            {
+                newContentWidth = actualMeasuredWidth;
+            }
+            else if (progress >= 0.9f)
+            {
+                var averageWidth = actualMeasuredWidth / measuredCount;
+                var estimatedTotal = averageWidth * totalItems;
+                newContentWidth = estimatedTotal + (estimatedTotal * 0.05f);
+            }
+            else if (progress >= 0.5f)
+            {
+                var averageWidth = actualMeasuredWidth / measuredCount;
+                var estimatedTotal = averageWidth * totalItems;
+                var buffer = estimatedTotal * (0.5f - progress * 0.4f);
+                newContentWidth = estimatedTotal + buffer;
+            }
+            else
+            {
+                var averageWidth = actualMeasuredWidth / measuredCount;
+                var estimatedTotal = averageWidth * totalItems;
+                newContentWidth = estimatedTotal + (estimatedTotal * 1.0f);
+            }
+
+            var currentWidth = MeasuredSize.Pixels.Width;
+            if (Math.Abs(newContentWidth - currentWidth) > 10f)
+            {
+                SetMeasured(newContentWidth, MeasuredSize.Pixels.Height, false, false, RenderingScale);
+                Debug.WriteLine($"[Scroll] Updated content ROW {1.0/progress:0}% width from {currentWidth:F1}px to {newContentWidth:F1}px");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Applies sliding window cleanup to maintain memory limits
+    /// </summary>
+    private void ApplySlidingWindowCleanup()
+    {
+        if (_measuredItems.Count <= SLIDING_WINDOW_SIZE)
+            return;
+
+        var currentViewportStart = Math.Max(0, FirstVisibleIndex - BEHIND_BUFFER);
+        var currentViewportEnd = LastVisibleIndex + AHEAD_BUFFER;
+
+        var itemsToRemove = _measuredItems
+            .Where(kvp => kvp.Key < currentViewportStart || kvp.Key > currentViewportEnd)
+            .OrderBy(kvp => kvp.Value.LastAccessed)
+            .Take(_measuredItems.Count - SLIDING_WINDOW_SIZE)
+            .Select(kvp => kvp.Key)
+            .ToList();
+
+        foreach (var indexToRemove in itemsToRemove)
+        {
+            _measuredItems.TryRemove(indexToRemove, out _);
+        }
+
+        if (itemsToRemove.Count > 0)
+        {
+            Debug.WriteLine($"[ApplySlidingWindowCleanup] Removed {itemsToRemove.Count} measured items, kept {_measuredItems.Count} items in memory");
+        }
+    }
+
+
+    /// <summary>
+    /// Background measurement implementation with sliding window
+    /// </summary>
+    private async Task BackgroundMeasureItems(SKRect constraints, float scale, int startIndex, CancellationToken cancellationToken,
+        BackgroundMeasurementContext context = null)
+    {
+        // Special case for single item remeasurement
+        if (context?.IsSingleItemRemeasurement == true && context.SingleItemIndex.HasValue)
+        {
+            MeasureSingleItem(context.SingleItemIndex.Value, constraints, scale, cancellationToken, true);
+            return;
+        }
+
+        var totalItems = ItemsSource.Count;
+        var currentBatchStart = startIndex;
+        var maxIterations = Math.Max(1, (totalItems / MEASUREMENT_BATCH_SIZE) + 10); // Safety limit
+        var iterationCount = 0;
+
+        Debug.WriteLine($"[MeasureVisible] Starting measurement from {startIndex} of {totalItems} total items");
+
+        while (currentBatchStart < totalItems && !cancellationToken.IsCancellationRequested && iterationCount < maxIterations)
+        {
+
+            lock (_structureChangesLock)
+            {
+                if (_pendingStructureChanges.Count > 0)
+                {
+                    break;
+                }
+            }
+
+            iterationCount++;
+            var batchEnd = Math.Min(currentBatchStart + MEASUREMENT_BATCH_SIZE, totalItems);
+            var itemsToMeasure = batchEnd - currentBatchStart;
+
+            // Safety check to prevent infinite loops
+            if (itemsToMeasure <= 0)
+            {
+                Debug.WriteLine($"[MeasureVisible] WARNING: No items to measure in batch {currentBatchStart}-{batchEnd}, breaking loop");
+                break;
+            }
+
+            Debug.WriteLine($"[MeasureVisible] Measuring batch {currentBatchStart}-{batchEnd - 1} ({itemsToMeasure} items) [iteration {iterationCount}/{maxIterations}]");
+
+            // Get positioning data on main thread (thread-safe read)
+            var structure = LatestStackStructure;
+            var (startX, startY, startRow, startCol) = GetNextItemPositionForIncremental(structure);
+
+            // Measure batch on background thread
+            var measuredBatch = await Task.Run(() => MeasureBatchInBackground(
+                constraints, scale, currentBatchStart, itemsToMeasure, startX, startY, startRow, startCol, cancellationToken), cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                Debug.WriteLine($"[MeasureVisible] Cancellation requested, stopping at batch {currentBatchStart}");
+                break;
+            }
+
+            // Integrate results on background thread (safe for reading/staging)
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                IntegrateMeasuredBatch(measuredBatch, scale, context);
+                ApplySlidingWindowCleanup();
+            }
+
+            _backgroundMeasurementProgress = batchEnd;
+
+            // Move to next batch - CRITICAL: This was missing!
+            currentBatchStart = batchEnd;
+
+            // Small delay to prevent overwhelming the system
+            await Task.Delay(10, cancellationToken);
+        }
+
+        if (iterationCount >= maxIterations)
+        {
+            Debug.WriteLine($"[MeasureVisible] WARNING: Hit maximum iteration limit ({maxIterations}), stopping background measurement");
+        }
+
+        Debug.WriteLine($"[MeasureVisible] Completed background measurement up to index {_backgroundMeasurementProgress}");
+
+        Repaint();
+    }
+
+    /// <summary>
+    /// Measures a single item in the background and stages it for structure update.
+    /// For MeasureVisible Only.
+    /// </summary>
+    public void MeasureSingleItem(int itemIndex, SKRect constraints, float scale, CancellationToken cancellationToken, bool inBackground)
+    {
+        try
+        {
+            if (MeasureItemsStrategy != MeasuringStrategy.MeasureVisible)
+            {
+                return;
+            }
+
+            Debug.WriteLine($"[StackStructure] Starting measurement for item at index {itemIndex}");
+
+            SkiaControl template = null;
+            
+            try
+            {
+                // Get child for this specific index
+                var child = ChildrenFactory.GetViewForIndex(itemIndex, template, 0, true);
+ 
+
+                if (child == null || !child.CanDraw)
+                {
+                    Debug.WriteLine($"[BackgroundMeasureSingleItem] Failed to get child or child cannot draw for item {itemIndex}");
+                    return;
+                }
+
+                // Create cell structure for measurement
+                var cell = new ControlInStack
+                {
+                    ControlIndex = itemIndex,
+                    View = child
+                };
+
+                // Measure the item (simplified measurement for single item)
+                var availableWidth = constraints.Width;
+                var availableHeight = float.PositiveInfinity; // Allow natural height
+
+                var measured = MeasureChild(child, availableWidth, availableHeight, scale);
+                cell.Measured = measured;
+                cell.WasMeasured = true;
+
+                // Create measured item info
+                var measuredItem = new MeasuredItemInfo
+                {
+                    Cell = cell,
+                    LastAccessed = DateTime.UtcNow,
+                    IsInViewport = true
+                };
+
+                // Stage for rendering pipeline with special single-item flag
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    lock (_structureChangesLock)
+                    {
+                        _pendingStructureChanges.Add(new StructureChange
+                        {
+                            Type = StructureChangeType.SingleItemUpdate,
+                            StartIndex = itemIndex,
+                            Count = 1,
+                            MeasuredItems = new List<MeasuredItemInfo> { measuredItem }
+                        });
+                    }
+
+                    //Debug.WriteLine($"[BackgroundMeasureSingleItem] Staged single item update for index {itemIndex}, measured size: {measured.Pixels.Width}x{measured.Pixels.Height}");
+ 
+                }
+            }
+            finally
+            {
+                if (template != null)
+                {
+                    ChildrenFactory.ReleaseTemplateInstance(template);
+                }
+ 
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[BackgroundMeasureSingleItem] Error measuring item {itemIndex}: {ex.Message}");
+        }
+    }
 
     /// <summary>
     /// Renders Templated Column/Row todo in some cases..
