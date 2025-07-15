@@ -847,11 +847,17 @@ items:
   - uid: DrawnUi.Draw.SkiaLayout
     name: SkiaLayout
     type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+    name: SkiaLayout.BackgroundMeasurementContext
+    type: Class
   - uid: DrawnUi.Draw.SkiaLayout.BuildWrapLayout
     name: SkiaLayout.BuildWrapLayout
     type: Class
   - uid: DrawnUi.Draw.SkiaLayout.Cell
     name: SkiaLayout.Cell
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+    name: SkiaLayout.MeasuredItemInfo
     type: Class
   - uid: DrawnUi.Draw.SkiaLayout.SecondPassArrange
     name: SkiaLayout.SecondPassArrange
@@ -859,6 +865,12 @@ items:
   - uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
     name: SkiaLayout.SkiaGridStructure
     type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChange
+    name: SkiaLayout.StructureChange
+    type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+    name: SkiaLayout.StructureChangeType
+    type: Enum
   - uid: DrawnUi.Draw.SkiaMarkdownLabel
     name: SkiaMarkdownLabel
     type: Class

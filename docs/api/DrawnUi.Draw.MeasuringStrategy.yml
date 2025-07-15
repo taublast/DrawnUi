@@ -49,10 +49,12 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureAll
     path: ../src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
-    startLine: 4
+    startLine: 7
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
+  summary: For different children sizes
+  example: []
   syntax:
     content: MeasureAll = 0
     return:
@@ -75,10 +77,12 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureFirst
     path: ../src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
-    startLine: 6
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
+  summary: Best for equal item sizes
+  example: []
   syntax:
     content: MeasureFirst = 1
     return:
@@ -101,10 +105,12 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureVisible
     path: ../src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
-    startLine: 8
+    startLine: 17
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
+  summary: EXPERIMENTAL PREVIEW!!! Acts like MeasureAll but measures by chunks in background.
+  example: []
   syntax:
     content: MeasureVisible = 2
     return:

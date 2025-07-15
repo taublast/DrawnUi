@@ -3892,6 +3892,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.yml\" sourcestartlinenumber=\"1\">Context for background measurement operations</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.yml",
       "output": {
         ".html": {
@@ -3920,6 +3934,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.MeasuredItemInfo",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.yml\" sourcestartlinenumber=\"1\">Information about a measured item for sliding window management</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.SecondPassArrange.yml",
       "output": {
         ".html": {
@@ -3945,6 +3973,34 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.SkiaLayout.SkiaGridStructure",
       "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.StructureChange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.StructureChange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.StructureChange",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.StructureChange.yml\" sourcestartlinenumber=\"1\">Represents a pending structure change to be applied during rendering</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.StructureChangeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.StructureChangeType",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.StructureChangeType.yml\" sourcestartlinenumber=\"1\">Types of structure changes that can be applied</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -6047,6 +6103,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/advanced/recycled-cells.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/recycled-cells.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/advanced/skiascroll.md",
       "output": {
         ".html": {
@@ -6267,6 +6333,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/interactive-button.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/interactive-button.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/interactive-cards.md",
       "output": {
         ".html": {
@@ -6344,6 +6420,16 @@
       "output": {
         "resource": {
           "relative_path": "images/cards.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/newsfeed.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/newsfeed.png"
         }
       },
       "version": ""

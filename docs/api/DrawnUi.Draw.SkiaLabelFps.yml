@@ -641,6 +641,7 @@ items:
   - DrawnUi.Draw.SkiaControl.UpdateWhenReturnedFromBackground
   - DrawnUi.Draw.SkiaControl.OnSuperviewShouldRenderChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.ApplyMeasureResult
+  - DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
   - DrawnUi.Draw.SkiaControl.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.IsRendering
@@ -13693,6 +13694,25 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.ApplyMeasureResult
     name: ApplyMeasureResult
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ApplyMeasureResult
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  commentId: M:DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  name: NeedToMeasureSelf()
+  nameWithType: SkiaControl.NeedToMeasureSelf()
+  fullName: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)

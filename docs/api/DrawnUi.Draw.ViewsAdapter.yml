@@ -9,18 +9,22 @@ items:
   - DrawnUi.Draw.ViewsAdapter.AddMoreToPool(System.Int32)
   - DrawnUi.Draw.ViewsAdapter.AddedMore
   - DrawnUi.Draw.ViewsAdapter.AttachView(DrawnUi.Draw.SkiaControl,System.Int32,System.Boolean)
+  - DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
   - DrawnUi.Draw.ViewsAdapter.Dispose
   - DrawnUi.Draw.ViewsAdapter.DisposeViews
   - DrawnUi.Draw.ViewsAdapter.DisposeVisibleViews
   - DrawnUi.Draw.ViewsAdapter.DisposeWrapper
   - DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32)
   - DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Collections.IList)
+  - DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Threading.CancellationToken)
+  - DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(System.Int32)
   - DrawnUi.Draw.ViewsAdapter.GetChildrenCount
   - DrawnUi.Draw.ViewsAdapter.GetDebugInfo
   - DrawnUi.Draw.ViewsAdapter.GetOrCreateViewForIndexInternal(System.Int32,System.Single,DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.ViewsAdapter.GetTemplateInstance
   - DrawnUi.Draw.ViewsAdapter.GetViewForIndex(System.Int32,DrawnUi.Draw.SkiaControl,System.Single,System.Boolean)
   - DrawnUi.Draw.ViewsAdapter.GetViewsIterator
+  - DrawnUi.Draw.ViewsAdapter.InitializeSoft(System.Boolean,System.Collections.IList,System.Int32)
   - DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
   - DrawnUi.Draw.ViewsAdapter.IsDisposed
   - DrawnUi.Draw.ViewsAdapter.LogEnabled
@@ -104,6 +108,113 @@ items:
     return:
       type: System.Boolean
     content.vb: Public Shared LogEnabled As Boolean
+- uid: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(System.Int32)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(System.Int32)
+  id: FillPoolInBackgroundAsync(System.Int32)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: FillPoolInBackgroundAsync(int)
+  nameWithType: ViewsAdapter.FillPoolInBackgroundAsync(int)
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillPoolInBackgroundAsync
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 25
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Safely fills the pool in background with cancellation support. Cancels any previous background filling operation.
+  example: []
+  syntax:
+    content: public Task FillPoolInBackgroundAsync(int size)
+    parameters:
+    - id: size
+      type: System.Int32
+      description: Number of views to pre-create in the pool
+    return:
+      type: System.Threading.Tasks.Task
+      description: Task that completes when pool filling is done or cancelled
+    content.vb: Public Function FillPoolInBackgroundAsync(size As Integer) As Task
+  overload: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync*
+  nameWithType.vb: ViewsAdapter.FillPoolInBackgroundAsync(Integer)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(Integer)
+  name.vb: FillPoolInBackgroundAsync(Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+  commentId: M:DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+  id: CancelBackgroundPoolFilling
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: CancelBackgroundPoolFilling()
+  nameWithType: ViewsAdapter.CancelBackgroundPoolFilling()
+  fullName: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CancelBackgroundPoolFilling
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 102
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Cancels any ongoing background pool filling operation
+  example: []
+  syntax:
+    content: public void CancelBackgroundPoolFilling()
+    content.vb: Public Sub CancelBackgroundPoolFilling()
+  overload: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling*
+- uid: DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Threading.CancellationToken)
+  id: FillPool(System.Int32,System.Threading.CancellationToken)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: FillPool(int, CancellationToken)
+  nameWithType: ViewsAdapter.FillPool(int, CancellationToken)
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPool(int, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FillPool
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 117
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Use to manually pre-create views from item templates so when we suddenly need more templates they would already be ready, avoiding lag spike,
+
+    This will respect pool MaxSize in order not to overpass it.
+  example: []
+  syntax:
+    content: public void FillPool(int size, CancellationToken cancellationToken = default)
+    parameters:
+    - id: size
+      type: System.Int32
+      description: Target pool size
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: Optional cancellation token
+    content.vb: Public Sub FillPool(size As Integer, cancellationToken As CancellationToken = Nothing)
+  overload: DrawnUi.Draw.ViewsAdapter.FillPool*
+  nameWithType.vb: ViewsAdapter.FillPool(Integer, CancellationToken)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPool(Integer, System.Threading.CancellationToken)
+  name.vb: FillPool(Integer, CancellationToken)
 - uid: DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
   commentId: M:DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
   id: InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
@@ -122,7 +233,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeTemplates
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 23
+    startLine: 146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -150,6 +261,42 @@ items:
   nameWithType.vb: ViewsAdapter.InitializeTemplates(NotifyCollectionChangedEventArgs, Func(Of Object), IList, Integer, Integer)
   fullName.vb: DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs, System.Func(Of Object), System.Collections.IList, Integer, Integer)
   name.vb: InitializeTemplates(NotifyCollectionChangedEventArgs, Func(Of Object), IList, Integer, Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.InitializeSoft(System.Boolean,System.Collections.IList,System.Int32)
+  commentId: M:DrawnUi.Draw.ViewsAdapter.InitializeSoft(System.Boolean,System.Collections.IList,System.Int32)
+  id: InitializeSoft(System.Boolean,System.Collections.IList,System.Int32)
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: InitializeSoft(bool, IList, int)
+  nameWithType: ViewsAdapter.InitializeSoft(bool, IList, int)
+  fullName: DrawnUi.Draw.ViewsAdapter.InitializeSoft(bool, System.Collections.IList, int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InitializeSoft
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 231
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void InitializeSoft(bool layoutChanged, IList dataContexts, int poolSize)
+    parameters:
+    - id: layoutChanged
+      type: System.Boolean
+    - id: dataContexts
+      type: System.Collections.IList
+    - id: poolSize
+      type: System.Int32
+    content.vb: Public Sub InitializeSoft(layoutChanged As Boolean, dataContexts As IList, poolSize As Integer)
+  overload: DrawnUi.Draw.ViewsAdapter.InitializeSoft*
+  nameWithType.vb: ViewsAdapter.InitializeSoft(Boolean, IList, Integer)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.InitializeSoft(Boolean, System.Collections.IList, Integer)
+  name.vb: InitializeSoft(Boolean, IList, Integer)
 - uid: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Collections.IList,System.Int32,System.Int32)
   commentId: M:DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Collections.IList,System.Int32,System.Int32)
   id: _HandleSmartCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Collections.IList,System.Int32,System.Int32)
@@ -168,7 +315,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _HandleSmartCollectionChange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 275
+    startLine: 403
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -210,7 +357,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReleaseViewInUse
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 587
+    startLine: 715
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -244,7 +391,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetViewForIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 608
+    startLine: 736
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -296,7 +443,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrCreateViewForIndexInternal
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 689
+    startLine: 817
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -334,7 +481,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReleaseViewToPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 727
+    startLine: 855
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -372,7 +519,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 782
+    startLine: 910
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -399,7 +546,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 785
+    startLine: 913
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -431,7 +578,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 790
+    startLine: 918
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -461,7 +608,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateVisibleViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 799
+    startLine: 935
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -487,7 +634,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeVisibleViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 813
+    startLine: 949
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -513,7 +660,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 829
+    startLine: 965
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -539,7 +686,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachView
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 838
+    startLine: 974
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -575,7 +722,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PoolMaxSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 908
+    startLine: 1043
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -604,7 +751,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PoolSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 921
+    startLine: 1056
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -633,7 +780,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MarkAllViewsAsHidden
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 940
+    startLine: 1075
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -659,7 +806,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MarkViewAsHidden
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 952
+    startLine: 1087
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -691,7 +838,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddedMore
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 980
+    startLine: 1115
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -720,7 +867,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddMoreToPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 987
+    startLine: 1122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -758,7 +905,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FillPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1011
+    startLine: 1146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -798,7 +945,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FillPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1031
+    startLine: 1166
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -836,7 +983,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDebugInfo
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1047
+    startLine: 1182
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -864,7 +1011,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildrenCount
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1058
+    startLine: 1193
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -892,7 +1039,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _lockTemplates
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1082
+    startLine: 1217
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -919,7 +1066,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplesInvalidating
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1087
+    startLine: 1222
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -946,7 +1093,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatesInvalidated
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1091
+    startLine: 1226
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -975,7 +1122,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatesBusy
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1104
+    startLine: 1239
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1002,7 +1149,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1110
+    startLine: 1245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1034,7 +1181,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatesAvailable
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1122
+    startLine: 1257
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1065,7 +1212,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetViewsIterator
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1132
+    startLine: 1267
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1093,7 +1240,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeWrapper
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1179
+    startLine: 1314
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1119,7 +1266,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrintDebugVisible
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1191
+    startLine: 1326
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1145,7 +1292,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplateInstance
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1205
+    startLine: 1340
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1173,7 +1320,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReleaseTemplateInstance
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1225
+    startLine: 1360
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1562,6 +1709,115 @@ references:
   nameWithType.vb: Boolean
   fullName.vb: Boolean
   name.vb: Boolean
+- uid: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPoolInBackgroundAsync_System_Int32_
+  name: FillPoolInBackgroundAsync
+  nameWithType: ViewsAdapter.FillPoolInBackgroundAsync
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_CancelBackgroundPoolFilling
+  name: CancelBackgroundPoolFilling
+  nameWithType: ViewsAdapter.CancelBackgroundPoolFilling
+  fullName: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+- uid: DrawnUi.Draw.ViewsAdapter.FillPool*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.FillPool
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPool_System_Int32_System_Threading_CancellationToken_
+  name: FillPool
+  nameWithType: ViewsAdapter.FillPool
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPool
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
 - uid: DrawnUi.Draw.ViewsAdapter.InitializeTemplates*
   commentId: Overload:DrawnUi.Draw.ViewsAdapter.InitializeTemplates
   href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_InitializeTemplates_System_Collections_Specialized_NotifyCollectionChangedEventArgs_System_Func_System_Object__System_Collections_IList_System_Int32_System_Int32_
@@ -1619,17 +1875,6 @@ references:
   name: IList
   nameWithType: IList
   fullName: System.Collections.IList
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.int32
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
 - uid: System.Collections.Specialized
   commentId: N:System.Collections.Specialized
   isExternal: true
@@ -1722,6 +1967,12 @@ references:
     name: Collections
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: DrawnUi.Draw.ViewsAdapter.InitializeSoft*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.InitializeSoft
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_InitializeSoft_System_Boolean_System_Collections_IList_System_Int32_
+  name: InitializeSoft
+  nameWithType: ViewsAdapter.InitializeSoft
+  fullName: DrawnUi.Draw.ViewsAdapter.InitializeSoft
 - uid: DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange*
   commentId: Overload:DrawnUi.Draw.ViewsAdapter._HandleSmartCollectionChange
   href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter__HandleSmartCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_System_Collections_IList_System_Int32_System_Int32_
@@ -1874,12 +2125,6 @@ references:
   name: AddMoreToPool
   nameWithType: ViewsAdapter.AddMoreToPool
   fullName: DrawnUi.Draw.ViewsAdapter.AddMoreToPool
-- uid: DrawnUi.Draw.ViewsAdapter.FillPool*
-  commentId: Overload:DrawnUi.Draw.ViewsAdapter.FillPool
-  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPool_System_Int32_System_Collections_IList_
-  name: FillPool
-  nameWithType: ViewsAdapter.FillPool
-  fullName: DrawnUi.Draw.ViewsAdapter.FillPool
 - uid: DrawnUi.Draw.ViewsAdapter.GetDebugInfo*
   commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetDebugInfo
   href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetDebugInfo

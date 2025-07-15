@@ -3805,6 +3805,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaDrawnCell.OnScrolled
   nameWithType: SkiaDrawnCell.OnScrolled
+- uid: DrawnUi.Controls.SkiaDrawnCell.Remeasure
+  name: Remeasure()
+  href: api/DrawnUi.Controls.SkiaDrawnCell.html#DrawnUi_Controls_SkiaDrawnCell_Remeasure
+  commentId: M:DrawnUi.Controls.SkiaDrawnCell.Remeasure
+  fullName: DrawnUi.Controls.SkiaDrawnCell.Remeasure()
+  nameWithType: SkiaDrawnCell.Remeasure()
+- uid: DrawnUi.Controls.SkiaDrawnCell.Remeasure*
+  name: Remeasure
+  href: api/DrawnUi.Controls.SkiaDrawnCell.html#DrawnUi_Controls_SkiaDrawnCell_Remeasure_
+  commentId: Overload:DrawnUi.Controls.SkiaDrawnCell.Remeasure
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaDrawnCell.Remeasure
+  nameWithType: SkiaDrawnCell.Remeasure
 - uid: DrawnUi.Controls.SkiaDrawnCell.SetContent(System.Object)
   name: SetContent(object)
   href: api/DrawnUi.Controls.SkiaDrawnCell.html#DrawnUi_Controls_SkiaDrawnCell_SetContent_System_Object_
@@ -3891,6 +3904,35 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.OnMeasured
   nameWithType: SkiaDynamicDrawnCell.OnMeasured
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(System.Boolean)
+  name: OnVisibilityChanged(bool)
+  href: api/DrawnUi.Controls.SkiaDynamicDrawnCell.html#DrawnUi_Controls_SkiaDynamicDrawnCell_OnVisibilityChanged_System_Boolean_
+  commentId: M:DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(System.Boolean)
+  name.vb: OnVisibilityChanged(Boolean)
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(bool)
+  fullName.vb: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(Boolean)
+  nameWithType: SkiaDynamicDrawnCell.OnVisibilityChanged(bool)
+  nameWithType.vb: SkiaDynamicDrawnCell.OnVisibilityChanged(Boolean)
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged*
+  name: OnVisibilityChanged
+  href: api/DrawnUi.Controls.SkiaDynamicDrawnCell.html#DrawnUi_Controls_SkiaDynamicDrawnCell_OnVisibilityChanged_
+  commentId: Overload:DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged
+  nameWithType: SkiaDynamicDrawnCell.OnVisibilityChanged
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  name: UpdateVisibilityChanged()
+  href: api/DrawnUi.Controls.SkiaDynamicDrawnCell.html#DrawnUi_Controls_SkiaDynamicDrawnCell_UpdateVisibilityChanged
+  commentId: M:DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged()
+  nameWithType: SkiaDynamicDrawnCell.UpdateVisibilityChanged()
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged*
+  name: UpdateVisibilityChanged
+  href: api/DrawnUi.Controls.SkiaDynamicDrawnCell.html#DrawnUi_Controls_SkiaDynamicDrawnCell_UpdateVisibilityChanged_
+  commentId: Overload:DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  nameWithType: SkiaDynamicDrawnCell.UpdateVisibilityChanged
 - uid: DrawnUi.Controls.SkiaGif
   name: SkiaGif
   href: api/DrawnUi.Controls.SkiaGif.html
@@ -10900,15 +10942,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaViewSwitcher.RevealNavigationView
   nameWithType: SkiaViewSwitcher.RevealNavigationView
-- uid: DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(System.Single,System.Single,System.Single)
-  name: ScrollTo(float, float, float)
-  href: api/DrawnUi.Controls.SkiaViewSwitcher.html#DrawnUi_Controls_SkiaViewSwitcher_ScrollTo_System_Single_System_Single_System_Single_
-  commentId: M:DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(System.Single,System.Single,System.Single)
-  name.vb: ScrollTo(Single, Single, Single)
-  fullName: DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(float, float, float)
-  fullName.vb: DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(Single, Single, Single)
-  nameWithType: SkiaViewSwitcher.ScrollTo(float, float, float)
-  nameWithType.vb: SkiaViewSwitcher.ScrollTo(Single, Single, Single)
+- uid: DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  name: ScrollTo(float, float, float, bool)
+  href: api/DrawnUi.Controls.SkiaViewSwitcher.html#DrawnUi_Controls_SkiaViewSwitcher_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_
+  commentId: M:DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  name.vb: ScrollTo(Single, Single, Single, Boolean)
+  fullName: DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(float, float, float, bool)
+  fullName.vb: DrawnUi.Controls.SkiaViewSwitcher.ScrollTo(Single, Single, Single, Boolean)
+  nameWithType: SkiaViewSwitcher.ScrollTo(float, float, float, bool)
+  nameWithType.vb: SkiaViewSwitcher.ScrollTo(Single, Single, Single, Boolean)
 - uid: DrawnUi.Controls.SkiaViewSwitcher.ScrollTo*
   name: ScrollTo
   href: api/DrawnUi.Controls.SkiaViewSwitcher.html#DrawnUi_Controls_SkiaViewSwitcher_ScrollTo_
@@ -15822,6 +15864,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ControlInStack.Drawn
   nameWithType: ControlInStack.Drawn
+- uid: DrawnUi.Draw.ControlInStack.IsCollapsed
+  name: IsCollapsed
+  href: api/DrawnUi.Draw.ControlInStack.html#DrawnUi_Draw_ControlInStack_IsCollapsed
+  commentId: P:DrawnUi.Draw.ControlInStack.IsCollapsed
+  fullName: DrawnUi.Draw.ControlInStack.IsCollapsed
+  nameWithType: ControlInStack.IsCollapsed
+- uid: DrawnUi.Draw.ControlInStack.IsCollapsed*
+  name: IsCollapsed
+  href: api/DrawnUi.Draw.ControlInStack.html#DrawnUi_Draw_ControlInStack_IsCollapsed_
+  commentId: Overload:DrawnUi.Draw.ControlInStack.IsCollapsed
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ControlInStack.IsCollapsed
+  nameWithType: ControlInStack.IsCollapsed
 - uid: DrawnUi.Draw.ControlInStack.IsVisible
   name: IsVisible
   href: api/DrawnUi.Draw.ControlInStack.html#DrawnUi_Draw_ControlInStack_IsVisible
@@ -20223,15 +20278,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.IDefinesViewport.InvalidateByChild
   nameWithType: IDefinesViewport.InvalidateByChild
-- uid: DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
-  name: ScrollTo(float, float, float)
-  href: api/DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_ScrollTo_System_Single_System_Single_System_Single_
-  commentId: M:DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
-  name.vb: ScrollTo(Single, Single, Single)
-  fullName: DrawnUi.Draw.IDefinesViewport.ScrollTo(float, float, float)
-  fullName.vb: DrawnUi.Draw.IDefinesViewport.ScrollTo(Single, Single, Single)
-  nameWithType: IDefinesViewport.ScrollTo(float, float, float)
-  nameWithType.vb: IDefinesViewport.ScrollTo(Single, Single, Single)
+- uid: DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  name: ScrollTo(float, float, float, bool)
+  href: api/DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_
+  commentId: M:DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  name.vb: ScrollTo(Single, Single, Single, Boolean)
+  fullName: DrawnUi.Draw.IDefinesViewport.ScrollTo(float, float, float, bool)
+  fullName.vb: DrawnUi.Draw.IDefinesViewport.ScrollTo(Single, Single, Single, Boolean)
+  nameWithType: IDefinesViewport.ScrollTo(float, float, float, bool)
+  nameWithType.vb: IDefinesViewport.ScrollTo(Single, Single, Single, Boolean)
 - uid: DrawnUi.Draw.IDefinesViewport.ScrollTo*
   name: ScrollTo
   href: api/DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_ScrollTo_
@@ -27194,6 +27249,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ScrollToIndexOrder.Animated
   nameWithType: ScrollToIndexOrder.Animated
+- uid: DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  name: Clamp
+  href: api/DrawnUi.Draw.ScrollToIndexOrder.html#DrawnUi_Draw_ScrollToIndexOrder_Clamp
+  commentId: P:DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  fullName: DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  nameWithType: ScrollToIndexOrder.Clamp
+- uid: DrawnUi.Draw.ScrollToIndexOrder.Clamp*
+  name: Clamp
+  href: api/DrawnUi.Draw.ScrollToIndexOrder.html#DrawnUi_Draw_ScrollToIndexOrder_Clamp_
+  commentId: Overload:DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  nameWithType: ScrollToIndexOrder.Clamp
 - uid: DrawnUi.Draw.ScrollToIndexOrder.Default
   name: Default
   href: api/DrawnUi.Draw.ScrollToIndexOrder.html#DrawnUi_Draw_ScrollToIndexOrder_Default
@@ -34497,6 +34565,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaControl.NeedRepaint
   nameWithType: SkiaControl.NeedRepaint
+- uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  name: NeedToMeasureSelf()
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  commentId: M:DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  fullName: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf()
+  nameWithType: SkiaControl.NeedToMeasureSelf()
+- uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf*
+  name: NeedToMeasureSelf
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  nameWithType: SkiaControl.NeedToMeasureSelf
 - uid: DrawnUi.Draw.SkiaControl.NeedUpdate
   name: NeedUpdate
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedUpdate
@@ -45020,6 +45101,129 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.ApplyNewItemsSource
   nameWithType: SkiaLayout.ApplyNewItemsSource
+- uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  name: ApplyStructureChanges()
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges
+  commentId: M:DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges()
+  nameWithType: SkiaLayout.ApplyStructureChanges()
+- uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges*
+  name: ApplyStructureChanges
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  nameWithType: SkiaLayout.ApplyStructureChanges
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  name: SkiaLayout.BackgroundMeasurementContext
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html
+  commentId: T:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  nameWithType: SkiaLayout.BackgroundMeasurementContext
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt
+  name: EndMeasuringAt
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_EndMeasuringAt
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt*
+  name: EndMeasuringAt
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_EndMeasuringAt_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.EndMeasuringAt
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertAtIndex
+  name: InsertAtIndex
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_InsertAtIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertAtIndex
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertAtIndex
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.InsertAtIndex
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertAtIndex*
+  name: InsertAtIndex
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_InsertAtIndex_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertAtIndex
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertAtIndex
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.InsertAtIndex
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertCount
+  name: InsertCount
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_InsertCount
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertCount
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertCount
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.InsertCount
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertCount*
+  name: InsertCount
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_InsertCount_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertCount
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.InsertCount
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.InsertCount
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsInsertOperation
+  name: IsInsertOperation
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_IsInsertOperation
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsInsertOperation
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsInsertOperation
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.IsInsertOperation
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsInsertOperation*
+  name: IsInsertOperation
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_IsInsertOperation_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsInsertOperation
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsInsertOperation
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.IsInsertOperation
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement
+  name: IsSingleItemRemeasurement
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_IsSingleItemRemeasurement
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement*
+  name: IsSingleItemRemeasurement
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_IsSingleItemRemeasurement_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.IsSingleItemRemeasurement
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.SingleItemIndex
+  name: SingleItemIndex
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_SingleItemIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.SingleItemIndex
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.SingleItemIndex
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.SingleItemIndex
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.SingleItemIndex*
+  name: SingleItemIndex
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_SingleItemIndex_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.SingleItemIndex
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.SingleItemIndex
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.SingleItemIndex
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom
+  name: StartMeasuringFrom
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_StartMeasuringFrom
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom*
+  name: StartMeasuringFrom
+  href: api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementContext_StartMeasuringFrom_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom
+  nameWithType: SkiaLayout.BackgroundMeasurementContext.StartMeasuringFrom
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  name: BackgroundMeasurementProgress
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementProgress
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  nameWithType: SkiaLayout.BackgroundMeasurementProgress
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress*
+  name: BackgroundMeasurementProgress
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementProgress_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  nameWithType: SkiaLayout.BackgroundMeasurementProgress
 - uid: DrawnUi.Draw.SkiaLayout.BreakLine
   name: BreakLine()
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_BreakLine
@@ -45087,6 +45291,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.BuildWrapLayout.Build
   nameWithType: SkiaLayout.BuildWrapLayout.Build
+- uid: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  name: CancelBackgroundMeasurement()
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_CancelBackgroundMeasurement
+  commentId: M:DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  fullName: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement()
+  nameWithType: SkiaLayout.CancelBackgroundMeasurement()
+- uid: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement*
+  name: CancelBackgroundMeasurement
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_CancelBackgroundMeasurement_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  nameWithType: SkiaLayout.CancelBackgroundMeasurement
 - uid: DrawnUi.Draw.SkiaLayout.Cell
   name: SkiaLayout.Cell
   href: api/DrawnUi.Draw.SkiaLayout.Cell.html
@@ -45854,6 +46071,84 @@ references:
   commentId: F:DrawnUi.Draw.SkiaLayout.GridStructureMeasured
   fullName: DrawnUi.Draw.SkiaLayout.GridStructureMeasured
   nameWithType: SkiaLayout.GridStructureMeasured
+- uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name: HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation*
+  name: HandleCollectionChangeWithStructurePreservation
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation
+  nameWithType: SkiaLayout.HandleCollectionChangeWithStructurePreservation
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name: HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingAdd_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd*
+  name: HandleStructurePreservingAdd
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingAdd_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd
+  nameWithType: SkiaLayout.HandleStructurePreservingAdd
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name: HandleStructurePreservingMove(NotifyCollectionChangedEventArgs)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingMove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingMove(NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove*
+  name: HandleStructurePreservingMove
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingMove_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove
+  nameWithType: SkiaLayout.HandleStructurePreservingMove
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name: HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingRemove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove*
+  name: HandleStructurePreservingRemove
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingRemove_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove
+  nameWithType: SkiaLayout.HandleStructurePreservingRemove
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name: HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReplace_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace*
+  name: HandleStructurePreservingReplace
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReplace_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace
+  nameWithType: SkiaLayout.HandleStructurePreservingReplace
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name: HandleStructurePreservingReset(NotifyCollectionChangedEventArgs)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReset_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingReset(NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset*
+  name: HandleStructurePreservingReset
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReset_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset
+  nameWithType: SkiaLayout.HandleStructurePreservingReset
 - uid: DrawnUi.Draw.SkiaLayout.Invalidate
   name: Invalidate()
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_Invalidate
@@ -45954,6 +46249,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.InvalidatedChildrenInternal
   nameWithType: SkiaLayout.InvalidatedChildrenInternal
+- uid: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  name: IsBackgroundMeasuring
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsBackgroundMeasuring
+  commentId: P:DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  fullName: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  nameWithType: SkiaLayout.IsBackgroundMeasuring
+- uid: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring*
+  name: IsBackgroundMeasuring
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsBackgroundMeasuring_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  nameWithType: SkiaLayout.IsBackgroundMeasuring
 - uid: DrawnUi.Draw.SkiaLayout.IsEmpty
   name: IsEmpty
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsEmpty
@@ -46255,6 +46563,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.MeasureList
   nameWithType: SkiaLayout.MeasureList
+- uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+  name: MeasureSingleItem(int, SKRect, float, CancellationToken, bool)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureSingleItem_System_Int32_SkiaSharp_SKRect_System_Single_System_Threading_CancellationToken_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+  name.vb: MeasureSingleItem(Integer, SKRect, Single, CancellationToken, Boolean)
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(int, SkiaSharp.SKRect, float, System.Threading.CancellationToken, bool)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(Integer, SkiaSharp.SKRect, Single, System.Threading.CancellationToken, Boolean)
+  nameWithType: SkiaLayout.MeasureSingleItem(int, SKRect, float, CancellationToken, bool)
+  nameWithType.vb: SkiaLayout.MeasureSingleItem(Integer, SKRect, Single, CancellationToken, Boolean)
+- uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem*
+  name: MeasureSingleItem
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureSingleItem_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasureSingleItem
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureSingleItem
+  nameWithType: SkiaLayout.MeasureSingleItem
 - uid: DrawnUi.Draw.SkiaLayout.MeasureStackLegacy(SkiaSharp.SKRect,System.Single)
   name: MeasureStackLegacy(SKRect, float)
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackLegacy_SkiaSharp_SKRect_System_Single_
@@ -46319,6 +46643,77 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.MeasureWrap
   nameWithType: SkiaLayout.MeasureWrap
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+  name: SkiaLayout.MeasuredItemInfo
+  href: api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html
+  commentId: T:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+  nameWithType: SkiaLayout.MeasuredItemInfo
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.Cell
+  name: Cell
+  href: api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html#DrawnUi_Draw_SkiaLayout_MeasuredItemInfo_Cell
+  commentId: P:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.Cell
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.Cell
+  nameWithType: SkiaLayout.MeasuredItemInfo.Cell
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.Cell*
+  name: Cell
+  href: api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html#DrawnUi_Draw_SkiaLayout_MeasuredItemInfo_Cell_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.Cell
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.Cell
+  nameWithType: SkiaLayout.MeasuredItemInfo.Cell
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.IsInViewport
+  name: IsInViewport
+  href: api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html#DrawnUi_Draw_SkiaLayout_MeasuredItemInfo_IsInViewport
+  commentId: P:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.IsInViewport
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.IsInViewport
+  nameWithType: SkiaLayout.MeasuredItemInfo.IsInViewport
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.IsInViewport*
+  name: IsInViewport
+  href: api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html#DrawnUi_Draw_SkiaLayout_MeasuredItemInfo_IsInViewport_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.IsInViewport
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.IsInViewport
+  nameWithType: SkiaLayout.MeasuredItemInfo.IsInViewport
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.LastAccessed
+  name: LastAccessed
+  href: api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html#DrawnUi_Draw_SkiaLayout_MeasuredItemInfo_LastAccessed
+  commentId: P:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.LastAccessed
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.LastAccessed
+  nameWithType: SkiaLayout.MeasuredItemInfo.LastAccessed
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.LastAccessed*
+  name: LastAccessed
+  href: api/DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html#DrawnUi_Draw_SkiaLayout_MeasuredItemInfo_LastAccessed_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.LastAccessed
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.LastAccessed
+  nameWithType: SkiaLayout.MeasuredItemInfo.LastAccessed
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  name: MeasuredItemsPercentage
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasuredItemsPercentage
+  commentId: P:DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  nameWithType: SkiaLayout.MeasuredItemsPercentage
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage*
+  name: MeasuredItemsPercentage
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasuredItemsPercentage_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  nameWithType: SkiaLayout.MeasuredItemsPercentage
+- uid: DrawnUi.Draw.SkiaLayout.NeedMeasure
+  name: NeedMeasure
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_NeedMeasure
+  commentId: P:DrawnUi.Draw.SkiaLayout.NeedMeasure
+  fullName: DrawnUi.Draw.SkiaLayout.NeedMeasure
+  nameWithType: SkiaLayout.NeedMeasure
+- uid: DrawnUi.Draw.SkiaLayout.NeedMeasure*
+  name: NeedMeasure
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_NeedMeasure_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.NeedMeasure
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.NeedMeasure
+  nameWithType: SkiaLayout.NeedMeasure
 - uid: DrawnUi.Draw.SkiaLayout.OnAppeared
   name: OnAppeared()
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAppeared
@@ -46413,19 +46808,6 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.OnDisposing
   nameWithType: SkiaLayout.OnDisposing
-- uid: DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  name: OnFirstDrawn()
-  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnFirstDrawn
-  commentId: M:DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  fullName: DrawnUi.Draw.SkiaLayout.OnFirstDrawn()
-  nameWithType: SkiaLayout.OnFirstDrawn()
-- uid: DrawnUi.Draw.SkiaLayout.OnFirstDrawn*
-  name: OnFirstDrawn
-  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnFirstDrawn_
-  commentId: Overload:DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  isSpec: "True"
-  fullName: DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  nameWithType: SkiaLayout.OnFirstDrawn
 - uid: DrawnUi.Draw.SkiaLayout.OnItemSourceChanged
   name: OnItemSourceChanged()
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnItemSourceChanged
@@ -46575,6 +46957,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.PreArrange
   nameWithType: SkiaLayout.PreArrange
+- uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  commentId: M:DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  nameWithType: SkiaLayout.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+- uid: DrawnUi.Draw.SkiaLayout.ProcessGestures*
+  name: ProcessGestures
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ProcessGestures
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.ProcessGestures
+  nameWithType: SkiaLayout.ProcessGestures
 - uid: DrawnUi.Draw.SkiaLayout.PropagateVisibilityChanged(System.Boolean)
   name: PropagateVisibilityChanged(bool)
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_PropagateVisibilityChanged_System_Boolean_
@@ -46642,6 +47037,47 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.RefreshAllViews
   nameWithType: SkiaLayout.RefreshAllViews
+- uid: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  name: RemeasureSingleItemInBackground(int)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RemeasureSingleItemInBackground_System_Int32_
+  commentId: M:DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  name.vb: RemeasureSingleItemInBackground(Integer)
+  fullName: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(int)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(Integer)
+  nameWithType: SkiaLayout.RemeasureSingleItemInBackground(int)
+  nameWithType.vb: SkiaLayout.RemeasureSingleItemInBackground(Integer)
+- uid: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground*
+  name: RemeasureSingleItemInBackground
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RemeasureSingleItemInBackground_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground
+  nameWithType: SkiaLayout.RemeasureSingleItemInBackground
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  name: ReportChildVisibilityChanged(int, bool)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  name.vb: ReportChildVisibilityChanged(Integer, Boolean)
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(int, bool)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(Integer, Boolean)
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged(int, bool)
+  nameWithType.vb: SkiaLayout.ReportChildVisibilityChanged(Integer, Boolean)
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  name: ReportChildVisibilityChanged(int, int, bool)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Int32_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  name.vb: ReportChildVisibilityChanged(Integer, Integer, Boolean)
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(int, int, bool)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(Integer, Integer, Boolean)
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged(int, int, bool)
+  nameWithType.vb: SkiaLayout.ReportChildVisibilityChanged(Integer, Integer, Boolean)
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged*
+  name: ReportChildVisibilityChanged
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged
 - uid: DrawnUi.Draw.SkiaLayout.ReportHotreloadChildAdded(DrawnUi.Draw.SkiaControl)
   name: ReportHotreloadChildAdded(SkiaControl)
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportHotreloadChildAdded_DrawnUi_Draw_SkiaControl_
@@ -46668,6 +47104,25 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.ReportHotreloadChildRemoved
   nameWithType: SkiaLayout.ReportHotreloadChildRemoved
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  name: ReserveTemplates
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReserveTemplates
+  commentId: P:DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  nameWithType: SkiaLayout.ReserveTemplates
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplates*
+  name: ReserveTemplates
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReserveTemplates_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  nameWithType: SkiaLayout.ReserveTemplates
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  name: ReserveTemplatesProperty
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReserveTemplatesProperty
+  commentId: F:DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  nameWithType: SkiaLayout.ReserveTemplatesProperty
 - uid: DrawnUi.Draw.SkiaLayout.ResetScroll
   name: ResetScroll()
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ResetScroll
@@ -46905,6 +47360,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.ShouldInvalidateByChildren
   nameWithType: SkiaLayout.ShouldInvalidateByChildren
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  name: ShouldPreserveStructureOnCollectionChange
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange
+  commentId: P:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange*
+  name: ShouldPreserveStructureOnCollectionChange
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
 - uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
   name: SkiaLayout.SkiaGridStructure
   href: api/DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html
@@ -47221,6 +47689,209 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.StackStructureMeasured
   nameWithType: SkiaLayout.StackStructureMeasured
+- uid: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  name: StageStructureChange(StructureChange)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_StageStructureChange_DrawnUi_Draw_SkiaLayout_StructureChange_
+  commentId: M:DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  fullName: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  nameWithType: SkiaLayout.StageStructureChange(SkiaLayout.StructureChange)
+- uid: DrawnUi.Draw.SkiaLayout.StageStructureChange*
+  name: StageStructureChange
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_StageStructureChange_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StageStructureChange
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StageStructureChange
+  nameWithType: SkiaLayout.StageStructureChange
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange
+  name: SkiaLayout.StructureChange
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html
+  commentId: T:DrawnUi.Draw.SkiaLayout.StructureChange
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange
+  nameWithType: SkiaLayout.StructureChange
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Count
+  name: Count
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Count
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.Count
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Count
+  nameWithType: SkiaLayout.StructureChange.Count
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Count*
+  name: Count
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Count_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.Count
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Count
+  nameWithType: SkiaLayout.StructureChange.Count
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.InsertAtIndex
+  name: InsertAtIndex
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_InsertAtIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.InsertAtIndex
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.InsertAtIndex
+  nameWithType: SkiaLayout.StructureChange.InsertAtIndex
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.InsertAtIndex*
+  name: InsertAtIndex
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_InsertAtIndex_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.InsertAtIndex
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.InsertAtIndex
+  nameWithType: SkiaLayout.StructureChange.InsertAtIndex
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.IsInsertOperation
+  name: IsInsertOperation
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_IsInsertOperation
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.IsInsertOperation
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.IsInsertOperation
+  nameWithType: SkiaLayout.StructureChange.IsInsertOperation
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.IsInsertOperation*
+  name: IsInsertOperation
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_IsInsertOperation_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.IsInsertOperation
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.IsInsertOperation
+  nameWithType: SkiaLayout.StructureChange.IsInsertOperation
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible
+  name: IsVisible
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_IsVisible
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible
+  nameWithType: SkiaLayout.StructureChange.IsVisible
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible*
+  name: IsVisible
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_IsVisible_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible
+  nameWithType: SkiaLayout.StructureChange.IsVisible
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Items
+  name: Items
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Items
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.Items
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Items
+  nameWithType: SkiaLayout.StructureChange.Items
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Items*
+  name: Items
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Items_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.Items
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Items
+  nameWithType: SkiaLayout.StructureChange.Items
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems
+  name: MeasuredItems
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_MeasuredItems
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems
+  nameWithType: SkiaLayout.StructureChange.MeasuredItems
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems*
+  name: MeasuredItems
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_MeasuredItems_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems
+  nameWithType: SkiaLayout.StructureChange.MeasuredItems
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
+  name: OffsetOthers
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_OffsetOthers
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
+  nameWithType: SkiaLayout.StructureChange.OffsetOthers
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers*
+  name: OffsetOthers
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_OffsetOthers_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
+  nameWithType: SkiaLayout.StructureChange.OffsetOthers
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex
+  name: StartIndex
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_StartIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex
+  nameWithType: SkiaLayout.StructureChange.StartIndex
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex*
+  name: StartIndex
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_StartIndex_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex
+  nameWithType: SkiaLayout.StructureChange.StartIndex
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex
+  name: TargetIndex
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_TargetIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex
+  nameWithType: SkiaLayout.StructureChange.TargetIndex
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex*
+  name: TargetIndex
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_TargetIndex_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex
+  nameWithType: SkiaLayout.StructureChange.TargetIndex
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Type
+  name: Type
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Type
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.Type
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Type
+  nameWithType: SkiaLayout.StructureChange.Type
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Type*
+  name: Type
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Type_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.Type
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Type
+  nameWithType: SkiaLayout.StructureChange.Type
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  name: SkiaLayout.StructureChangeType
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html
+  commentId: T:DrawnUi.Draw.SkiaLayout.StructureChangeType
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  nameWithType: SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Add
+  name: Add
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_Add
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Add
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Add
+  nameWithType: SkiaLayout.StructureChangeType.Add
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.BackgroundMeasurement
+  name: BackgroundMeasurement
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_BackgroundMeasurement
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.BackgroundMeasurement
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.BackgroundMeasurement
+  nameWithType: SkiaLayout.StructureChangeType.BackgroundMeasurement
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Move
+  name: Move
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_Move
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Move
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Move
+  nameWithType: SkiaLayout.StructureChangeType.Move
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Remove
+  name: Remove
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_Remove
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Remove
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Remove
+  nameWithType: SkiaLayout.StructureChangeType.Remove
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Replace
+  name: Replace
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_Replace
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Replace
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Replace
+  nameWithType: SkiaLayout.StructureChangeType.Replace
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Reset
+  name: Reset
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_Reset
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Reset
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Reset
+  nameWithType: SkiaLayout.StructureChangeType.Reset
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.SingleItemUpdate
+  name: SingleItemUpdate
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_SingleItemUpdate
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.SingleItemUpdate
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.SingleItemUpdate
+  nameWithType: SkiaLayout.StructureChangeType.SingleItemUpdate
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.VisibilityChange
+  name: VisibilityChange
+  href: api/DrawnUi.Draw.SkiaLayout.StructureChangeType.html#DrawnUi_Draw_SkiaLayout_StructureChangeType_VisibilityChange
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.VisibilityChange
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.VisibilityChange
+  nameWithType: SkiaLayout.StructureChangeType.VisibilityChange
 - uid: DrawnUi.Draw.SkiaLayout.TemplatedFooter
   name: TemplatedFooter
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TemplatedFooter
@@ -47259,6 +47930,19 @@ references:
   commentId: F:DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   fullName: DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   nameWithType: SkiaLayout.TemplatedHeaderProperty
+- uid: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  name: TotalMeasuredItems
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TotalMeasuredItems
+  commentId: P:DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  fullName: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  nameWithType: SkiaLayout.TotalMeasuredItems
+- uid: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems*
+  name: TotalMeasuredItems
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TotalMeasuredItems_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  nameWithType: SkiaLayout.TotalMeasuredItems
 - uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
   name: TrackChildAsDirty(SkiaControl)
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
@@ -47371,6 +48055,12 @@ references:
   commentId: F:DrawnUi.Draw.SkiaLayout.VirtualizationProperty
   fullName: DrawnUi.Draw.SkiaLayout.VirtualizationProperty
   nameWithType: SkiaLayout.VirtualizationProperty
+- uid: DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  name: WillDrawFromFreshItemssSource
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_WillDrawFromFreshItemssSource
+  commentId: F:DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  fullName: DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  nameWithType: SkiaLayout.WillDrawFromFreshItemssSource
 - uid: DrawnUi.Draw.SkiaLayout._emptyView
   name: _emptyView
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout__emptyView
@@ -51391,15 +52081,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaScroll.ScrollLocked
   nameWithType: SkiaScroll.ScrollLocked
-- uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single)
-  name: ScrollTo(float, float, float)
-  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_
-  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single)
-  name.vb: ScrollTo(Single, Single, Single)
-  fullName: DrawnUi.Draw.SkiaScroll.ScrollTo(float, float, float)
-  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollTo(Single, Single, Single)
-  nameWithType: SkiaScroll.ScrollTo(float, float, float)
-  nameWithType.vb: SkiaScroll.ScrollTo(Single, Single, Single)
+- uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  name: ScrollTo(float, float, float, bool)
+  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  name.vb: ScrollTo(Single, Single, Single, Boolean)
+  fullName: DrawnUi.Draw.SkiaScroll.ScrollTo(float, float, float, bool)
+  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollTo(Single, Single, Single, Boolean)
+  nameWithType: SkiaScroll.ScrollTo(float, float, float, bool)
+  nameWithType.vb: SkiaScroll.ScrollTo(Single, Single, Single, Boolean)
 - uid: DrawnUi.Draw.SkiaScroll.ScrollTo*
   name: ScrollTo
   href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_
@@ -51423,15 +52113,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaScroll.ScrollToBottom
   nameWithType: SkiaScroll.ScrollToBottom
-- uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType)
-  name: ScrollToIndex(int, bool, RelativePositionType)
-  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_
-  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType)
-  name.vb: ScrollToIndex(Integer, Boolean, RelativePositionType)
-  fullName: DrawnUi.Draw.SkiaScroll.ScrollToIndex(int, bool, DrawnUi.Draw.RelativePositionType)
-  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollToIndex(Integer, Boolean, DrawnUi.Draw.RelativePositionType)
-  nameWithType: SkiaScroll.ScrollToIndex(int, bool, RelativePositionType)
-  nameWithType.vb: SkiaScroll.ScrollToIndex(Integer, Boolean, RelativePositionType)
+- uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType,System.Boolean)
+  name: ScrollToIndex(int, bool, RelativePositionType, bool)
+  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType,System.Boolean)
+  name.vb: ScrollToIndex(Integer, Boolean, RelativePositionType, Boolean)
+  fullName: DrawnUi.Draw.SkiaScroll.ScrollToIndex(int, bool, DrawnUi.Draw.RelativePositionType, bool)
+  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollToIndex(Integer, Boolean, DrawnUi.Draw.RelativePositionType, Boolean)
+  nameWithType: SkiaScroll.ScrollToIndex(int, bool, RelativePositionType, bool)
+  nameWithType.vb: SkiaScroll.ScrollToIndex(Integer, Boolean, RelativePositionType, Boolean)
 - uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex*
   name: ScrollToIndex
   href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_
@@ -51633,15 +52323,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaScroll.SetContent
   nameWithType: SkiaScroll.SetContent
-- uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean)
-  name: SetContentOffset(Vector2, bool)
-  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_
-  commentId: M:DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean)
-  name.vb: SetContentOffset(Vector2, Boolean)
-  fullName: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, bool)
-  fullName.vb: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, Boolean)
-  nameWithType: SkiaScroll.SetContentOffset(Vector2, bool)
-  nameWithType.vb: SkiaScroll.SetContentOffset(Vector2, Boolean)
+- uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean,System.Boolean)
+  name: SetContentOffset(Vector2, bool, bool)
+  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean,System.Boolean)
+  name.vb: SetContentOffset(Vector2, Boolean, Boolean)
+  fullName: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, bool, bool)
+  fullName.vb: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, Boolean, Boolean)
+  nameWithType: SkiaScroll.SetContentOffset(Vector2, bool, bool)
+  nameWithType.vb: SkiaScroll.SetContentOffset(Vector2, Boolean, Boolean)
 - uid: DrawnUi.Draw.SkiaScroll.SetContentOffset*
   name: SetContentOffset
   href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_
@@ -60929,6 +61619,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ViewsAdapter.AttachView
   nameWithType: ViewsAdapter.AttachView
+- uid: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+  name: CancelBackgroundPoolFilling()
+  href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_CancelBackgroundPoolFilling
+  commentId: M:DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+  fullName: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling()
+  nameWithType: ViewsAdapter.CancelBackgroundPoolFilling()
+- uid: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling*
+  name: CancelBackgroundPoolFilling
+  href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_CancelBackgroundPoolFilling_
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ViewsAdapter.CancelBackgroundPoolFilling
+  nameWithType: ViewsAdapter.CancelBackgroundPoolFilling
 - uid: DrawnUi.Draw.ViewsAdapter.Dispose
   name: Dispose()
   href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_Dispose
@@ -60999,6 +61702,15 @@ references:
   fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPool(Integer, System.Collections.IList)
   nameWithType: ViewsAdapter.FillPool(int, IList)
   nameWithType.vb: ViewsAdapter.FillPool(Integer, IList)
+- uid: DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Threading.CancellationToken)
+  name: FillPool(int, CancellationToken)
+  href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPool_System_Int32_System_Threading_CancellationToken_
+  commentId: M:DrawnUi.Draw.ViewsAdapter.FillPool(System.Int32,System.Threading.CancellationToken)
+  name.vb: FillPool(Integer, CancellationToken)
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPool(int, System.Threading.CancellationToken)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPool(Integer, System.Threading.CancellationToken)
+  nameWithType: ViewsAdapter.FillPool(int, CancellationToken)
+  nameWithType.vb: ViewsAdapter.FillPool(Integer, CancellationToken)
 - uid: DrawnUi.Draw.ViewsAdapter.FillPool*
   name: FillPool
   href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPool_
@@ -61006,6 +61718,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ViewsAdapter.FillPool
   nameWithType: ViewsAdapter.FillPool
+- uid: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(System.Int32)
+  name: FillPoolInBackgroundAsync(int)
+  href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPoolInBackgroundAsync_System_Int32_
+  commentId: M:DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(System.Int32)
+  name.vb: FillPoolInBackgroundAsync(Integer)
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(int)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync(Integer)
+  nameWithType: ViewsAdapter.FillPoolInBackgroundAsync(int)
+  nameWithType.vb: ViewsAdapter.FillPoolInBackgroundAsync(Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync*
+  name: FillPoolInBackgroundAsync
+  href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_FillPoolInBackgroundAsync_
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ViewsAdapter.FillPoolInBackgroundAsync
+  nameWithType: ViewsAdapter.FillPoolInBackgroundAsync
 - uid: DrawnUi.Draw.ViewsAdapter.GetChildrenCount
   name: GetChildrenCount()
   href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetChildrenCount
@@ -61090,6 +61818,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ViewsAdapter.GetViewsIterator
   nameWithType: ViewsAdapter.GetViewsIterator
+- uid: DrawnUi.Draw.ViewsAdapter.InitializeSoft(System.Boolean,System.Collections.IList,System.Int32)
+  name: InitializeSoft(bool, IList, int)
+  href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_InitializeSoft_System_Boolean_System_Collections_IList_System_Int32_
+  commentId: M:DrawnUi.Draw.ViewsAdapter.InitializeSoft(System.Boolean,System.Collections.IList,System.Int32)
+  name.vb: InitializeSoft(Boolean, IList, Integer)
+  fullName: DrawnUi.Draw.ViewsAdapter.InitializeSoft(bool, System.Collections.IList, int)
+  fullName.vb: DrawnUi.Draw.ViewsAdapter.InitializeSoft(Boolean, System.Collections.IList, Integer)
+  nameWithType: ViewsAdapter.InitializeSoft(bool, IList, int)
+  nameWithType.vb: ViewsAdapter.InitializeSoft(Boolean, IList, Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.InitializeSoft*
+  name: InitializeSoft
+  href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_InitializeSoft_
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.InitializeSoft
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ViewsAdapter.InitializeSoft
+  nameWithType: ViewsAdapter.InitializeSoft
 - uid: DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
   name: InitializeTemplates(NotifyCollectionChangedEventArgs, Func<object>, IList, int, int)
   href: api/DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_InitializeTemplates_System_Collections_Specialized_NotifyCollectionChangedEventArgs_System_Func_System_Object__System_Collections_IList_System_Int32_System_Int32_

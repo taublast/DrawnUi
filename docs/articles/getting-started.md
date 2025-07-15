@@ -1,6 +1,8 @@
 # Getting Started with DrawnUI
 
-This guide will help you get started with DrawnUI in your .NET MAUI application.
+This guide will help you get started with DrawnUI in your .NET MAUI application.  
+
+📚 You might also look at our [Tutorials](samples.md)
 
 ## Installation
 

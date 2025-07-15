@@ -1,28 +1,34 @@
 # Sample Apps
 
-Explore tutorials, real-world examples and code snippets to help you get started and master DrawnUi.Maui.
+Explore tutorials, real-world examples and code snippets to help you get started and master DrawnUi.
 
 ## 📚 Step-by-Step Tutorials
 
 ### Beginner Tutorials
-- **[Your First DrawnUI App](first-app.md)** 🚀 - Perfect starting point for beginners:
+- **[Your First DrawnUI App](first-app.md)** 🚀 - Starting point for beginners:
   - Complete setup from scratch
   - Basic controls and layouts
   - Simple animations
   - Cross-platform deployment
 
+- **[Interactive Button Tutorial](interactive-button.md)** 🎮 - Create a nice-looking game-style button:
+  - Bevel/Emboss visual effects
+  - Gradient backgrounds
+  - Press animations and feedback
+  - Performance optimization techniques
+
 ### Intermediate Tutorials
-- **[Interactive Card Gallery](interactive-cards.md)** ✨ - Build impressive animations and effects:
-  - Advanced gesture handling
+- **[Interactive Card Gallery](interactive-cards.md)** ✨ - Build a card gallery with animations and effects:
+  - Gesture handling
   - Visual effects and shadows
   - Performance optimization
-  - Professional UI patterns
+  - UI patterns
 
 ### Advanced Tutorials
-- **[News Feed Tutorial](news-feed-tutorial.md)** 📱 - Complex real-world application:
+- **[News Feed Tutorial](news-feed-tutorial.md)** 📱 - Build a news feed scroller:
   - Data binding and MVVM
   - Custom controls development
-  - Advanced layouts and virtualization
+  - Layouts and virtualization
   - Production-ready patterns
 
 ## 🎮 Learning Projects

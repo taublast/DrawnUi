@@ -10,6 +10,8 @@ items:
   - DrawnUi.Controls.SkiaDynamicDrawnCell.FreeContext
   - DrawnUi.Controls.SkiaDynamicDrawnCell.LastMeasuredSizePixels
   - DrawnUi.Controls.SkiaDynamicDrawnCell.OnMeasured
+  - DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(System.Boolean)
+  - DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
   langs:
   - csharp
   - vb
@@ -24,7 +26,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaDynamicDrawnCell
     path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
-    startLine: 5
+    startLine: 7
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -76,6 +78,7 @@ items:
   inheritedMembers:
   - DrawnUi.Controls.SkiaDrawnCell.SetContent(System.Object)
   - DrawnUi.Controls.SkiaDrawnCell.OnScrolled
+  - DrawnUi.Controls.SkiaDrawnCell.Remeasure
   - DrawnUi.Controls.SkiaDrawnCell.LongPressingHandler
   - DrawnUi.Controls.SkiaDrawnCell.Context
   - DrawnUi.Controls.SkiaDrawnCell.OnDisposing
@@ -160,6 +163,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.Draw(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLayout.InvalidatedChildren
   - DrawnUi.Draw.SkiaLayout.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
   - DrawnUi.Draw.SkiaLayout.Paint(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLayout.DrawViews(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLayout.IsStack
@@ -169,6 +173,8 @@ items:
   - DrawnUi.Draw.SkiaLayout.MeasureItemsStrategy
   - DrawnUi.Draw.SkiaLayout.ItemTemplatePoolSizeProperty
   - DrawnUi.Draw.SkiaLayout.ItemTemplatePoolSize
+  - DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  - DrawnUi.Draw.SkiaLayout.ReserveTemplates
   - DrawnUi.Draw.SkiaLayout.EmptyViewProperty
   - DrawnUi.Draw.SkiaLayout.EmptyView
   - DrawnUi.Draw.SkiaLayout.ItemsSourceProperty
@@ -178,7 +184,17 @@ items:
   - DrawnUi.Draw.SkiaLayout.OnItemSourceChanged
   - DrawnUi.Draw.SkiaLayout.ApplyItemsSource
   - DrawnUi.Draw.SkiaLayout.ResetScroll
+  - DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
   - DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  - DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  - DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.RefreshAllViews
   - DrawnUi.Draw.SkiaLayout.GetCacheDebugInfo
   - DrawnUi.Draw.SkiaLayout.OnPrintDebug
@@ -218,11 +234,21 @@ items:
   - DrawnUi.Draw.SkiaLayout.UpdateSizeChangedHandlers(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaLayout.Invalidate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaLayout.UpdateRowColumnBindingContexts
-  - DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  - DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
   - DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
   - DrawnUi.Draw.SkiaLayout.LastMeasuredIndex
   - DrawnUi.Draw.SkiaLayout.FirstVisibleIndex
   - DrawnUi.Draw.SkiaLayout.LastVisibleIndex
+  - DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  - DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  - DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  - DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaLayout.NeedMeasure
+  - DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  - DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
   - DrawnUi.Draw.SkiaLayout.DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   - DrawnUi.Draw.SkiaLayout.EstimatedTotalItems
   - DrawnUi.Draw.SkiaLayout.GetMeasuredContentEnd
@@ -233,7 +259,6 @@ items:
   - DrawnUi.Draw.SkiaLayout.ReportHotreloadChildAdded(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaLayout.GetVisualChildren
   - DrawnUi.Draw.SkiaLayout.MeasureWrap(SkiaSharp.SKRect,System.Single)
-  - DrawnUi.Draw.SkiaLayout.OnFirstDrawn
   - DrawnUi.Draw.SkiaLayout.PropagateVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.GetEnumerator
   - DrawnUi.Draw.SkiaControl.Add(Microsoft.Maui.IView)
@@ -412,7 +437,6 @@ items:
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  - DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -432,7 +456,6 @@ items:
   - DrawnUi.Draw.SkiaControl.OnParentVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.VisibilityChanged
   - DrawnUi.Draw.SkiaControl.SendVisibilityChanged
-  - DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.lockPausingAnimators
   - DrawnUi.Draw.SkiaControl.PauseAllAnimators
   - DrawnUi.Draw.SkiaControl.ResumePausedAnimators
@@ -645,6 +668,7 @@ items:
   - DrawnUi.Draw.SkiaControl.UpdateWhenReturnedFromBackgroundProperty
   - DrawnUi.Draw.SkiaControl.UpdateWhenReturnedFromBackground
   - DrawnUi.Draw.SkiaControl.OnSuperviewShouldRenderChanged(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
   - DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.IsRendering
   - DrawnUi.Draw.SkiaControl.NodeAttached
@@ -676,11 +700,11 @@ items:
   - DrawnUi.Draw.SkiaControl.IsSimpleRectangle(SkiaSharp.SKPath)
   - DrawnUi.Draw.SkiaControl.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
-  - DrawnUi.Draw.SkiaControl.NeedMeasure
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaControl.OnFirstDrawn
   - DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
   - DrawnUi.Draw.SkiaControl.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
   - DrawnUi.Draw.SkiaControl.DebugRenderingColor
@@ -1023,6 +1047,67 @@ items:
   - Microsoft.Maui.Controls.VisualElement.DrawnUi.Draw.StaticResourcesExtensions.GetAllWithMyselfParents
   - Microsoft.Maui.IView.DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  commentId: M:DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  id: UpdateVisibilityChanged
+  parent: DrawnUi.Controls.SkiaDynamicDrawnCell
+  langs:
+  - csharp
+  - vb
+  name: UpdateVisibilityChanged()
+  nameWithType: SkiaDynamicDrawnCell.UpdateVisibilityChanged()
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateVisibilityChanged
+    path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public void UpdateVisibilityChanged()
+    content.vb: Public Sub UpdateVisibilityChanged()
+  overload: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged*
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(System.Boolean)
+  commentId: M:DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(System.Boolean)
+  id: OnVisibilityChanged(System.Boolean)
+  parent: DrawnUi.Controls.SkiaDynamicDrawnCell
+  langs:
+  - csharp
+  - vb
+  name: OnVisibilityChanged(bool)
+  nameWithType: SkiaDynamicDrawnCell.OnVisibilityChanged(bool)
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnVisibilityChanged
+    path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: todo override for templated skialayout to use ViewsProvider
+  example: []
+  syntax:
+    content: public override void OnVisibilityChanged(bool value)
+    parameters:
+    - id: value
+      type: System.Boolean
+    content.vb: Public Overrides Sub OnVisibilityChanged(value As Boolean)
+  overridden: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
+  overload: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged*
+  nameWithType.vb: SkiaDynamicDrawnCell.OnVisibilityChanged(Boolean)
+  fullName.vb: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged(Boolean)
+  name.vb: OnVisibilityChanged(Boolean)
 - uid: DrawnUi.Controls.SkiaDynamicDrawnCell.OnMeasured
   commentId: M:DrawnUi.Controls.SkiaDynamicDrawnCell.OnMeasured
   id: OnMeasured
@@ -1041,7 +1126,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasured
     path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
-    startLine: 7
+    startLine: 23
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1069,7 +1154,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastMeasuredSizePixels
     path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
-    startLine: 18
+    startLine: 38
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1096,7 +1181,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FreeContext
     path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
-    startLine: 20
+    startLine: 40
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1124,7 +1209,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachContext
     path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
-    startLine: 29
+    startLine: 49
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1158,7 +1243,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContextPropertyChanged
     path: ../src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs
-    startLine: 37
+    startLine: 57
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1618,6 +1703,25 @@ references:
   - uid: DrawnUi.Controls.SkiaDrawnCell.OnScrolled
     name: OnScrolled
     href: DrawnUi.Controls.SkiaDrawnCell.html#DrawnUi_Controls_SkiaDrawnCell_OnScrolled
+  - name: (
+  - name: )
+- uid: DrawnUi.Controls.SkiaDrawnCell.Remeasure
+  commentId: M:DrawnUi.Controls.SkiaDrawnCell.Remeasure
+  parent: DrawnUi.Controls.SkiaDrawnCell
+  href: DrawnUi.Controls.SkiaDrawnCell.html#DrawnUi_Controls_SkiaDrawnCell_Remeasure
+  name: Remeasure()
+  nameWithType: SkiaDrawnCell.Remeasure()
+  fullName: DrawnUi.Controls.SkiaDrawnCell.Remeasure()
+  spec.csharp:
+  - uid: DrawnUi.Controls.SkiaDrawnCell.Remeasure
+    name: Remeasure
+    href: DrawnUi.Controls.SkiaDrawnCell.html#DrawnUi_Controls_SkiaDrawnCell_Remeasure
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Controls.SkiaDrawnCell.Remeasure
+    name: Remeasure
+    href: DrawnUi.Controls.SkiaDrawnCell.html#DrawnUi_Controls_SkiaDrawnCell_Remeasure
   - name: (
   - name: )
 - uid: DrawnUi.Controls.SkiaDrawnCell.LongPressingHandler
@@ -3361,6 +3465,13 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  commentId: F:DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_WillDrawFromFreshItemssSource
+  name: WillDrawFromFreshItemssSource
+  nameWithType: SkiaLayout.WillDrawFromFreshItemssSource
+  fullName: DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
 - uid: DrawnUi.Draw.SkiaLayout.Paint(DrawnUi.Draw.DrawingContext)
   commentId: M:DrawnUi.Draw.SkiaLayout.Paint(DrawnUi.Draw.DrawingContext)
   parent: DrawnUi.Draw.SkiaLayout
@@ -3460,6 +3571,20 @@ references:
   name: ItemTemplatePoolSize
   nameWithType: SkiaLayout.ItemTemplatePoolSize
   fullName: DrawnUi.Draw.SkiaLayout.ItemTemplatePoolSize
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  commentId: F:DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReserveTemplatesProperty
+  name: ReserveTemplatesProperty
+  nameWithType: SkiaLayout.ReserveTemplatesProperty
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  commentId: P:DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReserveTemplates
+  name: ReserveTemplates
+  nameWithType: SkiaLayout.ReserveTemplates
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplates
 - uid: DrawnUi.Draw.SkiaLayout.EmptyViewProperty
   commentId: F:DrawnUi.Draw.SkiaLayout.EmptyViewProperty
   parent: DrawnUi.Draw.SkiaLayout
@@ -3571,6 +3696,13 @@ references:
     href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ResetScroll
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  commentId: P:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange
+  name: ShouldPreserveStructureOnCollectionChange
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
 - uid: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   commentId: M:DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   parent: DrawnUi.Draw.SkiaLayout
@@ -3609,6 +3741,297 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: ','
   - name: " "
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleCollectionChangeWithStructurePreservation
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleCollectionChangeWithStructurePreservation
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  commentId: M:DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_StageStructureChange_DrawnUi_Draw_SkiaLayout_StructureChange_
+  name: StageStructureChange(StructureChange)
+  nameWithType: SkiaLayout.StageStructureChange(SkiaLayout.StructureChange)
+  fullName: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+    name: StageStructureChange
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_StageStructureChange_DrawnUi_Draw_SkiaLayout_StructureChange_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChange
+    name: StructureChange
+    href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+    name: StageStructureChange
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_StageStructureChange_DrawnUi_Draw_SkiaLayout_StructureChange_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChange
+    name: StructureChange
+    href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Boolean_
+  name: ReportChildVisibilityChanged(int, bool)
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged(int, bool)
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(int, bool)
+  nameWithType.vb: SkiaLayout.ReportChildVisibilityChanged(Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(Integer, Boolean)
+  name.vb: ReportChildVisibilityChanged(Integer, Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+    name: ReportChildVisibilityChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+    name: ReportChildVisibilityChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Int32_System_Boolean_
+  name: ReportChildVisibilityChanged(int, int, bool)
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged(int, int, bool)
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(int, int, bool)
+  nameWithType.vb: SkiaLayout.ReportChildVisibilityChanged(Integer, Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(Integer, Integer, Boolean)
+  name.vb: ReportChildVisibilityChanged(Integer, Integer, Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+    name: ReportChildVisibilityChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+    name: ReportChildVisibilityChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingAdd_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingAdd
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingAdd_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingAdd
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingAdd_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingRemove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingRemove
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingRemove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingRemove
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingRemove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReplace_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingReplace
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReplace_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingReplace
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReplace_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingMove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingMove(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingMove(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingMove
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingMove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingMove
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingMove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReset_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingReset(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingReset(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingReset
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReset_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: HandleStructurePreservingReset
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReset_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
   - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
     name: NotifyCollectionChangedEventArgs
     isExternal: true
@@ -4448,6 +4871,147 @@ references:
     href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_UpdateRowColumnBindingContexts
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaLayout.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: ProcessGestures
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: ProcessGestures
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  commentId: P:DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsBackgroundMeasuring
+  name: IsBackgroundMeasuring
+  nameWithType: SkiaLayout.IsBackgroundMeasuring
+  fullName: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementProgress
+  name: BackgroundMeasurementProgress
+  nameWithType: SkiaLayout.BackgroundMeasurementProgress
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+- uid: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  commentId: P:DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TotalMeasuredItems
+  name: TotalMeasuredItems
+  nameWithType: SkiaLayout.TotalMeasuredItems
+  fullName: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+- uid: DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_FirstMeasuredIndex
+  name: FirstMeasuredIndex
+  nameWithType: SkiaLayout.FirstMeasuredIndex
+  fullName: DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
+- uid: DrawnUi.Draw.SkiaLayout.LastMeasuredIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.LastMeasuredIndex
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_LastMeasuredIndex
+  name: LastMeasuredIndex
+  nameWithType: SkiaLayout.LastMeasuredIndex
+  fullName: DrawnUi.Draw.SkiaLayout.LastMeasuredIndex
+- uid: DrawnUi.Draw.SkiaLayout.FirstVisibleIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.FirstVisibleIndex
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_FirstVisibleIndex
+  name: FirstVisibleIndex
+  nameWithType: SkiaLayout.FirstVisibleIndex
+  fullName: DrawnUi.Draw.SkiaLayout.FirstVisibleIndex
+- uid: DrawnUi.Draw.SkiaLayout.LastVisibleIndex
+  commentId: P:DrawnUi.Draw.SkiaLayout.LastVisibleIndex
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_LastVisibleIndex
+  name: LastVisibleIndex
+  nameWithType: SkiaLayout.LastVisibleIndex
+  fullName: DrawnUi.Draw.SkiaLayout.LastVisibleIndex
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  commentId: P:DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasuredItemsPercentage
+  name: MeasuredItemsPercentage
+  nameWithType: SkiaLayout.MeasuredItemsPercentage
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+- uid: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  commentId: M:DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_CancelBackgroundMeasurement
+  name: CancelBackgroundMeasurement()
+  nameWithType: SkiaLayout.CancelBackgroundMeasurement()
+  fullName: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+    name: CancelBackgroundMeasurement
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_CancelBackgroundMeasurement
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+    name: CancelBackgroundMeasurement
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_CancelBackgroundMeasurement
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RemeasureSingleItemInBackground_System_Int32_
+  name: RemeasureSingleItemInBackground(int)
+  nameWithType: SkiaLayout.RemeasureSingleItemInBackground(int)
+  fullName: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(int)
+  nameWithType.vb: SkiaLayout.RemeasureSingleItemInBackground(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(Integer)
+  name.vb: RemeasureSingleItemInBackground(Integer)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+    name: RemeasureSingleItemInBackground
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RemeasureSingleItemInBackground_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+    name: RemeasureSingleItemInBackground
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RemeasureSingleItemInBackground_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
   commentId: M:DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
   parent: DrawnUi.Draw.SkiaLayout
@@ -4491,34 +5055,111 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
-  commentId: P:DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
+- uid: DrawnUi.Draw.SkiaLayout.NeedMeasure
+  commentId: P:DrawnUi.Draw.SkiaLayout.NeedMeasure
   parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_FirstMeasuredIndex
-  name: FirstMeasuredIndex
-  nameWithType: SkiaLayout.FirstMeasuredIndex
-  fullName: DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
-- uid: DrawnUi.Draw.SkiaLayout.LastMeasuredIndex
-  commentId: P:DrawnUi.Draw.SkiaLayout.LastMeasuredIndex
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_NeedMeasure
+  name: NeedMeasure
+  nameWithType: SkiaLayout.NeedMeasure
+  fullName: DrawnUi.Draw.SkiaLayout.NeedMeasure
+- uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  commentId: M:DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
   parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_LastMeasuredIndex
-  name: LastMeasuredIndex
-  nameWithType: SkiaLayout.LastMeasuredIndex
-  fullName: DrawnUi.Draw.SkiaLayout.LastMeasuredIndex
-- uid: DrawnUi.Draw.SkiaLayout.FirstVisibleIndex
-  commentId: P:DrawnUi.Draw.SkiaLayout.FirstVisibleIndex
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges
+  name: ApplyStructureChanges()
+  nameWithType: SkiaLayout.ApplyStructureChanges()
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+    name: ApplyStructureChanges
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+    name: ApplyStructureChanges
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
   parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_FirstVisibleIndex
-  name: FirstVisibleIndex
-  nameWithType: SkiaLayout.FirstVisibleIndex
-  fullName: DrawnUi.Draw.SkiaLayout.FirstVisibleIndex
-- uid: DrawnUi.Draw.SkiaLayout.LastVisibleIndex
-  commentId: P:DrawnUi.Draw.SkiaLayout.LastVisibleIndex
-  parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_LastVisibleIndex
-  name: LastVisibleIndex
-  nameWithType: SkiaLayout.LastVisibleIndex
-  fullName: DrawnUi.Draw.SkiaLayout.LastVisibleIndex
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureSingleItem_System_Int32_SkiaSharp_SKRect_System_Single_System_Threading_CancellationToken_System_Boolean_
+  name: MeasureSingleItem(int, SKRect, float, CancellationToken, bool)
+  nameWithType: SkiaLayout.MeasureSingleItem(int, SKRect, float, CancellationToken, bool)
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(int, SkiaSharp.SKRect, float, System.Threading.CancellationToken, bool)
+  nameWithType.vb: SkiaLayout.MeasureSingleItem(Integer, SKRect, Single, CancellationToken, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(Integer, SkiaSharp.SKRect, Single, System.Threading.CancellationToken, Boolean)
+  name.vb: MeasureSingleItem(Integer, SKRect, Single, CancellationToken, Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+    name: MeasureSingleItem
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureSingleItem_System_Int32_SkiaSharp_SKRect_System_Single_System_Threading_CancellationToken_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+    name: MeasureSingleItem
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureSingleItem_System_Int32_SkiaSharp_SKRect_System_Single_System_Threading_CancellationToken_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   commentId: M:DrawnUi.Draw.SkiaLayout.DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   parent: DrawnUi.Draw.SkiaLayout
@@ -4796,25 +5437,6 @@ references:
     name: Single
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
-- uid: DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  commentId: M:DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnFirstDrawn
-  name: OnFirstDrawn()
-  nameWithType: SkiaLayout.OnFirstDrawn()
-  fullName: DrawnUi.Draw.SkiaLayout.OnFirstDrawn()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-    name: OnFirstDrawn
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnFirstDrawn
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-    name: OnFirstDrawn
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnFirstDrawn
-  - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaLayout.PropagateVisibilityChanged(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaLayout.PropagateVisibilityChanged(System.Boolean)
@@ -9429,41 +10051,6 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  commentId: M:DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
-  name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  nameWithType: SkiaControl.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  fullName: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-    name: ProcessGestures
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaGesturesParameters
-    name: SkiaGesturesParameters
-    href: DrawnUi.Draw.SkiaGesturesParameters.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.GestureEventProcessingInfo
-    name: GestureEventProcessingInfo
-    href: DrawnUi.Draw.GestureEventProcessingInfo.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-    name: ProcessGestures
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaGesturesParameters
-    name: SkiaGesturesParameters
-    href: DrawnUi.Draw.SkiaGesturesParameters.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.GestureEventProcessingInfo
-    name: GestureEventProcessingInfo
-    href: DrawnUi.Draw.GestureEventProcessingInfo.html
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -9668,37 +10255,6 @@ references:
     name: SendVisibilityChanged
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendVisibilityChanged
   - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
-  parent: DrawnUi.Draw.SkiaControl
-  isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnVisibilityChanged_System_Boolean_
-  name: OnVisibilityChanged(bool)
-  nameWithType: SkiaControl.OnVisibilityChanged(bool)
-  fullName: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(bool)
-  nameWithType.vb: SkiaControl.OnVisibilityChanged(Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(Boolean)
-  name.vb: OnVisibilityChanged(Boolean)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
-    name: OnVisibilityChanged
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnVisibilityChanged_System_Boolean_
-  - name: (
-  - uid: System.Boolean
-    name: bool
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
-    name: OnVisibilityChanged
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnVisibilityChanged_System_Boolean_
-  - name: (
-  - uid: System.Boolean
-    name: Boolean
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.lockPausingAnimators
   commentId: F:DrawnUi.Draw.SkiaControl.lockPausingAnimators
@@ -13567,6 +14123,25 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  commentId: M:DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  name: NeedToMeasureSelf()
+  nameWithType: SkiaControl.NeedToMeasureSelf()
+  fullName: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl
@@ -14340,13 +14915,6 @@ references:
   name: ShouldClipAntialiased
   nameWithType: SkiaControl.ShouldClipAntialiased
   fullName: DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
-- uid: DrawnUi.Draw.SkiaControl.NeedMeasure
-  commentId: P:DrawnUi.Draw.SkiaControl.NeedMeasure
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedMeasure
-  name: NeedMeasure
-  nameWithType: SkiaControl.NeedMeasure
-  fullName: DrawnUi.Draw.SkiaControl.NeedMeasure
 - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
   parent: DrawnUi.Draw.SkiaControl
@@ -14444,6 +15012,25 @@ references:
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
+  commentId: M:DrawnUi.Draw.SkiaControl.OnFirstDrawn
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
+  name: OnFirstDrawn()
+  nameWithType: SkiaControl.OnFirstDrawn()
+  fullName: DrawnUi.Draw.SkiaControl.OnFirstDrawn()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
+    name: OnFirstDrawn
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
+    name: OnFirstDrawn
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
+  - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
   commentId: E:DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
@@ -29548,6 +30135,60 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged*
+  commentId: Overload:DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  href: DrawnUi.Controls.SkiaDynamicDrawnCell.html#DrawnUi_Controls_SkiaDynamicDrawnCell_UpdateVisibilityChanged
+  name: UpdateVisibilityChanged
+  nameWithType: SkiaDynamicDrawnCell.UpdateVisibilityChanged
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.UpdateVisibilityChanged
+- uid: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnVisibilityChanged_System_Boolean_
+  name: OnVisibilityChanged(bool)
+  nameWithType: SkiaControl.OnVisibilityChanged(bool)
+  fullName: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(bool)
+  nameWithType.vb: SkiaControl.OnVisibilityChanged(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(Boolean)
+  name.vb: OnVisibilityChanged(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
+    name: OnVisibilityChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnVisibilityChanged_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
+    name: OnVisibilityChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnVisibilityChanged_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged*
+  commentId: Overload:DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged
+  href: DrawnUi.Controls.SkiaDynamicDrawnCell.html#DrawnUi_Controls_SkiaDynamicDrawnCell_OnVisibilityChanged_System_Boolean_
+  name: OnVisibilityChanged
+  nameWithType: SkiaDynamicDrawnCell.OnVisibilityChanged
+  fullName: DrawnUi.Controls.SkiaDynamicDrawnCell.OnVisibilityChanged
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: DrawnUi.Draw.SkiaLayout.OnMeasured
   commentId: M:DrawnUi.Draw.SkiaLayout.OnMeasured
   parent: DrawnUi.Draw.SkiaLayout

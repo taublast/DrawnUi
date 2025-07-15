@@ -224,10 +224,14 @@ items:
   - DrawnUi.Draw.SkiaLabelFps
   - DrawnUi.Draw.SkiaLayer
   - DrawnUi.Draw.SkiaLayout
+  - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
   - DrawnUi.Draw.SkiaLayout.BuildWrapLayout
   - DrawnUi.Draw.SkiaLayout.Cell
+  - DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
   - DrawnUi.Draw.SkiaLayout.SecondPassArrange
   - DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  - DrawnUi.Draw.SkiaLayout.StructureChange
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType
   - DrawnUi.Draw.SkiaMarkdownLabel
   - DrawnUi.Draw.SkiaMauiElement
   - DrawnUi.Draw.SkiaPoint
@@ -771,6 +775,96 @@ references:
   - uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
     name: SkiaGridStructure
     href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange
+  commentId: T:DrawnUi.Draw.SkiaLayout.StructureChange
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.StructureChange
+  nameWithType: SkiaLayout.StructureChange
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChange
+    name: StructureChange
+    href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChange
+    name: StructureChange
+    href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  commentId: T:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.BackgroundMeasurementContext
+  nameWithType: SkiaLayout.BackgroundMeasurementContext
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+    name: BackgroundMeasurementContext
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+    name: BackgroundMeasurementContext
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext.html
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  commentId: T:DrawnUi.Draw.SkiaLayout.StructureChangeType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.StructureChangeType
+  nameWithType: SkiaLayout.StructureChangeType
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+    name: StructureChangeType
+    href: DrawnUi.Draw.SkiaLayout.StructureChangeType.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+    name: StructureChangeType
+    href: DrawnUi.Draw.SkiaLayout.StructureChangeType.html
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+  commentId: T:DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.MeasuredItemInfo
+  nameWithType: SkiaLayout.MeasuredItemInfo
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+    name: MeasuredItemInfo
+    href: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
+    name: MeasuredItemInfo
+    href: DrawnUi.Draw.SkiaLayout.MeasuredItemInfo.html
 - uid: DrawnUi.Draw.MeasuredListCell
   commentId: T:DrawnUi.Draw.MeasuredListCell
   href: DrawnUi.Draw.MeasuredListCell.html

@@ -1,0 +1,384 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  commentId: T:DrawnUi.Draw.SkiaLayout.StructureChangeType
+  id: SkiaLayout.StructureChangeType
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.Add
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.BackgroundMeasurement
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.Move
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.Remove
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.Replace
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.Reset
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.SingleItemUpdate
+  - DrawnUi.Draw.SkiaLayout.StructureChangeType.VisibilityChange
+  langs:
+  - csharp
+  - vb
+  name: SkiaLayout.StructureChangeType
+  nameWithType: SkiaLayout.StructureChangeType
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  type: Enum
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StructureChangeType
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 65
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Types of structure changes that can be applied
+  example: []
+  syntax:
+    content: public enum SkiaLayout.StructureChangeType
+    content.vb: Public Enum SkiaLayout.StructureChangeType
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Add
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Add
+  id: Add
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: Add
+  nameWithType: SkiaLayout.StructureChangeType.Add
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Add
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Add
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 67
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Add = 0
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Remove
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Remove
+  id: Remove
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: Remove
+  nameWithType: SkiaLayout.StructureChangeType.Remove
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Remove
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Remove
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 68
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Remove = 1
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Replace
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Replace
+  id: Replace
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: Replace
+  nameWithType: SkiaLayout.StructureChangeType.Replace
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Replace
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Replace
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 69
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Replace = 2
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Move
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Move
+  id: Move
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: Move
+  nameWithType: SkiaLayout.StructureChangeType.Move
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Move
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Move
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 70
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Move = 3
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.Reset
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.Reset
+  id: Reset
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: Reset
+  nameWithType: SkiaLayout.StructureChangeType.Reset
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.Reset
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Reset
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 71
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Reset = 4
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.BackgroundMeasurement
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.BackgroundMeasurement
+  id: BackgroundMeasurement
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: BackgroundMeasurement
+  nameWithType: SkiaLayout.StructureChangeType.BackgroundMeasurement
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.BackgroundMeasurement
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BackgroundMeasurement
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 72
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: BackgroundMeasurement = 5
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.VisibilityChange
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.VisibilityChange
+  id: VisibilityChange
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: VisibilityChange
+  nameWithType: SkiaLayout.StructureChangeType.VisibilityChange
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.VisibilityChange
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VisibilityChange
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 73
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: VisibilityChange = 6
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType.SingleItemUpdate
+  commentId: F:DrawnUi.Draw.SkiaLayout.StructureChangeType.SingleItemUpdate
+  id: SingleItemUpdate
+  parent: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  langs:
+  - csharp
+  - vb
+  name: SingleItemUpdate
+  nameWithType: SkiaLayout.StructureChangeType.SingleItemUpdate
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType.SingleItemUpdate
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SingleItemUpdate
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 74
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: SingleItemUpdate = 7
+    return:
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  commentId: T:DrawnUi.Draw.SkiaLayout.StructureChangeType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.StructureChangeType
+  nameWithType: SkiaLayout.StructureChangeType
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChangeType
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+    name: StructureChangeType
+    href: DrawnUi.Draw.SkiaLayout.StructureChangeType.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
+    name: StructureChangeType
+    href: DrawnUi.Draw.SkiaLayout.StructureChangeType.html
