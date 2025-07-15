@@ -33,7 +33,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatedViewsPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1416
+    startLine: 1551
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -72,7 +72,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateTemplate
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1418
+    startLine: 1553
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -101,7 +101,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1419
+    startLine: 1554
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -130,7 +130,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1420
+    startLine: 1555
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -157,7 +157,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1432
+    startLine: 1567
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -193,7 +193,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Size
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1440
+    startLine: 1575
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -222,7 +222,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxDistinctHeights
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1455
+    startLine: 1590
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -251,7 +251,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1467
+    startLine: 1602
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -283,7 +283,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1498
+    startLine: 1633
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -313,7 +313,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reserve
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1523
+    startLine: 1658
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -339,7 +339,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetStandalone
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1545
+    startLine: 1680
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -367,7 +367,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnStandalone
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1563
+    startLine: 1698
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -396,7 +396,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearStandalonePool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1574
+    startLine: 1709
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -422,7 +422,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1590
+    startLine: 1725
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -456,7 +456,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Return
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1645
+    startLine: 1787
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

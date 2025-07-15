@@ -23,7 +23,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheValidityType
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 566
+    startLine: 580
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -50,7 +50,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Valid
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 568
+    startLine: 582
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -76,7 +76,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Missing
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 569
+    startLine: 583
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -102,7 +102,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SizeMismatch
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 570
+    startLine: 584
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -128,7 +128,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GraphicContextMismatch
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 571
+    startLine: 585
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

@@ -6,7 +6,7 @@ items:
   parent: DrawnUi.Draw
   children:
   - DrawnUi.Draw.IDefinesViewport.InvalidateByChild(DrawnUi.Draw.SkiaControl)
-  - DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
   - DrawnUi.Draw.IDefinesViewport.TrackIndexPosition
   - DrawnUi.Draw.IDefinesViewport.UpdateVisibleIndex
   - DrawnUi.Draw.IDefinesViewport.Viewport
@@ -117,16 +117,16 @@ items:
       type: DrawnUi.Draw.RelativePositionType
     content.vb: ReadOnly Property TrackIndexPosition As RelativePositionType
   overload: DrawnUi.Draw.IDefinesViewport.TrackIndexPosition*
-- uid: DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
-  commentId: M:DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)
-  id: ScrollTo(System.Single,System.Single,System.Single)
+- uid: DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  commentId: M:DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  id: ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
   parent: DrawnUi.Draw.IDefinesViewport
   langs:
   - csharp
   - vb
-  name: ScrollTo(float, float, float)
-  nameWithType: IDefinesViewport.ScrollTo(float, float, float)
-  fullName: DrawnUi.Draw.IDefinesViewport.ScrollTo(float, float, float)
+  name: ScrollTo(float, float, float, bool)
+  nameWithType: IDefinesViewport.ScrollTo(float, float, float, bool)
+  fullName: DrawnUi.Draw.IDefinesViewport.ScrollTo(float, float, float, bool)
   type: Method
   source:
     remote:
@@ -140,7 +140,7 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: void ScrollTo(float x, float y, float maxTimeSecs)
+    content: void ScrollTo(float x, float y, float maxTimeSecs, bool clamp)
     parameters:
     - id: x
       type: System.Single
@@ -148,11 +148,13 @@ items:
       type: System.Single
     - id: maxTimeSecs
       type: System.Single
-    content.vb: Sub ScrollTo(x As Single, y As Single, maxTimeSecs As Single)
+    - id: clamp
+      type: System.Boolean
+    content.vb: Sub ScrollTo(x As Single, y As Single, maxTimeSecs As Single, clamp As Boolean)
   overload: DrawnUi.Draw.IDefinesViewport.ScrollTo*
-  nameWithType.vb: IDefinesViewport.ScrollTo(Single, Single, Single)
-  fullName.vb: DrawnUi.Draw.IDefinesViewport.ScrollTo(Single, Single, Single)
-  name.vb: ScrollTo(Single, Single, Single)
+  nameWithType.vb: IDefinesViewport.ScrollTo(Single, Single, Single, Boolean)
+  fullName.vb: DrawnUi.Draw.IDefinesViewport.ScrollTo(Single, Single, Single, Boolean)
+  name.vb: ScrollTo(Single, Single, Single, Boolean)
 - uid: DrawnUi.Draw.IDefinesViewport.InvalidateByChild(DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Draw.IDefinesViewport.InvalidateByChild(DrawnUi.Draw.SkiaControl)
   id: InvalidateByChild(DrawnUi.Draw.SkiaControl)
@@ -331,7 +333,7 @@ references:
   fullName: DrawnUi.Draw.RelativePositionType
 - uid: DrawnUi.Draw.IDefinesViewport.ScrollTo*
   commentId: Overload:DrawnUi.Draw.IDefinesViewport.ScrollTo
-  href: DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_ScrollTo_System_Single_System_Single_System_Single_
+  href: DrawnUi.Draw.IDefinesViewport.html#DrawnUi_Draw_IDefinesViewport_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_
   name: ScrollTo
   nameWithType: IDefinesViewport.ScrollTo
   fullName: DrawnUi.Draw.IDefinesViewport.ScrollTo
@@ -346,6 +348,17 @@ references:
   nameWithType.vb: Single
   fullName.vb: Single
   name.vb: Single
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: System
   commentId: N:System
   isExternal: true

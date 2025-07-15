@@ -371,11 +371,11 @@ items:
   - DrawnUi.Draw.SkiaScroll.ScrollToOffset(System.Numerics.Vector2,System.Single)
   - DrawnUi.Draw.SkiaScroll.MoveToY(System.Single)
   - DrawnUi.Draw.SkiaScroll.MoveToX(System.Single)
-  - DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType)
+  - DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType,System.Boolean)
   - DrawnUi.Draw.SkiaScroll.ExecuteScrollToOrder
   - DrawnUi.Draw.SkiaScroll.ExecuteScrollToIndexOrder
-  - DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean)
-  - DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean,System.Boolean)
+  - DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
   - DrawnUi.Draw.SkiaScroll.ScrollToTop(System.Single)
   - DrawnUi.Draw.SkiaScroll.ScrollToBottom(System.Single)
   - DrawnUi.Draw.SkiaScroll.Snapped
@@ -804,6 +804,7 @@ items:
   - DrawnUi.Draw.SkiaControl.UpdateWhenReturnedFromBackground
   - DrawnUi.Draw.SkiaControl.OnSuperviewShouldRenderChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.ApplyMeasureResult
+  - DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
   - DrawnUi.Draw.SkiaControl.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.IsRendering
@@ -6404,21 +6405,21 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType)
-  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType)
+- uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType,System.Boolean)
   parent: DrawnUi.Draw.SkiaScroll
   isExternal: true
-  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_
-  name: ScrollToIndex(int, bool, RelativePositionType)
-  nameWithType: SkiaScroll.ScrollToIndex(int, bool, RelativePositionType)
-  fullName: DrawnUi.Draw.SkiaScroll.ScrollToIndex(int, bool, DrawnUi.Draw.RelativePositionType)
-  nameWithType.vb: SkiaScroll.ScrollToIndex(Integer, Boolean, RelativePositionType)
-  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollToIndex(Integer, Boolean, DrawnUi.Draw.RelativePositionType)
-  name.vb: ScrollToIndex(Integer, Boolean, RelativePositionType)
+  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_System_Boolean_
+  name: ScrollToIndex(int, bool, RelativePositionType, bool)
+  nameWithType: SkiaScroll.ScrollToIndex(int, bool, RelativePositionType, bool)
+  fullName: DrawnUi.Draw.SkiaScroll.ScrollToIndex(int, bool, DrawnUi.Draw.RelativePositionType, bool)
+  nameWithType.vb: SkiaScroll.ScrollToIndex(Integer, Boolean, RelativePositionType, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollToIndex(Integer, Boolean, DrawnUi.Draw.RelativePositionType, Boolean)
+  name.vb: ScrollToIndex(Integer, Boolean, RelativePositionType, Boolean)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType)
+  - uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType,System.Boolean)
     name: ScrollToIndex
-    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_
+    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_System_Boolean_
   - name: (
   - uid: System.Int32
     name: int
@@ -6435,11 +6436,17 @@ references:
   - uid: DrawnUi.Draw.RelativePositionType
     name: RelativePositionType
     href: DrawnUi.Draw.RelativePositionType.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType)
+  - uid: DrawnUi.Draw.SkiaScroll.ScrollToIndex(System.Int32,System.Boolean,DrawnUi.Draw.RelativePositionType,System.Boolean)
     name: ScrollToIndex
-    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_
+    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollToIndex_System_Int32_System_Boolean_DrawnUi_Draw_RelativePositionType_System_Boolean_
   - name: (
   - uid: System.Int32
     name: Integer
@@ -6456,6 +6463,12 @@ references:
   - uid: DrawnUi.Draw.RelativePositionType
     name: RelativePositionType
     href: DrawnUi.Draw.RelativePositionType.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: DrawnUi.Draw.SkiaScroll.ExecuteScrollToOrder
   commentId: M:DrawnUi.Draw.SkiaScroll.ExecuteScrollToOrder
@@ -6495,21 +6508,21 @@ references:
     href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ExecuteScrollToIndexOrder
   - name: (
   - name: )
-- uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean)
+- uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean,System.Boolean)
   parent: DrawnUi.Draw.SkiaScroll
   isExternal: true
-  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_
-  name: SetContentOffset(Vector2, bool)
-  nameWithType: SkiaScroll.SetContentOffset(Vector2, bool)
-  fullName: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, bool)
-  nameWithType.vb: SkiaScroll.SetContentOffset(Vector2, Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, Boolean)
-  name.vb: SetContentOffset(Vector2, Boolean)
+  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_System_Boolean_
+  name: SetContentOffset(Vector2, bool, bool)
+  nameWithType: SkiaScroll.SetContentOffset(Vector2, bool, bool)
+  fullName: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, bool, bool)
+  nameWithType.vb: SkiaScroll.SetContentOffset(Vector2, Boolean, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2, Boolean, Boolean)
+  name.vb: SetContentOffset(Vector2, Boolean, Boolean)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean,System.Boolean)
     name: SetContentOffset
-    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_
+    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_System_Boolean_
   - name: (
   - uid: System.Numerics.Vector2
     name: Vector2
@@ -6521,11 +6534,17 @@ references:
     name: bool
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaScroll.SetContentOffset(System.Numerics.Vector2,System.Boolean,System.Boolean)
     name: SetContentOffset
-    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_
+    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetContentOffset_System_Numerics_Vector2_System_Boolean_System_Boolean_
   - name: (
   - uid: System.Numerics.Vector2
     name: Vector2
@@ -6537,22 +6556,28 @@ references:
     name: Boolean
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
-- uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single)
-  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single)
+- uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
   parent: DrawnUi.Draw.SkiaScroll
   isExternal: true
-  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_
-  name: ScrollTo(float, float, float)
-  nameWithType: SkiaScroll.ScrollTo(float, float, float)
-  fullName: DrawnUi.Draw.SkiaScroll.ScrollTo(float, float, float)
-  nameWithType.vb: SkiaScroll.ScrollTo(Single, Single, Single)
-  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollTo(Single, Single, Single)
-  name.vb: ScrollTo(Single, Single, Single)
+  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_
+  name: ScrollTo(float, float, float, bool)
+  nameWithType: SkiaScroll.ScrollTo(float, float, float, bool)
+  fullName: DrawnUi.Draw.SkiaScroll.ScrollTo(float, float, float, bool)
+  nameWithType.vb: SkiaScroll.ScrollTo(Single, Single, Single, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaScroll.ScrollTo(Single, Single, Single, Boolean)
+  name.vb: ScrollTo(Single, Single, Single, Boolean)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single)
+  - uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
     name: ScrollTo
-    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_
+    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_
   - name: (
   - uid: System.Single
     name: float
@@ -6570,11 +6595,17 @@ references:
     name: float
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single)
+  - uid: DrawnUi.Draw.SkiaScroll.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)
     name: ScrollTo
-    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_
+    href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_
   - name: (
   - uid: System.Single
     name: Single
@@ -6592,6 +6623,12 @@ references:
     name: Single
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: DrawnUi.Draw.SkiaScroll.ScrollToTop(System.Single)
   commentId: M:DrawnUi.Draw.SkiaScroll.ScrollToTop(System.Single)
@@ -15556,6 +15593,25 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.ApplyMeasureResult
     name: ApplyMeasureResult
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ApplyMeasureResult
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  commentId: M:DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  name: NeedToMeasureSelf()
+  nameWithType: SkiaControl.NeedToMeasureSelf()
+  fullName: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)

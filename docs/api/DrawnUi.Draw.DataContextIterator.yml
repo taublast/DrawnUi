@@ -24,7 +24,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DataContextIterator
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1300
+    startLine: 1435
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -65,7 +65,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1331
+    startLine: 1466
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -99,7 +99,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Current
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1346
+    startLine: 1481
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -133,7 +133,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MoveNext
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1350
+    startLine: 1485
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -170,7 +170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1390
+    startLine: 1525
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -207,7 +207,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1407
+    startLine: 1542
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

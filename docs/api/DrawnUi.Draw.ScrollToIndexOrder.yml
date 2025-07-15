@@ -6,6 +6,7 @@ items:
   parent: DrawnUi.Draw
   children:
   - DrawnUi.Draw.ScrollToIndexOrder.Animated
+  - DrawnUi.Draw.ScrollToIndexOrder.Clamp
   - DrawnUi.Draw.ScrollToIndexOrder.Default
   - DrawnUi.Draw.ScrollToIndexOrder.Index
   - DrawnUi.Draw.ScrollToIndexOrder.IsSet
@@ -215,6 +216,35 @@ items:
       type: System.Int32
     content.vb: Public Property Index As Integer
   overload: DrawnUi.Draw.ScrollToIndexOrder.Index*
+- uid: DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  commentId: P:DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  id: Clamp
+  parent: DrawnUi.Draw.ScrollToIndexOrder
+  langs:
+  - csharp
+  - vb
+  name: Clamp
+  nameWithType: ScrollToIndexOrder.Clamp
+  fullName: DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Clamp
+    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool Clamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Clamp As Boolean
+  overload: DrawnUi.Draw.ScrollToIndexOrder.Clamp*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -628,3 +658,9 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
+- uid: DrawnUi.Draw.ScrollToIndexOrder.Clamp*
+  commentId: Overload:DrawnUi.Draw.ScrollToIndexOrder.Clamp
+  href: DrawnUi.Draw.ScrollToIndexOrder.html#DrawnUi_Draw_ScrollToIndexOrder_Clamp
+  name: Clamp
+  nameWithType: ScrollToIndexOrder.Clamp
+  fullName: DrawnUi.Draw.ScrollToIndexOrder.Clamp

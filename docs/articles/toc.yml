@@ -15,6 +15,8 @@
       href: samples.md
     - name: Your First Drawn App
       href: first-app.md
+    - name: Interactive Button Tutorial
+      href: interactive-button.md
     - name: Drawn Cards Tutorial
       href: interactive-cards.md
     - name: News Feed Tutorial
@@ -57,24 +59,22 @@
 - name: Advanced
   href: advanced/index.md
   items:
-    - name: Drawing Pipeline
-      href: drawing-pipeline.md
-    - name: Fluent C# Extensions
-      href: fluent-extensions.md
-    - name: Platform-Specific Styling
-      href: advanced/platform-styling.md
     - name: Layout System Architecture
       href: advanced/layout-system.md
-    - name: Recycled Cells
-      href: advanced/recycled-cells.md
-    - name: Gradients
-      href: advanced/gradients.md
-    - name: Game UI & Interactive Games
-      href: advanced/game-ui.md
-    - name: SkiaScroll & Virtualization
-      href: advanced/skiascroll.md
     - name: Gestures & Touch Input
       href: advanced/gestures.md
+    - name: Platform-Specific Styling
+      href: advanced/platform-styling.md
+    - name: Gradients
+      href: advanced/gradients.md
+    - name: Fluent C# Extensions
+      href: fluent-extensions.md
+    - name: SkiaScroll & Virtualization
+      href: advanced/skiascroll.md
+    - name: Drawing Pipeline
+      href: drawing-pipeline.md
+    - name: Game UI & Interactive Games
+      href: advanced/game-ui.md
 
 - name: FAQ
   href: faq.md

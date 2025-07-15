@@ -97,20 +97,30 @@
 <p><strong>Initialize in MauiProgram.cs:</strong></p>
 <pre><code class="lang-csharp">builder.UseDrawnUi();
 </code></pre>
-<p>👉 More in the <a href="getting-started.html">Getting Started Guide</a>.</p>
+<p>👉 More in the <a href="getting-started.html">Getting Started Guide</a>!</p>
 <hr>
-<h2 id="purpose">Purpose</h2>
+<h2 id="-knowledge-base">📚 Knowledge Base</h2>
+<h3 id="documentation--guides">Documentation &amp; Guides</h3>
 <ul>
-<li><strong>Easy canvas drawing</strong> with high-level helpers</li>
-<li><strong>Smart creation of controls</strong> by compositing different components</li>
-<li><strong>Custom layout system</strong> to create, layout and render your drawn controls with gestures and animations</li>
-<li><strong>Hardware-accelerated</strong> rendering on iOS • MacCatalyst • Android • Windows</li>
-<li><strong>Free to use</strong> under the MIT license, stable NuGet package available</li>
-<li><strong>Hybrid approach</strong>: Use inside existing MAUI apps by wrapping drawn controls in <code>Canvas</code> views</li>
-<li><strong>Fully drawn apps</strong>: Create totally drawn apps with just one Canvas as root view</li>
-<li><strong>Virtual controls</strong>: No native views/handlers created, UI-thread not required for access</li>
-<li><strong>To have the tools to create and use your own controls</strong> to expand the limits of the predefined</li>
+<li><strong><a href="getting-started.html">Getting Started Guide</a></strong> - Complete installation and setup</li>
+<li><strong><a href="samples.html">Sample Apps</a></strong> - Tutorials and example projects</li>
+<li><strong><a href="faq.html">FAQ</a></strong> - Frequently asked questions and answers</li>
+<li><strong><a href="controls/index.html">Controls Documentation</a></strong> - Complete controls reference</li>
+<li><strong><a href="advanced/index.html">Advanced Features</a></strong> - Performance and platform topics</li>
 </ul>
+<h3 id="community--support">Community &amp; Support</h3>
+<ul>
+<li><strong><a href="https://github.com/taublast/DrawnUi/discussions">GitHub Discussions</a></strong> - Community help and discussions</li>
+<li><strong><a href="https://github.com/taublast/DrawnUi.Maui/issues">GitHub Issues</a></strong> - Report bugs or ask questions</li>
+</ul>
+<h3 id="additional-resources">Additional Resources</h3>
+<ul>
+<li><strong><a href="fluent-extensions.html">Fluent Extensions</a></strong> - Code-behind UI creation patterns</li>
+<li><strong><a href="whats-new.html">What's New</a></strong> - Latest updates and features</li>
+<li><strong><a href="https://taublast.github.io/posts/MauiJuly/">How DrawnUI was created</a></strong> - article by the creator</li>
+</ul>
+<p><strong>Can't find what you're looking for?</strong> → <strong><a href="https://github.com/taublast/DrawnUi/discussions">Ask in GitHub Discussions</a></strong> - The community is here to help!</p>
+<hr>
 <h2 id="features">Features</h2>
 <h3 id="-rendering--graphics">🎨 <strong>Rendering &amp; Graphics</strong></h3>
 <ul>
@@ -148,46 +158,6 @@
 <li><strong>Modals, popups, toasts</strong> and custom overlays</li>
 <li><strong>Enhanced layout system</strong> with advanced positioning</li>
 </ul>
-<hr>
-<h2 id="-onboarding">🤔 Onboarding</h2>
-<p><strong>Q: What is the difference between DrawnUi and other drawn frameworks?</strong><br>
-A: Not really comparable since DrawnUI is just a library for <strong>.NET MAUI</strong>, to let you draw UI instead of using native views.</p>
-<p><strong>Q: Why choose drawn over native UI?</strong><br>
-A: Rather a freedom choice to draw what you want and how you see it.<br>
-It also can bemore performant to draw a complex UI on just one canvas instead of composing it with many native views.</p>
-<p><strong>Q: Do I need to know how to draw on a canvas??</strong><br>
-A: No, you can start by using prebuilt drawn controls and customize them. All controls are initially designed to be subclassed, customized, and almost every method is virtual.</p>
-<p><strong>Q: Can I still use XAML?</strong><br>
-A: Yes you can use both XAML and code-behind to create your UI.</p>
-<p><strong>Q: Can I avoid using XAML at all costs?</strong><br>
-A: Yes feel free to use code-behind to create your UI, up to using background thread to access and modify drawn controls properties.</p>
-<p><strong>Q: How do I create custom controls with DrawnUI?</strong><br>
-A: Inherit from <code>SkiaControl</code> for basic controls or <code>SkiaLayout</code> for containers etc. Override the <code>Paint</code> method to draw with SkiaSharp.</p>
-<p><strong>Q: Can I embed native MAUI controls inside DrawnUI?</strong><br>
-A: Yes! Use <code>SkiaMauiElement</code> to embed native MAUI controls like WebView inside your DrawnUI canvas. This allows you to combine the best of both worlds.</p>
-<p><strong>Q: Possible to create a game with DrawnUI?</strong><br>
-A: Well, since you draw, why not just draw a game instead of a business app. DrawnUI comes with gaming helpers and custom accelerated platform views to assure a smooth display-synched rendering.</p>
-<h2 id="-knowledge-base">📚 Knowledge Base</h2>
-<h3 id="documentation--guides">Documentation &amp; Guides</h3>
-<ul>
-<li><strong><a href="getting-started.html">Getting Started Guide</a></strong> - Complete installation and setup</li>
-<li><strong><a href="samples.html">Sample Apps</a></strong> - Tutorials and example projects</li>
-<li><strong><a href="faq.html">FAQ</a></strong> - Frequently asked questions and answers</li>
-<li><strong><a href="controls/index.html">Controls Documentation</a></strong> - Complete controls reference</li>
-<li><strong><a href="advanced/index.html">Advanced Features</a></strong> - Performance and platform topics</li>
-</ul>
-<h3 id="community--support">Community &amp; Support</h3>
-<ul>
-<li><strong><a href="https://github.com/taublast/DrawnUi/discussions">GitHub Discussions</a></strong> - Community help and discussions</li>
-<li><strong><a href="https://github.com/taublast/DrawnUi.Maui/issues">GitHub Issues</a></strong> - Report bugs or ask questions</li>
-</ul>
-<h3 id="additional-resources">Additional Resources</h3>
-<ul>
-<li><strong><a href="fluent-extensions.html">Fluent Extensions</a></strong> - Code-behind UI creation patterns</li>
-<li><strong><a href="whats-new.html">What's New</a></strong> - Latest updates and features</li>
-<li><strong><a href="https://taublast.github.io/posts/MauiJuly/">How DrawnUI was created</a></strong> - article by the creator</li>
-</ul>
-<p><strong>Can't find what you're looking for?</strong> → <strong><a href="https://github.com/taublast/DrawnUi/discussions">Ask in GitHub Discussions</a></strong> - The community is here to help!</p>
 <hr>
 
 </article>

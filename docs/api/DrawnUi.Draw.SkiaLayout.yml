@@ -12,8 +12,11 @@ items:
   - DrawnUi.Draw.SkiaLayout.ApplyItemsSource
   - DrawnUi.Draw.SkiaLayout.ApplyMeasureResult
   - DrawnUi.Draw.SkiaLayout.ApplyNewItemsSource
+  - DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
   - DrawnUi.Draw.SkiaLayout.BreakLine
   - DrawnUi.Draw.SkiaLayout.BuildGridLayout(SkiaSharp.SKSize)
+  - DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
   - DrawnUi.Draw.SkiaLayout.CheckAndSetupIfEmpty
   - DrawnUi.Draw.SkiaLayout.ChildrenFactory
   - DrawnUi.Draw.SkiaLayout.ChildrenGrid
@@ -62,6 +65,12 @@ items:
   - DrawnUi.Draw.SkiaLayout.GetVisualChildren
   - DrawnUi.Draw.SkiaLayout.GridStructure
   - DrawnUi.Draw.SkiaLayout.GridStructureMeasured
+  - DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.Invalidate
   - DrawnUi.Draw.SkiaLayout.Invalidate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaLayout.InvalidateByChild(DrawnUi.Draw.SkiaControl)
@@ -70,6 +79,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.InvalidateWithChildren
   - DrawnUi.Draw.SkiaLayout.InvalidatedChildren
   - DrawnUi.Draw.SkiaLayout.InvalidatedChildrenInternal
+  - DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
   - DrawnUi.Draw.SkiaLayout.IsEmpty
   - DrawnUi.Draw.SkiaLayout.IsEmptyChanged
   - DrawnUi.Draw.SkiaLayout.IsGestureForChild(DrawnUi.Draw.SkiaControlWithRect,SkiaSharp.SKPoint)
@@ -94,10 +104,13 @@ items:
   - DrawnUi.Draw.SkiaLayout.MeasureItemsStrategyProperty
   - DrawnUi.Draw.SkiaLayout.MeasureLayout(DrawnUi.Draw.MeasureRequest,System.Boolean)
   - DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
   - DrawnUi.Draw.SkiaLayout.MeasureStackLegacy(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackNonTemplated(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureWrap(SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  - DrawnUi.Draw.SkiaLayout.NeedMeasure
   - DrawnUi.Draw.SkiaLayout.OnAppeared
   - DrawnUi.Draw.SkiaLayout.OnAppearing
   - DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
@@ -105,7 +118,6 @@ items:
   - DrawnUi.Draw.SkiaLayout.OnDisappeared
   - DrawnUi.Draw.SkiaLayout.OnDisappearing
   - DrawnUi.Draw.SkiaLayout.OnDisposing
-  - DrawnUi.Draw.SkiaLayout.OnFirstDrawn
   - DrawnUi.Draw.SkiaLayout.OnItemSourceChanged
   - DrawnUi.Draw.SkiaLayout.OnItemTemplateChanged
   - DrawnUi.Draw.SkiaLayout.OnLayoutReady
@@ -117,14 +129,20 @@ items:
   - DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
   - DrawnUi.Draw.SkiaLayout.Paint(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLayout.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaLayout.PropagateVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaLayout.RecyclingBuffer
   - DrawnUi.Draw.SkiaLayout.RecyclingBufferProperty
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplate
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplateProperty
   - DrawnUi.Draw.SkiaLayout.RefreshAllViews
+  - DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  - DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  - DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
   - DrawnUi.Draw.SkiaLayout.ReportHotreloadChildAdded(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaLayout.ReportHotreloadChildRemoved(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  - DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
   - DrawnUi.Draw.SkiaLayout.ResetScroll
   - DrawnUi.Draw.SkiaLayout.RowDefinitions
   - DrawnUi.Draw.SkiaLayout.RowDefinitionsProperty
@@ -138,6 +156,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.SetRowSpan(Microsoft.Maui.Controls.BindableObject,System.Int32)
   - DrawnUi.Draw.SkiaLayout.SetupViews
   - DrawnUi.Draw.SkiaLayout.ShouldInvalidateByChildren
+  - DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
   - DrawnUi.Draw.SkiaLayout.Split
   - DrawnUi.Draw.SkiaLayout.SplitAlign
   - DrawnUi.Draw.SkiaLayout.SplitAlignProperty
@@ -146,10 +165,12 @@ items:
   - DrawnUi.Draw.SkiaLayout.SplitSpaceProperty
   - DrawnUi.Draw.SkiaLayout.StackStructure
   - DrawnUi.Draw.SkiaLayout.StackStructureMeasured
+  - DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
   - DrawnUi.Draw.SkiaLayout.TemplatedFooter
   - DrawnUi.Draw.SkiaLayout.TemplatedFooterProperty
   - DrawnUi.Draw.SkiaLayout.TemplatedHeader
   - DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
+  - DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
   - DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaLayout.Type
   - DrawnUi.Draw.SkiaLayout.TypeProperty
@@ -160,6 +181,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.VirtualisationInflated
   - DrawnUi.Draw.SkiaLayout.VirtualisationInflatedProperty
   - DrawnUi.Draw.SkiaLayout.VirtualizationProperty
+  - DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
   - DrawnUi.Draw.SkiaLayout._emptyView
   - DrawnUi.Draw.SkiaLayout._lockTemplates
   - DrawnUi.Draw.SkiaLayout.lockMeasureLayout
@@ -428,7 +450,6 @@ items:
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  - DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -661,6 +682,7 @@ items:
   - DrawnUi.Draw.SkiaControl.UpdateWhenReturnedFromBackgroundProperty
   - DrawnUi.Draw.SkiaControl.UpdateWhenReturnedFromBackground
   - DrawnUi.Draw.SkiaControl.OnSuperviewShouldRenderChanged(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
   - DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.IsRendering
   - DrawnUi.Draw.SkiaControl.NodeAttached
@@ -692,11 +714,11 @@ items:
   - DrawnUi.Draw.SkiaControl.IsSimpleRectangle(SkiaSharp.SKPath)
   - DrawnUi.Draw.SkiaControl.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
-  - DrawnUi.Draw.SkiaControl.NeedMeasure
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaControl.OnFirstDrawn
   - DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
   - DrawnUi.Draw.SkiaControl.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
   - DrawnUi.Draw.SkiaControl.DebugRenderingColor
@@ -1259,7 +1281,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSpacingForIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 123
+    startLine: 124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1295,7 +1317,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSizeKey
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 135
+    startLine: 136
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1326,7 +1348,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureStackLegacy
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 318
+    startLine: 319
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1367,7 +1389,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureStackNonTemplated
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 842
+    startLine: 843
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1405,7 +1427,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TrackChildAsDirty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 968
+    startLine: 969
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1434,7 +1456,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureStackTemplated
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 976
+    startLine: 977
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1472,7 +1494,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnBeforeDrawingVisibleChildren
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 2015
+    startLine: 2017
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1510,7 +1532,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawStack
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 2024
+    startLine: 2027
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1548,7 +1570,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreArrange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1592,7 +1614,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGestureForChild
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 35
+    startLine: 36
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1627,7 +1649,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyBindingContext
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 59
+    startLine: 60
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1656,7 +1678,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldInvalidateByChildren
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 74
+    startLine: 75
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1689,7 +1711,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTemplatesAvailable
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 110
+    startLine: 101
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1715,7 +1737,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetMeasured
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 121
+    startLine: 111
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1764,7 +1786,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecyclingTemplateProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 130
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1791,7 +1813,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecyclingTemplate
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 141
+    startLine: 131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1825,7 +1847,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatedHeaderProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 168
+    startLine: 158
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1852,7 +1874,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatedHeader
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 175
+    startLine: 165
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1883,7 +1905,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatedFooterProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 181
+    startLine: 171
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1910,7 +1932,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatedFooter
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 188
+    startLine: 178
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1941,7 +1963,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsTemplated
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 195
+    startLine: 185
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1972,7 +1994,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildRect
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 198
+    startLine: 188
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2006,7 +2028,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildRect
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 211
+    startLine: 201
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2037,7 +2059,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildAt
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 255
+    startLine: 245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2073,7 +2095,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 279
+    startLine: 269
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2102,7 +2124,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VirtualizationProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 289
+    startLine: 279
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2129,7 +2151,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Virtualisation
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 299
+    startLine: 289
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2160,7 +2182,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VirtualisationInflatedProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 305
+    startLine: 295
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2187,7 +2209,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VirtualisationInflated
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 318
+    startLine: 308
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2225,7 +2247,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecyclingBufferProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 325
+    startLine: 315
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2252,7 +2274,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecyclingBuffer
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 335
+    startLine: 325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2286,7 +2308,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenGrid
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 345
+    startLine: 335
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2315,7 +2337,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BreakLine
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 348
+    startLine: 338
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2341,7 +2363,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LineBreaks
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 353
+    startLine: 343
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2368,7 +2390,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOnScreenVisibleArea
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 356
+    startLine: 346
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2413,7 +2435,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawRenderObject
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 382
+    startLine: 372
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2449,7 +2471,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _emptyView
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 389
+    startLine: 379
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2476,7 +2498,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 391
+    startLine: 381
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2502,7 +2524,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmpty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 411
+    startLine: 401
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2531,7 +2553,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmptyChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 425
+    startLine: 415
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2558,7 +2580,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIsEmpty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 428
+    startLine: 418
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2590,7 +2612,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckAndSetupIfEmpty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 438
+    startLine: 428
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2618,7 +2640,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugString
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 456
+    startLine: 446
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2649,7 +2671,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenFactory
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 476
+    startLine: 466
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2678,7 +2700,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SplitProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 479
+    startLine: 469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2705,7 +2727,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Split
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 489
+    startLine: 479
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2736,7 +2758,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SplitAlignProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 495
+    startLine: 485
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2763,7 +2785,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SplitAlign
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 504
+    startLine: 494
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2794,7 +2816,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SplitSpaceProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 510
+    startLine: 500
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2821,7 +2843,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SplitSpace
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 520
+    startLine: 510
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2852,7 +2874,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DynamicColumnsProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 526
+    startLine: 516
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2879,7 +2901,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DynamicColumns
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 535
+    startLine: 525
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2910,7 +2932,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnViewportWasChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 545
+    startLine: 535
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2944,7 +2966,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewportWasChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 553
+    startLine: 543
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2973,7 +2995,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawChild
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 555
+    startLine: 545
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3006,7 +3028,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 601
+    startLine: 591
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3042,7 +3064,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasured
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 609
+    startLine: 599
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3070,7 +3092,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateInternal
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 616
+    startLine: 606
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3099,7 +3121,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: templatesInvalidated
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 623
+    startLine: 613
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3126,7 +3148,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateWithChildren
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 625
+    startLine: 615
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3154,7 +3176,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewsList
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 656
+    startLine: 646
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3184,7 +3206,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ActualizeSubviews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 663
+    startLine: 653
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3210,7 +3232,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplatesPoolPrefill
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 672
+    startLine: 662
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3238,7 +3260,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplatesPoolLimit
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 686
+    startLine: 676
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3266,7 +3288,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildrenChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 701
+    startLine: 691
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3295,7 +3317,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 715
+    startLine: 705
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3326,7 +3348,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateTemplatesInBackground
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 725
+    startLine: 715
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3354,7 +3376,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureAbsolute
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 742
+    startLine: 732
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3396,7 +3418,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: lockMeasureLayout
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 865
+    startLine: 855
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3423,7 +3445,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureLayout
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 867
+    startLine: 857
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3459,7 +3481,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _lockTemplates
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 945
+    startLine: 937
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3486,7 +3508,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasuring
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 954
+    startLine: 946
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3531,7 +3553,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyMeasureResult
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1032
+    startLine: 1024
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3563,7 +3585,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidatedChildrenInternal
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1058
+    startLine: 1050
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3594,7 +3616,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1060
+    startLine: 1052
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3625,7 +3647,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidatedChildren
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1078
+    startLine: 1070
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3656,7 +3678,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateByChild
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1080
+    startLine: 1072
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3673,6 +3695,33 @@ items:
   overload: DrawnUi.Draw.SkiaLayout.InvalidateByChild*
   implements:
   - DrawnUi.Draw.IDrawnBase.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+- uid: DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  commentId: F:DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  id: WillDrawFromFreshItemssSource
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: WillDrawFromFreshItemssSource
+  nameWithType: SkiaLayout.WillDrawFromFreshItemssSource
+  fullName: DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: WillDrawFromFreshItemssSource
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1093
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected bool WillDrawFromFreshItemssSource
+    return:
+      type: System.Boolean
+    content.vb: Protected WillDrawFromFreshItemssSource As Boolean
 - uid: DrawnUi.Draw.SkiaLayout.Paint(DrawnUi.Draw.DrawingContext)
   commentId: M:DrawnUi.Draw.SkiaLayout.Paint(DrawnUi.Draw.DrawingContext)
   id: Paint(DrawnUi.Draw.DrawingContext)
@@ -3691,7 +3740,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1096
+    startLine: 1095
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3729,7 +3778,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1161
+    startLine: 1163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3758,7 +3807,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1254
+    startLine: 1259
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3797,7 +3846,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsStack
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1291
+    startLine: 1296
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3828,7 +3877,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1296
+    startLine: 1301
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3855,7 +3904,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1301
+    startLine: 1306
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3884,7 +3933,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureItemsStrategyProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1330
+    startLine: 1335
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3911,7 +3960,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureItemsStrategy
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1337
+    startLine: 1342
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3940,7 +3989,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemTemplatePoolSizeProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1343
+    startLine: 1348
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3967,11 +4016,18 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemTemplatePoolSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1352
+    startLine: 1360
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Default is -1, the number od template instances will not be less than data collection count. You can manually set to to a specific number to fill your viewport etc. Beware that if you set this to a number that will not be enough to fill the viewport binding contexts will contasntly be changing triggering screen update.
+  summary: >-
+    Default is -1, the number od template instances will not be less than data collection count.
+
+    You can manually set to ta specific number to fill your viewport etc.
+
+    Beware that if you set this to a number that will not be enough to fill the viewport
+
+    binding contexts will contasntly be changing triggering screen update.
   example: []
   syntax:
     content: public int ItemTemplatePoolSize { get; set; }
@@ -3980,6 +4036,64 @@ items:
       type: System.Int32
     content.vb: Public Property ItemTemplatePoolSize As Integer
   overload: DrawnUi.Draw.SkiaLayout.ItemTemplatePoolSize*
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  commentId: F:DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  id: ReserveTemplatesProperty
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: ReserveTemplatesProperty
+  nameWithType: SkiaLayout.ReserveTemplatesProperty
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReserveTemplatesProperty
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1366
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty ReserveTemplatesProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly ReserveTemplatesProperty As BindableProperty
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  commentId: P:DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  id: ReserveTemplates
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: ReserveTemplates
+  nameWithType: SkiaLayout.ReserveTemplates
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReserveTemplates
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1375
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 'For recycled cells: Default is 2, how many item templates above visible in viewport we must reserve in pool.'
+  example: []
+  syntax:
+    content: public int ReserveTemplates { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ReserveTemplates As Integer
+  overload: DrawnUi.Draw.SkiaLayout.ReserveTemplates*
 - uid: DrawnUi.Draw.SkiaLayout.EmptyViewProperty
   commentId: F:DrawnUi.Draw.SkiaLayout.EmptyViewProperty
   id: EmptyViewProperty
@@ -3998,7 +4112,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EmptyViewProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1358
+    startLine: 1381
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4025,7 +4139,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EmptyView
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1370
+    startLine: 1393
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4054,7 +4168,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemsSourceProperty
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1376
+    startLine: 1399
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4081,7 +4195,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemsSource
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1384
+    startLine: 1407
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4110,7 +4224,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnItemTemplateChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1439
+    startLine: 1462
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4138,7 +4252,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyNewItemsSource
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1445
+    startLine: 1468
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4167,7 +4281,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnItemSourceChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1447
+    startLine: 1470
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4193,7 +4307,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyItemsSource
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1455
+    startLine: 1478
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4221,7 +4335,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ResetScroll
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1472
+    startLine: 1495
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4229,6 +4343,37 @@ items:
     content: public virtual void ResetScroll()
     content.vb: Public Overridable Sub ResetScroll()
   overload: DrawnUi.Draw.SkiaLayout.ResetScroll*
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  commentId: P:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  id: ShouldPreserveStructureOnCollectionChange
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: ShouldPreserveStructureOnCollectionChange
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ShouldPreserveStructureOnCollectionChange
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1506
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Determines if collection changes should preserve existing measurement structure
+  example: []
+  syntax:
+    content: protected virtual bool ShouldPreserveStructureOnCollectionChange { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Protected Overridable ReadOnly Property ShouldPreserveStructureOnCollectionChange As Boolean
+  overload: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange*
 - uid: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   commentId: M:DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   id: ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
@@ -4247,7 +4392,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemsSourceCollectionChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1483
+    startLine: 1518
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4265,6 +4410,308 @@ items:
   nameWithType.vb: SkiaLayout.ItemsSourceCollectionChanged(Object, NotifyCollectionChangedEventArgs)
   fullName.vb: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(Object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   name.vb: ItemsSourceCollectionChanged(Object, NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  id: HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HandleCollectionChangeWithStructurePreservation
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1582
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Handles collection changes while preserving existing measurement structure
+  example: []
+  syntax:
+    content: protected virtual void HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs args)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    content.vb: Protected Overridable Sub HandleCollectionChangeWithStructurePreservation(args As NotifyCollectionChangedEventArgs)
+  overload: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation*
+- uid: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  commentId: M:DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  id: StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: StageStructureChange(StructureChange)
+  nameWithType: SkiaLayout.StageStructureChange(SkiaLayout.StructureChange)
+  fullName: DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StageStructureChange
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1637
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Stages a structure change for processing during rendering pipeline
+  example: []
+  syntax:
+    content: protected virtual void StageStructureChange(SkiaLayout.StructureChange change)
+    parameters:
+    - id: change
+      type: DrawnUi.Draw.SkiaLayout.StructureChange
+    content.vb: Protected Overridable Sub StageStructureChange(change As SkiaLayout.StructureChange)
+  overload: DrawnUi.Draw.SkiaLayout.StageStructureChange*
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  id: ReportChildVisibilityChanged(System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: ReportChildVisibilityChanged(int, bool)
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged(int, bool)
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(int, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReportChildVisibilityChanged
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1666
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Called by templated cells to report visibility changes.
+
+    This stages the visibility change to be applied during the next rendering cycle.
+  example: []
+  syntax:
+    content: public virtual void ReportChildVisibilityChanged(int cellIndex, bool isVisible)
+    parameters:
+    - id: cellIndex
+      type: System.Int32
+      description: The index of the cell in the ItemsSource
+    - id: isVisible
+      type: System.Boolean
+      description: The new visibility state
+    content.vb: Public Overridable Sub ReportChildVisibilityChanged(cellIndex As Integer, isVisible As Boolean)
+  overload: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged*
+  nameWithType.vb: SkiaLayout.ReportChildVisibilityChanged(Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(Integer, Boolean)
+  name.vb: ReportChildVisibilityChanged(Integer, Boolean)
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  id: ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: ReportChildVisibilityChanged(int, int, bool)
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged(int, int, bool)
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(int, int, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReportChildVisibilityChanged
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1678
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Called by templated cells to report visibility changes for multiple cells.
+
+    This stages the visibility change to be applied during the next rendering cycle.
+  example: []
+  syntax:
+    content: public virtual void ReportChildVisibilityChanged(int startIndex, int count, bool isVisible)
+    parameters:
+    - id: startIndex
+      type: System.Int32
+      description: The starting index of cells in the ItemsSource
+    - id: count
+      type: System.Int32
+      description: The number of cells to change
+    - id: isVisible
+      type: System.Boolean
+      description: The new visibility state
+    content.vb: Public Overridable Sub ReportChildVisibilityChanged(startIndex As Integer, count As Integer, isVisible As Boolean)
+  overload: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged*
+  nameWithType.vb: SkiaLayout.ReportChildVisibilityChanged(Integer, Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(Integer, Integer, Boolean)
+  name.vb: ReportChildVisibilityChanged(Integer, Integer, Boolean)
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  id: HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HandleStructurePreservingAdd
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1700
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Handles Add collection changes while preserving existing structure
+  example: []
+  syntax:
+    content: protected virtual void HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs args)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    content.vb: Protected Overridable Sub HandleStructurePreservingAdd(args As NotifyCollectionChangedEventArgs)
+  overload: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd*
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  id: HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HandleStructurePreservingRemove
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1740
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Handles Remove collection changes while preserving existing structure
+  example: []
+  syntax:
+    content: protected virtual void HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs args)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    content.vb: Protected Overridable Sub HandleStructurePreservingRemove(args As NotifyCollectionChangedEventArgs)
+  overload: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove*
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  id: HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HandleStructurePreservingReplace
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1779
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Handles Replace collection changes while preserving existing structure
+  example: []
+  syntax:
+    content: protected virtual void HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs args)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    content.vb: Protected Overridable Sub HandleStructurePreservingReplace(args As NotifyCollectionChangedEventArgs)
+  overload: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace*
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  id: HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: HandleStructurePreservingMove(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingMove(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HandleStructurePreservingMove
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1819
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Handles Move collection changes while preserving existing structure
+  example: []
+  syntax:
+    content: protected virtual void HandleStructurePreservingMove(NotifyCollectionChangedEventArgs args)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    content.vb: Protected Overridable Sub HandleStructurePreservingMove(args As NotifyCollectionChangedEventArgs)
+  overload: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove*
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  id: HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: HandleStructurePreservingReset(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.HandleStructurePreservingReset(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HandleStructurePreservingReset
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
+    startLine: 1842
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Handles Reset collection changes while preserving existing structure
+  example: []
+  syntax:
+    content: protected virtual void HandleStructurePreservingReset(NotifyCollectionChangedEventArgs args)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    content.vb: Protected Overridable Sub HandleStructurePreservingReset(args As NotifyCollectionChangedEventArgs)
+  overload: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset*
 - uid: DrawnUi.Draw.SkiaLayout.RefreshAllViews
   commentId: M:DrawnUi.Draw.SkiaLayout.RefreshAllViews
   id: RefreshAllViews
@@ -4283,7 +4730,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RefreshAllViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1535
+    startLine: 1865
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4311,7 +4758,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCacheDebugInfo
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1550
+    startLine: 1880
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4341,7 +4788,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPrintDebug
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1582
+    startLine: 1912
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4370,7 +4817,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutReady
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1604
+    startLine: 1934
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4399,7 +4846,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppearing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1609
+    startLine: 1939
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4429,7 +4876,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappearing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1613
+    startLine: 1943
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4458,7 +4905,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppeared
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1617
+    startLine: 1947
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4488,7 +4935,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappeared
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1621
+    startLine: 1951
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4517,7 +4964,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLoaded
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1625
+    startLine: 1955
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4547,7 +4994,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVisibleChildIndexAt
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1629
+    startLine: 1959
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4584,7 +5031,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildIndexAt
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1646
+    startLine: 1976
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5540,47 +5987,128 @@ items:
     content: protected void UpdateRowColumnBindingContexts()
     content.vb: Protected Sub UpdateRowColumnBindingContexts()
   overload: DrawnUi.Draw.SkiaLayout.UpdateRowColumnBindingContexts*
-- uid: DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
-  commentId: M:DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
-  id: MeasureList(SkiaSharp.SKRect,System.Single)
+- uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  id: ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   parent: DrawnUi.Draw.SkiaLayout
   langs:
   - csharp
   - vb
-  name: MeasureList(SKRect, float)
-  nameWithType: SkiaLayout.MeasureList(SKRect, float)
-  fullName: DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect, float)
+  name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaLayout.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
   type: Method
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
-    id: MeasureList
+    id: ProcessGestures
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    parameters:
+    - id: args
+      type: DrawnUi.Draw.SkiaGesturesParameters
+    - id: apply
+      type: DrawnUi.Draw.GestureEventProcessingInfo
+    return:
+      type: DrawnUi.Draw.ISkiaGestureListener
+    content.vb: Public Overrides Function ProcessGestures(args As SkiaGesturesParameters, apply As GestureEventProcessingInfo) As ISkiaGestureListener
+  overridden: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  overload: DrawnUi.Draw.SkiaLayout.ProcessGestures*
+- uid: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  commentId: P:DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  id: IsBackgroundMeasuring
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: IsBackgroundMeasuring
+  nameWithType: SkiaLayout.IsBackgroundMeasuring
+  fullName: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsBackgroundMeasuring
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool IsBackgroundMeasuring { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsBackgroundMeasuring As Boolean
+  overload: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring*
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  commentId: P:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  id: BackgroundMeasurementProgress
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: BackgroundMeasurementProgress
+  nameWithType: SkiaLayout.BackgroundMeasurementProgress
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BackgroundMeasurementProgress
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Measuring column/row list with todo MeasureVisible
-  example: []
   syntax:
-    content: public virtual ScaledSize MeasureList(SKRect rectForChildrenPixels, float scale)
-    parameters:
-    - id: rectForChildrenPixels
-      type: SkiaSharp.SKRect
-      description: ''
-    - id: scale
-      type: System.Single
-      description: ''
+    content: public int BackgroundMeasurementProgress { get; }
+    parameters: []
     return:
-      type: DrawnUi.Draw.ScaledSize
-      description: ''
-    content.vb: Public Overridable Function MeasureList(rectForChildrenPixels As SKRect, scale As Single) As ScaledSize
-  overload: DrawnUi.Draw.SkiaLayout.MeasureList*
-  nameWithType.vb: SkiaLayout.MeasureList(SKRect, Single)
-  fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect, Single)
-  name.vb: MeasureList(SKRect, Single)
+      type: System.Int32
+    content.vb: Public ReadOnly Property BackgroundMeasurementProgress As Integer
+  overload: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress*
+- uid: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  commentId: P:DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  id: TotalMeasuredItems
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: TotalMeasuredItems
+  nameWithType: SkiaLayout.TotalMeasuredItems
+  fullName: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TotalMeasuredItems
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public int TotalMeasuredItems { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TotalMeasuredItems As Integer
+  overload: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems*
 - uid: DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
   commentId: P:DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
   id: FirstMeasuredIndex
@@ -5599,7 +6127,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FirstMeasuredIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 368
+    startLine: 21
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5628,7 +6156,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastMeasuredIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 370
+    startLine: 22
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5657,7 +6185,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FirstVisibleIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 372
+    startLine: 23
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5686,7 +6214,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastVisibleIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 374
+    startLine: 24
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5697,6 +6225,241 @@ items:
       type: System.Int32
     content.vb: Public Property LastVisibleIndex As Integer
   overload: DrawnUi.Draw.SkiaLayout.LastVisibleIndex*
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  commentId: P:DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  id: MeasuredItemsPercentage
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: MeasuredItemsPercentage
+  nameWithType: SkiaLayout.MeasuredItemsPercentage
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasuredItemsPercentage
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Percentage of items that have been measured (0.0 to 1.0)
+  example: []
+  syntax:
+    content: protected float MeasuredItemsPercentage { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Protected ReadOnly Property MeasuredItemsPercentage As Single
+  overload: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage*
+- uid: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  commentId: M:DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  id: CancelBackgroundMeasurement
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: CancelBackgroundMeasurement()
+  nameWithType: SkiaLayout.CancelBackgroundMeasurement()
+  fullName: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CancelBackgroundMeasurement
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 115
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Cancels any ongoing background measurement
+  example: []
+  syntax:
+    content: public void CancelBackgroundMeasurement()
+    content.vb: Public Sub CancelBackgroundMeasurement()
+  overload: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement*
+- uid: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(System.Int32)
+  id: RemeasureSingleItemInBackground(System.Int32)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: RemeasureSingleItemInBackground(int)
+  nameWithType: SkiaLayout.RemeasureSingleItemInBackground(int)
+  fullName: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RemeasureSingleItemInBackground
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 178
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Remeasures a single item in the background and updates it in the existing structure
+  example: []
+  syntax:
+    content: public void RemeasureSingleItemInBackground(int itemIndex)
+    parameters:
+    - id: itemIndex
+      type: System.Int32
+    content.vb: Public Sub RemeasureSingleItemInBackground(itemIndex As Integer)
+  overload: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground*
+  nameWithType.vb: SkiaLayout.RemeasureSingleItemInBackground(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground(Integer)
+  name.vb: RemeasureSingleItemInBackground(Integer)
+- uid: DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
+  id: MeasureList(SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: MeasureList(SKRect, float)
+  nameWithType: SkiaLayout.MeasureList(SKRect, float)
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasureList
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 210
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Enhanced MeasureList with background measurement support
+  example: []
+  syntax:
+    content: public virtual ScaledSize MeasureList(SKRect rectForChildrenPixels, float scale)
+    parameters:
+    - id: rectForChildrenPixels
+      type: SkiaSharp.SKRect
+    - id: scale
+      type: System.Single
+    return:
+      type: DrawnUi.Draw.ScaledSize
+    content.vb: Public Overridable Function MeasureList(rectForChildrenPixels As SKRect, scale As Single) As ScaledSize
+  overload: DrawnUi.Draw.SkiaLayout.MeasureList*
+  nameWithType.vb: SkiaLayout.MeasureList(SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect, Single)
+  name.vb: MeasureList(SKRect, Single)
+- uid: DrawnUi.Draw.SkiaLayout.NeedMeasure
+  commentId: P:DrawnUi.Draw.SkiaLayout.NeedMeasure
+  id: NeedMeasure
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: NeedMeasure
+  nameWithType: SkiaLayout.NeedMeasure
+  fullName: DrawnUi.Draw.SkiaLayout.NeedMeasure
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NeedMeasure
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 757
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public override bool NeedMeasure { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Property NeedMeasure As Boolean
+  overridden: DrawnUi.Draw.SkiaControl.NeedMeasure
+  overload: DrawnUi.Draw.SkiaLayout.NeedMeasure*
+- uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  commentId: M:DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  id: ApplyStructureChanges
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: ApplyStructureChanges()
+  nameWithType: SkiaLayout.ApplyStructureChanges()
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ApplyStructureChanges
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 777
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Applies all pending structure changes to StackStructure - called from rendering pipeline
+  example: []
+  syntax:
+    content: public void ApplyStructureChanges()
+    content.vb: Public Sub ApplyStructureChanges()
+  overload: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges*
+- uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+  id: MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: MeasureSingleItem(int, SKRect, float, CancellationToken, bool)
+  nameWithType: SkiaLayout.MeasureSingleItem(int, SKRect, float, CancellationToken, bool)
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(int, SkiaSharp.SKRect, float, System.Threading.CancellationToken, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MeasureSingleItem
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 1664
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Measures a single item in the background and stages it for structure update.
+
+    For MeasureVisible Only.
+  example: []
+  syntax:
+    content: public void MeasureSingleItem(int itemIndex, SKRect constraints, float scale, CancellationToken cancellationToken, bool inBackground)
+    parameters:
+    - id: itemIndex
+      type: System.Int32
+    - id: constraints
+      type: SkiaSharp.SKRect
+    - id: scale
+      type: System.Single
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    - id: inBackground
+      type: System.Boolean
+    content.vb: Public Sub MeasureSingleItem(itemIndex As Integer, constraints As SKRect, scale As Single, cancellationToken As CancellationToken, inBackground As Boolean)
+  overload: DrawnUi.Draw.SkiaLayout.MeasureSingleItem*
+  nameWithType.vb: SkiaLayout.MeasureSingleItem(Integer, SKRect, Single, CancellationToken, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(Integer, SkiaSharp.SKRect, Single, System.Threading.CancellationToken, Boolean)
+  name.vb: MeasureSingleItem(Integer, SKRect, Single, CancellationToken, Boolean)
 - uid: DrawnUi.Draw.SkiaLayout.DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   commentId: M:DrawnUi.Draw.SkiaLayout.DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   id: DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
@@ -5715,7 +6478,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawList
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 384
+    startLine: 1753
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5752,7 +6515,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EstimatedTotalItems
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 569
+    startLine: 1938
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5781,7 +6544,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetMeasuredContentEnd
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 572
+    startLine: 1941
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5809,7 +6572,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetEstimatedContentSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 598
+    startLine: 1967
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5845,7 +6608,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureAdditionalItems
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 745
+    startLine: 2114
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6026,34 +6789,6 @@ items:
   nameWithType.vb: SkiaLayout.MeasureWrap(SKRect, Single)
   fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureWrap(SkiaSharp.SKRect, Single)
   name.vb: MeasureWrap(SKRect, Single)
-- uid: DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  commentId: M:DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  id: OnFirstDrawn
-  parent: DrawnUi.Draw.SkiaLayout
-  langs:
-  - csharp
-  - vb
-  name: OnFirstDrawn()
-  nameWithType: SkiaLayout.OnFirstDrawn()
-  fullName: DrawnUi.Draw.SkiaLayout.OnFirstDrawn()
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Wrap.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: OnFirstDrawn
-    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Wrap.cs
-    startLine: 21
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  example: []
-  syntax:
-    content: protected override void OnFirstDrawn()
-    content.vb: Protected Overrides Sub OnFirstDrawn()
-  overridden: DrawnUi.Draw.SkiaControl.OnFirstDrawn
-  overload: DrawnUi.Draw.SkiaLayout.OnFirstDrawn*
 - uid: DrawnUi.Draw.SkiaLayout.PropagateVisibilityChanged(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaLayout.PropagateVisibilityChanged(System.Boolean)
   id: PropagateVisibilityChanged(System.Boolean)
@@ -6072,7 +6807,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PropagateVisibilityChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Wrap.cs
-    startLine: 35
+    startLine: 21
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11045,41 +11780,6 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  commentId: M:DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
-  name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  nameWithType: SkiaControl.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  fullName: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-    name: ProcessGestures
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaGesturesParameters
-    name: SkiaGesturesParameters
-    href: DrawnUi.Draw.SkiaGesturesParameters.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.GestureEventProcessingInfo
-    name: GestureEventProcessingInfo
-    href: DrawnUi.Draw.GestureEventProcessingInfo.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-    name: ProcessGestures
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaGesturesParameters
-    name: SkiaGesturesParameters
-    href: DrawnUi.Draw.SkiaGesturesParameters.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.GestureEventProcessingInfo
-    name: GestureEventProcessingInfo
-    href: DrawnUi.Draw.GestureEventProcessingInfo.html
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -15183,6 +15883,25 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  commentId: M:DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  name: NeedToMeasureSelf()
+  nameWithType: SkiaControl.NeedToMeasureSelf()
+  fullName: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.NeedToMeasureSelf
+    name: NeedToMeasureSelf
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedToMeasureSelf
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.MeasureSelf(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl
@@ -15956,13 +16675,6 @@ references:
   name: ShouldClipAntialiased
   nameWithType: SkiaControl.ShouldClipAntialiased
   fullName: DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
-- uid: DrawnUi.Draw.SkiaControl.NeedMeasure
-  commentId: P:DrawnUi.Draw.SkiaControl.NeedMeasure
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedMeasure
-  name: NeedMeasure
-  nameWithType: SkiaControl.NeedMeasure
-  fullName: DrawnUi.Draw.SkiaControl.NeedMeasure
 - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
   parent: DrawnUi.Draw.SkiaControl
@@ -16060,6 +16772,25 @@ references:
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
+  commentId: M:DrawnUi.Draw.SkiaControl.OnFirstDrawn
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
+  name: OnFirstDrawn()
+  nameWithType: SkiaControl.OnFirstDrawn()
+  fullName: DrawnUi.Draw.SkiaControl.OnFirstDrawn()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
+    name: OnFirstDrawn
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
+    name: OnFirstDrawn
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
+  - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
   commentId: E:DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
@@ -33006,6 +33737,12 @@ references:
   name: ItemTemplatePoolSize
   nameWithType: SkiaLayout.ItemTemplatePoolSize
   fullName: DrawnUi.Draw.SkiaLayout.ItemTemplatePoolSize
+- uid: DrawnUi.Draw.SkiaLayout.ReserveTemplates*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ReserveTemplates
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReserveTemplates
+  name: ReserveTemplates
+  nameWithType: SkiaLayout.ReserveTemplates
+  fullName: DrawnUi.Draw.SkiaLayout.ReserveTemplates
 - uid: DrawnUi.Draw.SkiaLayout.EmptyView*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.EmptyView
   href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_EmptyView
@@ -33075,6 +33812,12 @@ references:
   name: ResetScroll
   nameWithType: SkiaLayout.ResetScroll
   fullName: DrawnUi.Draw.SkiaLayout.ResetScroll
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange
+  name: ShouldPreserveStructureOnCollectionChange
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
 - uid: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged
   href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
@@ -33126,6 +33869,77 @@ references:
     name: Specialized
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.specialized
+- uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleCollectionChangeWithStructurePreservation
+  nameWithType: SkiaLayout.HandleCollectionChangeWithStructurePreservation
+  fullName: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation
+- uid: DrawnUi.Draw.SkiaLayout.StageStructureChange*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StageStructureChange
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_StageStructureChange_DrawnUi_Draw_SkiaLayout_StructureChange_
+  name: StageStructureChange
+  nameWithType: SkiaLayout.StageStructureChange
+  fullName: DrawnUi.Draw.SkiaLayout.StageStructureChange
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange
+  commentId: T:DrawnUi.Draw.SkiaLayout.StructureChange
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.StructureChange
+  nameWithType: SkiaLayout.StructureChange
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChange
+    name: StructureChange
+    href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.StructureChange
+    name: StructureChange
+    href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+- uid: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Boolean_
+  name: ReportChildVisibilityChanged
+  nameWithType: SkiaLayout.ReportChildVisibilityChanged
+  fullName: DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingAdd_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingAdd
+  nameWithType: SkiaLayout.HandleStructurePreservingAdd
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingRemove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingRemove
+  nameWithType: SkiaLayout.HandleStructurePreservingRemove
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReplace_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingReplace
+  nameWithType: SkiaLayout.HandleStructurePreservingReplace
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingMove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingMove
+  nameWithType: SkiaLayout.HandleStructurePreservingMove
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove
+- uid: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReset_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: HandleStructurePreservingReset
+  nameWithType: SkiaLayout.HandleStructurePreservingReset
+  fullName: DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset
 - uid: DrawnUi.Draw.SkiaLayout.RefreshAllViews*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.RefreshAllViews
   href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RefreshAllViews
@@ -33697,12 +34511,79 @@ references:
   name: UpdateRowColumnBindingContexts
   nameWithType: SkiaLayout.UpdateRowColumnBindingContexts
   fullName: DrawnUi.Draw.SkiaLayout.UpdateRowColumnBindingContexts
-- uid: DrawnUi.Draw.SkiaLayout.MeasureList*
-  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasureList
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureList_SkiaSharp_SKRect_System_Single_
-  name: MeasureList
-  nameWithType: SkiaLayout.MeasureList
-  fullName: DrawnUi.Draw.SkiaLayout.MeasureList
+- uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: ProcessGestures
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: ProcessGestures
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.ProcessGestures*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ProcessGestures
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: ProcessGestures
+  nameWithType: SkiaLayout.ProcessGestures
+  fullName: DrawnUi.Draw.SkiaLayout.ProcessGestures
+- uid: DrawnUi.Draw.SkiaGesturesParameters
+  commentId: T:DrawnUi.Draw.SkiaGesturesParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaGesturesParameters.html
+  name: SkiaGesturesParameters
+  nameWithType: SkiaGesturesParameters
+  fullName: DrawnUi.Draw.SkiaGesturesParameters
+- uid: DrawnUi.Draw.GestureEventProcessingInfo
+  commentId: T:DrawnUi.Draw.GestureEventProcessingInfo
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  name: GestureEventProcessingInfo
+  nameWithType: GestureEventProcessingInfo
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo
+- uid: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsBackgroundMeasuring
+  name: IsBackgroundMeasuring
+  nameWithType: SkiaLayout.IsBackgroundMeasuring
+  fullName: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_BackgroundMeasurementProgress
+  name: BackgroundMeasurementProgress
+  nameWithType: SkiaLayout.BackgroundMeasurementProgress
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
+- uid: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TotalMeasuredItems
+  name: TotalMeasuredItems
+  nameWithType: SkiaLayout.TotalMeasuredItems
+  fullName: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
 - uid: DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.FirstMeasuredIndex
   href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_FirstMeasuredIndex
@@ -33727,6 +34608,90 @@ references:
   name: LastVisibleIndex
   nameWithType: SkiaLayout.LastVisibleIndex
   fullName: DrawnUi.Draw.SkiaLayout.LastVisibleIndex
+- uid: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasuredItemsPercentage
+  name: MeasuredItemsPercentage
+  nameWithType: SkiaLayout.MeasuredItemsPercentage
+  fullName: DrawnUi.Draw.SkiaLayout.MeasuredItemsPercentage
+- uid: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_CancelBackgroundMeasurement
+  name: CancelBackgroundMeasurement
+  nameWithType: SkiaLayout.CancelBackgroundMeasurement
+  fullName: DrawnUi.Draw.SkiaLayout.CancelBackgroundMeasurement
+- uid: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RemeasureSingleItemInBackground_System_Int32_
+  name: RemeasureSingleItemInBackground
+  nameWithType: SkiaLayout.RemeasureSingleItemInBackground
+  fullName: DrawnUi.Draw.SkiaLayout.RemeasureSingleItemInBackground
+- uid: DrawnUi.Draw.SkiaLayout.MeasureList*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasureList
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureList_SkiaSharp_SKRect_System_Single_
+  name: MeasureList
+  nameWithType: SkiaLayout.MeasureList
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureList
+- uid: DrawnUi.Draw.SkiaControl.NeedMeasure
+  commentId: P:DrawnUi.Draw.SkiaControl.NeedMeasure
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedMeasure
+  name: NeedMeasure
+  nameWithType: SkiaControl.NeedMeasure
+  fullName: DrawnUi.Draw.SkiaControl.NeedMeasure
+- uid: DrawnUi.Draw.SkiaLayout.NeedMeasure*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.NeedMeasure
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_NeedMeasure
+  name: NeedMeasure
+  nameWithType: SkiaLayout.NeedMeasure
+  fullName: DrawnUi.Draw.SkiaLayout.NeedMeasure
+- uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges
+  name: ApplyStructureChanges
+  nameWithType: SkiaLayout.ApplyStructureChanges
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+- uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasureSingleItem
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureSingleItem_System_Int32_SkiaSharp_SKRect_System_Single_System_Threading_CancellationToken_System_Boolean_
+  name: MeasureSingleItem
+  nameWithType: SkiaLayout.MeasureSingleItem
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureSingleItem
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
 - uid: DrawnUi.Draw.SkiaLayout.DrawList*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.DrawList
   href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_DrawList_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_
@@ -33919,31 +34884,6 @@ references:
   name: MeasureWrap
   nameWithType: SkiaLayout.MeasureWrap
   fullName: DrawnUi.Draw.SkiaLayout.MeasureWrap
-- uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
-  commentId: M:DrawnUi.Draw.SkiaControl.OnFirstDrawn
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
-  name: OnFirstDrawn()
-  nameWithType: SkiaControl.OnFirstDrawn()
-  fullName: DrawnUi.Draw.SkiaControl.OnFirstDrawn()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
-    name: OnFirstDrawn
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.OnFirstDrawn
-    name: OnFirstDrawn
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFirstDrawn
-  - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaLayout.OnFirstDrawn*
-  commentId: Overload:DrawnUi.Draw.SkiaLayout.OnFirstDrawn
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnFirstDrawn
-  name: OnFirstDrawn
-  nameWithType: SkiaLayout.OnFirstDrawn
-  fullName: DrawnUi.Draw.SkiaLayout.OnFirstDrawn
 - uid: DrawnUi.Draw.SkiaControl.PropagateVisibilityChanged(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.PropagateVisibilityChanged(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl

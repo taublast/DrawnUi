@@ -22,7 +22,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityAccumulator
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 23
+    startLine: 24
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -59,7 +59,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 30
+    startLine: 31
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -85,7 +85,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CaptureVelocity
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 35
+    startLine: 36
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -114,7 +114,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateFinalVelocity
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 42
+    startLine: 43
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

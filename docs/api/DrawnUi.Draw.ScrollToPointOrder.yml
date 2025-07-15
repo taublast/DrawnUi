@@ -27,7 +27,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollToPointOrder
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 63
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsValid
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 65
+    startLine: 66
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -90,7 +90,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NotValid
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 73
+    startLine: 74
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -119,7 +119,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ToPoint
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 79
+    startLine: 80
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -155,7 +155,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ToCoords
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 88
+    startLine: 89
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -193,7 +193,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ToCoords
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 97
+    startLine: 98
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -231,7 +231,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Animated
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 106
+    startLine: 107
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -260,7 +260,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Location
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 107
+    startLine: 108
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -289,7 +289,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxTimeSecs
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-    startLine: 108
+    startLine: 109
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

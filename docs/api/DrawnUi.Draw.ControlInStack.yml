@@ -11,6 +11,7 @@ items:
   - DrawnUi.Draw.ControlInStack.ControlIndex
   - DrawnUi.Draw.ControlInStack.Destination
   - DrawnUi.Draw.ControlInStack.Drawn
+  - DrawnUi.Draw.ControlInStack.IsCollapsed
   - DrawnUi.Draw.ControlInStack.IsVisible
   - DrawnUi.Draw.ControlInStack.Layout
   - DrawnUi.Draw.ControlInStack.Measured
@@ -534,6 +535,37 @@ items:
       type: System.Int32
     content.vb: Public Property Row As Integer
   overload: DrawnUi.Draw.ControlInStack.Row*
+- uid: DrawnUi.Draw.ControlInStack.IsCollapsed
+  commentId: P:DrawnUi.Draw.ControlInStack.IsCollapsed
+  id: IsCollapsed
+  parent: DrawnUi.Draw.ControlInStack
+  langs:
+  - csharp
+  - vb
+  name: IsCollapsed
+  nameWithType: ControlInStack.IsCollapsed
+  fullName: DrawnUi.Draw.ControlInStack.IsCollapsed
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsCollapsed
+    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    startLine: 70
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Cell's own visibility state (independent of viewport visibility)
+  example: []
+  syntax:
+    content: public bool IsCollapsed { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsCollapsed As Boolean
+  overload: DrawnUi.Draw.ControlInStack.IsCollapsed*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -1076,3 +1108,9 @@ references:
   name: Row
   nameWithType: ControlInStack.Row
   fullName: DrawnUi.Draw.ControlInStack.Row
+- uid: DrawnUi.Draw.ControlInStack.IsCollapsed*
+  commentId: Overload:DrawnUi.Draw.ControlInStack.IsCollapsed
+  href: DrawnUi.Draw.ControlInStack.html#DrawnUi_Draw_ControlInStack_IsCollapsed
+  name: IsCollapsed
+  nameWithType: ControlInStack.IsCollapsed
+  fullName: DrawnUi.Draw.ControlInStack.IsCollapsed

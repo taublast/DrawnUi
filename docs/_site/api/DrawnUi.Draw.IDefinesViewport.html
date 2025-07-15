@@ -223,8 +223,8 @@ Interface IDefinesViewport  <a class="header-action link-secondary" title="View 
 
   <a id="DrawnUi_Draw_IDefinesViewport_ScrollTo_" data-uid="DrawnUi.Draw.IDefinesViewport.ScrollTo*"></a>
 
-  <h3 id="DrawnUi_Draw_IDefinesViewport_ScrollTo_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single)">
-  ScrollTo(float, float, float)
+  <h3 id="DrawnUi_Draw_IDefinesViewport_ScrollTo_System_Single_System_Single_System_Single_System_Boolean_" data-uid="DrawnUi.Draw.IDefinesViewport.ScrollTo(System.Single,System.Single,System.Single,System.Boolean)">
+  ScrollTo(float, float, float, bool)
   <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -232,7 +232,7 @@ Interface IDefinesViewport  <a class="header-action link-secondary" title="View 
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void ScrollTo(float x, float y, float maxTimeSecs)</code></pre>
+    <pre><code class="lang-csharp hljs">void ScrollTo(float x, float y, float maxTimeSecs, bool clamp)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -242,6 +242,8 @@ Interface IDefinesViewport  <a class="header-action link-secondary" title="View 
     <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
     <dd></dd>
     <dt><code>maxTimeSecs</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>clamp</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 
