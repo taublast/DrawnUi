@@ -712,6 +712,23 @@ public partial class SkiaLayout
         }
     }
 
+    public override bool NeedMeasure
+    {
+        get
+        {
+            return base.NeedMeasure;
+        }
+        set
+        {
+            if (value && IsTemplated)
+            {
+                Debug.WriteLine("Recycled cells stack remeasured");
+            }
+
+            base.NeedMeasure = value;
+        }
+    }
+
     /// <summary>
     /// Applies all pending structure changes to StackStructure - called from rendering pipeline
     /// </summary>
@@ -722,7 +739,7 @@ public partial class SkiaLayout
         // Get all pending changes atomically
         lock (_structureChangesLock)
         {
-            if (_pendingStructureChanges.Count == 0)
+            if (LatestStackStructure==null || _pendingStructureChanges.Count == 0)
                 return;
 
             // Copy and clear in one atomic operation
