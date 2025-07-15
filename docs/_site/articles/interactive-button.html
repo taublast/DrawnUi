@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interactive Button Tutorial: Game-Style UI Elements | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interactive Button Tutorial: Game-Style UI Elements | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/interactive-button.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="interactive-button-tutorial-game-style-ui-elements">Interactive Button Tutorial: Game-Style UI Elements</h1>
+
+<p>Learn how to create stunning interactive buttons with visual effects, just like those found in modern games! This tutorial shows you how to build a button with bevel effects, gradients, and smooth press animations.</p>
+<h2 id="-what-well-build">🎯 What We'll Build</h2>
+<p>A beautiful interactive button featuring:</p>
+<ul>
+<li><strong>✨ Bevel/Emboss effects</strong> with depth and lighting</li>
+<li><strong>🌈 Gradient backgrounds</strong> with smooth color transitions</li>
+<li><strong>🎮 Press animations</strong> with realistic visual feedback</li>
+<li><strong>⚡ Optimized performance</strong> with smart caching</li>
+</ul>
+<img src="../images/interactive-button.png" alt="Interactive Button" width="200" style="margin: 16px 0;">
+<h2 id="-step-by-step-implementation">🛠️ Step-by-Step Implementation</h2>
+<h3 id="1--setup-your-maui-page">1. 📱 Setup Your MAUI Page</h3>
+<p>First, let's create a basic MAUI page with a DrawnUI Canvas:</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage x:Class=&quot;ButtonDemo.MainPage&quot;
+             xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;&gt;
+
+    &lt;draw:Canvas x:Name=&quot;MainCanvas&quot; 
+                 BackgroundColor=&quot;DarkSlateBlue&quot;&gt;
+        
+        &lt;!-- Button container --&gt;
+        &lt;draw:SkiaLayout x:Name=&quot;ButtonContainer&quot;
+                         HorizontalOptions=&quot;Center&quot;
+                         VerticalOptions=&quot;Center&quot; /&gt;
+                         
+    &lt;/draw:Canvas&gt;
+
+&lt;/ContentPage&gt;
+</code></pre>
+<h3 id="2--create-the-button-factory">2. 🏗️ Create the Button Factory</h3>
+<p>Now let's create our button factory method with all the visual effects:</p>
+<pre><code class="lang-csharp">using DrawnUi.Maui.Draw;
+
+namespace ButtonDemo;
+
+public partial class MainPage : ContentPage
+{
+    public MainPage()
+    {
+        InitializeComponent();
+        CreateAwesomeButton();
+    }
+
+    void CreateAwesomeButton()
+    {
+        var button = CreateInteractiveButton(&quot;PLAY GAME&quot;, () =&gt; 
+        {
+            DisplayAlert(&quot;Success!&quot;, &quot;Button was pressed! 🎉&quot;, &quot;OK&quot;);
+        });
+        
+        ButtonContainer.Children.Add(button);
+    }
+
+    public static SkiaShape CreateInteractiveButton(string caption, Action action)
+    {
+        return new SkiaShape()
+        {
+            UseCache = SkiaCacheType.Image,
+            CornerRadius = 8,
+            MinimumWidthRequest = 120,
+            BackgroundColor = Colors.Black,
+            BevelType = BevelType.Bevel,
+            Bevel = new SkiaBevel()
+            {
+                Depth = 2,
+                LightColor = Colors.White,
+                ShadowColor = Colors.DarkBlue,
+                Opacity = 0.33,
+            },
+            Children =
+            {
+                new SkiaRichLabel()
+                {
+                    Text = caption,
+                    Margin = new Thickness(16, 8, 16, 10),
+                    UseCache = SkiaCacheType.Operations,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
+                    FontSize = 16,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Colors.White,
+                }
+            },
+            FillGradient = new SkiaGradient()
+            {
+                StartXRatio = 0,
+                EndXRatio = 1,
+                StartYRatio = 0,
+                EndYRatio = 0.5f,
+                Colors = new Color[]
+                {
+                    Colors.HotPink,
+                    Colors.DeepPink,
+                }
+            },
+        }.WithGestures((me, args, b) =&gt;
+        {
+            if (args.Type == TouchActionResult.Tapped)
+            {
+                action?.Invoke();
+            }
+            else if (args.Type == TouchActionResult.Down)
+            {
+                SetButtonPressed(me);
+            }
+            else if (args.Type == TouchActionResult.Up)
+            {
+                SetButtonReleased(me);
+                return null;
+            }
+            return me;
+        });
+    }
+
+    // Visual feedback for button press
+    public static void SetButtonPressed(SkiaShape btn)
+    {
+        btn.Children[0].TranslationX = 1;
+        btn.Children[0].TranslationY = 1;
+        btn.BevelType = BevelType.Emboss;
+    }
+
+    public static void SetButtonReleased(SkiaShape btn)
+    {
+        btn.Children[0].TranslationX = 0;
+        btn.Children[0].TranslationY = 0;
+        btn.BevelType = BevelType.Bevel;
+    }
+}
+</code></pre>
+<p>Now let's wrap it inside a Canvas to be used inside a usual MAUI app - that's all you need to integrate this awesome button into any existing MAUI project!</p>
+<h2 id="-understanding-the-visual-effects">🎨 Understanding the Visual Effects</h2>
+<h3 id="bevel-effects">Bevel Effects</h3>
+<p>The <code>SkiaBevel</code> creates a 3D appearance:</p>
+<ul>
+<li><strong>Depth</strong>: Controls how pronounced the effect is</li>
+<li><strong>LightColor</strong>: Simulates light hitting the surface</li>
+<li><strong>ShadowColor</strong>: Creates depth with shadows</li>
+<li><strong>BevelType</strong>: Switches between raised (Bevel) and pressed (Emboss)</li>
+</ul>
+<h3 id="gradient-backgrounds">Gradient Backgrounds</h3>
+<p>The <code>SkiaGradient</code> adds visual appeal:</p>
+<ul>
+<li><strong>StartXRatio/EndXRatio</strong>: Horizontal gradient direction</li>
+<li><strong>StartYRatio/EndYRatio</strong>: Vertical gradient direction</li>
+<li><strong>Colors</strong>: Array of colors for smooth transitions</li>
+</ul>
+<h3 id="press-animation">Press Animation</h3>
+<p>The gesture handling provides tactile feedback:</p>
+<ul>
+<li><strong>Translation</strong>: Moves the text slightly when pressed</li>
+<li><strong>Bevel switching</strong>: Changes from raised to pressed appearance</li>
+</ul>
+<h2 id="-advanced-customization">🚀 Advanced Customization</h2>
+<h3 id="different-color-schemes">Different Color Schemes</h3>
+<pre><code class="lang-csharp">// Blue theme
+FillGradient = new SkiaGradient()
+{
+    Colors = new Color[] { Colors.CornflowerBlue, Colors.DarkBlue }
+}
+
+// Green theme  
+FillGradient = new SkiaGradient()
+{
+    Colors = new Color[] { Colors.LimeGreen, Colors.DarkGreen }
+}
+
+// Orange theme
+FillGradient = new SkiaGradient()
+{
+    Colors = new Color[] { Colors.Orange, Colors.DarkOrange }
+}
+</code></pre>
+<h3 id="custom-shapes">Custom Shapes</h3>
+<pre><code class="lang-csharp">// Rounded button
+CornerRadius = 25,
+
+// Pill-shaped button
+CornerRadius = 50,
+
+// Sharp edges
+CornerRadius = 0,
+</code></pre>
+<h3 id="different-sizes">Different Sizes</h3>
+<pre><code class="lang-csharp">// Large button
+MinimumWidthRequest = 200,
+Margin = new Thickness(24, 12, 24, 14),
+
+// Small button  
+MinimumWidthRequest = 80,
+Margin = new Thickness(12, 6, 12, 8),
+</code></pre>
+<h2 id="-performance-tips">💡 Performance Tips</h2>
+<ol>
+<li><strong>Use Caching</strong>: <code>UseCache = SkiaCacheType.Image</code> for the button shape</li>
+<li><strong>Cache Text</strong>: <code>UseCache = SkiaCacheType.Operations</code> for labels</li>
+<li><strong>Minimize Redraws</strong>: Only change properties that need visual updates</li>
+<li><strong>Batch Updates</strong>: Group multiple property changes together</li>
+</ol>
+<h2 id="-what-youve-learned">🎯 What You've Learned</h2>
+<ul>
+<li><strong>Visual Effects</strong>: How to create depth with bevel effects</li>
+<li><strong>Gradients</strong>: Adding beautiful color transitions</li>
+<li><strong>Gesture Handling</strong>: Implementing interactive press states</li>
+<li><strong>Performance</strong>: Using caching for smooth animations</li>
+<li><strong>Customization</strong>: Adapting the button for different themes</li>
+</ul>
+<h2 id="-next-steps">🚀 Next Steps</h2>
+<p>Try experimenting with:</p>
+<ul>
+<li><strong>Different gradient directions</strong> (diagonal, radial)</li>
+<li><strong>Multiple buttons</strong> with different themes</li>
+<li><strong>Icon integration</strong> using SkiaSvg</li>
+<li><strong>Animation effects</strong> with SkiaLottie</li>
+</ul>
+<p>This button technique can be used throughout your app for a consistent, professional game-like interface! 🎮</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/interactive-button.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
