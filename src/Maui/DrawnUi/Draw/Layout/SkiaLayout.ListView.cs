@@ -1090,7 +1090,7 @@ public partial class SkiaLayout
         if (structure == null || change.Count==0)
             return;
 
-        Debug.WriteLine($"[ApplyVisibilityChange] Processing {change.Count} cells starting at {change.StartIndex}, visibility: {change.IsVisible}");
+        //Debug.WriteLine($"[ApplyVisibilityChange] Processing {change.Count} cells starting at {change.StartIndex}, visibility: {change.IsVisible}");
 
         // Calculate total offset from all cells in the batch
         float totalDeltaWidth = 0;
@@ -1104,23 +1104,19 @@ public partial class SkiaLayout
 
             if (!change.IsVisible && !cell.IsCollapsed)
             {
-                // BECOMING GHOST - accumulate offset
+                // BECOMING GHOST  
                 totalDeltaWidth += -cell.Destination.Width;
                 totalDeltaHeight += -cell.Destination.Height;
                 cell.IsCollapsed = true;
                 lastChangedCell = cell;
-
-                Debug.WriteLine($"[ApplyVisibilityChange] Cell {i} became ghost");
             }
             else if (change.IsVisible && cell.IsCollapsed)
             {
-                // BECOMING VISIBLE - accumulate offset
+                // BECOMING VISIBLE 
                 totalDeltaWidth += cell.Destination.Width;
                 totalDeltaHeight += cell.Destination.Height;
                 cell.IsCollapsed = false;
                 lastChangedCell = cell;
-
-                Debug.WriteLine($"[ApplyVisibilityChange] Cell {i} became visible from ghost");
             }
         }
 
@@ -1128,7 +1124,6 @@ public partial class SkiaLayout
         if (lastChangedCell != null && (Math.Abs(totalDeltaWidth) > 0.1f || Math.Abs(totalDeltaHeight) > 0.1f))
         {
             OffsetSubsequentCells(structure, lastChangedCell, totalDeltaWidth, totalDeltaHeight);
-            Debug.WriteLine($"[ApplyVisibilityChange] Applied batch offset: ({totalDeltaWidth}, {totalDeltaHeight})");
         }
 
         // Update content size after visibility changes

@@ -1609,7 +1609,7 @@ namespace DrawnUi.Draw
                             _animatorFlingX.Stop();
                             _animatorFlingY.Stop();
 
-                            ScrollTo(ViewportOffsetX, needOffsetY / layout.RenderingScale, AutoScrollingSpeedMs);
+                            ScrollTo(ViewportOffsetX, needOffsetY / layout.RenderingScale, AutoScrollingSpeedMs, true);
 
                             return;
                         }
@@ -1648,7 +1648,7 @@ namespace DrawnUi.Draw
                             _animatorFlingX.Stop();
                             _animatorFlingY.Stop();
 
-                            ScrollTo(needOffsetX / layout.RenderingScale, ViewportOffsetY, AutoScrollingSpeedMs);
+                            ScrollTo(needOffsetX / layout.RenderingScale, ViewportOffsetY, AutoScrollingSpeedMs, true);
 
                             return;
                         }
@@ -1924,7 +1924,7 @@ namespace DrawnUi.Draw
                      !CompareFloats(ContentSize.Pixels.Width, measuredContent.Pixels.Width, 1)))
                 {
                     if (ViewportOffsetX != 0 || ViewportOffsetY != 0)
-                        ScrollTo(0, 0, 0);
+                        ScrollTo(0, 0, 0, false);
                 }
 
                 ContentSize = ScaledSize.FromPixels(measuredContent.Pixels.Width, measuredContent.Pixels.Height,
@@ -2115,7 +2115,7 @@ namespace DrawnUi.Draw
                 if (clamped.X == 0 && clamped.Y == 0 && OverScrolled)
                 {
                     HideRefreshIndicator();
-                    ScrollTo(0, 0, 0);
+                    ScrollTo(0, 0, 0, false);
                 }
 
                 forceSyncOffsets = true;

@@ -3,18 +3,11 @@ using System.Runtime.CompilerServices;
 
 namespace DrawnUi.Draw;
 
-
-
-
 public partial class SkiaScroll
 {
-
     public float ViewportOffsetY
     {
-        get
-        {
-            return _viewportOffsetY;
-        }
+        get { return _viewportOffsetY; }
 
         set
         {
@@ -32,10 +25,7 @@ public partial class SkiaScroll
 
     public float ViewportOffsetX
     {
-        get
-        {
-            return _viewportOffsetX;
-        }
+        get { return _viewportOffsetX; }
 
         set
         {
@@ -64,6 +54,7 @@ public partial class SkiaScroll
         {
             ViewportOffsetX = 0;
         }
+
         _scrollMaxX = 0;
 
         _scrollMinY = ContentOffsetBounds.Top;
@@ -71,6 +62,7 @@ public partial class SkiaScroll
         {
             ViewportOffsetY = 0;
         }
+
         _scrollMaxY = 0;
 
         IsViewportReady = true;
@@ -100,10 +92,7 @@ public partial class SkiaScroll
         {
             _vectorAnimatorBounceY = new(this)
             {
-                OnStart = () =>
-                {
-                    IsAnimating = true;
-                },
+                OnStart = () => { IsAnimating = true; },
                 OnStop = () =>
                 {
                     UpdateLoadingLock(false);
@@ -121,10 +110,7 @@ public partial class SkiaScroll
 
             _vectorAnimatorBounceX = new(this)
             {
-                OnStart = () =>
-                {
-                    IsAnimating = true;
-                },
+                OnStart = () => { IsAnimating = true; },
                 OnStop = () =>
                 {
                     UpdateLoadingLock(false);
@@ -192,10 +178,7 @@ public partial class SkiaScroll
 
             _scrollerX = new(this)
             {
-                OnStart = () =>
-                {
-                    IsAnimating = true;
-                },
+                OnStart = () => { IsAnimating = true; },
                 OnStop = () =>
                 {
                     IsSnapping = false;
@@ -209,10 +192,7 @@ public partial class SkiaScroll
 
             _scrollerY = new(this)
             {
-                OnStart = () =>
-                {
-                    IsAnimating = true;
-                },
+                OnStart = () => { IsAnimating = true; },
                 OnStop = () =>
                 {
                     IsSnapping = false;
@@ -220,7 +200,6 @@ public partial class SkiaScroll
                     {
                         CheckAndSetIsStillAnimating();
                     }
-
                 }
             };
         }
@@ -229,6 +208,7 @@ public partial class SkiaScroll
         {
             _vectorAnimatorBounceY.Stop();
         }
+
         if (_vectorAnimatorBounceX.IsRunning)
         {
             _vectorAnimatorBounceX.Stop();
@@ -251,14 +231,10 @@ public partial class SkiaScroll
     /// <param name="animate"></param>
     public void ScrollToX(float offset, bool animate)
     {
-
         if (animate)
         {
             _scrollerX.Start(
-                (value) =>
-                {
-                    ViewportOffsetX = (float)value;
-                },
+                (value) => { ViewportOffsetX = (float)value; },
                 InternalViewportOffset.Units.X, offset, (uint)ScrollingSpeedMs, ScrollingEasing);
         }
         else
@@ -275,14 +251,10 @@ public partial class SkiaScroll
     /// <param name="animate"></param>
     protected void ScrollToY(float offset, bool animate)
     {
-
         if (animate)
         {
             _scrollerY.Start(
-                (value) =>
-                {
-                    ViewportOffsetY = (float)value;
-                },
+                (value) => { ViewportOffsetY = (float)value; },
                 InternalViewportOffset.Units.Y, offset, (uint)ScrollingSpeedMs, ScrollingEasing);
         }
         else
@@ -327,13 +299,11 @@ public partial class SkiaScroll
                 {
                     BounceY((float)ViewportOffsetY, _axis.Y, velocity);
                 }
-                else
-                if (animator == _animatorFlingX)
+                else if (animator == _animatorFlingX)
                 {
                     BounceX((float)ViewportOffsetX, _axis.X, velocity);
                 }
             }
-
         }
     }
 
@@ -351,13 +321,11 @@ public partial class SkiaScroll
             //scroll ended prematurely by our intent because it would end past the bounds
             if (Bounces)
             {
-
                 if (_changeSpeed != null)
                 {
                     BounceIfNeeded(_animatorFlingY);
                     BounceIfNeeded(_animatorFlingX);
                 }
-
             }
         }
     }
@@ -375,7 +343,7 @@ public partial class SkiaScroll
     }
 
     /*
-    
+
     basic concept:
 
     when finger goes up we check where the scrolling would end with current velocity.
@@ -460,8 +428,7 @@ public partial class SkiaScroll
 
         if (contentOffset.X < 0) //scrolling to  right
             closestPoint.X = contentRect.Left;
-        else
-        if (contentOffset.X > 0) //scrolling to left
+        else if (contentOffset.X > 0) //scrolling to left
             closestPoint.X = width;
         else
             closestPoint.X = contentOffset.X;
@@ -472,8 +439,7 @@ public partial class SkiaScroll
 
         if (contentOffset.Y < 0) //scrolling to bottom
             closestPoint.Y = contentRect.Top;
-        else
-        if (contentOffset.Y > 0) //scrolling to top
+        else if (contentOffset.Y > 0) //scrolling to top
             closestPoint.Y = height;
         else
             closestPoint.Y = contentOffset.Y;
@@ -513,7 +479,8 @@ public partial class SkiaScroll
     protected virtual bool OffsetOk(Vector2 offset)
     {
         if (offset.Y >= ContentOffsetBounds.Top && offset.Y <= ContentOffsetBounds.Bottom
-        && offset.X >= ContentOffsetBounds.Left && offset.X <= ContentOffsetBounds.Right)
+                                                && offset.X >= ContentOffsetBounds.Left &&
+                                                offset.X <= ContentOffsetBounds.Right)
             return true;
 
         return false;
@@ -522,10 +489,7 @@ public partial class SkiaScroll
     public bool OverScrolled
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get
-        {
-            return OverscrollDistance != Vector2.Zero;
-        }
+        get { return OverscrollDistance != Vector2.Zero; }
     }
 
     protected float ptsContentWidth;
@@ -595,12 +559,10 @@ public partial class SkiaScroll
     protected double _minVelocity = 1.5;
 
     private float _DecelerationRatio = 0.002f;
+
     public float DecelerationRatio
     {
-        get
-        {
-            return _DecelerationRatio;
-        }
+        get { return _DecelerationRatio; }
         set
         {
             if (_DecelerationRatio != value)
@@ -644,14 +606,15 @@ public partial class SkiaScroll
 
         //	Trace.WriteLine($"[FLING] velocity {velocity}");
 
-        var contentOffset = from;// new float((float)ViewportOffsetX, (float)ViewportOffsetY);
+        var contentOffset = from; // new float((float)ViewportOffsetX, (float)ViewportOffsetY);
 
         animator.InitializeWithVelocity(contentOffset, velocity, 1f - DecelerationRatio);
 
         return await FlingAfterInitialized(animator);
     }
 
-    protected virtual async Task<bool> FlingToAuto(ScrollFlingAnimator animator, float from, float to, float changeSpeedSecs = 0)
+    protected virtual async Task<bool> FlingToAuto(ScrollFlingAnimator animator, float from, float to,
+        float changeSpeedSecs = 0)
     {
         var velocity = animator.Parameters.VelocityToZero(from, to, changeSpeedSecs);
 
@@ -685,8 +648,7 @@ public partial class SkiaScroll
             destinationPoint = new SKPoint(destination, 0);
             offsetOk = OffsetOk(new(destination, 0));
         }
-        else
-        if (animator == _animatorFlingY)
+        else if (animator == _animatorFlingY)
         {
             destinationPoint = new SKPoint(0, destination);
             offsetOk = OffsetOk(new(0, destination));
@@ -705,8 +667,7 @@ public partial class SkiaScroll
                 _changeSpeed = animator.Parameters.DurationToValue(closestPoint.X);
                 animator.Speed = _changeSpeed.Value;
             }
-            else
-            if (animator == _animatorFlingY)
+            else if (animator == _animatorFlingY)
             {
                 _axis = _axis with { Y = closestPoint.Y };
                 _changeSpeed = animator.Parameters.DurationToValue(closestPoint.Y);
@@ -719,7 +680,6 @@ public partial class SkiaScroll
 
     protected async Task<bool> FlingAfterInitialized(ScrollFlingAnimator animator)
     {
-
         if (PrepareToFlingAfterInitialized(animator))
         {
             await animator.RunAsync(null);
@@ -784,18 +744,19 @@ public partial class SkiaScroll
         if (!ScrollLocked)
         {
             ViewportOffsetX = value;
-
         }
     }
 
-    public void ScrollToIndex(int index, bool animate, RelativePositionType option = RelativePositionType.Start)
+    public void ScrollToIndex(int index, bool animate, RelativePositionType option = RelativePositionType.Start,
+        bool clamp = false)
     {
         //saving to use upon creating control if this was called before its internal structure was really created
         OrderedScrollToIndex = new()
         {
             Animated = animate,
             RelativePosition = option,
-            Index = index
+            Index = index,
+            Clamp = clamp
         };
 
         ExecuteScrollToIndexOrder();
@@ -829,11 +790,12 @@ public partial class SkiaScroll
                 if (OrderedScrollToIndex.Animated)
                     time = SystemAnimationTimeSecs;
 
-                ScrollTo(offset.X, offset.Y, time);
+                ScrollTo(offset.X, offset.Y, time, OrderedScrollToIndex.Clamp);
                 OrderedScrollToIndex = ScrollToIndexOrder.Default;
                 return true;
             }
         }
+
         return false;
     }
 
@@ -842,18 +804,20 @@ public partial class SkiaScroll
     /// </summary>
     /// <param name="offset"></param>
     /// <param name="animated"></param>
-    public void SetContentOffset(Vector2 offset, bool animated)
+    public void SetContentOffset(Vector2 offset, bool animated, bool clamp)
     {
         var speed = animated ? AutoScrollingSpeedMs : 0;
 
-        ScrollTo(offset.X, offset.Y, speed);
+        ScrollTo(offset.X, offset.Y, speed, clamp);
     }
 
-    public void ScrollTo(float x, float y, float maxSpeedSecs)
+    public virtual void ScrollTo(float x, float y, float maxSpeedSecs, bool clamp)
     {
         StopScrolling();
 
-        OrderedScrollTo = ScrollToPointOrder.ToCoords(x, y, maxSpeedSecs);
+        var clamped = ClampOffsetHard(x, y);
+
+        OrderedScrollTo = ScrollToPointOrder.ToCoords(clamped.X, clamped.Y, maxSpeedSecs);
 
         if (!ExecuteScrollToOrder())
         {
@@ -865,23 +829,22 @@ public partial class SkiaScroll
     {
         if (Orientation == ScrollOrientation.Vertical)
         {
-            ScrollTo(InternalViewportOffset.Units.X, 0, maxTimeSecs);
+            ScrollTo(InternalViewportOffset.Units.X, 0, maxTimeSecs, false);
+        }
+        else if (Orientation == ScrollOrientation.Horizontal)
+        {
+            ScrollTo(0, InternalViewportOffset.Units.Y, maxTimeSecs, false);
         }
         else
-        if (Orientation == ScrollOrientation.Horizontal)
         {
-            ScrollTo(0, InternalViewportOffset.Units.Y, maxTimeSecs);
-        }
-        else
-        {
-            ScrollTo(0, 0, maxTimeSecs);
+            ScrollTo(0, 0, maxTimeSecs, false);
         }
     }
 
     public void ScrollToBottom(float maxTimeSecs)
     {
         // For virtualized lists with unmeasured items, use estimated bottom position
-        if (UseVirtual && Content is SkiaLayout layout && layout.IsTemplated && 
+        if (UseVirtual && Content is SkiaLayout layout && layout.IsTemplated &&
             layout.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
         {
             ScrollToEstimatedBottom(maxTimeSecs);
@@ -891,16 +854,15 @@ public partial class SkiaScroll
         // Standard scroll to bottom using measured content
         if (Orientation == ScrollOrientation.Vertical)
         {
-            ScrollTo(InternalViewportOffset.Units.X, _scrollMinY, maxTimeSecs);
+            ScrollTo(InternalViewportOffset.Units.X, _scrollMinY, maxTimeSecs, true);
+        }
+        else if (Orientation == ScrollOrientation.Horizontal)
+        {
+            ScrollTo(_scrollMinX, InternalViewportOffset.Units.Y, maxTimeSecs, true);
         }
         else
-        if (Orientation == ScrollOrientation.Horizontal)
         {
-            ScrollTo(_scrollMinX, InternalViewportOffset.Units.Y, maxTimeSecs);
-        }
-        else
-        {
-            ScrollTo(_scrollMinX, _scrollMinY, maxTimeSecs);
+            ScrollTo(_scrollMinX, _scrollMinY, maxTimeSecs, true);
         }
     }
 
@@ -913,8 +875,9 @@ public partial class SkiaScroll
             return;
 
         var estimatedSize = layout.GetEstimatedContentSize(RenderingScale);
-        
-        Debug.WriteLine($"[ScrollToEstimatedBottom] Current content size: {ContentSize.Pixels.Width}x{ContentSize.Pixels.Height}, estimated: {estimatedSize.Pixels.Width}x{estimatedSize.Pixels.Height}");
+
+        Debug.WriteLine(
+            $"[ScrollToEstimatedBottom] Current content size: {ContentSize.Pixels.Width}x{ContentSize.Pixels.Height}, estimated: {estimatedSize.Pixels.Width}x{estimatedSize.Pixels.Height}");
 
         if (Orientation == ScrollOrientation.Vertical)
         {
@@ -922,13 +885,14 @@ public partial class SkiaScroll
             var estimatedContentHeight = estimatedSize.Pixels.Height;
             var viewportHeight = Viewport.Pixels.Height;
             var estimatedScrollY = -(estimatedContentHeight - viewportHeight);
-            
+
             // Clamp to reasonable bounds
             var minScrollY = Math.Min(0, estimatedScrollY);
-            
-            Debug.WriteLine($"[ScrollToEstimatedBottom] Scrolling to estimated Y: {minScrollY} (content: {estimatedContentHeight}, viewport: {viewportHeight})");
-            
-            ScrollTo(InternalViewportOffset.Units.X, minScrollY, maxTimeSecs);
+
+            Debug.WriteLine(
+                $"[ScrollToEstimatedBottom] Scrolling to estimated Y: {minScrollY} (content: {estimatedContentHeight}, viewport: {viewportHeight})");
+
+            ScrollTo(InternalViewportOffset.Units.X, minScrollY, maxTimeSecs, true);
         }
         else if (Orientation == ScrollOrientation.Horizontal)
         {
@@ -936,23 +900,22 @@ public partial class SkiaScroll
             var estimatedContentWidth = estimatedSize.Pixels.Width;
             var viewportWidth = Viewport.Pixels.Width;
             var estimatedScrollX = -(estimatedContentWidth - viewportWidth);
-            
+
             // Clamp to reasonable bounds
             var minScrollX = Math.Min(0, estimatedScrollX);
-            
-            Debug.WriteLine($"[ScrollToEstimatedBottom] Scrolling to estimated X: {minScrollX} (content: {estimatedContentWidth}, viewport: {viewportWidth})");
-            
-            ScrollTo(minScrollX, InternalViewportOffset.Units.Y, maxTimeSecs);
+
+            Debug.WriteLine(
+                $"[ScrollToEstimatedBottom] Scrolling to estimated X: {minScrollX} (content: {estimatedContentWidth}, viewport: {viewportWidth})");
+
+            ScrollTo(minScrollX, InternalViewportOffset.Units.Y, maxTimeSecs, true);
         }
     }
 
     private bool _Snapped;
+
     public bool Snapped
     {
-        get
-        {
-            return _Snapped;
-        }
+        get { return _Snapped; }
         set
         {
             if (_Snapped != value)
@@ -964,12 +927,10 @@ public partial class SkiaScroll
     }
 
     private bool _IsSnapping;
+
     public bool IsSnapping
     {
-        get
-        {
-            return _IsSnapping;
-        }
+        get { return _IsSnapping; }
         set
         {
             if (_IsSnapping != value)
@@ -985,5 +946,4 @@ public partial class SkiaScroll
 
     Vector2 _axis;
     double? _changeSpeed = null;
-
 }

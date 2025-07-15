@@ -188,7 +188,7 @@ public partial class SkiaScroll
 
         var clamped = ClampOffsetHard(offsetX, offsetY);
 
-        ScrollTo(clamped.X, clamped.Y, AutoScrollingSpeedMs);
+        ScrollTo(clamped.X, clamped.Y, AutoScrollingSpeedMs, false);
     }
 
     /// <summary>

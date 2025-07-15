@@ -521,7 +521,7 @@ namespace Sandbox
                 var currentOffset = MainScroll?.ViewportOffsetY ?? 0;
                 var newOffset = currentOffset + (scrollDirection * 5);
 
-                MainScroll?.ScrollTo(MainScroll.ViewportOffsetX, newOffset, 0);
+                MainScroll?.ScrollTo(MainScroll.ViewportOffsetX, newOffset, 0,false);
 
                 return _autoScrolling;
             });

@@ -275,7 +275,7 @@ public class SkiaScrollLooped : SkiaScroll
                     needOffsetY = hit.Unmodified.Y + needMove;
                     if (needMove != 0f && Math.Abs(initialOffset - needOffsetY) > threshold)
                     {
-                        ScrollTo(InternalViewportOffset.Units.X, needOffsetY / layout.RenderingScale, maxTimeSecs);
+                        ScrollTo(InternalViewportOffset.Units.X, needOffsetY / layout.RenderingScale, maxTimeSecs, false);
 
                         //Trace.WriteLine($"Snapping to {needOffsetY / layout.RenderingScale}");
                         return;
@@ -312,7 +312,7 @@ public class SkiaScrollLooped : SkiaScroll
                     if (needMove != 0f && initialOffset != needOffsetX)
                     {
 
-                        ScrollTo(needOffsetX / layout.RenderingScale, InternalViewportOffset.Units.Y, maxTimeSecs);
+                        ScrollTo(needOffsetX / layout.RenderingScale, InternalViewportOffset.Units.Y, maxTimeSecs, false);
 
                         return;
 

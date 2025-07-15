@@ -2148,11 +2148,12 @@ else
                     cell.OffsetOthers = Vector2.Zero;
                     cell.WasLastDrawn = false;
 
-                    if (!cell.IsVisible) //fix case of collapsing groups
+                    if (!cell.IsVisible || cell.IsCollapsed)
                     {
                         ChildrenFactory.MarkViewAsHidden(cell.ControlIndex);
                     }
-                    else if (Virtualisation != VirtualisationType.Disabled &&
+                    else
+                    if (Virtualisation != VirtualisationType.Disabled &&
                              cell.Destination != SKRect.Empty &&
                              !cell.Measured.Pixels.IsEmpty)
                     {
@@ -2319,7 +2320,6 @@ else
                                 }
                             }
                             
-
                             if (child.IsVisible)
                             {
       

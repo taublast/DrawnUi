@@ -850,7 +850,7 @@ namespace DrawnUi.Controls
                 Snapped = true;
                 _animatorFlingX.Stop();
                 _animatorFlingY.Stop();
-                ScrollTo(ViewportOffsetX, needOffsetY, AutoScrollingSpeedMs);
+                ScrollTo(ViewportOffsetX, needOffsetY, AutoScrollingSpeedMs, true);
 
             }
             else

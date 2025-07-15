@@ -8,7 +8,7 @@ public interface IDefinesViewport
 
     public RelativePositionType TrackIndexPosition { get; }
 
-    public void ScrollTo(float x, float y, float maxTimeSecs);
+    public void ScrollTo(float x, float y, float maxTimeSecs, bool clamp);
 
     /// <summary>
     /// So child can call parent to invalidate scrolling offset etc if child size changes

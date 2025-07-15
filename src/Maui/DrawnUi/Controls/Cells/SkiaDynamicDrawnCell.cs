@@ -5,6 +5,19 @@
 /// </summary>
 public class SkiaDynamicDrawnCell : SkiaDrawnCell
 {
+    public void UpdateVisibilityChanged()
+    {
+        if (Parent is SkiaLayout layout)
+        {
+            layout.ReportChildVisibilityChanged(this.ContextIndex, IsVisible);
+        }
+    }
+
+    public override void OnVisibilityChanged(bool value)
+    {
+        UpdateVisibilityChanged();
+    }
+
     protected override void OnMeasured()
     {
         base.OnMeasured();

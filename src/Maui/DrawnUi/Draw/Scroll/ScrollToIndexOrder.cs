@@ -19,6 +19,7 @@ public struct ScrollToIndexOrder
     public float MaxTimeSecs { get; set; }
     public RelativePositionType RelativePosition { get; set; }
     public int Index { get; set; }
+    public bool Clamp { get; set; }
 }
 
 public class VelocityAccumulator

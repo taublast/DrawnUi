@@ -1490,7 +1490,7 @@ namespace DrawnUi.Draw
         {
             if (Parent is IDefinesViewport viewport)
             {
-                viewport.ScrollTo(0, 0, 0);
+                viewport.ScrollTo(0, 0, 0, false);
             }
         }
 

@@ -1561,7 +1561,7 @@ public class TemplatedViewsPool : IDisposable
     // New: track height-based pools
     // Key: Rounded integer height, Value: Stack of controls for that height
     private Dictionary<int, Stack<SkiaControl>> _heightPools = new();
-    private int _maxDistinctHeights = 10; // or configurable
+    private int _maxDistinctHeights = 24; // or configurable
     private readonly Stack<SkiaControl> _genericPool; // fallback pool for cells without specific height
     private Stack<SkiaControl> _standalonePool = new();
     private readonly object _syncLock = new object();

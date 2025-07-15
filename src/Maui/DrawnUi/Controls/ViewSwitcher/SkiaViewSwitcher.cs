@@ -1239,7 +1239,7 @@ namespace DrawnUi.Controls
 
         public RelativePositionType TrackIndexPosition { get; }
 
-        public void ScrollTo(float x, float y, float maxTimeSecs)
+        public void ScrollTo(float x, float y, float maxTimeSecs, bool clamp)
         {
         }
 
