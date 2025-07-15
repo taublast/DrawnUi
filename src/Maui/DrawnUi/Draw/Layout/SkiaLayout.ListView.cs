@@ -655,7 +655,7 @@ public partial class SkiaLayout
                         currentX += columnWidth + (float)(Spacing * scale);
                     }
 
-                    Debug.WriteLine($"[MeasureBatchInBackground] Measured item {itemIndex} at ({cell.Destination.Left:F1},{cell.Destination.Top:F1}): {measured.Pixels.Width:F1}x{measured.Pixels.Height:F1}");
+                    //Debug.WriteLine($"[MeasureBatchInBackground] Measured item {itemIndex} at ({cell.Destination.Left:F1},{cell.Destination.Top:F1}): {measured.Pixels.Width:F1}x{measured.Pixels.Height:F1}");
                 }
             }
         }
@@ -708,7 +708,7 @@ public partial class SkiaLayout
             // Recalculate estimated content size
             //UpdateEstimatedContentSize(scale);
 
-            Debug.WriteLine($"[IntegrateMeasuredBatch] Integrated {measuredBatch.Count} items, total measured: {_measuredItems.Count}, last index: {LastMeasuredIndex}");
+            //Debug.WriteLine($"[IntegrateMeasuredBatch] Integrated {measuredBatch.Count} items, total measured: {_measuredItems.Count}, last index: {LastMeasuredIndex}");
         }
     }
 
@@ -786,7 +786,7 @@ public partial class SkiaLayout
             }
         }
 
-        Debug.WriteLine($"[ApplyStructureChanges] Applied {changesToProcess.Count} structure changes. Measured: {MeasuredItemsPercentage:P1}");
+        Debug.WriteLine($"[StackStructure] Applied {changesToProcess.Count} structure changes. Measured: {MeasuredItemsPercentage:P1}");
     }
 
     /// <summary>
@@ -849,7 +849,7 @@ public partial class SkiaLayout
             }
 
             UpdateProgressiveContentSize();
-            Debug.WriteLine($"[InsertMeasurementsAtPosition] Inserted {allRows.Count} rows at index {insertAtIndex}");
+            Debug.WriteLine($"[StackStructure] Inserted {allRows.Count} rows at index {insertAtIndex}");
         }
     }
 
@@ -892,7 +892,7 @@ public partial class SkiaLayout
             }
 
             UpdateProgressiveContentSize();
-            Debug.WriteLine($"[AppendMeasurementsToEnd] Appended {allRows.Count} rows from background measurement");
+            Debug.WriteLine($"[StackStructure] Appended {allRows.Count} rows from background measurement");
         }
     }
 
@@ -947,7 +947,7 @@ public partial class SkiaLayout
         // Replace the entire structure
         StackStructure = new LayoutStructure(rebuiltRows);
 
-        Debug.WriteLine($"[InsertRowsAtPosition] Rebuilt structure with {newRows.Count} rows inserted at index {insertAtIndex}");
+        Debug.WriteLine($"[StackStructure] Rebuilt with {newRows.Count} rows inserted at index {insertAtIndex}");
     }
 
     /// <summary>
@@ -973,7 +973,7 @@ public partial class SkiaLayout
         // Start background measurement with insert context
         StartBackgroundMeasurement(constraints, scale, insertAtIndex, context);
 
-        Debug.WriteLine($"[TriggerInsertAwareBackgroundMeasurement] Started insert-aware background measurement for {insertCount} items at index {insertAtIndex}");
+        Debug.WriteLine($"[StackStructure] Started insert-aware background measurement for {insertCount} items at index {insertAtIndex}");
     }
 
     /// <summary>
@@ -981,7 +981,7 @@ public partial class SkiaLayout
     /// </summary>
     private void ApplyAddChange(StructureChange change)
     {
-        Debug.WriteLine($"[ApplyAddChange] Adding {change.Count} items at index {change.StartIndex}");
+        Debug.WriteLine($"[StackStructure] Adding {change.Count} items at index {change.StartIndex}");
 
         if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
         {
@@ -993,12 +993,12 @@ public partial class SkiaLayout
                 // Trigger insert-aware background measurement for new items
                 TriggerInsertAwareBackgroundMeasurement(change.StartIndex, change.Count);
 
-                Debug.WriteLine($"[ApplyAddChange] MeasureVisible: Shifted measurements and triggered insert-aware background measurement");
+                Debug.WriteLine($"[StackStructure] MeasureVisible: Shifted measurements and triggered insert-aware background measurement");
             }
             else
             {
                 // Adding at end - normal background measurement will handle it
-                Debug.WriteLine($"[ApplyAddChange] MeasureVisible strategy - background measurement will handle new items at end");
+                Debug.WriteLine($"[StackStructure] MeasureVisible strategy - background measurement will handle new items at end");
             }
         }
         else
@@ -1008,7 +1008,7 @@ public partial class SkiaLayout
             {
                 // Adding in middle of measured items - shift existing measurements
                 ShiftMeasurementIndices(change.StartIndex, change.Count);
-                Debug.WriteLine($"[ApplyAddChange] Shifted measurements for sync strategy");
+                Debug.WriteLine($"[StackStructure] Shifted measurements for sync strategy");
             }
             // Note: New items will be measured on-demand during normal layout
         }
@@ -1021,7 +1021,7 @@ public partial class SkiaLayout
     /// </summary>
     private void ApplyRemoveChange(StructureChange change)
     {
-        Debug.WriteLine($"[ApplyRemoveChange] Removing {change.Count} items at index {change.StartIndex}");
+        Debug.WriteLine($"[StackStructure] Removing {change.Count} items at index {change.StartIndex}");
 
         // Remove items from measurement cache and shift indices
         for (int i = change.StartIndex; i < change.StartIndex + change.Count; i++)
@@ -1038,7 +1038,7 @@ public partial class SkiaLayout
             RemoveItemsFromStackStructure(change.StartIndex, change.Count);
         }
 
-        Debug.WriteLine($"[ApplyRemoveChange] Removed {change.Count} items and shifted measurements");
+        Debug.WriteLine($"[StackStructure] Removed {change.Count} items and shifted measurements");
         UpdateProgressiveContentSize();
     }
 
@@ -1047,7 +1047,7 @@ public partial class SkiaLayout
     /// </summary>
     private void ApplyReplaceChange(StructureChange change)
     {
-        Debug.WriteLine($"[ApplyReplaceChange] Replacing {change.Count} items at index {change.StartIndex}");
+        Debug.WriteLine($"[StackStructure] Replacing {change.Count} items at index {change.StartIndex}");
 
         // For Replace: Split into Remove + Add in same frame
         var removeChange = new StructureChange
@@ -1069,7 +1069,7 @@ public partial class SkiaLayout
         ApplyRemoveChange(removeChange);
         ApplyAddChange(addChange);
 
-        Debug.WriteLine($"[ApplyReplaceChange] Split replace into remove + add operations");
+        Debug.WriteLine($"[StackStructure] Split replace into remove + add operations");
     }
 
     /// <summary>
@@ -1077,7 +1077,7 @@ public partial class SkiaLayout
     /// </summary>
     private void ApplyMoveChange(StructureChange change)
     {
-        Debug.WriteLine($"[ApplyMoveChange] Moving item from index {change.StartIndex} to {change.TargetIndex}");
+        Debug.WriteLine($"[StackStructure] Moving item from index {change.StartIndex} to {change.TargetIndex}");
         // TODO: Implement move logic that reorders structure
         UpdateProgressiveContentSize();
     }
@@ -1087,7 +1087,7 @@ public partial class SkiaLayout
     /// </summary>
     private void ApplyResetChange(StructureChange change)
     {
-        Debug.WriteLine($"[ApplyResetChange] Resetting all structure");
+        Debug.WriteLine($"[StackStructure] Resetting all");
         // Clear everything for reset
         StackStructure = null;
         _measuredItems.Clear();
@@ -1333,7 +1333,7 @@ public partial class SkiaLayout
             {
                 // 100% measured - use exact size
                 newContentHeight = actualMeasuredHeight;
-                Debug.WriteLine($"[UpdateProgressiveContentSize] 100% measured - exact height: {newContentHeight:F1}px");
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] 100% measured - exact height: {newContentHeight:F1}px");
             }
             else if (progress >= 0.9f)
             {
@@ -1342,7 +1342,7 @@ public partial class SkiaLayout
                 var estimatedTotal = averageHeight * totalItems;
                 var buffer = estimatedTotal * 0.05f; // 5% buffer for final items
                 newContentHeight = estimatedTotal + buffer;
-                Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - precise estimate: {newContentHeight:F1}px (avg: {averageHeight:F1}px)");
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - precise estimate: {newContentHeight:F1}px (avg: {averageHeight:F1}px)");
             }
             else if (progress >= 0.5f)
             {
@@ -1351,7 +1351,7 @@ public partial class SkiaLayout
                 var estimatedTotal = averageHeight * totalItems;
                 var buffer = estimatedTotal * (0.5f - progress * 0.4f); // Decreasing buffer as we approach 90%
                 newContentHeight = estimatedTotal + buffer;
-                Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - blended estimate: {newContentHeight:F1}px (buffer: {buffer:F1}px)");
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - blended estimate: {newContentHeight:F1}px (buffer: {buffer:F1}px)");
             }
             else
             {
@@ -1360,7 +1360,7 @@ public partial class SkiaLayout
                 var estimatedTotal = averageHeight * totalItems;
                 var buffer = estimatedTotal * 1.0f; // 100% buffer for early measurements
                 newContentHeight = estimatedTotal + buffer;
-                Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - early estimate: {newContentHeight:F1}px (large buffer)");
+                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - early estimate: {newContentHeight:F1}px (large buffer)");
             }
 
             // Only update if the new size is different enough to matter
@@ -1368,7 +1368,7 @@ public partial class SkiaLayout
             if (Math.Abs(newContentHeight - currentHeight) > 10f) // 10px threshold
             {
                 SetMeasured(MeasuredSize.Pixels.Width, newContentHeight, false, false, RenderingScale);
-                Debug.WriteLine($"[UpdateProgressiveContentSize] Updated height from {currentHeight:F1}px to {newContentHeight:F1}px");
+                Debug.WriteLine($"[Scroll] Updated content COLUMN {1.0/progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
             }
         }
         else if (Type == LayoutType.Row)
@@ -1417,7 +1417,7 @@ public partial class SkiaLayout
             if (Math.Abs(newContentWidth - currentWidth) > 10f)
             {
                 SetMeasured(newContentWidth, MeasuredSize.Pixels.Height, false, false, RenderingScale);
-                Debug.WriteLine($"[UpdateProgressiveContentSize] Updated width from {currentWidth:F1}px to {newContentWidth:F1}px");
+                Debug.WriteLine($"[Scroll] Updated content ROW {1.0/progress:0}% width from {currentWidth:F1}px to {newContentWidth:F1}px");
             }
         }
     }
@@ -1463,7 +1463,7 @@ public partial class SkiaLayout
         var maxIterations = Math.Max(1, (totalItems / MEASUREMENT_BATCH_SIZE) + 10); // Safety limit
         var iterationCount = 0;
 
-        Debug.WriteLine($"[BackgroundMeasureItems] Starting background measurement from index {startIndex} of {totalItems} total items");
+        Debug.WriteLine($"[MeasureVisible] Starting measurement from {startIndex} of {totalItems} total items");
 
         while (currentBatchStart < totalItems && !cancellationToken.IsCancellationRequested && iterationCount < maxIterations)
         {
@@ -1483,11 +1483,11 @@ public partial class SkiaLayout
             // Safety check to prevent infinite loops
             if (itemsToMeasure <= 0)
             {
-                Debug.WriteLine($"[BackgroundMeasureItems] WARNING: No items to measure in batch {currentBatchStart}-{batchEnd}, breaking loop");
+                Debug.WriteLine($"[MeasureVisible] WARNING: No items to measure in batch {currentBatchStart}-{batchEnd}, breaking loop");
                 break;
             }
 
-            Debug.WriteLine($"[BackgroundMeasureItems] Measuring batch {currentBatchStart}-{batchEnd - 1} ({itemsToMeasure} items) [iteration {iterationCount}/{maxIterations}]");
+            Debug.WriteLine($"[MeasureVisible] Measuring batch {currentBatchStart}-{batchEnd - 1} ({itemsToMeasure} items) [iteration {iterationCount}/{maxIterations}]");
 
             // Get positioning data on main thread (thread-safe read)
             var structure = LatestStackStructure;
@@ -1499,7 +1499,7 @@ public partial class SkiaLayout
 
             if (cancellationToken.IsCancellationRequested)
             {
-                Debug.WriteLine($"[BackgroundMeasureItems] Cancellation requested, stopping at batch {currentBatchStart}");
+                Debug.WriteLine($"[MeasureVisible] Cancellation requested, stopping at batch {currentBatchStart}");
                 break;
             }
 
@@ -1521,10 +1521,10 @@ public partial class SkiaLayout
 
         if (iterationCount >= maxIterations)
         {
-            Debug.WriteLine($"[BackgroundMeasureItems] WARNING: Hit maximum iteration limit ({maxIterations}), stopping background measurement");
+            Debug.WriteLine($"[MeasureVisible] WARNING: Hit maximum iteration limit ({maxIterations}), stopping background measurement");
         }
 
-        Debug.WriteLine($"[BackgroundMeasureItems] Completed background measurement up to index {_backgroundMeasurementProgress}");
+        Debug.WriteLine($"[MeasureVisible] Completed background measurement up to index {_backgroundMeasurementProgress}");
 
         Repaint();
     }

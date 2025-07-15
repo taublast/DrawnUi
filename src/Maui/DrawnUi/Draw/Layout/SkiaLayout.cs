@@ -1497,8 +1497,14 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Determines if collection changes should preserve existing measurement structure
         /// </summary>
-        protected virtual bool ShouldPreserveStructureOnCollectionChange =>
-            MeasureItemsStrategy == MeasuringStrategy.MeasureVisible;
+        protected virtual bool ShouldPreserveStructureOnCollectionChange
+        {
+            get
+            {
+                return StackStructure != null && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible;
+            }
+        }
+           
 
         /// <summary>
         /// Enhanced collection change handler with smart handling and fallback
@@ -1554,6 +1560,11 @@ namespace DrawnUi.Draw
                         ResetScroll();
                         Invalidate();
                     }
+                    else
+                    if ((MeasuredSize.Pixels.Height==0 || MeasuredSize.Pixels.Width == 0  || MeasureItemsStrategy != MeasuringStrategy.MeasureVisible) && NeedAutoSize)
+                    {
+                        Invalidate();
+                    }
                 });
                 
             }
@@ -1596,6 +1607,8 @@ namespace DrawnUi.Draw
                     goto ExistingLogic;
             }
 
+            Repaint();
+
             return;
 
             ExistingLogic:
@@ -1607,6 +1620,8 @@ namespace DrawnUi.Draw
                     ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, ItemsSource,
                         GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
                 });
+
+                Repaint();
             }
         }
 

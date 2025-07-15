@@ -36,7 +36,7 @@ dotnet add package DrawnUi.Maui
 
 > **Important**: Please install stable versions only.
 
-Alternatively, you can fork the DrawnUi repo and reference the main project directly.
+Alternatively, you can fork the DrawnUi repo and reference the main project directly. In that case if you are on Windows x64 please disable MSIX packaging.
 
 ### Additional Packages
 

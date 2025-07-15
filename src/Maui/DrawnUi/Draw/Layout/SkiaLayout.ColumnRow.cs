@@ -2068,17 +2068,17 @@ else
                 var currentIndex = -1;
                 foreach (var cell in structure.GetChildrenAsSpans())
                 {
-                    // NEW: Check if we have background measurement for this cell
-                    if (!cell.WasMeasured && _measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
-                    {
-                        // Apply the background measurement to this cell
-                        cell.Measured = measuredInfo.Cell.Measured;
-                        cell.WasMeasured = true;
-                        cell.Area = measuredInfo.Cell.Area;
-                        cell.Destination = measuredInfo.Cell.Destination;
+                    //// NEW: Check if we have background measurement for this cell
+                    //if (!cell.WasMeasured && _measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
+                    //{
+                    //    // Apply the background measurement to this cell
+                    //    cell.Measured = measuredInfo.Cell.Measured;
+                    //    cell.WasMeasured = true;
+                    //    cell.Area = measuredInfo.Cell.Area;
+                    //    cell.Destination = measuredInfo.Cell.Destination;
 
-                        Debug.WriteLine($"[DrawStack] Using background measurement for cell {cell.ControlIndex}");
-                    }
+                    //    Debug.WriteLine($"[DrawStack] Using background measurement for cell {cell.ControlIndex}");
+                    //}
 
                     if (!cell.WasMeasured)
                     {
@@ -2121,22 +2121,13 @@ else
                             }
                             else
                             {
-                                // For ghost cells: include in visible list but will skip drawing
                                 var viewportVisible = insideViewport;
-
-                                // Ghost cells are considered "visible" for processing but won't be drawn
                                 cell.IsVisible = viewportVisible;
-
-                                // for plane virtualization
-                                //if (!string.IsNullOrEmpty(planeId) && cell.ControlIndex < 3)
-                                //{
-                                //    Debug.WriteLine($"[{planeId}] Cell {cell.ControlIndex}: drawn={cell.Drawn}, visible={cell.IsVisible}");
-                                //}
                             }
                         }
                         else
                         {
-                            cell.IsVisible = true; // Always visible for processing, drawing will be skipped for ghosts
+                            cell.IsVisible = true; 
                         }
 
                         if (firstVisibleIndex < 0)
@@ -2152,16 +2143,16 @@ else
                     {
                         ChildrenFactory.MarkViewAsHidden(cell.ControlIndex);
                     }
-                    else
-                    if (Virtualisation != VirtualisationType.Disabled &&
-                             cell.Destination != SKRect.Empty &&
-                             !cell.Measured.Pixels.IsEmpty)
-                    {
-                        if (!cell.Drawn.IntersectsWith(recyclingAreaPixels))
-                        {
-                            ChildrenFactory.MarkViewAsHidden(cell.ControlIndex);
-                        }
-                    }
+                    //else
+                    //if (Virtualisation != VirtualisationType.Disabled &&
+                    //         cell.Destination != SKRect.Empty &&
+                    //         !cell.Measured.Pixels.IsEmpty)
+                    //{
+                    //    if (!cell.Drawn.IntersectsWith(recyclingAreaPixels))
+                    //    {
+                    //        ChildrenFactory.MarkViewAsHidden(cell.ControlIndex);
+                    //    }
+                    //}
 
                     // Add to visible elements for drawing
                     if (cell.IsVisible)
