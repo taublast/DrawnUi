@@ -1,10 +1,13 @@
-﻿namespace DrawnUi.Controls;
+﻿using System.Threading;
+
+namespace DrawnUi.Controls;
 
 /// <summary>
 /// This cell can watch binding context property changing
 /// </summary>
 public class SkiaDynamicDrawnCell : SkiaDrawnCell
 {
+    
     public void UpdateVisibilityChanged()
     {
         if (Parent is SkiaLayout layout)

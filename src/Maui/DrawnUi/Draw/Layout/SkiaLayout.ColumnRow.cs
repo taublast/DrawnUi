@@ -2069,16 +2069,16 @@ else
                 foreach (var cell in structure.GetChildrenAsSpans())
                 {
                     //// NEW: Check if we have background measurement for this cell
-                    //if (!cell.WasMeasured && _measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
-                    //{
-                    //    // Apply the background measurement to this cell
-                    //    cell.Measured = measuredInfo.Cell.Measured;
-                    //    cell.WasMeasured = true;
-                    //    cell.Area = measuredInfo.Cell.Area;
-                    //    cell.Destination = measuredInfo.Cell.Destination;
+                    if (!cell.WasMeasured && _measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
+                    {
+                        // Apply the background measurement to this cell
+                        cell.Measured = measuredInfo.Cell.Measured;
+                        cell.WasMeasured = true;
+                        cell.Area = measuredInfo.Cell.Area;
+                        cell.Destination = measuredInfo.Cell.Destination;
 
-                    //    Debug.WriteLine($"[DrawStack] Using background measurement for cell {cell.ControlIndex}");
-                    //}
+                        Debug.WriteLine($"[DrawStack] Using background measurement for cell {cell.ControlIndex}");
+                    }
 
                     if (!cell.WasMeasured)
                     {
@@ -2387,8 +2387,8 @@ else
                                             destinationRect,
                                             control.DrawingRect,
                                             index,
-                                            -1, // Default freeze index
-                                            control.BindingContext)); // Capture current binding context
+                                            control.ContextIndex, // freeze index
+                                            control.BindingContext)); // freeze binding context
                                     }
                                 }
                             }

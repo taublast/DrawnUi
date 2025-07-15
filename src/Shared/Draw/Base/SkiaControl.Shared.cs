@@ -638,10 +638,10 @@ namespace DrawnUi.Draw
             var startScaleY = this.ScaleY;
 
             return AnimateAsync(value =>
-            {
-                this.ScaleX = startScaleX + (x - startScaleX) * value;
-                this.ScaleY = startScaleY + (y - startScaleY) * value;
-            },
+                {
+                    this.ScaleX = startScaleX + (x - startScaleX) * value;
+                    this.ScaleY = startScaleY + (y - startScaleY) * value;
+                },
                 () =>
                 {
                     this.ScaleX = x;
@@ -692,10 +692,10 @@ namespace DrawnUi.Draw
             var startTranslationY = this.TranslationY;
 
             return AnimateAsync(value =>
-            {
-                this.TranslationX = (float)(startTranslationX + (x - startTranslationX) * value);
-                this.TranslationY = (float)(startTranslationY + (y - startTranslationY) * value);
-            },
+                {
+                    this.TranslationX = (float)(startTranslationX + (x - startTranslationX) * value);
+                    this.TranslationY = (float)(startTranslationY + (y - startTranslationY) * value);
+                },
                 () =>
                 {
                     this.TranslationX = x;
@@ -855,6 +855,7 @@ namespace DrawnUi.Draw
                 {
                     return WidthRequest + Margins.HorizontalThickness;
                 }
+
                 return WidthRequest;
             }
         }
@@ -925,18 +926,12 @@ namespace DrawnUi.Draw
 
         public bool NeedFillHorizontally
         {
-            get
-            {
-                return WidthRequest < 0 && HorizontalOptions.Alignment == LayoutAlignment.Fill;
-            }
+            get { return WidthRequest < 0 && HorizontalOptions.Alignment == LayoutAlignment.Fill; }
         }
 
         public bool NeedFillVertically
         {
-            get
-            {
-                return HeightRequest < 0 && VerticalOptions.Alignment == LayoutAlignment.Fill;
-            }
+            get { return HeightRequest < 0 && VerticalOptions.Alignment == LayoutAlignment.Fill; }
         }
 
 
@@ -1279,7 +1274,7 @@ namespace DrawnUi.Draw
                 !child.Control.InputTransparent && child.Control.CanDraw)
             {
                 var transformed = child.Control.ApplyTransforms(child.HitRect);
-                inside = transformed.ContainsInclusive(point.X, point.Y); 
+                inside = transformed.ContainsInclusive(point.X, point.Y);
             }
 
             return inside;
@@ -1471,7 +1466,8 @@ namespace DrawnUi.Draw
         /// <param name="child"></param>
         /// <param name="args"></param>
         /// <param name="apply"></param>
-        public virtual void OnChildTapped(SkiaControl child, SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        public virtual void OnChildTapped(SkiaControl child, SkiaGesturesParameters args,
+            GestureEventProcessingInfo apply)
         {
             if (ChildTapped != null)
             {
@@ -1484,8 +1480,7 @@ namespace DrawnUi.Draw
             }
         }
 
- 
- 
+
         public virtual ISkiaGestureListener ProcessGestures(
             SkiaGesturesParameters args,
             GestureEventProcessingInfo apply)
@@ -1594,56 +1589,78 @@ namespace DrawnUi.Draw
 
                             if (forChild)
                             {
-                                if (args.Type == TouchActionResult.Tapped)
+                                var originalBindingContext = child.Control.BindingContext;
+                                try
                                 {
-                                    OnChildTapped(child.Control, args, apply);
-                                }
-
-                                if (manageChildFocus && listener == Superview.FocusedChild)
-                                {
-                                    manageChildFocus = false;
-                                }
-
-                                var childOffset = TranslateInputCoords(apply.ChildOffsetDirect, false);
-
-                                //standart gesture processing
-                                var c = listener.OnSkiaGestureEvent(args,
-                                    new GestureEventProcessingInfo(
-                                        apply.MappedLocation,
-                                        thisOffset,
-                                        childOffset,
-                                        apply.AlreadyConsumed));
-                                if (c != null)
-                                {
-                                    consumed = c;
-                                }
-                                else
-                                {
-                                    //check attached listeners then
-                                    if (AddGestures.AttachedListeners.TryGetValue(child.Control, out var effect))
+                                    if (child.FreezeBindingContext != child.Control.BindingContext &&
+                                        child.FreezeBindingContext != null)
                                     {
-                                        c = effect.OnSkiaGestureEvent(args,
-                                            new GestureEventProcessingInfo(
-                                                apply.MappedLocation,
-                                                thisOffset,
-                                                childOffset,
-                                                apply.AlreadyConsumed));
-                                        if (c != null)
+                                        child.Control.BindingContext = child.FreezeBindingContext;
+                                    }
+
+                                    if (args.Type == TouchActionResult.Tapped)
+                                    {
+                                        OnChildTapped(child.Control, args, apply);
+                                    }
+
+                                    if (manageChildFocus && listener == Superview.FocusedChild)
+                                    {
+                                        manageChildFocus = false;
+                                    }
+
+                                    var childOffset = TranslateInputCoords(apply.ChildOffsetDirect, false);
+
+                                    //standart gesture processing
+                                    var c = listener.OnSkiaGestureEvent(args,
+                                        new GestureEventProcessingInfo(
+                                            apply.MappedLocation,
+                                            thisOffset,
+                                            childOffset,
+                                            apply.AlreadyConsumed));
+                                    if (c != null)
+                                    {
+                                        consumed = c;
+                                    }
+                                    else
+                                    {
+                                        //check attached listeners then
+                                        if (AddGestures.AttachedListeners.TryGetValue(child.Control, out var effect))
                                         {
-                                            consumed = effect;
+                                            c = effect.OnSkiaGestureEvent(args,
+                                                new GestureEventProcessingInfo(
+                                                    apply.MappedLocation,
+                                                    thisOffset,
+                                                    childOffset,
+                                                    apply.AlreadyConsumed));
+                                            if (c != null)
+                                            {
+                                                consumed = effect;
+                                            }
                                         }
                                     }
-                                }
 
-                                if (consumed != null)
-                                {
-                                    break;
-                                }
+                                    if (consumed != null)
+                                    {
+                                        break;
+                                    }
 
-                                if (breakForChild != null)
+                                    if (breakForChild != null)
+                                    {
+                                        consumed = breakForChild;
+                                        break;
+                                    }
+                                }
+                                catch (Exception e)
                                 {
-                                    consumed = breakForChild;
-                                    break;
+                                    Super.Log(e);
+                                }
+                                finally
+                                {
+                                    // FREEZE FIX: Always restore the original BindingContext
+                                    if (child.FreezeBindingContext != null)
+                                    {
+                                        child.Control.BindingContext = originalBindingContext;
+                                    }
                                 }
                             }
                         }
@@ -1701,6 +1718,7 @@ namespace DrawnUi.Draw
                                         {
                                             breakForChild = listener;
                                         }
+
                                         if (CommandChildTapped != null)
                                         {
                                             breakForChild = listener;
@@ -1768,7 +1786,7 @@ namespace DrawnUi.Draw
 
             return consumed;
         }
- 
+
 
         public static readonly BindableProperty BlockGesturesBelowProperty = BindableProperty.Create(
             nameof(BlockGesturesBelow),
@@ -2063,7 +2081,6 @@ namespace DrawnUi.Draw
         {
             if (bindable is SkiaControl control)
             {
-
                 if (oldvalue is SkiaGradient old)
                 {
                     old.BindingContext = null;
@@ -2855,10 +2872,7 @@ namespace DrawnUi.Draw
 
                 return value;
             }
-            set
-            {
-                SetValue(RenderingScaleProperty, value);
-            }
+            set { SetValue(RenderingScaleProperty, value); }
         }
 
         //public double RenderingScaleSafe
@@ -3690,6 +3704,7 @@ namespace DrawnUi.Draw
                 var legacy = this.GetPositionOnCanvas();
                 hitbox = new SKRect(legacy.X, legacy.Y, legacy.X + DrawingRect.Width, legacy.Y + DrawingRect.Height);
             }
+
             return hitbox;
         }
 
@@ -4176,7 +4191,8 @@ namespace DrawnUi.Draw
                     ScaledSize measured;
                     if (!hadFixedSize)
                     {
-                        measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
+                        measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height,
+                            scale);
                         // Don't process fill children sizes - they adapt to parent, not define it
                     }
                     else
@@ -4426,6 +4442,7 @@ namespace DrawnUi.Draw
             {
                 return true;
             }
+
             return false;
         }
 
@@ -4839,21 +4856,16 @@ namespace DrawnUi.Draw
 
         public virtual bool NeedFillX
         {
-            get
-            {
-                return HorizontalOptions.Alignment == LayoutAlignment.Fill && SizeRequest.Width < 0;
-            }
+            get { return HorizontalOptions.Alignment == LayoutAlignment.Fill && SizeRequest.Width < 0; }
         }
 
         public virtual bool NeedFillY
         {
-            get
-            {
-                return VerticalOptions.Alignment == LayoutAlignment.Fill && SizeRequest.Height < 0;
-            }
+            get { return VerticalOptions.Alignment == LayoutAlignment.Fill && SizeRequest.Height < 0; }
         }
 
         private bool _isDisposed;
+
         public bool IsDisposed
         {
             get { return _isDisposed; }
@@ -5162,7 +5174,7 @@ namespace DrawnUi.Draw
         protected virtual bool NeedToMeasureSelf()
         {
             return WillInvalidateMeasure || NeedMeasure;
-        } 
+        }
 
         /// <summary>
         /// Returns false if should not render
@@ -5212,6 +5224,7 @@ namespace DrawnUi.Draw
             {
                 width = destination.Width;
             }
+
             if (height > destination.Height)
             {
                 height = destination.Height;
@@ -6213,7 +6226,7 @@ namespace DrawnUi.Draw
         /// </summary>
         public virtual void Update()
         {
-            if (UpdateLocks>0 || NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
+            if (UpdateLocks > 0 || NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
             {
                 return;
             }
@@ -6589,7 +6602,7 @@ namespace DrawnUi.Draw
 
         protected override void InvalidateMeasure()
         {
-            if (WasMeasured && UpdateLocks<1)
+            if (WasMeasured && UpdateLocks < 1)
             {
                 InvalidateMeasureInternal();
                 Update();
@@ -6754,10 +6767,7 @@ namespace DrawnUi.Draw
 
             var animation = new ShimmerAnimator(this)
             {
-                Color = color.ToSKColor(),
-                ShimmerWidth = shimmerWidth,
-                ShimmerAngle = shimmerAngle,
-                Speed = speedMs
+                Color = color.ToSKColor(), ShimmerWidth = shimmerWidth, ShimmerAngle = shimmerAngle, Speed = speedMs
             };
             animation.Start();
         }

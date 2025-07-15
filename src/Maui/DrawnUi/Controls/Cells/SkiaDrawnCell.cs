@@ -18,6 +18,18 @@ public class SkiaDrawnCell : SkiaLayout, ISkiaCell
 
     }
 
+    public virtual void Remeasure()
+    {
+        if (Parent is SkiaLayout layout)
+        {
+            var constraints = new SKRect(0, 0, _lastMeasuredForWidth, _lastMeasuredForHeight);
+            var scale = RenderingScale;
+            layout.MeasureSingleItem(this.ContextIndex, constraints, scale, default, false);
+        }
+
+        Parent?.InvalidateByChild(this);
+    }
+
     public virtual TouchActionEventHandler LongPressingHandler => (sender, args) =>
     {
         args.PreventDefault = true;

@@ -7,6 +7,13 @@ namespace DrawnUi.Draw;
 
 public partial class SkiaLayout
 {
+    public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    {
+        //basically we override to be able to handle recycled cells
+
+
+        return base.ProcessGestures(args, apply);
+    }
 
     public bool IsBackgroundMeasuring => _isBackgroundMeasuring;
     public int BackgroundMeasurementProgress => _backgroundMeasurementProgress;
@@ -47,6 +54,9 @@ public partial class SkiaLayout
         public int? InsertCount { get; set; }
         public int StartMeasuringFrom { get; set; }
         public bool IsInsertOperation => InsertAtIndex.HasValue;
+        public bool IsSingleItemRemeasurement { get; set; }
+        public int? SingleItemIndex { get; set; }
+        public int? EndMeasuringAt { get; set; }
     }
 
     /// <summary>
@@ -60,7 +70,8 @@ public partial class SkiaLayout
         Move,
         Reset,
         BackgroundMeasurement,
-        VisibilityChange
+        VisibilityChange,
+        SingleItemUpdate
     }
 
     // Background measurement support
@@ -159,6 +170,36 @@ public partial class SkiaLayout
                 }
             }
         });
+    }
+
+    /// <summary>
+    /// Remeasures a single item in the background and updates it in the existing structure
+    /// </summary>
+    public void RemeasureSingleItemInBackground(int itemIndex)
+    {
+        if (!IsTemplated || ItemsSource == null || itemIndex < 0 || itemIndex >= ItemsSource.Count)
+        {
+            Debug.WriteLine($"[RemeasureSingleItemInBackground] Invalid parameters: IsTemplated={IsTemplated}, ItemsSource={ItemsSource?.Count}, itemIndex={itemIndex}");
+            return;
+        }
+
+        // Create context for single-item measurement
+        var context = new BackgroundMeasurementContext
+        {
+            IsSingleItemRemeasurement = true,
+            SingleItemIndex = itemIndex,
+            StartMeasuringFrom = itemIndex,
+            EndMeasuringAt = itemIndex
+        };
+
+        // Get current constraints from last measurement
+        var constraints = new SKRect(0, 0, _lastMeasuredForWidth, _lastMeasuredForHeight);
+        var scale = RenderingScale;
+
+        // Start targeted background measurement
+        StartBackgroundMeasurement(constraints, scale, itemIndex, context);
+
+        Debug.WriteLine($"[RemeasureSingleItemInBackground] Started background remeasurement for item at index {itemIndex}");
     }
 
     private int _listAdditionalMeasurements;
@@ -780,6 +821,10 @@ public partial class SkiaLayout
                     ApplyVisibilityChange(change);
                     break;
 
+                case StructureChangeType.SingleItemUpdate:
+                    ApplySingleItemUpdateChange(change);
+                    break;
+
                 default:
                     Debug.WriteLine($"[ApplyStructureChanges] Unknown change type: {change.Type}");
                     break;
@@ -1149,6 +1194,76 @@ public partial class SkiaLayout
         Repaint();
     }
 
+    /// <summary>
+    /// Applies a single item update to StackStructure
+    /// </summary>
+    private void ApplySingleItemUpdateChange(StructureChange change)
+    {
+        if (change.MeasuredItems?.Count == 1 && change.StartIndex >= 0)
+        {
+            var newMeasurement = change.MeasuredItems[0];
+            var itemIndex = change.StartIndex;
+
+            // Get old measurement for comparison
+            MeasuredItemInfo oldMeasurement = null;
+            _measuredItems.TryGetValue(itemIndex, out oldMeasurement);
+
+            // Update measurement in dictionary
+            _measuredItems[itemIndex] = newMeasurement;
+
+            // Find and update the cell in StackStructure
+            if (StackStructure != null)
+            {
+                var cell = StackStructure.GetForIndex(itemIndex);
+                if (cell != null)
+                {
+                    // Calculate size difference for shifting
+                    float deltaWidth = 0;
+                    float deltaHeight = 0;
+
+                    if (oldMeasurement != null)
+                    {
+                        deltaWidth = newMeasurement.Cell.Measured.Pixels.Width - oldMeasurement.Cell.Measured.Pixels.Width;
+                        deltaHeight = newMeasurement.Cell.Measured.Pixels.Height - oldMeasurement.Cell.Measured.Pixels.Height;
+                    }
+
+                    // Update cell with new measurement
+                    cell.Measured = newMeasurement.Cell.Measured;
+
+                    // CRITICAL: Update the destination rectangle to match the new size
+                    // This is what was missing - we need to resize the cell's destination
+                    cell.Destination = new SKRect(
+                        cell.Destination.Left,
+                        cell.Destination.Top,
+                        cell.Destination.Left + newMeasurement.Cell.Measured.Pixels.Width,
+                        cell.Destination.Top + newMeasurement.Cell.Measured.Pixels.Height
+                    );
+
+                    // Shift subsequent items if size changed significantly
+                    if (Math.Abs(deltaWidth) > 0.1f || Math.Abs(deltaHeight) > 0.1f)
+                    {
+                        // Use the existing OffsetSubsequentCells method
+                        OffsetSubsequentCells(StackStructure, cell, deltaWidth, deltaHeight);
+
+                        Debug.WriteLine($"[StackStructure] changed single item {itemIndex}, shifted cells by {deltaWidth}x{deltaHeight}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"[StackStructure] Could not find cell for index {itemIndex} in structure");
+                }
+            }
+
+            // Update content size
+            UpdateProgressiveContentSize();
+
+            // Trigger repaint to show changes
+            Repaint();
+
+            Debug.WriteLine($"[StackStructure] Updated measurement for item {itemIndex}");
+        }
+    }
+
     #region Hybrid Measurement Shifting
 
     /// <summary>
@@ -1458,6 +1573,13 @@ public partial class SkiaLayout
     private async Task BackgroundMeasureItems(SKRect constraints, float scale, int startIndex, CancellationToken cancellationToken,
         BackgroundMeasurementContext context = null)
     {
+        // Special case for single item remeasurement
+        if (context?.IsSingleItemRemeasurement == true && context.SingleItemIndex.HasValue)
+        {
+            MeasureSingleItem(context.SingleItemIndex.Value, constraints, scale, cancellationToken, true);
+            return;
+        }
+
         var totalItems = ItemsSource.Count;
         var currentBatchStart = startIndex;
         var maxIterations = Math.Max(1, (totalItems / MEASUREMENT_BATCH_SIZE) + 10); // Safety limit
@@ -1527,6 +1649,85 @@ public partial class SkiaLayout
         Debug.WriteLine($"[MeasureVisible] Completed background measurement up to index {_backgroundMeasurementProgress}");
 
         Repaint();
+    }
+
+    /// <summary>
+    /// Measures a single item in the background and stages it for structure update
+    /// </summary>
+    public void MeasureSingleItem(int itemIndex, SKRect constraints, float scale, CancellationToken cancellationToken, bool inBackground)
+    {
+        try
+        {
+            Debug.WriteLine($"[StackStructure] Starting measurement for item at index {itemIndex}");
+
+            SkiaControl template = null;
+            
+            try
+            {
+                // Get child for this specific index
+                var child = ChildrenFactory.GetViewForIndex(itemIndex, template, 0, true);
+ 
+
+                if (child == null || !child.CanDraw)
+                {
+                    Debug.WriteLine($"[BackgroundMeasureSingleItem] Failed to get child or child cannot draw for item {itemIndex}");
+                    return;
+                }
+
+                // Create cell structure for measurement
+                var cell = new ControlInStack
+                {
+                    ControlIndex = itemIndex,
+                    View = child
+                };
+
+                // Measure the item (simplified measurement for single item)
+                var availableWidth = constraints.Width;
+                var availableHeight = float.PositiveInfinity; // Allow natural height
+
+                var measured = MeasureChild(child, availableWidth, availableHeight, scale);
+                cell.Measured = measured;
+                cell.WasMeasured = true;
+
+                // Create measured item info
+                var measuredItem = new MeasuredItemInfo
+                {
+                    Cell = cell,
+                    LastAccessed = DateTime.UtcNow,
+                    IsInViewport = true
+                };
+
+                // Stage for rendering pipeline with special single-item flag
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    lock (_structureChangesLock)
+                    {
+                        _pendingStructureChanges.Add(new StructureChange
+                        {
+                            Type = StructureChangeType.SingleItemUpdate,
+                            StartIndex = itemIndex,
+                            Count = 1,
+                            MeasuredItems = new List<MeasuredItemInfo> { measuredItem }
+                        });
+                    }
+
+                    //Debug.WriteLine($"[BackgroundMeasureSingleItem] Staged single item update for index {itemIndex}, measured size: {measured.Pixels.Width}x{measured.Pixels.Height}");
+ 
+                }
+            }
+            finally
+            {
+                if (template != null)
+                {
+                    ChildrenFactory.ReleaseTemplateInstance(template);
+                }
+ 
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[BackgroundMeasureSingleItem] Error measuring item {itemIndex}: {ex.Message}");
+        }
     }
 
     /// <summary>
