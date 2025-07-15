@@ -14,7 +14,7 @@ An interactive card gallery featuring:
 - 👆 **Gesture interactions** (tap, pan)
 - 💫 **Visual effects** for shadows and glow  
 
-<img src="../images/cards.png" alt="Interactive Cards Demo" width="350" style="margin-top: 16px;" />
+<img src="../images/cards.png" alt="Interactive Cards Tutorial" width="350" style="margin-top: 16px;" />
 
 
 ## Prerequisites

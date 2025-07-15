@@ -13,8 +13,8 @@ REM Define the source directory for the packages
 set "source_dir=C:\Nugets"
 
 REM Define the list of file masks for the packages
-set "mask[1]=DrawnUi.Maui*.1.6.2.2*.nupkg"
-set "mask[2]=AppoMobi.Maui.DrawnUi.1.6.2.2*.*nupkg"
+set "mask[1]=DrawnUi.Maui*.1.6.2.3*.nupkg"
+set "mask[2]=AppoMobi.Maui.DrawnUi.1.6.2.3*.*nupkg"
 set "mask_count=2"
 
 REM Loop through each file mask

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using DrawnUi.Controls;
 using Sandbox.Models;
@@ -19,6 +20,11 @@ public partial class NewsCell : SkiaDynamicDrawnCell
         {
             ConfigureForContentType(news);
         }
+    }
+
+    protected override void ContextPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        base.ContextPropertyChanged(sender, e);
     }
 
 
