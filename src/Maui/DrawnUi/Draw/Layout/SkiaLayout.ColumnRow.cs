@@ -2020,7 +2020,7 @@ else
         {
         }
 
- 
+
         /// <summary>
         /// Renders stack/wrap layout.
         /// Returns number of drawn children.
@@ -2127,7 +2127,7 @@ else
                         }
                         else
                         {
-                            cell.IsVisible = true; 
+                            cell.IsVisible = true;
                         }
 
                         if (firstVisibleIndex < 0)
@@ -2281,10 +2281,9 @@ else
                             var x = offsetOthers.X + cell.Drawn.Left;
                             var y = offsetOthers.Y + cell.Drawn.Top;
 
-                            
+
                             if (child.NeedMeasure)
                             {
-
                                 if (!IsTemplated ||
                                     !child.WasMeasured || InvalidatedChildrenInternal.Contains(child) ||
                                     GetSizeKey(child.MeasuredSize.Pixels) != GetSizeKey(cell.Measured.Pixels))
@@ -2310,11 +2309,9 @@ else
                                     }
                                 }
                             }
-                            
+
                             if (child.IsVisible)
                             {
-      
-
                                 bool willDraw = true;
 
                                 if (child.MeasuredSize.Pixels.Width >= 1 && child.MeasuredSize.Pixels.Height >= 1)

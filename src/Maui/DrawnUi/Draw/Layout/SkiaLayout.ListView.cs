@@ -789,6 +789,7 @@ public partial class SkiaLayout
         }
 
         // Process all changes outside the lock for maximum performance
+
         foreach (var change in changesToProcess)
         {
             switch (change.Type)
@@ -1186,12 +1187,10 @@ public partial class SkiaLayout
         if (lastChangedCell != null && (Math.Abs(totalDeltaWidth) > 0.1f || Math.Abs(totalDeltaHeight) > 0.1f))
         {
             OffsetSubsequentCells(structure, lastChangedCell, totalDeltaWidth, totalDeltaHeight);
+            UpdateProgressiveContentSize();
+            Repaint();
         }
 
-        // Update content size after visibility changes
-        UpdateProgressiveContentSize();
-
-        Repaint();
     }
 
     /// <summary>
@@ -1652,12 +1651,18 @@ public partial class SkiaLayout
     }
 
     /// <summary>
-    /// Measures a single item in the background and stages it for structure update
+    /// Measures a single item in the background and stages it for structure update.
+    /// For MeasureVisible Only.
     /// </summary>
     public void MeasureSingleItem(int itemIndex, SKRect constraints, float scale, CancellationToken cancellationToken, bool inBackground)
     {
         try
         {
+            if (MeasureItemsStrategy != MeasuringStrategy.MeasureVisible)
+            {
+                return;
+            }
+
             Debug.WriteLine($"[StackStructure] Starting measurement for item at index {itemIndex}");
 
             SkiaControl template = null;
