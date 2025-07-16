@@ -35,6 +35,10 @@ Current development state is _ALPHA for prod_.
 * __Navigate__ on canvas with familiar MAUI Shell techniques 
 
 ## 🌱 What's new
+* Recycling cache/SkiaImage surfaces to reduce allocations
+* General layout calculation performance boost
+* Recycled cells stack MeasureVisible performance boost
+* FirstVisibleIndex/LastVisibleIndex for stacks 
 
 * The nuget package `DrawnUi.Maui` replaces the old package Id, you can still use the old one kept for compatibility for some time.
 * Docs, first appearence inside `/docs`! To teach LMs use `/aidocs` subfolder.
