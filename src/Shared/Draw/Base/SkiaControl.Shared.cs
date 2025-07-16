@@ -6602,7 +6602,7 @@ namespace DrawnUi.Draw
 
         protected override void InvalidateMeasure()
         {
-            if (WasMeasured)// && UpdateLocks < 1)
+            if (WasMeasured && UpdateLocks < 1)
             {
                 InvalidateMeasureInternal();
                 Update();

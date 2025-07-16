@@ -1148,51 +1148,130 @@ public partial class SkiaLayout
 
     /// <summary>
     /// Applies visibility changes to StackStructure
+    /// FIXED: Now processes visibility changes in sequential groups to prevent gaps
+    /// that occur when non-consecutive items change visibility
     /// </summary>
     private void ApplyVisibilityChange(StructureChange change)
     {
         var structure = LatestMeasuredStackStructure;
-        if (structure == null || change.Count==0)
+        if (structure == null || change.Count == 0)
             return;
 
         //Debug.WriteLine($"[ApplyVisibilityChange] Processing {change.Count} cells starting at {change.StartIndex}, visibility: {change.IsVisible}");
 
-        // Calculate total offset from all cells in the batch
-        float totalDeltaWidth = 0;
-        float totalDeltaHeight = 0;
-        ControlInStack lastChangedCell = null;
+        // Process visibility changes in sequential groups to prevent gaps
+        ProcessVisibilityChangesInSequentialGroups(structure, change);
 
+        UpdateProgressiveContentSize();
+        Repaint();
+    }
+
+    /// <summary>
+    /// Processes visibility changes in sequential groups to prevent gaps between items
+    /// when non-consecutive items change visibility
+    /// </summary>
+    private void ProcessVisibilityChangesInSequentialGroups(LayoutStructure structure, StructureChange change)
+    {
+        var changedCells = new List<(int index, ControlInStack cell, bool wasChanged)>();
+        
+        // First pass: identify all cells that actually changed and collect their info
         for (int i = change.StartIndex; i < change.StartIndex + change.Count; i++)
         {
             var cell = structure.GetForIndex(i);
             if (cell == null) continue;
 
+            bool wasChanged = false;
+            
             if (!change.IsVisible && !cell.IsCollapsed)
             {
                 // BECOMING GHOST  
-                totalDeltaWidth += -cell.Destination.Width;
-                totalDeltaHeight += -cell.Destination.Height;
                 cell.IsCollapsed = true;
-                lastChangedCell = cell;
+                wasChanged = true;
             }
             else if (change.IsVisible && cell.IsCollapsed)
             {
                 // BECOMING VISIBLE 
-                totalDeltaWidth += cell.Destination.Width;
-                totalDeltaHeight += cell.Destination.Height;
                 cell.IsCollapsed = false;
-                lastChangedCell = cell;
+                wasChanged = true;
+            }
+
+            changedCells.Add((i, cell, wasChanged));
+        }
+
+        // Second pass: process sequential groups of changes
+        var groups = GroupSequentialChanges(changedCells.Where(c => c.wasChanged).ToList());
+        
+        foreach (var group in groups)
+        {
+            // Calculate offset for this group
+            float groupDeltaWidth = 0;
+            float groupDeltaHeight = 0;
+            ControlInStack lastCellInGroup = null;
+
+            foreach (var (index, cell, _) in group)
+            {
+                if (!change.IsVisible && cell.IsCollapsed)
+                {
+                    // Cell became ghost
+                    groupDeltaWidth += -cell.Destination.Width;
+                    groupDeltaHeight += -cell.Destination.Height;
+                }
+                else if (change.IsVisible && !cell.IsCollapsed)
+                {
+                    // Cell became visible
+                    groupDeltaWidth += cell.Destination.Width;
+                    groupDeltaHeight += cell.Destination.Height;
+                }
+                lastCellInGroup = cell;
+            }
+
+            // Apply offset for this group to all subsequent cells
+            if (lastCellInGroup != null && (Math.Abs(groupDeltaWidth) > 0.1f || Math.Abs(groupDeltaHeight) > 0.1f))
+            {
+                OffsetSubsequentCells(structure, lastCellInGroup, groupDeltaWidth, groupDeltaHeight);
             }
         }
+    }
 
-        // Apply total offset once to all subsequent cells
-        if (lastChangedCell != null && (Math.Abs(totalDeltaWidth) > 0.1f || Math.Abs(totalDeltaHeight) > 0.1f))
+    /// <summary>
+    /// Groups sequential changes together to process them as batches
+    /// Example: changes at indices [1,2,3,7,8,12] become groups [[1,2,3], [7,8], [12]]
+    /// </summary>
+    private List<List<(int index, ControlInStack cell, bool wasChanged)>> GroupSequentialChanges(
+        List<(int index, ControlInStack cell, bool wasChanged)> changes)
+    {
+        var groups = new List<List<(int index, ControlInStack cell, bool wasChanged)>>();
+        
+        if (changes.Count == 0)
+            return groups;
+
+        // Sort by index to ensure proper grouping
+        changes.Sort((a, b) => a.index.CompareTo(b.index));
+
+        var currentGroup = new List<(int index, ControlInStack cell, bool wasChanged)> { changes[0] };
+        
+        for (int i = 1; i < changes.Count; i++)
         {
-            OffsetSubsequentCells(structure, lastChangedCell, totalDeltaWidth, totalDeltaHeight);
-            UpdateProgressiveContentSize();
-            Repaint();
+            var currentChange = changes[i];
+            var previousChange = changes[i - 1];
+            
+            // If current index is sequential to the previous, add to current group
+            if (currentChange.index == previousChange.index + 1)
+            {
+                currentGroup.Add(currentChange);
+            }
+            else
+            {
+                // Non-sequential, start a new group
+                groups.Add(currentGroup);
+                currentGroup = new List<(int index, ControlInStack cell, bool wasChanged)> { currentChange };
+            }
         }
-
+        
+        // Add the last group
+        groups.Add(currentGroup);
+        
+        return groups;
     }
 
     /// <summary>

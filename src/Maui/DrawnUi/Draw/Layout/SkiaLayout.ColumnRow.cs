@@ -2155,7 +2155,7 @@ else
                     //}
 
                     // Add to visible elements for drawing
-                    if (cell.IsVisible)
+                    if (cell.IsVisible && !cell.IsCollapsed)
                     {
                         visibleElements.Add(cell);
                     }
