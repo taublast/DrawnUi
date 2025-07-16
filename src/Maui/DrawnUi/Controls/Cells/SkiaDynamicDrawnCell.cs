@@ -21,21 +21,6 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
         UpdateVisibilityChanged();
     }
 
-    protected override void OnMeasured()
-    {
-        base.OnMeasured();
-
-        if (WasMeasured && MeasuredSize.Pixels != LastMeasuredSizePixels)
-        {
-            var invalidate = LastMeasuredSizePixels.Height >= 0 && LastMeasuredSizePixels.Width >= 0;
-            LastMeasuredSizePixels = MeasuredSize.Pixels;
-            if (invalidate)
-            {
-                InvalidateChildrenTree();
-            }
-        }
-    }
-
     protected SKSize LastMeasuredSizePixels = new SKSize(-1, -1);
 
     protected override void FreeContext()

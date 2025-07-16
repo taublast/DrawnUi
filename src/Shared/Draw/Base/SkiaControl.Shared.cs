@@ -6073,7 +6073,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// For internal use, set by Update method
         /// </summary>
-        public bool NeedUpdate
+        public virtual bool NeedUpdate
         {
             get { return _needUpdate; }
             set
@@ -6476,7 +6476,7 @@ namespace DrawnUi.Draw
         {
             CalculateMargins();
             CalculateSizeRequest();
-            InvalidateWithChildren();
+            NeedMeasure = true; //instead of previously InvalidateWithChildren();
             InvalidateParent();
         }
 

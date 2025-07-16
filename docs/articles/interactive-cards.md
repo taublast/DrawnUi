@@ -6,6 +6,17 @@ This example is using XAML! If you want to see how to do the same in code, check
 
 > 💡 **Prerequisites**: Complete [Your First DrawnUI App](first-app.md) before starting this tutorial.
 
+## 🚀 Live Demo in Tutorials Project
+
+Want to see this in action first? Check out the [**DrawnUI Tutorials Project**](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials) for:
+- **Interactive Cards (XAML)** - This tutorial in action
+- **Interactive Cards (Code)** - Same UI built with C# code-behind  
+- **News Feed Tutorial** - Advanced scrolling lists
+- **First App** - Your first DrawnUI app
+- **Button Tutorial** - Game-style interactive buttons
+
+Clone the repo and run the Tutorials project to explore all examples!
+
 ## What We're Building
 
 An interactive card gallery featuring:
@@ -41,7 +52,7 @@ dotnet add package DrawnUi.Maui
 Replace your `MauiProgram.cs` with this enhanced setup:
 
 ```csharp
-using DrawnUi.Maui.Infrastructure;
+using DrawnUi.Infrastructure;
 
 public static class MauiProgram
 {
@@ -346,8 +357,8 @@ Replace `MainPage.xaml` with our card gallery:
 Replace `MainPage.xaml.cs` with the interaction logic:
 
 ```csharp
-using DrawnUi.Maui.Draw;
-using DrawnUi.Maui.Infrastructure;
+using DrawnUi.Draw;
+using DrawnUi.Infrastructure;
 
 namespace InteractiveCardsTutorial;
 

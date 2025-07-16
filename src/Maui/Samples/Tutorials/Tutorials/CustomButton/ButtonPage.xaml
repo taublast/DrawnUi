@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage x:Class="DrawnUI.Tutorials.CustomButton.ButtonPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+             xmlns:customButton="using:DrawnUI.Tutorials.CustomButton"
+             Title="Interactive Button Tutorial">
+
+    <draw:Canvas x:Name="MainCanvas"
+                 BackgroundColor="DarkSlateBlue"
+                 RenderingMode="Accelerated"
+                 Gestures="Enabled"
+                 VerticalOptions="Fill" HorizontalOptions="Fill">
+        <!--use fill/fixed size when you need performance-->
+
+        <draw:SkiaScroll VerticalOptions="Fill" HorizontalOptions="Fill">
+
+            <draw:SkiaStack
+                UseCache="ImageComposite"
+                Spacing="30" Padding="20"
+                HorizontalOptions="Center">
+
+                <!-- Title -->
+                <draw:SkiaLayout Type="Column" Spacing="8" HorizontalOptions="Center" Margin="0,20,0,0">
+                    <draw:SkiaLabel
+                        Text="Custom Button Tutorial"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalOptions="Center" />
+                    <draw:SkiaRichLabel
+                        Text="Game-style button with visual effects ✨"
+                        FontSize="16"
+                        TextColor="LightGray"
+                        HorizontalOptions="Center" />
+                </draw:SkiaLayout>
+
+                <!-- Button container -->
+                <customButton:GameButton Text="PLAY GAME"
+                                         Clicked="ClickedPlay"
+                                         HorizontalOptions="Center" />
+
+                <!-- Features -->
+                <draw:SkiaLayout 
+                    UseCache="Operations"
+                    Type="Column" Spacing="12" HorizontalOptions="Center">
+                    <draw:SkiaLabel
+                        Text="Features Demonstrated:"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalOptions="Center" />
+
+                    <draw:SkiaRichLabel
+                        Text="🌈 Gradient backgrounds"
+                        FontSize="14"
+                        TextColor="LightBlue"
+                        HorizontalOptions="Center" />
+
+                    <draw:SkiaRichLabel
+                        Text="✨ Bevel/Emboss effects"
+                        FontSize="14"
+                        TextColor="LightBlue"
+                        HorizontalOptions="Center" />
+
+                    <draw:SkiaRichLabel
+                        Text="🎮 Press animations"
+                        FontSize="14"
+                        TextColor="LightBlue"
+                        HorizontalOptions="Center" />
+
+                    <draw:SkiaRichLabel
+                        Text="⚡ Optimized performance"
+                        FontSize="14"
+                        TextColor="LightBlue"
+                        HorizontalOptions="Center" />
+                </draw:SkiaLayout>
+
+                <!-- More Example Buttons -->
+                <draw:SkiaLayout 
+                    UseCache="ImageComposite"
+                    Type="Column" Spacing="16" HorizontalOptions="Center" Margin="0,20,0,20">
+                    <draw:SkiaLabel
+                        Text="Usage Examples:"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalOptions="Center" />
+
+                    <customButton:GameButton Text="YO !"
+                                             TintColor="CornflowerBlue"
+                                             Clicked="ClickedBlue"
+                                             LeftImageSource="Images\banana.gif"
+                                             HorizontalOptions="Center" />
+
+                    <customButton:GameButton Text="GREEN ONE"
+                                             TintColor="Green"
+                                             Clicked="ClickedGreen"
+                                             HorizontalOptions="Center" />
+
+                    <customButton:GameButton Text="ORANGE"
+                                             TintColor="Orange"
+                                             Clicked="ClickedOrange"
+                                             HorizontalOptions="Center" />
+
+                </draw:SkiaLayout>
+
+            </draw:SkiaStack>
+        </draw:SkiaScroll>
+
+    </draw:Canvas>
+
+</ContentPage>

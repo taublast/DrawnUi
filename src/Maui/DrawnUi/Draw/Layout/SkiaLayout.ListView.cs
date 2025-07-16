@@ -44,6 +44,22 @@ public partial class SkiaLayout
         public int? InsertAtIndex { get; set; } // Where to insert in existing structure
         public bool IsInsertOperation { get; set; } // Flag for insert vs append
         public bool IsVisible { get; set; } // For VisibilityChange
+        
+        // Background measurement offset compensation data
+        public BackgroundMeasurementStartingPosition StartingPosition { get; set; }
+    }
+
+    /// <summary>
+    /// Stores the starting position data when background measurement begins
+    /// Used to detect and compensate for position changes due to visibility changes
+    /// </summary>
+    public class BackgroundMeasurementStartingPosition
+    {
+        public int LastRow { get; set; }
+        public int LastCol { get; set; }
+        public float ExpectedStartX { get; set; }
+        public float ExpectedStartY { get; set; }
+        public LayoutType LayoutType { get; set; }
     }
 
     /// <summary>
@@ -720,7 +736,8 @@ public partial class SkiaLayout
     /// <summary>
     /// Integrates measured batch into the main structure
     /// </summary>
-    private void IntegrateMeasuredBatch(List<MeasuredItemInfo> measuredBatch, float scale, BackgroundMeasurementContext context = null)
+    private void IntegrateMeasuredBatch(List<MeasuredItemInfo> measuredBatch, float scale, BackgroundMeasurementContext context = null, 
+        BackgroundMeasurementStartingPosition startingPosition = null)
     {
         if (measuredBatch?.Count > 0)
         {
@@ -744,7 +761,8 @@ public partial class SkiaLayout
                     Type = StructureChangeType.BackgroundMeasurement,
                     MeasuredItems = measuredBatch,
                     InsertAtIndex = context?.InsertAtIndex,
-                    IsInsertOperation = context?.IsInsertOperation ?? false
+                    IsInsertOperation = context?.IsInsertOperation ?? false,
+                    StartingPosition = startingPosition // CRITICAL: Store starting position for offset compensation
                 });
             }
 
@@ -844,6 +862,12 @@ public partial class SkiaLayout
     {
         if (change.MeasuredItems?.Count > 0)
         {
+            // CRITICAL: Check for position changes and apply offset compensation
+            if (change.StartingPosition != null)
+            {
+                ApplyOffsetCompensationForBackgroundMeasurement(change);
+            }
+
             if (change.IsInsertOperation && change.InsertAtIndex.HasValue)
             {
                 // Insert measurements at specific position
@@ -854,6 +878,77 @@ public partial class SkiaLayout
                 // Append measurements to end (existing behavior)
                 AppendMeasurementsToEnd(change.MeasuredItems);
             }
+        }
+    }
+
+    /// <summary>
+    /// Applies offset compensation for background measurements when position changes occurred
+    /// This handles the race condition where visibility changes offset the structure
+    /// while background measurements were calculated with the original positions
+    /// </summary>
+    private void ApplyOffsetCompensationForBackgroundMeasurement(StructureChange change)
+    {
+        var startingPos = change.StartingPosition;
+        var currentStructure = LatestStackStructure;
+
+        if (currentStructure == null || currentStructure.GetCount() == 0)
+            return;
+
+        // Get the current position where new items should be placed
+        var (currentStartX, currentStartY, currentRow, currentCol) = GetNextItemPositionForIncremental(currentStructure);
+
+        // Calculate the offset difference
+        float deltaX = currentStartX - startingPos.ExpectedStartX;
+        float deltaY = currentStartY - startingPos.ExpectedStartY;
+
+        // Apply offset to all measured items if there's a significant difference
+        if (Math.Abs(deltaX) > 0.1f || Math.Abs(deltaY) > 0.1f)
+        {
+            Debug.WriteLine($"[ApplyOffsetCompensation] Detected position change - Expected: ({startingPos.ExpectedStartX:F1},{startingPos.ExpectedStartY:F1}) -> Current: ({currentStartX:F1},{currentStartY:F1}), Delta: ({deltaX:F1},{deltaY:F1})");
+
+            foreach (var item in change.MeasuredItems)
+            {
+                var cell = item.Cell;
+                
+                // Apply offset to both Area and Destination
+                cell.Area = new SKRect(
+                    cell.Area.Left + deltaX,
+                    cell.Area.Top + deltaY,
+                    cell.Area.Right + deltaX,
+                    cell.Area.Bottom + deltaY
+                );
+
+                cell.Destination = new SKRect(
+                    cell.Destination.Left + deltaX,
+                    cell.Destination.Top + deltaY,
+                    cell.Destination.Right + deltaX,
+                    cell.Destination.Bottom + deltaY
+                );
+
+                // Update row/col if needed (this is more complex for column layout)
+                if (startingPos.LayoutType == LayoutType.Column)
+                {
+                    // For column layout, check if we need to update row based on Y position
+                    // This is simplified - in reality, we'd need to recalculate based on actual structure
+                    if (Math.Abs(deltaY) > 0.1f)
+                    {
+                        // Update row/col based on position change
+                        cell.Row = currentRow + (cell.Row - startingPos.LastRow);
+                        cell.Column = currentCol + (cell.Column - startingPos.LastCol);
+                    }
+                }
+                else
+                {
+                    // For row layout, check if we need to update column based on X position
+                    if (Math.Abs(deltaX) > 0.1f)
+                    {
+                        cell.Column = currentCol + (cell.Column - startingPos.LastCol);
+                        cell.Row = currentRow + (cell.Row - startingPos.LastRow);
+                    }
+                }
+            }
+
+            Debug.WriteLine($"[ApplyOffsetCompensation] Applied offset compensation to {change.MeasuredItems.Count} items");
         }
     }
 
@@ -1148,51 +1243,130 @@ public partial class SkiaLayout
 
     /// <summary>
     /// Applies visibility changes to StackStructure
+    /// FIXED: Now processes visibility changes in sequential groups to prevent gaps
+    /// that occur when non-consecutive items change visibility
     /// </summary>
     private void ApplyVisibilityChange(StructureChange change)
     {
         var structure = LatestMeasuredStackStructure;
-        if (structure == null || change.Count==0)
+        if (structure == null || change.Count == 0)
             return;
 
         //Debug.WriteLine($"[ApplyVisibilityChange] Processing {change.Count} cells starting at {change.StartIndex}, visibility: {change.IsVisible}");
 
-        // Calculate total offset from all cells in the batch
-        float totalDeltaWidth = 0;
-        float totalDeltaHeight = 0;
-        ControlInStack lastChangedCell = null;
+        // Process visibility changes in sequential groups to prevent gaps
+        ProcessVisibilityChangesInSequentialGroups(structure, change);
 
+        UpdateProgressiveContentSize();
+        Repaint();
+    }
+
+    /// <summary>
+    /// Processes visibility changes in sequential groups to prevent gaps between items
+    /// when non-consecutive items change visibility
+    /// </summary>
+    private void ProcessVisibilityChangesInSequentialGroups(LayoutStructure structure, StructureChange change)
+    {
+        var changedCells = new List<(int index, ControlInStack cell, bool wasChanged)>();
+        
+        // First pass: identify all cells that actually changed and collect their info
         for (int i = change.StartIndex; i < change.StartIndex + change.Count; i++)
         {
             var cell = structure.GetForIndex(i);
             if (cell == null) continue;
 
+            bool wasChanged = false;
+            
             if (!change.IsVisible && !cell.IsCollapsed)
             {
                 // BECOMING GHOST  
-                totalDeltaWidth += -cell.Destination.Width;
-                totalDeltaHeight += -cell.Destination.Height;
                 cell.IsCollapsed = true;
-                lastChangedCell = cell;
+                wasChanged = true;
             }
             else if (change.IsVisible && cell.IsCollapsed)
             {
                 // BECOMING VISIBLE 
-                totalDeltaWidth += cell.Destination.Width;
-                totalDeltaHeight += cell.Destination.Height;
                 cell.IsCollapsed = false;
-                lastChangedCell = cell;
+                wasChanged = true;
+            }
+
+            changedCells.Add((i, cell, wasChanged));
+        }
+
+        // Second pass: process sequential groups of changes
+        var groups = GroupSequentialChanges(changedCells.Where(c => c.wasChanged).ToList());
+        
+        foreach (var group in groups)
+        {
+            // Calculate offset for this group
+            float groupDeltaWidth = 0;
+            float groupDeltaHeight = 0;
+            ControlInStack lastCellInGroup = null;
+
+            foreach (var (index, cell, _) in group)
+            {
+                if (!change.IsVisible && cell.IsCollapsed)
+                {
+                    // Cell became ghost
+                    groupDeltaWidth += -cell.Destination.Width;
+                    groupDeltaHeight += -cell.Destination.Height;
+                }
+                else if (change.IsVisible && !cell.IsCollapsed)
+                {
+                    // Cell became visible
+                    groupDeltaWidth += cell.Destination.Width;
+                    groupDeltaHeight += cell.Destination.Height;
+                }
+                lastCellInGroup = cell;
+            }
+
+            // Apply offset for this group to all subsequent cells
+            if (lastCellInGroup != null && (Math.Abs(groupDeltaWidth) > 0.1f || Math.Abs(groupDeltaHeight) > 0.1f))
+            {
+                OffsetSubsequentCells(structure, lastCellInGroup, groupDeltaWidth, groupDeltaHeight);
             }
         }
+    }
 
-        // Apply total offset once to all subsequent cells
-        if (lastChangedCell != null && (Math.Abs(totalDeltaWidth) > 0.1f || Math.Abs(totalDeltaHeight) > 0.1f))
+    /// <summary>
+    /// Groups sequential changes together to process them as batches
+    /// Example: changes at indices [1,2,3,7,8,12] become groups [[1,2,3], [7,8], [12]]
+    /// </summary>
+    private List<List<(int index, ControlInStack cell, bool wasChanged)>> GroupSequentialChanges(
+        List<(int index, ControlInStack cell, bool wasChanged)> changes)
+    {
+        var groups = new List<List<(int index, ControlInStack cell, bool wasChanged)>>();
+        
+        if (changes.Count == 0)
+            return groups;
+
+        // Sort by index to ensure proper grouping
+        changes.Sort((a, b) => a.index.CompareTo(b.index));
+
+        var currentGroup = new List<(int index, ControlInStack cell, bool wasChanged)> { changes[0] };
+        
+        for (int i = 1; i < changes.Count; i++)
         {
-            OffsetSubsequentCells(structure, lastChangedCell, totalDeltaWidth, totalDeltaHeight);
-            UpdateProgressiveContentSize();
-            Repaint();
+            var currentChange = changes[i];
+            var previousChange = changes[i - 1];
+            
+            // If current index is sequential to the previous, add to current group
+            if (currentChange.index == previousChange.index + 1)
+            {
+                currentGroup.Add(currentChange);
+            }
+            else
+            {
+                // Non-sequential, start a new group
+                groups.Add(currentGroup);
+                currentGroup = new List<(int index, ControlInStack cell, bool wasChanged)> { currentChange };
+            }
         }
-
+        
+        // Add the last group
+        groups.Add(currentGroup);
+        
+        return groups;
     }
 
     /// <summary>
@@ -1490,7 +1664,7 @@ public partial class SkiaLayout
             if (Math.Abs(newContentHeight - currentHeight) > 10f) // 10px threshold
             {
                 SetMeasured(MeasuredSize.Pixels.Width, newContentHeight, false, false, RenderingScale);
-                Debug.WriteLine($"[Scroll] Updated content COLUMN {1.0/progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
+                Debug.WriteLine($"[Scroll] Updated content COLUMN {100.0*progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
             }
         }
         else if (Type == LayoutType.Row)
@@ -1622,6 +1796,16 @@ public partial class SkiaLayout
             var structure = LatestStackStructure;
             var (startX, startY, startRow, startCol) = GetNextItemPositionForIncremental(structure);
 
+            // Create starting position data for offset compensation
+            var startingPosition = new BackgroundMeasurementStartingPosition
+            {
+                LastRow = startRow,
+                LastCol = startCol,
+                ExpectedStartX = startX,
+                ExpectedStartY = startY,
+                LayoutType = this.Type
+            };
+
             // Measure batch on background thread
             var measuredBatch = await Task.Run(() => MeasureBatchInBackground(
                 constraints, scale, currentBatchStart, itemsToMeasure, startX, startY, startRow, startCol, cancellationToken), cancellationToken);
@@ -1635,7 +1819,7 @@ public partial class SkiaLayout
             // Integrate results on background thread (safe for reading/staging)
             if (!cancellationToken.IsCancellationRequested)
             {
-                IntegrateMeasuredBatch(measuredBatch, scale, context);
+                IntegrateMeasuredBatch(measuredBatch, scale, context, startingPosition);
                 ApplySlidingWindowCleanup();
             }
 

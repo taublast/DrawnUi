@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage x:Class="DrawnUI.Tutorials.FirstApp.FirstAppPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+             Title="First App Tutorial"
+             BackgroundColor="#f5f5f5">
+
+    <draw:Canvas
+        RenderingMode="Default"
+        Gestures="Enabled"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+
+        <draw:SkiaLayout
+            Type="Column"
+            HorizontalOptions="Center"
+            Padding="40" Spacing="16"
+            UseCache="Operations"
+            VerticalOptions="Center">
+
+            <draw:SkiaImage
+                UseCache="Image"
+                Aspect="AspectFit"
+                WidthRequest="200"
+                Source="Images\dotnetbotcar.png"
+                HorizontalOptions="Center" />
+
+            <draw:SkiaLabel
+                UseCache="Operations"
+                Text="DrawnUI for .NET MAUI"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="DarkSlateBlue"
+                HorizontalTextAlignment="Center"
+                HorizontalOptions="Center" />
+
+            <draw:SkiaRichLabel
+                UseCache="Operations"
+                Text="This text is drawn with SkiaSharp ✨"
+                HorizontalTextAlignment="Center"
+                FontSize="16"
+                TextColor="Gray"
+                HorizontalOptions="Center" />
+
+            <draw:SkiaButton
+                UseCache="Image"
+                x:Name="MyButton"
+                Text="Click Me!"
+                BackgroundColor="CornflowerBlue"
+                TextColor="White"
+                CornerRadius="8"
+                HorizontalOptions="Center"
+                Tapped="OnButtonClicked" />
+
+            <draw:SkiaRichLabel
+                UseCache="Operations"
+                x:Name="ClickLabel"
+                Text="👆 Try clicking the button"
+                FontSize="14"
+                TextColor="Green"
+                HorizontalOptions="Center" />
+
+        </draw:SkiaLayout>
+    </draw:Canvas>
+
+</ContentPage>

@@ -5,7 +5,7 @@ using DrawnUi.Infrastructure.Enums;
 namespace DrawnUi.Views
 {
 
-    public partial class DrawnView : IDrawnBase, IAnimatorsManager, IVisualTreeElement
+    public partial class DrawnView : IDrawnBase, IAnimatorsManager, IVisualTreeElement, IDisposeManager
     {
 
         public void DumpLayersTree(VisualLayer node, string prefix = "", bool isLast = true, int level = 0)
@@ -467,7 +467,10 @@ namespace DrawnUi.Views
         public ConcurrentDictionary<Guid, ISkiaAnimator> AnimatingControls { get; } = new();
 
         protected FrameTimeInterpolator FrameTimeInterpolator = new();
+        protected long LastFrameTimeNanos;
+
         public long mLastFrameTime { get; set; }
+ 
 
         protected int ExecuteAnimators(long frameTime)
         {
@@ -482,6 +485,7 @@ namespace DrawnUi.Views
                         return executed;
 
                     var nanos = frameTime;
+
                     //if (mLastFrameTime == 0)
                     //{
                     //    mLastFrameTime = frameTime;
@@ -588,6 +592,8 @@ namespace DrawnUi.Views
                 //bug this creates garbage on aandroid on every frame
                 // DeviceDisplay.Current.MainDisplayInfoChanged += OnMainDisplayInfoChanged;
                 InitFramework(true);
+
+                SurfaceCacheManager = new(this);
             }
         }
 
@@ -885,6 +891,7 @@ namespace DrawnUi.Views
                     IsDisposed = true;
 
                     DisposeManager.Dispose();
+                    SurfaceCacheManager.Dispose();
 
                     PaintSystem?.Dispose();
 
@@ -1578,6 +1585,43 @@ namespace DrawnUi.Views
         protected object LockDraw = new();
 
         public long FrameNumber { get; private set; }
+
+        protected SurfaceCacheManager SurfaceCacheManager { get; set; }
+
+        public SKSurface CreateSurface(int width, int height, bool isGpu)
+        {
+            SKSurface surface = null;
+       
+            if (isGpu)
+            {
+                if (CanvasView is SkiaViewAccelerated accelerated
+                                                      && accelerated.GRContext != null)
+                {
+                    var cacheSurfaceInfo = new SKImageInfo(width, height);
+                    surface = SKSurface.Create(accelerated.GRContext, true, cacheSurfaceInfo);
+                }
+            }
+
+            if (surface == null) //fallback if gpu failed
+            {
+                //non-gpu
+                surface = SurfaceCacheManager.GetSurface(width, height);
+            }
+
+            return surface;
+        }
+
+        /// <summary>
+        /// DO NOT call this for GPU surfaces use DisposeObject instead
+        /// </summary>
+        /// <param name="surface"></param>
+        public void ReturnSurface(SKSurface surface)
+        {
+            if (surface != null)
+            {
+                SurfaceCacheManager.ReturnSurface(surface);
+            }
+        }
 
         #region DISPOSE STUFF
 

@@ -112,6 +112,8 @@ public class SkiaValueAnimator : AnimatorBase
 
     protected FrameTimeInterpolator FrameTimeInterpolator = new();
 
+    public static bool UseInterpolator = true;
+
     public override bool TickFrame(long frameTimeNanos)
     {
         if (lockCheck)
@@ -132,14 +134,27 @@ public class SkiaValueAnimator : AnimatorBase
                 StartFrameTimeNanos = frameTimeNanos;
             }
 
-            long deltaFromStart = (frameTimeNanos - StartFrameTimeNanos);
-            long deltaNanos = (frameTimeNanos - LastFrameTimeNanos);
+            long deltaFromStart;
+            long deltaNanos;
 
-            //float deltaSeconds = deltaNanos / 1_000_000_000.0f;
-            //deltaSeconds = FrameTimeInterpolator.GetDeltaTime(deltaSeconds);
-            //deltaNanos = (long)(deltaSeconds * 1_000_000_000.0f);
+            // Use interpolator for stable timing
+            if (UseInterpolator)
+            {
+                float currentFrameTimeSeconds = frameTimeNanos / 1_000_000_000.0f;
+                float interpolatedDeltaSeconds = FrameTimeInterpolator.Instance.GetDeltaTime(currentFrameTimeSeconds);
+                long interpolatedDeltaNanos = (long)(interpolatedDeltaSeconds * 1_000_000_000.0f);
+
+                deltaFromStart = (frameTimeNanos - StartFrameTimeNanos);
+                deltaNanos = interpolatedDeltaNanos;
+            }
+            else
+            {
+                deltaFromStart = (frameTimeNanos - StartFrameTimeNanos);
+                deltaNanos = (frameTimeNanos - LastFrameTimeNanos);
+            }
 
             LastFrameTimeNanos = frameTimeNanos;
+
             bool finished = UpdateValue(deltaNanos, deltaFromStart);
 
             var currentValue = TransformReportedValue(deltaNanos);

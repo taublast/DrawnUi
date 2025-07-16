@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage x:Class="DrawnUI.Tutorials.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+             Title="DrawnUI Tutorials">
+
+    <ContentPage.Resources>
+        <Style x:Key="ButtonStyle"
+               TargetType="draw:SkiaButton">
+            <Setter Property="WidthRequest" Value="-1" />
+            <Setter Property="UseCache" Value="Image" />
+            <Setter Property="MinimumHeightRequest" Value="40" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+    </ContentPage.Resources>
+
+    <draw:Canvas
+        RenderingMode="Default"
+        Gestures="Enabled"
+        BackgroundColor="#f5f5f5"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
+        <draw:SkiaStack
+            Spacing="20" Padding="20">
+
+            <!-- Header -->
+            <draw:SkiaLayout Type="Column" Spacing="8" HorizontalOptions="Center" UseCache="Operations">
+                <draw:SkiaLabel
+                    Text="DrawnUI Tutorials"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    TextColor="#2c3e50"
+                    HorizontalOptions="Center" />
+                <draw:SkiaLabel
+                    Text="Learn DrawnUI step by step"
+                    FontSize="16"
+                    TextColor="#7f8c8d"
+                    HorizontalOptions="Center" />
+            </draw:SkiaLayout>
+
+            <!-- Tutorial Cards -->
+            <draw:SkiaWrap
+                HorizontalOptions="Center"
+                Split="0"
+                Spacing="16">
+
+                <!-- First App Tutorial -->
+                <draw:SkiaButton
+                    Text="First App Try"
+                    Style="{x:StaticResource ButtonStyle}"
+                    BackgroundColor="#2ecc71"
+                    Tapped="OnFirstAppClicked" />
+
+                <!-- Button Tutorial -->
+                <draw:SkiaButton
+                    Text="Custom Button"
+                    Style="{x:StaticResource ButtonStyle}"
+                    BackgroundColor="#f39c12"
+                    Tapped="OnButtonClicked" />
+
+                <!-- Interactive Cards Tutorial -->
+                <draw:SkiaButton
+                    Text="Cards (XAML)"
+                    Style="{x:StaticResource ButtonStyle}"
+                    BackgroundColor="#3498db"
+                    TextColor="White"
+                    Tapped="OnCardsClicked" />
+
+                <!-- Interactive Cards Code-Behind Tutorial -->
+                <draw:SkiaButton
+                    Text="Cards (Code)"
+                    Style="{x:StaticResource ButtonStyle}"
+                    BackgroundColor="#9b59b6"
+                    Tapped="OnCardsCodeClicked" />
+
+                <!-- News Feed Tutorial -->
+                <draw:SkiaButton
+                    Text="News Feed Scroller"
+                    Style="{x:StaticResource ButtonStyle}"
+                    BackgroundColor="#e74c3c"
+                    Tapped="OnNewsFeedClicked" />
+
+            </draw:SkiaWrap>
+
+        </draw:SkiaStack>
+
+    </draw:Canvas>
+
+</ContentPage>

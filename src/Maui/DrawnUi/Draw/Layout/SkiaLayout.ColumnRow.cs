@@ -2155,7 +2155,7 @@ else
                     //}
 
                     // Add to visible elements for drawing
-                    if (cell.IsVisible)
+                    if (cell.IsVisible && !cell.IsCollapsed)
                     {
                         visibleElements.Add(cell);
                     }
@@ -2172,10 +2172,22 @@ else
                 if (visibleElements.Count > 1)
                 {
                     visibleElements.Sort((a, b) => a.ZIndex.CompareTo(b.ZIndex));
+                    if (IsTemplated)
+                    {
+                        FirstMeasuredIndex = visibleElements[0].ControlIndex;
+                        LastVisibleIndex = visibleElements[visibleElements.Count - 1].ControlIndex;
+                    }
+                    else
+                    {
+                        FirstMeasuredIndex = firstVisibleIndex;
+                        LastVisibleIndex = lastVisibleIndex;
+                    }
                 }
-
-                FirstMeasuredIndex = firstVisibleIndex;
-                LastVisibleIndex = lastVisibleIndex;
+                else
+                {
+                    FirstMeasuredIndex = -1;
+                    LastVisibleIndex = -1;
+                }
 
                 // Start background measurement if needed
                 if (IsTemplated &&
@@ -2281,8 +2293,14 @@ else
 
                             if (child.NeedMeasure)
                             {
+                                if (child.WasMeasured && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                                {
+                                    //we change structure elsewhere so no need to measure here
+                                    child.NeedMeasure = false;
+                                }
+                                else
                                 if (!IsTemplated ||
-                                    !child.WasMeasured 
+                                    !child.WasMeasured
                                     || InvalidatedChildrenInternal.Contains(child) ||
                                     //MeasureItemsStrategy == MeasuringStrategy.MeasureVisible ||
                                     GetSizeKey(child.MeasuredSize.Pixels) != GetSizeKey(cell.Measured.Pixels))
@@ -2332,6 +2350,7 @@ else
                                     }
                                 }
                             }
+              
 
                             if (child.IsVisible)
                             {

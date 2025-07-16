@@ -2,6 +2,12 @@
 
 namespace DrawnUi.Views
 {
+
+    public interface IDisposeManager
+    {
+        void DisposeObject(IDisposable disposable);
+    }
+
     /// <summary>
     /// Manages delayed disposal of IDisposable objects based on frame count
     /// </summary>

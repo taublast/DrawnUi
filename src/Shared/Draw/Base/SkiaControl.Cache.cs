@@ -1,7 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using HarfBuzzSharp;
+using Microsoft.Maui.Controls;
+using SkiaSharp;
 
 namespace DrawnUi.Draw;
 
@@ -57,15 +60,48 @@ public partial class SkiaControl
                     && UsingCacheType != SkiaCacheType.Image
                     && UsingCacheType == SkiaCacheType.ImageComposite)
                 {
-                    //kill.Dispose();
+                    if (kill.Surface != null)
+                    {
+                        ReturnSurface(kill.Surface);
+                        kill.Surface = null;
+                    }
                     DisposeObject(kill);
                 }
             }
         }
     }
 
-    CachedObject _renderObjectPrevious;
+    public SKSurface CreateSurface(int width, int height, bool isGpu)
+    {
+        SKSurface surface = null;
+        if (Superview is DrawnView view)
+        {
+            surface = view.CreateSurface(width, height, isGpu);
+        }
 
+        if (surface == null) //fallback if gpu failed
+        {
+            //non-gpu
+            var cacheSurfaceInfo = new SKImageInfo(width, height);
+            surface = SKSurface.Create(cacheSurfaceInfo);
+        }
+
+        return surface;
+    }
+
+    public void ReturnSurface(SKSurface surface)
+    {
+        if (Superview is DrawnView view)
+        {
+            view.ReturnSurface(surface);
+        }
+        else
+        {
+            DisposeObject(surface);
+        }
+    }
+
+    CachedObject _renderObjectPrevious;
 
     /// <summary>
     /// The cached representation of the control. Will be used on redraws without calling Paint etc, until the control is requested to be updated.
@@ -92,6 +128,11 @@ public partial class SkiaControl
                         }
                         else
                         {
+                            if (_renderObject.Surface != null && Superview is DrawnView view)
+                            {
+                                view.ReturnSurface(_renderObject.Surface);
+                                _renderObject.Surface = null;
+                            }
                             DisposeObject(_renderObject);
                         }
                     }
@@ -348,32 +389,8 @@ public partial class SkiaControl
                 }
                 else
                 {
-                    var kill = surface;
-
-                    var cacheSurfaceInfo = new SKImageInfo(width, height);
-
-                    if (usingCacheType == SkiaCacheType.GPU)
-                    {
-                        if (context.Context.Superview != null && context.Context.Superview?.CanvasView is
-                                                                  SkiaViewAccelerated accelerated
-                                                              && accelerated.GRContext != null)
-                        {
-                            //grContext = accelerated.GRContext;
-                            //hardware accelerated
-                            surface = SKSurface.Create(accelerated.GRContext,
-                                true,
-                                cacheSurfaceInfo);
-                        }
-                    }
-
-                    if (surface == null) //fallback if gpu failed
-                    {
-                        //non-gpu
-                        surface = SKSurface.Create(cacheSurfaceInfo);
-                    }
-
-                    if (kill != null && kill != surface)
-                        DisposeObject(kill);
+                    bool isGpu = usingCacheType == SkiaCacheType.GPU;
+                    surface = CreateSurface(width, height, isGpu);
 
                     // if (usingCacheType == SkiaCacheType.GPU)
                     //     surface.Canvas.Clear(SKColors.Red);
@@ -494,6 +511,11 @@ public partial class SkiaControl
 
                 if (kill != null)
                 {
+                    if (kill.Surface != null)
+                    {
+                        ReturnSurface(kill.Surface);
+                        kill.Surface = null;
+                    }
                     DisposeObject(kill);
                 }
             }
@@ -509,7 +531,16 @@ public partial class SkiaControl
                 //draw existing front cache
                 lock (LockDraw)
                 {
-                    DrawRenderObjectInternal(context, cache);
+                    if (UsesCacheDoubleBuffering)
+                    {
+                        if (CompareDoubles(cache.Bounds.Width, context.Destination.Width,1)
+                            && CompareDoubles( cache.Bounds.Height, context.Destination.Height, 1))
+                            DrawRenderObjectInternal(context, cache);
+                    }
+                    else
+                    {
+                        DrawRenderObjectInternal(context, cache);
+                    }
                     Monitor.PulseAll(LockDraw);
                 }
 
@@ -530,6 +561,7 @@ public partial class SkiaControl
                 {
                     if (cache == null && cacheOffscreen != null)
                     {
+                        //Drawing previous cache
                         DrawRenderObjectInternal(context, cacheOffscreen);
                     }
                     else
@@ -970,6 +1002,11 @@ public partial class SkiaControl
 
             if (!UsesCacheDoubleBuffering && usingCacheType != SkiaCacheType.ImageComposite)
             {
+                if (oldObject.Surface != null)
+                {
+                    ReturnSurface(oldObject.Surface);
+                    oldObject.Surface = null;
+                }
                 DisposeObject(oldObject);
             }
         }
