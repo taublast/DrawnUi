@@ -613,6 +613,13 @@ public class Canvas : DrawnView, IGestureListener
 
             if (args.Type == TouchActionResult.Up)
             {
+                Debug.WriteLine("Canvas UP");
+                if (consumed != null)
+                {
+                    Debug.WriteLine(
+                        $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} {consumed.Tag}");
+                }
+
                 if (HadInput.Count > 0)
                 {
                     HadInput.Clear();
@@ -705,7 +712,18 @@ public class Canvas : DrawnView, IGestureListener
         {
             if (_blockedPanning && !_hadTap && !_isPanning && !_hadLong)
             {
-                touchAction = TouchActionResult.Tapped;
+                PostponeExecutionBeforeDraw(() =>
+                {
+                    try
+                    {
+                        var tapped = SkiaGesturesParameters.Create(TouchActionResult.Tapped, args1);
+                        ProcessGestures(tapped);
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.WriteLine(e);
+                    }
+                });
             }
         }
         else
