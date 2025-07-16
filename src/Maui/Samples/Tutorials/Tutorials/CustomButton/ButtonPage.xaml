@@ -24,13 +24,13 @@
                 <!-- Title -->
                 <draw:SkiaLayout Type="Column" Spacing="8" HorizontalOptions="Center" Margin="0,20,0,0">
                     <draw:SkiaLabel
-                        Text="Interactive Button Tutorial"
+                        Text="Custom Button Tutorial"
                         FontSize="24"
                         FontAttributes="Bold"
                         TextColor="White"
                         HorizontalOptions="Center" />
                     <draw:SkiaRichLabel
-                        Text="Game-style buttons with visual effects ✨"
+                        Text="Game-style button with visual effects ✨"
                         FontSize="16"
                         TextColor="LightGray"
                         HorizontalOptions="Center" />
@@ -41,10 +41,10 @@
                                          Clicked="ClickedPlay"
                                          HorizontalOptions="Center" />
 
-                <!-- Instructions -->
+                <!-- Features -->
                 <draw:SkiaLayout 
                     UseCache="Operations"
-                    Type="Column" Spacing="12" HorizontalOptions="Center" Margin="0,20,0,0">
+                    Type="Column" Spacing="12" HorizontalOptions="Center">
                     <draw:SkiaLabel
                         Text="Features Demonstrated:"
                         FontSize="18"
@@ -82,7 +82,7 @@
                     UseCache="ImageComposite"
                     Type="Column" Spacing="16" HorizontalOptions="Center" Margin="0,20,0,20">
                     <draw:SkiaLabel
-                        Text="More Examples:"
+                        Text="Usage Examples:"
                         FontSize="18"
                         FontAttributes="Bold"
                         TextColor="White"
@@ -94,12 +94,12 @@
                                              LeftImageSource="Images\banana.gif"
                                              HorizontalOptions="Center" />
 
-                    <customButton:GameButton Text="GREEN THEME"
+                    <customButton:GameButton Text="GREEN ONE"
                                              TintColor="Green"
                                              Clicked="ClickedGreen"
                                              HorizontalOptions="Center" />
 
-                    <customButton:GameButton Text="ORANGE THEME"
+                    <customButton:GameButton Text="ORANGE"
                                              TintColor="Orange"
                                              Clicked="ClickedOrange"
                                              HorizontalOptions="Center" />

@@ -47,7 +47,7 @@
             <draw:SkiaWrap
                 HorizontalOptions="Center"
                 Split="0"
-                Spacing="20">
+                Spacing="16">
 
                 <!-- First App Tutorial -->
                 <draw:SkiaButton

@@ -121,9 +121,8 @@
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill" />
 
-            <!--wrapper to cache shadow-->
             <draw:SkiaLayout
-                UseCache="Image"
+                UseCache="Operations"
                 Padding="20"
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
@@ -140,9 +139,10 @@
                 </draw:SkiaShape>
 
                 <draw:SkiaRichLabel
+                    Margin="0,0,0,1"
                     Text="▶"
                     Opacity="0.7"
-                    FontSize="26"
+                    FontSize="30"
                     TextColor="White"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
@@ -227,31 +227,38 @@
         </draw:SkiaLayout>
 
         <!-- Interaction Bar -->
-        <draw:SkiaLayout Type="Row"
+        <draw:SkiaLayout Type="Grid"
                          UseCache="Operations"
-                         Spacing="16" HorizontalOptions="Fill">
+                         ColumnDefinitions="33*,33*,33*"
+                         ColumnSpacing="0"
+                         HorizontalOptions="Fill">
 
-            <draw:SkiaButton
+            <draw:SkiaRichLabel
+                HorizontalOptions="Center"
+                Grid.Column="0"
                 x:Name="LikeButton"
                 Text="👍"
                 BackgroundColor="Transparent"
                 TextColor="Gray"
                 FontSize="14" />
 
-            <draw:SkiaButton
+            <draw:SkiaRichLabel
+                Grid.Column="1"
+                HorizontalOptions="Center"
                 x:Name="CommentButton"
                 Text="💬"
                 BackgroundColor="Transparent"
                 TextColor="Gray"
                 FontSize="14" />
 
-            <draw:SkiaButton
+            <draw:SkiaRichLabel
+                Grid.Column="2"
+                HorizontalOptions="Center"
                 x:Name="ShareButton"
                 Text="📤"
                 BackgroundColor="Transparent"
                 TextColor="Gray"
-                FontSize="14"
-                HorizontalOptions="End" />
+                FontSize="14" />
 
         </draw:SkiaLayout>
 

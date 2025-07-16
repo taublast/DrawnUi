@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using AppoMobi.Maui.Gestures;
 using DrawnUi.Infrastructure.Xaml;
 
@@ -7,7 +8,40 @@ namespace DrawnUI.Tutorials.CustomButton
     {
         public GameButton()
         {
+            UseCache = SkiaCacheType.Image;
         }
+
+        //public override bool NeedMeasure
+        //{
+        //    get
+        //    {
+        //        return base.NeedMeasure;
+        //    }
+        //    set
+        //    {
+        //        if (value)
+        //        {
+        //            Debug.WriteLine($"Need Measure {this.Text}");
+        //        }
+        //        base.NeedMeasure = value;
+        //    }
+        //}
+
+        ////public override bool NeedUpdate
+        ////{
+        ////    get
+        ////    {
+        ////        return base.NeedUpdate;
+        ////    }
+        ////    set
+        ////    {
+        ////        if (value)
+        ////        {
+        ////            Debug.WriteLine($"Need Update {this.Text}");
+        ////        }
+        ////        base.NeedUpdate = value;
+        ////    }
+        ////}
 
         protected override void CreateDefaultContent()
         {
