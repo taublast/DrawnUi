@@ -3107,12 +3107,6 @@ namespace DrawnUi.Draw
             get { return (string)GetValue(FormatProperty); }
             set { SetValue(FormatProperty, value); }
         }
-
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(
-            nameof(Text), typeof(string), typeof(SkiaLabel),
-            string.Empty,
-            propertyChanged: TextWasChanged);
-
         protected static void TextWasChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is SkiaLabel control)
@@ -3141,6 +3135,12 @@ namespace DrawnUi.Draw
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(
+            nameof(Text), typeof(string), typeof(SkiaLabel),
+            string.Empty,
+            propertyChanged: TextWasChanged);
+
 
         public static readonly BindableProperty TextTransformProperty = BindableProperty.Create(nameof(TextTransform),
             typeof(TextTransform),

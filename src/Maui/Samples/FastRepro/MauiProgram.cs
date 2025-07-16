@@ -52,8 +52,9 @@ namespace Sandbox
                 UseDesktopKeyboard = true, //will not work with maui shell on apple!!
                 DesktopWindow = new()
                 {
-                    Width = 370, Height = 750,
-                    //IsFixedSize = true //user cannot resize window
+                    Width = 370,
+                    Height = 750,
+                    //IsFixedSize = true
                 }
             });
 

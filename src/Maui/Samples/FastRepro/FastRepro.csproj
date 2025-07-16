@@ -115,7 +115,11 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+        <!--https://github.com/BretJohnson/hot-preview-->
+        <PackageReference Include="HotPreview.App.Maui" Version="0.12.6" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
+        <!--<PackageReference Include="DrawnUi.Maui" Version="1.6.2.3" />-->
 	</ItemGroup>
 
 
@@ -136,47 +140,6 @@
       </EmbeddedResource>
     
     </ItemGroup>
-
-
-  <ItemGroup>
-    <MauiAsset Update="Resources\Raw\Lottie\cross.json">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Lottie\Loader.json">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Lottie\robot.json">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders\transfade.sksl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Shaders\transdoorway.sksl">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-    <MauiAsset Update="Resources\Raw\Svg\dotnet_bot.svg">
-      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </MauiAsset>
-  </ItemGroup>
-
-
-
-  <ItemGroup>
-    <Folder Include="Collections\" />
-    <Folder Include="Resources\Raw\Anims\" />
-    <Folder Include="Resources\Raw\Json\" />
-    <Folder Include="Resources\Raw\Lottie\" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
-    <Compile Update="TutorialNewsFeed.xaml.cs">
-      <DependentUpon>TutorialNewsFeed.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-
 
  
 </Project>

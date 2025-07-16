@@ -2,6 +2,17 @@
 
 This quickstart guide will help you create your first DrawnUi.Maui application from scratch in just a few minutes.
 
+## 🚀 Live Demo in Tutorials Project
+
+Want to see this in action first? Check out the [**DrawnUI Tutorials Project**](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials) for:
+- **First App** - This tutorial in action
+- **Interactive Cards (XAML)** - Beautiful animated cards
+- **Interactive Cards (Code)** - Same UI built with C# code-behind  
+- **News Feed Tutorial** - Advanced scrolling lists
+- **Button Tutorial** - Game-style interactive buttons
+
+Clone the repo and run the Tutorials project to explore all examples!
+
 ## Prerequisites
 
 - **.NET 9** or later
@@ -168,7 +179,7 @@ This caching setup ensures smooth performance and avoids unnecessary redraws and
 In `MainPage.xaml.cs`, add the button click handler:
 
 ```csharp
-using DrawnUi.Maui.Draw;
+using DrawnUi.Draw;
 
 namespace MyFirstDrawnApp;
 

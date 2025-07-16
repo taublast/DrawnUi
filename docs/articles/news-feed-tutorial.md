@@ -2,6 +2,17 @@
 
 Building a news feed with mixed content types (text posts, images, videos, articles, ads) is a common requirement. With DrawnUI, you get the freedom to **just draw what you need** inside a recycled cell! 🎨
 
+## 🚀 Live Demo in Tutorials Project
+
+Want to see this in action first? Check out the [**DrawnUI Tutorials Project**](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials) for:
+- **News Feed Tutorial** - This tutorial in action with live scrolling
+- **Interactive Cards (XAML)** - Beautiful animated cards
+- **Interactive Cards (Code)** - Same UI built with C# code-behind  
+- **First App** - Your first DrawnUI app
+- **Button Tutorial** - Game-style interactive buttons
+
+Clone the repo and run the Tutorials project to explore all examples!
+
 ## 🚀 This Tutorial Features:
 * **📏 Uneven row heights** - because real content isn't uniform!
 * **✨ Shadows behind cells** - adds visual depth to the interface

@@ -31,6 +31,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             //UseCache = SkiaCacheType.OperationsFull; todo fix, OperationsFull not working for some reason
             Tag = "BtnText";
             HorizontalOptions = LayoutOptions.Center;
+            HorizontalTextAlignment = DrawTextAlignment.Center;
             VerticalOptions = LayoutOptions.Center;
         }
     }
