@@ -2238,10 +2238,14 @@ else
                 {
                     if (WillDrawFromFreshItemssSource && IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled)
                     {
-                        Tasks.StartDelayed(TimeSpan.FromMilliseconds(10), async ()=>
+                        ChildrenFactory.FillPool(visibleElements.Count);
+                        if (ReserveTemplates > 0)
                         {
-                            await ChildrenFactory.FillPoolInBackgroundAsync(visibleElements.Count + ReserveTemplates);
-                        });
+                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(30), async () =>
+                            {
+                                await ChildrenFactory.FillPoolInBackgroundAsync(ReserveTemplates);
+                            });
+                        }
                     }
 
                     foreach (var cell in CollectionsMarshal.AsSpan(visibleElements))
