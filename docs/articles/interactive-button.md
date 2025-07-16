@@ -2,6 +2,17 @@
 
 Learn how to create stunning interactive buttons with visual effects, just like those found in modern games! This tutorial shows you how to build a button with bevel effects, gradients, and smooth press animations.
 
+## 🚀 Live Demo in Tutorials Project
+
+Want to see this in action first? Check out the [**DrawnUI Tutorials Project**](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials) for:
+- **Button Tutorial** - This tutorial in action with multiple themes
+- **Interactive Cards (XAML)** - Beautiful animated cards
+- **Interactive Cards (Code)** - Same UI built with C# code-behind  
+- **News Feed Tutorial** - Advanced scrolling lists
+- **First App** - Your first DrawnUI app
+
+Clone the repo and run the Tutorials project to explore all examples!
+
 ## 🎯 What We'll Build
 
 A beautiful interactive button featuring:
@@ -43,7 +54,7 @@ First, let's create a basic MAUI page with a DrawnUI Canvas:
 Now let's create our button factory method with all the visual effects:
 
 ```csharp
-using DrawnUi.Maui.Draw;
+using DrawnUi.Draw;
 
 namespace ButtonDemo;
 
