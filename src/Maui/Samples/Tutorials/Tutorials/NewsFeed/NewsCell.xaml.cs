@@ -96,7 +96,8 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
     private void ConfigureVideoPost(NewsItem news)
     {
-        VideoThumbnail.Source = ExtractVideoThumbnail(news.VideoUrl);
+        ContentImg.Source = ExtractVideoThumbnail(news.VideoUrl);
+        ContentImage.IsVisible = true;
         VideoLayout.IsVisible = true;
 
         if (!string.IsNullOrEmpty(news.Content))

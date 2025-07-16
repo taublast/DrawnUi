@@ -17,8 +17,10 @@
       href: first-app.md
     - name: Interactive Button Tutorial
       href: interactive-button.md
-    - name: Drawn Cards Tutorial
+    - name: Interactive Cards (XAML)
       href: interactive-cards.md
+    - name: Interactive Cards (C# Fluent)
+      href: interactive-cards-code.md
     - name: News Feed Tutorial
       href: news-feed-tutorial.md
 

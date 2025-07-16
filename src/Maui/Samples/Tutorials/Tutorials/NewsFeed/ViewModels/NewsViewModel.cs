@@ -20,7 +20,10 @@ public class NewsViewModel : BaseViewModel
         LoadMoreCommand = new Command(async () => await LoadMore());
         
         // Load initial data
-        _ = RefreshFeed();
+        Tasks.StartDelayed(TimeSpan.FromMilliseconds(50), async () =>
+        {
+            await RefreshFeed();
+        });
     }
     
     public ObservableRangeCollection<NewsItem> NewsItems { get; }
@@ -53,7 +56,8 @@ public class NewsViewModel : BaseViewModel
             // Update UI - Replace all items for refresh
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                NewsItems.ReplaceRange(newItems);
+                NewsItems.Clear();
+                NewsItems.AddRange(newItems);
             });
         }
         catch (Exception ex)

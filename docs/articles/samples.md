@@ -11,24 +11,33 @@ Explore tutorials, real-world examples and code snippets to help you get started
   - Simple animations
   - Cross-platform deployment
 
-- **[Interactive Button Tutorial](interactive-button.md)** 🎮 - Create a nice-looking game-style button:
-  - Bevel/Emboss visual effects
-  - Gradient backgrounds
-  - Press animations and feedback
-  - Performance optimization techniques
+### Enhanced Tutorials
 
-### Intermediate Tutorials
-- **[Interactive Card Gallery](interactive-cards.md)** ✨ - Build a card gallery with animations and effects:
+- **[Interactive Cards (XAML)](interactive-cards.md)** ✨ - Build a card gallery with animations and effects:
   - Gesture handling
   - Visual effects and shadows
   - Performance optimization
   - UI patterns
 
+- **[Interactive Cards (C# Fluent)](interactive-cards-code.md)** 🔧 - Same cards built with fluent C# syntax:
+  - Fluent API patterns
+  - Method chaining
+  - Code-based UI construction
+  - Advanced C# techniques
+
 ### Advanced Tutorials
+
+- **[Create Custom Controls](interactive-button.md)** 🎮 - Create a custom game-style button with optional image inside:
+  - Custom control development
+  - Bevel/Emboss visual effects
+  - Gradient backgrounds
+  - Press animations and feedback
+  - Performance optimization techniques
+
 - **[News Feed Tutorial](news-feed-tutorial.md)** 📱 - Build a news feed scroller:
   - Data binding and MVVM
-  - Custom controls development
-  - Layouts and virtualization
+  - Recycled cells and virtualization
+  - Large dataset handling
   - Production-ready patterns
 
 ## 🎮 Learning Projects
