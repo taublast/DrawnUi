@@ -20,6 +20,8 @@ public class SkiaDrawnCell : SkiaLayout, ISkiaCell
 
     public virtual void Remeasure()
     {
+        this.WasMeasured = false; //will be used by parent to measure 100%
+
         if (Parent is SkiaLayout layout)
         {
             var constraints = new SKRect(0, 0, _lastMeasuredForWidth, _lastMeasuredForHeight);

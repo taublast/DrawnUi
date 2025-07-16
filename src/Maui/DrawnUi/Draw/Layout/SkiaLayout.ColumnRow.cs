@@ -2281,8 +2281,14 @@ else
 
                             if (child.NeedMeasure)
                             {
+                                if (child.WasMeasured && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                                {
+                                    //we change structure elsewhere so no need to measure here
+                                    child.NeedMeasure = false;
+                                }
+                                else
                                 if (!IsTemplated ||
-                                    !child.WasMeasured 
+                                    !child.WasMeasured
                                     || InvalidatedChildrenInternal.Contains(child) ||
                                     //MeasureItemsStrategy == MeasuringStrategy.MeasureVisible ||
                                     GetSizeKey(child.MeasuredSize.Pixels) != GetSizeKey(cell.Measured.Pixels))
@@ -2332,6 +2338,7 @@ else
                                     }
                                 }
                             }
+              
 
                             if (child.IsVisible)
                             {
