@@ -35,6 +35,7 @@ public class SkiaImage : SkiaControl
             {
                 return ScaledSource.Image;
             }
+
             return base.CachedImage;
         }
     }
@@ -99,19 +100,29 @@ public class SkiaImage : SkiaControl
     {
         if (LoadedSource != null)
         {
-            var info = new SKImageInfo(LoadedSource.Width, LoadedSource.Height);
-            using var surface = SKSurface.Create(info);
+            var width = LoadedSource.Width;
+            var height = LoadedSource.Height;
+
+            var surface = CreateSurface(width, height, false);
+
             if (surface != null)
             {
-                var context = new SkiaDrawingContext()
+                try
                 {
-                    Canvas = surface.Canvas, Width = info.Width, Height = info.Height
-                };
-                var destination = new SKRect(0, 0, info.Width, info.Height);
-                var ctx = new DrawingContext(context, destination, 1, null);
-                Render(ctx);
-                surface.Flush();
-                return surface.Snapshot();
+                    var context = new SkiaDrawingContext()
+                    {
+                        Canvas = surface.Canvas, Width = width, Height = height
+                    };
+                    var destination = new SKRect(0, 0, width, height);
+                    var ctx = new DrawingContext(context, destination, 1, null);
+                    Render(ctx);
+                    surface.Flush();
+                    return surface.Snapshot();
+                }
+                finally
+                {
+                    ReturnSurface(surface);
+                }
             }
         }
 
@@ -514,6 +525,7 @@ public class SkiaImage : SkiaControl
                         {
                             Super.Log(e);
                         }
+
                         if (bitmap != null)
                         {
                             //ImageBitmap = new LoadedImageSource(bitmap)
@@ -527,6 +539,7 @@ public class SkiaImage : SkiaControl
                         {
                             OnError(url);
                         }
+
                         return;
                     }
                 }
@@ -579,6 +592,7 @@ public class SkiaImage : SkiaControl
                                         {
                                             DisposeObject(bitmap);
                                         }
+
                                         return;
                                     }
 
@@ -1331,6 +1345,7 @@ public class SkiaImage : SkiaControl
                 {
                     _image = SKImage.FromBitmap(Bitmap);
                 }
+
                 return _image;
             }
         }
@@ -1344,8 +1359,8 @@ public class SkiaImage : SkiaControl
             _image?.Dispose();
         }
     }
- 
- 
+
+
     /// <summary>
     /// Gets sampling options based on quality level
     /// </summary>
@@ -1363,7 +1378,7 @@ public class SkiaImage : SkiaControl
             SKFilterQuality.Medium => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Nearest),
 
             SKFilterQuality.High => isUpscaling
-                ? new SKSamplingOptions(SKCubicResampler.Mitchell)  // Bicubic for upscaling
+                ? new SKSamplingOptions(SKCubicResampler.Mitchell) // Bicubic for upscaling
                 : new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear), // Better for downscaling
 
             _ => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None)
@@ -1421,12 +1436,13 @@ public class SkiaImage : SkiaControl
                     {
                         ctx.Context.Canvas.DrawImage(source.Image, display, paint);
                     }
+
                     return;
                 }
 
                 if (ScaledSource == null
                     || ScaledSource.Source != source.Id
-                    || ScaledSource.Quality != this.RescalingQuality 
+                    || ScaledSource.Quality != this.RescalingQuality
                     || ScaledSource.Bitmap.Width != targetWidth
                     || ScaledSource.Bitmap.Height != targetHeight)
                 {
