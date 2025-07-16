@@ -2172,10 +2172,22 @@ else
                 if (visibleElements.Count > 1)
                 {
                     visibleElements.Sort((a, b) => a.ZIndex.CompareTo(b.ZIndex));
+                    if (IsTemplated)
+                    {
+                        FirstMeasuredIndex = visibleElements[0].ControlIndex;
+                        LastVisibleIndex = visibleElements[visibleElements.Count - 1].ControlIndex;
+                    }
+                    else
+                    {
+                        FirstMeasuredIndex = firstVisibleIndex;
+                        LastVisibleIndex = lastVisibleIndex;
+                    }
                 }
-
-                FirstMeasuredIndex = firstVisibleIndex;
-                LastVisibleIndex = lastVisibleIndex;
+                else
+                {
+                    FirstMeasuredIndex = -1;
+                    LastVisibleIndex = -1;
+                }
 
                 // Start background measurement if needed
                 if (IsTemplated &&

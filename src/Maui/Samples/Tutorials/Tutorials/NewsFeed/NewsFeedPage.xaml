@@ -55,10 +55,10 @@
                     <draw:SkiaLayout
                         x:Name="NewsStack"
                         Type="Column"
-                        ReserveTemplates="0"
                         ItemsSource="{Binding NewsItems}"
                         RecyclingTemplate="Enabled"
                         MeasureItemsStrategy="MeasureVisible"
+                        ReserveTemplates="10"
                         Spacing="0"
                         ItemTemplateType="{x:Type newsFeed:NewsCell}"
                         HorizontalOptions="Fill"/>
@@ -67,7 +67,7 @@
 
                 <!-- uncomment for debug info -->
 
-                <!--<draw:SkiaLabel
+                <draw:SkiaLabel
                     UseCache="Operations"
                     Margin="8"
                     Padding="2"
@@ -78,7 +78,7 @@
                     Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
                     TextColor="LawnGreen"
                     VerticalOptions="End"
-                    ZIndex="100" />-->
+                    ZIndex="100" />
 
                 <!-- uncomment for FPS info -->
 
