@@ -90,7 +90,7 @@ namespace DrawnUi.Controls
         }
 
         // Redirect ItemsSource property to inner wheel  
-        protected override void ItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        protected override void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             SyncItemsSource();
         }

@@ -68,7 +68,7 @@ public class SkiaSpinner : SkiaLayout
     }
 
     // Redirect ItemsSource property to inner wheel shape
-    protected override void ItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    protected override void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
         SyncItemsSource();
     }

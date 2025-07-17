@@ -7,12 +7,19 @@ namespace DrawnUi.Draw;
 
 public partial class SkiaLayout
 {
-    public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    public virtual void OnViewportWasChanged(ScaledRect viewport)
     {
-        //basically we override to be able to handle recycled cells
+        //RenderingViewport = new(viewport.Pixels);
+        if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+        {
+            if (WillDrawFromFreshItemssSource && ContentSize.IsEmpty && ItemsSource.Count > 0)
+            {
+                InvalidateMeasure();
+            }
+        }
 
-
-        return base.ProcessGestures(args, apply);
+        //cells will get OnScrolled
+        ViewportWasChanged = true;
     }
 
     public bool IsBackgroundMeasuring => _isBackgroundMeasuring;
@@ -261,6 +268,8 @@ public partial class SkiaLayout
             {
                 return ScaledSize.CreateEmpty(scale);
             }
+
+            WillMeasureFromFreshItemssSource = false;
 
             var rowsCount = itemsCount;
             var columnsCount = 1;

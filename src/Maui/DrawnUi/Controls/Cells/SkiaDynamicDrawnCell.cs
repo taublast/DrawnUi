@@ -38,6 +38,8 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
 
         if (Context != null)
             Context.PropertyChanged += ContextPropertyChanged;
+
+        DestroyRenderingObject();
     }
 
     protected virtual void ContextPropertyChanged(object sender, PropertyChangedEventArgs e)
