@@ -11,11 +11,6 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
     }
 
-    public SKSurface CreateStandaloneSurface(int width, int height)
-    {
-        return SKSurface.Create(new SKImageInfo(width, height));
-    }
-
     public Func<SKSurface, SKRect, bool> OnDraw { get; set; }
 
     public DrawnView Superview { get; protected set; }

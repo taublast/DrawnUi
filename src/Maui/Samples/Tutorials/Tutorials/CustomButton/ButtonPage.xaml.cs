@@ -16,7 +16,7 @@ public partial class ButtonPage : ContentPage
 
     private void ClickedBlue(object sender, EventArgs e)
     {
-        MainThread.BeginInvokeOnMainThread(() => { DisplayAlert("Success", "Green button pressed! 💚", "OK"); });
+        MainThread.BeginInvokeOnMainThread(() => { DisplayAlert("Success", "Blue button pressed! 💚", "OK"); });
     }
 
     private void ClickedGreen(object sender, EventArgs e)

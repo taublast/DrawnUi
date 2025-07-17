@@ -8,7 +8,7 @@ namespace DrawnUI.Tutorials.CustomButton
     {
         public GameButton()
         {
-            UseCache = SkiaCacheType.Image;
+            UseCache = SkiaCacheType.ImageDoubleBuffered;
         }
 
         protected override void CreateDefaultContent()

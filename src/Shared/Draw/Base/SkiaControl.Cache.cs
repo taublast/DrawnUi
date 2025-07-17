@@ -603,7 +603,7 @@ public partial class SkiaControl
 
                         if (Parent != null && Parent.UpdateLocks < 1)
                         {
-                            Parent?.UpdateByChild(this); //repaint us
+                            Repaint();
                         }
                     });
                 }
@@ -864,7 +864,7 @@ public partial class SkiaControl
 
                             if (Parent != null && Parent.UpdateLocks < 1)
                             {
-                                Parent?.UpdateByChild(this); //repaint us
+                                Repaint();
                             }
                         });
                     }

@@ -2068,18 +2068,6 @@ else
                 var currentIndex = -1;
                 foreach (var cell in structure.GetChildrenAsSpans())
                 {
-                    //// NEW: Check if we have background measurement for this cell
-                    if (!cell.WasMeasured && _measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
-                    {
-                        // Apply the background measurement to this cell
-                        cell.Measured = measuredInfo.Cell.Measured;
-                        cell.WasMeasured = true;
-                        cell.Area = measuredInfo.Cell.Area;
-                        cell.Destination = measuredInfo.Cell.Destination;
-
-                        Debug.WriteLine($"[DrawStack] Using background measurement for cell {cell.ControlIndex}");
-                    }
-
                     currentIndex++;
 
                     if (cell.WasMeasured && cell.Destination == SKRect.Empty || cell.Measured.Pixels.Width < 1 ||
@@ -2089,25 +2077,10 @@ else
                     }
                     else
                     {
-                        if (!cell.WasMeasured)
+                        if (!cell.WasMeasured) // && MeasureItemsStrategy != MeasuringStrategy.MeasureVisible)
                         {
                             // DrawStack tried to draw unmeasured cell!
-                            //todo measure!
-                            // Check if we have background measured data
-                            if (_measuredItems.TryGetValue(cell.ControlIndex, out var preMeasuredInfo))
-                            {
-                                // Use pre-measured dimensions
-                                cell.Measured = preMeasuredInfo.Cell.Measured;
-                                cell.WasMeasured = true;
-                                cell.Area = preMeasuredInfo.Cell.Area;
-
-                                // Update access time
-                                preMeasuredInfo.LastAccessed = DateTime.UtcNow;
-                            }
-                            else
-                            {
-                                continue; // Skip unmeasured
-                            }
+                            continue; // Skip unmeasured
                         }
 
                         // Calculate screen position (unchanged)
@@ -2206,7 +2179,6 @@ else
 
                 // Start background measurement if needed
                 if (IsTemplated && structure != null &&
-                    WillDrawFromFreshItemssSource > 5 && //more than some frames away from fresh itemssource
                     MeasureItemsStrategy == MeasuringStrategy.MeasureVisible &&
                     ItemsSource != null &&
                     lastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
@@ -2239,14 +2211,13 @@ else
 
                 try
                 {
-                    if (WillDrawFromFreshItemssSource == 0  && IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled)
+                    if (WillDrawFromFreshItemssSource == 0 && IsTemplated &&
+                        RecyclingTemplate != RecyclingTemplate.Disabled)
                     {
                         if (ReserveTemplates > 0)
                         {
-                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(50), () =>
-                            {
-                                ChildrenFactory.FillPool(ReserveTemplates);
-                            });
+                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(50),
+                                () => { ChildrenFactory.FillPool(ReserveTemplates); });
                         }
                     }
 
@@ -2264,21 +2235,7 @@ else
 
                         if (!cell.WasMeasured)
                         {
-                            // Check if we have background measured data
-                            if (_measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
-                            {
-                                // Use pre-measured dimensions
-                                cell.Measured = measuredInfo.Cell.Measured;
-                                cell.WasMeasured = true;
-                                cell.Area = measuredInfo.Cell.Area;
-
-                                // Update access time
-                                measuredInfo.LastAccessed = DateTime.UtcNow;
-                            }
-                            else
-                            {
-                                continue; // Skip unmeasured
-                            }
+                            continue; // Skip unmeasured
                         }
 
                         index++;

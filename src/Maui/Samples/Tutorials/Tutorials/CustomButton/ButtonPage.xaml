@@ -23,7 +23,7 @@
 
                 <!-- Title -->
                 <draw:SkiaLayout Type="Column" 
-                                 UseCache="Operations"
+                                 UseCache="Image"
                                  Spacing="8" HorizontalOptions="Center" Margin="0,20,0,0">
                     <draw:SkiaLabel
                         Text="Custom Button Tutorial"
@@ -81,8 +81,14 @@
 
                 <!-- More Example Buttons -->
                 <draw:SkiaLayout 
-                    Type="Column" Spacing="16" HorizontalOptions="Center" Margin="0,20,0,20">
+                    UseCache="Operations"
+                    Type="Column" 
+                    Spacing="16" 
+                    HorizontalOptions="Center" 
+                    Margin="0,20,0,20">
+                    
                     <draw:SkiaLabel
+                        UseCache="None"
                         Text="Usage Examples:"
                         FontSize="18"
                         FontAttributes="Bold"

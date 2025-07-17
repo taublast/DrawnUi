@@ -118,15 +118,12 @@ ___Please star ⭐ if you like it!___
 	* Perspective1
 	* Perspective2
 
-* Keyboard support for desktop platforms.
-  	* Not just accelerators, but full keyboard support, usage example inside __SpaceShooter__ game below. :)
-
+* Full keyboard support
 
  ## ‼️ Development Notes
 
 * .NET 9 only, Maui.Controls 9.0.70 minimum.
 * All files to be consumed (images etc) must be placed inside the MAUI app Resources/Raw folder, subfolders allowed. If you need to load from the native app folder use prefix "file://".
-* By default the main branch should be targeting NET 9 and use SkiaSharp v3.
 * Accessibility support is compatible and is on the roadmap.
 
 ## 📕 [Documentation](https://taublast.github.io/DrawnUi/)

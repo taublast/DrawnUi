@@ -2,11 +2,12 @@
 
 namespace DrawnUi.Draw;
 
+[DebuggerDisplay("{MaxColumns}x{MaxRows}, {Length} items")]
 public class DynamicGrid<T>
 {
     protected Dictionary<(int, int), T> grid = new Dictionary<(int, int), T>();
-    private Dictionary<int, int> columnCountPerColumn = new Dictionary<int, int>();  // Stores row counts for each column
-    private Dictionary<int, int> columnCountPerRow = new Dictionary<int, int>();  // Stores column counts for each row
+    private Dictionary<int, int> columnCountPerColumn = new Dictionary<int, int>(); // Stores row counts for each column
+    private Dictionary<int, int> columnCountPerRow = new Dictionary<int, int>(); // Stores column counts for each row
     private List<T> indexedValues = new List<T>(); // For efficient indexing
 
     public int MaxRows { get; private set; } = 0;
@@ -85,6 +86,14 @@ public class DynamicGrid<T>
         return grid.Values;
     }
 
+    public IEnumerable<T> Children
+    {
+        get
+        {
+            return grid.Values;
+        }
+    }
+
     public T FindChildAtIndex(int index)
     {
         return grid.Values.ToArray()[index];
@@ -99,7 +108,7 @@ public class DynamicGrid<T>
         {
             if (index < 0 || index >= indexedValues.Count)
                 return default(T);
-            
+
             return indexedValues[index];
         }
     }
@@ -131,6 +140,7 @@ public class DynamicGrid<T>
         {
             return count;
         }
+
         return 0; // Returns 0 if no columns are present for the row
     }
 }

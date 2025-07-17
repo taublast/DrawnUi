@@ -613,12 +613,11 @@ public class Canvas : DrawnView, IGestureListener
 
             if (args.Type == TouchActionResult.Up)
             {
-                Debug.WriteLine("Canvas UP");
-                if (consumed != null)
-                {
-                    Debug.WriteLine(
-                        $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} {consumed.Tag}");
-                }
+                //if (consumed != null)
+                //{
+                //    Debug.WriteLine(
+                //        $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} {consumed.Tag}");
+                //}
 
                 if (HadInput.Count > 0)
                 {
