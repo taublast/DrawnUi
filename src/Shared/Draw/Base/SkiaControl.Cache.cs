@@ -624,12 +624,12 @@ public partial class SkiaControl
 
                         if (Parent != null && Parent.UpdateLocks < 1)
                         {
-                            Parent?.UpdateByChild(this); //repaint us
+                            Repaint();//repaint us
                         }
                     });
                 }
 
-                return true; //!NeedUpdateFrontCache;
+                return !NeedUpdateFrontCache;
             }
 
             return false;
@@ -885,7 +885,7 @@ public partial class SkiaControl
 
                             if (Parent != null && Parent.UpdateLocks < 1)
                             {
-                                Parent?.UpdateByChild(this); //repaint us
+                                Repaint();//repaint us
                             }
                         });
                     }

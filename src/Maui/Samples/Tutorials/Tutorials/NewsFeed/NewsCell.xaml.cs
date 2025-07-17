@@ -41,7 +41,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
         PaintPlaceholder ??= new SKPaint
         {
-            Color = SKColor.Parse("#99FFFFFF"),
+            Color = SKColor.Parse("#FFFFFF"),
             Style = SKPaintStyle.Fill,
         };
 
@@ -55,7 +55,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
         // Configure common elements
 
-        //DebugId.Text = $"{news.Id}"; //for debugging
+        DebugId.Text = $"{news.Id}"; //for debugging
         AuthorLabel.Text = news.AuthorName;
         TimeLabel.Text = GetRelativeTime(news.PublishedAt);
         AvatarImage.Source = news.AuthorAvatarUrl;

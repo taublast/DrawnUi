@@ -285,30 +285,8 @@ public partial class SkiaLayout
             int index = -1;
             var cellsToRelease = new List<SkiaControl>();
 
-            // For MeasureVisible strategy, limit initial measurement to visible area + buffer
             var effectiveRowsCount = rowsCount;
-            if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-            {
-                var estimatedItemHeight = 60f;
-                var visibleAreaHeight = visibleArea.Pixels.Height;
-                var estimatedVisibleItems = Math.Max(1, (int)Math.Ceiling(visibleAreaHeight / estimatedItemHeight));
 
-                var bufferMultiplier = 3f;
-                var initialMeasureCount = Math.Min(itemsCount, (int)(estimatedVisibleItems * bufferMultiplier));
-
-                initialMeasureCount = Math.Max(20, Math.Min(200, initialMeasureCount));
-
-                if (Type == LayoutType.Column)
-                {
-                    effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
-                }
-                else if (Type == LayoutType.Row)
-                {
-                    effectiveRowsCount = Math.Min(rowsCount, initialMeasureCount);
-                }
-
-                Debug.WriteLine($"[MeasureList] INITIAL MEASURE: {effectiveRowsCount} items out of {itemsCount} total (visible area: {visibleAreaHeight:F1}px, estimated per item: {estimatedItemHeight}px)");
-            }
 
             try
             {
@@ -528,30 +506,18 @@ public partial class SkiaLayout
             {
                 if (this.Type == LayoutType.Column)
                 {
-                    var medium = stackHeight / measuredCount;
-
-                    if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
+                    if (measuredCount < itemsCount)
                     {
-                        var estimatedTotalHeight = medium * itemsCount;
-                        stackHeight = estimatedTotalHeight;
-                    }
-                    else
-                    {
-                        stackHeight = medium * itemsCount;
+                        var averageSize = stackHeight / measuredCount;
+                        stackHeight += averageSize;
                     }
                 }
                 else if (this.Type == LayoutType.Row)
                 {
-                    var medium = stackWidth / measuredCount;
-
-                    if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible && measuredCount < itemsCount)
+                    if (measuredCount < itemsCount)
                     {
-                        var estimatedTotalWidth = medium * itemsCount;
-                        stackWidth = estimatedTotalWidth;
-                    }
-                    else
-                    {
-                        stackWidth = medium * itemsCount;
+                        var averageSize = stackWidth / measuredCount;
+                        stackWidth += averageSize;
                     }
                 }
             }
@@ -729,13 +695,6 @@ public partial class SkiaLayout
                 _measuredItems[item.Cell.ControlIndex] = item;
             }
 
-            // Update LastMeasuredIndex
-            var maxIndex = measuredBatch.Max(x => x.Cell.ControlIndex);
-            if (maxIndex > LastMeasuredIndex)
-            {
-                LastMeasuredIndex = maxIndex;
-            }
-
             // Stage for rendering pipeline integration
             lock (_structureChangesLock)
             {
@@ -860,6 +819,13 @@ public partial class SkiaLayout
             {
                 // Append measurements to end (existing behavior)
                 AppendMeasurementsToEnd(change.MeasuredItems);
+            }
+
+            // Update LastMeasuredIndex only after items are applied to structure
+            var maxIndex = change.MeasuredItems.Max(x => x.Cell.ControlIndex);
+            if (maxIndex > LastMeasuredIndex)
+            {
+                LastMeasuredIndex = maxIndex;
             }
         }
     }
@@ -1626,33 +1592,18 @@ public partial class SkiaLayout
             }
             else
             {
-                // ANDROID-STYLE STABLE ESTIMATION: Use measured size + conservative estimate for remaining
+                // Use actual measured height from LatestStackStructure (what renderer uses)
                 var averageHeight = actualMeasuredHeight / visibleItemsCount;
-                var unmeasuredItems = totalItems - visibleItemsCount;
-                
-                // Use a conservative estimate that grows gradually
-                var estimatedRemainingHeight = unmeasuredItems * averageHeight;
-                
-                // Add small buffer only for scrolling headroom (max 20% or 1000px, whichever is smaller)
-                var buffer = Math.Min(estimatedRemainingHeight * 0.2f, 1000f * RenderingScale);
-                
-                newContentHeight = actualMeasuredHeight + estimatedRemainingHeight + buffer;
-                
-                Debug.WriteLine($"[SkiaLayout] {progress:P1} measured - stable estimate: {newContentHeight:F1}px (measured: {actualMeasuredHeight:F1}px, estimated: {estimatedRemainingHeight:F1}px, buffer: {buffer:F1}px)");
+                newContentHeight = actualMeasuredHeight + averageHeight;
+
+                Debug.WriteLine($"[SkiaLayout] {progress:P1} measured - estimate: {newContentHeight:F1}px");
             }
 
             // CRITICAL: Never allow content size to shrink dramatically during scrolling
             // This prevents the "huge empty space" issue when scrolling fast
             var currentHeight = MeasuredSize.Pixels.Height;
-            if (currentHeight > 0 && newContentHeight < currentHeight * 0.8f)
-            {
-                // If new estimate is more than 20% smaller, use gradual shrinking
-                newContentHeight = Math.Max(newContentHeight, currentHeight * 0.9f);
-                Debug.WriteLine($"[SkiaLayout] Preventing dramatic shrink - using gradual reduction: {newContentHeight:F1}px");
-            }
-
-            // Only update if the new size is different enough to matter
-            if (Math.Abs(newContentHeight - currentHeight) > 20f) // Increased threshold for stability
+            
+            if (Math.Abs(newContentHeight - currentHeight) > 1f) 
             {
                 SetMeasured(MeasuredSize.Pixels.Width, newContentHeight, false, false, RenderingScale);
                 Debug.WriteLine($"[SkiaLayout] Updated content COLUMN {100.0*progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
@@ -1689,24 +1640,15 @@ public partial class SkiaLayout
             }
             else
             {
-                // ANDROID-STYLE STABLE ESTIMATION for horizontal
                 var averageWidth = actualMeasuredWidth / visibleItemsCount;
-                var unmeasuredItems = totalItems - visibleItemsCount;
-                
-                var estimatedRemainingWidth = unmeasuredItems * averageWidth;
-                var buffer = Math.Min(estimatedRemainingWidth * 0.2f, 1000f * RenderingScale);
-                
-                newContentWidth = actualMeasuredWidth + estimatedRemainingWidth + buffer;
+                newContentWidth = actualMeasuredWidth + averageWidth;
+
+                Debug.WriteLine($"[SkiaLayout] {progress:P1} measured - structure-based estimate: {newContentWidth:F1}px");
             }
 
-            // CRITICAL: Never allow content size to shrink dramatically during scrolling
             var currentWidth = MeasuredSize.Pixels.Width;
-            if (currentWidth > 0 && newContentWidth < currentWidth * 0.8f)
-            {
-                newContentWidth = Math.Max(newContentWidth, currentWidth * 0.9f);
-            }
-
-            if (Math.Abs(newContentWidth - currentWidth) > 20f)
+            
+            if (Math.Abs(newContentWidth - currentWidth) > 1f)
             {
                 SetMeasured(newContentWidth, MeasuredSize.Pixels.Height, false, false, RenderingScale);
                 Debug.WriteLine($"[SkiaLayout] Updated content ROW {100.0*progress:0}% width from {currentWidth:F1}px to {newContentWidth:F1}px");
