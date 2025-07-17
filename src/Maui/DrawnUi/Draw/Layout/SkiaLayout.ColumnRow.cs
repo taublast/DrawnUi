@@ -2189,13 +2189,18 @@ else
                     LastVisibleIndex = -1;
                 }
 
+                if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                {
+                    var stop = visibleElements.Count;
+                    var stop1 = ItemsSource;
+                }
+
                 // Start background measurement if needed
-                if (IsTemplated &&
+                if (IsTemplated && structure != null &&
                     MeasureItemsStrategy == MeasuringStrategy.MeasureVisible &&
                     ItemsSource != null &&
                     lastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
-                    !_isBackgroundMeasuring &&
-                    structure != null && _pendingStructureChanges.Count == 0)
+                    !_isBackgroundMeasuring && _pendingStructureChanges.Count == 0)
                 {
 
                     // We have unmeasured items beyond visible area
@@ -2213,7 +2218,6 @@ else
                         StartBackgroundMeasurement(ctx.Destination, ctx.Scale, nextUnmeasuredIndex);
                     }
 
-  
                 }
 
                 // Update measured items access time for visible items
@@ -2300,12 +2304,16 @@ else
 
                             if (child.NeedMeasure)
                             {
-                                if (child.WasMeasured && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                                
+                                if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
                                 {
                                     //we change structure elsewhere so no need to measure here
-                                    child.NeedMeasure = false;
+                                    if (child.WasMeasured)
+                                    {
+                                        child.NeedMeasure = false;
+                                    }
                                 }
-                                else
+
                                 if (!IsTemplated ||
                                     !child.WasMeasured
                                     || InvalidatedChildrenInternal.Contains(child) ||
@@ -2316,7 +2324,7 @@ else
                                     var measured = child.Measure((float)cell.Area.Width, (float)cell.Area.Height,
                                         ctx.Scale);
 
-                                    Debug.WriteLine($"[DrawStack] measured {child.ContextIndex}");
+                                    //Debug.WriteLine($"[DrawStack] measured while drawing {child.ContextIndex}");
 
                                     cell.Measured = measured;
                                     cell.WasMeasured = true;
@@ -2334,7 +2342,7 @@ else
 
                                         if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
                                         {
-                                            Debug.WriteLine($"[DrawStack] OffsetOthers {cell.OffsetOthers}");
+                                            //Debug.WriteLine($"[DrawStack] OffsetOthers {cell.OffsetOthers}");
 
                                             var measuredItem = new MeasuredItemInfo
                                             {

@@ -504,6 +504,11 @@ public partial class SkiaControl
             var cache = RenderObject;
             var cacheOffscreen = RenderObjectPrevious;
 
+            if (UsesCacheDoubleBuffering)
+            {
+                var stop = this.ContextIndex;
+            }
+
             if (RenderObjectPrevious != null && RenderObjectPreviousNeedsUpdate)
             {
                 cacheOffscreen = null;
@@ -538,7 +543,13 @@ public partial class SkiaControl
                     {
                         if (CompareDoubles(cache.Bounds.Width, context.Destination.Width, 1)
                             && CompareDoubles(cache.Bounds.Height, context.Destination.Height, 1))
+                        {
                             DrawRenderObjectInternal(context, cache);
+                        }
+                        else
+                        {
+                            DrawPlaceholder(context);
+                        }
                     }
                     else
                     {
@@ -567,13 +578,14 @@ public partial class SkiaControl
                     {
                         //Drawing previous cache
                         DrawRenderObjectInternal(context, cacheOffscreen);
+
+                        Monitor.PulseAll(LockDraw);
                     }
                     else
                     {
+                        //no cache and no cacheOffscreen available
                         DrawPlaceholder(context);
                     }
-
-                    Monitor.PulseAll(LockDraw);
                 }
 
                 if (NeedUpdateFrontCache)
@@ -602,7 +614,7 @@ public partial class SkiaControl
                     });
                 }
 
-                return !NeedUpdateFrontCache;
+                return true; //!NeedUpdateFrontCache;
             }
 
             return false;
@@ -616,7 +628,6 @@ public partial class SkiaControl
     /// <param name="context"></param>
     public virtual void DrawPlaceholder(DrawingContext context)
     {
-        
     }
 
     public CacheValidityType CacheValidity { get; protected set; }
@@ -863,6 +874,11 @@ public partial class SkiaControl
                     }
                     else
                     {
+                        if (UsesCacheDoubleBuffering)
+                        {
+                            var stop = 1; //should NEVER happen
+                        }
+
                         CreateRenderingObjectAndPaint(clone, recordArea,
                             (ctx) => { PaintWithEffects(ctx.WithDestination(DrawingRect)); });
                     }

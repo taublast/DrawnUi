@@ -1,4 +1,8 @@
-# News Feed Tutorial: One Cell to Rule Them All
+---
+title: News Feed Scroller Tutorial
+description: When MAUI CollectionView is not enough.. \r\nThink Drawn! DrawnUI News Feed Scroller Tutorial.
+---
+# News Feed Scroller Tutorial: One Cell to Rule Them All
 
 Building a news feed with mixed content types (text posts, images, videos, articles, ads) is a common requirement. With DrawnUI, you get the freedom to **just draw what you need** inside a recycled cell! 🎨
 
@@ -26,7 +30,7 @@ Clone the repo and run the Tutorials project to explore all examples!
 * **🔄 Recycling mastery** - one cell type handles all content variations
 * **📱 Real-world techniques** - progressive measurement, smart caching, and more!
  
- <img src="../images/newsfeed.png" alt="News Feed Tutorial" width="350" style="margin-top: 16px;" />
+ <img src="../images/scroller.jpg" alt="News Feed Tutorial" width="350" style="margin-top: 16px;" />
 
 ## 🎯 The DrawnUI Way: One Universal Cell
 

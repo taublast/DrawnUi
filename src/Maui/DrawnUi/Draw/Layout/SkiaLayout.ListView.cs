@@ -312,6 +312,8 @@ public partial class SkiaLayout
 
             try
             {
+                int notVisible = 0;
+
                 // Initial measurement loop (same as before)
                 for (var row = 0; row < effectiveRowsCount; row++)
                 {
@@ -376,8 +378,12 @@ public partial class SkiaLayout
 
                                 if (!visibleArea.Pixels.IntersectsWithInclusive(cell.Destination))
                                 {
-                                    stopMeasuring = true;
-                                    break;
+                                    notVisible++;
+                                    if (notVisible > 2)
+                                    {
+                                        stopMeasuring = true;
+                                        break;
+                                    }
                                 }
 
                                 cell.Measured = measured;
@@ -575,7 +581,7 @@ public partial class SkiaLayout
             // Debug: Report actual measurement results
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
             {
-                Debug.WriteLine($"[MeasureList] COMPLETED: Actually measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px. Background measurement started for remaining {itemsCount - measuredCount} items.");
+                Debug.WriteLine($"[MeasureList] COMPLETED: Measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px. Background measurement started for remaining {itemsCount - measuredCount} items.");
             }
 
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
@@ -1619,17 +1625,19 @@ public partial class SkiaLayout
         {
             // Calculate actual measured height from structure (skip ghost cells)
             var actualMeasuredHeight = 0f;
+            var visibleItemsCount = 0;
             var measuredItems = StackStructure.GetChildren().Take(measuredCount);
             foreach (var item in measuredItems)
             {
                 if (!item.IsCollapsed) // Skip ghost cells
                 {
                     actualMeasuredHeight += item.Measured.Pixels.Height;
+                    visibleItemsCount++;
                 }
             }
 
-            // Add spacing between items
-            var spacingHeight = (measuredCount - 1) * (float)(Spacing * RenderingScale);
+            // Add spacing between visible items
+            var spacingHeight = Math.Max(0, visibleItemsCount - 1) * (float)(Spacing * RenderingScale);
             actualMeasuredHeight += spacingHeight;
 
             float newContentHeight;
@@ -1638,58 +1646,66 @@ public partial class SkiaLayout
             {
                 // 100% measured - use exact size
                 newContentHeight = actualMeasuredHeight;
-                //Debug.WriteLine($"[UpdateProgressiveContentSize] 100% measured - exact height: {newContentHeight:F1}px");
+                Debug.WriteLine($"[SkiaLayout] 100% measured - exact height: {newContentHeight:F1}px");
             }
-            else if (progress >= 0.9f)
+            else if (visibleItemsCount == 0)
             {
-                // 90%+ measured - use precise estimate with small buffer
-                var averageHeight = actualMeasuredHeight / measuredCount;
-                var estimatedTotal = averageHeight * totalItems;
-                var buffer = estimatedTotal * 0.05f; // 5% buffer for final items
-                newContentHeight = estimatedTotal + buffer;
-                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - precise estimate: {newContentHeight:F1}px (avg: {averageHeight:F1}px)");
-            }
-            else if (progress >= 0.5f)
-            {
-                // 50%+ measured - blend between estimate and large buffer
-                var averageHeight = actualMeasuredHeight / measuredCount;
-                var estimatedTotal = averageHeight * totalItems;
-                var buffer = estimatedTotal * (0.5f - progress * 0.4f); // Decreasing buffer as we approach 90%
-                newContentHeight = estimatedTotal + buffer;
-                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - blended estimate: {newContentHeight:F1}px (buffer: {buffer:F1}px)");
+                // No items measured yet - use a minimal estimate
+                // Use default item height or a reasonable fallback
+                var defaultItemHeight = 60f * RenderingScale; // Reasonable default
+                newContentHeight = Math.Min(totalItems * defaultItemHeight, 10000f); // Cap at 10k pixels
+                Debug.WriteLine($"[SkiaLayout] No items measured - using default estimate: {newContentHeight:F1}px");
             }
             else
             {
-                // Less than 50% measured - use large estimate to allow scrolling
-                var averageHeight = actualMeasuredHeight / measuredCount;
-                var estimatedTotal = averageHeight * totalItems;
-                var buffer = estimatedTotal * 1.0f; // 100% buffer for early measurements
-                newContentHeight = estimatedTotal + buffer;
-                //Debug.WriteLine($"[UpdateProgressiveContentSize] {progress:P1} measured - early estimate: {newContentHeight:F1}px (large buffer)");
+                // ANDROID-STYLE STABLE ESTIMATION: Use measured size + conservative estimate for remaining
+                var averageHeight = actualMeasuredHeight / visibleItemsCount;
+                var unmeasuredItems = totalItems - visibleItemsCount;
+                
+                // Use a conservative estimate that grows gradually
+                var estimatedRemainingHeight = unmeasuredItems * averageHeight;
+                
+                // Add small buffer only for scrolling headroom (max 20% or 1000px, whichever is smaller)
+                var buffer = Math.Min(estimatedRemainingHeight * 0.2f, 1000f * RenderingScale);
+                
+                newContentHeight = actualMeasuredHeight + estimatedRemainingHeight + buffer;
+                
+                Debug.WriteLine($"[SkiaLayout] {progress:P1} measured - stable estimate: {newContentHeight:F1}px (measured: {actualMeasuredHeight:F1}px, estimated: {estimatedRemainingHeight:F1}px, buffer: {buffer:F1}px)");
+            }
+
+            // CRITICAL: Never allow content size to shrink dramatically during scrolling
+            // This prevents the "huge empty space" issue when scrolling fast
+            var currentHeight = MeasuredSize.Pixels.Height;
+            if (currentHeight > 0 && newContentHeight < currentHeight * 0.8f)
+            {
+                // If new estimate is more than 20% smaller, use gradual shrinking
+                newContentHeight = Math.Max(newContentHeight, currentHeight * 0.9f);
+                Debug.WriteLine($"[SkiaLayout] Preventing dramatic shrink - using gradual reduction: {newContentHeight:F1}px");
             }
 
             // Only update if the new size is different enough to matter
-            var currentHeight = MeasuredSize.Pixels.Height;
-            if (Math.Abs(newContentHeight - currentHeight) > 10f) // 10px threshold
+            if (Math.Abs(newContentHeight - currentHeight) > 20f) // Increased threshold for stability
             {
                 SetMeasured(MeasuredSize.Pixels.Width, newContentHeight, false, false, RenderingScale);
-                Debug.WriteLine($"[Scroll] Updated content COLUMN {100.0*progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
+                Debug.WriteLine($"[SkiaLayout] Updated content COLUMN {100.0*progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
             }
         }
         else if (Type == LayoutType.Row)
         {
             // Similar logic for horizontal scrolling (skip ghost cells)
             var actualMeasuredWidth = 0f;
+            var visibleItemsCount = 0;
             var measuredItems = StackStructure.GetChildren().Take(measuredCount);
             foreach (var item in measuredItems)
             {
                 if (!item.IsCollapsed) // Skip ghost cells
                 {
                     actualMeasuredWidth += item.Measured.Pixels.Width;
+                    visibleItemsCount++;
                 }
             }
 
-            var spacingWidth = (measuredCount - 1) * (float)(Spacing * RenderingScale);
+            var spacingWidth = Math.Max(0, visibleItemsCount - 1) * (float)(Spacing * RenderingScale);
             actualMeasuredWidth += spacingWidth;
 
             float newContentWidth;
@@ -1698,33 +1714,50 @@ public partial class SkiaLayout
             {
                 newContentWidth = actualMeasuredWidth;
             }
-            else if (progress >= 0.9f)
+            else if (visibleItemsCount == 0)
             {
-                var averageWidth = actualMeasuredWidth / measuredCount;
-                var estimatedTotal = averageWidth * totalItems;
-                newContentWidth = estimatedTotal + (estimatedTotal * 0.05f);
-            }
-            else if (progress >= 0.5f)
-            {
-                var averageWidth = actualMeasuredWidth / measuredCount;
-                var estimatedTotal = averageWidth * totalItems;
-                var buffer = estimatedTotal * (0.5f - progress * 0.4f);
-                newContentWidth = estimatedTotal + buffer;
+                var defaultItemWidth = 100f * RenderingScale; // Reasonable default
+                newContentWidth = Math.Min(totalItems * defaultItemWidth, 10000f); // Cap at 10k pixels
             }
             else
             {
-                var averageWidth = actualMeasuredWidth / measuredCount;
-                var estimatedTotal = averageWidth * totalItems;
-                newContentWidth = estimatedTotal + (estimatedTotal * 1.0f);
+                // ANDROID-STYLE STABLE ESTIMATION for horizontal
+                var averageWidth = actualMeasuredWidth / visibleItemsCount;
+                var unmeasuredItems = totalItems - visibleItemsCount;
+                
+                var estimatedRemainingWidth = unmeasuredItems * averageWidth;
+                var buffer = Math.Min(estimatedRemainingWidth * 0.2f, 1000f * RenderingScale);
+                
+                newContentWidth = actualMeasuredWidth + estimatedRemainingWidth + buffer;
             }
 
+            // CRITICAL: Never allow content size to shrink dramatically during scrolling
             var currentWidth = MeasuredSize.Pixels.Width;
-            if (Math.Abs(newContentWidth - currentWidth) > 10f)
+            if (currentWidth > 0 && newContentWidth < currentWidth * 0.8f)
+            {
+                newContentWidth = Math.Max(newContentWidth, currentWidth * 0.9f);
+            }
+
+            if (Math.Abs(newContentWidth - currentWidth) > 20f)
             {
                 SetMeasured(newContentWidth, MeasuredSize.Pixels.Height, false, false, RenderingScale);
-                Debug.WriteLine($"[Scroll] Updated content ROW {1.0/progress:0}% width from {currentWidth:F1}px to {newContentWidth:F1}px");
+                Debug.WriteLine($"[SkiaLayout] Updated content ROW {100.0*progress:0}% width from {currentWidth:F1}px to {newContentWidth:F1}px");
             }
         }
+    }
+
+    /// <summary>
+    /// ANDROID-STYLE: Never allow dramatic content size shrinkage during scrolling
+    /// This prevents the "huge empty space" issue when scrolling fast to unmeasured areas
+    /// </summary>
+    private float ApplyStableSizeConstraints(float newSize, float currentSize)
+    {
+        if (currentSize > 0 && newSize < currentSize * 0.8f)
+        {
+            // If new estimate is more than 20% smaller, use gradual shrinking
+            return Math.Max(newSize, currentSize * 0.9f);
+        }
+        return newSize;
     }
 
     /// <summary>
