@@ -110,9 +110,9 @@ public class SkiaValueAnimator : AnimatorBase
         return finished;
     }
 
-    protected FrameTimeInterpolator FrameTimeInterpolator = new();
+    protected FrameTimeInterpolator FrameTimeInterpolator;
 
-    public static bool UseInterpolator = true;
+    public bool UseInterpolator { get; set; }
 
     public override bool TickFrame(long frameTimeNanos)
     {
@@ -140,6 +140,9 @@ public class SkiaValueAnimator : AnimatorBase
             // Use interpolator for stable timing
             if (UseInterpolator)
             {
+
+                FrameTimeInterpolator ??= new FrameTimeInterpolator();
+
                 float currentFrameTimeSeconds = frameTimeNanos / 1_000_000_000.0f;
                 float interpolatedDeltaSeconds = FrameTimeInterpolator.Instance.GetDeltaTime(currentFrameTimeSeconds);
                 long interpolatedDeltaNanos = (long)(interpolatedDeltaSeconds * 1_000_000_000.0f);
