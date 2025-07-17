@@ -104,18 +104,34 @@ public partial class SkiaCamera : SkiaControl
 
     public SkiaImage Display { get; protected set; }
 
+    protected override void InvalidateMeasure()
+    {
+        if (Display != null)
+        {
+            LayoutDisplay();
+        }
+        base.InvalidateMeasure();
+    }
+
+    protected virtual void LayoutDisplay()
+    {
+        Display.HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill;
+        Display.VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill;
+    }
+
     protected virtual SkiaImage CreatePreview()
     {
         return new SkiaImage()
         {
+            IsParentIndependent=true,
             LoadSourceOnFirstDraw = true,
 #if WINDOWS || MACCATALYST
             RescalingQuality = SKFilterQuality.Low,
 #else
             RescalingQuality = SKFilterQuality.None,
 #endif
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
+            HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
+            VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
             Aspect = this.Aspect,
         };
     }
