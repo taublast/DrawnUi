@@ -1,6 +1,9 @@
 ---
 title: News Feed Scroller Tutorial
 description: When MAUI CollectionView is not enough.. \r\nThink Drawn! DrawnUI News Feed Scroller Tutorial.
+categories: [MAUI, DrawnUI]
+tags: [drawnui, skiasharp, dotnetmaui]    
+image: /images/scroller.jpg
 ---
 # News Feed Scroller Tutorial: One Cell to Rule Them All
 

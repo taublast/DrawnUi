@@ -130,8 +130,6 @@ public class ViewsAdapter : IDisposable
             }
         }
     }
- 
- 
 
     #endregion
 
@@ -149,7 +147,6 @@ public class ViewsAdapter : IDisposable
     {
         if (IsDisposed || _parent != null && _parent.IsDisposing)
             return;
-
 
 
         //Debug.WriteLine("[CELLS] InitializeTemplates");
@@ -995,14 +992,14 @@ public class ViewsAdapter : IDisposable
                     // Double-check before setting binding context
                     if (!view.IsDisposed && !view.IsDisposing)
                     {
-
                         var context = _dataContexts[index];
 
                         if (!isMeasuring)
                         {
                             view.Parent = _parent;
                         }
-                        if (view.ContextIndex != index || view.BindingContext != context)//index == 0 || 
+
+                        if (view.ContextIndex != index || view.BindingContext != context) //index == 0 || 
                         {
                             view.ContextIndex = index;
                             var ctx = view.BindingContext;
@@ -1011,12 +1008,12 @@ public class ViewsAdapter : IDisposable
                             {
                                 view.NeedMeasure = true;
                             }
+
                             if (!isMeasuring)
                             {
                                 _parent.OnViewAttached();
                             }
                         }
-
                     }
                 }
             }
@@ -1658,22 +1655,20 @@ public class TemplatedViewsPool : IDisposable
 
     public void Reserve()
     {
-        lock (_syncLock)
-        {
-            if (IsDisposing)
-                return;
+        //not using lock here
+        if (IsDisposing)
+            return;
 
-            if (_genericPool.Count < MaxSize)
+        if (_genericPool.Count < MaxSize)
+        {
+            try
             {
-                try
-                {
-                    _genericPool.Push(CreateFromTemplate());
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(e);
-                    throw;
-                }
+                _genericPool.Push(CreateFromTemplate());
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+                throw;
             }
         }
     }

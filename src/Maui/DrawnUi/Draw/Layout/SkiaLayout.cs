@@ -104,7 +104,7 @@ namespace DrawnUi.Draw
             NeedMeasure = true;
             InvalidateParent();
 
-            WillDrawFromFreshItemssSource = true;
+            WillDrawFromFreshItemssSource = 0;
             WillMeasureFromFreshItemssSource = true;
         }
 
@@ -1086,7 +1086,7 @@ namespace DrawnUi.Draw
         }
 
         bool _trackWasDrawn;
-        protected bool WillDrawFromFreshItemssSource;
+        protected long WillDrawFromFreshItemssSource;
         protected bool WillMeasureFromFreshItemssSource;
 
         protected override void Paint(DrawingContext ctx)
@@ -1441,17 +1441,6 @@ namespace DrawnUi.Draw
         private static void NeedUpdateItemsSource(BindableObject bindable, object oldvalue, object newvalue)
         {
             var skiaControl = (SkiaLayout)bindable;
-
-//#if TMP
-//            if (skiaControl.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-//            {
-//                Super.Log("MeasureVisible is not supported for this property yet, soon.");
-//                skiaControl.MeasureItemsStrategy = MeasuringStrategy.MeasureFirst;
-//            }
-//#endif
-
-            //skiaControl.PostponeInvalidation(nameof(UpdateItemsSource), skiaControl.UpdateItemsSource);
-            //skiaControl.Update();
 
             skiaControl.ApplyItemsSource();
         }

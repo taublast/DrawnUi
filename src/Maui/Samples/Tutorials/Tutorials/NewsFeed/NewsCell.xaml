@@ -15,6 +15,7 @@
         VerticalOptions="Fill"
         HorizontalOptions="Fill"
         UseCache="Image"
+        x:Name="BackgroundLayer"
         Padding="16,6,16,10">
 
         <draw:SkiaShape

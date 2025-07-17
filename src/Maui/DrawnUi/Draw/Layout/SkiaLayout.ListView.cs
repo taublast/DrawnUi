@@ -12,7 +12,7 @@ public partial class SkiaLayout
         //RenderingViewport = new(viewport.Pixels);
         if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
         {
-            if (WillDrawFromFreshItemssSource && ContentSize.IsEmpty && ItemsSource.Count > 0)
+            if (WillDrawFromFreshItemssSource==0 && ContentSize.IsEmpty && ItemsSource.Count > 0)
             {
                 InvalidateMeasure();
             }
@@ -172,28 +172,32 @@ public partial class SkiaLayout
 
         var cancellationToken = _backgroundMeasurementCts.Token;
 
-        _backgroundMeasurementTask = Task.Run(async () =>
+        Tasks.StartDelayed(TimeSpan.FromMilliseconds(10), () =>
         {
-            try
+            _backgroundMeasurementTask = Task.Run(async () =>
             {
-                await BackgroundMeasureItems(constraints, scale, startFromIndex, cancellationToken, context);
-            }
-            catch (OperationCanceledException)
-            {
-                Debug.WriteLine("[StartBackgroundMeasurement] Background measurement was cancelled");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[StartBackgroundMeasurement] Background measurement error: {ex.Message}");
-            }
-            finally
-            {
-                lock (_measurementLock)
+                try
                 {
-                    _isBackgroundMeasuring = false;
+                    await BackgroundMeasureItems(constraints, scale, startFromIndex, cancellationToken, context);
                 }
-            }
+                catch (OperationCanceledException)
+                {
+                    Debug.WriteLine("[StartBackgroundMeasurement] Background measurement was cancelled");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[StartBackgroundMeasurement] Background measurement error: {ex.Message}");
+                }
+                finally
+                {
+                    lock (_measurementLock)
+                    {
+                        _isBackgroundMeasuring = false;
+                    }
+                }
+            });
         });
+
     }
 
     /// <summary>
@@ -1557,22 +1561,36 @@ public partial class SkiaLayout
 
         if (Type == LayoutType.Column)
         {
-            // Calculate actual measured height from structure (skip ghost cells)
+            // Calculate actual measured height using first/last item positions (O(1) optimization)
             var actualMeasuredHeight = 0f;
-            var visibleItemsCount = 0;
-            var measuredItems = StackStructure.GetChildren().Take(measuredCount);
-            foreach (var item in measuredItems)
+            var visibleItemsCount = measuredCount; // Assume all measured items are visible
+            
+            if (measuredCount > 0 && StackStructure.Length > 0)
             {
-                if (!item.IsCollapsed) // Skip ghost cells
+                // Get first item, skip collapsed if needed
+                ControlInStack firstVisibleItem = StackStructure[0];
+                var firstIndex = 0;
+                while (firstIndex < measuredCount && firstIndex < StackStructure.Length && StackStructure[firstIndex].IsCollapsed)
                 {
-                    actualMeasuredHeight += item.Measured.Pixels.Height;
-                    visibleItemsCount++;
+                    firstVisibleItem = StackStructure[++firstIndex];
+                    visibleItemsCount--; // Subtract collapsed items
+                }
+
+                // Get last item, skip collapsed if needed
+                ControlInStack lastVisibleItem = StackStructure[Math.Min(measuredCount - 1, StackStructure.Length - 1)];
+                var lastIndex = Math.Min(measuredCount - 1, StackStructure.Length - 1);
+                while (lastIndex >= 0 && StackStructure[lastIndex].IsCollapsed)
+                {
+                    lastVisibleItem = StackStructure[--lastIndex];
+                    visibleItemsCount--; // Subtract collapsed items
+                }
+
+                // Use first/last item positions for O(1) calculation
+                if (firstVisibleItem != null && lastVisibleItem != null && !firstVisibleItem.IsCollapsed && !lastVisibleItem.IsCollapsed)
+                {
+                    actualMeasuredHeight = lastVisibleItem.Destination.Bottom - firstVisibleItem.Destination.Top;
                 }
             }
-
-            // Add spacing between visible items
-            var spacingHeight = Math.Max(0, visibleItemsCount - 1) * (float)(Spacing * RenderingScale);
-            actualMeasuredHeight += spacingHeight;
 
             float newContentHeight;
 
@@ -1611,21 +1629,36 @@ public partial class SkiaLayout
         }
         else if (Type == LayoutType.Row)
         {
-            // Similar logic for horizontal scrolling (skip ghost cells)
+            // Calculate actual measured width using first/last item positions (O(1) optimization)
             var actualMeasuredWidth = 0f;
-            var visibleItemsCount = 0;
-            var measuredItems = StackStructure.GetChildren().Take(measuredCount);
-            foreach (var item in measuredItems)
+            var visibleItemsCount = measuredCount; // Assume all measured items are visible
+            
+            if (measuredCount > 0 && StackStructure.Length > 0)
             {
-                if (!item.IsCollapsed) // Skip ghost cells
+                // Get first item, skip collapsed if needed
+                ControlInStack firstVisibleItem = StackStructure[0];
+                var firstIndex = 0;
+                while (firstIndex < measuredCount && firstIndex < StackStructure.Length && StackStructure[firstIndex].IsCollapsed)
                 {
-                    actualMeasuredWidth += item.Measured.Pixels.Width;
-                    visibleItemsCount++;
+                    firstVisibleItem = StackStructure[++firstIndex];
+                    visibleItemsCount--; // Subtract collapsed items
+                }
+
+                // Get last item, skip collapsed if needed
+                ControlInStack lastVisibleItem = StackStructure[Math.Min(measuredCount - 1, StackStructure.Length - 1)];
+                var lastIndex = Math.Min(measuredCount - 1, StackStructure.Length - 1);
+                while (lastIndex >= 0 && StackStructure[lastIndex].IsCollapsed)
+                {
+                    lastVisibleItem = StackStructure[--lastIndex];
+                    visibleItemsCount--; // Subtract collapsed items
+                }
+
+                // Use first/last item positions for O(1) calculation
+                if (firstVisibleItem != null && lastVisibleItem != null && !firstVisibleItem.IsCollapsed && !lastVisibleItem.IsCollapsed)
+                {
+                    actualMeasuredWidth = lastVisibleItem.Destination.Right - firstVisibleItem.Destination.Left;
                 }
             }
-
-            var spacingWidth = Math.Max(0, visibleItemsCount - 1) * (float)(Spacing * RenderingScale);
-            actualMeasuredWidth += spacingWidth;
 
             float newContentWidth;
 

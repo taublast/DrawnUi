@@ -70,7 +70,7 @@
 
                 <!-- uncomment for debug info -->
 
-                <!--<draw:SkiaLabel
+                <draw:SkiaLabel
                     UseCache="Operations"
                     Margin="8"
                     Padding="2"
@@ -81,7 +81,7 @@
                     Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
                     TextColor="LawnGreen"
                     VerticalOptions="End"
-                    ZIndex="100" />-->
+                    ZIndex="100" />
 
                 <!-- uncomment for FPS info -->
 

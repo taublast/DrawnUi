@@ -33,11 +33,12 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
     public override void DrawPlaceholder(DrawingContext context)
     {
+        var margins = BackgroundLayer.Padding;
         var area =
-        new SKRect(context.Destination.Left + 16 * context.Scale,
-            context.Destination.Top + 6 * context.Scale,
-            context.Destination.Right - 16 * context.Scale,
-            context.Destination.Bottom - 10 * context.Scale);
+                new SKRect((float)(context.Destination.Left + margins.Left * context.Scale),
+            (float)(context.Destination.Top + margins.Top * context.Scale),
+        (float)(context.Destination.Right - margins.Right * context.Scale),
+        (float)(context.Destination.Bottom - margins.Bottom * context.Scale));
 
         PaintPlaceholder ??= new SKPaint
         {

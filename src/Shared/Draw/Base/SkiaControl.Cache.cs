@@ -504,11 +504,6 @@ public partial class SkiaControl
             var cache = RenderObject;
             var cacheOffscreen = RenderObjectPrevious;
 
-            if (UsesCacheDoubleBuffering)
-            {
-                var stop = this.ContextIndex;
-            }
-
             if (RenderObjectPrevious != null && RenderObjectPreviousNeedsUpdate)
             {
                 cacheOffscreen = null;
@@ -528,7 +523,6 @@ public partial class SkiaControl
                 }
             }
 
-            bool wasDrawn = false;
             if (cache != null)
             {
                 //CacheValidity will be set by CheckCachedObjectValid
@@ -546,7 +540,6 @@ public partial class SkiaControl
                             && CompareDoubles(cache.Bounds.Height, context.Destination.Height, 1))
                         {
                             DrawRenderObjectInternal(context, cache);
-                            wasDrawn = true;
                         }
                         else
                         {
@@ -556,7 +549,6 @@ public partial class SkiaControl
                     else
                     {
                         DrawRenderObjectInternal(context, cache);
-                        wasDrawn = true;
                     }
 
                     Monitor.PulseAll(LockDraw);
@@ -580,27 +572,14 @@ public partial class SkiaControl
                     if (cache == null && cacheOffscreen != null)
                     {
                         //Drawing previous cache
-                        if (CompareDoubles(cacheOffscreen.Bounds.Width, context.Destination.Width, 1)
-                            && CompareDoubles(cacheOffscreen.Bounds.Height, context.Destination.Height, 1))
-                        {
-                            DrawRenderObjectInternal(context, cacheOffscreen);
-                            wasDrawn = true;
-                        }
-                        else
-                        {
-                            DrawPlaceholder(context);
-                        }
-
-                        Monitor.PulseAll(LockDraw);
+                        DrawRenderObjectInternal(context, cacheOffscreen);
                     }
                     else
                     {
-                        //no cache and no cacheOffscreen available
-                        if (!wasDrawn)
-                        {
-                            DrawPlaceholder(context);
-                        }
+                        DrawPlaceholder(context);
                     }
+
+                    Monitor.PulseAll(LockDraw);
                 }
 
                 if (NeedUpdateFrontCache)
@@ -624,7 +603,7 @@ public partial class SkiaControl
 
                         if (Parent != null && Parent.UpdateLocks < 1)
                         {
-                            Repaint();//repaint us
+                            Parent?.UpdateByChild(this); //repaint us
                         }
                     });
                 }
@@ -885,7 +864,7 @@ public partial class SkiaControl
 
                             if (Parent != null && Parent.UpdateLocks < 1)
                             {
-                                Repaint();//repaint us
+                                Parent?.UpdateByChild(this); //repaint us
                             }
                         });
                     }

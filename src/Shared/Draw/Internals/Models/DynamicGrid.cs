@@ -7,6 +7,7 @@ public class DynamicGrid<T>
     protected Dictionary<(int, int), T> grid = new Dictionary<(int, int), T>();
     private Dictionary<int, int> columnCountPerColumn = new Dictionary<int, int>();  // Stores row counts for each column
     private Dictionary<int, int> columnCountPerRow = new Dictionary<int, int>();  // Stores column counts for each row
+    private List<T> indexedValues = new List<T>(); // For efficient indexing
 
     public int MaxRows { get; private set; } = 0;
     public int MaxColumns { get; private set; } = 0;
@@ -14,6 +15,7 @@ public class DynamicGrid<T>
     public void Add(T item, int column, int row)
     {
         grid[(column, row)] = item;
+        indexedValues.Add(item); // Maintain indexed list for O(1) access
 
         // Update the maximum rows and columns
         if (column >= MaxColumns)
@@ -75,6 +77,7 @@ public class DynamicGrid<T>
         grid.Clear();
         columnCountPerColumn.Clear();
         columnCountPerRow.Clear();
+        indexedValues.Clear();
     }
 
     public IEnumerable<T> GetChildren()
@@ -87,6 +90,20 @@ public class DynamicGrid<T>
         return grid.Values.ToArray()[index];
     }
 
+    /// <summary>
+    /// Gets child at the specified index with O(1) performance
+    /// </summary>
+    public T this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= indexedValues.Count)
+                return default(T);
+            
+            return indexedValues[index];
+        }
+    }
+
     public Span<T> GetChildrenAsSpans()
     {
         return CollectionsMarshal.AsSpan(grid.Values.ToList());
@@ -96,6 +113,11 @@ public class DynamicGrid<T>
     {
         return grid.Count;
     }
+
+    /// <summary>
+    /// Gets the number of children in the grid (same as GetCount but more intuitive)
+    /// </summary>
+    public int Length => indexedValues.Count;
 
     /// <summary>
     /// Returns the column count for the specified row.

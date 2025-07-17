@@ -2206,10 +2206,11 @@ else
 
                 // Start background measurement if needed
                 if (IsTemplated && structure != null &&
+                    WillDrawFromFreshItemssSource > 5 && //more than some frames away from fresh itemssource
                     MeasureItemsStrategy == MeasuringStrategy.MeasureVisible &&
                     ItemsSource != null &&
                     lastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
-                    !_isBackgroundMeasuring && _pendingStructureChanges.Count == 0)
+                    !IsBackgroundMeasuring && _pendingStructureChanges.Count == 0)
                 {
                     // We have unmeasured items beyond visible area
                     var nextUnmeasuredIndex = lastVisibleIndex + 1;
@@ -2238,13 +2239,14 @@ else
 
                 try
                 {
-                    if (WillDrawFromFreshItemssSource && IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled)
+                    if (WillDrawFromFreshItemssSource == 0  && IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled)
                     {
-                        ChildrenFactory.FillPool(visibleElements.Count);
                         if (ReserveTemplates > 0)
                         {
-                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(30),
-                                async () => { await ChildrenFactory.FillPoolInBackgroundAsync(ReserveTemplates); });
+                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(50), () =>
+                            {
+                                ChildrenFactory.FillPool(ReserveTemplates);
+                            });
                         }
                     }
 
@@ -2480,7 +2482,7 @@ else
                 Update();
             }
 
-            WillDrawFromFreshItemssSource = false;
+            WillDrawFromFreshItemssSource++;
 
             //todo move/remove???
             if (_measuredItems.Count > SLIDING_WINDOW_SIZE)
