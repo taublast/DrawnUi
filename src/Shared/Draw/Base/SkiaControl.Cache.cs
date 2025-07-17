@@ -528,6 +528,7 @@ public partial class SkiaControl
                 }
             }
 
+            bool wasDrawn = false;
             if (cache != null)
             {
                 //CacheValidity will be set by CheckCachedObjectValid
@@ -545,6 +546,7 @@ public partial class SkiaControl
                             && CompareDoubles(cache.Bounds.Height, context.Destination.Height, 1))
                         {
                             DrawRenderObjectInternal(context, cache);
+                            wasDrawn = true;
                         }
                         else
                         {
@@ -554,6 +556,7 @@ public partial class SkiaControl
                     else
                     {
                         DrawRenderObjectInternal(context, cache);
+                        wasDrawn = true;
                     }
 
                     Monitor.PulseAll(LockDraw);
@@ -577,14 +580,26 @@ public partial class SkiaControl
                     if (cache == null && cacheOffscreen != null)
                     {
                         //Drawing previous cache
-                        DrawRenderObjectInternal(context, cacheOffscreen);
+                        if (CompareDoubles(cacheOffscreen.Bounds.Width, context.Destination.Width, 1)
+                            && CompareDoubles(cacheOffscreen.Bounds.Height, context.Destination.Height, 1))
+                        {
+                            DrawRenderObjectInternal(context, cacheOffscreen);
+                            wasDrawn = true;
+                        }
+                        else
+                        {
+                            DrawPlaceholder(context);
+                        }
 
                         Monitor.PulseAll(LockDraw);
                     }
                     else
                     {
                         //no cache and no cacheOffscreen available
-                        DrawPlaceholder(context);
+                        if (!wasDrawn)
+                        {
+                            DrawPlaceholder(context);
+                        }
                     }
                 }
 
@@ -856,6 +871,8 @@ public partial class SkiaControl
                     //record to cache and paint 
                     if (UsesCacheDoubleBuffering)
                     {
+                        DrawPlaceholder(clone);
+
                         //use cloned struct in another thread 
                         PushToOffscreenRendering(() =>
                         {
@@ -874,11 +891,6 @@ public partial class SkiaControl
                     }
                     else
                     {
-                        if (UsesCacheDoubleBuffering)
-                        {
-                            var stop = 1; //should NEVER happen
-                        }
-
                         CreateRenderingObjectAndPaint(clone, recordArea,
                             (ctx) => { PaintWithEffects(ctx.WithDestination(DrawingRect)); });
                     }

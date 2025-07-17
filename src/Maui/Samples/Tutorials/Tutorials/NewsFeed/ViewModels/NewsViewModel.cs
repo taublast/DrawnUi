@@ -31,7 +31,7 @@ public class NewsViewModel : BaseViewModel
     public ICommand RefreshCommand { get; }
     public ICommand LoadMoreCommand { get; }
 
-    private int DataChunkSize = 100;
+    private int DataChunkSize = 30;
     
     private async Task RefreshFeed()
     {

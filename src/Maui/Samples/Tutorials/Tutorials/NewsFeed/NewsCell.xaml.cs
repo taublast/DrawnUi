@@ -41,7 +41,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
         PaintPlaceholder ??= new SKPaint
         {
-            Color = SKColor.Parse("#66FFFFFF"),
+            Color = SKColor.Parse("#99FFFFFF"),
             Style = SKPaintStyle.Fill,
         };
 

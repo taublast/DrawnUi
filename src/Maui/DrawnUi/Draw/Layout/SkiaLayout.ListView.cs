@@ -340,7 +340,7 @@ public partial class SkiaLayout
                     {
                         try
                         {
-                            if (index + 2 > itemsCount)
+                            if (index + 4 > itemsCount)
                             {
                                 stopMeasuring = true;
                                 break;
@@ -588,38 +588,6 @@ public partial class SkiaLayout
         }
 
         return ScaledSize.FromPixels(rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
-    }
-
-    /// <summary>
-    /// Updates estimated content size based on current measurements
-    /// </summary>
-    private void UpdateEstimatedContentSize(float scale)
-    {
-        if (_measuredItems.Count == 0)
-            return;
-
-        var totalItems = ItemsSource?.Count ?? 0;
-        if (totalItems == 0)
-            return;
-
-        var measuredHeights = _measuredItems.Values
-            .Where(x => x.Cell.WasMeasured)
-            .Select(x => x.Cell.Measured.Pixels.Height)
-            .Where(h => h > 0)
-            .ToList();
-
-        if (measuredHeights.Count > 0 && Type == LayoutType.Column)
-        {
-            var averageHeight = measuredHeights.Average();
-            var estimatedTotalHeight = averageHeight * totalItems;
-
-            // Update the measured size if estimate is larger
-            if (estimatedTotalHeight > MeasuredSize.Pixels.Height)
-            {
-                SetMeasured(MeasuredSize.Pixels.Width, estimatedTotalHeight, false, false, scale);
-                Debug.WriteLine($"[UpdateEstimatedContentSize] Updated estimated height to {estimatedTotalHeight:F1}px based on {measuredHeights.Count} measured items (avg: {averageHeight:F1}px)");
-            }
-        }
     }
 
     /// <summary>

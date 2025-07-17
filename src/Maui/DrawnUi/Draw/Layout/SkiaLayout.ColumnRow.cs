@@ -2080,22 +2080,36 @@ else
                         Debug.WriteLine($"[DrawStack] Using background measurement for cell {cell.ControlIndex}");
                     }
 
-                    if (!cell.WasMeasured)
-                    {
-                        Super.Log(
-                            "DrawStack tried to draw unmeasured cell!"); //would be unexpected due to flaw in custom control
-                        continue; //structure changed, must be measured by Measure method
-                    }
-
                     currentIndex++;
 
-                    if (cell.Destination == SKRect.Empty || cell.Measured.Pixels.Width < 1 ||
+                    if (cell.WasMeasured && cell.Destination == SKRect.Empty || cell.Measured.Pixels.Width < 1 ||
                         cell.Measured.Pixels.Height < 1)
                     {
                         cell.IsVisible = false;
                     }
                     else
                     {
+                        if (!cell.WasMeasured)
+                        {
+                            // DrawStack tried to draw unmeasured cell!
+                            //todo measure!
+                            // Check if we have background measured data
+                            if (_measuredItems.TryGetValue(cell.ControlIndex, out var preMeasuredInfo))
+                            {
+                                // Use pre-measured dimensions
+                                cell.Measured = preMeasuredInfo.Cell.Measured;
+                                cell.WasMeasured = true;
+                                cell.Area = preMeasuredInfo.Cell.Area;
+
+                                // Update access time
+                                preMeasuredInfo.LastAccessed = DateTime.UtcNow;
+                            }
+                            else
+                            {
+                                continue; // Skip unmeasured
+                            }
+                        }
+
                         // Calculate screen position (unchanged)
                         var x = ctx.Destination.Left + cell.Destination.Left;
                         var y = ctx.Destination.Top + cell.Destination.Top;
@@ -2189,11 +2203,6 @@ else
                     LastVisibleIndex = -1;
                 }
 
-                if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-                {
-                    var stop = visibleElements.Count;
-                    var stop1 = ItemsSource;
-                }
 
                 // Start background measurement if needed
                 if (IsTemplated && structure != null &&
@@ -2202,7 +2211,6 @@ else
                     lastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
                     !_isBackgroundMeasuring && _pendingStructureChanges.Count == 0)
                 {
-
                     // We have unmeasured items beyond visible area
                     var nextUnmeasuredIndex = lastVisibleIndex + 1;
 
@@ -2217,18 +2225,8 @@ else
                     {
                         StartBackgroundMeasurement(ctx.Destination, ctx.Scale, nextUnmeasuredIndex);
                     }
-
                 }
 
-                // Update measured items access time for visible items
-                foreach (var cell in visibleElements)
-                {
-                    if (_measuredItems.TryGetValue(cell.ControlIndex, out var info))
-                    {
-                        info.LastAccessed = DateTime.UtcNow;
-                        info.IsInViewport = true;
-                    }
-                }
 
                 //PASS 2 DRAW VISIBLE
                 bool hadAdjustments = false;
@@ -2245,15 +2243,20 @@ else
                         ChildrenFactory.FillPool(visibleElements.Count);
                         if (ReserveTemplates > 0)
                         {
-                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(30), async () =>
-                            {
-                                await ChildrenFactory.FillPoolInBackgroundAsync(ReserveTemplates);
-                            });
+                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(30),
+                                async () => { await ChildrenFactory.FillPoolInBackgroundAsync(ReserveTemplates); });
                         }
                     }
 
                     foreach (var cell in CollectionsMarshal.AsSpan(visibleElements))
                     {
+                        // Update measured items access time for visible items
+                        if (_measuredItems.TryGetValue(cell.ControlIndex, out var info))
+                        {
+                            info.LastAccessed = DateTime.UtcNow;
+                            info.IsInViewport = true;
+                        }
+
                         if (cell.IsCollapsed)
                             continue;
 
@@ -2304,7 +2307,6 @@ else
 
                             if (child.NeedMeasure)
                             {
-                                
                                 if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
                                 {
                                     //we change structure elsewhere so no need to measure here
@@ -2346,9 +2348,7 @@ else
 
                                             var measuredItem = new MeasuredItemInfo
                                             {
-                                                Cell = cell,
-                                                LastAccessed = DateTime.UtcNow,
-                                                IsInViewport = true,
+                                                Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = true,
                                             };
                                             _pendingStructureChanges.Add(new StructureChange
                                             {
@@ -2361,11 +2361,10 @@ else
 
                                             cell.OffsetOthers = Vector2.Zero;
                                         }
-
                                     }
                                 }
                             }
-              
+
 
                             if (child.IsVisible)
                             {
