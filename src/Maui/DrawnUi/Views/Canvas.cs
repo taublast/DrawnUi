@@ -707,25 +707,6 @@ public class Canvas : DrawnView, IGestureListener
             _blockedPanning = false;
         }
         else
-        if (touchAction == TouchActionResult.Up)
-        {
-            if (_blockedPanning && !_hadTap && !_isPanning && !_hadLong)
-            {
-                PostponeExecutionBeforeDraw(() =>
-                {
-                    try
-                    {
-                        var tapped = SkiaGesturesParameters.Create(TouchActionResult.Tapped, args1);
-                        ProcessGestures(tapped);
-                    }
-                    catch (Exception e)
-                    {
-                        Trace.WriteLine(e);
-                    }
-                });
-            }
-        }
-        else
         if (touchAction == TouchActionResult.Panning)
         {
             //filter micro-gestures
@@ -819,6 +800,22 @@ public class Canvas : DrawnView, IGestureListener
                 Trace.WriteLine(e);
             }
         });
+
+        if (_blockedPanning && !_hadTap && !_isPanning && !_hadLong)
+        {
+            PostponeExecutionBeforeDraw(() =>
+            {
+                try
+                {
+                    var tapped = SkiaGesturesParameters.Create(TouchActionResult.Tapped, args1);
+                    ProcessGestures(tapped);
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e);
+                }
+            });
+        }
 
         Repaint();
     }
