@@ -126,6 +126,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsCacheImage
   - DrawnUi.Draw.SkiaControl.IsCacheOperations
   - DrawnUi.Draw.SkiaControl.UseRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.CacheValidity
   - DrawnUi.Draw.SkiaControl.GetOffscreenRenderingAction
   - DrawnUi.Draw.SkiaControl.PushToOffscreenRendering(System.Action,System.Threading.CancellationToken)
@@ -825,12 +826,16 @@ items:
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveBindingContext``2(System.Action{DrawnUi.Draw.AddGestures.GestureListener,{TSource},System.String},System.Boolean)
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveOn``3({TParent},System.Func{{TTarget}},System.String,System.Action{DrawnUi.Draw.AddGestures.GestureListener,System.String},System.String[])
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObservePropertiesOn``3({TParent},System.Func{{TTarget}},System.String,System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+  - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveProperties``2(System.Func{{TSource}},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.AddGestures.GestureListener})
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveProperties``2({TSource},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.AddGestures.GestureListener})
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObservePropertyOn``3({TParent},System.Func{{TTarget}},System.String,System.String,System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+  - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveProperty``2(System.Func{{TSource}},System.String,System.Action{DrawnUi.Draw.AddGestures.GestureListener})
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveProperty``2({TSource},System.String,System.Action{DrawnUi.Draw.AddGestures.GestureListener})
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveSelf``1(System.Action{DrawnUi.Draw.AddGestures.GestureListener,System.String})
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.AddGestures.GestureListener,System.String},System.String[])
+  - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.AddGestures.GestureListener,System.String},System.String[])
+  - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Draw.AddGestures.GestureListener,System.Object},System.String[])
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Draw.AddGestures.GestureListener})
   - DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Draw.AddGestures.GestureListener,DrawnUi.Draw.DrawingContext})
@@ -2901,6 +2906,31 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DrawPlaceholder_DrawnUi_Draw_DrawingContext_
+  name: DrawPlaceholder(DrawingContext)
+  nameWithType: SkiaControl.DrawPlaceholder(DrawingContext)
+  fullName: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+    name: DrawPlaceholder
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DrawPlaceholder_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+    name: DrawPlaceholder
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DrawPlaceholder_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.CacheValidity
   commentId: P:DrawnUi.Draw.SkiaControl.CacheValidity
@@ -18758,6 +18788,123 @@ references:
     href: DrawnUi.Draw.AddGestures.GestureListener.html
   - name: )
   - name: )
+- uid: DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveProperties``2(System.Func{{TSource}},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  name: ObserveProperties<GestureListener, TSource>(GestureListener, Func<TSource>, IEnumerable<string>, Action<GestureListener>)
+  nameWithType: FluentExtensions.ObserveProperties<AddGestures.GestureListener, TSource>(AddGestures.GestureListener, Func<TSource>, IEnumerable<string>, Action<AddGestures.GestureListener>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperties<DrawnUi.Draw.AddGestures.GestureListener, TSource>(DrawnUi.Draw.AddGestures.GestureListener, System.Func<TSource>, System.Collections.Generic.IEnumerable<string>, System.Action<DrawnUi.Draw.AddGestures.GestureListener>)
+  nameWithType.vb: FluentExtensions.ObserveProperties(Of AddGestures.GestureListener, TSource)(AddGestures.GestureListener, Func(Of TSource), IEnumerable(Of String), Action(Of AddGestures.GestureListener))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperties(Of DrawnUi.Draw.AddGestures.GestureListener, TSource)(DrawnUi.Draw.AddGestures.GestureListener, System.Func(Of TSource), System.Collections.Generic.IEnumerable(Of String), System.Action(Of DrawnUi.Draw.AddGestures.GestureListener))
+  name.vb: ObserveProperties(Of GestureListener, TSource)(GestureListener, Func(Of TSource), IEnumerable(Of String), Action(Of GestureListener))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(DrawnUi.Draw.AddGestures.GestureListener,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(DrawnUi.Draw.AddGestures.GestureListener,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveProperties``2({TSource},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.AddGestures.GestureListener})
   commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,``1,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
   parent: DrawnUi.Draw.FluentExtensions
@@ -18968,6 +19115,109 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.ObserveProperty``2(System.Func{{TSource}},System.String,System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  name: ObserveProperty<GestureListener, TSource>(GestureListener, Func<TSource>, string, Action<GestureListener>)
+  nameWithType: FluentExtensions.ObserveProperty<AddGestures.GestureListener, TSource>(AddGestures.GestureListener, Func<TSource>, string, Action<AddGestures.GestureListener>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperty<DrawnUi.Draw.AddGestures.GestureListener, TSource>(DrawnUi.Draw.AddGestures.GestureListener, System.Func<TSource>, string, System.Action<DrawnUi.Draw.AddGestures.GestureListener>)
+  nameWithType.vb: FluentExtensions.ObserveProperty(Of AddGestures.GestureListener, TSource)(AddGestures.GestureListener, Func(Of TSource), String, Action(Of AddGestures.GestureListener))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperty(Of DrawnUi.Draw.AddGestures.GestureListener, TSource)(DrawnUi.Draw.AddGestures.GestureListener, System.Func(Of TSource), String, System.Action(Of DrawnUi.Draw.AddGestures.GestureListener))
+  name.vb: ObserveProperty(Of GestureListener, TSource)(GestureListener, Func(Of TSource), String, Action(Of GestureListener))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(DrawnUi.Draw.AddGestures.GestureListener,System.Func{``1},System.String,System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(DrawnUi.Draw.AddGestures.GestureListener,System.Func{``1},System.String,System.Action{DrawnUi.Draw.AddGestures.GestureListener})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
   - name: ','
   - name: " "
   - uid: System.String
@@ -19273,6 +19523,113 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  name: Observe<GestureListener, TSource>(GestureListener, Func<TSource>, Action<GestureListener>, string[])
+  nameWithType: FluentExtensions.Observe<AddGestures.GestureListener, TSource>(AddGestures.GestureListener, Func<TSource>, Action<AddGestures.GestureListener>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<DrawnUi.Draw.AddGestures.GestureListener, TSource>(DrawnUi.Draw.AddGestures.GestureListener, System.Func<TSource>, System.Action<DrawnUi.Draw.AddGestures.GestureListener>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of AddGestures.GestureListener, TSource)(AddGestures.GestureListener, Func(Of TSource), Action(Of AddGestures.GestureListener), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of DrawnUi.Draw.AddGestures.GestureListener, TSource)(DrawnUi.Draw.AddGestures.GestureListener, System.Func(Of TSource), System.Action(Of DrawnUi.Draw.AddGestures.GestureListener), String())
+  name.vb: Observe(Of GestureListener, TSource)(GestureListener, Func(Of TSource), Action(Of GestureListener), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.AddGestures.GestureListener,System.Func{``1},System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.AddGestures.GestureListener,System.Func{``1},System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.AddGestures.GestureListener,System.String},System.String[])
   commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])
   parent: DrawnUi.Draw.FluentExtensions
@@ -19368,6 +19725,99 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.AddGestures.GestureListener.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  name: Observe<GestureListener, TSource>(GestureListener, TSource, Action<GestureListener>, string[])
+  nameWithType: FluentExtensions.Observe<AddGestures.GestureListener, TSource>(AddGestures.GestureListener, TSource, Action<AddGestures.GestureListener>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<DrawnUi.Draw.AddGestures.GestureListener, TSource>(DrawnUi.Draw.AddGestures.GestureListener, TSource, System.Action<DrawnUi.Draw.AddGestures.GestureListener>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of AddGestures.GestureListener, TSource)(AddGestures.GestureListener, TSource, Action(Of AddGestures.GestureListener), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of DrawnUi.Draw.AddGestures.GestureListener, TSource)(DrawnUi.Draw.AddGestures.GestureListener, TSource, System.Action(Of DrawnUi.Draw.AddGestures.GestureListener), String())
+  name.vb: Observe(Of GestureListener, TSource)(GestureListener, TSource, Action(Of GestureListener), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.AddGestures.GestureListener,``1,System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.AddGestures.GestureListener,``1,System.Action{DrawnUi.Draw.AddGestures.GestureListener},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AddGestures.GestureListener
+    name: GestureListener
+    href: DrawnUi.Draw.AddGestures.GestureListener.html
   - name: )
   - name: ','
   - name: " "
@@ -23221,6 +23671,110 @@ references:
   - name: T
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  name: ObserveProperties<T, TSource>(T, Func<TSource>, IEnumerable<string>, Action<T>)
+  nameWithType: FluentExtensions.ObserveProperties<T, TSource>(T, Func<TSource>, IEnumerable<string>, Action<T>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperties<T, TSource>(T, System.Func<TSource>, System.Collections.Generic.IEnumerable<string>, System.Action<T>)
+  nameWithType.vb: FluentExtensions.ObserveProperties(Of T, TSource)(T, Func(Of TSource), IEnumerable(Of String), Action(Of T))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperties(Of T, TSource)(T, System.Func(Of TSource), System.Collections.Generic.IEnumerable(Of String), System.Action(Of T))
+  name.vb: ObserveProperties(Of T, TSource)(T, Func(Of TSource), IEnumerable(Of String), Action(Of T))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,``1,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
   commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,``1,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
   isExternal: true
@@ -23407,6 +23961,96 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  name: ObserveProperty<T, TSource>(T, Func<TSource>, string, Action<T>)
+  nameWithType: FluentExtensions.ObserveProperty<T, TSource>(T, Func<TSource>, string, Action<T>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperty<T, TSource>(T, System.Func<TSource>, string, System.Action<T>)
+  nameWithType.vb: FluentExtensions.ObserveProperty(Of T, TSource)(T, Func(Of TSource), String, Action(Of T))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperty(Of T, TSource)(T, System.Func(Of TSource), String, System.Action(Of T))
+  name.vb: ObserveProperty(Of T, TSource)(T, Func(Of TSource), String, Action(Of T))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
   - name: ','
   - name: " "
   - uid: System.String
@@ -23671,6 +24315,100 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  name: Observe<T, TSource>(T, Func<TSource>, Action<T>, string[])
+  nameWithType: FluentExtensions.Observe<T, TSource>(T, Func<TSource>, Action<T>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<T, TSource>(T, System.Func<TSource>, System.Action<T>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of T, TSource)(T, Func(Of TSource), Action(Of T), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of T, TSource)(T, System.Func(Of TSource), System.Action(Of T), String())
+  name.vb: Observe(Of T, TSource)(T, Func(Of TSource), Action(Of T), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])
   commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])
   isExternal: true
@@ -23753,6 +24491,86 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  name: Observe<T, TSource>(T, TSource, Action<T>, string[])
+  nameWithType: FluentExtensions.Observe<T, TSource>(T, TSource, Action<T>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<T, TSource>(T, TSource, System.Action<T>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of T, TSource)(T, TSource, Action(Of T), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of T, TSource)(T, TSource, System.Action(Of T), String())
+  name.vb: Observe(Of T, TSource)(T, TSource, Action(Of T), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
   - name: )
   - name: ','
   - name: " "

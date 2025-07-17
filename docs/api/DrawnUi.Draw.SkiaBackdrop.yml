@@ -159,7 +159,6 @@ items:
   - DrawnUi.Draw.SkiaLayout.SplitSpace
   - DrawnUi.Draw.SkiaLayout.DynamicColumnsProperty
   - DrawnUi.Draw.SkiaLayout.DynamicColumns
-  - DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
   - DrawnUi.Draw.SkiaLayout.ViewportWasChanged
   - DrawnUi.Draw.SkiaLayout.DrawChild(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.ISkiaControl)
   - DrawnUi.Draw.SkiaLayout.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
@@ -184,6 +183,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.InvalidatedChildren
   - DrawnUi.Draw.SkiaLayout.InvalidateByChild(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+  - DrawnUi.Draw.SkiaLayout.WillMeasureFromFreshItemssSource
   - DrawnUi.Draw.SkiaLayout.DrawViews(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLayout.IsStack
   - DrawnUi.Draw.SkiaLayout.TypeProperty
@@ -204,7 +204,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.ApplyItemsSource
   - DrawnUi.Draw.SkiaLayout.ResetScroll
   - DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  - DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  - DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
   - DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)
@@ -253,6 +253,9 @@ items:
   - DrawnUi.Draw.SkiaLayout.UpdateSizeChangedHandlers(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaLayout.Invalidate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaLayout.UpdateRowColumnBindingContexts
+  - DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  - DrawnUi.Draw.SkiaLayout.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  - DrawnUi.Draw.SkiaLayout.IsViewportAtEndOfMeasuredContent(DrawnUi.Draw.ScaledRect)
   - DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
   - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
   - DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
@@ -331,6 +334,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsCacheImage
   - DrawnUi.Draw.SkiaControl.IsCacheOperations
   - DrawnUi.Draw.SkiaControl.UseRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.CacheValidity
   - DrawnUi.Draw.SkiaControl.GetOffscreenRenderingAction
   - DrawnUi.Draw.SkiaControl.PushToOffscreenRendering(System.Action,System.Threading.CancellationToken)
@@ -1009,12 +1013,16 @@ items:
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveBindingContext``2(System.Action{DrawnUi.Draw.SkiaBackdrop,{TSource},System.String},System.Boolean)
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveOn``3({TParent},System.Func{{TTarget}},System.String,System.Action{DrawnUi.Draw.SkiaBackdrop,System.String},System.String[])
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObservePropertiesOn``3({TParent},System.Func{{TTarget}},System.String,System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.SkiaBackdrop})
+  - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveProperties``2(System.Func{{TSource}},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.SkiaBackdrop})
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveProperties``2({TSource},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.SkiaBackdrop})
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObservePropertyOn``3({TParent},System.Func{{TTarget}},System.String,System.String,System.Action{DrawnUi.Draw.SkiaBackdrop})
+  - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveProperty``2(System.Func{{TSource}},System.String,System.Action{DrawnUi.Draw.SkiaBackdrop})
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveProperty``2({TSource},System.String,System.Action{DrawnUi.Draw.SkiaBackdrop})
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveSelf``1(System.Action{DrawnUi.Draw.SkiaBackdrop,System.String})
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.SkiaBackdrop,System.String},System.String[])
+  - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaBackdrop,System.String},System.String[])
+  - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Draw.SkiaBackdrop,System.Object},System.String[])
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Draw.SkiaBackdrop})
   - DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Draw.SkiaBackdrop,DrawnUi.Draw.DrawingContext})
@@ -1101,7 +1109,7 @@ items:
     return:
       type: DrawnUi.Draw.ISkiaGestureListener
     content.vb: Public Overrides Function ProcessGestures(args As SkiaGesturesParameters, apply As GestureEventProcessingInfo) As ISkiaGestureListener
-  overridden: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  overridden: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   overload: DrawnUi.Draw.SkiaBackdrop.ProcessGestures*
 - uid: DrawnUi.Draw.SkiaBackdrop.ImagePaint
   commentId: F:DrawnUi.Draw.SkiaBackdrop.ImagePaint
@@ -3488,31 +3496,6 @@ references:
   name: DynamicColumns
   nameWithType: SkiaLayout.DynamicColumns
   fullName: DrawnUi.Draw.SkiaLayout.DynamicColumns
-- uid: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
-  commentId: M:DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
-  parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
-  name: OnViewportWasChanged(ScaledRect)
-  nameWithType: SkiaLayout.OnViewportWasChanged(ScaledRect)
-  fullName: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
-    name: OnViewportWasChanged
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
-  - name: (
-  - uid: DrawnUi.Draw.ScaledRect
-    name: ScaledRect
-    href: DrawnUi.Draw.ScaledRect.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
-    name: OnViewportWasChanged
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
-  - name: (
-  - uid: DrawnUi.Draw.ScaledRect
-    name: ScaledRect
-    href: DrawnUi.Draw.ScaledRect.html
-  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.ViewportWasChanged
   commentId: P:DrawnUi.Draw.SkiaLayout.ViewportWasChanged
   parent: DrawnUi.Draw.SkiaLayout
@@ -4019,6 +4002,13 @@ references:
   name: WillDrawFromFreshItemssSource
   nameWithType: SkiaLayout.WillDrawFromFreshItemssSource
   fullName: DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource
+- uid: DrawnUi.Draw.SkiaLayout.WillMeasureFromFreshItemssSource
+  commentId: F:DrawnUi.Draw.SkiaLayout.WillMeasureFromFreshItemssSource
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_WillMeasureFromFreshItemssSource
+  name: WillMeasureFromFreshItemssSource
+  nameWithType: SkiaLayout.WillMeasureFromFreshItemssSource
+  fullName: DrawnUi.Draw.SkiaLayout.WillMeasureFromFreshItemssSource
 - uid: DrawnUi.Draw.SkiaLayout.DrawViews(DrawnUi.Draw.DrawingContext)
   commentId: M:DrawnUi.Draw.SkiaLayout.DrawViews(DrawnUi.Draw.DrawingContext)
   parent: DrawnUi.Draw.SkiaLayout
@@ -4225,21 +4215,21 @@ references:
   name: ShouldPreserveStructureOnCollectionChange
   nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
   fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-- uid: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
-  commentId: M:DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+- uid: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   parent: DrawnUi.Draw.SkiaLayout
   isExternal: true
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
-  name: ItemsSourceCollectionChanged(object, NotifyCollectionChangedEventArgs)
-  nameWithType: SkiaLayout.ItemsSourceCollectionChanged(object, NotifyCollectionChangedEventArgs)
-  fullName: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)
-  nameWithType.vb: SkiaLayout.ItemsSourceCollectionChanged(Object, NotifyCollectionChangedEventArgs)
-  fullName.vb: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(Object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)
-  name.vb: ItemsSourceCollectionChanged(Object, NotifyCollectionChangedEventArgs)
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: OnItemsSourceCollectionChanged(object, NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.OnItemsSourceCollectionChanged(object, NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType.vb: SkiaLayout.OnItemsSourceCollectionChanged(Object, NotifyCollectionChangedEventArgs)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(Object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name.vb: OnItemsSourceCollectionChanged(Object, NotifyCollectionChangedEventArgs)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
-    name: ItemsSourceCollectionChanged
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - uid: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: OnItemsSourceCollectionChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
   - name: (
   - uid: System.Object
     name: object
@@ -4253,9 +4243,9 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaLayout.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
-    name: ItemsSourceCollectionChanged
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - uid: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: OnItemsSourceCollectionChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
   - name: (
   - uid: System.Object
     name: Object
@@ -5392,6 +5382,81 @@ references:
     name: UpdateRowColumnBindingContexts
     href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_UpdateRowColumnBindingContexts
   - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  commentId: M:DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
+  name: OnViewportWasChanged(ScaledRect)
+  nameWithType: SkiaLayout.OnViewportWasChanged(ScaledRect)
+  fullName: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+    name: OnViewportWasChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+    name: OnViewportWasChanged
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnViewportWasChanged_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldTriggerLoadMore_DrawnUi_Draw_ScaledRect_
+  name: ShouldTriggerLoadMore(ScaledRect)
+  nameWithType: SkiaLayout.ShouldTriggerLoadMore(ScaledRect)
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+    name: ShouldTriggerLoadMore
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldTriggerLoadMore_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+    name: ShouldTriggerLoadMore
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldTriggerLoadMore_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.IsViewportAtEndOfMeasuredContent(DrawnUi.Draw.ScaledRect)
+  commentId: M:DrawnUi.Draw.SkiaLayout.IsViewportAtEndOfMeasuredContent(DrawnUi.Draw.ScaledRect)
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsViewportAtEndOfMeasuredContent_DrawnUi_Draw_ScaledRect_
+  name: IsViewportAtEndOfMeasuredContent(ScaledRect)
+  nameWithType: SkiaLayout.IsViewportAtEndOfMeasuredContent(ScaledRect)
+  fullName: DrawnUi.Draw.SkiaLayout.IsViewportAtEndOfMeasuredContent(DrawnUi.Draw.ScaledRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.IsViewportAtEndOfMeasuredContent(DrawnUi.Draw.ScaledRect)
+    name: IsViewportAtEndOfMeasuredContent
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsViewportAtEndOfMeasuredContent_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.IsViewportAtEndOfMeasuredContent(DrawnUi.Draw.ScaledRect)
+    name: IsViewportAtEndOfMeasuredContent
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_IsViewportAtEndOfMeasuredContent_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
   - name: )
 - uid: DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
   commentId: P:DrawnUi.Draw.SkiaLayout.IsBackgroundMeasuring
@@ -7187,6 +7252,31 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DrawPlaceholder_DrawnUi_Draw_DrawingContext_
+  name: DrawPlaceholder(DrawingContext)
+  nameWithType: SkiaControl.DrawPlaceholder(DrawingContext)
+  fullName: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+    name: DrawPlaceholder
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DrawPlaceholder_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)
+    name: DrawPlaceholder
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DrawPlaceholder_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.CacheValidity
   commentId: P:DrawnUi.Draw.SkiaControl.CacheValidity
@@ -22440,6 +22530,123 @@ references:
     href: DrawnUi.Draw.SkiaBackdrop.html
   - name: )
   - name: )
+- uid: DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveProperties``2(System.Func{{TSource}},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.SkiaBackdrop})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  name: ObserveProperties<SkiaBackdrop, TSource>(SkiaBackdrop, Func<TSource>, IEnumerable<string>, Action<SkiaBackdrop>)
+  nameWithType: FluentExtensions.ObserveProperties<SkiaBackdrop, TSource>(SkiaBackdrop, Func<TSource>, IEnumerable<string>, Action<SkiaBackdrop>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperties<DrawnUi.Draw.SkiaBackdrop, TSource>(DrawnUi.Draw.SkiaBackdrop, System.Func<TSource>, System.Collections.Generic.IEnumerable<string>, System.Action<DrawnUi.Draw.SkiaBackdrop>)
+  nameWithType.vb: FluentExtensions.ObserveProperties(Of SkiaBackdrop, TSource)(SkiaBackdrop, Func(Of TSource), IEnumerable(Of String), Action(Of SkiaBackdrop))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperties(Of DrawnUi.Draw.SkiaBackdrop, TSource)(DrawnUi.Draw.SkiaBackdrop, System.Func(Of TSource), System.Collections.Generic.IEnumerable(Of String), System.Action(Of DrawnUi.Draw.SkiaBackdrop))
+  name.vb: ObserveProperties(Of SkiaBackdrop, TSource)(SkiaBackdrop, Func(Of TSource), IEnumerable(Of String), Action(Of SkiaBackdrop))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(DrawnUi.Draw.SkiaBackdrop,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.SkiaBackdrop})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(DrawnUi.Draw.SkiaBackdrop,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.SkiaBackdrop})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveProperties``2({TSource},System.Collections.Generic.IEnumerable{System.String},System.Action{DrawnUi.Draw.SkiaBackdrop})
   commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,``1,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
   parent: DrawnUi.Draw.FluentExtensions
@@ -22650,6 +22857,109 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.ObserveProperty``2(System.Func{{TSource}},System.String,System.Action{DrawnUi.Draw.SkiaBackdrop})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  name: ObserveProperty<SkiaBackdrop, TSource>(SkiaBackdrop, Func<TSource>, string, Action<SkiaBackdrop>)
+  nameWithType: FluentExtensions.ObserveProperty<SkiaBackdrop, TSource>(SkiaBackdrop, Func<TSource>, string, Action<SkiaBackdrop>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperty<DrawnUi.Draw.SkiaBackdrop, TSource>(DrawnUi.Draw.SkiaBackdrop, System.Func<TSource>, string, System.Action<DrawnUi.Draw.SkiaBackdrop>)
+  nameWithType.vb: FluentExtensions.ObserveProperty(Of SkiaBackdrop, TSource)(SkiaBackdrop, Func(Of TSource), String, Action(Of SkiaBackdrop))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperty(Of DrawnUi.Draw.SkiaBackdrop, TSource)(DrawnUi.Draw.SkiaBackdrop, System.Func(Of TSource), String, System.Action(Of DrawnUi.Draw.SkiaBackdrop))
+  name.vb: ObserveProperty(Of SkiaBackdrop, TSource)(SkiaBackdrop, Func(Of TSource), String, Action(Of SkiaBackdrop))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(DrawnUi.Draw.SkiaBackdrop,System.Func{``1},System.String,System.Action{DrawnUi.Draw.SkiaBackdrop})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(DrawnUi.Draw.SkiaBackdrop,System.Func{``1},System.String,System.Action{DrawnUi.Draw.SkiaBackdrop})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
   - name: ','
   - name: " "
   - uid: System.String
@@ -22955,6 +23265,113 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  name: Observe<SkiaBackdrop, TSource>(SkiaBackdrop, Func<TSource>, Action<SkiaBackdrop>, string[])
+  nameWithType: FluentExtensions.Observe<SkiaBackdrop, TSource>(SkiaBackdrop, Func<TSource>, Action<SkiaBackdrop>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<DrawnUi.Draw.SkiaBackdrop, TSource>(DrawnUi.Draw.SkiaBackdrop, System.Func<TSource>, System.Action<DrawnUi.Draw.SkiaBackdrop>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of SkiaBackdrop, TSource)(SkiaBackdrop, Func(Of TSource), Action(Of SkiaBackdrop), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of DrawnUi.Draw.SkiaBackdrop, TSource)(DrawnUi.Draw.SkiaBackdrop, System.Func(Of TSource), System.Action(Of DrawnUi.Draw.SkiaBackdrop), String())
+  name.vb: Observe(Of SkiaBackdrop, TSource)(SkiaBackdrop, Func(Of TSource), Action(Of SkiaBackdrop), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.SkiaBackdrop,System.Func{``1},System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.SkiaBackdrop,System.Func{``1},System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaBackdrop,System.String},System.String[])
   commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])
   parent: DrawnUi.Draw.FluentExtensions
@@ -23050,6 +23467,99 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaBackdrop.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  name: Observe<SkiaBackdrop, TSource>(SkiaBackdrop, TSource, Action<SkiaBackdrop>, string[])
+  nameWithType: FluentExtensions.Observe<SkiaBackdrop, TSource>(SkiaBackdrop, TSource, Action<SkiaBackdrop>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<DrawnUi.Draw.SkiaBackdrop, TSource>(DrawnUi.Draw.SkiaBackdrop, TSource, System.Action<DrawnUi.Draw.SkiaBackdrop>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of SkiaBackdrop, TSource)(SkiaBackdrop, TSource, Action(Of SkiaBackdrop), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of DrawnUi.Draw.SkiaBackdrop, TSource)(DrawnUi.Draw.SkiaBackdrop, TSource, System.Action(Of DrawnUi.Draw.SkiaBackdrop), String())
+  name.vb: Observe(Of SkiaBackdrop, TSource)(SkiaBackdrop, TSource, Action(Of SkiaBackdrop), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.SkiaBackdrop,``1,System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(DrawnUi.Draw.SkiaBackdrop,``1,System.Action{DrawnUi.Draw.SkiaBackdrop},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaBackdrop
+    name: SkiaBackdrop
+    href: DrawnUi.Draw.SkiaBackdrop.html
   - name: )
   - name: ','
   - name: " "
@@ -27559,6 +28069,110 @@ references:
   - name: T
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  name: ObserveProperties<T, TSource>(T, Func<TSource>, IEnumerable<string>, Action<T>)
+  nameWithType: FluentExtensions.ObserveProperties<T, TSource>(T, Func<TSource>, IEnumerable<string>, Action<T>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperties<T, TSource>(T, System.Func<TSource>, System.Collections.Generic.IEnumerable<string>, System.Action<T>)
+  nameWithType.vb: FluentExtensions.ObserveProperties(Of T, TSource)(T, Func(Of TSource), IEnumerable(Of String), Action(Of T))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperties(Of T, TSource)(T, System.Func(Of TSource), System.Collections.Generic.IEnumerable(Of String), System.Action(Of T))
+  name.vb: ObserveProperties(Of T, TSource)(T, Func(Of TSource), IEnumerable(Of String), Action(Of T))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,System.Func{``1},System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
+    name: ObserveProperties
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,``1,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
   commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperties``2(``0,``1,System.Collections.Generic.IEnumerable{System.String},System.Action{``0})
   isExternal: true
@@ -27745,6 +28359,96 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  commentId: M:DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  name: ObserveProperty<T, TSource>(T, Func<TSource>, string, Action<T>)
+  nameWithType: FluentExtensions.ObserveProperty<T, TSource>(T, Func<TSource>, string, Action<T>)
+  fullName: DrawnUi.Draw.FluentExtensions.ObserveProperty<T, TSource>(T, System.Func<TSource>, string, System.Action<T>)
+  nameWithType.vb: FluentExtensions.ObserveProperty(Of T, TSource)(T, Func(Of TSource), String, Action(Of T))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.ObserveProperty(Of T, TSource)(T, System.Func(Of TSource), String, System.Action(Of T))
+  name.vb: ObserveProperty(Of T, TSource)(T, Func(Of TSource), String, Action(Of T))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.ObserveProperty``2(``0,System.Func{``1},System.String,System.Action{``0})
+    name: ObserveProperty
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
   - name: ','
   - name: " "
   - uid: System.String
@@ -28009,6 +28713,100 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  name: Observe<T, TSource>(T, Func<TSource>, Action<T>, string[])
+  nameWithType: FluentExtensions.Observe<T, TSource>(T, Func<TSource>, Action<T>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<T, TSource>(T, System.Func<TSource>, System.Action<T>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of T, TSource)(T, Func(Of TSource), Action(Of T), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of T, TSource)(T, System.Func(Of TSource), System.Action(Of T), String())
+  name.vb: Observe(Of T, TSource)(T, Func(Of TSource), Action(Of T), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TSource
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])
   commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])
   isExternal: true
@@ -28091,6 +28889,86 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  name: Observe<T, TSource>(T, TSource, Action<T>, string[])
+  nameWithType: FluentExtensions.Observe<T, TSource>(T, TSource, Action<T>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.Observe<T, TSource>(T, TSource, System.Action<T>, string[])
+  nameWithType.vb: FluentExtensions.Observe(Of T, TSource)(T, TSource, Action(Of T), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Observe(Of T, TSource)(T, TSource, System.Action(Of T), String())
+  name.vb: Observe(Of T, TSource)(T, TSource, Action(Of T), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+    name: Observe
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TSource
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
   - name: )
   - name: ','
   - name: " "
@@ -30787,17 +31665,17 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
-- uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  commentId: M:DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
-  parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+- uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
   name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  nameWithType: SkiaLayout.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  fullName: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  nameWithType: SkiaControl.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
     name: ProcessGestures
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
   - name: (
   - uid: DrawnUi.Draw.SkiaGesturesParameters
     name: SkiaGesturesParameters
@@ -30809,9 +31687,9 @@ references:
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaLayout.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
     name: ProcessGestures
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
   - name: (
   - uid: DrawnUi.Draw.SkiaGesturesParameters
     name: SkiaGesturesParameters

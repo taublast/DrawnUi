@@ -722,10 +722,16 @@ public class SkiaControl : VisualElement, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObservePropertiesOn__3___0___1_System_Func___2__System_String_System_Collections_Generic_IEnumerable_System_String__System_Action___0__">FluentExtensions.ObservePropertiesOn&lt;T, TParent, TTarget&gt;(T, TParent, Func&lt;TTarget&gt;, string, IEnumerable&lt;string&gt;, Action&lt;T&gt;)</a>
   </div>
   <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0_System_Func___1__System_Collections_Generic_IEnumerable_System_String__System_Action___0__">FluentExtensions.ObserveProperties&lt;T, TSource&gt;(T, Func&lt;TSource&gt;, IEnumerable&lt;string&gt;, Action&lt;T&gt;)</a>
+  </div>
+  <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperties__2___0___1_System_Collections_Generic_IEnumerable_System_String__System_Action___0__">FluentExtensions.ObserveProperties&lt;T, TSource&gt;(T, TSource, IEnumerable&lt;string&gt;, Action&lt;T&gt;)</a>
   </div>
   <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObservePropertyOn__3___0___1_System_Func___2__System_String_System_String_System_Action___0__">FluentExtensions.ObservePropertyOn&lt;T, TParent, TTarget&gt;(T, TParent, Func&lt;TTarget&gt;, string, string, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0_System_Func___1__System_String_System_Action___0__">FluentExtensions.ObserveProperty&lt;T, TSource&gt;(T, Func&lt;TSource&gt;, string, Action&lt;T&gt;)</a>
   </div>
   <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_ObserveProperty__2___0___1_System_String_System_Action___0__">FluentExtensions.ObserveProperty&lt;T, TSource&gt;(T, TSource, string, Action&lt;T&gt;)</a>
@@ -737,7 +743,13 @@ public class SkiaControl : VisualElement, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0_System_String__System_String___">FluentExtensions.Observe&lt;T, TSource&gt;(T, Func&lt;TSource&gt;, Action&lt;T, string&gt;, string[])</a>
   </div>
   <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0_System_Func___1__System_Action___0__System_String___">FluentExtensions.Observe&lt;T, TSource&gt;(T, Func&lt;TSource&gt;, Action&lt;T&gt;, string[])</a>
+  </div>
+  <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0_System_String__System_String___">FluentExtensions.Observe&lt;T, TSource&gt;(T, TSource, Action&lt;T, string&gt;, string[])</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Observe__2___0___1_System_Action___0__System_String___">FluentExtensions.Observe&lt;T, TSource&gt;(T, TSource, Action&lt;T&gt;, string[])</a>
   </div>
   <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___">FluentExtensions.OnBindingContextSet&lt;T&gt;(T, Action&lt;T, object&gt;, string[])</a>
@@ -3986,7 +3998,7 @@ public class SkiaControl : VisualElement, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Draw_SkiaControl_semaphoreOffsecreenProcess" data-uid="DrawnUi.Draw.SkiaControl.semaphoreOffsecreenProcess">
   semaphoreOffsecreenProcess
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L647"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L671"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4488,7 +4500,7 @@ public class SkiaControl : VisualElement, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Draw_SkiaControl_CacheValidity" data-uid="DrawnUi.Draw.SkiaControl.CacheValidity">
   CacheValidity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L611"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L635"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5060,7 +5072,7 @@ If this is set then the Tapped gesture will be consumed by this control after pa
 
   <h3 id="DrawnUi_Draw_SkiaControl_DelegateDrawCache" data-uid="DrawnUi.Draw.SkiaControl.DelegateDrawCache">
   DelegateDrawCache
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L449"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L451"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5951,7 +5963,7 @@ todo think about it baby =) meanwhile just do not set gestures below cached leve
 
   <h3 id="DrawnUi_Draw_SkiaControl_IsCacheImage" data-uid="DrawnUi.Draw.SkiaControl.IsCacheImage">
   IsCacheImage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L476"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L478"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5982,7 +5994,7 @@ todo think about it baby =) meanwhile just do not set gestures below cached leve
 
   <h3 id="DrawnUi_Draw_SkiaControl_IsCacheOperations" data-uid="DrawnUi.Draw.SkiaControl.IsCacheOperations">
   IsCacheOperations
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L488"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L490"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6275,7 +6287,7 @@ todo think about it baby =) meanwhile just do not set gestures below cached leve
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsParentIndependent { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual bool IsParentIndependent { get; set; }</code></pre>
   </div>
 
 
@@ -7137,7 +7149,7 @@ If set to Enabled wit, otherwise can be more specific.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_NeedUpdateFrontCache" data-uid="DrawnUi.Draw.SkiaControl.NeedUpdateFrontCache">
   NeedUpdateFrontCache
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L714"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L738"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Used by ImageDoubleBuffering cache</p>
@@ -7451,7 +7463,7 @@ If set to Enabled wit, otherwise can be more specific.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_RenderObject" data-uid="DrawnUi.Draw.SkiaControl.RenderObject">
   RenderObject
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L110"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L111"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The cached representation of the control. Will be used on redraws without calling Paint etc, until the control is requested to be updated.</p>
@@ -8279,7 +8291,7 @@ Cached controls only, not a bindable property, doesn't trigger repaint, would ne
 
   <h3 id="DrawnUi_Draw_SkiaControl_UsingCacheType" data-uid="DrawnUi.Draw.SkiaControl.UsingCacheType">
   UsingCacheType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L289"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10482,7 +10494,7 @@ Children are responsible to apply Padding to their content and to apply Margin t
 
   <h3 id="DrawnUi_Draw_SkiaControl_CheckCachedObjectValid_DrawnUi_Draw_CachedObject_SkiaSharp_SKRect_DrawnUi_Draw_SkiaDrawingContext_" data-uid="DrawnUi.Draw.SkiaControl.CheckCachedObjectValid(DrawnUi.Draw.CachedObject,SkiaSharp.SKRect,DrawnUi.Draw.SkiaDrawingContext)">
   CheckCachedObjectValid(CachedObject, SKRect, SkiaDrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L257"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11487,7 +11499,7 @@ RenderingScale is set insde.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_CreateRenderedObject_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_System_Boolean_" data-uid="DrawnUi.Draw.SkiaControl.CreateRenderedObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,System.Boolean)">
   CreateRenderedObject(DrawingContext, SKRect, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L231"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Technical optional method for some custom logic. Will create as SKImage or SKPicture (asOperations=true).
@@ -11529,7 +11541,7 @@ WIll not affect current RenderObject property.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_CreateRenderingObject_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_DrawnUi_Draw_CachedObject_DrawnUi_Draw_SkiaCacheType_System_Action_DrawnUi_Draw_DrawingContext__" data-uid="DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})">
   CreateRenderingObject(DrawingContext, SKRect, CachedObject, SkiaCacheType, Action&lt;DrawingContext&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L326"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L328"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11573,7 +11585,7 @@ WIll not affect current RenderObject property.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_CreateRenderingObjectAndPaint_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_System_Action_DrawnUi_Draw_DrawingContext__" data-uid="DrawnUi.Draw.SkiaControl.CreateRenderingObjectAndPaint(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,System.Action{DrawnUi.Draw.DrawingContext})">
   CreateRenderingObjectAndPaint(DrawingContext, SKRect, Action&lt;DrawingContext&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L953"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L979"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is NOT calling FinalizeDraw()!
@@ -11648,7 +11660,7 @@ parameter 'area' Usually is equal to DrawingRect</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_CreateSurface_System_Int32_System_Int32_System_Boolean_" data-uid="DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)">
   CreateSurface(int, int, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11838,7 +11850,7 @@ parameter 'area' Usually is equal to DrawingRect</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_DestroyRenderingObject" data-uid="DrawnUi.Draw.SkiaControl.DestroyRenderingObject">
   DestroyRenderingObject()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L188"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L190"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12076,7 +12088,7 @@ optionally releases the managed resources.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_DrawDirectInternal_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaControl.DrawDirectInternal(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect)">
   DrawDirectInternal(DrawingContext, SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L929"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L955"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Not using cache</p>
@@ -12095,6 +12107,39 @@ optionally releases the managed resources.</p>
     <dt><code>drawingRect</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
     <dd><p>normally equal to DrawingRect</p>
 </dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaControl_DrawPlaceholder_" data-uid="DrawnUi.Draw.SkiaControl.DrawPlaceholder*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaControl_DrawPlaceholder_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaControl.DrawPlaceholder(DrawnUi.Draw.DrawingContext)">
+  DrawPlaceholder(DrawingContext)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L631"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Called by ImageDoubleBuffered cache rendering when no cache is ready yet.
+Other controls might use this too to draw placeholders when result is not ready yet.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void DrawPlaceholder(DrawingContext context)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>context</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
   </dl>
 
 
@@ -12146,7 +12191,7 @@ optionally releases the managed resources.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_DrawRenderObject_DrawnUi_Draw_DrawingContext_System_Single_System_Single_DrawnUi_Draw_CachedObject_" data-uid="DrawnUi.Draw.SkiaControl.DrawRenderObject(DrawnUi.Draw.DrawingContext,System.Single,System.Single,DrawnUi.Draw.CachedObject)">
   DrawRenderObject(DrawingContext, float, float, CachedObject)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L203"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Technical optional method for some custom logic. Actually used by SkiaMap only.</p>
@@ -12184,7 +12229,7 @@ optionally releases the managed resources.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_DrawRenderObjectInternal_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_CachedObject_" data-uid="DrawnUi.Draw.SkiaControl.DrawRenderObjectInternal(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedObject)">
   DrawRenderObjectInternal(DrawingContext, CachedObject)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L452"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L454"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12217,7 +12262,7 @@ optionally releases the managed resources.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_DrawUsingRenderObject_DrawnUi_Draw_DrawingContext_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaControl.DrawUsingRenderObject(DrawnUi.Draw.DrawingContext,System.Single,System.Single)">
   DrawUsingRenderObject(DrawingContext, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L810"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L834"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns true if had drawn.</p>
@@ -12838,7 +12883,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_GetCacheArea_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaControl.GetCacheArea(SkiaSharp.SKRect)">
   GetCacheArea(SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L785"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L809"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Normally cache is recorded inside DrawingRect, but you might want to expand this to include shadows around, for example.</p>
@@ -12875,7 +12920,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_GetCacheRecordingArea_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaControl.GetCacheRecordingArea(SkiaSharp.SKRect)">
   GetCacheRecordingArea(SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L777"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L801"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Used for the Operations cache type to record inside the changed area, if your control is not inside the DrawingRect due to transforms/translations. This is NOT changing the rendering object</p>
@@ -13447,7 +13492,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_GetOffscreenRenderingAction" data-uid="DrawnUi.Draw.SkiaControl.GetOffscreenRenderingAction">
   GetOffscreenRenderingAction()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L621"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L645"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -14425,7 +14470,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaControl_InvalidateCache" data-uid="DrawnUi.Draw.SkiaControl.InvalidateCache">
   InvalidateCache()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L756"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L780"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -14451,7 +14496,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaControl_InvalidateCacheWithPrevious" data-uid="DrawnUi.Draw.SkiaControl.InvalidateCacheWithPrevious">
   InvalidateCacheWithPrevious()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L762"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L786"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -15138,7 +15183,7 @@ but this is faster.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_IsRenderObjectValid_SkiaSharp_SKSize_DrawnUi_Draw_CachedObject_" data-uid="DrawnUi.Draw.SkiaControl.IsRenderObjectValid(SkiaSharp.SKSize,DrawnUi.Draw.CachedObject)">
   IsRenderObjectValid(SKSize, CachedObject)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L211"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L213"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -16091,7 +16136,7 @@ Base method, not aware of any views provider, not virtual, silly measuring Child
 
   <h3 id="DrawnUi_Draw_SkiaControl_OnCacheCreated" data-uid="DrawnUi.Draw.SkiaControl.OnCacheCreated">
   OnCacheCreated()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L156"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L158"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -16117,7 +16162,7 @@ Base method, not aware of any views provider, not virtual, silly measuring Child
 
   <h3 id="DrawnUi_Draw_SkiaControl_OnCacheDestroyed" data-uid="DrawnUi.Draw.SkiaControl.OnCacheDestroyed">
   OnCacheDestroyed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L163"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -17454,7 +17499,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaControl_PrepareNode_DrawnUi_Draw_DrawingContext_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaControl.PrepareNode(DrawnUi.Draw.DrawingContext,System.Single,System.Single)">
   PrepareNode(DrawingContext, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L872"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L898"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -17563,7 +17608,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaControl_ProcessOffscreenCacheRenderingAsync" data-uid="DrawnUi.Draw.SkiaControl.ProcessOffscreenCacheRenderingAsync">
   ProcessOffscreenCacheRenderingAsync()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L649"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L673"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -17625,7 +17670,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaControl_PushToOffscreenRendering_System_Action_System_Threading_CancellationToken_" data-uid="DrawnUi.Draw.SkiaControl.PushToOffscreenRendering(System.Action,System.Threading.CancellationToken)">
   PushToOffscreenRendering(Action, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L627"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L651"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -17730,7 +17775,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaControl_RasterizeToCache_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaControl.RasterizeToCache(DrawnUi.Draw.DrawingContext)">
   RasterizeToCache(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L239"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L241"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -18207,7 +18252,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_ReturnSurface_SkiaSharp_SKSurface_" data-uid="DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)">
   ReturnSurface(SKSurface)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L93"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -19827,7 +19872,7 @@ do not use result for passing gestures below</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_UseRenderingObject_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaControl.UseRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect)">
   UseRenderingObject(DrawingContext, SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L498"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L500"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -19961,7 +20006,7 @@ Can also use code-behind ProcessGestures override for more control.</p>
 
   <h3 id="DrawnUi_Draw_SkiaControl_CreatedCache" data-uid="DrawnUi.Draw.SkiaControl.CreatedCache">
   CreatedCache
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Cache.cs/#L188"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

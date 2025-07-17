@@ -51,10 +51,17 @@
 
                 <!-- First App Tutorial -->
                 <draw:SkiaButton
-                    Text="First App Try"
+                    Text="First App (XAML)"
                     Style="{x:StaticResource ButtonStyle}"
                     BackgroundColor="#2ecc71"
                     Tapped="OnFirstAppClicked" />
+
+                <!-- First App Code -->
+                <draw:SkiaButton
+                    Text="First App (Code)"
+                    Style="{x:StaticResource ButtonStyle}"
+                    BackgroundColor="#2e9971"
+                    Tapped="OnFirstAppCodeClicked" />
 
                 <!-- Button Tutorial -->
                 <draw:SkiaButton

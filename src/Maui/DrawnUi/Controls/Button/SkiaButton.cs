@@ -12,7 +12,6 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
 {
     public SkiaButton()
     {
-
     }
 
     public SkiaButton(string caption)
@@ -449,6 +448,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             {
                 MainFrame.StrokeColor = this.StrokeColor;
             }
+
             if (StrokeWidth != 0)
             {
                 MainFrame.StrokeWidth = this.StrokeWidth;
@@ -923,6 +923,9 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         false,
         BindingMode.OneWayToSource);
 
+    /// <summary>
+    /// Gets whether the button is pressed, readonly.
+    /// </summary>
     public bool IsPressed
     {
         get { return (bool)GetValue(IsPressedProperty); }

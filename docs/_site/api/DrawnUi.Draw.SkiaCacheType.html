@@ -132,7 +132,11 @@ Slower but will work for sizes bigger than graphics memory if needed.</p>
 </dd>
     <dt id="DrawnUi_Draw_SkiaCacheType_ImageComposite"><code>ImageComposite = 5</code></dt>
   
-  <dd><p>Would receive the invalidated area rectangle, then redraw the previous cache but clipped to exclude the dirty area, then would re-create the dirty area and draw it clipped inside the dirty rectangle. This is useful for layouts with many children, like scroll content etc, but useless for non-containers.</p>
+  <dd><p>Would receive the invalidated area rectangle, then redraw the previous cache
+but clipped to exclude the dirty area, then would re-create the dirty area and
+draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
+like scroll content etc, but useless for non-containers.
+But will suffer from children that love to invalidate parent much!</p>
 </dd>
     <dt id="DrawnUi_Draw_SkiaCacheType_ImageDoubleBuffered"><code>ImageDoubleBuffered = 4</code></dt>
   

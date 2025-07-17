@@ -5,11 +5,17 @@ Step-by-step tutorials to help you learn and master DrawnUI, from basic concepts
 ## 📚 Step-by-Step Tutorials
 
 ### Beginner Tutorials
-- **[Your First DrawnUI App](first-app.md)** 🚀 - Starting point for beginners:
+- **[Your First DrawnUI App (XAML)](first-app.md)** 🚀 - Starting point for beginners:
   - Complete setup from scratch
   - Basic controls and layouts
   - Simple animations
   - Cross-platform deployment
+
+- **[Your First DrawnUI App (C# Fluent)](first-app-code.md)** 🔧 - Same app built with fluent C# syntax:
+  - Hot reload support
+  - Fluent API patterns
+  - Property observation
+  - Code-based UI construction
 
 ### Enhanced Tutorials
 

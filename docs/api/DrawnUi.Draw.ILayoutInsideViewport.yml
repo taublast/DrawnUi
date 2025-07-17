@@ -31,6 +31,7 @@ items:
   inheritedMembers:
   - DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
   - DrawnUi.Draw.IInsideViewport.OnLoaded
+  - DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
   - DrawnUi.Draw.IVisibilityAware.OnAppearing
   - DrawnUi.Draw.IVisibilityAware.OnAppeared
   - DrawnUi.Draw.IVisibilityAware.OnDisappeared
@@ -174,6 +175,31 @@ references:
     name: OnLoaded
     href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_OnLoaded
   - name: (
+  - name: )
+- uid: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  commentId: M:DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  parent: DrawnUi.Draw.IInsideViewport
+  href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_ShouldTriggerLoadMore_DrawnUi_Draw_ScaledRect_
+  name: ShouldTriggerLoadMore(ScaledRect)
+  nameWithType: IInsideViewport.ShouldTriggerLoadMore(ScaledRect)
+  fullName: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+    name: ShouldTriggerLoadMore
+    href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_ShouldTriggerLoadMore_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+    name: ShouldTriggerLoadMore
+    href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_ShouldTriggerLoadMore_DrawnUi_Draw_ScaledRect_
+  - name: (
+  - uid: DrawnUi.Draw.ScaledRect
+    name: ScaledRect
+    href: DrawnUi.Draw.ScaledRect.html
   - name: )
 - uid: DrawnUi.Draw.IVisibilityAware.OnAppearing
   commentId: M:DrawnUi.Draw.IVisibilityAware.OnAppearing

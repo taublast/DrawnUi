@@ -4000,7 +4000,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Draw.SkiaLayout.StructureChange",
-      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.StructureChange.yml\" sourcestartlinenumber=\"1\">Represents a pending structure change to be applied during rendering</p>\n"
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -6377,6 +6377,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/first-app-code.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/first-app-code.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/first-app.md",
       "output": {
         ".html": {
@@ -6467,6 +6477,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/sample-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/sample-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/samples.md",
       "output": {
         ".html": {
@@ -6520,10 +6540,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/newsfeed.png",
+      "source_relative_path": "images/scroller.jpg",
       "output": {
         "resource": {
-          "relative_path": "images/newsfeed.png"
+          "relative_path": "images/scroller.jpg"
         }
       },
       "version": ""

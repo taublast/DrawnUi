@@ -34,7 +34,11 @@ public enum SkiaCacheType
 
 
     /// <summary>
-    /// Would receive the invalidated area rectangle, then redraw the previous cache but clipped to exclude the dirty area, then would re-create the dirty area and draw it clipped inside the dirty rectangle. This is useful for layouts with many children, like scroll content etc, but useless for non-containers.
+    /// Would receive the invalidated area rectangle, then redraw the previous cache
+    /// but clipped to exclude the dirty area, then would re-create the dirty area and
+    /// draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
+    /// like scroll content etc, but useless for non-containers.
+    /// But will suffer from children that love to invalidate parent much!
     /// </summary>
     ImageComposite,
 

@@ -6,7 +6,6 @@ items:
   parent: DrawnUi.Draw
   children:
   - DrawnUi.Draw.ISkiaSharpView.CanvasSize
-  - DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
   - DrawnUi.Draw.ISkiaSharpView.SignalFrame(System.Int64)
   - DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)
   langs:
@@ -127,47 +126,6 @@ items:
       type: SkiaSharp.SKSize
     content.vb: ReadOnly Property CanvasSize As SKSize
   overload: DrawnUi.Draw.ISkiaSharpView.CanvasSize*
-- uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  commentId: M:DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  id: CreateStandaloneSurface(System.Int32,System.Int32)
-  parent: DrawnUi.Draw.ISkiaSharpView
-  langs:
-  - csharp
-  - vb
-  name: CreateStandaloneSurface(int, int)
-  nameWithType: ISkiaSharpView.CreateStandaloneSurface(int, int)
-  fullName: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(int, int)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: CreateStandaloneSurface
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
-    startLine: 19
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: This is needed to get a hardware accelerated surface or a normal one depending on the platform
-  example: []
-  syntax:
-    content: SKSurface CreateStandaloneSurface(int width, int height)
-    parameters:
-    - id: width
-      type: System.Int32
-      description: ''
-    - id: height
-      type: System.Int32
-      description: ''
-    return:
-      type: SkiaSharp.SKSurface
-      description: ''
-    content.vb: Function CreateStandaloneSurface(width As Integer, height As Integer) As SKSurface
-  overload: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface*
-  nameWithType.vb: ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  fullName.vb: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  name.vb: CreateStandaloneSurface(Integer, Integer)
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -332,28 +290,3 @@ references:
   name: SkiaSharp
   nameWithType: SkiaSharp
   fullName: SkiaSharp
-- uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface*
-  commentId: Overload:DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface
-  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  name: CreateStandaloneSurface
-  nameWithType: ISkiaSharpView.CreateStandaloneSurface
-  fullName: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.int32
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
-- uid: SkiaSharp.SKSurface
-  commentId: T:SkiaSharp.SKSurface
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
-  name: SKSurface
-  nameWithType: SKSurface
-  fullName: SkiaSharp.SKSurface

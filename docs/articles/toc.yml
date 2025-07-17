@@ -13,8 +13,10 @@
   items:
     - name: Tutorials Overview
       href: samples.md
-    - name: Your First Drawn App
+    - name: Your First Drawn App (XAML)
       href: first-app.md
+    - name: Your First Drawn App (C# Fluent)
+      href: first-app-code.md
     - name: Interactive Button Tutorial
       href: interactive-button.md
     - name: Interactive Cards (XAML)

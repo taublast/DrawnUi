@@ -6,7 +6,6 @@ items:
   parent: DrawnUi.Views
   children:
   - DrawnUi.Views.SkiaViewAccelerated.#ctor(DrawnUi.Views.DrawnView)
-  - DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface(System.Int32,System.Int32)
   - DrawnUi.Views.SkiaViewAccelerated.Dispose
   - DrawnUi.Views.SkiaViewAccelerated.FPS
   - DrawnUi.Views.SkiaViewAccelerated.FrameTime
@@ -306,49 +305,6 @@ items:
   overload: DrawnUi.Views.SkiaViewAccelerated.Uid*
   implements:
   - DrawnUi.Draw.ISkiaDrawable.Uid
-- uid: DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface(System.Int32,System.Int32)
-  commentId: M:DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface(System.Int32,System.Int32)
-  id: CreateStandaloneSurface(System.Int32,System.Int32)
-  parent: DrawnUi.Views.SkiaViewAccelerated
-  langs:
-  - csharp
-  - vb
-  name: CreateStandaloneSurface(int, int)
-  nameWithType: SkiaViewAccelerated.CreateStandaloneSurface(int, int)
-  fullName: DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface(int, int)
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: CreateStandaloneSurface
-    path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 8
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Views
-  summary: This is needed to get a hardware accelerated surface or a normal one depending on the platform
-  example: []
-  syntax:
-    content: public SKSurface CreateStandaloneSurface(int width, int height)
-    parameters:
-    - id: width
-      type: System.Int32
-      description: ''
-    - id: height
-      type: System.Int32
-      description: ''
-    return:
-      type: SkiaSharp.SKSurface
-      description: ''
-    content.vb: Public Function CreateStandaloneSurface(width As Integer, height As Integer) As SKSurface
-  overload: DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface*
-  implements:
-  - DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  nameWithType.vb: SkiaViewAccelerated.CreateStandaloneSurface(Integer, Integer)
-  fullName.vb: DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface(Integer, Integer)
-  name.vb: CreateStandaloneSurface(Integer, Integer)
 - uid: DrawnUi.Views.SkiaViewAccelerated.OnDraw
   commentId: P:DrawnUi.Views.SkiaViewAccelerated.OnDraw
   id: OnDraw
@@ -367,7 +323,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDraw
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 13
+    startLine: 8
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -400,7 +356,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 15
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -432,7 +388,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanging
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 54
+    startLine: 47
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -466,7 +422,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 76
+    startLine: 69
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -496,7 +452,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Superview
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 121
+    startLine: 114
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -525,7 +481,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 124
+    startLine: 117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -555,7 +511,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 138
+    startLine: 131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -587,7 +543,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHardwareAccelerated
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 146
+    startLine: 139
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -619,7 +575,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FPS
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 148
+    startLine: 141
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -651,7 +607,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDrawing
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 156
+    startLine: 149
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -683,7 +639,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasDrawn
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 167
+    startLine: 160
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -715,7 +671,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTime
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 168
+    startLine: 161
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -747,7 +703,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SignalFrame
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 170
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -782,7 +738,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 175
+    startLine: 168
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4896,81 +4852,6 @@ references:
   name: Guid
   nameWithType: Guid
   fullName: System.Guid
-- uid: DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface*
-  commentId: Overload:DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface
-  href: DrawnUi.Views.SkiaViewAccelerated.html#DrawnUi_Views_SkiaViewAccelerated_CreateStandaloneSurface_System_Int32_System_Int32_
-  name: CreateStandaloneSurface
-  nameWithType: SkiaViewAccelerated.CreateStandaloneSurface
-  fullName: DrawnUi.Views.SkiaViewAccelerated.CreateStandaloneSurface
-- uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  commentId: M:DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  parent: DrawnUi.Draw.ISkiaSharpView
-  isExternal: true
-  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  name: CreateStandaloneSurface(int, int)
-  nameWithType: ISkiaSharpView.CreateStandaloneSurface(int, int)
-  fullName: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(int, int)
-  nameWithType.vb: ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  fullName.vb: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  name.vb: CreateStandaloneSurface(Integer, Integer)
-  spec.csharp:
-  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-    name: CreateStandaloneSurface
-    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  - name: (
-  - uid: System.Int32
-    name: int
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: ','
-  - name: " "
-  - uid: System.Int32
-    name: int
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-    name: CreateStandaloneSurface
-    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  - name: (
-  - uid: System.Int32
-    name: Integer
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: ','
-  - name: " "
-  - uid: System.Int32
-    name: Integer
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: )
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.int32
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
-- uid: SkiaSharp.SKSurface
-  commentId: T:SkiaSharp.SKSurface
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
-  name: SKSurface
-  nameWithType: SKSurface
-  fullName: SkiaSharp.SKSurface
-- uid: SkiaSharp
-  commentId: N:SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp
-  name: SkiaSharp
-  nameWithType: SkiaSharp
-  fullName: SkiaSharp
 - uid: DrawnUi.Views.SkiaViewAccelerated.OnDraw*
   commentId: Overload:DrawnUi.Views.SkiaViewAccelerated.OnDraw
   href: DrawnUi.Views.SkiaViewAccelerated.html#DrawnUi_Views_SkiaViewAccelerated_OnDraw
@@ -5218,6 +5099,21 @@ references:
   name: Surface
   nameWithType: ISkiaDrawable.Surface
   fullName: DrawnUi.Draw.ISkiaDrawable.Surface
+- uid: SkiaSharp.SKSurface
+  commentId: T:SkiaSharp.SKSurface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  name: SKSurface
+  nameWithType: SKSurface
+  fullName: SkiaSharp.SKSurface
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
 - uid: DrawnUi.Views.SkiaViewAccelerated.IsHardwareAccelerated*
   commentId: Overload:DrawnUi.Views.SkiaViewAccelerated.IsHardwareAccelerated
   href: DrawnUi.Views.SkiaViewAccelerated.html#DrawnUi_Views_SkiaViewAccelerated_IsHardwareAccelerated

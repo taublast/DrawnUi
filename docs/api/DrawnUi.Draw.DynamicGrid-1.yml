@@ -6,6 +6,7 @@ items:
   parent: DrawnUi.Draw
   children:
   - DrawnUi.Draw.DynamicGrid`1.Add(`0,System.Int32,System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.Children
   - DrawnUi.Draw.DynamicGrid`1.Clear
   - DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
   - DrawnUi.Draw.DynamicGrid`1.Get(System.Int32,System.Int32)
@@ -15,6 +16,8 @@ items:
   - DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
   - DrawnUi.Draw.DynamicGrid`1.GetCount
   - DrawnUi.Draw.DynamicGrid`1.GetRow(System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.Item(System.Int32)
+  - DrawnUi.Draw.DynamicGrid`1.Length
   - DrawnUi.Draw.DynamicGrid`1.MaxColumns
   - DrawnUi.Draw.DynamicGrid`1.MaxRows
   - DrawnUi.Draw.DynamicGrid`1.grid
@@ -76,7 +79,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: grid
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 6
+    startLine: 7
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -105,7 +108,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxRows
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 10
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -136,7 +139,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxColumns
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 11
+    startLine: 13
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -167,7 +170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Add
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 13
+    startLine: 15
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -203,7 +206,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 44
+    startLine: 47
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -239,7 +242,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRow
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 50
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -273,7 +276,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumn
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 61
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -307,7 +310,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 72
+    startLine: 75
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -335,7 +338,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildren
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 79
+    startLine: 83
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -347,6 +350,37 @@ items:
   overload: DrawnUi.Draw.DynamicGrid`1.GetChildren*
   nameWithType.vb: DynamicGrid(Of T).GetChildren()
   fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetChildren()
+- uid: DrawnUi.Draw.DynamicGrid`1.Children
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.Children
+  id: Children
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: Children
+  nameWithType: DynamicGrid<T>.Children
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Children
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Children
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 88
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public IEnumerable<T> Children { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public ReadOnly Property Children As IEnumerable(Of T)
+  overload: DrawnUi.Draw.DynamicGrid`1.Children*
+  nameWithType.vb: DynamicGrid(Of T).Children
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Children
 - uid: DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
   commentId: M:DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
   id: FindChildAtIndex(System.Int32)
@@ -365,7 +399,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindChildAtIndex
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 84
+    startLine: 96
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -381,6 +415,42 @@ items:
   nameWithType.vb: DynamicGrid(Of T).FindChildAtIndex(Integer)
   fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).FindChildAtIndex(Integer)
   name.vb: FindChildAtIndex(Integer)
+- uid: DrawnUi.Draw.DynamicGrid`1.Item(System.Int32)
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.Item(System.Int32)
+  id: Item(System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: this[int]
+  nameWithType: DynamicGrid<T>.this[int]
+  fullName: DrawnUi.Draw.DynamicGrid<T>.this[int]
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: this[]
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 104
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets child at the specified index with O(1) performance
+  example: []
+  syntax:
+    content: public T this[int index] { get; }
+    parameters:
+    - id: index
+      type: System.Int32
+    return:
+      type: '{T}'
+    content.vb: Public ReadOnly Default Property this[](index As Integer) As T
+  overload: DrawnUi.Draw.DynamicGrid`1.Item*
+  nameWithType.vb: DynamicGrid(Of T).this[](Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).this[](Integer)
+  name.vb: this[](Integer)
 - uid: DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans
   commentId: M:DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans
   id: GetChildrenAsSpans
@@ -399,7 +469,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildrenAsSpans
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 89
+    startLine: 115
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -429,7 +499,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCount
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 94
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -441,6 +511,39 @@ items:
   overload: DrawnUi.Draw.DynamicGrid`1.GetCount*
   nameWithType.vb: DynamicGrid(Of T).GetCount()
   fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetCount()
+- uid: DrawnUi.Draw.DynamicGrid`1.Length
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.Length
+  id: Length
+  parent: DrawnUi.Draw.DynamicGrid`1
+  langs:
+  - csharp
+  - vb
+  name: Length
+  nameWithType: DynamicGrid<T>.Length
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Length
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Length
+    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    startLine: 128
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the number of children in the grid (same as GetCount but more intuitive)
+  example: []
+  syntax:
+    content: public int Length { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Length As Integer
+  overload: DrawnUi.Draw.DynamicGrid`1.Length*
+  nameWithType.vb: DynamicGrid(Of T).Length
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Length
 - uid: DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
   commentId: M:DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
   id: GetColumnCountForRow(System.Int32)
@@ -459,7 +562,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumnCountForRow
     path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
-    startLine: 105
+    startLine: 136
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1102,6 +1205,14 @@ references:
   fullName: DrawnUi.Draw.DynamicGrid<T>.GetChildren
   nameWithType.vb: DynamicGrid(Of T).GetChildren
   fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetChildren
+- uid: DrawnUi.Draw.DynamicGrid`1.Children*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.Children
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Children
+  name: Children
+  nameWithType: DynamicGrid<T>.Children
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Children
+  nameWithType.vb: DynamicGrid(Of T).Children
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Children
 - uid: DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex*
   commentId: Overload:DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex
   href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_FindChildAtIndex_System_Int32_
@@ -1110,6 +1221,15 @@ references:
   fullName: DrawnUi.Draw.DynamicGrid<T>.FindChildAtIndex
   nameWithType.vb: DynamicGrid(Of T).FindChildAtIndex
   fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).FindChildAtIndex
+- uid: DrawnUi.Draw.DynamicGrid`1.Item*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.Item
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Item_System_Int32_
+  name: this
+  nameWithType: DynamicGrid<T>.this
+  fullName: DrawnUi.Draw.DynamicGrid<T>.this
+  nameWithType.vb: DynamicGrid(Of T).this[]
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).this[]
+  name.vb: this[]
 - uid: DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans*
   commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetChildrenAsSpans
   href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetChildrenAsSpans
@@ -1183,6 +1303,14 @@ references:
   fullName: DrawnUi.Draw.DynamicGrid<T>.GetCount
   nameWithType.vb: DynamicGrid(Of T).GetCount
   fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).GetCount
+- uid: DrawnUi.Draw.DynamicGrid`1.Length*
+  commentId: Overload:DrawnUi.Draw.DynamicGrid`1.Length
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Length
+  name: Length
+  nameWithType: DynamicGrid<T>.Length
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Length
+  nameWithType.vb: DynamicGrid(Of T).Length
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Length
 - uid: DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow*
   commentId: Overload:DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow
   href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetColumnCountForRow_System_Int32_

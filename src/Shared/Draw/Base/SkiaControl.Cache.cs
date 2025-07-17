@@ -572,7 +572,15 @@ public partial class SkiaControl
                     if (cache == null && cacheOffscreen != null)
                     {
                         //Drawing previous cache
-                        DrawRenderObjectInternal(context, cacheOffscreen);
+                        if (CompareDoubles(cacheOffscreen.Bounds.Width, context.Destination.Width, 1)
+                            && CompareDoubles(cacheOffscreen.Bounds.Height, context.Destination.Height, 1))
+                        {
+                            DrawRenderObjectInternal(context, cacheOffscreen);
+                        }
+                        else
+                        {
+                            DrawPlaceholder(context);
+                        }
                     }
                     else
                     {

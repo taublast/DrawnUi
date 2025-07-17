@@ -233,7 +233,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeTemplates
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 146
+    startLine: 144
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -279,7 +279,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeSoft
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 231
+    startLine: 228
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -315,7 +315,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _HandleSmartCollectionChange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 403
+    startLine: 400
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -357,7 +357,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReleaseViewInUse
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 715
+    startLine: 712
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -391,7 +391,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetViewForIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 736
+    startLine: 733
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -443,7 +443,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrCreateViewForIndexInternal
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 817
+    startLine: 814
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

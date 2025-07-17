@@ -10,7 +10,7 @@ items:
   - DrawnUi.Draw.TemplatedViewsPool.CreateTemplate
   - DrawnUi.Draw.TemplatedViewsPool.Dispose
   - DrawnUi.Draw.TemplatedViewsPool.Dispose(System.Boolean)
-  - DrawnUi.Draw.TemplatedViewsPool.Get(System.Single)
+  - DrawnUi.Draw.TemplatedViewsPool.Get(System.Single,System.Object)
   - DrawnUi.Draw.TemplatedViewsPool.GetStandalone
   - DrawnUi.Draw.TemplatedViewsPool.IsDisposing
   - DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
@@ -251,7 +251,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1602
+    startLine: 1657
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -283,7 +283,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1633
+    startLine: 1688
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -313,7 +313,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reserve
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1658
+    startLine: 1713
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -339,7 +339,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetStandalone
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1680
+    startLine: 1733
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -367,7 +367,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnStandalone
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1698
+    startLine: 1751
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -396,7 +396,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearStandalonePool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1709
+    startLine: 1762
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -404,16 +404,16 @@ items:
     content: public void ClearStandalonePool()
     content.vb: Public Sub ClearStandalonePool()
   overload: DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool*
-- uid: DrawnUi.Draw.TemplatedViewsPool.Get(System.Single)
-  commentId: M:DrawnUi.Draw.TemplatedViewsPool.Get(System.Single)
-  id: Get(System.Single)
+- uid: DrawnUi.Draw.TemplatedViewsPool.Get(System.Single,System.Object)
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.Get(System.Single,System.Object)
+  id: Get(System.Single,System.Object)
   parent: DrawnUi.Draw.TemplatedViewsPool
   langs:
   - csharp
   - vb
-  name: Get(float)
-  nameWithType: TemplatedViewsPool.Get(float)
-  fullName: DrawnUi.Draw.TemplatedViewsPool.Get(float)
+  name: Get(float, object)
+  nameWithType: TemplatedViewsPool.Get(float, object)
+  fullName: DrawnUi.Draw.TemplatedViewsPool.Get(float, object)
   type: Method
   source:
     remote:
@@ -422,22 +422,24 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1725
+    startLine: 1778
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public SkiaControl Get(float height = 0)
+    content: public SkiaControl Get(float height = 0, object bindingContext = null)
     parameters:
     - id: height
       type: System.Single
+    - id: bindingContext
+      type: System.Object
     return:
       type: DrawnUi.Draw.SkiaControl
-    content.vb: Public Function [Get](height As Single = 0) As SkiaControl
+    content.vb: Public Function [Get](height As Single = 0, bindingContext As Object = Nothing) As SkiaControl
   overload: DrawnUi.Draw.TemplatedViewsPool.Get*
-  nameWithType.vb: TemplatedViewsPool.Get(Single)
-  fullName.vb: DrawnUi.Draw.TemplatedViewsPool.Get(Single)
-  name.vb: Get(Single)
+  nameWithType.vb: TemplatedViewsPool.Get(Single, Object)
+  fullName.vb: DrawnUi.Draw.TemplatedViewsPool.Get(Single, Object)
+  name.vb: Get(Single, Object)
 - uid: DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl,System.Int32)
   commentId: M:DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl,System.Int32)
   id: Return(DrawnUi.Draw.SkiaControl,System.Int32)
@@ -456,7 +458,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Return
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1787
+    startLine: 1871
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1072,7 +1074,7 @@ references:
   fullName: DrawnUi.Draw.TemplatedViewsPool.ClearStandalonePool
 - uid: DrawnUi.Draw.TemplatedViewsPool.Get*
   commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.Get
-  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_Get_System_Single_
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_Get_System_Single_System_Object_
   name: Get
   nameWithType: TemplatedViewsPool.Get
   fullName: DrawnUi.Draw.TemplatedViewsPool.Get
