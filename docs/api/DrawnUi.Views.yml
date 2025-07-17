@@ -13,8 +13,13 @@ items:
   - DrawnUi.Views.DrawnView.FocusedItemChangedArgs
   - DrawnUi.Views.DrawnView.OffscreenCommand
   - DrawnUi.Views.DrawnView.TimedDisposable
+  - DrawnUi.Views.IDisposeManager
   - DrawnUi.Views.SkiaView
   - DrawnUi.Views.SkiaViewAccelerated
+  - DrawnUi.Views.SurfaceCacheManager
+  - DrawnUi.Views.SurfaceKey
+  - DrawnUi.Views.SurfacePool
+  - DrawnUi.Views.SurfaceStats
   langs:
   - csharp
   - vb
@@ -39,6 +44,13 @@ references:
   name: Canvas
   nameWithType: Canvas
   fullName: DrawnUi.Views.Canvas
+- uid: DrawnUi.Views.IDisposeManager
+  commentId: T:DrawnUi.Views.IDisposeManager
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.IDisposeManager.html
+  name: IDisposeManager
+  nameWithType: IDisposeManager
+  fullName: DrawnUi.Views.IDisposeManager
 - uid: DrawnUi.Views.DisposableManager
   commentId: T:DrawnUi.Views.DisposableManager
   parent: DrawnUi.Views
@@ -161,6 +173,32 @@ references:
   name: SkiaViewAccelerated
   nameWithType: SkiaViewAccelerated
   fullName: DrawnUi.Views.SkiaViewAccelerated
+- uid: DrawnUi.Views.SurfaceCacheManager
+  commentId: T:DrawnUi.Views.SurfaceCacheManager
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.SurfaceCacheManager.html
+  name: SurfaceCacheManager
+  nameWithType: SurfaceCacheManager
+  fullName: DrawnUi.Views.SurfaceCacheManager
+- uid: DrawnUi.Views.SurfaceKey
+  commentId: T:DrawnUi.Views.SurfaceKey
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.SurfaceKey.html
+  name: SurfaceKey
+  nameWithType: SurfaceKey
+  fullName: DrawnUi.Views.SurfaceKey
+- uid: DrawnUi.Views.SurfaceStats
+  commentId: T:DrawnUi.Views.SurfaceStats
+  href: DrawnUi.Views.SurfaceStats.html
+  name: SurfaceStats
+  nameWithType: SurfaceStats
+  fullName: DrawnUi.Views.SurfaceStats
+- uid: DrawnUi.Views.SurfacePool
+  commentId: T:DrawnUi.Views.SurfacePool
+  href: DrawnUi.Views.SurfacePool.html
+  name: SurfacePool
+  nameWithType: SurfacePool
+  fullName: DrawnUi.Views.SurfacePool
 - uid: DrawnUi.Views
   commentId: N:DrawnUi.Views
   href: DrawnUi.html

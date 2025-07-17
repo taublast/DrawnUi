@@ -3906,6 +3906,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.yml\" sourcestartlinenumber=\"1\">Stores the starting position data when background measurement begins\nUsed to detect and compensate for position changes due to visibility changes</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.yml",
       "output": {
         ".html": {
@@ -5964,6 +5978,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.IDisposeManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.IDisposeManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.IDisposeManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Views.SkiaView.yml",
       "output": {
         ".html": {
@@ -5988,6 +6016,62 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Views.SkiaViewAccelerated",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfaceCacheManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfaceCacheManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfaceCacheManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfaceKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfaceKey.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfaceKey",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfacePool.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfacePool.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfacePool",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfaceStats.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfaceStats.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfaceStats",
       "Summary": null
     },
     {
@@ -6337,6 +6421,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/interactive-button.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/interactive-cards-code.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/interactive-cards-code.html"
         }
       },
       "version": ""

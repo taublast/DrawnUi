@@ -13,6 +13,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems
   - DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
   - DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex
+  - DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition
   - DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex
   - DrawnUi.Draw.SkiaLayout.StructureChange.Type
   langs:
@@ -340,6 +341,35 @@ items:
       type: System.Boolean
     content.vb: Public Property IsVisible As Boolean
   overload: DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible*
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition
+  id: StartingPosition
+  parent: DrawnUi.Draw.SkiaLayout.StructureChange
+  langs:
+  - csharp
+  - vb
+  name: StartingPosition
+  nameWithType: SkiaLayout.StructureChange.StartingPosition
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StartingPosition
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 48
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaLayout.BackgroundMeasurementStartingPosition StartingPosition { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    content.vb: Public Property StartingPosition As SkiaLayout.BackgroundMeasurementStartingPosition
+  overload: DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -1007,3 +1037,32 @@ references:
   name: IsVisible
   nameWithType: SkiaLayout.StructureChange.IsVisible
   fullName: DrawnUi.Draw.SkiaLayout.StructureChange.IsVisible
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition
+  href: DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_StartingPosition
+  name: StartingPosition
+  nameWithType: SkiaLayout.StructureChange.StartingPosition
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  commentId: T:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.BackgroundMeasurementStartingPosition
+  nameWithType: SkiaLayout.BackgroundMeasurementStartingPosition
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    name: BackgroundMeasurementStartingPosition
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    name: BackgroundMeasurementStartingPosition
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html

@@ -55,6 +55,7 @@ items:
   - DrawnUi.Draw.SkiaValueAnimator.Finished
   - DrawnUi.Draw.SkiaValueAnimator.FinishedRunning
   - DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+  - DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
   - DrawnUi.Draw.SkiaValueAnimator.Repeat
   - DrawnUi.Draw.SkiaValueAnimator.mValue
   - DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
@@ -549,6 +550,13 @@ references:
   name: FrameTimeInterpolator
   nameWithType: SkiaValueAnimator.FrameTimeInterpolator
   fullName: DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+- uid: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  commentId: F:DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_UseInterpolator
+  name: UseInterpolator
+  nameWithType: SkiaValueAnimator.UseInterpolator
+  fullName: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
 - uid: DrawnUi.Draw.SkiaValueAnimator.Repeat
   commentId: P:DrawnUi.Draw.SkiaValueAnimator.Repeat
   parent: DrawnUi.Draw.SkiaValueAnimator

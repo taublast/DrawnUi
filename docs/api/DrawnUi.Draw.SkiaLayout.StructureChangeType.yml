@@ -27,7 +27,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StructureChangeType
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 65
+    startLine: 81
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -56,7 +56,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Add
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 67
+    startLine: 83
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -82,7 +82,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Remove
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 68
+    startLine: 84
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -108,7 +108,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Replace
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 69
+    startLine: 85
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -134,7 +134,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Move
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 70
+    startLine: 86
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -160,7 +160,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 71
+    startLine: 87
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -186,7 +186,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundMeasurement
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 72
+    startLine: 88
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -212,7 +212,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VisibilityChange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 73
+    startLine: 89
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -238,7 +238,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SingleItemUpdate
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 74
+    startLine: 90
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

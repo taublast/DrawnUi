@@ -234,10 +234,11 @@
 
     </draw:SkiaLayout>
 
-    <draw:SkiaLabel
+    <!--used for debug Id-->
+    <!--<draw:SkiaLabel
         Margin="32,24"
         x:Name="DebugId"
         TextColor="Red"
-        HorizontalOptions="End" UseCache="Operations" />
+        HorizontalOptions="End" UseCache="Operations" />-->
 
 </draw:SkiaDynamicDrawnCell>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interactive Cards Tutorial: C# Fluent Syntax | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interactive Cards Tutorial: C# Fluent Syntax | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/interactive-cards-code.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="interactive-cards-tutorial-c-fluent-syntax">Interactive Cards Tutorial: C# Fluent Syntax</h1>
+
+<p>Ready to build an animated, interactive card gallery using <strong>pure C# with fluent syntax</strong>? This tutorial shows you how to create the same beautiful cards from the <a href="interactive-cards.html">XAML version</a> but using DrawnUI's powerful fluent API!</p>
+<h2 id="-live-demo-in-tutorials-project">🚀 Live Demo in Tutorials Project</h2>
+<p>Want to see this in action first? Check out the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials"><strong>DrawnUI Tutorials Project</strong></a> for:</p>
+<ul>
+<li><strong>Interactive Cards (Code)</strong> - This tutorial in action</li>
+<li><strong>Interactive Cards (XAML)</strong> - Same UI built with XAML</li>
+<li><strong>Button Tutorial</strong> - Game-style interactive buttons</li>
+<li><strong>News Feed Tutorial</strong> - Advanced scrolling lists</li>
+<li><strong>First App</strong> - Your first DrawnUI app</li>
+</ul>
+<p>Clone the repo and run the Tutorials project to explore all examples!</p>
+<h2 id="-what-well-build">🎯 What We'll Build</h2>
+<p>An interactive card gallery featuring:</p>
+<ul>
+<li>🎨 <strong>Beautiful gradient cards</strong> with unicode text and controls</li>
+<li>✨ <strong>Smooth animations</strong> (scale, rotation, color changing)</li>
+<li>👆 <strong>Gesture interactions</strong> (tap, pan)</li>
+<li>💫 <strong>Visual effects</strong> for shadows and glow</li>
+</ul>
+<img src="../images/cards.png" alt="Interactive Cards Tutorial" width="350" style="margin-top: 16px;">
+<h2 id="-step-by-step-implementation">🛠️ Step-by-Step Implementation</h2>
+<h3 id="1--setup-your-maui-page">1. 📱 Setup Your MAUI Page</h3>
+<p>Create a basic MAUI page with DrawnUI Canvas:</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage x:Class=&quot;CardsCodeDemo.MainPage&quot;
+             xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;&gt;
+
+    &lt;draw:Canvas x:Name=&quot;MainCanvas&quot; 
+                 BackgroundColor=&quot;DarkSlateBlue&quot; /&gt;
+
+&lt;/ContentPage&gt;
+</code></pre>
+<h3 id="2--create-cards-with-fluent-c">2. 🏗️ Create Cards with Fluent C#</h3>
+<p>Now let's build the entire UI using fluent C# syntax in code-behind:</p>
+<pre><code class="lang-csharp">using DrawnUi.Draw;
+
+namespace CardsCodeDemo;
+
+public partial class MainPage : ContentPage
+{
+    private SkiaLayout cardsContainer;
+    private readonly List&lt;SkiaShape&gt; cards = new();
+
+    public MainPage()
+    {
+        InitializeComponent();
+        CreateCardsUI();
+    }
+
+    void CreateCardsUI()
+    {
+        // Create the main scroll container with cards
+        var scrollContainer = new SkiaScroll()
+        {
+            Orientation = ScrollOrientation.Vertical,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+        }
+        .WithChild(
+            new SkiaLayout()
+            {
+                Type = LayoutType.Column,
+                Spacing = 20,
+                Margin = new Thickness(20),
+                HorizontalOptions = LayoutOptions.Fill,
+            }
+            .Assign(out cardsContainer)
+            .WithChildren(
+                CreateHeaderSection(),
+                CreateCard(&quot;🎮 Gaming&quot;, &quot;Explore the latest games&quot;, Colors.Purple, Colors.DeepPink),
+                CreateCard(&quot;🎵 Music&quot;, &quot;Discover new sounds&quot;, Colors.Orange, Colors.Red),
+                CreateCard(&quot;📚 Reading&quot;, &quot;Dive into stories&quot;, Colors.Green, Colors.Teal),
+                CreateCard(&quot;🎨 Art&quot;, &quot;Create and inspire&quot;, Colors.Blue, Colors.Purple),
+                CreateCard(&quot;🏃 Fitness&quot;, &quot;Stay healthy&quot;, Colors.Red, Colors.Orange)
+            )
+        );
+
+        MainCanvas.Children.Add(scrollContainer);
+    }
+
+    SkiaControl CreateHeaderSection()
+    {
+        return new SkiaLayout()
+        {
+            Type = LayoutType.Column,
+            Spacing = 10,
+            HorizontalOptions = LayoutOptions.Fill,
+            Margin = new Thickness(0, 20, 0, 30),
+        }
+        .WithChildren(
+            new SkiaLabel()
+            {
+                Text = &quot;Interactive Cards&quot;,
+                FontSize = 28,
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Colors.White,
+                HorizontalOptions = LayoutOptions.Center,
+                UseCache = SkiaCacheType.Operations,
+            },
+            new SkiaLabel()
+            {
+                Text = &quot;Built with C# Fluent Syntax&quot;,
+                FontSize = 16,
+                TextColor = Colors.LightGray,
+                HorizontalOptions = LayoutOptions.Center,
+                UseCache = SkiaCacheType.Operations,
+            }
+        );
+    }
+
+    SkiaShape CreateCard(string title, string subtitle, Color startColor, Color endColor)
+    {
+        SkiaShape cardShape = null;
+        SkiaLabel titleLabel = null;
+        SkiaLabel subtitleLabel = null;
+
+        cardShape = new SkiaShape()
+        {
+            CornerRadius = 16,
+            HeightRequest = 120,
+            HorizontalOptions = LayoutOptions.Fill,
+            UseCache = SkiaCacheType.Image,
+            FillGradient = new SkiaGradient()
+            {
+                StartXRatio = 0,
+                EndXRatio = 1,
+                StartYRatio = 0,
+                EndYRatio = 1,
+                Colors = new[] { startColor, endColor }
+            }
+        }
+        .WithVisualEffects(
+            new DropShadowEffect()
+            {
+                Color = Colors.Black.WithAlpha(0.3f),
+                Blur = 8,
+                X = 0,
+                Y = 4
+            }
+        )
+        .WithChild(
+            new SkiaLayout()
+            {
+                Type = LayoutType.Column,
+                Spacing = 8,
+                Margin = new Thickness(20),
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Start,
+                UseCache = SkiaCacheType.Operations,
+            }
+            .WithChildren(
+                new SkiaLabel()
+                {
+                    Text = title,
+                    FontSize = 20,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Colors.White,
+                    UseCache = SkiaCacheType.Operations,
+                }
+                .Assign(out titleLabel),
+                new SkiaLabel()
+                {
+                    Text = subtitle,
+                    FontSize = 14,
+                    TextColor = Colors.White.WithAlpha(0.8f),
+                    UseCache = SkiaCacheType.Operations,
+                }
+                .Assign(out subtitleLabel)
+            )
+        )
+        .WithGestures((card, args, info) =&gt;
+        {
+            switch (args.Type)
+            {
+                case TouchActionResult.Down:
+                    AnimateCardPress(card, true);
+                    break;
+                case TouchActionResult.Up:
+                case TouchActionResult.Cancelled:
+                    AnimateCardPress(card, false);
+                    break;
+                case TouchActionResult.Tapped:
+                    OnCardTapped(title);
+                    break;
+            }
+            return card;
+        });
+
+        cards.Add(cardShape);
+        return cardShape;
+    }
+
+    void AnimateCardPress(SkiaShape card, bool pressed)
+    {
+        var scale = pressed ? 0.95f : 1.0f;
+        var opacity = pressed ? 0.8f : 1.0f;
+
+        card.AnimateScaleTo(scale, 150, Easing.CubicOut);
+        card.AnimateOpacityTo(opacity, 150, Easing.CubicOut);
+    }
+
+    async void OnCardTapped(string cardTitle)
+    {
+        await DisplayAlert(&quot;Card Tapped&quot;, $&quot;You tapped: {cardTitle}&quot;, &quot;OK&quot;);
+    }
+}
+</code></pre>
+<p>Now let's wrap it inside a Canvas to be used inside a usual MAUI app - that's all you need to integrate these beautiful cards into any existing MAUI project!</p>
+<h2 id="-understanding-the-fluent-syntax">🎨 Understanding the Fluent Syntax</h2>
+<h3 id="key-fluent-methods">Key Fluent Methods</h3>
+<p><strong><code>.WithChild()</code> and <code>.WithChildren()</code></strong></p>
+<pre><code class="lang-csharp">layout.WithChild(new SkiaLabel { Text = &quot;Single child&quot; })
+layout.WithChildren(child1, child2, child3)
+</code></pre>
+<p><strong><code>.Assign(out variable)</code></strong></p>
+<pre><code class="lang-csharp">new SkiaLabel().Assign(out titleLabel)  // Assigns reference for later use
+</code></pre>
+<p><strong><code>.WithGestures()</code></strong></p>
+<pre><code class="lang-csharp">card.WithGestures((control, args, info) =&gt; {
+    // Handle gestures
+    return control;
+})
+</code></pre>
+<p><strong><code>.WithVisualEffects()</code></strong></p>
+<pre><code class="lang-csharp">shape.WithVisualEffects(new DropShadowEffect { Blur = 8 })
+</code></pre>
+<h3 id="animation-methods">Animation Methods</h3>
+<pre><code class="lang-csharp">card.AnimateScaleTo(0.95f, 150, Easing.CubicOut);
+card.AnimateOpacityTo(0.8f, 150, Easing.CubicOut);
+</code></pre>
+<h2 id="-advanced-customization">🚀 Advanced Customization</h2>
+<h3 id="custom-card-factory">Custom Card Factory</h3>
+<pre><code class="lang-csharp">public static class CardFactory
+{
+    public static SkiaShape CreateGlowCard(string title, Color glowColor)
+    {
+        return new SkiaShape()
+        {
+            CornerRadius = 20,
+            HeightRequest = 140,
+            BackgroundColor = Colors.Black,
+        }
+        .WithVisualEffects(
+            new DropShadowEffect()
+            {
+                Color = glowColor,
+                Blur = 20,
+                X = 0,
+                Y = 0
+            }
+        )
+        .WithChild(
+            new SkiaLabel()
+            {
+                Text = title,
+                TextColor = glowColor,
+                FontSize = 18,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+            }
+        );
+    }
+}
+</code></pre>
+<h3 id="dynamic-card-creation">Dynamic Card Creation</h3>
+<pre><code class="lang-csharp">void AddDynamicCard()
+{
+    var newCard = CreateCard(&quot;🆕 New&quot;, &quot;Just added!&quot;, Colors.Cyan, Colors.Blue);
+    
+    cardsContainer.Children.Add(newCard);
+    
+    // Animate in
+    newCard.Opacity = 0;
+    newCard.Scale = 0.5f;
+    newCard.AnimateOpacityTo(1, 300, Easing.BounceOut);
+    newCard.AnimateScaleTo(1, 300, Easing.BounceOut);
+}
+</code></pre>
+<h2 id="-performance-tips">💡 Performance Tips</h2>
+<ol>
+<li><strong>Use Caching</strong>: <code>UseCache = SkiaCacheType.Image</code> for complex shapes</li>
+<li><strong>Cache Text</strong>: <code>UseCache = SkiaCacheType.Operations</code> for labels</li>
+<li><strong>Assign References</strong>: Use <code>.Assign(out variable)</code> for controls you'll modify</li>
+<li><strong>Batch Animations</strong>: Group multiple animations together</li>
+</ol>
+<h2 id="-what-youve-learned">🎯 What You've Learned</h2>
+<ul>
+<li><strong>Fluent C# Syntax</strong>: Building UI with method chaining</li>
+<li><strong>Gesture Handling</strong>: Interactive touch responses</li>
+<li><strong>Visual Effects</strong>: Shadows, gradients, and animations</li>
+<li><strong>Performance</strong>: Smart caching and optimization</li>
+<li><strong>Code Organization</strong>: Clean, readable UI construction</li>
+</ul>
+<h2 id="-next-steps">🚀 Next Steps</h2>
+<p>Try experimenting with:</p>
+<ul>
+<li><strong>Custom animations</strong> with different easing curves</li>
+<li><strong>Complex layouts</strong> with nested fluent chains</li>
+<li><strong>Data binding</strong> with ObservableCollections</li>
+<li><strong>Custom controls</strong> using fluent patterns</li>
+</ul>
+<p>The fluent syntax makes building complex UIs both powerful and enjoyable! 🎨</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/interactive-cards-code.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

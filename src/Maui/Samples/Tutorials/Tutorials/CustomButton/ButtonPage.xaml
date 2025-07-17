@@ -17,12 +17,14 @@
         <draw:SkiaScroll VerticalOptions="Fill" HorizontalOptions="Fill">
 
             <draw:SkiaStack
-                UseCache="ImageComposite"
+                Tag="MainStack"
                 Spacing="30" Padding="20"
                 HorizontalOptions="Center">
 
                 <!-- Title -->
-                <draw:SkiaLayout Type="Column" Spacing="8" HorizontalOptions="Center" Margin="0,20,0,0">
+                <draw:SkiaLayout Type="Column" 
+                                 UseCache="Operations"
+                                 Spacing="8" HorizontalOptions="Center" Margin="0,20,0,0">
                     <draw:SkiaLabel
                         Text="Custom Button Tutorial"
                         FontSize="24"
@@ -43,7 +45,7 @@
 
                 <!-- Features -->
                 <draw:SkiaLayout 
-                    UseCache="Operations"
+                    UseCache="Image"
                     Type="Column" Spacing="12" HorizontalOptions="Center">
                     <draw:SkiaLabel
                         Text="Features Demonstrated:"
@@ -79,7 +81,6 @@
 
                 <!-- More Example Buttons -->
                 <draw:SkiaLayout 
-                    UseCache="ImageComposite"
                     Type="Column" Spacing="16" HorizontalOptions="Center" Margin="0,20,0,20">
                     <draw:SkiaLabel
                         Text="Usage Examples:"

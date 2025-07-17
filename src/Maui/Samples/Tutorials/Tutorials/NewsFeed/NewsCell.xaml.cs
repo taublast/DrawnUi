@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using DrawnUI.Tutorials.NewsFeed.Models;
+using SkiaSharp;
+using SkiaSharp.Views.Maui;
 
 namespace DrawnUI.Tutorials.NewsFeed;
 
@@ -19,7 +21,32 @@ public partial class NewsCell : SkiaDynamicDrawnCell
             ConfigureForContentType(news);
         }
     }
- 
+
+    public override void OnWillDisposeWithChildren()
+    {
+        base.OnWillDisposeWithChildren();
+
+        PaintPlaceholder?.Dispose();
+    }
+
+    private SKPaint PaintPlaceholder;
+
+    public override void DrawPlaceholder(DrawingContext context)
+    {
+        var area =
+        new SKRect(context.Destination.Left + 16 * context.Scale,
+            context.Destination.Top + 6 * context.Scale,
+            context.Destination.Right - 16 * context.Scale,
+            context.Destination.Bottom - 10 * context.Scale);
+
+        PaintPlaceholder ??= new SKPaint
+        {
+            Color = SKColor.Parse("#66FFFFFF"),
+            Style = SKPaintStyle.Fill,
+        };
+
+        context.Context.Canvas.DrawRect(area, PaintPlaceholder);
+    }
 
     private void ConfigureForContentType(NewsItem news)
     {
@@ -28,7 +55,7 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
         // Configure common elements
 
-        DebugId.Text = $"{news.Id}";
+        //DebugId.Text = $"{news.Id}"; //for debugging
         AuthorLabel.Text = news.AuthorName;
         TimeLabel.Text = GetRelativeTime(news.PublishedAt);
         AvatarImage.Source = news.AuthorAvatarUrl;

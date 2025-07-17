@@ -101,7 +101,7 @@ If you put this inside some Maui control like Grid whatever expect more GC colle
 
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[ContentProperty(&quot;Content&quot;)]
-public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IGestureListener</code></pre>
+public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IDisposeManager, IGestureListener</code></pre>
   </div>
 
 
@@ -155,6 +155,7 @@ public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider,
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html">ICanBeUpdated</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IAnimatorsManager.html">IAnimatorsManager</a></div>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.ivisualtreeelement">IVisualTreeElement</a></div>
+      <div><a class="xref" href="DrawnUi.Views.IDisposeManager.html">IDisposeManager</a></div>
       <div><span class="xref">IGestureListener</span></div>
     </dd>
   </dl>
@@ -279,6 +280,9 @@ public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider,
     </div>
     <div>
       <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FrameTimeInterpolator">DrawnView.FrameTimeInterpolator</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_LastFrameTimeNanos">DrawnView.LastFrameTimeNanos</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_mLastFrameTime">DrawnView.mLastFrameTime</a>
@@ -507,6 +511,15 @@ public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider,
     </div>
     <div>
       <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_FrameNumber">DrawnView.FrameNumber</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SurfaceCacheManager">DrawnView.SurfaceCacheManager</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateSurface_System_Int32_System_Int32_System_Boolean_">DrawnView.CreateSurface(int, int, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ReturnSurface_SkiaSharp_SKSurface_">DrawnView.ReturnSurface(SKSurface)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisposeObject_System_IDisposable_">DrawnView.DisposeObject(IDisposable)</a>

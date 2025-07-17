@@ -225,6 +225,7 @@ items:
   - DrawnUi.Draw.SkiaLayer
   - DrawnUi.Draw.SkiaLayout
   - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
   - DrawnUi.Draw.SkiaLayout.BuildWrapLayout
   - DrawnUi.Draw.SkiaLayout.Cell
   - DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
@@ -798,6 +799,29 @@ references:
   - uid: DrawnUi.Draw.SkiaLayout.StructureChange
     name: StructureChange
     href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  commentId: T:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.BackgroundMeasurementStartingPosition
+  nameWithType: SkiaLayout.BackgroundMeasurementStartingPosition
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    name: BackgroundMeasurementStartingPosition
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    name: BackgroundMeasurementStartingPosition
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html
 - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
   commentId: T:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
   href: DrawnUi.Draw.SkiaLayout.html

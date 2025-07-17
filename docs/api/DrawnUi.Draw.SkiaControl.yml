@@ -128,6 +128,7 @@ items:
   - DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})
   - DrawnUi.Draw.SkiaControl.CreateRenderingObjectAndPaint(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,System.Action{DrawnUi.Draw.DrawingContext})
   - DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
+  - DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
   - DrawnUi.Draw.SkiaControl.CreateTransformationMatrix(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaControl.CreatedCache
   - DrawnUi.Draw.SkiaControl.CustomizeLayerPaint
@@ -460,6 +461,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ReportHotreloadChildRemoved(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.RescaleAspect(System.Single,System.Single,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect)
   - DrawnUi.Draw.SkiaControl.ResumePausedAnimators
+  - DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
   - DrawnUi.Draw.SkiaControl.RotateToAsync(System.Double,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.SkiaControl.RotationZ
   - DrawnUi.Draw.SkiaControl.RotationZProperty
@@ -2051,7 +2053,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseCacheProperty
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 11
+    startLine: 14
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2078,7 +2080,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseCache
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 20
+    startLine: 23
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2109,7 +2111,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AllowCachingProperty
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 26
+    startLine: 29
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2136,7 +2138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AllowCaching
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 35
+    startLine: 38
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2149,6 +2151,73 @@ items:
       type: System.Boolean
     content.vb: Public Property AllowCaching As Boolean
   overload: DrawnUi.Draw.SkiaControl.AllowCaching*
+- uid: DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  id: CreateSurface(System.Int32,System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.SkiaControl
+  langs:
+  - csharp
+  - vb
+  name: CreateSurface(int, int, bool)
+  nameWithType: SkiaControl.CreateSurface(int, int, bool)
+  fullName: DrawnUi.Draw.SkiaControl.CreateSurface(int, int, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SkiaControl.Cache.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateSurface
+    path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
+    startLine: 73
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKSurface CreateSurface(int width, int height, bool isGpu)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: isGpu
+      type: System.Boolean
+    return:
+      type: SkiaSharp.SKSurface
+    content.vb: Public Function CreateSurface(width As Integer, height As Integer, isGpu As Boolean) As SKSurface
+  overload: DrawnUi.Draw.SkiaControl.CreateSurface*
+  nameWithType.vb: SkiaControl.CreateSurface(Integer, Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaControl.CreateSurface(Integer, Integer, Boolean)
+  name.vb: CreateSurface(Integer, Integer, Boolean)
+- uid: DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+  commentId: M:DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+  id: ReturnSurface(SkiaSharp.SKSurface)
+  parent: DrawnUi.Draw.SkiaControl
+  langs:
+  - csharp
+  - vb
+  name: ReturnSurface(SKSurface)
+  nameWithType: SkiaControl.ReturnSurface(SKSurface)
+  fullName: DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SkiaControl.Cache.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ReturnSurface
+    path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
+    startLine: 91
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public void ReturnSurface(SKSurface surface)
+    parameters:
+    - id: surface
+      type: SkiaSharp.SKSurface
+    content.vb: Public Sub ReturnSurface(surface As SKSurface)
+  overload: DrawnUi.Draw.SkiaControl.ReturnSurface*
 - uid: DrawnUi.Draw.SkiaControl.RenderObject
   commentId: P:DrawnUi.Draw.SkiaControl.RenderObject
   id: RenderObject
@@ -2167,7 +2236,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderObject
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 73
+    startLine: 109
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2198,7 +2267,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCacheCreated
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 114
+    startLine: 155
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2224,7 +2293,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCacheDestroyed
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 119
+    startLine: 160
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2250,7 +2319,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreatedCache
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 144
+    startLine: 185
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2277,7 +2346,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DestroyRenderingObject
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 146
+    startLine: 187
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2303,7 +2372,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawRenderObject
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 159
+    startLine: 200
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2347,7 +2416,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRenderObjectValid
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 169
+    startLine: 210
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2380,7 +2449,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateRenderedObject
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 187
+    startLine: 228
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2427,7 +2496,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RasterizeToCache
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 197
+    startLine: 238
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2456,7 +2525,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckCachedObjectValid
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 213
+    startLine: 254
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2491,7 +2560,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UsingCacheType
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 245
+    startLine: 286
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2520,7 +2589,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateRenderingObject
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 284
+    startLine: 325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2562,7 +2631,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DelegateDrawCache
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 431
+    startLine: 448
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2591,7 +2660,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawRenderObjectInternal
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 434
+    startLine: 451
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2622,7 +2691,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsCacheImage
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 458
+    startLine: 475
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2651,7 +2720,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsCacheOperations
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 470
+    startLine: 487
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2680,7 +2749,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseRenderingObject
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 480
+    startLine: 497
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2713,7 +2782,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheValidity
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 578
+    startLine: 610
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2742,7 +2811,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOffscreenRenderingAction
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 588
+    startLine: 620
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2770,7 +2839,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PushToOffscreenRendering
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 594
+    startLine: 626
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2801,7 +2870,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: semaphoreOffsecreenProcess
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 614
+    startLine: 646
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2828,7 +2897,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessOffscreenCacheRenderingAsync
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 616
+    startLine: 648
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2856,7 +2925,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedUpdateFrontCache
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 681
+    startLine: 713
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2887,7 +2956,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateCache
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 723
+    startLine: 755
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2913,7 +2982,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateCacheWithPrevious
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 729
+    startLine: 761
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2939,7 +3008,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCacheRecordingArea
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 744
+    startLine: 776
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2972,7 +3041,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCacheArea
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 752
+    startLine: 784
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3005,7 +3074,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawUsingRenderObject
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 777
+    startLine: 809
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3049,7 +3118,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrepareNode
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 839
+    startLine: 871
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3087,7 +3156,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawDirectInternal
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 896
+    startLine: 928
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3122,7 +3191,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateRenderingObjectAndPaint
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
-    startLine: 920
+    startLine: 952
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16511,11 +16580,11 @@ items:
   summary: For internal use, set by Update method
   example: []
   syntax:
-    content: public bool NeedUpdate { get; set; }
+    content: public virtual bool NeedUpdate { get; set; }
     parameters: []
     return:
       type: System.Boolean
-    content.vb: Public Property NeedUpdate As Boolean
+    content.vb: Public Overridable Property NeedUpdate As Boolean
   overload: DrawnUi.Draw.SkiaControl.NeedUpdate*
 - uid: DrawnUi.Draw.SkiaControl.Superview
   commentId: P:DrawnUi.Draw.SkiaControl.Superview
@@ -32446,6 +32515,26 @@ references:
   name: AllowCaching
   nameWithType: SkiaControl.AllowCaching
   fullName: DrawnUi.Draw.SkiaControl.AllowCaching
+- uid: DrawnUi.Draw.SkiaControl.CreateSurface*
+  commentId: Overload:DrawnUi.Draw.SkiaControl.CreateSurface
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateSurface_System_Int32_System_Int32_System_Boolean_
+  name: CreateSurface
+  nameWithType: SkiaControl.CreateSurface
+  fullName: DrawnUi.Draw.SkiaControl.CreateSurface
+- uid: SkiaSharp.SKSurface
+  commentId: T:SkiaSharp.SKSurface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  name: SKSurface
+  nameWithType: SKSurface
+  fullName: SkiaSharp.SKSurface
+- uid: DrawnUi.Draw.SkiaControl.ReturnSurface*
+  commentId: Overload:DrawnUi.Draw.SkiaControl.ReturnSurface
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ReturnSurface_SkiaSharp_SKSurface_
+  name: ReturnSurface
+  nameWithType: SkiaControl.ReturnSurface
+  fullName: DrawnUi.Draw.SkiaControl.ReturnSurface
 - uid: DrawnUi.Draw.SkiaControl.RenderObject*
   commentId: Overload:DrawnUi.Draw.SkiaControl.RenderObject
   href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderObject

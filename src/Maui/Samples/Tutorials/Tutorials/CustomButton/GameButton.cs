@@ -11,38 +11,6 @@ namespace DrawnUI.Tutorials.CustomButton
             UseCache = SkiaCacheType.Image;
         }
 
-        //public override bool NeedMeasure
-        //{
-        //    get
-        //    {
-        //        return base.NeedMeasure;
-        //    }
-        //    set
-        //    {
-        //        if (value)
-        //        {
-        //            Debug.WriteLine($"Need Measure {this.Text}");
-        //        }
-        //        base.NeedMeasure = value;
-        //    }
-        //}
-
-        ////public override bool NeedUpdate
-        ////{
-        ////    get
-        ////    {
-        ////        return base.NeedUpdate;
-        ////    }
-        ////    set
-        ////    {
-        ////        if (value)
-        ////        {
-        ////            Debug.WriteLine($"Need Update {this.Text}");
-        ////        }
-        ////        base.NeedUpdate = value;
-        ////    }
-        ////}
-
         protected override void CreateDefaultContent()
         {
             base.CreateDefaultContent();
@@ -150,9 +118,10 @@ namespace DrawnUI.Tutorials.CustomButton
         // Visual feedback for button press
         public static void SetButtonPressed(SkiaShape btn)
         {
-            btn.Children[0].TranslationX = 1;
-            btn.Children[0].TranslationY = 1;
+            btn.Children[0].TranslationX = 1.5;
+            btn.Children[0].TranslationY = 1.5;
             btn.BevelType = BevelType.Emboss;
+            Debug.WriteLine("Pressed");
         }
 
         public static void SetButtonReleased(SkiaShape btn)
@@ -160,6 +129,7 @@ namespace DrawnUI.Tutorials.CustomButton
             btn.Children[0].TranslationX = 0;
             btn.Children[0].TranslationY = 0;
             btn.BevelType = BevelType.Bevel;
+            Debug.WriteLine("Released");
         }
 
         public event EventHandler Clicked;

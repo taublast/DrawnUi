@@ -361,6 +361,9 @@ Class SkiaDynamicDrawnCell  <a class="header-action link-secondary" title="View 
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_SetChildren_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__">SkiaLayout.SetChildren(IEnumerable&lt;SkiaControl&gt;)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnMeasured">SkiaLayout.OnMeasured()</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvalidateInternal">SkiaLayout.InvalidateInternal()</a>
     </div>
     <div>
@@ -812,6 +815,12 @@ Class SkiaDynamicDrawnCell  <a class="header-action link-secondary" title="View 
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AllowCaching">SkiaControl.AllowCaching</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateSurface_System_Int32_System_Int32_System_Boolean_">SkiaControl.CreateSurface(int, int, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ReturnSurface_SkiaSharp_SKSurface_">SkiaControl.ReturnSurface(SKSurface)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderObject">SkiaControl.RenderObject</a>
@@ -3087,7 +3096,7 @@ Class SkiaDynamicDrawnCell  <a class="header-action link-secondary" title="View 
 
   <h3 id="DrawnUi_Controls_SkiaDynamicDrawnCell_LastMeasuredSizePixels" data-uid="DrawnUi.Controls.SkiaDynamicDrawnCell.LastMeasuredSizePixels">
   LastMeasuredSizePixels
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3122,7 +3131,7 @@ Class SkiaDynamicDrawnCell  <a class="header-action link-secondary" title="View 
 
   <h3 id="DrawnUi_Controls_SkiaDynamicDrawnCell_AttachContext_System_Object_" data-uid="DrawnUi.Controls.SkiaDynamicDrawnCell.AttachContext(System.Object)">
   AttachContext(object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3153,7 +3162,7 @@ Class SkiaDynamicDrawnCell  <a class="header-action link-secondary" title="View 
 
   <h3 id="DrawnUi_Controls_SkiaDynamicDrawnCell_ContextPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="DrawnUi.Controls.SkiaDynamicDrawnCell.ContextPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
   ContextPropertyChanged(object, PropertyChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3186,7 +3195,7 @@ Class SkiaDynamicDrawnCell  <a class="header-action link-secondary" title="View 
 
   <h3 id="DrawnUi_Controls_SkiaDynamicDrawnCell_FreeContext" data-uid="DrawnUi.Controls.SkiaDynamicDrawnCell.FreeContext">
   FreeContext()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3194,32 +3203,6 @@ Class SkiaDynamicDrawnCell  <a class="header-action link-secondary" title="View 
 
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected override void FreeContext()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="DrawnUi_Controls_SkiaDynamicDrawnCell_OnMeasured_" data-uid="DrawnUi.Controls.SkiaDynamicDrawnCell.OnMeasured*"></a>
-
-  <h3 id="DrawnUi_Controls_SkiaDynamicDrawnCell_OnMeasured" data-uid="DrawnUi.Controls.SkiaDynamicDrawnCell.OnMeasured">
-  OnMeasured()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Cells/SkiaDynamicDrawnCell.cs/#L24"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnMeasured()</code></pre>
   </div>
 
 

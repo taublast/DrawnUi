@@ -307,6 +307,8 @@ items:
   - DrawnUi.Draw.SkiaControl.UseCache
   - DrawnUi.Draw.SkiaControl.AllowCachingProperty
   - DrawnUi.Draw.SkiaControl.AllowCaching
+  - DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  - DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
   - DrawnUi.Draw.SkiaControl.RenderObject
   - DrawnUi.Draw.SkiaControl.OnCacheCreated
   - DrawnUi.Draw.SkiaControl.OnCacheDestroyed
@@ -6274,7 +6276,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CancelBackgroundMeasurement
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 115
+    startLine: 131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6302,7 +6304,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RemeasureSingleItemInBackground
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 178
+    startLine: 194
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6336,7 +6338,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureList
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 210
+    startLine: 226
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6374,7 +6376,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedMeasure
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 757
+    startLine: 775
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6405,7 +6407,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyStructureChanges
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 777
+    startLine: 795
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6433,7 +6435,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureSingleItem
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 1664
+    startLine: 1848
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6478,7 +6480,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawList
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 1753
+    startLine: 1937
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6515,7 +6517,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EstimatedTotalItems
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 1938
+    startLine: 2122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6544,7 +6546,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetMeasuredContentEnd
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 1941
+    startLine: 2125
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6572,7 +6574,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetEstimatedContentSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 1967
+    startLine: 2151
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6608,7 +6610,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureAdditionalItems
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 2114
+    startLine: 2298
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7863,6 +7865,89 @@ references:
   name: AllowCaching
   nameWithType: SkiaControl.AllowCaching
   fullName: DrawnUi.Draw.SkiaControl.AllowCaching
+- uid: DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateSurface_System_Int32_System_Int32_System_Boolean_
+  name: CreateSurface(int, int, bool)
+  nameWithType: SkiaControl.CreateSurface(int, int, bool)
+  fullName: DrawnUi.Draw.SkiaControl.CreateSurface(int, int, bool)
+  nameWithType.vb: SkiaControl.CreateSurface(Integer, Integer, Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaControl.CreateSurface(Integer, Integer, Boolean)
+  name.vb: CreateSurface(Integer, Integer, Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
+    name: CreateSurface
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateSurface_System_Int32_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CreateSurface(System.Int32,System.Int32,System.Boolean)
+    name: CreateSurface
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateSurface_System_Int32_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+  commentId: M:DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ReturnSurface_SkiaSharp_SKSurface_
+  name: ReturnSurface(SKSurface)
+  nameWithType: SkiaControl.ReturnSurface(SKSurface)
+  fullName: DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+    name: ReturnSurface
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ReturnSurface_SkiaSharp_SKSurface_
+  - name: (
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ReturnSurface(SkiaSharp.SKSurface)
+    name: ReturnSurface
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ReturnSurface_SkiaSharp_SKSurface_
+  - name: (
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.RenderObject
   commentId: P:DrawnUi.Draw.SkiaControl.RenderObject
   parent: DrawnUi.Draw.SkiaControl

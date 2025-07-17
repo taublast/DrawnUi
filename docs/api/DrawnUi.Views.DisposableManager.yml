@@ -24,7 +24,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposableManager
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 7
+    startLine: 13
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -65,7 +65,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 37
+    startLine: 43
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -100,7 +100,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueueDisposable
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 51
+    startLine: 57
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -138,7 +138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeDisposables
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 65
+    startLine: 71
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -176,7 +176,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 101
+    startLine: 107
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -206,7 +206,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PendingDisposalCount
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 141
+    startLine: 147
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

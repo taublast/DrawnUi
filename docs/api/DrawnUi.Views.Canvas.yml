@@ -91,11 +91,11 @@ items:
     content: >-
       [ContentProperty("Content")]
 
-      public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IGestureListener
+      public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IDisposeManager, IGestureListener
     content.vb: >-
       <ContentProperty("Content")>
 
-      Public Class Canvas Inherits DrawnView Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IGestureListener
+      Public Class Canvas Inherits DrawnView Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IDisposeManager, IGestureListener
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
@@ -136,6 +136,7 @@ items:
   - DrawnUi.Draw.ICanBeUpdated
   - DrawnUi.Draw.IAnimatorsManager
   - Microsoft.Maui.IVisualTreeElement
+  - DrawnUi.Views.IDisposeManager
   - AppoMobi.Maui.Gestures.IGestureListener
   inheritedMembers:
   - DrawnUi.Views.DrawnView.DumpLayersTree(DrawnUi.Draw.VisualLayer,System.String,System.Boolean,System.Int32)
@@ -177,6 +178,7 @@ items:
   - DrawnUi.Views.DrawnView.PostAnimators
   - DrawnUi.Views.DrawnView.AnimatingControls
   - DrawnUi.Views.DrawnView.FrameTimeInterpolator
+  - DrawnUi.Views.DrawnView.LastFrameTimeNanos
   - DrawnUi.Views.DrawnView.mLastFrameTime
   - DrawnUi.Views.DrawnView.ExecuteAnimators(System.Int64)
   - DrawnUi.Views.DrawnView.OnCanvasViewChanged
@@ -253,6 +255,9 @@ items:
   - DrawnUi.Views.DrawnView.FPS
   - DrawnUi.Views.DrawnView.LockDraw
   - DrawnUi.Views.DrawnView.FrameNumber
+  - DrawnUi.Views.DrawnView.SurfaceCacheManager
+  - DrawnUi.Views.DrawnView.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  - DrawnUi.Views.DrawnView.ReturnSurface(SkiaSharp.SKSurface)
   - DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable)
   - DrawnUi.Views.DrawnView.DisposeManager
   - DrawnUi.Views.DrawnView.PostponeInvalidation(DrawnUi.Draw.SkiaControl,System.Action)
@@ -2659,6 +2664,13 @@ references:
   name: IVisualTreeElement
   nameWithType: IVisualTreeElement
   fullName: Microsoft.Maui.IVisualTreeElement
+- uid: DrawnUi.Views.IDisposeManager
+  commentId: T:DrawnUi.Views.IDisposeManager
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.IDisposeManager.html
+  name: IDisposeManager
+  nameWithType: IDisposeManager
+  fullName: DrawnUi.Views.IDisposeManager
 - uid: AppoMobi.Maui.Gestures.IGestureListener
   commentId: T:AppoMobi.Maui.Gestures.IGestureListener
   parent: AppoMobi.Maui.Gestures
@@ -3485,6 +3497,13 @@ references:
   name: FrameTimeInterpolator
   nameWithType: DrawnView.FrameTimeInterpolator
   fullName: DrawnUi.Views.DrawnView.FrameTimeInterpolator
+- uid: DrawnUi.Views.DrawnView.LastFrameTimeNanos
+  commentId: F:DrawnUi.Views.DrawnView.LastFrameTimeNanos
+  parent: DrawnUi.Views.DrawnView
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_LastFrameTimeNanos
+  name: LastFrameTimeNanos
+  nameWithType: DrawnView.LastFrameTimeNanos
+  fullName: DrawnUi.Views.DrawnView.LastFrameTimeNanos
 - uid: DrawnUi.Views.DrawnView.mLastFrameTime
   commentId: P:DrawnUi.Views.DrawnView.mLastFrameTime
   parent: DrawnUi.Views.DrawnView
@@ -4686,6 +4705,96 @@ references:
   name: FrameNumber
   nameWithType: DrawnView.FrameNumber
   fullName: DrawnUi.Views.DrawnView.FrameNumber
+- uid: DrawnUi.Views.DrawnView.SurfaceCacheManager
+  commentId: P:DrawnUi.Views.DrawnView.SurfaceCacheManager
+  parent: DrawnUi.Views.DrawnView
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_SurfaceCacheManager
+  name: SurfaceCacheManager
+  nameWithType: DrawnView.SurfaceCacheManager
+  fullName: DrawnUi.Views.DrawnView.SurfaceCacheManager
+- uid: DrawnUi.Views.DrawnView.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  commentId: M:DrawnUi.Views.DrawnView.CreateSurface(System.Int32,System.Int32,System.Boolean)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateSurface_System_Int32_System_Int32_System_Boolean_
+  name: CreateSurface(int, int, bool)
+  nameWithType: DrawnView.CreateSurface(int, int, bool)
+  fullName: DrawnUi.Views.DrawnView.CreateSurface(int, int, bool)
+  nameWithType.vb: DrawnView.CreateSurface(Integer, Integer, Boolean)
+  fullName.vb: DrawnUi.Views.DrawnView.CreateSurface(Integer, Integer, Boolean)
+  name.vb: CreateSurface(Integer, Integer, Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.CreateSurface(System.Int32,System.Int32,System.Boolean)
+    name: CreateSurface
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateSurface_System_Int32_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.CreateSurface(System.Int32,System.Int32,System.Boolean)
+    name: CreateSurface
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateSurface_System_Int32_System_Int32_System_Boolean_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Views.DrawnView.ReturnSurface(SkiaSharp.SKSurface)
+  commentId: M:DrawnUi.Views.DrawnView.ReturnSurface(SkiaSharp.SKSurface)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ReturnSurface_SkiaSharp_SKSurface_
+  name: ReturnSurface(SKSurface)
+  nameWithType: DrawnView.ReturnSurface(SKSurface)
+  fullName: DrawnUi.Views.DrawnView.ReturnSurface(SkiaSharp.SKSurface)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.ReturnSurface(SkiaSharp.SKSurface)
+    name: ReturnSurface
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ReturnSurface_SkiaSharp_SKSurface_
+  - name: (
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.ReturnSurface(SkiaSharp.SKSurface)
+    name: ReturnSurface
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ReturnSurface_SkiaSharp_SKSurface_
+  - name: (
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: )
 - uid: DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable)
   commentId: M:DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable)
   parent: DrawnUi.Views.DrawnView
