@@ -1,0 +1,661 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ThemeBindingManager
+  commentId: T:DrawnUi.Draw.ThemeBindingManager
+  id: ThemeBindingManager
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  - DrawnUi.Draw.ThemeBindingManager.Cleanup
+  - DrawnUi.Draw.ThemeBindingManager.CreateBinding(DrawnUi.Draw.ThemeBindingExtension,Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty)
+  - DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  - DrawnUi.Draw.ThemeBindingManager.SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  - DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  langs:
+  - csharp
+  - vb
+  name: ThemeBindingManager
+  nameWithType: ThemeBindingManager
+  fullName: DrawnUi.Draw.ThemeBindingManager
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ThemeBindingManager
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Simplified theme binding manager using DrawnUI's disposal mechanism
+
+    No periodic cleanup needed - controls clean up themselves!
+  example: []
+  syntax:
+    content: public static class ThemeBindingManager
+    content.vb: Public Module ThemeBindingManager
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  commentId: P:DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  id: CurrentTheme
+  parent: DrawnUi.Draw.ThemeBindingManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentTheme
+  nameWithType: ThemeBindingManager.CurrentTheme
+  fullName: DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CurrentTheme
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 49
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Current theme from the active theme provider
+  example: []
+  syntax:
+    content: public static AppTheme CurrentTheme { get; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.ApplicationModel.AppTheme
+    content.vb: Public Shared ReadOnly Property CurrentTheme As AppTheme
+  overload: DrawnUi.Draw.ThemeBindingManager.CurrentTheme*
+- uid: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  id: SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  parent: DrawnUi.Draw.ThemeBindingManager
+  langs:
+  - csharp
+  - vb
+  name: SetThemeProvider(IThemeProvider)
+  nameWithType: ThemeBindingManager.SetThemeProvider(IThemeProvider)
+  fullName: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetThemeProvider
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Sets a custom theme provider (for Blazor, testing, etc.)
+  example: []
+  syntax:
+    content: public static void SetThemeProvider(IThemeProvider themeProvider)
+    parameters:
+    - id: themeProvider
+      type: DrawnUi.Draw.IThemeProvider
+    content.vb: Public Shared Sub SetThemeProvider(themeProvider As IThemeProvider)
+  overload: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider*
+- uid: DrawnUi.Draw.ThemeBindingManager.CreateBinding(DrawnUi.Draw.ThemeBindingExtension,Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.CreateBinding(DrawnUi.Draw.ThemeBindingExtension,Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty)
+  id: CreateBinding(DrawnUi.Draw.ThemeBindingExtension,Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty)
+  parent: DrawnUi.Draw.ThemeBindingManager
+  langs:
+  - csharp
+  - vb
+  name: CreateBinding(ThemeBindingExtension, BindableObject, BindableProperty)
+  nameWithType: ThemeBindingManager.CreateBinding(ThemeBindingExtension, BindableObject, BindableProperty)
+  fullName: DrawnUi.Draw.ThemeBindingManager.CreateBinding(DrawnUi.Draw.ThemeBindingExtension, Microsoft.Maui.Controls.BindableObject, Microsoft.Maui.Controls.BindableProperty)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateBinding
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 65
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Creates and registers a new theme binding
+  example: []
+  syntax:
+    content: public static ThemeBinding CreateBinding(ThemeBindingExtension extension, BindableObject target, BindableProperty property)
+    parameters:
+    - id: extension
+      type: DrawnUi.Draw.ThemeBindingExtension
+    - id: target
+      type: Microsoft.Maui.Controls.BindableObject
+    - id: property
+      type: Microsoft.Maui.Controls.BindableProperty
+    return:
+      type: DrawnUi.Draw.ThemeBinding
+    content.vb: Public Shared Function CreateBinding(extension As ThemeBindingExtension, target As BindableObject, [property] As BindableProperty) As ThemeBinding
+  overload: DrawnUi.Draw.ThemeBindingManager.CreateBinding*
+- uid: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  id: UpdateAllBindings
+  parent: DrawnUi.Draw.ThemeBindingManager
+  langs:
+  - csharp
+  - vb
+  name: UpdateAllBindings()
+  nameWithType: ThemeBindingManager.UpdateAllBindings()
+  fullName: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateAllBindings
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 110
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Forces update of all active bindings (useful for manual theme changes)
+  example: []
+  syntax:
+    content: public static void UpdateAllBindings()
+    content.vb: Public Shared Sub UpdateAllBindings()
+  overload: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings*
+- uid: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  commentId: P:DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  id: ActiveBindingCount
+  parent: DrawnUi.Draw.ThemeBindingManager
+  langs:
+  - csharp
+  - vb
+  name: ActiveBindingCount
+  nameWithType: ThemeBindingManager.ActiveBindingCount
+  fullName: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ActiveBindingCount
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 139
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the current number of active bindings (for diagnostics)
+  example: []
+  syntax:
+    content: public static int ActiveBindingCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Shared ReadOnly Property ActiveBindingCount As Integer
+  overload: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount*
+- uid: DrawnUi.Draw.ThemeBindingManager.Cleanup
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.Cleanup
+  id: Cleanup
+  parent: DrawnUi.Draw.ThemeBindingManager
+  langs:
+  - csharp
+  - vb
+  name: Cleanup()
+  nameWithType: ThemeBindingManager.Cleanup()
+  fullName: DrawnUi.Draw.ThemeBindingManager.Cleanup()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Cleanup
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 156
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Manually triggers cleanup of dead references
+  example: []
+  syntax:
+    content: public static void Cleanup()
+    content.vb: Public Shared Sub Cleanup()
+  overload: DrawnUi.Draw.ThemeBindingManager.Cleanup*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.ThemeBindingManager.CurrentTheme*
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  href: DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_CurrentTheme
+  name: CurrentTheme
+  nameWithType: ThemeBindingManager.CurrentTheme
+  fullName: DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+- uid: Microsoft.Maui.ApplicationModel.AppTheme
+  commentId: T:Microsoft.Maui.ApplicationModel.AppTheme
+  parent: Microsoft.Maui.ApplicationModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.applicationmodel.apptheme
+  name: AppTheme
+  nameWithType: AppTheme
+  fullName: Microsoft.Maui.ApplicationModel.AppTheme
+- uid: Microsoft.Maui.ApplicationModel
+  commentId: N:Microsoft.Maui.ApplicationModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.ApplicationModel
+  nameWithType: Microsoft.Maui.ApplicationModel
+  fullName: Microsoft.Maui.ApplicationModel
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.ApplicationModel
+    name: ApplicationModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.applicationmodel
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.ApplicationModel
+    name: ApplicationModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.applicationmodel
+- uid: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider*
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.SetThemeProvider
+  href: DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_SetThemeProvider_DrawnUi_Draw_IThemeProvider_
+  name: SetThemeProvider
+  nameWithType: ThemeBindingManager.SetThemeProvider
+  fullName: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider
+- uid: DrawnUi.Draw.IThemeProvider
+  commentId: T:DrawnUi.Draw.IThemeProvider
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IThemeProvider.html
+  name: IThemeProvider
+  nameWithType: IThemeProvider
+  fullName: DrawnUi.Draw.IThemeProvider
+- uid: DrawnUi.Draw.ThemeBindingManager.CreateBinding*
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.CreateBinding
+  href: DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_CreateBinding_DrawnUi_Draw_ThemeBindingExtension_Microsoft_Maui_Controls_BindableObject_Microsoft_Maui_Controls_BindableProperty_
+  name: CreateBinding
+  nameWithType: ThemeBindingManager.CreateBinding
+  fullName: DrawnUi.Draw.ThemeBindingManager.CreateBinding
+- uid: DrawnUi.Draw.ThemeBindingExtension
+  commentId: T:DrawnUi.Draw.ThemeBindingExtension
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBindingExtension.html
+  name: ThemeBindingExtension
+  nameWithType: ThemeBindingExtension
+  fullName: DrawnUi.Draw.ThemeBindingExtension
+- uid: Microsoft.Maui.Controls.BindableObject
+  commentId: T:Microsoft.Maui.Controls.BindableObject
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  name: BindableObject
+  nameWithType: BindableObject
+  fullName: Microsoft.Maui.Controls.BindableObject
+- uid: Microsoft.Maui.Controls.BindableProperty
+  commentId: T:Microsoft.Maui.Controls.BindableProperty
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  name: BindableProperty
+  nameWithType: BindableProperty
+  fullName: Microsoft.Maui.Controls.BindableProperty
+- uid: DrawnUi.Draw.ThemeBinding
+  commentId: T:DrawnUi.Draw.ThemeBinding
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBinding.html
+  name: ThemeBinding
+  nameWithType: ThemeBinding
+  fullName: DrawnUi.Draw.ThemeBinding
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings*
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  href: DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_UpdateAllBindings
+  name: UpdateAllBindings
+  nameWithType: ThemeBindingManager.UpdateAllBindings
+  fullName: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+- uid: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount*
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  href: DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_ActiveBindingCount
+  name: ActiveBindingCount
+  nameWithType: ThemeBindingManager.ActiveBindingCount
+  fullName: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.ThemeBindingManager.Cleanup*
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.Cleanup
+  href: DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_Cleanup
+  name: Cleanup
+  nameWithType: ThemeBindingManager.Cleanup
+  fullName: DrawnUi.Draw.ThemeBindingManager.Cleanup

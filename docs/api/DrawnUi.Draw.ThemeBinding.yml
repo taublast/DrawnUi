@@ -1,0 +1,609 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.ThemeBinding
+  commentId: T:DrawnUi.Draw.ThemeBinding
+  id: ThemeBinding
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.ThemeBinding.Dispose
+  - DrawnUi.Draw.ThemeBinding.Equals(System.Object)
+  - DrawnUi.Draw.ThemeBinding.GetHashCode
+  - DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  langs:
+  - csharp
+  - vb
+  name: ThemeBinding
+  nameWithType: ThemeBinding
+  fullName: DrawnUi.Draw.ThemeBinding
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ThemeBinding
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 183
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Represents a theme binding for a specific target object and property
+
+    Implements proper disposal pattern and weak references to prevent memory leaks
+  example: []
+  syntax:
+    content: 'public class ThemeBinding : IDisposable'
+    content.vb: Public Class ThemeBinding Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  commentId: M:DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  id: UpdateTargetValue
+  parent: DrawnUi.Draw.ThemeBinding
+  langs:
+  - csharp
+  - vb
+  name: UpdateTargetValue()
+  nameWithType: ThemeBinding.UpdateTargetValue()
+  fullName: DrawnUi.Draw.ThemeBinding.UpdateTargetValue()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdateTargetValue
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 239
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Updates the target property with the current theme value
+
+    Returns true if update was successful, false if target is no longer available
+  example: []
+  syntax:
+    content: public bool UpdateTargetValue()
+    return:
+      type: System.Boolean
+    content.vb: Public Function UpdateTargetValue() As Boolean
+  overload: DrawnUi.Draw.ThemeBinding.UpdateTargetValue*
+- uid: DrawnUi.Draw.ThemeBinding.Dispose
+  commentId: M:DrawnUi.Draw.ThemeBinding.Dispose
+  id: Dispose
+  parent: DrawnUi.Draw.ThemeBinding
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ThemeBinding.Dispose()
+  fullName: DrawnUi.Draw.ThemeBinding.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 284
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Draw.ThemeBinding.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: DrawnUi.Draw.ThemeBinding.GetHashCode
+  commentId: M:DrawnUi.Draw.ThemeBinding.GetHashCode
+  id: GetHashCode
+  parent: DrawnUi.Draw.ThemeBinding
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: ThemeBinding.GetHashCode()
+  fullName: DrawnUi.Draw.ThemeBinding.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetHashCode
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 302
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: DrawnUi.Draw.ThemeBinding.GetHashCode*
+- uid: DrawnUi.Draw.ThemeBinding.Equals(System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBinding.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: DrawnUi.Draw.ThemeBinding
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: ThemeBinding.Equals(object)
+  fullName: DrawnUi.Draw.ThemeBinding.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Equals
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 304
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: DrawnUi.Draw.ThemeBinding.Equals*
+  nameWithType.vb: ThemeBinding.Equals(Object)
+  fullName.vb: DrawnUi.Draw.ThemeBinding.Equals(Object)
+  name.vb: Equals(Object)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ThemeBinding.UpdateTargetValue*
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  href: DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_UpdateTargetValue
+  name: UpdateTargetValue
+  nameWithType: ThemeBinding.UpdateTargetValue
+  fullName: DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.ThemeBinding.Dispose*
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.Dispose
+  href: DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_Dispose
+  name: Dispose
+  nameWithType: ThemeBinding.Dispose
+  fullName: DrawnUi.Draw.ThemeBinding.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ThemeBinding.GetHashCode*
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.GetHashCode
+  href: DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_GetHashCode
+  name: GetHashCode
+  nameWithType: ThemeBinding.GetHashCode
+  fullName: DrawnUi.Draw.ThemeBinding.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ThemeBinding.Equals*
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.Equals
+  href: DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_Equals_System_Object_
+  name: Equals
+  nameWithType: ThemeBinding.Equals
+  fullName: DrawnUi.Draw.ThemeBinding.Equals

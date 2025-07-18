@@ -22403,6 +22403,31 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.IStateEffect.UpdateState
   nameWithType: IStateEffect.UpdateState
+- uid: DrawnUi.Draw.IThemeProvider
+  name: IThemeProvider
+  href: api/DrawnUi.Draw.IThemeProvider.html
+  commentId: T:DrawnUi.Draw.IThemeProvider
+  fullName: DrawnUi.Draw.IThemeProvider
+  nameWithType: IThemeProvider
+- uid: DrawnUi.Draw.IThemeProvider.CurrentTheme
+  name: CurrentTheme
+  href: api/DrawnUi.Draw.IThemeProvider.html#DrawnUi_Draw_IThemeProvider_CurrentTheme
+  commentId: P:DrawnUi.Draw.IThemeProvider.CurrentTheme
+  fullName: DrawnUi.Draw.IThemeProvider.CurrentTheme
+  nameWithType: IThemeProvider.CurrentTheme
+- uid: DrawnUi.Draw.IThemeProvider.CurrentTheme*
+  name: CurrentTheme
+  href: api/DrawnUi.Draw.IThemeProvider.html#DrawnUi_Draw_IThemeProvider_CurrentTheme_
+  commentId: Overload:DrawnUi.Draw.IThemeProvider.CurrentTheme
+  isSpec: "True"
+  fullName: DrawnUi.Draw.IThemeProvider.CurrentTheme
+  nameWithType: IThemeProvider.CurrentTheme
+- uid: DrawnUi.Draw.IThemeProvider.ThemeChanged
+  name: ThemeChanged
+  href: api/DrawnUi.Draw.IThemeProvider.html#DrawnUi_Draw_IThemeProvider_ThemeChanged
+  commentId: E:DrawnUi.Draw.IThemeProvider.ThemeChanged
+  fullName: DrawnUi.Draw.IThemeProvider.ThemeChanged
+  nameWithType: IThemeProvider.ThemeChanged
 - uid: DrawnUi.Draw.ITimingParameters
   name: ITimingParameters
   href: api/DrawnUi.Draw.ITimingParameters.html
@@ -24381,6 +24406,50 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.MauiKeyMapper.MapToJava
   nameWithType: MauiKeyMapper.MapToJava
+- uid: DrawnUi.Draw.MauiThemeProvider
+  name: MauiThemeProvider
+  href: api/DrawnUi.Draw.MauiThemeProvider.html
+  commentId: T:DrawnUi.Draw.MauiThemeProvider
+  fullName: DrawnUi.Draw.MauiThemeProvider
+  nameWithType: MauiThemeProvider
+- uid: DrawnUi.Draw.MauiThemeProvider.#ctor
+  name: MauiThemeProvider()
+  href: api/DrawnUi.Draw.MauiThemeProvider.html#DrawnUi_Draw_MauiThemeProvider__ctor
+  commentId: M:DrawnUi.Draw.MauiThemeProvider.#ctor
+  name.vb: New()
+  fullName: DrawnUi.Draw.MauiThemeProvider.MauiThemeProvider()
+  fullName.vb: DrawnUi.Draw.MauiThemeProvider.New()
+  nameWithType: MauiThemeProvider.MauiThemeProvider()
+  nameWithType.vb: MauiThemeProvider.New()
+- uid: DrawnUi.Draw.MauiThemeProvider.#ctor*
+  name: MauiThemeProvider
+  href: api/DrawnUi.Draw.MauiThemeProvider.html#DrawnUi_Draw_MauiThemeProvider__ctor_
+  commentId: Overload:DrawnUi.Draw.MauiThemeProvider.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: DrawnUi.Draw.MauiThemeProvider.MauiThemeProvider
+  fullName.vb: DrawnUi.Draw.MauiThemeProvider.New
+  nameWithType: MauiThemeProvider.MauiThemeProvider
+  nameWithType.vb: MauiThemeProvider.New
+- uid: DrawnUi.Draw.MauiThemeProvider.CurrentTheme
+  name: CurrentTheme
+  href: api/DrawnUi.Draw.MauiThemeProvider.html#DrawnUi_Draw_MauiThemeProvider_CurrentTheme
+  commentId: P:DrawnUi.Draw.MauiThemeProvider.CurrentTheme
+  fullName: DrawnUi.Draw.MauiThemeProvider.CurrentTheme
+  nameWithType: MauiThemeProvider.CurrentTheme
+- uid: DrawnUi.Draw.MauiThemeProvider.CurrentTheme*
+  name: CurrentTheme
+  href: api/DrawnUi.Draw.MauiThemeProvider.html#DrawnUi_Draw_MauiThemeProvider_CurrentTheme_
+  commentId: Overload:DrawnUi.Draw.MauiThemeProvider.CurrentTheme
+  isSpec: "True"
+  fullName: DrawnUi.Draw.MauiThemeProvider.CurrentTheme
+  nameWithType: MauiThemeProvider.CurrentTheme
+- uid: DrawnUi.Draw.MauiThemeProvider.ThemeChanged
+  name: ThemeChanged
+  href: api/DrawnUi.Draw.MauiThemeProvider.html#DrawnUi_Draw_MauiThemeProvider_ThemeChanged
+  commentId: E:DrawnUi.Draw.MauiThemeProvider.ThemeChanged
+  fullName: DrawnUi.Draw.MauiThemeProvider.ThemeChanged
+  nameWithType: MauiThemeProvider.ThemeChanged
 - uid: DrawnUi.Draw.MeasureRequest
   name: MeasureRequest
   href: api/DrawnUi.Draw.MeasureRequest.html
@@ -61088,6 +61157,327 @@ references:
   commentId: F:DrawnUi.Draw.TextTransform.Uppercase
   fullName: DrawnUi.Draw.TextTransform.Uppercase
   nameWithType: TextTransform.Uppercase
+- uid: DrawnUi.Draw.ThemeBinding
+  name: ThemeBinding
+  href: api/DrawnUi.Draw.ThemeBinding.html
+  commentId: T:DrawnUi.Draw.ThemeBinding
+  fullName: DrawnUi.Draw.ThemeBinding
+  nameWithType: ThemeBinding
+- uid: DrawnUi.Draw.ThemeBinding.Dispose
+  name: Dispose()
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_Dispose
+  commentId: M:DrawnUi.Draw.ThemeBinding.Dispose
+  fullName: DrawnUi.Draw.ThemeBinding.Dispose()
+  nameWithType: ThemeBinding.Dispose()
+- uid: DrawnUi.Draw.ThemeBinding.Dispose*
+  name: Dispose
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_Dispose_
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.Dispose
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBinding.Dispose
+  nameWithType: ThemeBinding.Dispose
+- uid: DrawnUi.Draw.ThemeBinding.Equals(System.Object)
+  name: Equals(object)
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_Equals_System_Object_
+  commentId: M:DrawnUi.Draw.ThemeBinding.Equals(System.Object)
+  name.vb: Equals(Object)
+  fullName: DrawnUi.Draw.ThemeBinding.Equals(object)
+  fullName.vb: DrawnUi.Draw.ThemeBinding.Equals(Object)
+  nameWithType: ThemeBinding.Equals(object)
+  nameWithType.vb: ThemeBinding.Equals(Object)
+- uid: DrawnUi.Draw.ThemeBinding.Equals*
+  name: Equals
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_Equals_
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.Equals
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBinding.Equals
+  nameWithType: ThemeBinding.Equals
+- uid: DrawnUi.Draw.ThemeBinding.GetHashCode
+  name: GetHashCode()
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_GetHashCode
+  commentId: M:DrawnUi.Draw.ThemeBinding.GetHashCode
+  fullName: DrawnUi.Draw.ThemeBinding.GetHashCode()
+  nameWithType: ThemeBinding.GetHashCode()
+- uid: DrawnUi.Draw.ThemeBinding.GetHashCode*
+  name: GetHashCode
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_GetHashCode_
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.GetHashCode
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBinding.GetHashCode
+  nameWithType: ThemeBinding.GetHashCode
+- uid: DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  name: UpdateTargetValue()
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_UpdateTargetValue
+  commentId: M:DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  fullName: DrawnUi.Draw.ThemeBinding.UpdateTargetValue()
+  nameWithType: ThemeBinding.UpdateTargetValue()
+- uid: DrawnUi.Draw.ThemeBinding.UpdateTargetValue*
+  name: UpdateTargetValue
+  href: api/DrawnUi.Draw.ThemeBinding.html#DrawnUi_Draw_ThemeBinding_UpdateTargetValue_
+  commentId: Overload:DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBinding.UpdateTargetValue
+  nameWithType: ThemeBinding.UpdateTargetValue
+- uid: DrawnUi.Draw.ThemeBindingExtension
+  name: ThemeBindingExtension
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html
+  commentId: T:DrawnUi.Draw.ThemeBindingExtension
+  fullName: DrawnUi.Draw.ThemeBindingExtension
+  nameWithType: ThemeBindingExtension
+- uid: DrawnUi.Draw.ThemeBindingExtension.Dark
+  name: Dark
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_Dark
+  commentId: P:DrawnUi.Draw.ThemeBindingExtension.Dark
+  fullName: DrawnUi.Draw.ThemeBindingExtension.Dark
+  nameWithType: ThemeBindingExtension.Dark
+- uid: DrawnUi.Draw.ThemeBindingExtension.Dark*
+  name: Dark
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_Dark_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingExtension.Dark
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingExtension.Dark
+  nameWithType: ThemeBindingExtension.Dark
+- uid: DrawnUi.Draw.ThemeBindingExtension.Default
+  name: Default
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_Default
+  commentId: P:DrawnUi.Draw.ThemeBindingExtension.Default
+  fullName: DrawnUi.Draw.ThemeBindingExtension.Default
+  nameWithType: ThemeBindingExtension.Default
+- uid: DrawnUi.Draw.ThemeBindingExtension.Default*
+  name: Default
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_Default_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingExtension.Default
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingExtension.Default
+  nameWithType: ThemeBindingExtension.Default
+- uid: DrawnUi.Draw.ThemeBindingExtension.GetCurrentThemeValue
+  name: GetCurrentThemeValue()
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_GetCurrentThemeValue
+  commentId: M:DrawnUi.Draw.ThemeBindingExtension.GetCurrentThemeValue
+  fullName: DrawnUi.Draw.ThemeBindingExtension.GetCurrentThemeValue()
+  nameWithType: ThemeBindingExtension.GetCurrentThemeValue()
+- uid: DrawnUi.Draw.ThemeBindingExtension.GetCurrentThemeValue*
+  name: GetCurrentThemeValue
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_GetCurrentThemeValue_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingExtension.GetCurrentThemeValue
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingExtension.GetCurrentThemeValue
+  nameWithType: ThemeBindingExtension.GetCurrentThemeValue
+- uid: DrawnUi.Draw.ThemeBindingExtension.Light
+  name: Light
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_Light
+  commentId: P:DrawnUi.Draw.ThemeBindingExtension.Light
+  fullName: DrawnUi.Draw.ThemeBindingExtension.Light
+  nameWithType: ThemeBindingExtension.Light
+- uid: DrawnUi.Draw.ThemeBindingExtension.Light*
+  name: Light
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_Light_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingExtension.Light
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingExtension.Light
+  nameWithType: ThemeBindingExtension.Light
+- uid: DrawnUi.Draw.ThemeBindingExtension.ProvideValue(System.IServiceProvider)
+  name: ProvideValue(IServiceProvider)
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_ProvideValue_System_IServiceProvider_
+  commentId: M:DrawnUi.Draw.ThemeBindingExtension.ProvideValue(System.IServiceProvider)
+  fullName: DrawnUi.Draw.ThemeBindingExtension.ProvideValue(System.IServiceProvider)
+  nameWithType: ThemeBindingExtension.ProvideValue(IServiceProvider)
+- uid: DrawnUi.Draw.ThemeBindingExtension.ProvideValue*
+  name: ProvideValue
+  href: api/DrawnUi.Draw.ThemeBindingExtension.html#DrawnUi_Draw_ThemeBindingExtension_ProvideValue_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingExtension.ProvideValue
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingExtension.ProvideValue
+  nameWithType: ThemeBindingExtension.ProvideValue
+- uid: DrawnUi.Draw.ThemeBindingManager
+  name: ThemeBindingManager
+  href: api/DrawnUi.Draw.ThemeBindingManager.html
+  commentId: T:DrawnUi.Draw.ThemeBindingManager
+  fullName: DrawnUi.Draw.ThemeBindingManager
+  nameWithType: ThemeBindingManager
+- uid: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  name: ActiveBindingCount
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_ActiveBindingCount
+  commentId: P:DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  fullName: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  nameWithType: ThemeBindingManager.ActiveBindingCount
+- uid: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount*
+  name: ActiveBindingCount
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_ActiveBindingCount_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingManager.ActiveBindingCount
+  nameWithType: ThemeBindingManager.ActiveBindingCount
+- uid: DrawnUi.Draw.ThemeBindingManager.Cleanup
+  name: Cleanup()
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_Cleanup
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.Cleanup
+  fullName: DrawnUi.Draw.ThemeBindingManager.Cleanup()
+  nameWithType: ThemeBindingManager.Cleanup()
+- uid: DrawnUi.Draw.ThemeBindingManager.Cleanup*
+  name: Cleanup
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_Cleanup_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.Cleanup
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingManager.Cleanup
+  nameWithType: ThemeBindingManager.Cleanup
+- uid: DrawnUi.Draw.ThemeBindingManager.CreateBinding(DrawnUi.Draw.ThemeBindingExtension,Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty)
+  name: CreateBinding(ThemeBindingExtension, BindableObject, BindableProperty)
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_CreateBinding_DrawnUi_Draw_ThemeBindingExtension_Microsoft_Maui_Controls_BindableObject_Microsoft_Maui_Controls_BindableProperty_
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.CreateBinding(DrawnUi.Draw.ThemeBindingExtension,Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty)
+  fullName: DrawnUi.Draw.ThemeBindingManager.CreateBinding(DrawnUi.Draw.ThemeBindingExtension, Microsoft.Maui.Controls.BindableObject, Microsoft.Maui.Controls.BindableProperty)
+  nameWithType: ThemeBindingManager.CreateBinding(ThemeBindingExtension, BindableObject, BindableProperty)
+- uid: DrawnUi.Draw.ThemeBindingManager.CreateBinding*
+  name: CreateBinding
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_CreateBinding_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.CreateBinding
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingManager.CreateBinding
+  nameWithType: ThemeBindingManager.CreateBinding
+- uid: DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  name: CurrentTheme
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_CurrentTheme
+  commentId: P:DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  fullName: DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  nameWithType: ThemeBindingManager.CurrentTheme
+- uid: DrawnUi.Draw.ThemeBindingManager.CurrentTheme*
+  name: CurrentTheme
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_CurrentTheme_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingManager.CurrentTheme
+  nameWithType: ThemeBindingManager.CurrentTheme
+- uid: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  name: SetThemeProvider(IThemeProvider)
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_SetThemeProvider_DrawnUi_Draw_IThemeProvider_
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  fullName: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider(DrawnUi.Draw.IThemeProvider)
+  nameWithType: ThemeBindingManager.SetThemeProvider(IThemeProvider)
+- uid: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider*
+  name: SetThemeProvider
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_SetThemeProvider_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.SetThemeProvider
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingManager.SetThemeProvider
+  nameWithType: ThemeBindingManager.SetThemeProvider
+- uid: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  name: UpdateAllBindings()
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_UpdateAllBindings
+  commentId: M:DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  fullName: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings()
+  nameWithType: ThemeBindingManager.UpdateAllBindings()
+- uid: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings*
+  name: UpdateAllBindings
+  href: api/DrawnUi.Draw.ThemeBindingManager.html#DrawnUi_Draw_ThemeBindingManager_UpdateAllBindings_
+  commentId: Overload:DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindingManager.UpdateAllBindings
+  nameWithType: ThemeBindingManager.UpdateAllBindings
+- uid: DrawnUi.Draw.ThemeBindings
+  name: ThemeBindings
+  href: api/DrawnUi.Draw.ThemeBindings.html
+  commentId: T:DrawnUi.Draw.ThemeBindings
+  fullName: DrawnUi.Draw.ThemeBindings
+  nameWithType: ThemeBindings
+- uid: DrawnUi.Draw.ThemeBindings.GetThemeValue*
+  name: GetThemeValue
+  href: api/DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_GetThemeValue_
+  commentId: Overload:DrawnUi.Draw.ThemeBindings.GetThemeValue
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindings.GetThemeValue
+  nameWithType: ThemeBindings.GetThemeValue
+- uid: DrawnUi.Draw.ThemeBindings.GetThemeValue``1(``0,``0,``0)
+  name: GetThemeValue<T>(T, T, T)
+  href: api/DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_GetThemeValue__1___0___0___0_
+  commentId: M:DrawnUi.Draw.ThemeBindings.GetThemeValue``1(``0,``0,``0)
+  name.vb: GetThemeValue(Of T)(T, T, T)
+  fullName: DrawnUi.Draw.ThemeBindings.GetThemeValue<T>(T, T, T)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.GetThemeValue(Of T)(T, T, T)
+  nameWithType: ThemeBindings.GetThemeValue<T>(T, T, T)
+  nameWithType.vb: ThemeBindings.GetThemeValue(Of T)(T, T, T)
+- uid: DrawnUi.Draw.ThemeBindings.SetThemeBinding(Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  name: SetThemeBinding(BindableObject, BindableProperty, object, object, object)
+  href: api/DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_SetThemeBinding_Microsoft_Maui_Controls_BindableObject_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  commentId: M:DrawnUi.Draw.ThemeBindings.SetThemeBinding(Microsoft.Maui.Controls.BindableObject,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  name.vb: SetThemeBinding(BindableObject, BindableProperty, Object, Object, Object)
+  fullName: DrawnUi.Draw.ThemeBindings.SetThemeBinding(Microsoft.Maui.Controls.BindableObject, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.SetThemeBinding(Microsoft.Maui.Controls.BindableObject, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  nameWithType: ThemeBindings.SetThemeBinding(BindableObject, BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.SetThemeBinding(BindableObject, BindableProperty, Object, Object, Object)
+- uid: DrawnUi.Draw.ThemeBindings.SetThemeBinding*
+  name: SetThemeBinding
+  href: api/DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_SetThemeBinding_
+  commentId: Overload:DrawnUi.Draw.ThemeBindings.SetThemeBinding
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindings.SetThemeBinding
+  nameWithType: ThemeBindings.SetThemeBinding
+- uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding*
+  name: WithThemeBinding
+  href: api/DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding_
+  commentId: Overload:DrawnUi.Draw.ThemeBindings.WithThemeBinding
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding
+  nameWithType: ThemeBindings.WithThemeBinding
+- uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  name: WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  href: api/DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  name.vb: WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<TControl>(TControl, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of TControl)(TControl, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  nameWithType: ThemeBindings.WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+- uid: DrawnUi.Draw.ThemeChangedEventArgs
+  name: ThemeChangedEventArgs
+  href: api/DrawnUi.Draw.ThemeChangedEventArgs.html
+  commentId: T:DrawnUi.Draw.ThemeChangedEventArgs
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs
+  nameWithType: ThemeChangedEventArgs
+- uid: DrawnUi.Draw.ThemeChangedEventArgs.#ctor(Microsoft.Maui.ApplicationModel.AppTheme,Microsoft.Maui.ApplicationModel.AppTheme)
+  name: ThemeChangedEventArgs(AppTheme, AppTheme)
+  href: api/DrawnUi.Draw.ThemeChangedEventArgs.html#DrawnUi_Draw_ThemeChangedEventArgs__ctor_Microsoft_Maui_ApplicationModel_AppTheme_Microsoft_Maui_ApplicationModel_AppTheme_
+  commentId: M:DrawnUi.Draw.ThemeChangedEventArgs.#ctor(Microsoft.Maui.ApplicationModel.AppTheme,Microsoft.Maui.ApplicationModel.AppTheme)
+  name.vb: New(AppTheme, AppTheme)
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs.ThemeChangedEventArgs(Microsoft.Maui.ApplicationModel.AppTheme, Microsoft.Maui.ApplicationModel.AppTheme)
+  fullName.vb: DrawnUi.Draw.ThemeChangedEventArgs.New(Microsoft.Maui.ApplicationModel.AppTheme, Microsoft.Maui.ApplicationModel.AppTheme)
+  nameWithType: ThemeChangedEventArgs.ThemeChangedEventArgs(AppTheme, AppTheme)
+  nameWithType.vb: ThemeChangedEventArgs.New(AppTheme, AppTheme)
+- uid: DrawnUi.Draw.ThemeChangedEventArgs.#ctor*
+  name: ThemeChangedEventArgs
+  href: api/DrawnUi.Draw.ThemeChangedEventArgs.html#DrawnUi_Draw_ThemeChangedEventArgs__ctor_
+  commentId: Overload:DrawnUi.Draw.ThemeChangedEventArgs.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs.ThemeChangedEventArgs
+  fullName.vb: DrawnUi.Draw.ThemeChangedEventArgs.New
+  nameWithType: ThemeChangedEventArgs.ThemeChangedEventArgs
+  nameWithType.vb: ThemeChangedEventArgs.New
+- uid: DrawnUi.Draw.ThemeChangedEventArgs.NewTheme
+  name: NewTheme
+  href: api/DrawnUi.Draw.ThemeChangedEventArgs.html#DrawnUi_Draw_ThemeChangedEventArgs_NewTheme
+  commentId: P:DrawnUi.Draw.ThemeChangedEventArgs.NewTheme
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs.NewTheme
+  nameWithType: ThemeChangedEventArgs.NewTheme
+- uid: DrawnUi.Draw.ThemeChangedEventArgs.NewTheme*
+  name: NewTheme
+  href: api/DrawnUi.Draw.ThemeChangedEventArgs.html#DrawnUi_Draw_ThemeChangedEventArgs_NewTheme_
+  commentId: Overload:DrawnUi.Draw.ThemeChangedEventArgs.NewTheme
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs.NewTheme
+  nameWithType: ThemeChangedEventArgs.NewTheme
+- uid: DrawnUi.Draw.ThemeChangedEventArgs.OldTheme
+  name: OldTheme
+  href: api/DrawnUi.Draw.ThemeChangedEventArgs.html#DrawnUi_Draw_ThemeChangedEventArgs_OldTheme
+  commentId: P:DrawnUi.Draw.ThemeChangedEventArgs.OldTheme
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs.OldTheme
+  nameWithType: ThemeChangedEventArgs.OldTheme
+- uid: DrawnUi.Draw.ThemeChangedEventArgs.OldTheme*
+  name: OldTheme
+  href: api/DrawnUi.Draw.ThemeChangedEventArgs.html#DrawnUi_Draw_ThemeChangedEventArgs_OldTheme_
+  commentId: Overload:DrawnUi.Draw.ThemeChangedEventArgs.OldTheme
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs.OldTheme
+  nameWithType: ThemeChangedEventArgs.OldTheme
 - uid: DrawnUi.Draw.TintEffect
   name: TintEffect
   href: api/DrawnUi.Draw.TintEffect.html

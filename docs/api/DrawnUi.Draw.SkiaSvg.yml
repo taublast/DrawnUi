@@ -938,6 +938,7 @@ items:
   - DrawnUi.Draw.SkiaSvg.DrawnUi.Draw.FluentExtensions.WithVerticalOptions``1(Microsoft.Maui.Controls.LayoutOptions)
   - DrawnUi.Draw.SkiaSvg.DrawnUi.Draw.FluentExtensions.WithVisibility``1(System.Boolean)
   - DrawnUi.Draw.SkiaSvg.DrawnUi.Draw.FluentExtensions.WithWidth``1(System.Double)
+  - DrawnUi.Draw.SkiaSvg.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   - Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.FindMauiContext(System.Boolean)
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.GetParentsPath
@@ -23765,6 +23766,95 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.double
   - name: )
+- uid: DrawnUi.Draw.SkiaSvg.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  parent: DrawnUi.Draw.ThemeBindings
+  definition: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<SkiaSvg>(SkiaSvg, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<SkiaSvg>(SkiaSvg, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<DrawnUi.Draw.SkiaSvg>(DrawnUi.Draw.SkiaSvg, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of SkiaSvg)(SkiaSvg, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of DrawnUi.Draw.SkiaSvg)(DrawnUi.Draw.SkiaSvg, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of SkiaSvg)(SkiaSvg, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.SkiaSvg,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - uid: DrawnUi.Draw.SkiaSvg
+    name: SkiaSvg
+    href: DrawnUi.Draw.SkiaSvg.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaSvg
+    name: SkiaSvg
+    href: DrawnUi.Draw.SkiaSvg.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.SkiaSvg,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaSvg
+    name: SkiaSvg
+    href: DrawnUi.Draw.SkiaSvg.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaSvg
+    name: SkiaSvg
+    href: DrawnUi.Draw.SkiaSvg.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
 - uid: Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   commentId: M:DrawnUi.Draw.StaticResourcesExtensions.FindParent``1(Microsoft.Maui.Controls.Element)
   parent: DrawnUi.Draw.StaticResourcesExtensions
@@ -28240,6 +28330,93 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.double
   - name: )
+- uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  isExternal: true
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<TControl>(TControl, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of TControl)(TControl, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - name: TControl
+  - name: '>'
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TControl
+  - name: )
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ThemeBindings
+  commentId: T:DrawnUi.Draw.ThemeBindings
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBindings.html
+  name: ThemeBindings
+  nameWithType: ThemeBindings
+  fullName: DrawnUi.Draw.ThemeBindings
 - uid: DrawnUi.Draw.StaticResourcesExtensions.FindParent``1(Microsoft.Maui.Controls.Element)
   commentId: M:DrawnUi.Draw.StaticResourcesExtensions.FindParent``1(Microsoft.Maui.Controls.Element)
   isExternal: true

@@ -2,7 +2,7 @@
 
 This guide will help you get started with DrawnUI in your .NET MAUI application.  
 
-📚 You might also look at our [Tutorials](samples.md)
+📚 You might also look at our [Tutorials](tutorials.md)
 
 ## Installation
 
@@ -282,5 +282,5 @@ Canvas = new Canvas()
 - Create [Your First DrawnUI App](first-app.md)
 - Explore the [Controls documentation](controls/index.md) to learn about available controls
 - See [Platform-Specific Styling](advanced/platform-styling.md) for more styling options
-- Check out the [Sample Applications](samples.md) for complete examples
+- Check out the [Sample Applications](tutorials.md) for complete examples
 - Review [Development Notes](development-notes.md) for technical requirements and best practices

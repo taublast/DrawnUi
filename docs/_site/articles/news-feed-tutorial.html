@@ -101,10 +101,8 @@ Clone the repo and run the Tutorials project to explore all examples!</p>
 <li><strong>🏗️ Smart caching strategies</strong> - organize layers to redraw only what changed</li>
 <li><strong>⚡ Performance optimization</strong> - handle thousands of items smoothly</li>
 <li><strong>🔄 Recycling mastery</strong> - one cell type handles all content variations</li>
-<li><strong>📱 Real-world techniques</strong> - progressive measurement, smart caching, and more!</li>
+<li><strong>📱 DrawnUI nuances</strong> - real-world techniques for building performant UIs</li>
 </ul>
-<h2 id="-the-drawnui-way-one-universal-cell">🎯 The DrawnUI Way: One Universal Cell</h2>
-<p>With DrawnUI, we can use a layout as a cell that simply shows or hides elements based on content type - no complex <code>DataTemplateSelector</code> needed! All recycling and height calculation happen automatically ✨</p>
 <h2 id="-what-we-want-to-build">🎯 What We Want to Build</h2>
 <p>A news feed with mixed content types (text posts, images, videos, articles, ads). We will be using a combination of <code>SkiaScroll</code> and <code>SkiaLayout</code> to obtain a recycled cells scrolling view. We will also use <code>SkiaDynamicDrawnCell</code> custom control as our cell base. This is optional - you could use any <code>SkiaControl</code> as your cell, but it's a helpful utility for handling BindingContext changes smoothly and provides useful override methods.</p>
 <h2 id="-the-tech-behind">⚙️ The Tech Behind</h2>
@@ -113,8 +111,49 @@ Clone the repo and run the Tutorials project to explore all examples!</p>
 <p>Another important point is the databinding for the recycled view - the cell. We'll do it in code-behind for better performance. <code>SkiaDynamicDrawnCell</code> helper provides us with a <code>SetContent</code> method we can override to update the cell content based on the new BindingContext. This code is wrapped by the helper with a batch update lock, so no intermediate rendering happens. We could also override <code>ContextPropertyChanged</code> if we wanted to react to property changes in the bound object (for example <code>IsOnline</code> changing for a person and updating the avatar color to green), but we'll keep this tutorial simple.</p>
 <p>We will be using real internet resources to get images for avatars and banners to be realistic with performance. We'll also be using shadow effects for visual appeal.
 You can display debugging information over the scroll to see displayed/created/measured number of cells along with FPS.</p>
-<h2 id="-step-by-step-implementation">🛠️ Step-by-Step Implementation</h2>
-<h3 id="1--setup-the-app">1. 📱 Setup The App</h3>
+<p>With DrawnUI, we can use a layout as a cell that simply shows or hides elements based on content type - no complex <code>DataTemplateSelector</code> needed! Recycling and height calculation happen automatically ✨</p>
+<h2 id="performance-key-requirements">Performance Key Requirements</h2>
+<h3 id="stack-optimisations"><strong>Stack Optimisations</strong></h3>
+<p>Let's look at critical SkiaLayout properties for this scenario:</p>
+<p><code> MeasureItemsStrategy=&quot;MeasureVisible&quot;</code></p>
+<p>this <strong>experimental</strong> measurement strategy for <code>SkiaLayout</code> works well for large lists with uneven rows. It measures only visible items initially, then progressively measures off-screen items in the background. This can provide good scrolling performance with thousands of items of varying heights. At the</p>
+<p><code>ReserveTemplates=&quot;10&quot;</code></p>
+<p>The layout views adapter creates new istances of cells only when needed. When a new one is instantiated this can create a UI lag spike. This property indicates that we want it to pre-create a specifc number of cells, to avoid a potential lag spike when the user just starts scrolling and new cells are created. This would not be needed for &quot;same size&quot; type of rows, but for &quot;uneven rows&quot; adapter tries to have some reasonable number of cells for different heights to return appropriate one from the pool when requested.</p>
+<p><code>VirtualisationInflated=&quot;200&quot;</code></p>
+<p>We are drawing only cells visible inside scrolling viewport, but with double-buffered cache we want cells to start rendering before they enter the viewport, to avoid seing unrendered content. This property defines how much of the hidden content out of visible bounds should be considered visible for rendering.</p>
+<h3 id="scroll-optimisations"><strong>Scroll Optimisations</strong></h3>
+<p>Let's take a look what spices we added to ou scroll:</p>
+<p><code>LoadMoreOffset=&quot;500&quot;</code></p>
+<p>It would ask content's permission to execute LoadMoreCommand by calling <code>IInsideViewport.ShouldTriggerLoadMore</code> when the user scrolls within 500 points (not pixels) of the end of the content. This allows our stack to make a decision about when to load more data, more spicifically it would allow it only if the background measurement of the existing content ended.</p>
+<p><code>FrictionScrolled</code> and <code>ChangeVelocityScrolled</code></p>
+<p>Notice we customized scrolling to stop faster with <code>FrictionScrolled</code> for news feed case were user would read content but help kick swipes with <code>ChangeVelocityScrolled</code>.</p>
+<h3 id="layering"><strong>Layering</strong></h3>
+<p>When designed a drawn UI, it's important to think about layering and caching. We know that there would be a static layer with unchanged data, and one that would be redrawn when something changes, for example image gets loaded from internet. In such case we would want to fast-draw static layer from cache and rebuild the dynamic one.  Our background has a shadow effect, so we cache it into a separate layer with <code>SkiaShape</code> and draw content on top. If you would want to clip your content with the shape form your would just need to wrap it with a shape if same parameters than the background layer.</p>
+<pre><code class="lang-xml">    &lt;!--cached background layer with shadow--&gt;
+    &lt;draw:SkiaLayout
+        UseCache=&quot;Image&quot;
+        VerticalOptions=&quot;Fill&quot;
+        HorizontalOptions=&quot;Fill&quot;
+        x:Name=&quot;BackgroundLayer&quot;
+        Padding=&quot;16,6,16,10&quot;&gt;
+        &lt;draw:SkiaShape
+            CornerRadius=&quot;0&quot;
+            BackgroundColor=&quot;White&quot;
+            VerticalOptions=&quot;Fill&quot;
+            HorizontalOptions=&quot;Fill&quot;&gt;
+            &lt;draw:SkiaShape.VisualEffects&gt;
+                &lt;draw:DropShadowEffect
+                    Color=&quot;#33000000&quot; Blur=&quot;3&quot; X=&quot;3&quot; Y=&quot;3&quot; /&gt;
+            &lt;/draw:SkiaShape.VisualEffects&gt;
+        &lt;/draw:SkiaShape&gt;
+    &lt;/draw:SkiaLayout&gt;
+
+    &lt;!--content layer goes here--&gt;   
+</code></pre>
+<h3 id="loadmore-implementation"><strong>LoadMore Implementation</strong></h3>
+<p>We want to load data by chunks when the user scrolls, and append them to the existing collection, creating a potentially infinite scroll.<br>
+We use an <code>ObservableRangeCollection</code> to hold our news items. This allows us to change collection (UI thread is needed for that) in the middle of the scrolling without resetting the ItemsSource, the stack would pick up our changes automatically.</p>
+<h3 id="-implementation">📱 Implementation</h3>
 <p>Proceed as described in the <a href="getting-started.html">Getting Started</a> section. When working on desktop you'll normally want to set your app window to a phone-like size, to be consistent with mobile platforms:</p>
 <pre><code class="lang-csharp">        .UseDrawnUi(new DrawnUiStartupSettings
         {
@@ -125,10 +164,9 @@ You can display debugging information over the scroll to see displayed/created/m
             }
         })
 </code></pre>
-<h3 id="2--define-content-types">2. 📋 Define Content Types</h3>
-<pre><code class="lang-csharp">namespace Sandbox.Models;
-
-public enum NewsType
+<h3 id="define-content-types">Define Content Types</h3>
+<p>We have several possible feed types, we handle all of them with one model. Notice that we didn't implement INotifyPropertyChanged for this example. If your app is updating already existing cells at runtime, for example changing <code>IsUnread</code> for a feed or <code>IsOnline</code> for avatar, you would need to implement it and then override <code>ContextPropertyChanged</code> inside the cell to reflect dynamic changes in model to your UI.</p>
+<pre><code class="lang-csharp">public enum NewsType
 {
     Text,
     Image,
@@ -153,7 +191,50 @@ public class NewsItem
     public int CommentsCount { get; set; }
 }
 </code></pre>
-<h3 id="3--create-your-cell">3. 🏗️ Create Your Cell</h3>
+<h3 id="-scroll-and-stack">🪽 Scroll and Stack</h3>
+<p>Thise are friends when it come to creating recycled or &quot;bindablelayout-like&quot; scenario. They interact via <code>IInsideViewport</code> interface that content could implement and is implementing in case of <code>SkiaLayout</code>:</p>
+<pre><code class="lang-xml">                &lt;draw:SkiaScroll
+                    x:Name=&quot;NewsScroll&quot;
+                    Orientation=&quot;Vertical&quot;
+                    FrictionScrolled=&quot;0.5&quot;
+                    ChangeVelocityScrolled=&quot;1.35&quot;
+                    RefreshCommand=&quot;{Binding RefreshCommand}&quot;
+                    LoadMoreCommand=&quot;{Binding LoadMoreCommand}&quot;
+                    RefreshEnabled=&quot;True&quot;
+                    HorizontalOptions=&quot;Fill&quot;
+                    VerticalOptions=&quot;Fill&quot;&gt;
+
+                    &lt;draw:SkiaScroll.Header&gt;
+
+                        &lt;draw:SkiaLayer HeightRequest=&quot;40&quot; UseCache=&quot;Image&quot;&gt;
+                            &lt;draw:SkiaRichLabel
+                                Text=&quot;DrawnUI News Feed Tutorial&quot;
+                                HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot; /&gt;
+                        &lt;/draw:SkiaLayer&gt;
+
+                    &lt;/draw:SkiaScroll.Header&gt;
+
+                    &lt;draw:SkiaScroll.Footer&gt;
+
+                        &lt;draw:SkiaLayer HeightRequest=&quot;50&quot; /&gt;
+
+                    &lt;/draw:SkiaScroll.Footer&gt;
+
+                    &lt;draw:SkiaLayout
+                        x:Name=&quot;NewsStack&quot;
+                        Type=&quot;Column&quot;
+                        ItemsSource=&quot;{Binding NewsItems}&quot;
+                        RecyclingTemplate=&quot;Enabled&quot;
+                        MeasureItemsStrategy=&quot;MeasureVisible&quot;
+                        ReserveTemplates=&quot;10&quot;
+                        VirtualisationInflated=&quot;200&quot;
+                        Spacing=&quot;0&quot;
+                        ItemTemplateType=&quot;{x:Type newsFeed:NewsCell}&quot;
+                        HorizontalOptions=&quot;Fill&quot; /&gt;
+
+                &lt;/draw:SkiaScroll&gt;
+</code></pre>
+<h3 id="-create-your-cell">🏗️ Create Your Cell</h3>
 <blockquote>
 <p><strong>Caching Strategy Note</strong>: For recycled cells <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> is a must - it displays the previous cache while the next one is being prepared in background, allowing smooth scrolling. It supports painting placeholders when no cache is available at all.</p>
 </blockquote>
@@ -166,11 +247,13 @@ public class NewsItem
 <pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 
 &lt;draw:SkiaDynamicDrawnCell
-    x:Class=&quot;Sandbox.Views.NewsCell&quot;
+    x:Class=&quot;DrawnUI.Tutorials.NewsFeed.NewsCell&quot;
     xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
     xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
+    xmlns:models=&quot;clr-namespace:DrawnUI.Tutorials.NewsFeed.Models&quot;
     HorizontalOptions=&quot;Fill&quot;
+    x:DataType=&quot;models:NewsItem&quot;
     UseCache=&quot;ImageDoubleBuffered&quot;&gt;
 
     &lt;!--cached background layer with shadow--&gt;
@@ -178,6 +261,7 @@ public class NewsItem
         VerticalOptions=&quot;Fill&quot;
         HorizontalOptions=&quot;Fill&quot;
         UseCache=&quot;Image&quot;
+        x:Name=&quot;BackgroundLayer&quot;
         Padding=&quot;16,6,16,10&quot;&gt;
 
         &lt;draw:SkiaShape
@@ -185,10 +269,12 @@ public class NewsItem
             BackgroundColor=&quot;White&quot;
             VerticalOptions=&quot;Fill&quot;
             HorizontalOptions=&quot;Fill&quot;&gt;
+
             &lt;draw:SkiaShape.VisualEffects&gt;
                 &lt;draw:DropShadowEffect
                     Color=&quot;#33000000&quot; Blur=&quot;3&quot; X=&quot;3&quot; Y=&quot;3&quot; /&gt;
             &lt;/draw:SkiaShape.VisualEffects&gt;
+
         &lt;/draw:SkiaShape&gt;
     &lt;/draw:SkiaLayout&gt;
 
@@ -198,7 +284,7 @@ public class NewsItem
         Type=&quot;Column&quot; Spacing=&quot;12&quot;
         HorizontalOptions=&quot;Fill&quot;&gt;
 
-              &lt;!-- Author Header --&gt;
+        &lt;!-- Author Header --&gt;
         &lt;draw:SkiaLayout Type=&quot;Row&quot; Spacing=&quot;8&quot;
                          UseCache=&quot;Image&quot;
                          HorizontalOptions=&quot;Fill&quot;&gt;
@@ -253,64 +339,32 @@ public class NewsItem
             LineBreakMode=&quot;WordWrap&quot;
             IsVisible=&quot;False&quot; /&gt;
 
-        &lt;!-- Image Content --&gt;
+        &lt;!-- Image Content and optional Play Button --&gt;
         &lt;draw:SkiaShape x:Name=&quot;ContentImage&quot;
                         IsVisible=&quot;False&quot;
+                        CornerRadius=&quot;16,0,0,0&quot;
                         HorizontalOptions=&quot;Fill&quot;
                         HeightRequest=&quot;200&quot;&gt;
+
             &lt;draw:SkiaImage
                 BackgroundColor=&quot;LightGray&quot;
                 x:Name=&quot;ContentImg&quot;
                 Aspect=&quot;AspectCover&quot;
                 VerticalOptions=&quot;Fill&quot;
                 HorizontalOptions=&quot;Fill&quot; /&gt;
-        &lt;/draw:SkiaShape&gt;
 
-        &lt;!-- Video Thumbnail with Play Button --&gt;
-        &lt;draw:SkiaLayout
-            HorizontalOptions=&quot;Fill&quot;
-            UseCache=&quot;Image&quot;
-            x:Name=&quot;VideoLayout&quot;
-            Type=&quot;Absolute&quot;
-            HeightRequest=&quot;200&quot;
-            IsVisible=&quot;False&quot;&gt;
-
-            &lt;draw:SkiaImage
-                BackgroundColor=&quot;LightGray&quot;
-                x:Name=&quot;VideoThumbnail&quot;
-                Aspect=&quot;AspectFill&quot;
-                HorizontalOptions=&quot;Fill&quot;
-                VerticalOptions=&quot;Fill&quot; /&gt;
-
-            &lt;!--wrapper to cache shadow--&gt;
-            &lt;draw:SkiaLayout
-                UseCache=&quot;Image&quot;
-                Padding=&quot;20&quot;
+            &lt;draw:SkiaSvg
+                x:Name=&quot;VideoLayout&quot;
+                UseCache=&quot;Operations&quot;
+                SvgString=&quot;{x:StaticResource SvgPlay}&quot;
+                WidthRequest=&quot;50&quot;
+                LockRatio=&quot;1&quot;
+                TintColor=&quot;White&quot;
+                Opacity=&quot;0.66&quot;
                 HorizontalOptions=&quot;Center&quot;
-                VerticalOptions=&quot;Center&quot;&gt;
+                VerticalOptions=&quot;Center&quot; /&gt;
 
-                &lt;draw:SkiaShape
-                    Type=&quot;Circle&quot;
-                    WidthRequest=&quot;60&quot;
-                    HeightRequest=&quot;60&quot;
-                    BackgroundColor=&quot;Black&quot;
-                    Opacity=&quot;0.7&quot;
-                    HorizontalOptions=&quot;Center&quot;
-                    VerticalOptions=&quot;Center&quot;&gt;
-
-                &lt;/draw:SkiaShape&gt;
-
-                &lt;draw:SkiaRichLabel
-                    Text=&quot;▶&quot;
-                    Opacity=&quot;0.7&quot;
-                    FontSize=&quot;26&quot;
-                    TextColor=&quot;White&quot;
-                    HorizontalOptions=&quot;Center&quot;
-                    VerticalOptions=&quot;Center&quot; /&gt;
-
-            &lt;/draw:SkiaLayout&gt;
-
-        &lt;/draw:SkiaLayout&gt;
+        &lt;/draw:SkiaShape&gt;
 
         &lt;!-- Article Preview --&gt;
         &lt;draw:SkiaLayout
@@ -353,14 +407,12 @@ public class NewsItem
         &lt;/draw:SkiaLayout&gt;
 
         &lt;!-- Ad Content --&gt;
-        &lt;draw:SkiaLayout
+        &lt;draw:SkiaShape
             HeightRequest=&quot;150&quot;
             BackgroundColor=&quot;LightGray&quot;
             HorizontalOptions=&quot;Fill&quot;
             UseCache=&quot;Image&quot;
             x:Name=&quot;AdLayout&quot;
-            Type=&quot;Column&quot;
-            Spacing=&quot;8&quot;
             IsVisible=&quot;False&quot;&gt;
 
             &lt;draw:SkiaLabel
@@ -368,9 +420,11 @@ public class NewsItem
                 Text=&quot;Sponsored&quot;
                 FontSize=&quot;10&quot;
                 TextColor=&quot;Gray&quot;
+                Margin=&quot;4,0&quot;
                 HorizontalOptions=&quot;End&quot; /&gt;
 
             &lt;draw:SkiaImage
+                Margin=&quot;0,16,0,32&quot;
                 UseCache=&quot;Image&quot;
                 x:Name=&quot;AdImage&quot;
                 VerticalOptions=&quot;Fill&quot;
@@ -378,46 +432,56 @@ public class NewsItem
                 Aspect=&quot;AspectFill&quot; /&gt;
 
             &lt;draw:SkiaLabel
+                VerticalOptions=&quot;End&quot;
                 UseCache=&quot;Operations&quot;
                 x:Name=&quot;AdTitle&quot;
                 FontSize=&quot;14&quot;
                 Margin=&quot;8&quot;
                 FontAttributes=&quot;Bold&quot;
+                MaxLines=&quot;1&quot;
                 TextColor=&quot;Black&quot; /&gt;
 
-        &lt;/draw:SkiaLayout&gt;
+        &lt;/draw:SkiaShape&gt;
 
         &lt;!-- Interaction Bar --&gt;
-        &lt;draw:SkiaLayout Type=&quot;Row&quot;
+        &lt;draw:SkiaLayout Type=&quot;Grid&quot;
                          UseCache=&quot;Operations&quot;
-                         Spacing=&quot;16&quot; HorizontalOptions=&quot;Fill&quot;&gt;
+                         ColumnDefinitions=&quot;33*,33*,33*&quot;
+                         ColumnSpacing=&quot;0&quot;
+                         HorizontalOptions=&quot;Fill&quot;&gt;
 
-            &lt;draw:SkiaButton
+            &lt;draw:SkiaRichLabel
+                HorizontalOptions=&quot;Center&quot;
+                Grid.Column=&quot;0&quot;
                 x:Name=&quot;LikeButton&quot;
                 Text=&quot;👍&quot;
                 BackgroundColor=&quot;Transparent&quot;
                 TextColor=&quot;Gray&quot;
                 FontSize=&quot;14&quot; /&gt;
 
-            &lt;draw:SkiaButton
+            &lt;draw:SkiaRichLabel
+                Grid.Column=&quot;1&quot;
+                HorizontalOptions=&quot;Center&quot;
                 x:Name=&quot;CommentButton&quot;
                 Text=&quot;💬&quot;
                 BackgroundColor=&quot;Transparent&quot;
                 TextColor=&quot;Gray&quot;
                 FontSize=&quot;14&quot; /&gt;
 
-            &lt;draw:SkiaButton
+            &lt;draw:SkiaRichLabel
+                Grid.Column=&quot;2&quot;
+                HorizontalOptions=&quot;Center&quot;
                 x:Name=&quot;ShareButton&quot;
                 Text=&quot;📤&quot;
                 BackgroundColor=&quot;Transparent&quot;
                 TextColor=&quot;Gray&quot;
-                FontSize=&quot;14&quot;
-                HorizontalOptions=&quot;End&quot; /&gt;
+                FontSize=&quot;14&quot; /&gt;
 
         &lt;/draw:SkiaLayout&gt;
 
     &lt;/draw:SkiaLayout&gt;
 
+    &lt;!--used for debug Id--&gt;
     &lt;draw:SkiaLabel
         Margin=&quot;32,24&quot;
         x:Name=&quot;DebugId&quot;
@@ -426,9 +490,37 @@ public class NewsItem
 
 &lt;/draw:SkiaDynamicDrawnCell&gt;
 </code></pre>
-<h3 id="4--smart-cell-logic---key-concepts">4. 🧠 Smart Cell Logic - Key Concepts</h3>
-<p>The magic happens in the code-behind where one cell adapts to any content type. Here are the most interesting parts:</p>
+<p>You could enable showing debugging information by uncommenting the following code on the sample page, this would give you the idea what is happening with your cells, how much of them you are currently using and have in the pool:</p>
+<pre><code class="lang-xml">                &lt;draw:SkiaLabel
+                    UseCache=&quot;Operations&quot;
+                    Margin=&quot;8&quot;
+                    Padding=&quot;2&quot;
+                    AddMarginBottom=&quot;50&quot;
+                    BackgroundColor=&quot;#CC000000&quot;
+                    HorizontalOptions=&quot;Start&quot;
+                    InputTransparent=&quot;True&quot;
+                    Text=&quot;{Binding Source={x:Reference NewsStack}, Path=DebugString}&quot;
+                    TextColor=&quot;LawnGreen&quot;
+                    VerticalOptions=&quot;End&quot;
+                    ZIndex=&quot;100&quot; /&gt;
+
+                &lt;draw:SkiaLabelFps
+                    Margin=&quot;0,0,4,24&quot;
+                    BackgroundColor=&quot;DarkRed&quot;
+                    HorizontalOptions=&quot;End&quot;
+                    Rotation=&quot;-45&quot;
+                    TextColor=&quot;White&quot;
+                    VerticalOptions=&quot;End&quot;
+                    ZIndex=&quot;100&quot;/&gt;
+</code></pre>
+<h3 id="-key-concept">🧠 Key Concept</h3>
+<blockquote>
+<ul>
+<li>In performance critical scenarios we do not use MAUI bindings, we patch cells properties in one frame from code-behind. Notice we do not need UI thread to access properties of drawn virtual controls. If you need thread-safe bindings use DrawnUI fluent extensions, they provide INotifyPropertyChanged oberver pattern that is background thread-friendly.</li>
+</ul>
+</blockquote>
 <h4 id="core-recycling-pattern"><strong>Core Recycling Pattern</strong></h4>
+<p>The <code>SetContent</code> method is called every time <code>BindingContext</code> changes for cell, and it's internally wrapped with batch-update lock, so no intermediate rendering happens, very important for performance.</p>
 <pre><code class="lang-csharp">protected override void SetContent(object ctx)
 {
     base.SetContent(ctx);
@@ -439,22 +531,8 @@ public class NewsItem
     }
 }
 </code></pre>
-<h4 id="custom-placeholder-drawing"><strong>Custom Placeholder Drawing</strong></h4>
-<pre><code class="lang-csharp">public override void DrawPlaceholder(DrawingContext context)
-{
-    var margins = BackgroundLayer.Padding;
-    var area = new SKRect(/* calculated bounds with proper scaling */);
-
-    PaintPlaceholder ??= new SKPaint
-    {
-        Color = SKColor.Parse(&quot;#FFFFFF&quot;),
-        Style = SKPaintStyle.Fill,
-    };
-
-    context.Context.Canvas.DrawRect(area, PaintPlaceholder);
-}
-</code></pre>
 <h4 id="smart-content-configuration"><strong>Smart Content Configuration</strong></h4>
+<p>Since we paint what we need instead of using MAUI <code>DataTemplateSelector</code>, we can simply hide/show elements based on content type. The hide/show concent is very efficient with virtual controls, hidden controls do not participate in layout and drawing and they since they do not create any native views they affect no pressure.</p>
 <pre><code class="lang-csharp">private void ConfigureForContentType(NewsItem news)
 {
     // Reset all content visibility first
@@ -477,7 +555,26 @@ public class NewsItem
     }
 }
 </code></pre>
-<h4 id="memory-management"><strong>Memory Management</strong></h4>
+<h4 id="custom-placeholder-drawing"><strong>Custom Placeholder Drawing</strong></h4>
+<p>When using cache type <code>ImageDoubleBuffered</code> we can use <code>DrawPlaceholder</code> method to draw a custom placeholder while the first  cache is being prepared in background. Here we simulate an empty cell background layer, we use its existing padding to calculate the exact area. Notice we reuse the SKPaint and it would be disposed when the cell is disposed, instead of creating a new one for each call, keeping the UI-freezing GC collector away as much as possible.</p>
+<pre><code class="lang-csharp">public override void DrawPlaceholder(DrawingContext context)
+{
+        var margins = BackgroundLayer.Padding;
+        var area =
+                new SKRect((float)(context.Destination.Left + margins.Left * context.Scale),
+            (float)(context.Destination.Top + margins.Top * context.Scale),
+        (float)(context.Destination.Right - margins.Right * context.Scale),
+        (float)(context.Destination.Bottom - margins.Bottom * context.Scale));
+
+    PaintPlaceholder ??= new SKPaint
+    {
+        Color = SKColor.Parse(&quot;#FFFFFF&quot;),
+        Style = SKPaintStyle.Fill,
+    };
+
+    context.Context.Canvas.DrawRect(area, PaintPlaceholder);
+}
+</code></pre>
 <pre><code class="lang-csharp">public override void OnWillDisposeWithChildren()
 {
     base.OnWillDisposeWithChildren();
@@ -485,98 +582,17 @@ public class NewsItem
 }
 </code></pre>
 <blockquote>
-<p><strong>💡 Key Concepts:</strong></p>
-<ul>
-<li><strong>One cell handles all content types</strong> - no DataTemplateSelector needed</li>
-<li><strong>Custom placeholder drawing</strong> - smooth loading experience with SkiaSharp</li>
-<li><strong>Proper disposal</strong> - prevents memory leaks in recycled cells</li>
-<li><strong>Reset-then-configure pattern</strong> - ensures clean state for each item</li>
-</ul>
-</blockquote>
-<blockquote>
 <p><strong>📁 Complete Code:</strong> Find the full implementation in the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials/Tutorials/NewsFeed/NewsCell.xaml.cs">Tutorials project</a></p>
 </blockquote>
-<h3 id="5--real-internet-images-data-provider">5. 🌐 Real Internet Images Data Provider</h3>
+<h3 id="-data-provider">🌐 Data Provider</h3>
 <blockquote>
-<p><strong>Real Avatar Images</strong>: Uses RandomUser.me API for 100x100px professional avatars
+<p><strong>Real Avatar Images</strong>: Uses RandomUser.me API for 100x100px professional avatars<br>
 <strong>Real Content Images</strong>: Uses Picsum Photos API for high-quality random images</p>
 </blockquote>
-<pre><code class="lang-csharp">using Sandbox.Models;
-
-namespace Sandbox.Services;
-
+<pre><code class="lang-csharp"> 
 public class NewsDataProvider
 {
-    private static Random random = new Random();
-    private long index = 0;
-
-    private static (string name, string avatarUrl)[] authors = new (string, string)[]
-    {
-        (&quot;Alex Chen&quot;, &quot;https://randomuser.me/api/portraits/men/1.jpg&quot;),
-        (&quot;Sarah Williams&quot;, &quot;https://randomuser.me/api/portraits/women/2.jpg&quot;),
-        (&quot;Mike Johnson&quot;, &quot;https://randomuser.me/api/portraits/men/3.jpg&quot;),
-        (&quot;Emma Davis&quot;, &quot;https://randomuser.me/api/portraits/women/4.jpg&quot;),
-        (&quot;Chris Brown&quot;, &quot;https://randomuser.me/api/portraits/men/5.jpg&quot;),
-        (&quot;Lisa Martinez&quot;, &quot;https://randomuser.me/api/portraits/women/6.jpg&quot;),
-        (&quot;David Wilson&quot;, &quot;https://randomuser.me/api/portraits/men/7.jpg&quot;),
-        (&quot;Amy Garcia&quot;, &quot;https://randomuser.me/api/portraits/women/8.jpg&quot;),
-        (&quot;Tom Anderson&quot;, &quot;https://randomuser.me/api/portraits/men/9.jpg&quot;),
-        (&quot;Maya Patel&quot;, &quot;https://randomuser.me/api/portraits/women/10.jpg&quot;)
-    };
-
-    private static string[] postTexts = new string[]
-    {
-        &quot;Just finished an amazing project! 🚀 Feeling accomplished and ready for the next challenge.&quot;,
-        &quot;Beautiful morning coffee and some deep thoughts about technology's future ☕️&quot;,
-        &quot;Working on something exciting. Can't wait to share it with everyone soon! 🎉&quot;,
-        &quot;Loved this book recommendation from a friend. Anyone else read it? 📚&quot;,
-        &quot;Amazing sunset from my balcony today. Nature never fails to inspire 🌅&quot;
-    };
-
-    private static string[] articleTitles = new string[]
-    {
-        &quot;Breaking: Revolutionary AI Technology Unveiled&quot;,
-        &quot;Climate Scientists Make Groundbreaking Discovery&quot;,
-        &quot;Tech Giants Announce Major Collaboration&quot;,
-        &quot;New Study Reveals Surprising Health Benefits&quot;,
-        &quot;Space Mission Returns with Fascinating Data&quot;
-    };
-
-    private static string[] articleDescriptions = new string[]
-    {
-        &quot;Researchers have developed a new method that could change everything we know...&quot;,
-        &quot;The implications of this discovery could reshape our understanding of...&quot;,
-        &quot;Industry experts are calling this the most significant development in...&quot;,
-        &quot;Scientists from leading universities collaborated to uncover...&quot;,
-        &quot;This breakthrough opens up possibilities that were previously unimaginable...&quot;
-    };
-
-    public List&lt;NewsItem&gt; GetNewsFeed(int count)
-    {
-        var items = new List&lt;NewsItem&gt;();
-
-        for (int i = 0; i &lt; count; i++)
-        {
-            index++;
-            var newsType = GetRandomNewsType();
-
-            var author = GetRandomAuthor();
-            var item = new NewsItem
-            {
-                Id = index,
-                Type = newsType,
-                AuthorName = author.name,
-                AuthorAvatarUrl = author.avatarUrl,
-                PublishedAt = DateTime.Now.AddMinutes(-random.Next(1, 1440)) // Random time within last day
-            };
-
-            ConfigureItemByType(item);
-            items.Add(item);
-        }
-
-        return items;
-    }
-
+ 
     private void ConfigureItemByType(NewsItem item)
     {
         switch (item.Type)
@@ -649,100 +665,17 @@ public class NewsDataProvider
     }
 }
 </code></pre>
-<h3 id="6--feed-implementation-with-real-data">6. 🚀 Feed Implementation with Real Data</h3>
-<blockquote>
-<p><strong>Spacing Strategy</strong>: Stack spacing is 0 because cell margin/padding provides the spacing between items
-<strong>Recycling</strong>: RecyclingTemplate=&quot;Enabled&quot; with experimental MeasureItemsStrategy=&quot;MeasureVisible&quot; for optimal performance with large lists and uneven rows
-<strong>Virtualization</strong>: VirtualisationInflated=&quot;200&quot; pre-inflates items for smoother scrolling
-<strong>ItemTemplateType</strong>: Direct type reference for better performance than DataTemplate</p>
-</blockquote>
-<pre><code class="lang-xml">&lt;!-- NewsFeedPage.xaml excerpt --&gt;
-&lt;draw:SkiaScroll
-    x:Name=&quot;NewsScroll&quot;
-    Orientation=&quot;Vertical&quot;
-    FrictionScrolled=&quot;0.5&quot;
-    ChangeVelocityScrolled=&quot;1.35&quot;
-    RefreshCommand=&quot;{Binding RefreshCommand}&quot;
-    LoadMoreCommand=&quot;{Binding LoadMoreCommand}&quot;
-    RefreshEnabled=&quot;True&quot;
-    HorizontalOptions=&quot;Fill&quot;
-    VerticalOptions=&quot;Fill&quot;&gt;
-
-    &lt;draw:SkiaScroll.Header&gt;
-        &lt;draw:SkiaLayer HeightRequest=&quot;40&quot; UseCache=&quot;Image&quot;&gt;
-            &lt;draw:SkiaRichLabel
-                Text=&quot;DrawnUI News Feed Tutorial&quot;
-                HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot; /&gt;
-        &lt;/draw:SkiaLayer&gt;
-    &lt;/draw:SkiaScroll.Header&gt;
-
-    &lt;draw:SkiaScroll.Footer&gt;
-        &lt;draw:SkiaLayer HeightRequest=&quot;50&quot; /&gt;
-    &lt;/draw:SkiaScroll.Footer&gt;
-
-    &lt;!-- Dynamic height cells using direct ItemTemplateType --&gt;
-    &lt;draw:SkiaLayout
-        x:Name=&quot;NewsStack&quot;
-        Type=&quot;Column&quot;
-        ItemsSource=&quot;{Binding NewsItems}&quot;
-        RecyclingTemplate=&quot;Enabled&quot;
-        MeasureItemsStrategy=&quot;MeasureVisible&quot;
-        ReserveTemplates=&quot;10&quot;
-        VirtualisationInflated=&quot;200&quot;
-        Spacing=&quot;0&quot;
-        ItemTemplateType=&quot;{x:Type newsFeed:NewsCell}&quot;
-        HorizontalOptions=&quot;Fill&quot; /&gt;
-
-&lt;/draw:SkiaScroll&gt;
-
-&lt;!-- Debug info display --&gt;
-&lt;draw:SkiaLabel
-    UseCache=&quot;Operations&quot;
-    Margin=&quot;8&quot;
-    Padding=&quot;2&quot;
-    AddMarginBottom=&quot;50&quot;
-    BackgroundColor=&quot;#CC000000&quot;
-    HorizontalOptions=&quot;Start&quot;
-    InputTransparent=&quot;True&quot;
-    Text=&quot;{Binding Source={x:Reference NewsStack}, Path=DebugString}&quot;
-    TextColor=&quot;LawnGreen&quot;
-    VerticalOptions=&quot;End&quot;
-    ZIndex=&quot;100&quot; /&gt;
-</code></pre>
-<pre><code class="lang-csharp">using System.Diagnostics;
-using System.Windows.Input;
-using AppoMobi.Specials;
-using Sandbox.Models;
-using Sandbox.Services;
-
-namespace Sandbox.ViewModels;
-
+<p>You would see something you'd normally expect in our viewmodel:</p>
+<pre><code class="lang-csharp">
 public class NewsViewModel : BaseViewModel
 {
-    private readonly NewsDataProvider _dataProvider;
-    private CancellationTokenSource _preloadCancellation;
-
-    public NewsViewModel()
-    {
-        _dataProvider = new NewsDataProvider();
-        NewsItems = new ObservableRangeCollection&lt;NewsItem&gt;();
-
-        RefreshCommand = new Command(async () =&gt; await RefreshFeed());
-        LoadMoreCommand = new Command(async () =&gt; await LoadMore());
-
-        // Load initial data
-        Tasks.StartDelayed(TimeSpan.FromMilliseconds(50), async () =&gt;
-        {
-            await RefreshFeed();
-        });
-    }
-
+ 
     public ObservableRangeCollection&lt;NewsItem&gt; NewsItems { get; }
 
     public ICommand RefreshCommand { get; }
     public ICommand LoadMoreCommand { get; }
 
-    private const int DataChunkSize = 20;
+    private const int DataChunkSize = 50;
 
     private async Task RefreshFeed()
     {
@@ -811,116 +744,12 @@ public class NewsViewModel : BaseViewModel
             IsBusy = false;
         }
     }
-
-    private async Task PreloadImages(List&lt;NewsItem&gt; items, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var imageUrls = new List&lt;string&gt;();
-
-            // Add content images
-            imageUrls.AddRange(items
-                .Where(x =&gt; !string.IsNullOrEmpty(x.ImageUrl))
-                .Select(x =&gt; x.ImageUrl));
-
-            // Add avatar images
-            imageUrls.AddRange(items
-                .Where(x =&gt; !string.IsNullOrEmpty(x.AuthorAvatarUrl))
-                .Select(x =&gt; x.AuthorAvatarUrl));
-
-            // Use DrawnUI's image manager for efficient preloading
-            await SkiaImageManager.Instance.PreloadImages(imageUrls, _preloadCancellation);
-        }
-        catch (OperationCanceledException)
-        {
-            // Expected when cancelled
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($&quot;Error preloading images: {ex.Message}&quot;);
-        }
-    }
 }
-
-// NewsFeedPage.xaml.cs
-public partial class NewsFeedPage : DrawnUiBasePage
-{
-    public NewsFeedPage()
-    {
-        try
-        {
-            InitializeComponent();
-            BindingContext = new NewsViewModel();
-        }
-        catch (Exception e)
-        {
-            Super.DisplayException(this, e);
-        }
-    }
-}
+ 
 </code></pre>
-<h2 id="key-advantages">Key Advantages</h2>
-<h3 id="1-recycling-with-smart-caching">1. <strong>Recycling with Smart Caching</strong></h3>
-<ul>
-<li>Single cell type provides good recycling efficiency</li>
-<li><code>UseCache=&quot;ImageDoubleBuffered&quot;</code> works well with MeasureVisible strategy</li>
-<li>Strategic cache placement: <code>UseCache=&quot;Operations&quot;</code> for text, <code>UseCache=&quot;Image&quot;</code> for complex layouts</li>
-<li>Separate shadow layer with independent caching for better performance</li>
-</ul>
-<h3 id="2-handling-uneven-row-heights">2. <strong>Handling Uneven Row Heights</strong></h3>
-<p>This tutorial demonstrates the challenging case of <strong>uneven row heights</strong> using the experimental <strong>MeasureVisible</strong> strategy:</p>
-<pre><code class="lang-csharp">// Different content types = different heights:
-// - Text post = ~120dp
-// - Image post = ~320dp
-// - Video post = ~320dp
-// - Article preview = ~180dp
-// - Ad content = ~250dp
-// All calculated automatically by DrawnUI's layout system
-</code></pre>
-<blockquote>
-<p><strong>💡 MeasureVisible Strategy</strong>: This experimental strategy works well for large lists with uneven rows. It measures only visible items initially, then progressively measures off-screen items in the background. This can provide good scrolling performance with thousands of items of varying heights.</p>
-</blockquote>
-<h3 id="3-real-internet-images">3. <strong>Real Internet Images</strong></h3>
-<ul>
-<li><strong>Avatars</strong>: RandomUser.me API (100x100px professional portraits)</li>
-<li><strong>Content</strong>: Picsum Photos API (high-quality random images)</li>
-<li><strong>Caching</strong>: DrawnUI's SkiaImageManager handles efficient image caching</li>
-</ul>
-<h3 id="4-shadow-performance-optimization">4. <strong>Shadow Performance Optimization</strong></h3>
-<ul>
-<li>Shadows are cached in a separate background layer for optimal performance</li>
-<li>Background layer with <code>UseCache=&quot;Image&quot;</code> contains shadow effects independently</li>
-<li>Cell margin/padding creates space for shadows to render properly</li>
-</ul>
-<h3 id="5-spacing-strategy">5. <strong>Spacing Strategy</strong></h3>
-<ul>
-<li>Stack <code>Spacing=&quot;0&quot;</code> because cell margin/padding provides item spacing</li>
-<li>Cell <code>Margin=&quot;16,6,16,10&quot;</code> and <code>Padding=&quot;16&quot;</code> act as general spacing between items</li>
-<li>Separate background layer allows independent shadow caching</li>
-</ul>
-<h3 id="6-loadmore-implementation">6. <strong>LoadMore Implementation</strong></h3>
-<ul>
-<li><strong>Refresh</strong>: Uses <code>ReplaceRange()</code> to replace all items</li>
-<li><strong>LoadMore</strong>: Uses <code>AddRange()</code> to append new items (proper infinite scroll)</li>
-<li><strong>ObservableRangeCollection</strong>: Efficient bulk operations without individual notifications</li>
-</ul>
-<h3 id="7-smart-text-rendering">7. <strong>Smart Text Rendering</strong></h3>
-<ul>
-<li><strong>SkiaLabel</strong>: Fast rendering when your font family supports all symbols</li>
-<li><strong>SkiaRichLabel</strong>: Auto-finds installed fonts for Unicode symbols (emojis, special characters)</li>
-<li><strong>No more &quot;???&quot;</strong>: SkiaRichLabel prevents missing symbol fallbacks by finding the right fonts</li>
-<li><strong>Customizable fallbacks</strong>: SkiaLabel lets you customize fallback symbols if needed</li>
-</ul>
-<h3 id="8-icons--animations">8. <strong>Icons &amp; Animations</strong></h3>
-<p>We kept it simple with emoji for this tutorial, but DrawnUI provides additional options:</p>
-<ul>
-<li><strong>SkiaSvg</strong>: Vector icons for like, share, play buttons that scale well</li>
-<li><strong>SkiaLottie</strong>: Animated icons (animated hearts, loading spinners, etc.)</li>
-<li><strong>Performance</strong>: Both render with hardware acceleration and cache efficiently</li>
-</ul>
-<h2 id="conclusion-just-draw-what-you-want">Conclusion: Just Draw What You Want</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>DrawnUI gives you the freedom to <strong>just draw what you need</strong>. This tutorial demonstrates a challenging real-world scenario:</p>
-<h3 id="-what-we-accomplished">✅ <strong>What We Accomplished</strong></h3>
+<h3 id="-we-accomplished">✅ <strong>We Accomplished</strong></h3>
 <ul>
 <li><strong>One universal cell</strong> handling 5 different content types with uneven heights</li>
 <li><strong>Real internet images</strong> from RandomUser.me (avatars) and Picsum Photos (content)</li>
@@ -930,24 +759,17 @@ public partial class NewsFeedPage : DrawnUiBasePage
 <li><strong>Proper LoadMore</strong> implementation with <code>AddRange()</code> vs <code>Clear()</code> + <code>AddRange()</code></li>
 <li><strong>Strategic spacing</strong> using cell margin/padding instead of stack spacing</li>
 <li><strong>Experimental MeasureVisible</strong> strategy for optimal large list performance</li>
-<li><strong>ItemTemplateType</strong> for better performance than DataTemplate</li>
 <li><strong>VirtualisationInflated</strong> for smoother scrolling with pre-inflated items</li>
 <li><strong>Debug information</strong> display for monitoring performance</li>
 </ul>
-<h3 id="-performance-optimizations">🎯 <strong>Performance Optimizations</strong></h3>
+<h3 id="-performance-remainder">🎯 <strong>Performance Remainder</strong></h3>
 <ul>
-<li><strong>Caching</strong>: <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> for cells, <code>UseCache=&quot;Image&quot;</code> for layouts, <code>UseCache=&quot;Operations&quot;</code> for text</li>
-<li><strong>Shadows</strong>: Separate background layer with independent caching</li>
-<li><strong>Spacing</strong>: Stack spacing = 0, cell margin/padding provides item spacing</li>
-<li><strong>Images</strong>: Preloaded with DrawnUI's SkiaImageManager for smooth scrolling</li>
-<li><strong>MeasureVisible</strong>: Progressive measurement for instant scrolling with thousands of items</li>
-<li><strong>ItemTemplateType</strong>: Direct type reference avoids DataTemplate overhead</li>
-<li><strong>VirtualisationInflated</strong>: Pre-inflates 200 items for smoother scrolling</li>
-<li><strong>Debug monitoring</strong>: Real-time performance metrics display</li>
+<li><strong>Caching</strong>: <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> for cells, <code>UseCache=&quot;Image&quot;</code> for heavy content, <code>UseCache=&quot;Operations&quot;</code> for simple text and vectors.</li>
+<li><strong>Layering</strong>: Separate UI into layers for caching</li>
+<li><strong>Debug</strong>: Monitor how your optimizations affect FPS in realtime to notice drastic difference with and without caching and other techniques.</li>
 </ul>
 <h3 id="-the-drawnui-advantage">🚀 <strong>The DrawnUI Advantage</strong></h3>
-<p>Adding a new content type? Simply add an enum value and a configuration method. No new templates, no complex selectors, no performance compromises.</p>
-<p>The result? A smooth, efficient news feed that handles the challenging case of uneven row heights while loading real images from the internet. <strong>Just draw what you want!</strong> 🎨</p>
+<p>A smooth, efficient news feed that handles the challenging case of uneven row heights while loading real images from the internet. <strong>Draw what you want!</strong> 🎨</p>
 
 </article>
 
@@ -968,7 +790,7 @@ public partial class NewsFeedPage : DrawnUiBasePage
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a>
         </div>
       </div>
     </footer>

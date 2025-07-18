@@ -32,7 +32,7 @@ builder.UseDrawnUi();
 
 ### Documentation & Guides
 - **[Getting Started Guide](getting-started.md)** - Complete installation and setup
-- **[Sample Apps](samples.md)** - Tutorials and example projects
+- **[Sample Apps](tutorials.md)** - Tutorials and example projects
 - **[FAQ](faq.md)** - Frequently asked questions and answers
 - **[Controls Documentation](controls/index.md)** - Complete controls reference
 - **[Advanced Features](advanced/index.md)** - Performance and platform topics

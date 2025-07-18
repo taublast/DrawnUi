@@ -36,4 +36,12 @@ public partial class MainPage : ContentPage
     {
         await Shell.Current.GoToAsync("button");
     }
+
+    private void LinkTutorialsTapped(object sender, SkiaControl.ControlTappedEventArgs e)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            Super.OpenLink("https://taublast.github.io/DrawnUi/samples.html");
+        });
+    }
 }

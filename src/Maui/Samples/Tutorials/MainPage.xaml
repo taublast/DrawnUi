@@ -87,6 +87,33 @@
 
             </draw:SkiaWrap>
 
+            <draw:SkiaLabel
+                Margin="0,16,0,0"
+                UseCache="Image"
+                Tapped="LinkTutorialsTapped"
+                FontFamily="FontText"
+                FontSize="15"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                LineHeightUniform="False"
+                TextColor="#3333FF">
+                <draw:SkiaLabel.Spans>
+
+                    <draw:TextSpan Text="Read the tutorials" />
+
+                    <draw:TextSpan Text=" " />
+
+                    <draw:SvgSpan
+                        Width="17"
+                        Height="17"
+                        Source="Svg/linkout.svg"
+                        TintColor="#3333FF"
+                        VerticalAlignement="Center" />
+
+                </draw:SkiaLabel.Spans>
+
+            </draw:SkiaLabel>
+
         </draw:SkiaStack>
 
     </draw:Canvas>

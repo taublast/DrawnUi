@@ -122,7 +122,7 @@ Proceed as described in the [Getting Started](getting-started.md) section. When 
         })
 ```
 
-### 2. Define Content Types
+### Define Content Types
 We have several possible feed types, we handle all of them with one model. Notice that we didn't implement INotifyPropertyChanged for this example. If your app is updating already existing cells at runtime, for example changing `IsUnread` for a feed or `IsOnline` for avatar, you would need to implement it and then override `ContextPropertyChanged` inside the cell to reflect dynamic changes in model to your UI.
 
 ```csharp
@@ -456,6 +456,31 @@ Thise are friends when it come to creating recycled or "bindablelayout-like" sce
 </draw:SkiaDynamicDrawnCell>
 ```
 
+You could enable showing debugging information by uncommenting the following code on the sample page, this would give you the idea what is happening with your cells, how much of them you are currently using and have in the pool:
+
+```xml
+                <draw:SkiaLabel
+                    UseCache="Operations"
+                    Margin="8"
+                    Padding="2"
+                    AddMarginBottom="50"
+                    BackgroundColor="#CC000000"
+                    HorizontalOptions="Start"
+                    InputTransparent="True"
+                    Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
+                    TextColor="LawnGreen"
+                    VerticalOptions="End"
+                    ZIndex="100" />
+
+                <draw:SkiaLabelFps
+                    Margin="0,0,4,24"
+                    BackgroundColor="DarkRed"
+                    HorizontalOptions="End"
+                    Rotation="-45"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    ZIndex="100"/>
+```
 
 ### 🧠 Key Concept
 
@@ -536,7 +561,7 @@ public override void OnWillDisposeWithChildren()
 
 > **📁 Complete Code:** Find the full implementation in the [Tutorials project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials/Tutorials/NewsFeed/NewsCell.xaml.cs)
 
-### 5. 🌐 Real Internet Images Data Provider
+### 🌐 Data Provider
 
 > **Real Avatar Images**: Uses RandomUser.me API for 100x100px professional avatars  
 > **Real Content Images**: Uses Picsum Photos API for high-quality random images
@@ -620,69 +645,7 @@ public class NewsDataProvider
 }
 ```
 
-### 6. 🚀 Feed Implementation with Real Data
-
-> **Spacing Strategy**: Stack spacing is 0 because cell margin/padding provides the spacing between items
-> **Recycling**: RecyclingTemplate="Enabled" with experimental MeasureItemsStrategy="MeasureVisible" for optimal performance with large lists and uneven rows
-> **Virtualization**: VirtualisationInflated="200" pre-inflates items for smoother scrolling
-> **ItemTemplateType**: Direct type reference for better performance than DataTemplate
-
-```xml
-<!-- NewsFeedPage.xaml excerpt -->
-<draw:SkiaScroll
-    x:Name="NewsScroll"
-    Orientation="Vertical"
-    FrictionScrolled="0.5"
-    ChangeVelocityScrolled="1.35"
-    RefreshCommand="{Binding RefreshCommand}"
-    LoadMoreCommand="{Binding LoadMoreCommand}"
-    RefreshEnabled="True"
-    HorizontalOptions="Fill"
-    VerticalOptions="Fill">
-
-    <draw:SkiaScroll.Header>
-        <draw:SkiaLayer HeightRequest="40" UseCache="Image">
-            <draw:SkiaRichLabel
-                Text="DrawnUI News Feed Tutorial"
-                HorizontalOptions="Center" VerticalOptions="Center" />
-        </draw:SkiaLayer>
-    </draw:SkiaScroll.Header>
-
-    <draw:SkiaScroll.Footer>
-        <draw:SkiaLayer HeightRequest="50" />
-    </draw:SkiaScroll.Footer>
-
-    <!-- Dynamic height cells using direct ItemTemplateType -->
-    <draw:SkiaLayout
-        x:Name="NewsStack"
-        Type="Column"
-        ItemsSource="{Binding NewsItems}"
-        RecyclingTemplate="Enabled"
-        MeasureItemsStrategy="MeasureVisible"
-        ReserveTemplates="10"
-        VirtualisationInflated="200"
-        Spacing="0"
-        ItemTemplateType="{x:Type newsFeed:NewsCell}"
-        HorizontalOptions="Fill" />
-
-</draw:SkiaScroll>
-
-<!-- Debug info display -->
-<draw:SkiaLabel
-    UseCache="Operations"
-    Margin="8"
-    Padding="2"
-    AddMarginBottom="50"
-    BackgroundColor="#CC000000"
-    HorizontalOptions="Start"
-    InputTransparent="True"
-    Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
-    TextColor="LawnGreen"
-    VerticalOptions="End"
-    ZIndex="100" />
-```
-
-You would see something like what you'd excpect from such viewmodel:
+You would see something you'd normally expect in our viewmodel:
 
 ```csharp
 
@@ -767,31 +730,6 @@ public class NewsViewModel : BaseViewModel
  
 ```
 
-You could enable showing debugging information by uncommenting the following code on the sample page, this would give you the idea what is happening with your cells, how much of them you are currently using and have in the pool:
-
-```xml
-                <draw:SkiaLabel
-                    UseCache="Operations"
-                    Margin="8"
-                    Padding="2"
-                    AddMarginBottom="50"
-                    BackgroundColor="#CC000000"
-                    HorizontalOptions="Start"
-                    InputTransparent="True"
-                    Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
-                    TextColor="LawnGreen"
-                    VerticalOptions="End"
-                    ZIndex="100" />
-
-                <draw:SkiaLabelFps
-                    Margin="0,0,4,24"
-                    BackgroundColor="DarkRed"
-                    HorizontalOptions="End"
-                    Rotation="-45"
-                    TextColor="White"
-                    VerticalOptions="End"
-                    ZIndex="100"/>
-```
 
 ## Conclusion
 

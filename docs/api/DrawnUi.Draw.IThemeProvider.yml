@@ -1,0 +1,322 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.IThemeProvider
+  commentId: T:DrawnUi.Draw.IThemeProvider
+  id: IThemeProvider
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.IThemeProvider.CurrentTheme
+  - DrawnUi.Draw.IThemeProvider.ThemeChanged
+  langs:
+  - csharp
+  - vb
+  name: IThemeProvider
+  nameWithType: IThemeProvider
+  fullName: DrawnUi.Draw.IThemeProvider
+  type: Interface
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IThemeProvider
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Platform-agnostic theme provider interface for cross-platform compatibility
+  example: []
+  syntax:
+    content: public interface IThemeProvider
+    content.vb: Public Interface IThemeProvider
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.IThemeProvider.CurrentTheme
+  commentId: P:DrawnUi.Draw.IThemeProvider.CurrentTheme
+  id: CurrentTheme
+  parent: DrawnUi.Draw.IThemeProvider
+  langs:
+  - csharp
+  - vb
+  name: CurrentTheme
+  nameWithType: IThemeProvider.CurrentTheme
+  fullName: DrawnUi.Draw.IThemeProvider.CurrentTheme
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CurrentTheme
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: AppTheme CurrentTheme { get; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.ApplicationModel.AppTheme
+    content.vb: ReadOnly Property CurrentTheme As AppTheme
+  overload: DrawnUi.Draw.IThemeProvider.CurrentTheme*
+- uid: DrawnUi.Draw.IThemeProvider.ThemeChanged
+  commentId: E:DrawnUi.Draw.IThemeProvider.ThemeChanged
+  id: ThemeChanged
+  parent: DrawnUi.Draw.IThemeProvider
+  langs:
+  - csharp
+  - vb
+  name: ThemeChanged
+  nameWithType: IThemeProvider.ThemeChanged
+  fullName: DrawnUi.Draw.IThemeProvider.ThemeChanged
+  type: Event
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ThemeChanged
+    path: ../src/Maui/DrawnUi/Shared/Extensions/ThemeBindingExtension.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: event EventHandler<ThemeChangedEventArgs> ThemeChanged
+    return:
+      type: System.EventHandler{DrawnUi.Draw.ThemeChangedEventArgs}
+    content.vb: Event ThemeChanged As EventHandler(Of ThemeChangedEventArgs)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.IThemeProvider.CurrentTheme*
+  commentId: Overload:DrawnUi.Draw.IThemeProvider.CurrentTheme
+  href: DrawnUi.Draw.IThemeProvider.html#DrawnUi_Draw_IThemeProvider_CurrentTheme
+  name: CurrentTheme
+  nameWithType: IThemeProvider.CurrentTheme
+  fullName: DrawnUi.Draw.IThemeProvider.CurrentTheme
+- uid: Microsoft.Maui.ApplicationModel.AppTheme
+  commentId: T:Microsoft.Maui.ApplicationModel.AppTheme
+  parent: Microsoft.Maui.ApplicationModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.applicationmodel.apptheme
+  name: AppTheme
+  nameWithType: AppTheme
+  fullName: Microsoft.Maui.ApplicationModel.AppTheme
+- uid: Microsoft.Maui.ApplicationModel
+  commentId: N:Microsoft.Maui.ApplicationModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.ApplicationModel
+  nameWithType: Microsoft.Maui.ApplicationModel
+  fullName: Microsoft.Maui.ApplicationModel
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.ApplicationModel
+    name: ApplicationModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.applicationmodel
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.ApplicationModel
+    name: ApplicationModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.applicationmodel
+- uid: System.EventHandler{DrawnUi.Draw.ThemeChangedEventArgs}
+  commentId: T:System.EventHandler{DrawnUi.Draw.ThemeChangedEventArgs}
+  parent: System
+  definition: System.EventHandler`1
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<ThemeChangedEventArgs>
+  nameWithType: EventHandler<ThemeChangedEventArgs>
+  fullName: System.EventHandler<DrawnUi.Draw.ThemeChangedEventArgs>
+  nameWithType.vb: EventHandler(Of ThemeChangedEventArgs)
+  fullName.vb: System.EventHandler(Of DrawnUi.Draw.ThemeChangedEventArgs)
+  name.vb: EventHandler(Of ThemeChangedEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - uid: DrawnUi.Draw.ThemeChangedEventArgs
+    name: ThemeChangedEventArgs
+    href: DrawnUi.Draw.ThemeChangedEventArgs.html
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.ThemeChangedEventArgs
+    name: ThemeChangedEventArgs
+    href: DrawnUi.Draw.ThemeChangedEventArgs.html
+  - name: )
+- uid: System.EventHandler`1
+  commentId: T:System.EventHandler`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+  nameWithType.vb: EventHandler(Of TEventArgs)
+  fullName.vb: System.EventHandler(Of TEventArgs)
+  name.vb: EventHandler(Of TEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - name: TEventArgs
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TEventArgs
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

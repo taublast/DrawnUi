@@ -9,10 +9,10 @@
       href: porting-maui.md
 
 - name: Tutorials
-  href: samples.md
+  href: tutorials.md
   items:
     - name: Tutorials Overview
-      href: samples.md
+      href: tutorials.md
     - name: Your First Drawn App (XAML)
       href: first-app.md
     - name: Your First Drawn App (C# Fluent)
