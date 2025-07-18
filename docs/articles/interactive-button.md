@@ -185,11 +185,11 @@ protected virtual SkiaShape CreateView()
         }
         else if (args.Type == TouchActionResult.Down)
         {
-            SetButtonPressed(me);
+            SetButtonPressedme;
         }
         else if (args.Type == TouchActionResult.Up)
         {
-            SetButtonReleased(me);
+            SetButtonReleasedme;
             return null; //do not consume UP if not required, so others can receive it
         }
 

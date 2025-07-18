@@ -1,9 +1,9 @@
 # Porting Native to Drawn with DrawnUI
 
-There may come a time when you feel that some complex parts of your app are not rendering the way you wish, or you cannot implement certain UI elements with out-of-the-box native controls. At the same time, you want to stay with MAUI and not rewrite the app in something else.
+There may come a time when you feel that some complex parts of your app are not rendering the way you wish, or you cannot implement certain UI elements with out-of-the-box native controls. At the same time, you want to stay with MAUI and not rewrite the app in something else.  
 In such cases, you can replace chunks of your UI with drawn controls, or even convert the whole app.
 
-Why even bother?
+## When To Consider
 
 * __You want complex layouts not to affect your app performance__
 In some scenarios, native layouts can be slower than drawn ones. Think of it like 5 horses vs a car with a 5 horsepower engine: your app has to handle 5 native views instead of just 1 - the Canvas. Rasterized caching ensures that shadows and other heavy-duty elements never affect your performance.
@@ -23,7 +23,7 @@ This guide will help you port your existing native MAUI controls to DrawnUI.
 
 First, please follow the [Getting Started guide](./getting-started.md) to set up your project for DrawnUI.
 
-## The theory
+## The Theory
 
 Replacing native controls with DrawnUI ones involves several steps:
 

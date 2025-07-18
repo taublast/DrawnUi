@@ -68,7 +68,7 @@ namespace Sandbox
                                     new SkiaButton()
                                     {
                                         Text = "Toggle Play", ControlStyle = PrebuiltControlStyle.Cupertino,
-                                    }.OnTapped((me) =>
+                                    }.OnTapped(me =>
                                     {
                                         if (Lottie.IsPlaying)
                                         {

@@ -13,7 +13,7 @@
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="toc.html">
       
-      
+      <meta name="docfx:rel" content="../">
       
       
       <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/index.md/#L1">
@@ -44,7 +44,7 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="">
+            <img id="logo" class="svg" src="../images/logo.png" alt="">
             
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +52,10 @@
           </button>
           <div class="collapse navbar-collapse" id="navpanel">
             <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
             </div>
           </div>
         </div>
@@ -103,7 +107,8 @@
 <h3 id="documentation--guides">Documentation &amp; Guides</h3>
 <ul>
 <li><strong><a href="getting-started.html">Getting Started Guide</a></strong> - Complete installation and setup</li>
-<li><strong><a href="tutorials.html">Sample Apps</a></strong> - Tutorials and example projects</li>
+<li><strong><a href="tutorials.html">Tutorials</a></strong> - Tutorials and example projects</li>
+<li><strong><a href="fluent-extensions.html">Fluent Extensions</a></strong> - Code-behind UI creation patterns</li>
 <li><strong><a href="faq.html">FAQ</a></strong> - Frequently asked questions and answers</li>
 <li><strong><a href="controls/index.html">Controls Documentation</a></strong> - Complete controls reference</li>
 <li><strong><a href="advanced/index.html">Advanced Features</a></strong> - Performance and platform topics</li>
@@ -115,8 +120,7 @@
 </ul>
 <h3 id="additional-resources">Additional Resources</h3>
 <ul>
-<li><strong><a href="fluent-extensions.html">Fluent Extensions</a></strong> - Code-behind UI creation patterns</li>
-<li><strong><a href="whats-new.html">What's New</a></strong> - Latest updates and features</li>
+<li><strong><a href="sample-apps.html">Sample Apps</a></strong> - Apps built with DrawnUI</li>
 <li><strong><a href="https://taublast.github.io/posts/MauiJuly/">How DrawnUI was created</a></strong> - article by the creator</li>
 </ul>
 <p><strong>Can't find what you're looking for?</strong> → <strong><a href="https://github.com/taublast/DrawnUi/discussions">Ask in GitHub Discussions</a></strong> - The community is here to help!</p>
@@ -175,6 +179,7 @@
       </div>
     </main>
 
+    <div class="container-xxl search-results" id="search-results"></div>
 
     <footer class="border-top text-secondary">
       <div class="container-xxl">

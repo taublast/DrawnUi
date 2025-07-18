@@ -1,8 +1,9 @@
-# DrawnUI Fluent C# Extensions - Developer Guide
+# DrawnUI Fluent C# Extensions - Developer Guide 🚀
 
 version 1.5a
 
-This guide covers the essential patterns of DrawnUI fluent extensions for drawn controls.
+Welcome to the world of fluent C# UI development! 🎉 This guide covers the essential patterns of DrawnUI fluent extensions for drawn controls, making your UI code more readable, maintainable, and fun to write.
+
 Not all methods are listed here, as extensions are evolving.
 
 **WARNING: this API could become obsolete as i recently discovered UNO platform fluent syntax and thinking much about replicating it.**
@@ -11,13 +12,14 @@ Not all methods are listed here, as extensions are evolving.
 
 1. [Core Philosophy](#core-philosophy)
 2. [Actions and References](#actions-and-references)
-3. [Property Observation](#property-observation)
-4. [Common Patterns](#common-patterns)
-5. [Layout Extensions](#layout-extensions)
-6. [Gesture Handling](#gesture-handling)
-7. [Control Helpers](#control-helpers)
-8. [Best Practices](#best-practices)
-9. [Troubleshooting](#troubleshooting)
+3. [Property Observation](#property-observation) 🎯 **Start here for reactive UI**
+4. [Advanced Property Observation](#advanced-property-observation)
+5. [Common Patterns](#common-patterns)
+6. [Layout Extensions](#layout-extensions)
+7. [Gesture Handling](#gesture-handling)
+8. [Control Helpers](#control-helpers)
+9. [Best Practices](#best-practices)
+10. [Troubleshooting](#troubleshooting)
 
 ## Core Philosophy
 
@@ -37,19 +39,14 @@ new SkiaLabel()
 {
     UseCache = SkiaCacheType.Operations
 }
-.Observe(Model, (label, prop) => 
+.ObserveProperty(()=>Model, nameof(Title), me =>
 {
-    if (prop.IsEither(nameof(BindingContext), nameof(Model.DisplayName)))
-    {
-        label.Text = Model.DisplayName;
-    }
+    me.Text = Model.Title;
 })
-.OnTapped((me) =>
+.OnTapped(me =>
 {
     Model.CommandAddRequest.Execute(null);
 })
-.CenterX()
-.WithHeight(44);
 ```
 
 ## Actions and References
@@ -67,7 +64,7 @@ new SkiaMauiEditor()
     Placeholder = "...",
     Padding = new Thickness(0, 2, 0, 4),
 }
-.Adapt(me =>
+.Initialize(me =>
 {
     if (_multiline)
     {
@@ -86,14 +83,16 @@ You can declare a variable holding a reference to a control and assign it during
 SkiaLabel labelText;
 
 //assign variable during control creation
-new SkiaLabel("Hello World!").Assign(out labelText)
+new SkiaLabel("Hello World!")
+    .WithFontSize(24)
+    .Assign(out labelText)
 ```
 
 ### Getting References During Construction
 
 The variable you set with `Assign` will be available after the fluent chain has been completely built. 
 If you need to access them for initialization, use the `Initialize` method.  
-For observing variables that are still null at the time of UI construction use access by action inside the `Observe`:
+For observing variables that are still null at the time of UI construction use access by action inside the `Observe`, same goes for `ObserveProperty`, `ObserveProperties`:
 
 ```csharp
 SkiaLabel statusLabel;
@@ -183,67 +182,64 @@ layout.ClearChildren(); //clear them all
 
 ## Property Observation
 
+These methods replace traditional MAUI bindings with a thread-safe approach that works seamlessly with ViewModels and controls without requiring UI-thread.
+
+**Key Benefits:**
+- 🚀 **Thread-safe** - No UI thread requirements for property access
+- 🧹 **Auto-cleanup** - Subscriptions automatically dispose when control is disposed
+- 🎯 **Type-safe** - Full IntelliSense support with `nameof()`
+- ⚡ **Performance** - Direct property observation without binding overhead
+- 🔄 **Reactive** - UI updates automatically when properties change
+
+**Essential Methods (start here):**
+- `ObserveProperty()` - Single property observation
+- `ObserveProperties()` - Multiple properties observation
+
 **Key Points:**
 - Observe properties of any `INotifyPropertyChanged` source
 - Always check for `nameof(BindingContext)` for initial default value setup
 - Extension will automatically unsubscribe/cleanup when control is disposed
 - Can use `propertyName.IsEither(prop1, prop2)` for multiple properties
 
-### 1. `.Observe(vm, callback)` - Basic Pattern
+### `.ObserveProperty(target, propertyName, callback)` - Single Property
 
-Observes property changes on any `INotifyPropertyChanged` source:
-
-```csharp
-//BindingMode.OneWay alternative
-new SkiaLabel()
-.Observe(Model, (label, prop) => {
-    if (prop.IsEither(nameof(BindingContext), nameof(Model.DisplayName)))
-    {
-        //get value from viewmodel      
-        label.Text = Model.DisplayName;
-    }
-});
-```
-
-### 2. `.ObserveSelf(callback)` - Self Observation
-
-Observes the control's own property changes:
-
-```csharp
-//BindingMode.OneWayToSource alternative
-wheelPicker
-    .ObserveSelf((me, prop) => {          
-        if (prop.IsEither(nameof(BindingContext), nameof(me.SelectedIndex)))
-        {
-            //set viewmodel property
-            viewModel.CurrentIndex = me.SelectedIndex;
-        }
-    });
-```
-
-### 3. `.ObserveBindingContext<TControl, TViewModel>(callback)` - Typed ViewModel
-
-Type-safe observation of the control's BindingContext:
+The simplest way to observe a single property change. Perfect for basic scenarios:
 
 ```csharp
 new SkiaLabel()
-.ObserveBindingContext<SkiaLabel, ChatViewModel>((me, vm, prop) => {
-    if (prop.IsEither(nameof(BindingContext), nameof(vm.MessageCount)))
-    {
-        me.Text = $"Messages: {vm.MessageCount}";
-    }
-});
+.ObserveProperty(Model, nameof(Model.Title), me =>
+{
+    me.Text = Model.Title;
+})
 ```
 
-### 4. `.ObserveProperties(target, propertyNames, callback)` - Multiple Properties
+**Real-world example from GameButton tutorial:**
+```csharp
+new SkiaRichLabel()
+{
+    Text = this.Text,
+    UseCache = SkiaCacheType.Operations,
+    HorizontalTextAlignment = DrawTextAlignment.Center,
+    VerticalOptions = LayoutOptions.Center,
+    FontSize = 16,
+    FontAttributes = FontAttributes.Bold,
+    TextColor = Colors.White,
+}
+.ObserveProperty(this, nameof(Text), me =>
+{
+    me.Text = this.Text;
+})
+```
 
-Observes specific properties on a source control. BindingContext is automatically included:
+### `.ObserveProperties(target, propertyNames, callback)` - Multiple Properties
+
+Observes multiple specific properties on a source. BindingContext is automatically included:
 
 ```csharp
 new SkiaButton("Submit")
-.ObserveProperties(viewModel, 
-    new[] { nameof(viewModel.CanSubmit), nameof(viewModel.IsLoading) }, 
-    me => 
+.ObserveProperties(viewModel,
+    [nameof(viewModel.CanSubmit), nameof(viewModel.IsLoading)],
+    me =>
     {
         if (viewModel.CanSubmit && !viewModel.IsLoading)
         {
@@ -258,7 +254,95 @@ new SkiaButton("Submit")
     });
 ```
 
-### 5. `.ObservePropertyOn(parent, targetSelector, parentPropertyName, callback)` - Dynamic Target
+**Real-world example from [FirstApp tutorial](first-app-code.md):**
+```csharp
+SkiaButton btnClickMe;
+
+// Create button with assignment
+new SkiaButton("Click Me!")
+{
+    UseCache = SkiaCacheType.Image,
+    BackgroundColor = Colors.CornflowerBlue,
+    TextColor = Colors.White,
+    CornerRadius = 8,
+    HorizontalOptions = LayoutOptions.Center,
+}
+.Assign(out btnClickMe)
+.OnTapped(async me =>
+{
+    clickCount++;
+    me.Text = $"Clicked {clickCount} times! 🎉";
+    await me.ScaleToAsync(1.1, 1.1, 100);
+    await me.ScaleToAsync(1, 1, 100);
+}),
+
+// Observer label that watches button properties
+new SkiaRichLabel()
+{
+    UseCache = SkiaCacheType.Operations,
+    FontSize = 14,
+    TextColor = Colors.Green,
+    HorizontalOptions = LayoutOptions.Center,
+}
+.ObserveProperties(() => btnClickMe,
+    [nameof(SkiaButton.Text), nameof(SkiaButton.IsPressed)],
+    me =>
+    {
+        me.Text = $"Observing button: \"..{btnClickMe.Text.Right(12)}\", is pressed: {btnClickMe.IsPressed}";
+    })
+```
+
+### `.Observe(vm, callback)` - Basic Pattern
+
+Observes property changes on any `INotifyPropertyChanged` source:
+
+```csharp
+//BindingMode.OneWay alternative
+new SkiaLabel()
+.Observe(Model, (label, prop) => {
+    if (prop.IsEither(nameof(BindingContext), nameof(Model.DisplayName)))
+    {
+        //get value from viewmodel
+        label.Text = Model.DisplayName;
+    }
+});
+```
+
+### `.ObserveSelf(callback)` - Self Observation
+
+Observes the control's own property changes:
+
+```csharp
+//BindingMode.OneWayToSource alternative
+wheelPicker
+    .ObserveSelf((me, prop) => {
+        if (prop.IsEither(nameof(BindingContext), nameof(me.SelectedIndex)))
+        {
+            //set viewmodel property
+            viewModel.CurrentIndex = me.SelectedIndex;
+        }
+    });
+```
+
+### `.ObserveBindingContext<TControl, TViewModel>(callback)` - Typed ViewModel
+
+Type-safe observation of the control's BindingContext:
+
+```csharp
+new SkiaLabel()
+.ObserveBindingContext<SkiaLabel, ChatViewModel>((me, vm, prop) => {
+    if (prop.IsEither(nameof(BindingContext), nameof(vm.MessageCount)))
+    {
+        me.Text = $"Messages: {vm.MessageCount}";
+    }
+});
+```
+
+## Advanced Property Observation
+
+For complex scenarios where targets change dynamically or you need to observe nested properties:
+
+### `.ObservePropertyOn(parent, targetSelector, parentPropertyName, callback)` - Dynamic Target
 
 Observes a dynamically resolved target object using a function selector. When the parent's properties change, re-evaluates the selector and automatically unsubscribes from old target and subscribes to new one:
 
@@ -278,7 +362,7 @@ new SkiaLabel()
 )
 ```
 
-### 6. `.ObservePropertiesOn(parent, targetSelector, parentPropertyName, propertyNames, callback)` - Dynamic Target Multiple Properties
+### `.ObservePropertiesOn(parent, targetSelector, parentPropertyName, propertyNames, callback)` - Dynamic Target Multiple Properties
 
 Similar to `ObservePropertyOn` but observes multiple specific properties on the dynamically resolved target:
 
@@ -288,7 +372,7 @@ new SkiaLabel()
     parentViewModel,
     () => parentViewModel.CurrentUser,
     nameof(ParentViewModel.CurrentUser),
-    new[] { nameof(User.Name), nameof(User.Status) },
+    [nameof(User.Name), nameof(User.Status)],
     me =>
     {
         var user = parentViewModel.CurrentUser;
@@ -297,7 +381,7 @@ new SkiaLabel()
 )
 ```
 
-### 7. `.ObserveBindingContextOn<TControl, TTarget, TViewModel>(target, callback)` - Another Control's BindingContext
+### `.ObserveBindingContextOn<TControl, TTarget, TViewModel>(target, callback)` - Another Control's BindingContext
 
 Watches for property changes on another control's BindingContext:
 
@@ -316,7 +400,7 @@ new SkiaLabel()
 )
 ```
 
-### 8. `.ObserveOn<T, TParent, TTarget>(parent, targetSelector, parentPropertyName, callback, propertyFilter)` - Core Dynamic Observation
+### `.ObserveOn<T, TParent, TTarget>(parent, targetSelector, parentPropertyName, callback, propertyFilter)` - Core Dynamic Observation
 
 The foundational method for observing dynamically resolved target objects. When the parent's properties change, re-evaluates the selector and automatically unsubscribes from old target and subscribes to new one. This is AOT-compatible:
 
@@ -332,11 +416,11 @@ new SkiaLabel()
             me.Text = $"Time: {parentViewModel.CurrentTimer?.RemainingTime ?? 0}";
         }
     },
-    new[] { nameof(BindingContext), nameof(Timer.RemainingTime) }
+    [nameof(BindingContext), nameof(Timer.RemainingTime)]
 );
 ```
 
-### 9. `.Observe<T, TSource>(sourceFetcher, callback, propertyFilter)` - Delayed Assignment Observation
+### `.Observe<T, TSource>(sourceFetcher, callback, propertyFilter)` - Delayed Assignment Observation
 
 Observes a control that will be assigned later in the initialization process using a function selector:
 
@@ -398,32 +482,27 @@ protected void CreateContent()
 
 ### Observe another control property
 
-You have few options here, simple and advanced.
+You have several options depending on your scenario:
 
-Simple, when `Model` is not likely to change:
-
+**Simple static reference** - when the target is not likely to change:
 ```csharp
-
 new SkiaLabel()
-.ObserveProperty(Model, nameof(Title), me =>
+.ObserveProperty(Model, nameof(Model.Title), me =>
 {
     me.Text = Model.Title;
-}),
+})
 ```
 
-When `Model` is likely to change and is implementing INotifyPropertyChanged and is member of (for example) `this`:
-
+**Dynamic reference** - when `Model` is likely to change and implements INotifyPropertyChanged:
 ```csharp
-
 new SkiaLabel()
-.ObservePropertyOn(this, ()=>Model, nameof(Model), (me, propertyName) =>
+.ObservePropertyOn(this, () => Model, nameof(Model), (me, propertyName) =>
 {
     me.Text = Model.Title;
-}),
+})
 ```
 
-Advanced:
-
+**Advanced cross-control observation** - observing one control from another:
 ```csharp
 SkiaLabel labelTitle;
 
@@ -446,7 +525,7 @@ new SkiaLabel()
     {
         me.Text = $"The title was: {labelTitle.Text}";
     }
-}),
+})
 ```
 
 ### Two-Way bindings
@@ -485,7 +564,7 @@ var submitButton = new SkiaButton("Submit")
             btn.IsVisible = !vm.IsReadOnly;
         }
     })
-    .OnTapped((me) => { viewModel.SubmitCommand.Execute(null); });
+    .OnTapped(me => { viewModel.SubmitCommand.Execute(null); });
 ```
 
 ### Conditional Visibility
@@ -785,7 +864,7 @@ new SkiaButton("Save")
     .ObserveBindingContext<SkiaButton, MyViewModel>((btn, vm, prop) => {
         // Reactive logic
     })
-    .OnTapped((me) =>
+    .OnTapped(me =>
     {
         // Action logic
     });

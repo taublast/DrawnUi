@@ -71,14 +71,19 @@
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
     "keepFileLink": false,
-    "cleanupCacheHistory": false,
+    "cleanupCacheHistory": true,
     "disableGitFeatures": false,
+    "force": true,
     "globalMetadata": {
 "_appTitle": "DrawnUI for .NET MAUI",
   "_appDescription": "DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.",
   "_appKeywords": ".NET MAUI, SkiaSharp, cross-platform UI, hardware acceleration, mobile development, iOS, Android, Windows, MacCatalyst, custom controls, animations, gestures, pixel-perfect, rendering engine",
   "_appAuthor": "Nick Kovalsky aka AppoMobi (@taublast)",
   "_appFooter": "Made by <a href=\"https://taublast.github.io/about/\">Nick Kovalsky aka AppoMobi (@taublast)</a>",
+  "_enableSearch": true,
+  "_disableContribution": false,
+  "_disableBreadcrumb": false,
+  "_enableNewTab": true,
   "description": "DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.",
   "keywords": ".NET MAUI, SkiaSharp, cross-platform UI, hardware acceleration, mobile development, iOS, Android, Windows, MacCatalyst, custom controls, animations, gestures, pixel-perfect, rendering engine",
   "author": "Nick Kovalsky aka AppoMobi (@taublast)",
@@ -93,7 +98,16 @@
     "_gitContribute": {
       "repo": "https://github.com/taublast/drawnui",
       "branch": "master"
-    }
+    },
+    "_appLogoPath": "images/logo.png",
+    "_appFaviconPath": "favicon.ico",
+    "_disableAffix": false,
+    "_disableNavbar": false,
+    "_disableSideFilter": false,
+    "_disableToc": false,
+    "_enableSearch": true,
+    "_noCache": true,
+    "_buildTime": "{{BUILD_TIMESTAMP}}"
     }
   }
 }
