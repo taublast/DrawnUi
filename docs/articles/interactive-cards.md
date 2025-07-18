@@ -2,20 +2,7 @@
 
 Ready for something **impressive**? Let's build an animated, interactive card gallery that showcases the true power of DrawnUI! You'll create smooth animations, beautiful visual effects, and responsive touch interactions - all with better performance than native controls.
 
-This example is using XAML! If you want to see how to do the same in code, check out the [Cards with C#](interactive-cards-code.md) version of this article.
-
 > 💡 **Prerequisites**: Complete [Your First DrawnUI App](first-app.md) before starting this tutorial.
-
-## 🚀 Live Demo in Tutorials Project
-
-Want to see this in action first? Check out the [**DrawnUI Tutorials Project**](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials) for:
-- **Interactive Cards (XAML)** - This tutorial in action
-- **Interactive Cards (Code)** - Same UI built with C# code-behind  
-- **News Feed Tutorial** - Advanced scrolling lists
-- **First App** - Your first DrawnUI app
-- **Button Tutorial** - Game-style interactive buttons
-
-Clone the repo and run the Tutorials project to explore all examples!
 
 ## What We're Building
 
@@ -27,12 +14,10 @@ An interactive card gallery featuring:
 
 <img src="../images/cards.png" alt="Interactive Cards Tutorial" width="350" style="margin-top: 16px;" />
 
+Want to see this in action first? Check out the [**DrawnUI Tutorials Project**](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials) 
 
-## Prerequisites
+Clone the repo and run the Tutorials project to explore all examples!
 
-- **.NET 9** or later
-- **MAUI 9.0.70+**
-- **Visual Studio 2022** or **VS Code** with MAUI extension
 
 ## Step 1: Create & Setup Project
 
@@ -422,7 +407,7 @@ public partial class MainPage : ContentPage
                     control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
 
                     // Rotate animation for fun
-                    control.RotateToAsync(control.Rotation + 5, 200, Easing.SpringOut);
+                    control.RotateToAsync(control.Rotation + 2, 200, Easing.SpringOut);
                     await Task.Delay(150);
                     control.RotateToAsync(0, 300, Easing.SpringOut);
                 });

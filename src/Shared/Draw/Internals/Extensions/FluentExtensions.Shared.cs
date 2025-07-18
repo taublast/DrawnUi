@@ -196,7 +196,6 @@ namespace DrawnUi.Draw
             // Will unsubscrbe when control is disposed 
             control.ExecuteUponDisposal[subscriptionKey] = () => { target.PropertyChanged -= handler; };
 
-
             return control;
         }
 

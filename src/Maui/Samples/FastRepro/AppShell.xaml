@@ -22,9 +22,19 @@
         ContentTemplate="{DataTemplate sandbox:TutorialCards}"
         Route="MainPage" />-->
 
-    <ShellContent
+    <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:TutorialNewsFeed}"
+        Route="MainPage" />-->
+
+    <!--<ShellContent
+        Title="DrawnUI for .NET MAUI"
+        ContentTemplate="{DataTemplate sandbox:AppThemeTestPage}"
+        Route="MainPage" />-->
+
+    <ShellContent
+        Title="DrawnUI for .NET MAUI"
+        ContentTemplate="{DataTemplate sandbox:MainPageSpinner}"
         Route="MainPage" />
 
 </Shell>

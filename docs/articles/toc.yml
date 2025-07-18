@@ -19,10 +19,8 @@
       href: first-app-code.md
     - name: Interactive Button Tutorial
       href: interactive-button.md
-    - name: Interactive Cards (XAML)
+    - name: Interactive Cards
       href: interactive-cards.md
-    - name: Interactive Cards (C# Fluent)
-      href: interactive-cards-code.md
     - name: News Feed Tutorial
       href: news-feed-tutorial.md
 
@@ -75,6 +73,8 @@
       href: fluent-extensions.md
     - name: SkiaScroll & Virtualization
       href: advanced/skiascroll.md
+    - name: Theme Bindings
+      href: advanced/theme-binding.md
     - name: Drawing Pipeline
       href: drawing-pipeline.md
     - name: Game UI & Interactive Games

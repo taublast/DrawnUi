@@ -22,7 +22,7 @@
             <draw:SkiaLayout Type="Column"
                              HorizontalOptions="Center"
                              Margin="16"
-                             UseCache="Operations"
+                             UseCache="Image"
                              Spacing="8">
 
                 <draw:SkiaLabel
@@ -55,6 +55,7 @@
                     <draw:SkiaLayer
                         Padding="20,8"
                         UseCache="Image">
+
                         <draw:SkiaShape
                             x:Name="Card1"
                             Type="Rectangle"
@@ -62,7 +63,6 @@
                             WidthRequest="300"
                             HeightRequest="180"
                             HorizontalOptions="Center"
-
                             ConsumeGestures="OnCardGestures">
 
                             <!-- Gradient Background -->

@@ -60,7 +60,7 @@
                 <draw:SkiaButton
                     Text="First App (Code)"
                     Style="{x:StaticResource ButtonStyle}"
-                    BackgroundColor="#2e9971"
+                    BackgroundColor="#9b59b6"
                     Tapped="OnFirstAppCodeClicked" />
 
                 <!-- Button Tutorial -->
@@ -72,18 +72,11 @@
 
                 <!-- Interactive Cards Tutorial -->
                 <draw:SkiaButton
-                    Text="Cards (XAML)"
+                    Text="Interactive Cards"
                     Style="{x:StaticResource ButtonStyle}"
                     BackgroundColor="#3498db"
                     TextColor="White"
                     Tapped="OnCardsClicked" />
-
-                <!-- Interactive Cards Code-Behind Tutorial -->
-                <draw:SkiaButton
-                    Text="Cards (Code)"
-                    Style="{x:StaticResource ButtonStyle}"
-                    BackgroundColor="#9b59b6"
-                    Tapped="OnCardsCodeClicked" />
 
                 <!-- News Feed Tutorial -->
                 <draw:SkiaButton

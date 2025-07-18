@@ -235,7 +235,6 @@ namespace DrawnUi.Draw
 
         #endregion
 
-
         #region THICKNESS
 
         public static Thickness WithTop(this Thickness existing, double value)

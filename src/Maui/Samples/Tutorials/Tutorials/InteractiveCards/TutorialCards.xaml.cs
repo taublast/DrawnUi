@@ -62,7 +62,7 @@ public partial class TutorialCards : ContentPage
                     control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
 
                     // Rotate animation for fun
-                    control.RotateToAsync(control.Rotation + 5, 200, Easing.SpringOut);
+                    control.RotateToAsync(control.Rotation + 2, 200, Easing.SpringOut);
                     await Task.Delay(150);
                     control.RotateToAsync(0, 300, Easing.SpringOut);
                 });

@@ -6437,16 +6437,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "articles/interactive-cards-code.md",
-      "output": {
-        ".html": {
-          "relative_path": "articles/interactive-cards-code.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "articles/interactive-cards.md",
       "output": {
         ".html": {

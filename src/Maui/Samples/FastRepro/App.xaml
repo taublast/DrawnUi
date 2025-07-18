@@ -3,7 +3,8 @@
     x:Class="Sandbox.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:xaml="clr-namespace:DrawnUi.Infrastructure.Xaml;assembly=DrawnUi.Maui">
+    xmlns:xaml="clr-namespace:DrawnUi.Infrastructure.Xaml;assembly=DrawnUi.Maui"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

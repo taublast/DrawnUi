@@ -81,19 +81,10 @@
         </div>
 
         <article data-uid="">
-<h1 id="news-feed-scroller-tutorial-one-cell-to-rule-them-all">News Feed Scroller Tutorial: One Cell to Rule Them All</h1>
+<h1 id="news-feed-scroller-tutorial">News Feed Scroller Tutorial</h1>
 
-<p>Building a news feed with mixed content types (text posts, images, videos, articles, ads) is a common requirement. With DrawnUI, you get the freedom to <strong>just draw what you need</strong> inside a recycled cell! 🎨</p>
-<h2 id="-live-demo-in-tutorials-project">🚀 Live Demo in Tutorials Project</h2>
-<p>Want to see this in action first? Check out the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials"><strong>DrawnUI Tutorials Project</strong></a> for:</p>
-<ul>
-<li><strong>News Feed Tutorial</strong> - This tutorial in action with live scrolling</li>
-<li><strong>Interactive Cards (XAML)</strong> - Beautiful animated cards</li>
-<li><strong>Interactive Cards (Code)</strong> - Same UI built with C# code-behind</li>
-<li><strong>First App</strong> - Your first DrawnUI app</li>
-<li><strong>Button Tutorial</strong> - Game-style interactive buttons</li>
-</ul>
-<p>Clone the repo and run the Tutorials project to explore all examples!</p>
+<p>When .NET MAUI CollectionView is not enough.. Think Drawn!<br>
+We will be building a news feed scroller with mixed content: text posts, images, videos, articles, ads: an infinite scroll with LoadMore mechanics.</p>
 <h2 id="-this-tutorial-features">🚀 This Tutorial Features:</h2>
 <ul>
 <li><strong>📏 Uneven row heights</strong> - because real content isn't uniform!</li>
@@ -102,6 +93,9 @@
 <li><strong>📊 Large dataset handling</strong> - measures only visible items at startup, then works in background</li>
 <li><strong>♾️ Load more functionality</strong> - you never know how far users will scroll!</li>
 </ul>
+<img src="../images/scroller.jpg" alt="News Feed Tutorial" width="350" style="margin-top: 16px;">
+<p>Want to see this in action first? Check out the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials"><strong>DrawnUI Tutorials Project</strong></a><br>
+Clone the repo and run the Tutorials project to explore all examples!</p>
 <h2 id="-what-youll-learn">🎓 What You'll Learn:</h2>
 <ul>
 <li><strong>🏗️ Smart caching strategies</strong> - organize layers to redraw only what changed</li>
@@ -109,7 +103,6 @@
 <li><strong>🔄 Recycling mastery</strong> - one cell type handles all content variations</li>
 <li><strong>📱 Real-world techniques</strong> - progressive measurement, smart caching, and more!</li>
 </ul>
- <img src="../images/scroller.jpg" alt="News Feed Tutorial" width="350" style="margin-top: 16px;">
 <h2 id="-the-drawnui-way-one-universal-cell">🎯 The DrawnUI Way: One Universal Cell</h2>
 <p>With DrawnUI, we can use a layout as a cell that simply shows or hides elements based on content type - no complex <code>DataTemplateSelector</code> needed! All recycling and height calculation happen automatically ✨</p>
 <h2 id="-what-we-want-to-build">🎯 What We Want to Build</h2>
@@ -162,7 +155,7 @@ public class NewsItem
 </code></pre>
 <h3 id="3--create-your-cell">3. 🏗️ Create Your Cell</h3>
 <blockquote>
-<p><strong>Caching Strategy Note</strong>: For recycled cells, <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> works well - it displays the previous cache while the next one is being prepared in background, allowing smooth scrolling.</p>
+<p><strong>Caching Strategy Note</strong>: For recycled cells <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> is a must - it displays the previous cache while the next one is being prepared in background, allowing smooth scrolling. It supports painting placeholders when no cache is available at all.</p>
 </blockquote>
 <blockquote>
 <p><strong>Shadow Performance</strong>: Shadows are cached in a separate background layer to avoid performance issues. The shadow layer is cached independently from the content.</p>
@@ -170,7 +163,6 @@ public class NewsItem
 <blockquote>
 <p><strong>Spacing Strategy</strong>: Stack spacing is set to 0 because the cell margin/padding acts as general spacing between items. If we had no special layer for saving background with shadows you could use Spacing normally, but we need that space for shadows.</p>
 </blockquote>
-<p>Normally you might want to use <code>SkiaSvg</code> for vector graphics or even <code>SkiaLottie</code> for animated icons, but for simplicity we'll be using emoji for this tutorial! 😊</p>
 <pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 
 &lt;draw:SkiaDynamicDrawnCell
@@ -434,144 +426,76 @@ public class NewsItem
 
 &lt;/draw:SkiaDynamicDrawnCell&gt;
 </code></pre>
-<pre><code class="lang-csharp">using DrawnUi.Controls;
-using Sandbox.Models;
-
-namespace Sandbox.Views;
-
-public partial class NewsCell : SkiaDynamicDrawnCell
+<h3 id="4--smart-cell-logic---key-concepts">4. 🧠 Smart Cell Logic - Key Concepts</h3>
+<p>The magic happens in the code-behind where one cell adapts to any content type. Here are the most interesting parts:</p>
+<h4 id="core-recycling-pattern"><strong>Core Recycling Pattern</strong></h4>
+<pre><code class="lang-csharp">protected override void SetContent(object ctx)
 {
-    public NewsCell()
+    base.SetContent(ctx);
+
+    if (ctx is NewsItem news)
     {
-        InitializeComponent();
-    }
-
-    protected override void SetContent(object ctx)
-    {
-        base.SetContent(ctx);
-
-        if (ctx is NewsItem news)
-        {
-            ConfigureForContentType(news);
-        }
-    }
-
-    private void ConfigureForContentType(NewsItem news)
-    {
-        // Reset all content visibility
-        HideAllContent();
-
-        // Configure common elements
-        DebugId.Text = $&quot;{news.Id}&quot;;
-        AuthorLabel.Text = news.AuthorName;
-        TimeLabel.Text = GetRelativeTime(news.PublishedAt);
-        AvatarImage.Source = news.AuthorAvatarUrl;
-        LikeButton.Text = $&quot;👍 {news.LikesCount}&quot;;
-        CommentButton.Text = $&quot;💬 {news.CommentsCount}&quot;;
-
-        // Configure based on content type
-        switch (news.Type)
-        {
-            case NewsType.Text:
-                ConfigureTextPost(news);
-                break;
-
-            case NewsType.Image:
-                ConfigureImagePost(news);
-                break;
-
-            case NewsType.Video:
-                ConfigureVideoPost(news);
-                break;
-
-            case NewsType.Article:
-                ConfigureArticlePost(news);
-                break;
-
-            case NewsType.Ad:
-                ConfigureAdPost(news);
-                break;
-        }
-    }
-
-    private void HideAllContent()
-    {
-        TitleLabel.IsVisible = false;
-        ContentLabel.IsVisible = false;
-        ContentImage.IsVisible = false;
-        VideoLayout.IsVisible = false;
-        ArticleLayout.IsVisible = false;
-        AdLayout.IsVisible = false;
-    }
-
-    private void ConfigureTextPost(NewsItem news)
-    {
-        if (!string.IsNullOrEmpty(news.Title))
-        {
-            TitleLabel.Text = news.Title;
-            TitleLabel.IsVisible = true;
-        }
-
-        ContentLabel.Text = news.Content;
-        ContentLabel.IsVisible = true;
-    }
-
-    private void ConfigureImagePost(NewsItem news)
-    {
-        ContentImage.Source = news.ImageUrl;
-        ContentImage.IsVisible = true;
-
-        if (!string.IsNullOrEmpty(news.Content))
-        {
-            ContentLabel.Text = news.Content;
-            ContentLabel.IsVisible = true;
-        }
-    }
-
-    private void ConfigureVideoPost(NewsItem news)
-    {
-        VideoThumbnail.Source = ExtractVideoThumbnail(news.VideoUrl);
-        VideoLayout.IsVisible = true;
-
-        if (!string.IsNullOrEmpty(news.Content))
-        {
-            ContentLabel.Text = news.Content;
-            ContentLabel.IsVisible = true;
-        }
-    }
-
-    private void ConfigureArticlePost(NewsItem news)
-    {
-        ArticleThumbnail.Source = news.ImageUrl;
-        ArticleTitle.Text = news.Title;
-        ArticleDescription.Text = news.Content;
-        ArticleLayout.IsVisible = true;
-    }
-
-    private void ConfigureAdPost(NewsItem news)
-    {
-        AdImage.Source = news.ImageUrl;
-        AdTitle.Text = news.Title;
-        AdLayout.IsVisible = true;
-    }
-
-    private string GetRelativeTime(DateTime publishedAt)
-    {
-        var delta = DateTime.Now - publishedAt;
-        return delta.TotalDays &gt;= 1
-            ? publishedAt.ToString(&quot;MMM dd&quot;)
-            : delta.TotalHours &gt;= 1
-                ? $&quot;{(int)delta.TotalHours}h&quot;
-                : $&quot;{(int)delta.TotalMinutes}m&quot;;
-    }
-
-    private string ExtractVideoThumbnail(string videoUrl)
-    {
-        // Extract thumbnail from video URL or use placeholder
-        return videoUrl; // For now, just use the same URL as it's from Picsum
+        ConfigureForContentType(news);
     }
 }
 </code></pre>
+<h4 id="custom-placeholder-drawing"><strong>Custom Placeholder Drawing</strong></h4>
+<pre><code class="lang-csharp">public override void DrawPlaceholder(DrawingContext context)
+{
+    var margins = BackgroundLayer.Padding;
+    var area = new SKRect(/* calculated bounds with proper scaling */);
+
+    PaintPlaceholder ??= new SKPaint
+    {
+        Color = SKColor.Parse(&quot;#FFFFFF&quot;),
+        Style = SKPaintStyle.Fill,
+    };
+
+    context.Context.Canvas.DrawRect(area, PaintPlaceholder);
+}
+</code></pre>
+<h4 id="smart-content-configuration"><strong>Smart Content Configuration</strong></h4>
+<pre><code class="lang-csharp">private void ConfigureForContentType(NewsItem news)
+{
+    // Reset all content visibility first
+    HideAllContent();
+
+    // Configure common elements (author, time, etc.)
+    AuthorLabel.Text = news.AuthorName;
+    TimeLabel.Text = GetRelativeTime(news.PublishedAt);
+
+    // Then configure based on content type
+    switch (news.Type)
+    {
+        case NewsType.Text:
+            ConfigureTextPost(news);
+            break;
+        case NewsType.Image:
+            ConfigureImagePost(news);
+            break;
+        // ... other types
+    }
+}
+</code></pre>
+<h4 id="memory-management"><strong>Memory Management</strong></h4>
+<pre><code class="lang-csharp">public override void OnWillDisposeWithChildren()
+{
+    base.OnWillDisposeWithChildren();
+    PaintPlaceholder?.Dispose(); // Clean up SKPaint resources
+}
+</code></pre>
+<blockquote>
+<p><strong>💡 Key Concepts:</strong></p>
+<ul>
+<li><strong>One cell handles all content types</strong> - no DataTemplateSelector needed</li>
+<li><strong>Custom placeholder drawing</strong> - smooth loading experience with SkiaSharp</li>
+<li><strong>Proper disposal</strong> - prevents memory leaks in recycled cells</li>
+<li><strong>Reset-then-configure pattern</strong> - ensures clean state for each item</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>📁 Complete Code:</strong> Find the full implementation in the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials/Tutorials/NewsFeed/NewsCell.xaml.cs">Tutorials project</a></p>
+</blockquote>
 <h3 id="5--real-internet-images-data-provider">5. 🌐 Real Internet Images Data Provider</h3>
 <blockquote>
 <p><strong>Real Avatar Images</strong>: Uses RandomUser.me API for 100x100px professional avatars
@@ -729,14 +653,15 @@ public class NewsDataProvider
 <blockquote>
 <p><strong>Spacing Strategy</strong>: Stack spacing is 0 because cell margin/padding provides the spacing between items
 <strong>Recycling</strong>: RecyclingTemplate=&quot;Enabled&quot; with experimental MeasureItemsStrategy=&quot;MeasureVisible&quot; for optimal performance with large lists and uneven rows
-<strong>Template Reservation</strong>: ReserveTemplates=&quot;10&quot; pre-allocates cell templates for smoother scrolling</p>
+<strong>Virtualization</strong>: VirtualisationInflated=&quot;200&quot; pre-inflates items for smoother scrolling
+<strong>ItemTemplateType</strong>: Direct type reference for better performance than DataTemplate</p>
 </blockquote>
-<pre><code class="lang-xml">&lt;!-- TutorialNewsFeed.xaml excerpt --&gt;
+<pre><code class="lang-xml">&lt;!-- NewsFeedPage.xaml excerpt --&gt;
 &lt;draw:SkiaScroll
     x:Name=&quot;NewsScroll&quot;
     Orientation=&quot;Vertical&quot;
-    FrictionScrolled=&quot;0.2&quot;
-    ChangeVelocityScrolled=&quot;0.9&quot;
+    FrictionScrolled=&quot;0.5&quot;
+    ChangeVelocityScrolled=&quot;1.35&quot;
     RefreshCommand=&quot;{Binding RefreshCommand}&quot;
     LoadMoreCommand=&quot;{Binding LoadMoreCommand}&quot;
     RefreshEnabled=&quot;True&quot;
@@ -755,26 +680,34 @@ public class NewsDataProvider
         &lt;draw:SkiaLayer HeightRequest=&quot;50&quot; /&gt;
     &lt;/draw:SkiaScroll.Footer&gt;
 
-    &lt;!-- Dynamic height cells using SkiaLayout with ItemTemplate --&gt;
+    &lt;!-- Dynamic height cells using direct ItemTemplateType --&gt;
     &lt;draw:SkiaLayout
         x:Name=&quot;NewsStack&quot;
         Type=&quot;Column&quot;
-        ReserveTemplates=&quot;10&quot;
         ItemsSource=&quot;{Binding NewsItems}&quot;
         RecyclingTemplate=&quot;Enabled&quot;
         MeasureItemsStrategy=&quot;MeasureVisible&quot;
+        ReserveTemplates=&quot;10&quot;
+        VirtualisationInflated=&quot;200&quot;
         Spacing=&quot;0&quot;
-        HorizontalOptions=&quot;Fill&quot;&gt;
-
-        &lt;draw:SkiaLayout.ItemTemplate&gt;
-            &lt;DataTemplate&gt;
-                &lt;views:NewsCell /&gt;
-            &lt;/DataTemplate&gt;
-        &lt;/draw:SkiaLayout.ItemTemplate&gt;
-
-    &lt;/draw:SkiaLayout&gt;
+        ItemTemplateType=&quot;{x:Type newsFeed:NewsCell}&quot;
+        HorizontalOptions=&quot;Fill&quot; /&gt;
 
 &lt;/draw:SkiaScroll&gt;
+
+&lt;!-- Debug info display --&gt;
+&lt;draw:SkiaLabel
+    UseCache=&quot;Operations&quot;
+    Margin=&quot;8&quot;
+    Padding=&quot;2&quot;
+    AddMarginBottom=&quot;50&quot;
+    BackgroundColor=&quot;#CC000000&quot;
+    HorizontalOptions=&quot;Start&quot;
+    InputTransparent=&quot;True&quot;
+    Text=&quot;{Binding Source={x:Reference NewsStack}, Path=DebugString}&quot;
+    TextColor=&quot;LawnGreen&quot;
+    VerticalOptions=&quot;End&quot;
+    ZIndex=&quot;100&quot; /&gt;
 </code></pre>
 <pre><code class="lang-csharp">using System.Diagnostics;
 using System.Windows.Input;
@@ -787,6 +720,7 @@ namespace Sandbox.ViewModels;
 public class NewsViewModel : BaseViewModel
 {
     private readonly NewsDataProvider _dataProvider;
+    private CancellationTokenSource _preloadCancellation;
 
     public NewsViewModel()
     {
@@ -797,13 +731,18 @@ public class NewsViewModel : BaseViewModel
         LoadMoreCommand = new Command(async () =&gt; await LoadMore());
 
         // Load initial data
-        _ = RefreshFeed();
+        Tasks.StartDelayed(TimeSpan.FromMilliseconds(50), async () =&gt;
+        {
+            await RefreshFeed();
+        });
     }
 
     public ObservableRangeCollection&lt;NewsItem&gt; NewsItems { get; }
 
     public ICommand RefreshCommand { get; }
     public ICommand LoadMoreCommand { get; }
+
+    private const int DataChunkSize = 20;
 
     private async Task RefreshFeed()
     {
@@ -813,15 +752,23 @@ public class NewsViewModel : BaseViewModel
 
         try
         {
+            // Cancel previous preloading
+            _preloadCancellation?.Cancel();
+
             Debug.WriteLine($&quot;Loading news feed !!!&quot;);
 
             // Generate fresh content
-            var newItems = _dataProvider.GetNewsFeed(20);
+            var newItems = _dataProvider.GetNewsFeed(DataChunkSize);
+
+            // Preload images in background (DrawnUI's SkiaImageManager)
+            _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            _ = PreloadImages(newItems, _preloadCancellation.Token);
 
             // Update UI - Replace all items for refresh
             MainThread.BeginInvokeOnMainThread(() =&gt;
             {
-                NewsItems.ReplaceRange(newItems);
+                NewsItems.Clear();
+                NewsItems.AddRange(newItems);
             });
         }
         catch (Exception ex)
@@ -845,6 +792,10 @@ public class NewsViewModel : BaseViewModel
             Debug.WriteLine(&quot;Loading more items !!!&quot;);
             var newItems = _dataProvider.GetNewsFeed(15);
 
+            // Preload new images
+            _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            _ = PreloadImages(newItems, _preloadCancellation.Token);
+
             // Add new items to the end of the collection
             MainThread.BeginInvokeOnMainThread(() =&gt;
             {
@@ -861,13 +812,40 @@ public class NewsViewModel : BaseViewModel
         }
     }
 
+    private async Task PreloadImages(List&lt;NewsItem&gt; items, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var imageUrls = new List&lt;string&gt;();
 
+            // Add content images
+            imageUrls.AddRange(items
+                .Where(x =&gt; !string.IsNullOrEmpty(x.ImageUrl))
+                .Select(x =&gt; x.ImageUrl));
+
+            // Add avatar images
+            imageUrls.AddRange(items
+                .Where(x =&gt; !string.IsNullOrEmpty(x.AuthorAvatarUrl))
+                .Select(x =&gt; x.AuthorAvatarUrl));
+
+            // Use DrawnUI's image manager for efficient preloading
+            await SkiaImageManager.Instance.PreloadImages(imageUrls, _preloadCancellation);
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected when cancelled
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($&quot;Error preloading images: {ex.Message}&quot;);
+        }
+    }
 }
 
-// TutorialNewsFeed.xaml.cs
-public partial class TutorialNewsFeed : DrawnUiBasePage
+// NewsFeedPage.xaml.cs
+public partial class NewsFeedPage : DrawnUiBasePage
 {
-    public TutorialNewsFeed()
+    public NewsFeedPage()
     {
         try
         {
@@ -946,19 +924,26 @@ public partial class TutorialNewsFeed : DrawnUiBasePage
 <ul>
 <li><strong>One universal cell</strong> handling 5 different content types with uneven heights</li>
 <li><strong>Real internet images</strong> from RandomUser.me (avatars) and Picsum Photos (content)</li>
+<li><strong>Image preloading</strong> for both avatars and content images using SkiaImageManager</li>
 <li><strong>Smart caching strategy</strong> using <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> with MeasureVisible</li>
 <li><strong>Shadow performance optimization</strong> with separate cached background layer</li>
-<li><strong>Proper LoadMore</strong> implementation with <code>AddRange()</code> vs <code>ReplaceRange()</code></li>
+<li><strong>Proper LoadMore</strong> implementation with <code>AddRange()</code> vs <code>Clear()</code> + <code>AddRange()</code></li>
 <li><strong>Strategic spacing</strong> using cell margin/padding instead of stack spacing</li>
 <li><strong>Experimental MeasureVisible</strong> strategy for optimal large list performance</li>
+<li><strong>ItemTemplateType</strong> for better performance than DataTemplate</li>
+<li><strong>VirtualisationInflated</strong> for smoother scrolling with pre-inflated items</li>
+<li><strong>Debug information</strong> display for monitoring performance</li>
 </ul>
 <h3 id="-performance-optimizations">🎯 <strong>Performance Optimizations</strong></h3>
 <ul>
 <li><strong>Caching</strong>: <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> for cells, <code>UseCache=&quot;Image&quot;</code> for layouts, <code>UseCache=&quot;Operations&quot;</code> for text</li>
 <li><strong>Shadows</strong>: Separate background layer with independent caching</li>
 <li><strong>Spacing</strong>: Stack spacing = 0, cell margin/padding provides item spacing</li>
-<li><strong>Images</strong>: DrawnUI's SkiaImageManager handles efficient image caching automatically</li>
+<li><strong>Images</strong>: Preloaded with DrawnUI's SkiaImageManager for smooth scrolling</li>
 <li><strong>MeasureVisible</strong>: Progressive measurement for instant scrolling with thousands of items</li>
+<li><strong>ItemTemplateType</strong>: Direct type reference avoids DataTemplate overhead</li>
+<li><strong>VirtualisationInflated</strong>: Pre-inflates 200 items for smoother scrolling</li>
+<li><strong>Debug monitoring</strong>: Real-time performance metrics display</li>
 </ul>
 <h3 id="-the-drawnui-advantage">🚀 <strong>The DrawnUI Advantage</strong></h3>
 <p>Adding a new content type? Simply add an enum value and a configuration method. No new templates, no complex selectors, no performance compromises.</p>
