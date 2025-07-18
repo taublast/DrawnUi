@@ -796,7 +796,14 @@ namespace DrawnUi.Draw
 
         #region GESTURES
 
-        public static T OnToggled<T>(this T view, Action<T, bool> action) where T : SkiaSwitch
+        /// <summary>
+        /// State change callback for SkiaToggle and related controls
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="view"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static T OnToggled<T>(this T view, Action<T, bool> action) where T : SkiaToggle
         {
             try
             {
