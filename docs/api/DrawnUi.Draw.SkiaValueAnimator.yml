@@ -30,6 +30,7 @@ items:
   - DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
   - DrawnUi.Draw.SkiaValueAnimator.TransformReportedValue(System.Int64)
   - DrawnUi.Draw.SkiaValueAnimator.UpdateValue(System.Int64,System.Int64)
+  - DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
   - DrawnUi.Draw.SkiaValueAnimator.mMaxValue
   - DrawnUi.Draw.SkiaValueAnimator.mMinValue
   - DrawnUi.Draw.SkiaValueAnimator.mStartValueIsSet
@@ -372,6 +373,35 @@ items:
     return:
       type: DrawnUi.Draw.FrameTimeInterpolator
     content.vb: Protected FrameTimeInterpolator As FrameTimeInterpolator
+- uid: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  id: UseInterpolator
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  langs:
+  - csharp
+  - vb
+  name: UseInterpolator
+  nameWithType: SkiaValueAnimator.UseInterpolator
+  fullName: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Animators/SkiaValueAnimator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UseInterpolator
+    path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
+    startLine: 114
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool UseInterpolator { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UseInterpolator As Boolean
+  overload: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator*
 - uid: DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
   commentId: M:DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
   id: TickFrame(System.Int64)
@@ -390,7 +420,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TickFrame
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 114
+    startLine: 116
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -429,7 +459,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Repeat
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 175
+    startLine: 193
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -460,7 +490,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: mValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 189
+    startLine: 207
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -489,7 +519,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: mStartValueIsSet
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 204
+    startLine: 222
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -518,7 +548,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: mMaxValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 205
+    startLine: 223
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -547,7 +577,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: mMinValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 206
+    startLine: 224
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -576,7 +606,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Easing
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 207
+    startLine: 225
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -605,7 +635,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Speed
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 208
+    startLine: 226
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -634,7 +664,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformReportedValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 215
+    startLine: 233
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -672,7 +702,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Debug
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 220
+    startLine: 238
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -699,7 +729,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetNanoseconds
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 223
+    startLine: 241
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -727,7 +757,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 237
+    startLine: 255
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -770,7 +800,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ElapsedMs
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 272
+    startLine: 290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -799,7 +829,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Progress
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 277
+    startLine: 295
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -830,7 +860,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnUpdated
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 279
+    startLine: 297
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -859,7 +889,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClampOnStart
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 281
+    startLine: 299
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -885,7 +915,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 296
+    startLine: 314
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -919,7 +949,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 310
+    startLine: 328
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -953,7 +983,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetSpeed
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 316
+    startLine: 334
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -987,7 +1017,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
-    startLine: 324
+    startLine: 342
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1824,6 +1854,12 @@ references:
   name: FrameTimeInterpolator
   nameWithType: FrameTimeInterpolator
   fullName: DrawnUi.Draw.FrameTimeInterpolator
+- uid: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator*
+  commentId: Overload:DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_UseInterpolator
+  name: UseInterpolator
+  nameWithType: SkiaValueAnimator.UseInterpolator
+  fullName: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
 - uid: DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
   commentId: M:DrawnUi.Draw.AnimatorBase.TickFrame(System.Int64)
   parent: DrawnUi.Draw.AnimatorBase

@@ -196,7 +196,6 @@ namespace DrawnUi.Draw
             // Will unsubscrbe when control is disposed 
             control.ExecuteUponDisposal[subscriptionKey] = () => { target.PropertyChanged -= handler; };
 
-
             return control;
         }
 
@@ -424,6 +423,35 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
+        /// Subscribes to one specific property changes on a source control obtained via lambda expression and executes a callback when they occur.
+        /// Will unsubscribe upon control disposal.
+        /// </summary>
+        /// <typeparam name="T">Type of the control being extended</typeparam>
+        /// <typeparam name="TSource">Type of the source control being observed</typeparam>
+        /// <param name="control">The control subscribing to changes</param>
+        /// <param name="targetSelector">Lambda expression that returns the target control (e.g., () => clickLabel)</param>
+        /// <param name="propertyName">Name of the property to observe</param>
+        /// <param name="callback">Callback to execute when the property changes</param>
+        /// <returns>The control for chaining</returns>
+        public static T ObserveProperty<T, TSource>(
+            this T control,
+            Func<TSource> targetSelector,
+            string propertyName,
+            Action<T> callback)
+            where T : SkiaControl
+            where TSource : INotifyPropertyChanged
+        {
+            return control.Initialize((me) =>
+            {
+                TSource target = targetSelector();
+                if (target != null)
+                {
+                    me.ObserveProperty(target, propertyName, callback);
+                }
+            });
+        }
+
+        /// <summary>
         /// Subscribes to specific properties changes on a source control and executes a callback when they occur.
         /// 
         /// Will unsubscribe upon control disposal.
@@ -448,6 +476,35 @@ namespace DrawnUi.Draw
             {
                 callback?.Invoke(me);
             }, props);
+        }
+
+        /// <summary>
+        /// Subscribes to specific properties changes on a source control obtained via lambda expression and executes a callback when they occur.
+        /// Will unsubscribe upon control disposal.
+        /// </summary>
+        /// <typeparam name="T">Type of the control being extended</typeparam>
+        /// <typeparam name="TSource">Type of the source control being observed</typeparam>
+        /// <param name="control">The control subscribing to changes</param>
+        /// <param name="targetSelector">Lambda expression that returns the target control (e.g., () => clickLabel)</param>
+        /// <param name="propertyNames">Names of the properties to observe</param>
+        /// <param name="callback">Callback to execute when properties change</param>
+        /// <returns>The control for chaining</returns>
+        public static T ObserveProperties<T, TSource>(
+            this T control,
+            Func<TSource> targetSelector,
+            IEnumerable<string> propertyNames,
+            Action<T> callback)
+            where T : SkiaControl
+            where TSource : INotifyPropertyChanged
+        {
+            return control.Initialize((me) =>
+            {
+                TSource target = targetSelector();
+                if (target != null)
+                {
+                    me.ObserveProperties(target, propertyNames, callback);
+                }
+            });
         }
 
         /// <summary>
@@ -510,6 +567,50 @@ namespace DrawnUi.Draw
             });
 
             return control;
+        }
+
+        /// <summary>
+        /// Observes a control that will be assigned later in the initialization process.
+        /// Simplified version that doesn't pass the property name to the callback.
+        /// </summary>
+        /// <typeparam name="T">Type of the target control (the one being extended)</typeparam>
+        /// <typeparam name="TSource">Type of the source control (the one that will be observed)</typeparam>
+        /// <param name="control">The control subscribing to changes</param>
+        /// <param name="sourceFetcher">Function that will retrieve the source control when needed</param>
+        /// <param name="callback">Callback that receives only the control instance when changed</param>
+        /// <param name="propertyFilter">Optional filter to only trigger on specific properties</param>
+        /// <returns>The target control for chaining</returns>
+        public static T Observe<T, TSource>(
+            this T control,
+            Func<TSource> sourceFetcher,
+            Action<T> callback,
+            string[] propertyFilter = null)
+            where T : SkiaControl
+            where TSource : SkiaControl, INotifyPropertyChanged
+        {
+            return control.Observe(sourceFetcher, (me, prop) => callback?.Invoke(me), propertyFilter);
+        }
+
+        /// <summary>
+        /// Observes a source control with a simplified callback that doesn't include the property name.
+        /// Will unsubscribe upon control disposal.
+        /// </summary>
+        /// <typeparam name="T">Type of the target control (the one being extended)</typeparam>
+        /// <typeparam name="TSource">Type of the source control (the one being observed)</typeparam>
+        /// <param name="control">The control subscribing to changes</param>
+        /// <param name="target">The control being observed</param>
+        /// <param name="callback">Callback that receives only the control instance when changed</param>
+        /// <param name="propertyFilter">Optional filter to only trigger on specific properties</param>
+        /// <returns>The target control for chaining</returns>
+        public static T Observe<T, TSource>(
+            this T control,
+            TSource target,
+            Action<T> callback,
+            string[] propertyFilter = null)
+            where T : SkiaControl
+            where TSource : INotifyPropertyChanged
+        {
+            return control.Observe(target, (me, prop) => callback?.Invoke(me), propertyFilter);
         }
 
         /// <summary>

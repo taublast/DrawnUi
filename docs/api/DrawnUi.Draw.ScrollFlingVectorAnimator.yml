@@ -55,6 +55,7 @@ items:
   - DrawnUi.Draw.SkiaValueAnimator.Finished
   - DrawnUi.Draw.SkiaValueAnimator.FinishedRunning
   - DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+  - DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
   - DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
   - DrawnUi.Draw.SkiaValueAnimator.Repeat
   - DrawnUi.Draw.SkiaValueAnimator.mValue
@@ -671,6 +672,13 @@ references:
   name: FrameTimeInterpolator
   nameWithType: SkiaValueAnimator.FrameTimeInterpolator
   fullName: DrawnUi.Draw.SkiaValueAnimator.FrameTimeInterpolator
+- uid: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  commentId: P:DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
+  parent: DrawnUi.Draw.SkiaValueAnimator
+  href: DrawnUi.Draw.SkiaValueAnimator.html#DrawnUi_Draw_SkiaValueAnimator_UseInterpolator
+  name: UseInterpolator
+  nameWithType: SkiaValueAnimator.UseInterpolator
+  fullName: DrawnUi.Draw.SkiaValueAnimator.UseInterpolator
 - uid: DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
   commentId: M:DrawnUi.Draw.SkiaValueAnimator.TickFrame(System.Int64)
   parent: DrawnUi.Draw.SkiaValueAnimator

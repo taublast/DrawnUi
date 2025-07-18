@@ -7,7 +7,6 @@ namespace DrawnUi.Controls;
 /// </summary>
 public class SkiaDynamicDrawnCell : SkiaDrawnCell
 {
-    
     public void UpdateVisibilityChanged()
     {
         if (Parent is SkiaLayout layout)
@@ -29,6 +28,7 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
         {
             Context.PropertyChanged -= ContextPropertyChanged;
         }
+
         base.FreeContext();
     }
 
@@ -38,10 +38,11 @@ public class SkiaDynamicDrawnCell : SkiaDrawnCell
 
         if (Context != null)
             Context.PropertyChanged += ContextPropertyChanged;
+
+        DestroyRenderingObject();
     }
 
     protected virtual void ContextPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
- 
     }
 }

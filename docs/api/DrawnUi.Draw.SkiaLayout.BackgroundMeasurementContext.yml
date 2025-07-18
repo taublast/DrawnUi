@@ -26,7 +26,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundMeasurementContext
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 51
+    startLine: 122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -65,7 +65,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InsertAtIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 53
+    startLine: 124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -94,7 +94,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InsertCount
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 54
+    startLine: 125
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -123,7 +123,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartMeasuringFrom
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 55
+    startLine: 126
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -152,7 +152,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsInsertOperation
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 56
+    startLine: 127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -181,7 +181,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSingleItemRemeasurement
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 57
+    startLine: 128
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -210,7 +210,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SingleItemIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 58
+    startLine: 129
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -239,7 +239,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndMeasuringAt
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 59
+    startLine: 130
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

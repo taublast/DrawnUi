@@ -10,6 +10,7 @@ namespace DrawnUi.Draw
     [ContentProperty("Content")]
     public partial class SkiaScroll : SkiaControl, ISkiaGestureListener, IDefinesViewport, IWithContent
     {
+
         /// <summary>
         /// Min velocity in points/sec to flee/swipe when finger is up
         /// </summary>
@@ -2174,17 +2175,39 @@ namespace DrawnUi.Draw
 
                 if (HasContentToScroll && _loadMoreTriggeredAt == 0)
                 {
-                    var threshold = LoadMoreOffset * scale;
 
-                    if ((Orientation == ScrollOrientation.Vertical &&
-                         InternalViewportOffset.Units.Y <= _scrollMinY + threshold)
-                        || (Orientation == ScrollOrientation.Horizontal &&
-                            InternalViewportOffset.Units.X <= _scrollMinX + threshold))
+                    bool shouldTriggerLoadMore = false;
+                        var threshold = LoadMoreOffset * scale;
+                        shouldTriggerLoadMore = (Orientation == ScrollOrientation.Vertical &&
+                                               InternalViewportOffset.Units.Y <= _scrollMinY + threshold)
+                                              || (Orientation == ScrollOrientation.Horizontal &&
+                                                  InternalViewportOffset.Units.X <= _scrollMinX + threshold);
+             
+
+                    if (shouldTriggerLoadMore)
                     {
-                        _loadMoreTriggeredTime = DateTime.Now;
-                        _loadMoreTriggeredAt = InternalViewportOffset.Units.Y;
-                        Debug.WriteLine("LoadMoreCommand");
-                        LoadMoreCommand?.Execute(this);
+                        // Let the content decide if LoadMore should be triggered
+                        if (Content is IInsideViewport contentViewport)
+                        {
+                            // Ask the layout if it's ready for LoadMore based on its measurement state
+                            shouldTriggerLoadMore = contentViewport.ShouldTriggerLoadMore(ContentViewport);
+                        }
+
+                        if (shouldTriggerLoadMore)
+                        {
+                            _loadMoreTriggeredTime = DateTime.Now;
+                            _loadMoreTriggeredAt = InternalViewportOffset.Units.Y;
+                            Debug.WriteLine("[SkiaScroll] LoadMoreCommand triggered via ShouldTriggerLoadMore");
+                            LoadMoreCommand?.Execute(this);
+                        }
+                        else
+                        {
+                            _loadMoreTriggeredAt = 0;
+                        }
+                    }
+                    else
+                    {
+                        _loadMoreTriggeredAt = 0;
                     }
                 }
             }

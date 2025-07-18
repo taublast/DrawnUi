@@ -8,6 +8,7 @@
     xmlns:newsFeed="clr-namespace:DrawnUI.Tutorials.NewsFeed"
     xmlns:viewModels="clr-namespace:DrawnUI.Tutorials.NewsFeed.ViewModels"
     x:DataType="viewModels:NewsViewModel"
+    Title="Recycled Cells Scroller"
     x:Name="ThisPage">
 
     <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
@@ -28,10 +29,11 @@
                 <draw:SkiaScroll
                     x:Name="NewsScroll"
                     Orientation="Vertical"
-                    FrictionScrolled="0.2"
-                    ChangeVelocityScrolled="0.9"
+                    FrictionScrolled="0.5"
+                    ChangeVelocityScrolled="1.35"
                     RefreshCommand="{Binding RefreshCommand}"
                     LoadMoreCommand="{Binding LoadMoreCommand}"
+                    LoadMoreOffset="500"
                     RefreshEnabled="True"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill">
@@ -39,8 +41,8 @@
                     <draw:SkiaScroll.Header>
 
                         <draw:SkiaLayer HeightRequest="40" UseCache="Image">
-                            <draw:SkiaRichLabel 
-                                Text="DrawnUI News Feed Tutorial" 
+                            <draw:SkiaRichLabel
+                                Text="DrawnUI News Feed Tutorial"
                                 HorizontalOptions="Center" VerticalOptions="Center" />
                         </draw:SkiaLayer>
 
@@ -59,15 +61,16 @@
                         RecyclingTemplate="Enabled"
                         MeasureItemsStrategy="MeasureVisible"
                         ReserveTemplates="10"
+                        VirtualisationInflated="200"
                         Spacing="0"
                         ItemTemplateType="{x:Type newsFeed:NewsCell}"
-                        HorizontalOptions="Fill"/>
+                        HorizontalOptions="Fill" />
 
                 </draw:SkiaScroll>
 
                 <!-- uncomment for debug info -->
 
-                <draw:SkiaLabel
+                <!--<draw:SkiaLabel
                     UseCache="Operations"
                     Margin="8"
                     Padding="2"
@@ -78,7 +81,7 @@
                     Text="{Binding Source={x:Reference NewsStack}, Path=DebugString}"
                     TextColor="LawnGreen"
                     VerticalOptions="End"
-                    ZIndex="100" />
+                    ZIndex="100" />-->
 
                 <!-- uncomment for FPS info -->
 

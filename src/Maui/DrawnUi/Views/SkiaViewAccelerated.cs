@@ -6,11 +6,6 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 {
     public Guid Uid { get; }  = Guid.NewGuid();
 
-    public SKSurface CreateStandaloneSurface(int width, int height)
-    {
-        return SKSurface.Create(new SKImageInfo(width, height));
-    }
-
     public Func<SKSurface, SKRect, bool> OnDraw { get; set; }
 
     public SkiaViewAccelerated(DrawnView superview)
@@ -19,8 +14,6 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         EnableTouchEvents = false;
         //this.HasRenderLoop = true;
     }
-
-
 
 #if ANDROID
 

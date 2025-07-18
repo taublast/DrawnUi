@@ -65,6 +65,7 @@ public partial class SkiaControl
                         ReturnSurface(kill.Surface);
                         kill.Surface = null;
                     }
+
                     DisposeObject(kill);
                 }
             }
@@ -133,6 +134,7 @@ public partial class SkiaControl
                                 view.ReturnSurface(_renderObject.Surface);
                                 _renderObject.Surface = null;
                             }
+
                             DisposeObject(_renderObject);
                         }
                     }
@@ -516,6 +518,7 @@ public partial class SkiaControl
                         ReturnSurface(kill.Surface);
                         kill.Surface = null;
                     }
+
                     DisposeObject(kill);
                 }
             }
@@ -533,14 +536,21 @@ public partial class SkiaControl
                 {
                     if (UsesCacheDoubleBuffering)
                     {
-                        if (CompareDoubles(cache.Bounds.Width, context.Destination.Width,1)
-                            && CompareDoubles( cache.Bounds.Height, context.Destination.Height, 1))
+                        if (CompareDoubles(cache.Bounds.Width, context.Destination.Width, 1)
+                            && CompareDoubles(cache.Bounds.Height, context.Destination.Height, 1))
+                        {
                             DrawRenderObjectInternal(context, cache);
+                        }
+                        else
+                        {
+                            DrawPlaceholder(context);
+                        }
                     }
                     else
                     {
                         DrawRenderObjectInternal(context, cache);
                     }
+
                     Monitor.PulseAll(LockDraw);
                 }
 
@@ -562,11 +572,19 @@ public partial class SkiaControl
                     if (cache == null && cacheOffscreen != null)
                     {
                         //Drawing previous cache
-                        DrawRenderObjectInternal(context, cacheOffscreen);
+                        if (CompareDoubles(cacheOffscreen.Bounds.Width, context.Destination.Width, 1)
+                            && CompareDoubles(cacheOffscreen.Bounds.Height, context.Destination.Height, 1))
+                        {
+                            DrawRenderObjectInternal(context, cacheOffscreen);
+                        }
+                        else
+                        {
+                            DrawPlaceholder(context);
+                        }
                     }
                     else
                     {
-                        needBuild = true;
+                        DrawPlaceholder(context);
                     }
 
                     Monitor.PulseAll(LockDraw);
@@ -587,16 +605,13 @@ public partial class SkiaControl
                         //will be executed on background thread in parallel
                         var oldObject = RenderObjectPreparing;
                         RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
-                            (ctx) =>
-                            {
-                                PaintWithEffects(ctx);
-                            });
+                            (ctx) => { PaintWithEffects(ctx); });
                         RenderObject = RenderObjectPreparing;
                         _renderObjectPreparing = null;
 
                         if (Parent != null && Parent.UpdateLocks < 1)
                         {
-                            Parent?.UpdateByChild(this); //repaint us
+                            Repaint();
                         }
                     });
                 }
@@ -606,6 +621,15 @@ public partial class SkiaControl
 
             return false;
         }
+    }
+
+    /// <summary>
+    /// Called by ImageDoubleBuffered cache rendering when no cache is ready yet.
+    /// Other controls might use this too to draw placeholders when result is not ready yet.
+    /// </summary>
+    /// <param name="context"></param>
+    public virtual void DrawPlaceholder(DrawingContext context)
+    {
     }
 
     public CacheValidityType CacheValidity { get; protected set; }
@@ -834,6 +858,8 @@ public partial class SkiaControl
                     //record to cache and paint 
                     if (UsesCacheDoubleBuffering)
                     {
+                        DrawPlaceholder(clone);
+
                         //use cloned struct in another thread 
                         PushToOffscreenRendering(() =>
                         {
@@ -846,7 +872,7 @@ public partial class SkiaControl
 
                             if (Parent != null && Parent.UpdateLocks < 1)
                             {
-                                Parent?.UpdateByChild(this); //repaint us
+                                Repaint();
                             }
                         });
                     }
@@ -1007,6 +1033,7 @@ public partial class SkiaControl
                     ReturnSurface(oldObject.Surface);
                     oldObject.Surface = null;
                 }
+
                 DisposeObject(oldObject);
             }
         }

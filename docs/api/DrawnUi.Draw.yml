@@ -107,6 +107,7 @@ items:
   - DrawnUi.Draw.ISkiaLayout
   - DrawnUi.Draw.ISkiaSharpView
   - DrawnUi.Draw.IStateEffect
+  - DrawnUi.Draw.IThemeProvider
   - DrawnUi.Draw.ITimingParameters
   - DrawnUi.Draw.ITimingVectorParameters
   - DrawnUi.Draw.IVisibilityAware
@@ -126,6 +127,7 @@ items:
   - DrawnUi.Draw.LottieRefreshIndicator
   - DrawnUi.Draw.MauiKey
   - DrawnUi.Draw.MauiKeyMapper
+  - DrawnUi.Draw.MauiThemeProvider
   - DrawnUi.Draw.MeasureRequest
   - DrawnUi.Draw.MeasuredListCell
   - DrawnUi.Draw.MeasuredListCells
@@ -225,6 +227,7 @@ items:
   - DrawnUi.Draw.SkiaLayer
   - DrawnUi.Draw.SkiaLayout
   - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
+  - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
   - DrawnUi.Draw.SkiaLayout.BuildWrapLayout
   - DrawnUi.Draw.SkiaLayout.Cell
   - DrawnUi.Draw.SkiaLayout.MeasuredItemInfo
@@ -279,6 +282,11 @@ items:
   - DrawnUi.Draw.TextLine
   - DrawnUi.Draw.TextSpan
   - DrawnUi.Draw.TextTransform
+  - DrawnUi.Draw.ThemeBinding
+  - DrawnUi.Draw.ThemeBindingExtension
+  - DrawnUi.Draw.ThemeBindingManager
+  - DrawnUi.Draw.ThemeBindings
+  - DrawnUi.Draw.ThemeChangedEventArgs
   - DrawnUi.Draw.TintEffect
   - DrawnUi.Draw.TintWithAlphaEffect
   - DrawnUi.Draw.ToggleAnimator
@@ -798,6 +806,29 @@ references:
   - uid: DrawnUi.Draw.SkiaLayout.StructureChange
     name: StructureChange
     href: DrawnUi.Draw.SkiaLayout.StructureChange.html
+- uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  commentId: T:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLayout.html
+  name: SkiaLayout.BackgroundMeasurementStartingPosition
+  nameWithType: SkiaLayout.BackgroundMeasurementStartingPosition
+  fullName: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    name: BackgroundMeasurementStartingPosition
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout
+    name: SkiaLayout
+    href: DrawnUi.Draw.SkiaLayout.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    name: BackgroundMeasurementStartingPosition
+    href: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html
 - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
   commentId: T:DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
   href: DrawnUi.Draw.SkiaLayout.html
@@ -1668,6 +1699,19 @@ references:
   name: StaticResourcesExtensions
   nameWithType: StaticResourcesExtensions
   fullName: DrawnUi.Draw.StaticResourcesExtensions
+- uid: DrawnUi.Draw.MauiThemeProvider
+  commentId: T:DrawnUi.Draw.MauiThemeProvider
+  href: DrawnUi.Draw.MauiThemeProvider.html
+  name: MauiThemeProvider
+  nameWithType: MauiThemeProvider
+  fullName: DrawnUi.Draw.MauiThemeProvider
+- uid: DrawnUi.Draw.ThemeBindingExtension
+  commentId: T:DrawnUi.Draw.ThemeBindingExtension
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBindingExtension.html
+  name: ThemeBindingExtension
+  nameWithType: ThemeBindingExtension
+  fullName: DrawnUi.Draw.ThemeBindingExtension
 - uid: DrawnUi.Draw.SkiaSetter
   commentId: T:DrawnUi.Draw.SkiaSetter
   href: DrawnUi.Draw.SkiaSetter.html
@@ -1699,6 +1743,39 @@ references:
   name: FindTagExtension
   nameWithType: FindTagExtension
   fullName: DrawnUi.Draw.FindTagExtension
+- uid: DrawnUi.Draw.IThemeProvider
+  commentId: T:DrawnUi.Draw.IThemeProvider
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IThemeProvider.html
+  name: IThemeProvider
+  nameWithType: IThemeProvider
+  fullName: DrawnUi.Draw.IThemeProvider
+- uid: DrawnUi.Draw.ThemeChangedEventArgs
+  commentId: T:DrawnUi.Draw.ThemeChangedEventArgs
+  href: DrawnUi.Draw.ThemeChangedEventArgs.html
+  name: ThemeChangedEventArgs
+  nameWithType: ThemeChangedEventArgs
+  fullName: DrawnUi.Draw.ThemeChangedEventArgs
+- uid: DrawnUi.Draw.ThemeBindingManager
+  commentId: T:DrawnUi.Draw.ThemeBindingManager
+  href: DrawnUi.Draw.ThemeBindingManager.html
+  name: ThemeBindingManager
+  nameWithType: ThemeBindingManager
+  fullName: DrawnUi.Draw.ThemeBindingManager
+- uid: DrawnUi.Draw.ThemeBinding
+  commentId: T:DrawnUi.Draw.ThemeBinding
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBinding.html
+  name: ThemeBinding
+  nameWithType: ThemeBinding
+  fullName: DrawnUi.Draw.ThemeBinding
+- uid: DrawnUi.Draw.ThemeBindings
+  commentId: T:DrawnUi.Draw.ThemeBindings
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBindings.html
+  name: ThemeBindings
+  nameWithType: ThemeBindings
+  fullName: DrawnUi.Draw.ThemeBindings
 - uid: DrawnUi.Draw.Super
   commentId: T:DrawnUi.Draw.Super
   href: DrawnUi.Draw.Super.html

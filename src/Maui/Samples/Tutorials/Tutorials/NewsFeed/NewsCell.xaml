@@ -15,6 +15,7 @@
         VerticalOptions="Fill"
         HorizontalOptions="Fill"
         UseCache="Image"
+        x:Name="BackgroundLayer"
         Padding="16,6,16,10">
 
         <draw:SkiaShape
@@ -92,64 +93,32 @@
             LineBreakMode="WordWrap"
             IsVisible="False" />
 
-        <!-- Image Content -->
+        <!-- Image Content and optional Play Button -->
         <draw:SkiaShape x:Name="ContentImage"
                         IsVisible="False"
+                        CornerRadius="16,0,0,0"
                         HorizontalOptions="Fill"
                         HeightRequest="200">
+
             <draw:SkiaImage
                 BackgroundColor="LightGray"
                 x:Name="ContentImg"
                 Aspect="AspectCover"
                 VerticalOptions="Fill"
                 HorizontalOptions="Fill" />
-        </draw:SkiaShape>
 
-        <!-- Video Thumbnail with Play Button -->
-        <draw:SkiaLayout
-            HorizontalOptions="Fill"
-            UseCache="Image"
-            x:Name="VideoLayout"
-            Type="Absolute"
-            HeightRequest="200"
-            IsVisible="False">
-
-            <draw:SkiaImage
-                BackgroundColor="LightGray"
-                x:Name="VideoThumbnail"
-                Aspect="AspectFill"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill" />
-
-            <draw:SkiaLayout
+            <draw:SkiaSvg
+                x:Name="VideoLayout"
                 UseCache="Operations"
-                Padding="20"
+                SvgString="{x:StaticResource SvgPlay}"
+                WidthRequest="50"
+                LockRatio="1"
+                TintColor="White"
+                Opacity="0.66"
                 HorizontalOptions="Center"
-                VerticalOptions="Center">
+                VerticalOptions="Center" />
 
-                <draw:SkiaShape
-                    Type="Circle"
-                    WidthRequest="60"
-                    HeightRequest="60"
-                    BackgroundColor="Black"
-                    Opacity="0.7"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-
-                </draw:SkiaShape>
-
-                <draw:SkiaRichLabel
-                    Margin="0,0,0,1"
-                    Text="▶"
-                    Opacity="0.7"
-                    FontSize="30"
-                    TextColor="White"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
-
-            </draw:SkiaLayout>
-
-        </draw:SkiaLayout>
+        </draw:SkiaShape>
 
         <!-- Article Preview -->
         <draw:SkiaLayout
@@ -192,14 +161,12 @@
         </draw:SkiaLayout>
 
         <!-- Ad Content -->
-        <draw:SkiaLayout
+        <draw:SkiaShape
             HeightRequest="150"
             BackgroundColor="LightGray"
             HorizontalOptions="Fill"
             UseCache="Image"
             x:Name="AdLayout"
-            Type="Column"
-            Spacing="8"
             IsVisible="False">
 
             <draw:SkiaLabel
@@ -207,9 +174,11 @@
                 Text="Sponsored"
                 FontSize="10"
                 TextColor="Gray"
+                Margin="4,0"
                 HorizontalOptions="End" />
 
             <draw:SkiaImage
+                Margin="0,16,0,32"
                 UseCache="Image"
                 x:Name="AdImage"
                 VerticalOptions="Fill"
@@ -217,14 +186,16 @@
                 Aspect="AspectFill" />
 
             <draw:SkiaLabel
+                VerticalOptions="End"
                 UseCache="Operations"
                 x:Name="AdTitle"
                 FontSize="14"
                 Margin="8"
                 FontAttributes="Bold"
+                MaxLines="1"
                 TextColor="Black" />
 
-        </draw:SkiaLayout>
+        </draw:SkiaShape>
 
         <!-- Interaction Bar -->
         <draw:SkiaLayout Type="Grid"
@@ -264,10 +235,11 @@
 
     </draw:SkiaLayout>
 
-    <draw:SkiaLabel
+    <!--used for debug Id-->
+    <!--<draw:SkiaLabel
         Margin="32,24"
         x:Name="DebugId"
         TextColor="Red"
-        HorizontalOptions="End" UseCache="Operations" />
+        HorizontalOptions="End" UseCache="Operations" />-->
 
 </draw:SkiaDynamicDrawnCell>

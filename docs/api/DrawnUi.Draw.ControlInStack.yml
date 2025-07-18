@@ -73,7 +73,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 6
+    startLine: 9
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -102,7 +102,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlIndex
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 16
+    startLine: 19
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -133,7 +133,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Measured
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 21
+    startLine: 24
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -164,7 +164,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Layout
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 23
+    startLine: 26
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -193,7 +193,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Area
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 28
+    startLine: 31
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -224,7 +224,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 33
+    startLine: 36
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -255,7 +255,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetOthers
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 35
+    startLine: 38
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -284,7 +284,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WasLastDrawn
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 40
+    startLine: 43
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -315,7 +315,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: View
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 45
+    startLine: 48
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -346,7 +346,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Drawn
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 50
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -377,7 +377,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Offset
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 55
+    startLine: 58
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -408,7 +408,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WasMeasured
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 57
+    startLine: 60
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -437,7 +437,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 59
+    startLine: 62
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -466,7 +466,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndex
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 61
+    startLine: 75
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -495,7 +495,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Column
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 63
+    startLine: 77
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -524,7 +524,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Row
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 65
+    startLine: 79
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -553,7 +553,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsCollapsed
     path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
-    startLine: 70
+    startLine: 84
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

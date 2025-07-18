@@ -4,10 +4,11 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
-             Title="First App Tutorial"
-             BackgroundColor="#f5f5f5">
+             BackgroundColor="#f5f5f5"
+             Title="First App Tutorial">
 
     <draw:Canvas
+        BackgroundColor="#f5f5f5"
         RenderingMode="Default"
         Gestures="Enabled"
         HorizontalOptions="Center"

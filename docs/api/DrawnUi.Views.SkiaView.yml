@@ -6,7 +6,6 @@ items:
   parent: DrawnUi.Views
   children:
   - DrawnUi.Views.SkiaView.#ctor(DrawnUi.Views.DrawnView)
-  - DrawnUi.Views.SkiaView.CreateStandaloneSurface(System.Int32,System.Int32)
   - DrawnUi.Views.SkiaView.Disconnect
   - DrawnUi.Views.SkiaView.Dispose
   - DrawnUi.Views.SkiaView.FPS
@@ -266,6 +265,7 @@ items:
   - System.Object.ToString
   extensionMethods:
   - DrawnUi.Views.SkiaView.DrawnUi.Draw.FluentExtensions.AssignNative``1(DrawnUi.Views.SkiaView@)
+  - DrawnUi.Views.SkiaView.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   - Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.FindMauiContext(System.Boolean)
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.GetParentsPath
@@ -371,49 +371,6 @@ items:
   nameWithType.vb: SkiaView.SignalFrame(Long)
   fullName.vb: DrawnUi.Views.SkiaView.SignalFrame(Long)
   name.vb: SignalFrame(Long)
-- uid: DrawnUi.Views.SkiaView.CreateStandaloneSurface(System.Int32,System.Int32)
-  commentId: M:DrawnUi.Views.SkiaView.CreateStandaloneSurface(System.Int32,System.Int32)
-  id: CreateStandaloneSurface(System.Int32,System.Int32)
-  parent: DrawnUi.Views.SkiaView
-  langs:
-  - csharp
-  - vb
-  name: CreateStandaloneSurface(int, int)
-  nameWithType: SkiaView.CreateStandaloneSurface(int, int)
-  fullName: DrawnUi.Views.SkiaView.CreateStandaloneSurface(int, int)
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Views/SkiaView.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: CreateStandaloneSurface
-    path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 13
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Views
-  summary: This is needed to get a hardware accelerated surface or a normal one depending on the platform
-  example: []
-  syntax:
-    content: public SKSurface CreateStandaloneSurface(int width, int height)
-    parameters:
-    - id: width
-      type: System.Int32
-      description: ''
-    - id: height
-      type: System.Int32
-      description: ''
-    return:
-      type: SkiaSharp.SKSurface
-      description: ''
-    content.vb: Public Function CreateStandaloneSurface(width As Integer, height As Integer) As SKSurface
-  overload: DrawnUi.Views.SkiaView.CreateStandaloneSurface*
-  implements:
-  - DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  nameWithType.vb: SkiaView.CreateStandaloneSurface(Integer, Integer)
-  fullName.vb: DrawnUi.Views.SkiaView.CreateStandaloneSurface(Integer, Integer)
-  name.vb: CreateStandaloneSurface(Integer, Integer)
 - uid: DrawnUi.Views.SkiaView.OnDraw
   commentId: P:DrawnUi.Views.SkiaView.OnDraw
   id: OnDraw
@@ -432,7 +389,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDraw
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 18
+    startLine: 13
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -465,7 +422,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Superview
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 20
+    startLine: 15
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -494,7 +451,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 22
+    startLine: 17
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -524,7 +481,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 29
+    startLine: 24
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -556,7 +513,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Disconnect
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 35
+    startLine: 30
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -582,7 +539,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanging
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 40
+    startLine: 35
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -616,7 +573,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 51
+    startLine: 46
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -646,7 +603,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 70
+    startLine: 65
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -678,7 +635,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FPS
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 78
+    startLine: 73
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -710,7 +667,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTime
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 115
+    startLine: 110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -742,7 +699,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDrawing
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 117
+    startLine: 112
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -774,7 +731,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasDrawn
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 119
+    startLine: 114
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -806,7 +763,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 177
+    startLine: 172
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4117,6 +4074,95 @@ references:
     name: SkiaView
     href: DrawnUi.Views.SkiaView.html
   - name: )
+- uid: DrawnUi.Views.SkiaView.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  parent: DrawnUi.Draw.ThemeBindings
+  definition: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<SkiaView>(SkiaView, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<SkiaView>(SkiaView, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<DrawnUi.Views.SkiaView>(DrawnUi.Views.SkiaView, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of SkiaView)(SkiaView, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of DrawnUi.Views.SkiaView)(DrawnUi.Views.SkiaView, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of SkiaView)(SkiaView, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Views.SkiaView,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - uid: DrawnUi.Views.SkiaView
+    name: SkiaView
+    href: DrawnUi.Views.SkiaView.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Views.SkiaView
+    name: SkiaView
+    href: DrawnUi.Views.SkiaView.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Views.SkiaView,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Views.SkiaView
+    name: SkiaView
+    href: DrawnUi.Views.SkiaView.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Views.SkiaView
+    name: SkiaView
+    href: DrawnUi.Views.SkiaView.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
 - uid: Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   commentId: M:DrawnUi.Draw.StaticResourcesExtensions.FindParent``1(Microsoft.Maui.Controls.Element)
   parent: DrawnUi.Draw.StaticResourcesExtensions
@@ -4648,6 +4694,93 @@ references:
   name: FluentExtensions
   nameWithType: FluentExtensions
   fullName: DrawnUi.Draw.FluentExtensions
+- uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  isExternal: true
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<TControl>(TControl, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of TControl)(TControl, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - name: TControl
+  - name: '>'
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TControl
+  - name: )
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ThemeBindings
+  commentId: T:DrawnUi.Draw.ThemeBindings
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBindings.html
+  name: ThemeBindings
+  nameWithType: ThemeBindings
+  fullName: DrawnUi.Draw.ThemeBindings
 - uid: DrawnUi.Draw.StaticResourcesExtensions.FindParent``1(Microsoft.Maui.Controls.Element)
   commentId: M:DrawnUi.Draw.StaticResourcesExtensions.FindParent``1(Microsoft.Maui.Controls.Element)
   isExternal: true
@@ -4968,81 +5101,6 @@ references:
   nameWithType.vb: Long
   fullName.vb: Long
   name.vb: Long
-- uid: DrawnUi.Views.SkiaView.CreateStandaloneSurface*
-  commentId: Overload:DrawnUi.Views.SkiaView.CreateStandaloneSurface
-  href: DrawnUi.Views.SkiaView.html#DrawnUi_Views_SkiaView_CreateStandaloneSurface_System_Int32_System_Int32_
-  name: CreateStandaloneSurface
-  nameWithType: SkiaView.CreateStandaloneSurface
-  fullName: DrawnUi.Views.SkiaView.CreateStandaloneSurface
-- uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  commentId: M:DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  parent: DrawnUi.Draw.ISkiaSharpView
-  isExternal: true
-  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  name: CreateStandaloneSurface(int, int)
-  nameWithType: ISkiaSharpView.CreateStandaloneSurface(int, int)
-  fullName: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(int, int)
-  nameWithType.vb: ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  fullName.vb: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  name.vb: CreateStandaloneSurface(Integer, Integer)
-  spec.csharp:
-  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-    name: CreateStandaloneSurface
-    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  - name: (
-  - uid: System.Int32
-    name: int
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: ','
-  - name: " "
-  - uid: System.Int32
-    name: int
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-    name: CreateStandaloneSurface
-    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  - name: (
-  - uid: System.Int32
-    name: Integer
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: ','
-  - name: " "
-  - uid: System.Int32
-    name: Integer
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: )
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.int32
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
-- uid: SkiaSharp.SKSurface
-  commentId: T:SkiaSharp.SKSurface
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
-  name: SKSurface
-  nameWithType: SKSurface
-  fullName: SkiaSharp.SKSurface
-- uid: SkiaSharp
-  commentId: N:SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp
-  name: SkiaSharp
-  nameWithType: SkiaSharp
-  fullName: SkiaSharp
 - uid: DrawnUi.Views.SkiaView.OnDraw*
   commentId: Overload:DrawnUi.Views.SkiaView.OnDraw
   href: DrawnUi.Views.SkiaView.html#DrawnUi_Views_SkiaView_OnDraw
@@ -5296,6 +5354,21 @@ references:
   name: Surface
   nameWithType: ISkiaDrawable.Surface
   fullName: DrawnUi.Draw.ISkiaDrawable.Surface
+- uid: SkiaSharp.SKSurface
+  commentId: T:SkiaSharp.SKSurface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  name: SKSurface
+  nameWithType: SKSurface
+  fullName: SkiaSharp.SKSurface
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
 - uid: DrawnUi.Views.SkiaView.FPS*
   commentId: Overload:DrawnUi.Views.SkiaView.FPS
   href: DrawnUi.Views.SkiaView.html#DrawnUi_Views_SkiaView_FPS

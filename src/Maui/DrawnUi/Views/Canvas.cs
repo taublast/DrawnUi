@@ -613,6 +613,12 @@ public class Canvas : DrawnView, IGestureListener
 
             if (args.Type == TouchActionResult.Up)
             {
+                //if (consumed != null)
+                //{
+                //    Debug.WriteLine(
+                //        $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} {consumed.Tag}");
+                //}
+
                 if (HadInput.Count > 0)
                 {
                     HadInput.Clear();
@@ -699,14 +705,6 @@ public class Canvas : DrawnView, IGestureListener
             _hadLong = false;
             _hadTap = false;
             _blockedPanning = false;
-        }
-        else
-        if (touchAction == TouchActionResult.Up)
-        {
-            if (_blockedPanning && !_hadTap && !_isPanning && !_hadLong)
-            {
-                touchAction = TouchActionResult.Tapped;
-            }
         }
         else
         if (touchAction == TouchActionResult.Panning)
@@ -802,6 +800,22 @@ public class Canvas : DrawnView, IGestureListener
                 Trace.WriteLine(e);
             }
         });
+
+        if (_blockedPanning && !_hadTap && !_isPanning && !_hadLong)
+        {
+            PostponeExecutionBeforeDraw(() =>
+            {
+                try
+                {
+                    var tapped = SkiaGesturesParameters.Create(TouchActionResult.Tapped, args1);
+                    ProcessGestures(tapped);
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e);
+                }
+            });
+        }
 
         Repaint();
     }

@@ -2268,6 +2268,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.IThemeProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.IThemeProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.IThemeProvider",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.IThemeProvider.yml\" sourcestartlinenumber=\"1\">Platform-agnostic theme provider interface for cross-platform compatibility</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.ITimingParameters.yml",
       "output": {
         ".html": {
@@ -2531,6 +2545,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.MauiKeyMapper",
       "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.MauiThemeProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.MauiThemeProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.MauiThemeProvider",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.MauiThemeProvider.yml\" sourcestartlinenumber=\"1\">MAUI-specific theme provider implementation</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -3906,6 +3934,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition.yml\" sourcestartlinenumber=\"1\">Stores the starting position data when background measurement begins\nUsed to detect and compensate for position changes due to visibility changes</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.yml",
       "output": {
         ".html": {
@@ -3986,7 +4028,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Draw.SkiaLayout.StructureChange",
-      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.StructureChange.yml\" sourcestartlinenumber=\"1\">Represents a pending structure change to be applied during rendering</p>\n"
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -4673,6 +4715,76 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.TextTransform",
       "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ThemeBinding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ThemeBinding.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ThemeBinding",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ThemeBinding.yml\" sourcestartlinenumber=\"1\">Represents a theme binding for a specific target object and property\nImplements proper disposal pattern and weak references to prevent memory leaks</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ThemeBindingExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ThemeBindingExtension.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ThemeBindingExtension",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ThemeBindingExtension.yml\" sourcestartlinenumber=\"1\">Theme binding extension for DrawnUI controls\nSupports MAUI, Blazor, and other platforms through IThemeProvider abstraction</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ThemeBindingManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ThemeBindingManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ThemeBindingManager",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ThemeBindingManager.yml\" sourcestartlinenumber=\"1\">Simplified theme binding manager using DrawnUI's disposal mechanism\nNo periodic cleanup needed - controls clean up themselves!</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ThemeBindings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ThemeBindings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ThemeBindings",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ThemeBindings.yml\" sourcestartlinenumber=\"1\">Helper methods for using theme bindings in code-behind</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ThemeChangedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ThemeChangedEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ThemeChangedEventArgs",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ThemeChangedEventArgs.yml\" sourcestartlinenumber=\"1\">Theme changed event arguments</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -5964,6 +6076,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.IDisposeManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.IDisposeManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.IDisposeManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Views.SkiaView.yml",
       "output": {
         ".html": {
@@ -5988,6 +6114,62 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Views.SkiaViewAccelerated",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfaceCacheManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfaceCacheManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfaceCacheManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfaceKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfaceKey.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfaceKey",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfacePool.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfacePool.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfacePool",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SurfaceStats.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SurfaceStats.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SurfaceStats",
       "Summary": null
     },
     {
@@ -6117,6 +6299,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/advanced/skiascroll.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/advanced/theme-binding.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/theme-binding.html"
         }
       },
       "version": ""
@@ -6293,6 +6485,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/first-app-code.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/first-app-code.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/first-app.md",
       "output": {
         ".html": {
@@ -6373,10 +6575,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "articles/samples.md",
+      "source_relative_path": "articles/sample-apps.md",
       "output": {
         ".html": {
-          "relative_path": "articles/samples.html"
+          "relative_path": "articles/sample-apps.html"
         }
       },
       "version": ""
@@ -6390,6 +6592,16 @@
         },
         ".json": {
           "relative_path": "articles/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/tutorials.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/tutorials.html"
         }
       },
       "version": ""
@@ -6426,10 +6638,50 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/newsfeed.png",
+      "source_relative_path": "images/custombutton.jpg",
       "output": {
         "resource": {
-          "relative_path": "images/newsfeed.png"
+          "relative_path": "images/custombutton.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/first.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "images/first.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/firstcode.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "images/firstcode.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/scroller.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "images/scroller.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/tutorials.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "images/tutorials.jpg"
         }
       },
       "version": ""

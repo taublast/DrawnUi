@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Interactive Button Tutorial: Game-Style UI Elements | DrawnUI for .NET MAUI </title>
+      <title>Creating Custom Drawn Controls: Game-Style Button Tutorial | DrawnUI for .NET MAUI </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Interactive Button Tutorial: Game-Style UI Elements | DrawnUI for .NET MAUI ">
+      <meta name="title" content="Creating Custom Drawn Controls: Game-Style Button Tutorial | DrawnUI for .NET MAUI ">
       
       <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
       <link rel="icon" href="../favicon.ico">
@@ -81,226 +81,304 @@
         </div>
 
         <article data-uid="">
-<h1 id="interactive-button-tutorial-game-style-ui-elements">Interactive Button Tutorial: Game-Style UI Elements</h1>
+<h1 id="creating-custom-drawn-controls-game-style-button-tutorial">Creating Custom Drawn Controls: Game-Style Button Tutorial</h1>
 
-<p>Learn how to create stunning interactive buttons with visual effects, just like those found in modern games! This tutorial shows you how to build a button with bevel effects, gradients, and smooth press animations.</p>
-<h2 id="-what-well-build">🎯 What We'll Build</h2>
-<p>A beautiful interactive button featuring:</p>
+<p>We will be building a custom drawn control, using a game-style button as our example.</p>
+<h2 id="-this-tutorial-features">🚀 This Tutorial Features:</h2>
 <ul>
-<li><strong>✨ Bevel/Emboss effects</strong> with depth and lighting</li>
-<li><strong>🌈 Gradient backgrounds</strong> with smooth color transitions</li>
-<li><strong>🎮 Press animations</strong> with realistic visual feedback</li>
-<li><strong>⚡ Optimized performance</strong> with smart caching</li>
+<li><strong>🏗️ Custom control architecture</strong> - extending SkiaLayout</li>
+<li><strong>🔗 Bindable properties system</strong> - creating properties for data binding</li>
+<li><strong>✨ Advanced visual effects</strong> - dynamic bevel/emboss and gradients</li>
+<li><strong>🖼️ Optional accessory images</strong> - support for icons and animated  images</li>
+<li><strong>⚡ Performance optimization</strong> - smart caching strategies for faster rendering</li>
 </ul>
-<img src="../images/interactive-button.png" alt="Interactive Button" width="200" style="margin: 16px 0;">
-<h2 id="-step-by-step-implementation">🛠️ Step-by-Step Implementation</h2>
-<h3 id="1--setup-your-maui-page">1. 📱 Setup Your MAUI Page</h3>
-<p>First, let's create a basic MAUI page with a DrawnUI Canvas:</p>
-<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-&lt;ContentPage x:Class=&quot;ButtonDemo.MainPage&quot;
-             xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
+<img src="../images/custombutton.jpg" alt="Custom Button Tutorial" width="350" style="margin-top: 16px;">
+<p>Want to see this in action first? Check out the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials"><strong>DrawnUI Tutorials Project</strong></a>
+Clone the repo and run the Tutorials project to explore all examples!</p>
+<h2 id="-what-youll-learn">🎓 What You'll Learn:</h2>
+<ul>
+<li><strong>🎮 Game-style UI creation</strong> - building controls with depth, lighting, and visual appeal</li>
+<li><strong>🔧 Property observation patterns</strong> - dynamic content updates with ObserveProperty</li>
+<li><strong>🎯 Interactive feedback systems</strong> - implementing realistic press/release animations</li>
+<li><strong>📱 XAML integration mastery</strong> - creating controls that work like built-in MAUI controls</li>
+</ul>
+<h2 id="-what-we-want-to-build">🎯 What We Want to Build</h2>
+<p>A sophisticated game-style button control that can be used just like any built-in MAUI control. We will create a <code>GameButton</code> class that supports text, optional accessory images, customizable colors, and realistic press animations. The control will work seamlessly in XAML with full IntelliSense support and data binding. We're not styling an existing control but creating entirely new one.</p>
+<h2 id="-the-tech-behind">⚙️ The Tech Behind</h2>
+<p>Custom drawn controls can be created by subclassing any control, base being <code>SkiaControl</code>. For better layout management we extend <code>SkiaLayout</code> that would allow us to easiy layout child controls. You could paint directly on the Canvas, but it's much easier to compose with existing DrawnUI controls.<br>
+For bevel/emboss effect and the button base wrapper we would obviously use <code>SkiaShape</code> with its tonns of options for customization. The we would arrange a row stack with image+label inside and react to gestures.</p>
+<h2 id="-custom-control-architecture">🏗️ Custom Control Architecture</h2>
+<h3 id="the-foundation-pattern"><strong>The Foundation Pattern</strong></h3>
+<p>Our <code>GameButton</code> extends <code>SkiaLayout</code> and uses the <code>CreateDefaultContent()</code> method to build its visual structure:</p>
+<pre><code class="lang-csharp">public class GameButton : SkiaLayout
+{
+    public GameButton()
+    {
+        UseCache = SkiaCacheType.Image; // Enable caching for performance
+    }
+
+    protected override void CreateDefaultContent()
+    {
+        base.CreateDefaultContent();
+
+        if (Views.Count == 0)
+        {
+            AddSubView(CreateView()); // Build our button structure
+        }
+    }
+}
+</code></pre>
+<h3 id="bindable-properties-system"><strong>Bindable Properties System</strong></h3>
+<p>Custom controls need bindable properties to work with XAML and data binding. Here's the pattern:</p>
+<pre><code class="lang-csharp">public static readonly BindableProperty TextProperty = BindableProperty.Create(
+    nameof(Text),
+    typeof(string),
+    typeof(GameButton),
+    string.Empty);
+
+public string Text
+{
+    get { return (string)GetValue(TextProperty); }
+    set { SetValue(TextProperty, value); }
+}
+</code></pre>
+<h3 id="property-change-handling"><strong>Property Change Handling</strong></h3>
+<p>For properties that affect appearance, we respond to changes with callbacks:</p>
+<pre><code class="lang-csharp">public static readonly BindableProperty TintColorProperty = BindableProperty.Create(
+    nameof(TintColor),
+    typeof(Color),
+    typeof(GameButton),
+    Colors.HotPink,
+    propertyChanged: OnLookChanged); // Callback when property changes
+
+private static void OnLookChanged(BindableObject bindable, object oldValue, object newValue)
+{
+    if (bindable is GameButton control)
+    {
+        control.MapProperties(); // Update visual appearance
+    }
+}
+</code></pre>
+<p>You could react to every property change separately or call common methods that would apply them all in lightweight scenarios.</p>
+<p>For our button we would ned to create bindable properties like <code>Text</code>, <code>TintColor</code>, <code>LeftImageSource</code>. You would see that there is much room for enhancing this button, to create your additional properties.</p>
+<h2 id="-building-the-visual-structure">🎨 Building the Visual Structure</h2>
+<h3 id="creating-the-view"><strong>Creating the view</strong></h3>
+<p>We would create our UI in code-behind, in one file, using DrawnUI fluent extensions. Observation methods like <code>ObserveProperty</code>, <code>ObserveProperty</code> and others do not use MAUI bindings but observe <code>INotifyPropertyChanged</code> viewmodels, are thread and leaks safe (subscribtions are released when the subscribing control is disposed).</p>
+<pre><code class="lang-csharp">protected virtual SkiaShape CreateView()
+{
+    var startColor = TintColor;
+    var endColor = TintColor.MakeDarker(20);
+
+    return new SkiaShape()
+    {
+        UseCache = SkiaCacheType.Image,
+        CornerRadius = 8,
+        MinimumWidthRequest = 120,
+        BackgroundColor = Colors.Black,
+        BevelType = BevelType.Bevel,
+        Bevel = new SkiaBevel()
+        {
+            Depth = 2,
+            LightColor = Colors.White,
+            ShadowColor = Colors.DarkBlue,
+            Opacity = 0.33f,
+        },
+        Children =
+        {
+            new SkiaLayout()
+            {
+                Type = LayoutType.Row,
+                Margin = new Thickness(16, 8),
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                Spacing = 6,
+                Children =
+                {
+                    // Optional left image (icon)
+                    new SkiaMediaImage()
+                    {
+                        VerticalOptions = LayoutOptions.Center,
+                        WidthRequest = 40,
+                        Aspect = TransformAspect.AspectFit
+                    }.ObserveProperty(this, nameof(LeftImageSource),
+                        me =&gt;
+                        {
+                            me.Source = this.LeftImageSource;
+                            me.IsVisible = LeftImageSource != null;
+                        }),
+
+                    // Button text
+                    new SkiaRichLabel()
+                    {
+                        Text = this.Text,
+                        UseCache = SkiaCacheType.Operations,
+                        HorizontalTextAlignment = DrawTextAlignment.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                        FontSize = 16,
+                        FontAttributes = FontAttributes.Bold,
+                        TextColor = Colors.White,
+                    }.Assign(out TextLabel)
+                    .ObserveProperty(this, nameof(Text),
+                        me =&gt;
+                        {
+                            me.Text = this.Text;
+                        }),
+                }
+            }
+        },
+        FillGradient = new SkiaGradient()
+        {
+            StartXRatio = 0,
+            EndXRatio = 1,
+            StartYRatio = 0,
+            EndYRatio = 0.5f,
+            Colors = new Color[] { startColor, endColor, }
+        },
+    }.WithGestures((me, args, b) =&gt;
+    {
+        // Handle touch gestures
+        if (args.Type == TouchActionResult.Tapped)
+        {
+            Clicked?.Invoke(this, EventArgs.Empty);
+        }
+        else if (args.Type == TouchActionResult.Down)
+        {
+            SetButtonPressed(me);
+        }
+        else if (args.Type == TouchActionResult.Up)
+        {
+            SetButtonReleased(me);
+            return null; //do not consume UP if not required, so others can receive it
+        }
+
+        return me;
+    });
+}
+</code></pre>
+<h3 id="property-observation-pattern"><strong>Property Observation Pattern</strong></h3>
+<p>Notice how we use the <code>ObserveProperty</code> method to dynamically update child controls when properties change:</p>
+<pre><code class="lang-csharp">.ObserveProperty(this, nameof(Text), me =&gt; { me.Text = this.Text; })
+</code></pre>
+<p>This pattern creates a subscription that automatically updates the child control whenever the parent property changes.</p>
+<h2 id="-interactive-feedback-system">🎮 Interactive Feedback System</h2>
+<h3 id="visual-press-effects"><strong>Visual Press Effects</strong></h3>
+<p>To create realistic button press feedback, we implement methods that change the visual appearance:</p>
+<pre><code class="lang-csharp">public static void SetButtonPressed(SkiaShape btn)
+{
+    btn.Children[0].TranslationX = 1.5;
+    btn.Children[0].TranslationY = 1.5;
+    btn.BevelType = BevelType.Emboss;
+}
+
+public static void SetButtonReleased(SkiaShape btn)
+{
+    btn.Children[0].TranslationX = 0;
+    btn.Children[0].TranslationY = 0;
+    btn.BevelType = BevelType.Bevel;
+}
+</code></pre>
+<h3 id="dynamic-property-updates"><strong>Dynamic Property Updates</strong></h3>
+<p>When visual properties like <code>TintColor</code> change, we update multiple visual elements in one method, since it's a virtual control and it would be drawn only once when all these properties change:</p>
+<pre><code class="lang-csharp">private void MapProperties()
+{
+    if (Control != null)
+    {
+        DarkColor = this.TintColor.MakeDarker(25);
+        Control.Bevel.ShadowColor = DarkColor;
+        Control.FillGradient.Colors = new Color[] { TintColor, DarkColor, };
+    }
+}
+</code></pre>
+<h2 id="-xaml-integration">📱 XAML Integration</h2>
+<h3 id="using-your-custom-control"><strong>Using Your Custom Control</strong></h3>
+<p>Once our custom control is created, we can use it in XAML just like any built-in MAUI control:</p>
+<pre><code class="lang-xml">&lt;ContentPage xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
-             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;&gt;
+             xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
+             xmlns:customButton=&quot;using:DrawnUI.Tutorials.CustomButton&quot;&gt;
 
-    &lt;draw:Canvas x:Name=&quot;MainCanvas&quot; 
-                 BackgroundColor=&quot;DarkSlateBlue&quot;&gt;
-        
-        &lt;!-- Button container --&gt;
-        &lt;draw:SkiaLayout x:Name=&quot;ButtonContainer&quot;
-                         HorizontalOptions=&quot;Center&quot;
-                         VerticalOptions=&quot;Center&quot; /&gt;
-                         
+    &lt;draw:Canvas BackgroundColor=&quot;DarkSlateBlue&quot;&gt;
+        &lt;draw:SkiaScroll&gt;
+            &lt;draw:SkiaStack Spacing=&quot;30&quot; Padding=&quot;20&quot;&gt;
+
+                &lt;!-- Basic button --&gt;
+                &lt;customButton:GameButton
+                    Text=&quot;PLAY GAME&quot;
+                    Clicked=&quot;ClickedPlay&quot;
+                    HorizontalOptions=&quot;Center&quot; /&gt;
+
+                &lt;!-- Button with custom color and animated GIF --&gt;
+                &lt;customButton:GameButton
+                    Text=&quot;YO !&quot;
+                    TintColor=&quot;CornflowerBlue&quot;
+                    LeftImageSource=&quot;Images\banana.gif&quot;
+                    Clicked=&quot;ClickedBlue&quot;
+                    HorizontalOptions=&quot;Center&quot; /&gt;
+
+            &lt;/draw:SkiaStack&gt;
+        &lt;/draw:SkiaScroll&gt;
     &lt;/draw:Canvas&gt;
-
 &lt;/ContentPage&gt;
 </code></pre>
-<h3 id="2--create-the-button-factory">2. 🏗️ Create the Button Factory</h3>
-<p>Now let's create our button factory method with all the visual effects:</p>
-<pre><code class="lang-csharp">using DrawnUi.Draw;
+<h2 id="performance-key-requirements">Performance Key Requirements</h2>
+<h3 id="caching-strategy"><strong>Caching Strategy</strong></h3>
+<blockquote>
+<p><strong>Caching is Critical</strong>: For custom controls, proper caching makes the difference between smooth 60fps and laggy performance.</p>
+</blockquote>
+<p>Let's look at the caching approach used in our GameButton:</p>
+<p><code>UseCache = SkiaCacheType.Image</code> for the main control - caches the entire button as a bitmap for fast redrawing.</p>
+<p><code>UseCache = SkiaCacheType.Operations</code> for text labels - caches drawing operations for text rendering.</p>
+<h2 id="-usage-examples">🚀 Usage Examples</h2>
+<h3 id="different-themes"><strong>Different Themes</strong></h3>
+<pre><code class="lang-xml">
+&lt;!-- Green nature theme --&gt;
+&lt;customButton:GameButton Text=&quot;GREEN ENERGY&quot; TintColor=&quot;Green&quot; /&gt;
 
-namespace ButtonDemo;
-
-public partial class MainPage : ContentPage
-{
-    public MainPage()
-    {
-        InitializeComponent();
-        CreateAwesomeButton();
-    }
-
-    void CreateAwesomeButton()
-    {
-        var button = CreateInteractiveButton(&quot;PLAY GAME&quot;, () =&gt; 
-        {
-            DisplayAlert(&quot;Success!&quot;, &quot;Button was pressed! 🎉&quot;, &quot;OK&quot;);
-        });
-        
-        ButtonContainer.Children.Add(button);
-    }
-
-    public static SkiaShape CreateInteractiveButton(string caption, Action action)
-    {
-        return new SkiaShape()
-        {
-            UseCache = SkiaCacheType.Image,
-            CornerRadius = 8,
-            MinimumWidthRequest = 120,
-            BackgroundColor = Colors.Black,
-            BevelType = BevelType.Bevel,
-            Bevel = new SkiaBevel()
-            {
-                Depth = 2,
-                LightColor = Colors.White,
-                ShadowColor = Colors.DarkBlue,
-                Opacity = 0.33,
-            },
-            Children =
-            {
-                new SkiaRichLabel()
-                {
-                    Text = caption,
-                    Margin = new Thickness(16, 8, 16, 10),
-                    UseCache = SkiaCacheType.Operations,
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                    FontSize = 16,
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Colors.White,
-                }
-            },
-            FillGradient = new SkiaGradient()
-            {
-                StartXRatio = 0,
-                EndXRatio = 1,
-                StartYRatio = 0,
-                EndYRatio = 0.5f,
-                Colors = new Color[]
-                {
-                    Colors.HotPink,
-                    Colors.DeepPink,
-                }
-            },
-        }.WithGestures((me, args, b) =&gt;
-        {
-            if (args.Type == TouchActionResult.Tapped)
-            {
-                action?.Invoke();
-            }
-            else if (args.Type == TouchActionResult.Down)
-            {
-                SetButtonPressed(me);
-            }
-            else if (args.Type == TouchActionResult.Up)
-            {
-                SetButtonReleased(me);
-                return null;
-            }
-            return me;
-        });
-    }
-
-    // Visual feedback for button press
-    public static void SetButtonPressed(SkiaShape btn)
-    {
-        btn.Children[0].TranslationX = 1;
-        btn.Children[0].TranslationY = 1;
-        btn.BevelType = BevelType.Emboss;
-    }
-
-    public static void SetButtonReleased(SkiaShape btn)
-    {
-        btn.Children[0].TranslationX = 0;
-        btn.Children[0].TranslationY = 0;
-        btn.BevelType = BevelType.Bevel;
-    }
-}
+&lt;!-- Orange fire theme --&gt;
+&lt;customButton:GameButton Text=&quot;FIRE BLAST&quot; TintColor=&quot;Orange&quot; /&gt;
 </code></pre>
-<p>Now let's wrap it inside a Canvas to be used inside a usual MAUI app - that's all you need to integrate this awesome button into any existing MAUI project!</p>
-<h2 id="-understanding-the-visual-effects">🎨 Understanding the Visual Effects</h2>
-<h3 id="bevel-effects">Bevel Effects</h3>
-<p>The <code>SkiaBevel</code> creates a 3D appearance:</p>
-<ul>
-<li><strong>Depth</strong>: Controls how pronounced the effect is</li>
-<li><strong>LightColor</strong>: Simulates light hitting the surface</li>
-<li><strong>ShadowColor</strong>: Creates depth with shadows</li>
-<li><strong>BevelType</strong>: Switches between raised (Bevel) and pressed (Emboss)</li>
-</ul>
-<h3 id="gradient-backgrounds">Gradient Backgrounds</h3>
-<p>The <code>SkiaGradient</code> adds visual appeal:</p>
-<ul>
-<li><strong>StartXRatio/EndXRatio</strong>: Horizontal gradient direction</li>
-<li><strong>StartYRatio/EndYRatio</strong>: Vertical gradient direction</li>
-<li><strong>Colors</strong>: Array of colors for smooth transitions</li>
-</ul>
-<h3 id="press-animation">Press Animation</h3>
-<p>The gesture handling provides tactile feedback:</p>
-<ul>
-<li><strong>Translation</strong>: Moves the text slightly when pressed</li>
-<li><strong>Bevel switching</strong>: Changes from raised to pressed appearance</li>
-</ul>
-<h2 id="-advanced-customization">🚀 Advanced Customization</h2>
-<h3 id="different-color-schemes">Different Color Schemes</h3>
-<pre><code class="lang-csharp">// Blue theme
-FillGradient = new SkiaGradient()
-{
-    Colors = new Color[] { Colors.CornflowerBlue, Colors.DarkBlue }
-}
+<h3 id="with-accessory-images"><strong>With Accessory Images</strong></h3>
+<pre><code class="lang-xml">&lt;!-- Button with animated GIF --&gt;
+&lt;customButton:GameButton
+    Text=&quot;ANIMATED FUN&quot;
+    TintColor=&quot;Purple&quot;
+    LeftImageSource=&quot;Images\banana.gif&quot; /&gt;
 
-// Green theme  
-FillGradient = new SkiaGradient()
-{
-    Colors = new Color[] { Colors.LimeGreen, Colors.DarkGreen }
-}
-
-// Orange theme
-FillGradient = new SkiaGradient()
-{
-    Colors = new Color[] { Colors.Orange, Colors.DarkOrange }
-}
 </code></pre>
-<h3 id="custom-shapes">Custom Shapes</h3>
-<pre><code class="lang-csharp">// Rounded button
-CornerRadius = 25,
-
-// Pill-shaped button
-CornerRadius = 50,
-
-// Sharp edges
-CornerRadius = 0,
-</code></pre>
-<h3 id="different-sizes">Different Sizes</h3>
-<pre><code class="lang-csharp">// Large button
-MinimumWidthRequest = 200,
-Margin = new Thickness(24, 12, 24, 14),
-
-// Small button  
-MinimumWidthRequest = 80,
-Margin = new Thickness(12, 6, 12, 8),
-</code></pre>
-<h2 id="-performance-tips">💡 Performance Tips</h2>
-<ol>
-<li><strong>Use Caching</strong>: <code>UseCache = SkiaCacheType.Image</code> for the button shape</li>
-<li><strong>Cache Text</strong>: <code>UseCache = SkiaCacheType.Operations</code> for labels</li>
-<li><strong>Minimize Redraws</strong>: Only change properties that need visual updates</li>
-<li><strong>Batch Updates</strong>: Group multiple property changes together</li>
-</ol>
-<h2 id="-what-youve-learned">🎯 What You've Learned</h2>
+<h2 id="-key-concept">🧠 Key Concept</h2>
+<blockquote>
 <ul>
-<li><strong>Visual Effects</strong>: How to create depth with bevel effects</li>
-<li><strong>Gradients</strong>: Adding beautiful color transitions</li>
-<li><strong>Gesture Handling</strong>: Implementing interactive press states</li>
-<li><strong>Performance</strong>: Using caching for smooth animations</li>
-<li><strong>Customization</strong>: Adapting the button for different themes</li>
+<li><strong>Think Virtual</strong>: Unlike traditional MAUI controls that create native views, drawn controls exist only as drawing instructions. This makes them relatively fast and very flexible - you can create any visual appearance.</li>
 </ul>
-<h2 id="-next-steps">🚀 Next Steps</h2>
-<p>Try experimenting with:</p>
+</blockquote>
+<blockquote>
 <ul>
-<li><strong>Different gradient directions</strong> (diagonal, radial)</li>
-<li><strong>Multiple buttons</strong> with different themes</li>
-<li><strong>Icon integration</strong> using SkiaSvg</li>
-<li><strong>Animation effects</strong> with SkiaLottie</li>
+<li><strong>Property-Driven Design</strong>: Custom controls should be designed around bindable properties that affect their visual appearance. This makes them work seamlessly with MAUI XAML, data binding, and MVVM patterns.</li>
 </ul>
-<p>This button technique can be used throughout your app for a consistent, professional game-like interface! 🎮</p>
+</blockquote>
+<blockquote>
+<p><strong>📁 Complete Code:</strong> Find the full implementation in the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials/Tutorials/CustomButton/GameButton.cs">Tutorials project</a></p>
+</blockquote>
+<h2 id="conclusion">Conclusion</h2>
+<p>DrawnUI gives you the freedom to <strong>create exactly the controls you need</strong>. This tutorial demonstrates how to build a complete custom control:</p>
+<h3 id="-we-accomplished">✅ <strong>We Accomplished</strong></h3>
+<ul>
+<li><strong>Complete custom control</strong> extending SkiaLayout with proper architecture</li>
+<li><strong>Bindable properties system</strong> for Text, TintColor, and LeftImageSource</li>
+<li><strong>Advanced visual effects</strong> with 3D bevel effects and dynamic gradients</li>
+<li><strong>Interactive animations</strong> with realistic press/release feedback</li>
+<li><strong>Property observation</strong> for dynamic content updates</li>
+<li><strong>Performance optimization</strong> with smart caching strategies</li>
+<li><strong>XAML integration</strong> that works like built-in MAUI controls</li>
+<li><strong>Accessory image support</strong> including animated GIFs</li>
+</ul>
+<h3 id="-performance-remainder">🎯 <strong>Performance Remainder</strong></h3>
+<ul>
+<li><strong>Caching</strong>: <code>UseCache = SkiaCacheType.Image</code> for complex controls, <code>UseCache = SkiaCacheType.Operations</code> for text and simple graphics.</li>
+<li><strong>Virtual Controls</strong>: Remember that drawn controls are virtual - they don't create native views, can be accessed on from anythread.</li>
+</ul>
+<h3 id="-the-drawnui-advantage">🚀 <strong>The DrawnUI Advantage</strong></h3>
+<p>You can create any UI control you can imagine with complete control over appearance and behavior.  <strong>Draw what you want!</strong> 🎨</p>
 
 </article>
 
@@ -321,7 +399,7 @@ Margin = new Thickness(12, 6, 12, 8),
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a>
         </div>
       </div>
     </footer>

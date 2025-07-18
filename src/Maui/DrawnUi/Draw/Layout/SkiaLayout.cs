@@ -10,7 +10,6 @@ namespace DrawnUi.Draw
 {
     public partial class SkiaLayout : SkiaControl, ISkiaGridLayout
     {
-     
         public override bool PreArrange(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
             if (!CanDraw)
@@ -104,9 +103,9 @@ namespace DrawnUi.Draw
             _measuredNewTemplates = false;
             NeedMeasure = true;
             InvalidateParent();
-            
-            // Enable initial drawing mode to pre-create more cells
-            WillDrawFromFreshItemssSource = true;
+
+            WillDrawFromFreshItemssSource = 0;
+            WillMeasureFromFreshItemssSource = true;
         }
 
         protected override ScaledSize SetMeasured(float width, float height, bool widthCut, bool heightCut, float scale)
@@ -266,7 +265,6 @@ namespace DrawnUi.Draw
         }
 
 
-
         public SkiaLayout()
         {
             ChildrenFactory = new(this);
@@ -361,7 +359,7 @@ namespace DrawnUi.Draw
                 {
                     return ScaledRect.FromPixels(planeSpecificViewport.Value, RenderingScale);
                 }
-                
+
                 return onscreen;
             }
 
@@ -532,14 +530,6 @@ namespace DrawnUi.Draw
         #endregion
 
         #region RENDERiNG
-
-        public virtual void OnViewportWasChanged(ScaledRect viewport)
-        {
-            //RenderingViewport = new(viewport.Pixels);
-
-            //cells will get OnScrolled
-            ViewportWasChanged = true;
-        }
 
         protected bool ViewportWasChanged { get; set; }
 
@@ -808,7 +798,7 @@ namespace DrawnUi.Draw
                                 if (!measured.IsEmpty)
                                 {
                                     // FastMeasurement: skip FILL checks for performance
-                                    if (true)//FastMeasurement)
+                                    if (true) //FastMeasurement)
                                     {
                                         if (measured.Pixels.Width > maxWidth)
                                             maxWidth = measured.Pixels.Width;
@@ -865,7 +855,7 @@ namespace DrawnUi.Draw
             {
                 _measuredNewTemplates = false;
                 CancelBackgroundMeasurement();
-                _measuredItems.Clear(); 
+                _measuredItems.Clear();
 
                 var constraints = GetMeasuringConstraints(request);
 
@@ -905,7 +895,7 @@ namespace DrawnUi.Draw
                             {
                                 ContentSize = MeasureStackNonTemplated(constraints.Content, request.Scale);
                             }
-                                
+
                             break;
 
                         case LayoutType.Wrap:
@@ -929,6 +919,11 @@ namespace DrawnUi.Draw
                 else
                 {
                     ContentSize = MeasureAbsoluteBase(constraints.Content, request.Scale);
+                }
+
+                if (MeasureItemsStrategy != MeasuringStrategy.MeasureVisible)
+                {
+                    WillMeasureFromFreshItemssSource = false;
                 }
 
                 return SetMeasuredAdaptToContentSize(constraints, request.Scale);
@@ -1072,7 +1067,6 @@ namespace DrawnUi.Draw
 
         public override void InvalidateByChild(SkiaControl child)
         {
-
             if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
             {
                 //RemeasureSingleItemInBackground(child.ContextIndex);
@@ -1081,17 +1075,19 @@ namespace DrawnUi.Draw
 
             InvalidatedChildren.Add(child);
 
-            if ((!NeedAutoSize && (child.NeedAutoSize || IsTemplated)) || (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible))
+            if ((!NeedAutoSize && (child.NeedAutoSize || IsTemplated)) ||
+                (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible))
             {
                 UpdateByChild(child); //simple update
                 return;
             }
 
-            base.InvalidateByChild(child);  //calling Invalidate
+            base.InvalidateByChild(child); //calling Invalidate
         }
 
         bool _trackWasDrawn;
-        protected bool WillDrawFromFreshItemssSource;
+        protected long WillDrawFromFreshItemssSource;
+        protected bool WillMeasureFromFreshItemssSource;
 
         protected override void Paint(DrawingContext ctx)
         {
@@ -1428,15 +1424,15 @@ namespace DrawnUi.Draw
 
                 if (oldvalue is INotifyCollectionChanged oldCollection)
                 {
-                    oldCollection.CollectionChanged -= skiaControl.ItemsSourceCollectionChanged;
+                    oldCollection.CollectionChanged -= skiaControl.OnItemsSourceCollectionChanged;
                 }
             }
 
 
             if (newvalue is INotifyCollectionChanged newCollection)
             {
-                newCollection.CollectionChanged -= skiaControl.ItemsSourceCollectionChanged;
-                newCollection.CollectionChanged += skiaControl.ItemsSourceCollectionChanged;
+                newCollection.CollectionChanged -= skiaControl.OnItemsSourceCollectionChanged;
+                newCollection.CollectionChanged += skiaControl.OnItemsSourceCollectionChanged;
             }
 
             skiaControl.OnItemSourceChanged();
@@ -1445,17 +1441,6 @@ namespace DrawnUi.Draw
         private static void NeedUpdateItemsSource(BindableObject bindable, object oldvalue, object newvalue)
         {
             var skiaControl = (SkiaLayout)bindable;
-
-//#if TMP
-//            if (skiaControl.MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-//            {
-//                Super.Log("MeasureVisible is not supported for this property yet, soon.");
-//                skiaControl.MeasureItemsStrategy = MeasuringStrategy.MeasureFirst;
-//            }
-//#endif
-
-            //skiaControl.PostponeInvalidation(nameof(UpdateItemsSource), skiaControl.UpdateItemsSource);
-            //skiaControl.Update();
 
             skiaControl.ApplyItemsSource();
         }
@@ -1506,17 +1491,14 @@ namespace DrawnUi.Draw
         /// </summary>
         protected virtual bool ShouldPreserveStructureOnCollectionChange
         {
-            get
-            {
-                return StackStructure != null && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible;
-            }
+            get { return StackStructure != null && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible; }
         }
-           
+
 
         /// <summary>
         /// Enhanced collection change handler with smart handling and fallback
         /// </summary>
-        protected virtual void ItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        protected virtual void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             if (!IsTemplated)
                 return;
@@ -1548,7 +1530,7 @@ namespace DrawnUi.Draw
                     // Defer the change until templates are ready
                     PostponeInvalidation($"collection_change_{args.Action}", () =>
                     {
-                        ItemsSourceCollectionChanged(sender, args); //re-enter
+                        OnItemsSourceCollectionChanged(sender, args); //re-enter
                     });
                     return;
                 }
@@ -1567,13 +1549,12 @@ namespace DrawnUi.Draw
                         ResetScroll();
                         Invalidate();
                     }
-                    else
-                    if ((MeasuredSize.Pixels.Height==0 || MeasuredSize.Pixels.Width == 0  || MeasureItemsStrategy != MeasuringStrategy.MeasureVisible) && NeedAutoSize)
+                    else if ((MeasuredSize.Pixels.Height == 0 || MeasuredSize.Pixels.Width == 0 ||
+                              MeasureItemsStrategy != MeasuringStrategy.MeasureVisible) && NeedAutoSize)
                     {
                         Invalidate();
                     }
                 });
-                
             }
         }
 
@@ -1691,7 +1672,8 @@ namespace DrawnUi.Draw
 
             if (ViewsAdapter.LogEnabled)
             {
-                Trace.WriteLine($"[SkiaLayout] {Tag} Staged visibility change for {count} cells starting at {startIndex}: {isVisible}");
+                Trace.WriteLine(
+                    $"[SkiaLayout] {Tag} Staged visibility change for {count} cells starting at {startIndex}: {isVisible}");
             }
         }
 
@@ -1702,7 +1684,8 @@ namespace DrawnUi.Draw
         {
             if (ViewsAdapter.LogEnabled)
             {
-                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving ADD: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
+                Trace.WriteLine(
+                    $"[SkiaLayout] {Tag} Structure-preserving ADD: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
             }
 
             // Cancel any ongoing background measurement to avoid conflicts
@@ -1742,7 +1725,8 @@ namespace DrawnUi.Draw
         {
             if (ViewsAdapter.LogEnabled)
             {
-                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REMOVE: {args.OldItems?.Count ?? 0} items at index {args.OldStartingIndex}");
+                Trace.WriteLine(
+                    $"[SkiaLayout] {Tag} Structure-preserving REMOVE: {args.OldItems?.Count ?? 0} items at index {args.OldStartingIndex}");
             }
 
             // Cancel any ongoing background measurement to avoid conflicts
@@ -1765,7 +1749,8 @@ namespace DrawnUi.Draw
 
                     if (ViewsAdapter.LogEnabled)
                     {
-                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, remove change staged");
+                        Trace.WriteLine(
+                            $"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, remove change staged");
                     }
 
                     // Trigger repaint without invalidation to apply staged changes
@@ -1781,7 +1766,8 @@ namespace DrawnUi.Draw
         {
             if (ViewsAdapter.LogEnabled)
             {
-                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving REPLACE: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
+                Trace.WriteLine(
+                    $"[SkiaLayout] {Tag} Structure-preserving REPLACE: {args.NewItems?.Count ?? 0} items at index {args.NewStartingIndex}");
             }
 
             // Cancel any ongoing background measurement to avoid conflicts
@@ -1805,7 +1791,8 @@ namespace DrawnUi.Draw
 
                     if (ViewsAdapter.LogEnabled)
                     {
-                        Trace.WriteLine($"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, replace change staged");
+                        Trace.WriteLine(
+                            $"[SkiaLayout] {Tag} Structure preserved using InitializeSoft, replace change staged");
                     }
 
                     // Trigger repaint without invalidation to apply staged changes
@@ -1821,7 +1808,8 @@ namespace DrawnUi.Draw
         {
             if (ViewsAdapter.LogEnabled)
             {
-                Trace.WriteLine($"[SkiaLayout] {Tag} Structure-preserving MOVE: from index {args.OldStartingIndex} to {args.NewStartingIndex}");
+                Trace.WriteLine(
+                    $"[SkiaLayout] {Tag} Structure-preserving MOVE: from index {args.OldStartingIndex} to {args.NewStartingIndex}");
             }
 
             // TODO: Implement move logic that updates StackStructure and _measuredItems

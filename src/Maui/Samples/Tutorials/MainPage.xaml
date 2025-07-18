@@ -51,10 +51,17 @@
 
                 <!-- First App Tutorial -->
                 <draw:SkiaButton
-                    Text="First App Try"
+                    Text="First App (XAML)"
                     Style="{x:StaticResource ButtonStyle}"
                     BackgroundColor="#2ecc71"
                     Tapped="OnFirstAppClicked" />
+
+                <!-- First App Code -->
+                <draw:SkiaButton
+                    Text="First App (Code)"
+                    Style="{x:StaticResource ButtonStyle}"
+                    BackgroundColor="#9b59b6"
+                    Tapped="OnFirstAppCodeClicked" />
 
                 <!-- Button Tutorial -->
                 <draw:SkiaButton
@@ -65,18 +72,11 @@
 
                 <!-- Interactive Cards Tutorial -->
                 <draw:SkiaButton
-                    Text="Cards (XAML)"
+                    Text="Interactive Cards"
                     Style="{x:StaticResource ButtonStyle}"
                     BackgroundColor="#3498db"
                     TextColor="White"
                     Tapped="OnCardsClicked" />
-
-                <!-- Interactive Cards Code-Behind Tutorial -->
-                <draw:SkiaButton
-                    Text="Cards (Code)"
-                    Style="{x:StaticResource ButtonStyle}"
-                    BackgroundColor="#9b59b6"
-                    Tapped="OnCardsCodeClicked" />
 
                 <!-- News Feed Tutorial -->
                 <draw:SkiaButton
@@ -86,6 +86,33 @@
                     Tapped="OnNewsFeedClicked" />
 
             </draw:SkiaWrap>
+
+            <draw:SkiaLabel
+                Margin="0,16,0,0"
+                UseCache="Image"
+                Tapped="LinkTutorialsTapped"
+                FontFamily="FontText"
+                FontSize="15"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                LineHeightUniform="False"
+                TextColor="#3333FF">
+                <draw:SkiaLabel.Spans>
+
+                    <draw:TextSpan Text="Read the tutorials" />
+
+                    <draw:TextSpan Text=" " />
+
+                    <draw:SvgSpan
+                        Width="17"
+                        Height="17"
+                        Source="Svg/linkout.svg"
+                        TintColor="#3333FF"
+                        VerticalAlignement="Center" />
+
+                </draw:SkiaLabel.Spans>
+
+            </draw:SkiaLabel>
 
         </draw:SkiaStack>
 

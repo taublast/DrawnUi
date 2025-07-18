@@ -8,18 +8,20 @@
     - name: Porting Native to Drawn
       href: porting-maui.md
 
-- name: Sample Apps
-  href: samples.md
+- name: Tutorials
+  href: tutorials.md
   items:
-    - name: Sample Apps Overview
-      href: samples.md
-    - name: Your First Drawn App
+    - name: Tutorials Overview
+      href: tutorials.md
+    - name: Your First Drawn App (XAML)
       href: first-app.md
-    - name: Interactive Button Tutorial
-      href: interactive-button.md
-    - name: Drawn Cards Tutorial
+    - name: Your First Drawn App (C# Fluent)
+      href: first-app-code.md
+    - name: Interactive Cards
       href: interactive-cards.md
-    - name: News Feed Tutorial
+    - name: A Custom Drawn Control
+      href: interactive-button.md
+    - name: News Feed Scroller
       href: news-feed-tutorial.md
 
 - name: Controls
@@ -71,10 +73,15 @@
       href: fluent-extensions.md
     - name: SkiaScroll & Virtualization
       href: advanced/skiascroll.md
+    - name: Theme Bindings
+      href: advanced/theme-binding.md
     - name: Drawing Pipeline
       href: drawing-pipeline.md
     - name: Game UI & Interactive Games
       href: advanced/game-ui.md
+
+- name: Sample Apps
+  href: sample-apps.md
 
 - name: FAQ
   href: faq.md

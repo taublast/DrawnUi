@@ -22,7 +22,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ButtonStyleType
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 762
+    startLine: 763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -51,7 +51,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Contained
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 767
+    startLine: 768
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -79,7 +79,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Outlined
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 772
+    startLine: 773
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -107,7 +107,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Text
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 777
+    startLine: 778
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

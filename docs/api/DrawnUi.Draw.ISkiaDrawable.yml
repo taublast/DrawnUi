@@ -38,7 +38,6 @@ items:
   - DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)
   - DrawnUi.Draw.ISkiaSharpView.SignalFrame(System.Int64)
   - DrawnUi.Draw.ISkiaSharpView.CanvasSize
-  - DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
   - System.IDisposable.Dispose
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
@@ -368,49 +367,6 @@ references:
   name: CanvasSize
   nameWithType: ISkiaSharpView.CanvasSize
   fullName: DrawnUi.Draw.ISkiaSharpView.CanvasSize
-- uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  commentId: M:DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-  parent: DrawnUi.Draw.ISkiaSharpView
-  isExternal: true
-  href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  name: CreateStandaloneSurface(int, int)
-  nameWithType: ISkiaSharpView.CreateStandaloneSurface(int, int)
-  fullName: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(int, int)
-  nameWithType.vb: ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  fullName.vb: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(Integer, Integer)
-  name.vb: CreateStandaloneSurface(Integer, Integer)
-  spec.csharp:
-  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-    name: CreateStandaloneSurface
-    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  - name: (
-  - uid: System.Int32
-    name: int
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: ','
-  - name: " "
-  - uid: System.Int32
-    name: int
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.ISkiaSharpView.CreateStandaloneSurface(System.Int32,System.Int32)
-    name: CreateStandaloneSurface
-    href: DrawnUi.Draw.ISkiaSharpView.html#DrawnUi_Draw_ISkiaSharpView_CreateStandaloneSurface_System_Int32_System_Int32_
-  - name: (
-  - uid: System.Int32
-    name: Integer
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: ','
-  - name: " "
-  - uid: System.Int32
-    name: Integer
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: )
 - uid: System.IDisposable.Dispose
   commentId: M:System.IDisposable.Dispose
   parent: System.IDisposable

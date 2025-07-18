@@ -13,6 +13,8 @@
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
 
+        <!--<UseSource>true</UseSource>-->
+
     </PropertyGroup>
 
 	<PropertyGroup>
@@ -67,25 +69,20 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+    <ItemGroup Condition="'$(UseSource)' != 'true'">
+        <PackageReference Include="DrawnUi.Maui" Version="1.6.2.6" />
+    </ItemGroup>
+
     <ItemGroup>
         <!--https://github.com/BretJohnson/hot-preview-->
         <PackageReference Include="HotPreview.App.Maui" Version="0.12.6" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
-        <!--<PackageReference Include="DrawnUi.Maui" Version="1.6.2.4" />-->
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="'$(UseSource)' == 'true'">
       <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Tutorials\NewsFeed\NewsFeedPage.xaml.cs">
-        <DependentUpon>NewsFeedPage.xaml</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
-   
 
  
 </Project>

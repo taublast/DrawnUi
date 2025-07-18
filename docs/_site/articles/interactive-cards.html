@@ -84,7 +84,6 @@
 <h1 id="interactive-cards-tutorial">Interactive Cards Tutorial</h1>
 
 <p>Ready for something <strong>impressive</strong>? Let's build an animated, interactive card gallery that showcases the true power of DrawnUI! You'll create smooth animations, beautiful visual effects, and responsive touch interactions - all with better performance than native controls.</p>
-<p>This example is using XAML! If you want to see how to do the same in code, check out the <a href="interactive-cards-code.md">Cards with C#</a> version of this article.</p>
 <blockquote>
 <p>💡 <strong>Prerequisites</strong>: Complete <a href="first-app.html">Your First DrawnUI App</a> before starting this tutorial.</p>
 </blockquote>
@@ -97,12 +96,8 @@
 <li>💫 <strong>Visual effects</strong> for shadows and glow</li>
 </ul>
 <img src="../images/cards.png" alt="Interactive Cards Tutorial" width="350" style="margin-top: 16px;">
-<h2 id="prerequisites">Prerequisites</h2>
-<ul>
-<li><strong>.NET 9</strong> or later</li>
-<li><strong>MAUI 9.0.70+</strong></li>
-<li><strong>Visual Studio 2022</strong> or <strong>VS Code</strong> with MAUI extension</li>
-</ul>
+<p>Want to see this in action first? Check out the <a href="https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials"><strong>DrawnUI Tutorials Project</strong></a></p>
+<p>Clone the repo and run the Tutorials project to explore all examples!</p>
 <h2 id="step-1-create--setup-project">Step 1: Create &amp; Setup Project</h2>
 <h3 id="create-new-maui-project">Create New MAUI Project</h3>
 <pre><code class="lang-bash">dotnet new maui -n InteractiveCardsTutorial
@@ -477,7 +472,7 @@ public partial class MainPage : ContentPage
                     control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
 
                     // Rotate animation for fun
-                    control.RotateToAsync(control.Rotation + 5, 200, Easing.SpringOut);
+                    control.RotateToAsync(control.Rotation + 2, 200, Easing.SpringOut);
                     await Task.Delay(150);
                     control.RotateToAsync(0, 300, Easing.SpringOut);
                 });
@@ -731,7 +726,7 @@ dotnet run
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a>
         </div>
       </div>
     </footer>

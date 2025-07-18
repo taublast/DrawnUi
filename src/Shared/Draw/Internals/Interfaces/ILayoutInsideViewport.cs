@@ -17,4 +17,14 @@ public interface ILayoutInsideViewport : IInsideViewport
     /// <param name="point"></param>
     /// <returns></returns>
     public ContainsPointResult GetChildIndexAt(SKPoint point);
+
+    /// <summary>
+    /// Default implementation for layouts that don't need custom LoadMore logic
+    /// </summary>
+    bool IInsideViewport.ShouldTriggerLoadMore(ScaledRect viewport)
+    {
+        // Default implementation - always return false (no LoadMore)
+        // Individual layouts can override this method for custom behavior
+        return false;
+    }
 }

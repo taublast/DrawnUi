@@ -130,8 +130,6 @@ public class ViewsAdapter : IDisposable
             }
         }
     }
- 
- 
 
     #endregion
 
@@ -149,7 +147,6 @@ public class ViewsAdapter : IDisposable
     {
         if (IsDisposed || _parent != null && _parent.IsDisposing)
             return;
-
 
 
         //Debug.WriteLine("[CELLS] InitializeTemplates");
@@ -829,12 +826,15 @@ public class ViewsAdapter : IDisposable
 
         if (template == null)
         {
-            template = _templatedViewsPool.Get(height);
+            // Get the binding context for this index
+            var bindingContext = _dataContexts[index];
+            template = _templatedViewsPool.Get(height, bindingContext);
 
             if (LogEnabled && template != null)
             {
+                var contextMatch = template.BindingContext != null && template.BindingContext.Equals(bindingContext);
                 Super.Log(
-                    $"[ViewsAdapter] {_parent.Tag} for index {index} returned from POOL {template.Uid} with height={height}");
+                    $"[ViewsAdapter] {_parent.Tag} for index {index} returned from POOL {template.Uid} with height={height} (bindingContext match: {contextMatch})");
             }
         }
         else
@@ -995,14 +995,14 @@ public class ViewsAdapter : IDisposable
                     // Double-check before setting binding context
                     if (!view.IsDisposed && !view.IsDisposing)
                     {
-
                         var context = _dataContexts[index];
 
                         if (!isMeasuring)
                         {
                             view.Parent = _parent;
                         }
-                        if (view.ContextIndex != index || view.BindingContext != context)//index == 0 || 
+
+                        if (view.ContextIndex != index || view.BindingContext != context) //index == 0 || 
                         {
                             view.ContextIndex = index;
                             var ctx = view.BindingContext;
@@ -1011,12 +1011,12 @@ public class ViewsAdapter : IDisposable
                             {
                                 view.NeedMeasure = true;
                             }
+
                             if (!isMeasuring)
                             {
                                 _parent.OnViewAttached();
                             }
                         }
-
                     }
                 }
             }
@@ -1600,6 +1600,61 @@ public class TemplatedViewsPool : IDisposable
         }
     }
 
+    /// <summary>
+    /// Searches for a view with matching bindingContext in the stack.
+    /// Limited search depth for performance optimization.
+    /// </summary>
+    /// <param name="stack">Stack to search in</param>
+    /// <param name="bindingContext">Target bindingContext to find</param>
+    /// <returns>View with matching bindingContext, or null if not found</returns>
+    private SkiaControl GetViewWithMatchingBindingContext(Stack<SkiaControl> stack, object bindingContext)
+    {
+        if (stack == null || stack.Count == 0 || bindingContext == null)
+            return null;
+
+        // Convert stack to array for efficient searching
+        var stackArray = stack.ToArray();
+        
+        // Search only top 10 items for performance (or full stack if smaller)
+        var searchLimit = Math.Min(10, stackArray.Length);
+        
+        for (int i = 0; i < searchLimit; i++)
+        {
+            var view = stackArray[i];
+            if (view != null && !view.IsDisposed && 
+                view.BindingContext != null && 
+                view.BindingContext.Equals(bindingContext))
+            {
+                // Found matching view - remove it from stack
+                RemoveViewFromStack(stack, view);
+                return view;
+            }
+        }
+        
+        return null; // No matching view found
+    }
+
+    /// <summary>
+    /// Removes a specific view from the stack efficiently
+    /// </summary>
+    /// <param name="stack">Stack to remove from</param>
+    /// <param name="viewToRemove">View to remove</param>
+    private void RemoveViewFromStack(Stack<SkiaControl> stack, SkiaControl viewToRemove)
+    {
+        if (stack == null || viewToRemove == null)
+            return;
+
+        // Convert to list, remove item, rebuild stack
+        var items = stack.ToList();
+        items.Remove(viewToRemove);
+        
+        stack.Clear();
+        for (int i = items.Count - 1; i >= 0; i--)
+        {
+            stack.Push(items[i]);
+        }
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         lock (_syncLock)
@@ -1658,22 +1713,20 @@ public class TemplatedViewsPool : IDisposable
 
     public void Reserve()
     {
-        lock (_syncLock)
-        {
-            if (IsDisposing)
-                return;
+        //not using lock here
+        if (IsDisposing)
+            return;
 
-            if (_genericPool.Count < MaxSize)
+        if (_genericPool.Count < MaxSize)
+        {
+            try
             {
-                try
-                {
-                    _genericPool.Push(CreateFromTemplate());
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(e);
-                    throw;
-                }
+                _genericPool.Push(CreateFromTemplate());
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+                throw;
             }
         }
     }
@@ -1723,7 +1776,7 @@ public class TemplatedViewsPool : IDisposable
         }
     }
 
-    public SkiaControl Get(float height = 0)
+    public SkiaControl Get(float height = 0, object bindingContext = null)
     {
         lock (_syncLock)
         {
@@ -1732,6 +1785,14 @@ public class TemplatedViewsPool : IDisposable
 
             if (height == 0)
             {
+                // ENHANCED: Support bindingContext matching for generic pool too
+                if (bindingContext != null && _genericPool.Count > 0)
+                {
+                    var matchingView = GetViewWithMatchingBindingContext(_genericPool, bindingContext);
+                    if (matchingView != null)
+                        return matchingView;
+                }
+
                 if (_genericPool.Count > 0)
                 {
                     var generic = _genericPool.Pop();
@@ -1754,6 +1815,14 @@ public class TemplatedViewsPool : IDisposable
                     _heightPools[hKey] = stack;
                 }
 
+                // ENHANCED: Support bindingContext matching for generic pool fallback
+                if (bindingContext != null && _genericPool.Count > 0)
+                {
+                    var matchingView = GetViewWithMatchingBindingContext(_genericPool, bindingContext);
+                    if (matchingView != null)
+                        return matchingView;
+                }
+
                 if (_genericPool.Count > 0)
                 {
                     var generic = _genericPool.Pop();
@@ -1766,12 +1835,27 @@ public class TemplatedViewsPool : IDisposable
 
             if (stack != null && stack.Count > 0)
             {
-                view = stack.Pop();
+                // ENHANCED: Look for view with matching bindingContext first
+                if (bindingContext != null)
+                {
+                    view = GetViewWithMatchingBindingContext(stack, bindingContext);
+                }
+                
+                // Fall back to normal pop if no match found
+                if (view == null)
+                {
+                    view = stack.Pop();
+                }
             }
             else
             {
-                //maybe generic available?
-                if (_genericPool.Count > 0)
+                // ENHANCED: Support bindingContext matching for generic pool
+                if (bindingContext != null && _genericPool.Count > 0)
+                {
+                    view = GetViewWithMatchingBindingContext(_genericPool, bindingContext);
+                }
+                
+                if (view == null && _genericPool.Count > 0)
                     view = _genericPool.Pop();
 
                 //create new for size

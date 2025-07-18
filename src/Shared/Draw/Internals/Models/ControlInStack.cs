@@ -2,8 +2,11 @@
 
 namespace DrawnUi.Draw;
 
+[DebuggerDisplay("{ControlIndex} WasMeasured {WasMeasured}, Destination {Destination}")]
 public class ControlInStack
 {
+    private bool isVisible;
+
     public ControlInStack()
     {
         Drawn = new();
@@ -57,7 +60,18 @@ public class ControlInStack
 
     public bool WasMeasured { get; set; }
 
-    public bool IsVisible { get; set; }
+    public bool IsVisible   
+    {
+        get => isVisible;
+        set
+        {
+            //if (!value)
+            //{
+            //    Debug.WriteLine("INVIS");
+            //}
+            isVisible = value;
+        } 
+    }
 
     public int ZIndex { get; set; }
 

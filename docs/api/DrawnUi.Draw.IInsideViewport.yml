@@ -7,6 +7,7 @@ items:
   children:
   - DrawnUi.Draw.IInsideViewport.OnLoaded
   - DrawnUi.Draw.IInsideViewport.OnViewportWasChanged(DrawnUi.Draw.ScaledRect)
+  - DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
   langs:
   - csharp
   - vb
@@ -96,6 +97,44 @@ items:
     content: void OnLoaded()
     content.vb: Sub OnLoaded()
   overload: DrawnUi.Draw.IInsideViewport.OnLoaded*
+- uid: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  commentId: M:DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  id: ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  parent: DrawnUi.Draw.IInsideViewport
+  langs:
+  - csharp
+  - vb
+  name: ShouldTriggerLoadMore(ScaledRect)
+  nameWithType: IInsideViewport.ShouldTriggerLoadMore(ScaledRect)
+  fullName: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ShouldTriggerLoadMore
+    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Determines whether LoadMore should be triggered based on viewport position and internal measurement state.
+
+    This allows the layout to make intelligent decisions about when to load more data.
+  example: []
+  syntax:
+    content: bool ShouldTriggerLoadMore(ScaledRect viewport)
+    parameters:
+    - id: viewport
+      type: DrawnUi.Draw.ScaledRect
+      description: Current viewport rectangle
+    return:
+      type: System.Boolean
+      description: True if LoadMore should be triggered, false otherwise
+    content.vb: Function ShouldTriggerLoadMore(viewport As ScaledRect) As Boolean
+  overload: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -348,3 +387,20 @@ references:
   name: OnLoaded
   nameWithType: IInsideViewport.OnLoaded
   fullName: DrawnUi.Draw.IInsideViewport.OnLoaded
+- uid: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore*
+  commentId: Overload:DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore
+  href: DrawnUi.Draw.IInsideViewport.html#DrawnUi_Draw_IInsideViewport_ShouldTriggerLoadMore_DrawnUi_Draw_ScaledRect_
+  name: ShouldTriggerLoadMore
+  nameWithType: IInsideViewport.ShouldTriggerLoadMore
+  fullName: DrawnUi.Draw.IInsideViewport.ShouldTriggerLoadMore
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

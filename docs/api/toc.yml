@@ -496,6 +496,9 @@ items:
   - uid: DrawnUi.Draw.IStateEffect
     name: IStateEffect
     type: Interface
+  - uid: DrawnUi.Draw.IThemeProvider
+    name: IThemeProvider
+    type: Interface
   - uid: DrawnUi.Draw.ITimingParameters
     name: ITimingParameters
     type: Interface
@@ -552,6 +555,9 @@ items:
     type: Enum
   - uid: DrawnUi.Draw.MauiKeyMapper
     name: MauiKeyMapper
+    type: Class
+  - uid: DrawnUi.Draw.MauiThemeProvider
+    name: MauiThemeProvider
     type: Class
   - uid: DrawnUi.Draw.MeasureRequest
     name: MeasureRequest
@@ -850,6 +856,9 @@ items:
   - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementContext
     name: SkiaLayout.BackgroundMeasurementContext
     type: Class
+  - uid: DrawnUi.Draw.SkiaLayout.BackgroundMeasurementStartingPosition
+    name: SkiaLayout.BackgroundMeasurementStartingPosition
+    type: Class
   - uid: DrawnUi.Draw.SkiaLayout.BuildWrapLayout
     name: SkiaLayout.BuildWrapLayout
     type: Class
@@ -1012,6 +1021,21 @@ items:
   - uid: DrawnUi.Draw.TextTransform
     name: TextTransform
     type: Enum
+  - uid: DrawnUi.Draw.ThemeBinding
+    name: ThemeBinding
+    type: Class
+  - uid: DrawnUi.Draw.ThemeBindingExtension
+    name: ThemeBindingExtension
+    type: Class
+  - uid: DrawnUi.Draw.ThemeBindingManager
+    name: ThemeBindingManager
+    type: Class
+  - uid: DrawnUi.Draw.ThemeBindings
+    name: ThemeBindings
+    type: Class
+  - uid: DrawnUi.Draw.ThemeChangedEventArgs
+    name: ThemeChangedEventArgs
+    type: Class
   - uid: DrawnUi.Draw.TintEffect
     name: TintEffect
     type: Class
@@ -1296,10 +1320,25 @@ items:
   - uid: DrawnUi.Views.DrawnView.TimedDisposable
     name: DrawnView.TimedDisposable
     type: Struct
+  - uid: DrawnUi.Views.IDisposeManager
+    name: IDisposeManager
+    type: Interface
   - uid: DrawnUi.Views.SkiaView
     name: SkiaView
     type: Class
   - uid: DrawnUi.Views.SkiaViewAccelerated
     name: SkiaViewAccelerated
+    type: Class
+  - uid: DrawnUi.Views.SurfaceCacheManager
+    name: SurfaceCacheManager
+    type: Class
+  - uid: DrawnUi.Views.SurfaceKey
+    name: SurfaceKey
+    type: Struct
+  - uid: DrawnUi.Views.SurfacePool
+    name: SurfacePool
+    type: Class
+  - uid: DrawnUi.Views.SurfaceStats
+    name: SurfaceStats
     type: Class
 memberLayout: SamePage

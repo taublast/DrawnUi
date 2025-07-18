@@ -17,6 +17,7 @@ public class SkiaGif : AnimatedFramesRenderer
         this.Display = new()
         {
             Tag="GifDisplay",
+            IsParentIndependent = true,
             LoadSourceOnFirstDraw = false,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+             x:Class="Sandbox.AppThemeTestPage"
+             Title="AppTheme Binding Test">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="30">
+            
+            <!-- Title Section -->
+            <StackLayout Spacing="10">
+                <Label Text="Enhanced ThemeBinding Test Page"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                <Label Text="Testing Microsoft-level ThemeBinding system for DrawnUI controls"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}" />
+
+                <Label x:Name="DiagnosticsLabel"
+                       Text="Active Bindings: Loading..."
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+            </StackLayout>
+
+            <!-- Control Buttons -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+                <Button x:Name="ThemeSwitchButton"
+                        Text="Switch to Dark Theme"
+                        Clicked="OnThemeSwitchClicked"
+                        BackgroundColor="{AppThemeBinding Light=DodgerBlue, Dark=Orange}"
+                        TextColor="White"
+                        CornerRadius="8"
+                        Padding="15,10" />
+
+                <Button Text="Force Update"
+                        Clicked="OnForceUpdateClicked"
+                        BackgroundColor="{AppThemeBinding Light=Green, Dark=DarkGreen}"
+                        TextColor="White"
+                        CornerRadius="8"
+                        Padding="15,10" />
+
+                <Button Text="Cleanup"
+                        Clicked="OnCleanupClicked"
+                        BackgroundColor="{AppThemeBinding Light=Purple, Dark=MediumPurple}"
+                        TextColor="White"
+                        CornerRadius="8"
+                        Padding="15,10" />
+            </StackLayout>
+
+            <!-- Current Theme Display -->
+            <Label x:Name="CurrentThemeLabel" 
+                   Text="Current Theme: Light" 
+                   FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+
+            <!-- MAUI Label Test Section -->
+            <Frame BackgroundColor="{AppThemeBinding Light=LightGray, Dark=DarkGray}" 
+                   CornerRadius="10" 
+                   Padding="15">
+                <StackLayout Spacing="15">
+                    <Label Text="MAUI Label Tests" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    
+                    <Label Text="ABC - Basic Text Color Test" 
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light=Red, Dark=Blue}" />
+                    
+                    <Label Text="XYZ - Background Color Test" 
+                           FontSize="16"
+                           BackgroundColor="{AppThemeBinding Light=Yellow, Dark=Purple}"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           Padding="10,5" />
+                    
+                    <Label Text="123 - Multiple Properties Test" 
+                           FontSize="{AppThemeBinding Light=14, Dark=18}"
+                           TextColor="{AppThemeBinding Light=Green, Dark=Cyan}"
+                           BackgroundColor="{AppThemeBinding Light=LightGreen, Dark=DarkSlateGray}"
+                           Padding="8" />
+                </StackLayout>
+            </Frame>
+
+            <!-- DrawnUI Canvas Test Section -->
+            <Frame BackgroundColor="{AppThemeBinding Light=LightGray, Dark=DarkGray}" 
+                   CornerRadius="10" 
+                   Padding="15">
+                <StackLayout Spacing="15">
+                    <Label Text="DrawnUI SkiaLabel Tests" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    
+                    <draw:Canvas HeightRequest="500"
+                                 BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+                        
+                        <draw:SkiaStack Type="Column" 
+                                        Spacing="20" 
+                                        Padding="20"
+                                        VerticalOptions="Fill">
+
+                            <!-- WORKING: Enhanced ThemeBinding Extension -->
+                            <draw:SkiaLabel Text="✅ Enhanced ThemeBinding - Basic Colors"
+                                            FontSize="16"
+                                            BackgroundColor="{draw:ThemeBinding Light=Yellow, Dark=Purple}"
+                                            TextColor="{draw:ThemeBinding Light=Black, Dark=White}"
+                                            Padding="10,5"
+                                            Margin="0,5" />
+
+                            <!-- Advanced ThemeBinding with multiple properties -->
+                            <draw:SkiaLabel Text="✅ Multi-Property ThemeBinding"
+                                            FontSize="{draw:ThemeBinding Light=14, Dark=18}"
+                                            TextColor="{draw:ThemeBinding Light=Green, Dark=Cyan}"
+                                            BackgroundColor="{draw:ThemeBinding Light=LightGreen, Dark=DarkSlateGray}"
+                                            Padding="8"
+                                            Margin="0,5" />
+
+                            <!-- ThemeBinding with Default fallback -->
+                            <draw:SkiaLabel Text="✅ ThemeBinding with Default Fallback"
+                                            FontSize="16"
+                                            TextColor="{draw:ThemeBinding Light=Orange, Dark=Gold, Default=Gray}"
+                                            BackgroundColor="{draw:ThemeBinding Light=LightBlue, Dark=DarkBlue, Default=Silver}"
+                                            Padding="10,5"
+                                            Margin="0,5" />
+
+                            <!-- Code-behind controlled labels -->
+                            <draw:SkiaLabel x:Name="CodeBehindLabel1"
+                                            Text="✅ Code-Behind Direct Binding"
+                                            FontSize="16"
+                                            Padding="10,5"
+                                            Margin="0,5" />
+
+                            <draw:SkiaLabel x:Name="CodeBehindLabel2"
+                                            Text="✅ Code-Behind Fluent API"
+                                            FontSize="16"
+                                            Padding="10,5"
+                                            Margin="0,5" />
+
+                            <draw:SkiaLabel x:Name="CodeBehindLabel3"
+                                            Text="✅ Code-Behind Helper Method"
+                                            FontSize="16"
+                                            Padding="10,5"
+                                            Margin="0,5" />
+                            
+                            <!-- Additional DrawnUI specific tests -->
+                            <draw:SkiaShape Type="Rectangle"
+                                            WidthRequest="200"
+                                            HeightRequest="40"
+                                            CornerRadius="8"
+                                            BackgroundColor="{AppThemeBinding Light=Orange, Dark=Teal}">
+                                <draw:SkiaLabel Text="Shape with Theme Background" 
+                                                FontSize="14"
+                                                TextColor="{AppThemeBinding Light=White, Dark=Black}"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center" />
+                            </draw:SkiaShape>
+                            
+                            <draw:SkiaLabel x:Name="DrawnTestLabel"
+                                            Text="Programmatic Test Label" 
+                                            FontSize="16"
+                                            TextColor="{AppThemeBinding Light=Purple, Dark=Yellow}"
+                                            BackgroundColor="{AppThemeBinding Light=Lavender, Dark=DarkMagenta}"
+                                            Padding="10" />
+
+                            <!-- BROKEN: AppThemeBinding doesn't work with DrawnUI -->
+                            <draw:SkiaLabel Text="❌ AppThemeBinding (BROKEN - stays same color)"
+                                            FontSize="16"
+                                            TextColor="{AppThemeBinding Light=Red, Dark=Blue}"
+                                            Margin="0,5" />
+
+                        </draw:SkiaStack>
+                    </draw:Canvas>
+                </StackLayout>
+            </Frame>
+
+            <!-- Test Results Section -->
+            <Frame BackgroundColor="{AppThemeBinding Light=LightBlue, Dark=DarkBlue}" 
+                   CornerRadius="10" 
+                   Padding="15">
+                <StackLayout Spacing="10">
+                    <Label Text="Test Instructions" 
+                           FontSize="16" 
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                    
+                    <Label Text="1. Use the 'Switch Theme' button to toggle between light and dark themes"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                    
+                    <Label Text="2. Compare how MAUI Labels vs DrawnUI SkiaLabels respond to theme changes"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                    
+                    <Label Text="3. Check if colors update immediately or require app restart"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                    
+                    <Label Text="4. Test system theme changes (if supported on platform)"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

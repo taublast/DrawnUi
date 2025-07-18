@@ -204,11 +204,20 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ImageComposite
     path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
-    startLine: 38
+    startLine: 42
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Would receive the invalidated area rectangle, then redraw the previous cache but clipped to exclude the dirty area, then would re-create the dirty area and draw it clipped inside the dirty rectangle. This is useful for layouts with many children, like scroll content etc, but useless for non-containers.
+  summary: >-
+    Would receive the invalidated area rectangle, then redraw the previous cache
+
+    but clipped to exclude the dirty area, then would re-create the dirty area and
+
+    draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
+
+    like scroll content etc, but useless for non-containers.
+
+    But will suffer from children that love to invalidate parent much!
   example: []
   syntax:
     content: ImageComposite = 5
@@ -232,7 +241,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GPU
     path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
-    startLine: 45
+    startLine: 49
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

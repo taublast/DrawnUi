@@ -6189,7 +6189,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Will not invalidate the measurement of parent if True
         /// </summary>
-        public bool IsParentIndependent { get; set; }
+        public virtual bool IsParentIndependent { get; set; }
 
         /// <summary>
         /// Will not call Update on Parent if True

@@ -79,7 +79,7 @@ A: Directly call `layout.ApplyItemsSource()`.
 
 
 **Can't find the answer to your question?** → 
-* Please check out [samples source code](samples.md), covers many scenarios.
+* Please check out [samples source code](tutorials.md), covers many scenarios.
 * [Ask in GitHub Discussions](https://github.com/taublast/DrawnUi/discussions)** - The community is here to help!
 
 

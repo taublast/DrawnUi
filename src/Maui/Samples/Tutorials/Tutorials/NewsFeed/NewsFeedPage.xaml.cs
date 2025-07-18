@@ -11,6 +11,7 @@ public partial class NewsFeedPage : DrawnUiBasePage
         try
         {
             InitializeComponent();
+
             BindingContext = new NewsViewModel();
         }
         catch (Exception e)

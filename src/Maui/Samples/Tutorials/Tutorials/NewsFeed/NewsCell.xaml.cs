@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using DrawnUI.Tutorials.NewsFeed.Models;
+using SkiaSharp;
+using SkiaSharp.Views.Maui;
 
 namespace DrawnUI.Tutorials.NewsFeed;
 
@@ -19,7 +21,33 @@ public partial class NewsCell : SkiaDynamicDrawnCell
             ConfigureForContentType(news);
         }
     }
- 
+
+    public override void OnWillDisposeWithChildren()
+    {
+        base.OnWillDisposeWithChildren();
+
+        PaintPlaceholder?.Dispose();
+    }
+
+    private SKPaint PaintPlaceholder;
+
+    public override void DrawPlaceholder(DrawingContext context)
+    {
+        var margins = BackgroundLayer.Padding;
+        var area =
+                new SKRect((float)(context.Destination.Left + margins.Left * context.Scale),
+            (float)(context.Destination.Top + margins.Top * context.Scale),
+        (float)(context.Destination.Right - margins.Right * context.Scale),
+        (float)(context.Destination.Bottom - margins.Bottom * context.Scale));
+
+        PaintPlaceholder ??= new SKPaint
+        {
+            Color = SKColor.Parse("#FFFFFF"),
+            Style = SKPaintStyle.Fill,
+        };
+
+        context.Context.Canvas.DrawRect(area, PaintPlaceholder);
+    }
 
     private void ConfigureForContentType(NewsItem news)
     {
@@ -28,7 +56,8 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
         // Configure common elements
 
-        DebugId.Text = $"{news.Id}";
+        //DebugId.Text = $"{news.Id}"; //for debugging
+
         AuthorLabel.Text = news.AuthorName;
         TimeLabel.Text = GetRelativeTime(news.PublishedAt);
         AvatarImage.Source = news.AuthorAvatarUrl;
@@ -96,7 +125,8 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
     private void ConfigureVideoPost(NewsItem news)
     {
-        VideoThumbnail.Source = ExtractVideoThumbnail(news.VideoUrl);
+        ContentImg.Source = ExtractVideoThumbnail(news.VideoUrl);
+        ContentImage.IsVisible = true;
         VideoLayout.IsVisible = true;
 
         if (!string.IsNullOrEmpty(news.Content))

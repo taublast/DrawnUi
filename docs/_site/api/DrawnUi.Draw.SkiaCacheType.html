@@ -132,7 +132,11 @@ Slower but will work for sizes bigger than graphics memory if needed.</p>
 </dd>
     <dt id="DrawnUi_Draw_SkiaCacheType_ImageComposite"><code>ImageComposite = 5</code></dt>
   
-  <dd><p>Would receive the invalidated area rectangle, then redraw the previous cache but clipped to exclude the dirty area, then would re-create the dirty area and draw it clipped inside the dirty rectangle. This is useful for layouts with many children, like scroll content etc, but useless for non-containers.</p>
+  <dd><p>Would receive the invalidated area rectangle, then redraw the previous cache
+but clipped to exclude the dirty area, then would re-create the dirty area and
+draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
+like scroll content etc, but useless for non-containers.
+But will suffer from children that love to invalidate parent much!</p>
 </dd>
     <dt id="DrawnUi_Draw_SkiaCacheType_ImageDoubleBuffered"><code>ImageDoubleBuffered = 4</code></dt>
   
@@ -175,7 +179,7 @@ Do not use this when dropping shadows or with other effects, better use Bitmap.<
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a>
         </div>
       </div>
     </footer>

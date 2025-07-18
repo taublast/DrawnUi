@@ -269,6 +269,6 @@ After conversion, you'll get:
 
 ### Further Reading
 
-Please see [sample apps](samples.md) and [controls documentation](controls/index.md) for more examples and details.
+Please see [sample apps](tutorials.md) and [controls documentation](controls/index.md) for more examples and details.
 
 

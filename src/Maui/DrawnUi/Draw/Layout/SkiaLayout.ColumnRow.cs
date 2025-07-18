@@ -2068,34 +2068,21 @@ else
                 var currentIndex = -1;
                 foreach (var cell in structure.GetChildrenAsSpans())
                 {
-                    //// NEW: Check if we have background measurement for this cell
-                    if (!cell.WasMeasured && _measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
-                    {
-                        // Apply the background measurement to this cell
-                        cell.Measured = measuredInfo.Cell.Measured;
-                        cell.WasMeasured = true;
-                        cell.Area = measuredInfo.Cell.Area;
-                        cell.Destination = measuredInfo.Cell.Destination;
-
-                        Debug.WriteLine($"[DrawStack] Using background measurement for cell {cell.ControlIndex}");
-                    }
-
-                    if (!cell.WasMeasured)
-                    {
-                        Super.Log(
-                            "DrawStack tried to draw unmeasured cell!"); //would be unexpected due to flaw in custom control
-                        continue; //structure changed, must be measured by Measure method
-                    }
-
                     currentIndex++;
 
-                    if (cell.Destination == SKRect.Empty || cell.Measured.Pixels.Width < 1 ||
+                    if (cell.WasMeasured && cell.Destination == SKRect.Empty || cell.Measured.Pixels.Width < 1 ||
                         cell.Measured.Pixels.Height < 1)
                     {
                         cell.IsVisible = false;
                     }
                     else
                     {
+                        if (!cell.WasMeasured) // && MeasureItemsStrategy != MeasuringStrategy.MeasureVisible)
+                        {
+                            // DrawStack tried to draw unmeasured cell!
+                            continue; // Skip unmeasured
+                        }
+
                         // Calculate screen position (unchanged)
                         var x = ctx.Destination.Left + cell.Destination.Left;
                         var y = ctx.Destination.Top + cell.Destination.Top;
@@ -2189,15 +2176,14 @@ else
                     LastVisibleIndex = -1;
                 }
 
+
                 // Start background measurement if needed
-                if (IsTemplated &&
+                if (IsTemplated && structure != null &&
                     MeasureItemsStrategy == MeasuringStrategy.MeasureVisible &&
                     ItemsSource != null &&
                     lastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
-                    !_isBackgroundMeasuring &&
-                    structure != null && _pendingStructureChanges.Count == 0)
+                    !IsBackgroundMeasuring && _pendingStructureChanges.Count == 0)
                 {
-
                     // We have unmeasured items beyond visible area
                     var nextUnmeasuredIndex = lastVisibleIndex + 1;
 
@@ -2212,19 +2198,8 @@ else
                     {
                         StartBackgroundMeasurement(ctx.Destination, ctx.Scale, nextUnmeasuredIndex);
                     }
-
-  
                 }
 
-                // Update measured items access time for visible items
-                foreach (var cell in visibleElements)
-                {
-                    if (_measuredItems.TryGetValue(cell.ControlIndex, out var info))
-                    {
-                        info.LastAccessed = DateTime.UtcNow;
-                        info.IsInViewport = true;
-                    }
-                }
 
                 //PASS 2 DRAW VISIBLE
                 bool hadAdjustments = false;
@@ -2236,33 +2211,31 @@ else
 
                 try
                 {
-                    if (WillDrawFromFreshItemssSource && IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled)
+                    if (WillDrawFromFreshItemssSource == 0 && IsTemplated &&
+                        RecyclingTemplate != RecyclingTemplate.Disabled)
                     {
-                        _ = ChildrenFactory.FillPoolInBackgroundAsync(visibleElements.Count + ReserveTemplates);
+                        if (ReserveTemplates > 0)
+                        {
+                            Tasks.StartDelayed(TimeSpan.FromMilliseconds(50),
+                                () => { ChildrenFactory.FillPool(ReserveTemplates); });
+                        }
                     }
 
                     foreach (var cell in CollectionsMarshal.AsSpan(visibleElements))
                     {
+                        // Update measured items access time for visible items
+                        if (_measuredItems.TryGetValue(cell.ControlIndex, out var info))
+                        {
+                            info.LastAccessed = DateTime.UtcNow;
+                            info.IsInViewport = true;
+                        }
+
                         if (cell.IsCollapsed)
                             continue;
 
                         if (!cell.WasMeasured)
                         {
-                            // Check if we have background measured data
-                            if (_measuredItems.TryGetValue(cell.ControlIndex, out var measuredInfo))
-                            {
-                                // Use pre-measured dimensions
-                                cell.Measured = measuredInfo.Cell.Measured;
-                                cell.WasMeasured = true;
-                                cell.Area = measuredInfo.Cell.Area;
-
-                                // Update access time
-                                measuredInfo.LastAccessed = DateTime.UtcNow;
-                            }
-                            else
-                            {
-                                continue; // Skip unmeasured
-                            }
+                            continue; // Skip unmeasured
                         }
 
                         index++;
@@ -2293,12 +2266,15 @@ else
 
                             if (child.NeedMeasure)
                             {
-                                if (child.WasMeasured && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                                if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
                                 {
                                     //we change structure elsewhere so no need to measure here
-                                    child.NeedMeasure = false;
+                                    if (child.WasMeasured)
+                                    {
+                                        child.NeedMeasure = false;
+                                    }
                                 }
-                                else
+
                                 if (!IsTemplated ||
                                     !child.WasMeasured
                                     || InvalidatedChildrenInternal.Contains(child) ||
@@ -2309,7 +2285,7 @@ else
                                     var measured = child.Measure((float)cell.Area.Width, (float)cell.Area.Height,
                                         ctx.Scale);
 
-                                    Debug.WriteLine($"[DrawStack] measured {child.ContextIndex}");
+                                    //Debug.WriteLine($"[DrawStack] measured while drawing {child.ContextIndex}");
 
                                     cell.Measured = measured;
                                     cell.WasMeasured = true;
@@ -2327,13 +2303,11 @@ else
 
                                         if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
                                         {
-                                            Debug.WriteLine($"[DrawStack] OffsetOthers {cell.OffsetOthers}");
+                                            //Debug.WriteLine($"[DrawStack] OffsetOthers {cell.OffsetOthers}");
 
                                             var measuredItem = new MeasuredItemInfo
                                             {
-                                                Cell = cell,
-                                                LastAccessed = DateTime.UtcNow,
-                                                IsInViewport = true,
+                                                Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = true,
                                             };
                                             _pendingStructureChanges.Add(new StructureChange
                                             {
@@ -2346,11 +2320,10 @@ else
 
                                             cell.OffsetOthers = Vector2.Zero;
                                         }
-
                                     }
                                 }
                             }
-              
+
 
                             if (child.IsVisible)
                             {
@@ -2466,7 +2439,7 @@ else
                 Update();
             }
 
-            WillDrawFromFreshItemssSource = false;
+            WillDrawFromFreshItemssSource++;
 
             //todo move/remove???
             if (_measuredItems.Count > SLIDING_WINDOW_SIZE)

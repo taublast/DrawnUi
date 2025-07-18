@@ -11,18 +11,21 @@
                  BackgroundColor="DarkSlateBlue"
                  RenderingMode="Accelerated"
                  Gestures="Enabled"
-                 VerticalOptions="Fill" HorizontalOptions="Fill">
-        <!--use fill/fixed size when you need performance-->
+                 VerticalOptions="Fill"
+                 HorizontalOptions="Fill">
+        <!--do not use autosize when you need performance, fill is ok-->
 
         <draw:SkiaScroll VerticalOptions="Fill" HorizontalOptions="Fill">
 
             <draw:SkiaStack
-                UseCache="ImageComposite"
+                Tag="MainStack"
                 Spacing="30" Padding="20"
                 HorizontalOptions="Center">
 
                 <!-- Title -->
-                <draw:SkiaLayout Type="Column" Spacing="8" HorizontalOptions="Center" Margin="0,20,0,0">
+                <draw:SkiaLayout Type="Column"
+                                 UseCache="Image"
+                                 Spacing="8" HorizontalOptions="Center" Margin="0,20,0,0">
                     <draw:SkiaLabel
                         Text="Custom Button Tutorial"
                         FontSize="24"
@@ -42,8 +45,8 @@
                                          HorizontalOptions="Center" />
 
                 <!-- Features -->
-                <draw:SkiaLayout 
-                    UseCache="Operations"
+                <draw:SkiaLayout
+                    UseCache="Image"
                     Type="Column" Spacing="12" HorizontalOptions="Center">
                     <draw:SkiaLabel
                         Text="Features Demonstrated:"
@@ -78,10 +81,15 @@
                 </draw:SkiaLayout>
 
                 <!-- More Example Buttons -->
-                <draw:SkiaLayout 
+                <draw:SkiaLayout
                     UseCache="ImageComposite"
-                    Type="Column" Spacing="16" HorizontalOptions="Center" Margin="0,20,0,20">
+                    Type="Column"
+                    Spacing="16"
+                    HorizontalOptions="Center"
+                    Margin="0,20,0,20">
+
                     <draw:SkiaLabel
+                        UseCache="None"
                         Text="Usage Examples:"
                         FontSize="18"
                         FontAttributes="Bold"

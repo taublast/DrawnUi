@@ -44,9 +44,12 @@ items:
   - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.GetColumn(System.Int32)
   - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Clear
   - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.GetChildren
+  - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Children
   - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.FindChildAtIndex(System.Int32)
+  - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Item(System.Int32)
   - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.GetChildrenAsSpans
   - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.GetCount
+  - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Length
   - DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.GetColumnCountForRow(System.Int32)
   - System.Object.Equals(System.Object)
   - System.Object.Equals(System.Object,System.Object)
@@ -514,6 +517,16 @@ references:
     href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetChildren
   - name: (
   - name: )
+- uid: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Children
+  commentId: P:DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Children
+  parent: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}
+  definition: DrawnUi.Draw.DynamicGrid`1.Children
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Children
+  name: Children
+  nameWithType: DynamicGrid<ControlInStack>.Children
+  fullName: DrawnUi.Draw.DynamicGrid<DrawnUi.Draw.ControlInStack>.Children
+  nameWithType.vb: DynamicGrid(Of ControlInStack).Children
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of DrawnUi.Draw.ControlInStack).Children
 - uid: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.FindChildAtIndex(System.Int32)
   commentId: M:DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.FindChildAtIndex(System.Int32)
   parent: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}
@@ -539,6 +552,35 @@ references:
   - uid: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.FindChildAtIndex(System.Int32)
     name: FindChildAtIndex
     href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_FindChildAtIndex_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Item(System.Int32)
+  commentId: P:DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Item(System.Int32)
+  parent: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}
+  definition: DrawnUi.Draw.DynamicGrid`1.Item(System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: DynamicGrid<ControlInStack>.this[int]
+  fullName: DrawnUi.Draw.DynamicGrid<DrawnUi.Draw.ControlInStack>.this[int]
+  nameWithType.vb: DynamicGrid(Of ControlInStack).this[](Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of DrawnUi.Draw.ControlInStack).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Item(System.Int32)
+    name: this[]
+    href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Item_System_Int32_
   - name: (
   - uid: System.Int32
     name: Integer
@@ -589,6 +631,16 @@ references:
     href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetCount
   - name: (
   - name: )
+- uid: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Length
+  commentId: P:DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.Length
+  parent: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}
+  definition: DrawnUi.Draw.DynamicGrid`1.Length
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Length
+  name: Length
+  nameWithType: DynamicGrid<ControlInStack>.Length
+  fullName: DrawnUi.Draw.DynamicGrid<DrawnUi.Draw.ControlInStack>.Length
+  nameWithType.vb: DynamicGrid(Of ControlInStack).Length
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of DrawnUi.Draw.ControlInStack).Length
 - uid: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.GetColumnCountForRow(System.Int32)
   commentId: M:DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}.GetColumnCountForRow(System.Int32)
   parent: DrawnUi.Draw.DynamicGrid{DrawnUi.Draw.ControlInStack}
@@ -1116,6 +1168,14 @@ references:
     href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetChildren
   - name: (
   - name: )
+- uid: DrawnUi.Draw.DynamicGrid`1.Children
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.Children
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Children
+  name: Children
+  nameWithType: DynamicGrid<T>.Children
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Children
+  nameWithType.vb: DynamicGrid(Of T).Children
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Children
 - uid: DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
   commentId: M:DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
   isExternal: true
@@ -1140,6 +1200,34 @@ references:
   - uid: DrawnUi.Draw.DynamicGrid`1.FindChildAtIndex(System.Int32)
     name: FindChildAtIndex
     href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_FindChildAtIndex_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: DrawnUi.Draw.DynamicGrid`1.Item(System.Int32)
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.Item(System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: DynamicGrid<T>.this[int]
+  fullName: DrawnUi.Draw.DynamicGrid<T>.this[int]
+  nameWithType.vb: DynamicGrid(Of T).this[](Integer)
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: DrawnUi.Draw.DynamicGrid`1.Item(System.Int32)
+    name: this[]
+    href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Item_System_Int32_
   - name: (
   - uid: System.Int32
     name: Integer
@@ -1186,6 +1274,14 @@ references:
     href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_GetCount
   - name: (
   - name: )
+- uid: DrawnUi.Draw.DynamicGrid`1.Length
+  commentId: P:DrawnUi.Draw.DynamicGrid`1.Length
+  href: DrawnUi.Draw.DynamicGrid-1.html#DrawnUi_Draw_DynamicGrid_1_Length
+  name: Length
+  nameWithType: DynamicGrid<T>.Length
+  fullName: DrawnUi.Draw.DynamicGrid<T>.Length
+  nameWithType.vb: DynamicGrid(Of T).Length
+  fullName.vb: DrawnUi.Draw.DynamicGrid(Of T).Length
 - uid: DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
   commentId: M:DrawnUi.Draw.DynamicGrid`1.GetColumnCountForRow(System.Int32)
   isExternal: true
