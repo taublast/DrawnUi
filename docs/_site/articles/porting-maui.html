@@ -13,7 +13,7 @@
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="toc.html">
       
-      
+      <meta name="docfx:rel" content="../">
       
       
       <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/porting-maui.md/#L1">
@@ -44,7 +44,7 @@
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
           <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="">
+            <img id="logo" class="svg" src="../images/logo.png" alt="">
             
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +52,10 @@
           </button>
           <div class="collapse navbar-collapse" id="navpanel">
             <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
             </div>
           </div>
         </div>
@@ -83,9 +87,9 @@
         <article data-uid="">
 <h1 id="porting-native-to-drawn-with-drawnui">Porting Native to Drawn with DrawnUI</h1>
 
-<p>There may come a time when you feel that some complex parts of your app are not rendering the way you wish, or you cannot implement certain UI elements with out-of-the-box native controls. At the same time, you want to stay with MAUI and not rewrite the app in something else.
+<p>There may come a time when you feel that some complex parts of your app are not rendering the way you wish, or you cannot implement certain UI elements with out-of-the-box native controls. At the same time, you want to stay with MAUI and not rewrite the app in something else.<br>
 In such cases, you can replace chunks of your UI with drawn controls, or even convert the whole app.</p>
-<p>Why even bother?</p>
+<h2 id="when-to-consider">When To Consider</h2>
 <ul>
 <li><p><strong>You want complex layouts not to affect your app performance</strong>
 In some scenarios, native layouts can be slower than drawn ones. Think of it like 5 horses vs a car with a 5 horsepower engine: your app has to handle 5 native views instead of just 1 - the Canvas. Rasterized caching ensures that shadows and other heavy-duty elements never affect your performance.</p>
@@ -103,7 +107,7 @@ DrawnUI is a lightweight open-source project that can be directly referenced and
 <p>This guide will help you port your existing native MAUI controls to DrawnUI.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>First, please follow the <a href="getting-started.html">Getting Started guide</a> to set up your project for DrawnUI.</p>
-<h2 id="the-theory">The theory</h2>
+<h2 id="the-theory">The Theory</h2>
 <p>Replacing native controls with DrawnUI ones involves several steps:</p>
 <ol>
 <li><p>Move used images to the <code>Resources/Raw</code> folder.</p>
@@ -623,6 +627,7 @@ private void OnButtonClicked(SkiaButton button, SkiaGesturesParameters args)
       </div>
     </main>
 
+    <div class="container-xxl search-results" id="search-results"></div>
 
     <footer class="border-top text-secondary">
       <div class="container-xxl">

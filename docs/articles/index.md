@@ -32,7 +32,8 @@ builder.UseDrawnUi();
 
 ### Documentation & Guides
 - **[Getting Started Guide](getting-started.md)** - Complete installation and setup
-- **[Sample Apps](tutorials.md)** - Tutorials and example projects
+- **[Tutorials](tutorials.md)** - Tutorials and example projects
+- **[Fluent Extensions](fluent-extensions.md)** - Code-behind UI creation patterns
 - **[FAQ](faq.md)** - Frequently asked questions and answers
 - **[Controls Documentation](controls/index.md)** - Complete controls reference
 - **[Advanced Features](advanced/index.md)** - Performance and platform topics
@@ -42,8 +43,7 @@ builder.UseDrawnUi();
 - **[GitHub Issues](https://github.com/taublast/DrawnUi.Maui/issues)** - Report bugs or ask questions
 
 ### Additional Resources
-- **[Fluent Extensions](fluent-extensions.md)** - Code-behind UI creation patterns
-- **[What's New](whats-new.md)** - Latest updates and features
+- **[Sample Apps](sample-apps.md)** - Apps built with DrawnUI
 - **[How DrawnUI was created](https://taublast.github.io/posts/MauiJuly/)** - article by the creator
 
 **Can't find what you're looking for?** → **[Ask in GitHub Discussions](https://github.com/taublast/DrawnUi/discussions)** - The community is here to help!

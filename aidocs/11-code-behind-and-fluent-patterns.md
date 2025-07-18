@@ -39,7 +39,7 @@ public class ScreenSearchOnMap : AppScreen
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
                 ZIndex = -1
-            }.Adapt((me) =>
+            }.Adapt(me =>
             {
                 // Complex map pin setup function
                 MapPin SetupClickedPin(bool show)
@@ -227,7 +227,7 @@ public class ScreenSearchOnMap : AppScreen
                                             }
                                         },
                                         Clicked = (me, args) => { Drawer.IsOpen = !Drawer.IsOpen; }
-                                    }.Initialize((me) =>
+                                    }.Initialize(me =>
                                     {
                                         // Real observation pattern for icon changes
                                         me.Observe(Drawer, (me, prop) =>
@@ -418,7 +418,7 @@ public class ScreenChat : AppScreen
                             .SetGrid(1, 1),
                         }
                     }
-                    .OnTapped((me) => { Model.CommandCancelReply.Execute(null); })
+                    .OnTapped(me => { Model.CommandCancelReply.Execute(null); })
                     .WithRow(2)
                     .WithRowDefinitions("Auto,Auto")
                     .WithColumnDefinitions("Auto,*,40")
@@ -522,7 +522,7 @@ public class ScreenChat : AppScreen
                                             },
                                         }
                                     }.WithColumn(0)
-                                    .OnTapped((me) => { Model.CommandSelectAttachment.Execute(null); }),
+                                    .OnTapped(me => { Model.CommandSelectAttachment.Execute(null); }),
 
                                     // Send button with layered icons
                                     new SkiaLayer()
@@ -555,7 +555,7 @@ public class ScreenChat : AppScreen
                                             }
                                         }
                                     }.WithColumn(2)
-                                    .OnTapped((me) =>
+                                    .OnTapped(me =>
                                     {
                                         Debug.WriteLine("SEND TAPPED");
                                         Model.CommandSubmit.Execute(null);
@@ -694,7 +694,7 @@ public class ScreenRequestEditor : AppScreen
                                 LockRatio = 1,
                                 SvgString = App.Current.Resources.Get<string>("SvgDropdown")
                             }
-                            .Initialize((me) => { me.IsVisible = Model.CanChange; })
+                            .Initialize(me => { me.IsVisible = Model.CanChange; })
                             .CenterY().EndX()
                         }
                     }
@@ -727,7 +727,7 @@ public class ScreenRequestEditor : AppScreen
                                     },
                                     string.Empty)
                         }.SetGrid(0, 1)
-                        .OnTapped((me) =>
+                        .OnTapped(me =>
                         {
                             if (Model.CanChange)
                             {
@@ -757,7 +757,7 @@ public class ScreenRequestEditor : AppScreen
                                     },
                                     string.Empty)
                         }.SetGrid(1, 1)
-                        .OnTapped((me) =>
+                        .OnTapped(me =>
                         {
                             if (Model.CanChange)
                             {
@@ -791,7 +791,7 @@ public class ScreenRequestEditor : AppScreen
                             },
                             string.Empty)
                 }
-                .OnTapped((me) =>
+                .OnTapped(me =>
                 {
                     if (Model.CanChange)
                     {

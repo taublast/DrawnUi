@@ -1,6 +1,6 @@
 ---
 title: News Feed Scroller Tutorial
-description: When MAUI CollectionView is not enough.. \r\nThink Drawn! DrawnUI News Feed Scroller Tutorial.
+description: When MAUI CollectionView is not enough.. Think Drawn! DrawnUI News Feed Scroller Tutorial.
 categories: [MAUI, DrawnUI]
 tags: [drawnui, skiasharp, dotnetmaui]    
 image: /images/scroller.jpg
@@ -8,7 +8,7 @@ image: /images/scroller.jpg
 # News Feed Scroller Tutorial
 
 When .NET MAUI CollectionView is not enough.. Think Drawn!  
-We will be building a news feed scroller with mixed content: text posts, images, videos, articles, ads: an infinite scroll with LoadMore mechanics. 
+We will be building a news feed scroller with mixed content: text posts, images, videos, articles, ads: an infinite scroll of recycled cells with LoadMore mechanics. 
 
 ## 🚀 This Tutorial Features:
 * **📏 Uneven row heights** - because real content isn't uniform!

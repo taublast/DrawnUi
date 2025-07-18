@@ -98,7 +98,7 @@ public class SkiaSwitch : SkiaToggle
                     }
                 }
             },
-            new SkiaHotspot() { TransformView = this.Thumb, }.Adapt((me) =>
+            new SkiaHotspot() { TransformView = this.Thumb, }.Adapt(me =>
             {
                 me.Tapped += (s, e) => { IsToggled = !IsToggled; };
             })
@@ -149,7 +149,7 @@ public class SkiaSwitch : SkiaToggle
                     }
                 }
             },
-            new SkiaHotspot() { TransformView = this.Thumb, }.Adapt((me) =>
+            new SkiaHotspot() { TransformView = this.Thumb, }.Adapt(me =>
             {
                 me.Tapped += (s, e) => { IsToggled = !IsToggled; };
             })

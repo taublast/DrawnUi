@@ -66,7 +66,7 @@ namespace Sandbox
                             BackgroundColor = Colors.DarkOliveGreen,
                             HorizontalOptions = LayoutOptions.End,
                             VerticalOptions = LayoutOptions.Center,
-                        }.OnTapped((me) =>
+                        }.OnTapped(me =>
                         {
                             Trace.WriteLine("BTN TAPPED");
                         })

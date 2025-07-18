@@ -73,7 +73,7 @@ namespace Sandbox
                             HeightRequest = 40,
                             HorizontalOptions = LayoutOptions.Center,
                             WidthRequest = 200,
-                        }.OnTapped((me) =>
+                        }.OnTapped(me =>
                         {
                             me.TranslationX += RndExtensions.CreateRandom(1, 20);
                             Source.Add("new item");

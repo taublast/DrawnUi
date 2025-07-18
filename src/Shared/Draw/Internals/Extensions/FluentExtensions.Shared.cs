@@ -236,7 +236,7 @@ namespace DrawnUi.Draw
                 parentPropertyName,
                 (me, prop) =>
                 {
-                    callback?.Invoke(me);
+                    callback?.Invokeme;
                 },
                 props);
         }
@@ -277,7 +277,7 @@ namespace DrawnUi.Draw
                 parentPropertyName,
                 (me, prop) =>
                 {
-                    callback?.Invoke(me);
+                    callback?.Invokeme;
                 },
                 props);
         }
@@ -418,7 +418,7 @@ namespace DrawnUi.Draw
         {
             return control.Observe(target, (me, prop) =>
             {
-                callback?.Invoke(me);
+                callback?.Invokeme;
             }, new[] { nameof(BindableObject.BindingContext), propertyName });
         }
 
@@ -441,7 +441,7 @@ namespace DrawnUi.Draw
             where T : SkiaControl
             where TSource : INotifyPropertyChanged
         {
-            return control.Initialize((me) =>
+            return control.Initialize(me =>
             {
                 TSource target = targetSelector();
                 if (target != null)
@@ -474,7 +474,7 @@ namespace DrawnUi.Draw
             var props = propertyNames.Concat(new[] { nameof(BindableObject.BindingContext) }).ToArray();
             return control.Observe(target, (me, prop) =>
             {
-                callback?.Invoke(me);
+                callback?.Invokeme;
             }, props);
         }
 
@@ -497,7 +497,7 @@ namespace DrawnUi.Draw
             where T : SkiaControl
             where TSource : INotifyPropertyChanged
         {
-            return control.Initialize((me) =>
+            return control.Initialize(me =>
             {
                 TSource target = targetSelector();
                 if (target != null)
@@ -525,7 +525,7 @@ namespace DrawnUi.Draw
             where T : SkiaControl
             where TSource : SkiaControl, INotifyPropertyChanged
         {
-            control.Initialize((me) =>
+            control.Initialize(me =>
             {
                 // Get the source control using the provided fetcher function
                 TSource source = sourceFetcher();
@@ -588,7 +588,7 @@ namespace DrawnUi.Draw
             where T : SkiaControl
             where TSource : SkiaControl, INotifyPropertyChanged
         {
-            return control.Observe(sourceFetcher, (me, prop) => callback?.Invoke(me), propertyFilter);
+            return control.Observe(sourceFetcher, (me, prop) => callback?.Invokeme, propertyFilter);
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace DrawnUi.Draw
             where T : SkiaControl
             where TSource : INotifyPropertyChanged
         {
-            return control.Observe(target, (me, prop) => callback?.Invoke(me), propertyFilter);
+            return control.Observe(target, (me, prop) => callback?.Invokeme, propertyFilter);
         }
 
         /// <summary>
