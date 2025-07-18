@@ -797,6 +797,35 @@ namespace DrawnUi.Draw
         #region GESTURES
 
         /// <summary>
+        /// State change callback for SkiaToggle and related controls
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="view"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static T OnToggled<T>(this T view, Action<T, bool> action) where T : SkiaToggle
+        {
+            try
+            {
+                void onToggled(object s, bool a)
+                {
+                    action?.Invoke(view, a);
+                }
+                view.Toggled += onToggled;
+                string subscriptionKey = $"toggled_{Guid.NewGuid()}";
+                view.ExecuteUponDisposal[subscriptionKey] = () =>
+                {
+                    view.Toggled -= onToggled;
+                };
+            }
+            catch (Exception e)
+            {
+                Super.Log(e);
+            }
+
+            return view;
+        }
+        /// <summary>
         /// Uses an `AddGestures.SetCommandTapped` with this control, will invoke code in passed callback when tapped.
         /// </summary>
         /// <typeparam name="T"></typeparam>
