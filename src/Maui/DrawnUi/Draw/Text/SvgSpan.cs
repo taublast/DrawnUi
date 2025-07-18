@@ -93,6 +93,23 @@ public class SvgSpan : TextSpan, IDrawnTextSpan
         }
     }
 
+    private string _SvgString;
+    public string SvgString
+    {
+        get
+        {
+            return _SvgString;
+        }
+        set
+        {
+            if (_SvgString != value)
+            {
+                _SvgString = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     protected SkiaSvg Control = new();
 
     void IDrawnTextSpan.Render(DrawingContext ctx)
@@ -115,6 +132,7 @@ public class SvgSpan : TextSpan, IDrawnTextSpan
             Control.TintColor = this.TintColor;
             Control.BackgroundColor = this.BackgroundColor;
             Control.Source = this.Source;
+            Control.SvgString = this.SvgString;
             Control.WidthRequest = this.Width;
             Control.HeightRequest = this.Height;
         }
