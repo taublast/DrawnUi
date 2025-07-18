@@ -236,7 +236,7 @@ namespace DrawnUi.Draw
                 parentPropertyName,
                 (me, prop) =>
                 {
-                    callback?.Invokeme;
+                    callback?.Invoke(me);
                 },
                 props);
         }
@@ -277,7 +277,7 @@ namespace DrawnUi.Draw
                 parentPropertyName,
                 (me, prop) =>
                 {
-                    callback?.Invokeme;
+                    callback?.Invoke(me);
                 },
                 props);
         }
@@ -418,7 +418,7 @@ namespace DrawnUi.Draw
         {
             return control.Observe(target, (me, prop) =>
             {
-                callback?.Invokeme;
+                callback?.Invoke(me);
             }, new[] { nameof(BindableObject.BindingContext), propertyName });
         }
 
@@ -474,7 +474,7 @@ namespace DrawnUi.Draw
             var props = propertyNames.Concat(new[] { nameof(BindableObject.BindingContext) }).ToArray();
             return control.Observe(target, (me, prop) =>
             {
-                callback?.Invokeme;
+                callback?.Invoke(me);
             }, props);
         }
 
@@ -584,11 +584,11 @@ namespace DrawnUi.Draw
             this T control,
             Func<TSource> sourceFetcher,
             Action<T> callback,
-            string[] propertyFilter = null)
+            string[] propertyFilter = null) 
             where T : SkiaControl
             where TSource : SkiaControl, INotifyPropertyChanged
         {
-            return control.Observe(sourceFetcher, (me, prop) => callback?.Invokeme, propertyFilter);
+            return control.Observe(sourceFetcher, (me, prop) => callback?.Invoke(me), propertyFilter);
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace DrawnUi.Draw
             where T : SkiaControl
             where TSource : INotifyPropertyChanged
         {
-            return control.Observe(target, (me, prop) => callback?.Invokeme, propertyFilter);
+            return control.Observe(target, (me, prop) => callback?.Invoke(me), propertyFilter);
         }
 
         /// <summary>
