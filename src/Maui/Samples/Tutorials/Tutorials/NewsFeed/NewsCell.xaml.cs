@@ -56,7 +56,8 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
         // Configure common elements
 
-        DebugId.Text = $"{news.Id}"; //for debugging
+        //DebugId.Text = $"{news.Id}"; //for debugging
+
         AuthorLabel.Text = news.AuthorName;
         TimeLabel.Text = GetRelativeTime(news.PublishedAt);
         AvatarImage.Source = news.AuthorAvatarUrl;

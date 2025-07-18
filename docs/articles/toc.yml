@@ -17,11 +17,11 @@
       href: first-app.md
     - name: Your First Drawn App (C# Fluent)
       href: first-app-code.md
-    - name: Interactive Button Tutorial
-      href: interactive-button.md
     - name: Interactive Cards
       href: interactive-cards.md
-    - name: News Feed Tutorial
+    - name: A Custom Drawn Control
+      href: interactive-button.md
+    - name: News Feed Scroller
       href: news-feed-tutorial.md
 
 - name: Controls

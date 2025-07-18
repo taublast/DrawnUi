@@ -64,6 +64,18 @@ The layout views adapter creates new istances of cells only when needed. When a 
 
 We are drawing only cells visible inside scrolling viewport, but with double-buffered cache we want cells to start rendering before they enter the viewport, to avoid seing unrendered content. This property defines how much of the hidden content out of visible bounds should be considered visible for rendering.
 
+### **Scroll Optimisations**
+
+Let's take a look what spices we added to ou scroll:
+
+`LoadMoreOffset="500"`
+
+It would ask content's permission to execute LoadMoreCommand by calling `IInsideViewport.ShouldTriggerLoadMore` when the user scrolls within 500 points (not pixels) of the end of the content. This allows our stack to make a decision about when to load more data, more spicifically it would allow it only if the background measurement of the existing content ended.
+
+`FrictionScrolled` and `ChangeVelocityScrolled`
+
+Notice we customized scrolling to stop faster with `FrictionScrolled` for news feed case were user would read content but help kick swipes with `ChangeVelocityScrolled`.
+
 ### **Layering**
 
 When designed a drawn UI, it's important to think about layering and caching. We know that there would be a static layer with unchanged data, and one that would be redrawn when something changes, for example image gets loaded from internet. In such case we would want to fast-draw static layer from cache and rebuild the dynamic one.  Our background has a shadow effect, so we cache it into a separate layer with `SkiaShape` and draw content on top. If you would want to clip your content with the shape form your would just need to wrap it with a shape if same parameters than the background layer. 
@@ -142,10 +154,7 @@ public class NewsItem
 
 ### 🪽 Scroll and Stack
 
-Thise are friends when it come to creating recycled or "bindablelayout-like" scenario.  
-Notice we customized scrolling to stop faster with `FrictionScrolled` for news feed case were user would read content but help kick swipes with `ChangeVelocityScrolled`.
-
-``
+Thise are friends when it come to creating recycled or "bindablelayout-like" scenario. They interact via `IInsideViewport` interface that content could implement and is implementing in case of `SkiaLayout`:
 
 ```xml
                 <draw:SkiaScroll

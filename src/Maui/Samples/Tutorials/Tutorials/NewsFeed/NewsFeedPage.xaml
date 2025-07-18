@@ -31,9 +31,9 @@
                     Orientation="Vertical"
                     FrictionScrolled="0.5"
                     ChangeVelocityScrolled="1.35"
-
                     RefreshCommand="{Binding RefreshCommand}"
                     LoadMoreCommand="{Binding LoadMoreCommand}"
+                    LoadMoreOffset="500"
                     RefreshEnabled="True"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill">

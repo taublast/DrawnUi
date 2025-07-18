@@ -62,7 +62,7 @@ public partial class SkiaLayout
 
         if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
         {
-            return LastMeasuredIndex == StackStructure.Length - 1;
+            return LastMeasuredIndex == ItemsSource.Count - 1;
         }
 
         return true;
@@ -908,6 +908,7 @@ public partial class SkiaLayout
 
     /// <summary>
     /// Applies background measurement changes to StackStructure
+    /// FIXED: Now applies structure modifications atomically with LastMeasuredIndex updates
     /// </summary>
     private void ApplyBackgroundMeasurementChange(StructureChange change)
     {
@@ -919,22 +920,56 @@ public partial class SkiaLayout
                 ApplyOffsetCompensationForBackgroundMeasurement(change);
             }
 
+            List<List<ControlInStack>> allRows;
+            
             if (change.IsInsertOperation && change.InsertAtIndex.HasValue)
             {
-                // Insert measurements at specific position
-                InsertMeasurementsAtPosition(change.MeasuredItems, change.InsertAtIndex.Value);
+                // Prepare measurements for insertion at specific position
+                allRows = InsertMeasurementsAtPosition(change.MeasuredItems, change.InsertAtIndex.Value);
             }
             else
             {
-                // Append measurements to end (existing behavior)
-                AppendMeasurementsToEnd(change.MeasuredItems);
+                // Prepare measurements for appending to end
+                allRows = AppendMeasurementsToEnd(change.MeasuredItems);
             }
 
-            // Update LastMeasuredIndex only after items are applied to structure
-            var maxIndex = change.MeasuredItems.Max(x => x.Cell.ControlIndex);
-            if (maxIndex > LastMeasuredIndex)
+            // ATOMIC STRUCTURE MODIFICATION - Apply structure changes and update index together
+            if (allRows?.Count > 0)
             {
-                LastMeasuredIndex = maxIndex;
+                if (change.IsInsertOperation && change.InsertAtIndex.HasValue)
+                {
+                    // Insert rows at the correct position in existing structure
+                    if (StackStructure == null)
+                    {
+                        StackStructure = new LayoutStructure(allRows);
+                    }
+                    else
+                    {
+                        InsertRowsAtPosition(allRows, change.InsertAtIndex.Value);
+                    }
+                }
+                else
+                {
+                    // Append rows to end
+                    if (StackStructure == null)
+                    {
+                        StackStructure = new LayoutStructure(allRows);
+                    }
+                    else
+                    {
+                        StackStructure.Append(allRows);
+                    }
+                }
+
+                // Update LastMeasuredIndex atomically with structure changes
+                var maxIndex = change.MeasuredItems.Max(x => x.Cell.ControlIndex);
+                if (maxIndex > LastMeasuredIndex)
+                {
+                    LastMeasuredIndex = maxIndex;
+                }
+
+                UpdateProgressiveContentSize();
+                Debug.WriteLine($"[StackStructure] Applied {allRows.Count} rows atomically, LastMeasuredIndex: {LastMeasuredIndex}");
             }
         }
     }
@@ -1015,9 +1050,10 @@ public partial class SkiaLayout
     }
 
     /// <summary>
-    /// Inserts measurements at a specific position in existing structure
+    /// Prepares measurements for insertion at a specific position in existing structure
+    /// FIXED: No longer modifies StackStructure directly - returns rows for atomic application
     /// </summary>
-    private void InsertMeasurementsAtPosition(List<MeasuredItemInfo> measuredItems, int insertAtIndex)
+    private List<List<ControlInStack>> InsertMeasurementsAtPosition(List<MeasuredItemInfo> measuredItems, int insertAtIndex)
     {
         var allRows = new List<List<ControlInStack>>();
         var columnsCount = (Split > 0) ? Split : 1;
@@ -1041,27 +1077,15 @@ public partial class SkiaLayout
             allRows.Add(currentRow);
         }
 
-        if (allRows.Count > 0)
-        {
-            if (StackStructure == null)
-            {
-                StackStructure = new LayoutStructure(allRows);
-            }
-            else
-            {
-                // Insert rows at the correct position in existing structure
-                InsertRowsAtPosition(allRows, insertAtIndex);
-            }
-
-            UpdateProgressiveContentSize();
-            Debug.WriteLine($"[StackStructure] Inserted {allRows.Count} rows at index {insertAtIndex}");
-        }
+        Debug.WriteLine($"[StackStructure] Prepared {allRows.Count} rows for insertion at index {insertAtIndex}");
+        return allRows;
     }
 
     /// <summary>
-    /// Appends measurements to the end of existing structure
+    /// Prepares measurements for appending to the end of existing structure
+    /// FIXED: No longer modifies StackStructure directly - returns rows for atomic application
     /// </summary>
-    private void AppendMeasurementsToEnd(List<MeasuredItemInfo> measuredItems)
+    private List<List<ControlInStack>> AppendMeasurementsToEnd(List<MeasuredItemInfo> measuredItems)
     {
         var allRows = new List<List<ControlInStack>>();
         var columnsCount = (Split > 0) ? Split : 1;
@@ -1085,20 +1109,8 @@ public partial class SkiaLayout
             allRows.Add(currentRow);
         }
 
-        if (allRows.Count > 0)
-        {
-            if (StackStructure == null)
-            {
-                StackStructure = new LayoutStructure(allRows);
-            }
-            else
-            {
-                StackStructure.Append(allRows);
-            }
-
-            UpdateProgressiveContentSize();
-            Debug.WriteLine($"[StackStructure] Appended {allRows.Count} rows from background measurement");
-        }
+        Debug.WriteLine($"[StackStructure] Prepared {allRows.Count} rows for appending");
+        return allRows;
     }
 
     /// <summary>
@@ -1734,7 +1746,7 @@ public partial class SkiaLayout
             {
                 // Use actual measured height from LatestStackStructure (what renderer uses)
                 var averageHeight = actualMeasuredHeight / visibleItemsCount;
-                newContentHeight = actualMeasuredHeight + averageHeight;
+                newContentHeight = actualMeasuredHeight;//+ averageHeight;
 
                 Debug.WriteLine($"[SkiaLayout] {progress:P1} measured - estimate: {newContentHeight:F1}px");
             }
@@ -1799,7 +1811,7 @@ public partial class SkiaLayout
             else
             {
                 var averageWidth = actualMeasuredWidth / visibleItemsCount;
-                newContentWidth = actualMeasuredWidth + averageWidth;
+                newContentWidth = actualMeasuredWidth;// + averageWidth;
 
                 Debug.WriteLine(
                     $"[SkiaLayout] {progress:P1} measured - structure-based estimate: {newContentWidth:F1}px");

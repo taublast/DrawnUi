@@ -13,6 +13,16 @@ Want to see this in action first? Check out the [**DrawnUI Tutorials Project**](
 
 Clone the repo and run the Tutorials project to explore all examples!
 
+## 🎯 What We'll Build
+
+A simple interactive app featuring:
+- 🖼️ **Display Logo** with proper image handling
+- 📝 **Styled text labels** with different fonts and colors
+- 🎮 **Interactive button** with animations
+- 🔄 **Hot reload support** for rapid development
+
+<img src="../images/first.jpg" alt="News Feed Tutorial" width="350" style="margin-top: 16px;" />
+
 ## Prerequisites
 
 - **.NET 9** or later

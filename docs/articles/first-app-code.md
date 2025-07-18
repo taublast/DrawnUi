@@ -16,11 +16,13 @@ Clone the repo and run the Tutorials project to explore all examples!
 ## 🎯 What We'll Build
 
 A simple interactive app featuring:
-- 🖼️ **DrawnUI logo** with proper image handling
+- 🖼️ **Display Logo** with proper image handling
 - 📝 **Styled text labels** with different fonts and colors
 - 🎮 **Interactive button** with animations
 - 🔄 **Hot reload support** for rapid development
 - 👀 **Property observation** for reactive UI updates
+
+<img src="../images/firstcode.jpg" alt="News Feed Tutorial" width="350" style="margin-top: 16px;" />
 
 ## 🛠️ Step-by-Step Implementation
 
