@@ -35,13 +35,6 @@ public partial class SkiaRichLabel : SkiaLabel
 
     #endregion
 
-    protected override void OnFontUpdated()
-    {
-        base.OnFontUpdated();
-
-        OnTextChanged();
-    }
-
     private object LockParsing = new();
 
     #region SPANS
