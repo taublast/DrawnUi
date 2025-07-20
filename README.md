@@ -3,7 +3,7 @@
 ![NuGet Version](https://img.shields.io/nuget/v/AppoMobi.Maui.DrawnUi.svg)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 
-📕 [Documentation](https://taublast.github.io/DrawnUi/) 👈
+📕 [Documentation](https://drawnui.net/) 👈
 
 Replace native controls with a Skia Canvas! 🤩 On **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
@@ -35,6 +35,11 @@ Current development state is _ALPHA for prod_.
 * __Navigate__ on canvas with familiar MAUI Shell techniques 
 
 ## 🌱 What's new
+* `SkiaCacheType.ImageComposite` implementation for `Absolute` layout.
+* Added translation transfroms for `SkiaCacheType.ImageComposite` dirty regions usage.
+* Fix `SkiaRichLabel` spans invaldation when font changes for existing label
+
+
 * Recycling cache/SkiaImage surfaces to reduce allocations
 * General layout calculation performance boost
 * Recycled cells stack MeasureVisible performance boost

@@ -113,6 +113,7 @@ public class CachedObject : IDisposable
     }
 
     public Guid Id = Guid.NewGuid();
+    private SKSurface surface;
 
     /// <summary>
     /// An existing surface was reused for creating this object
@@ -159,6 +160,6 @@ public class CachedObject : IDisposable
     }
 
     public SKSurface Surface { get; set; }
-
+   
     public List<VisualLayer> Children { get; set; }
 }

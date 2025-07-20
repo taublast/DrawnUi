@@ -6027,7 +6027,21 @@ namespace DrawnUi.Draw
                     child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
                     if (child.CanDraw) //still visible 
                     {
-                        child.Render(context);
+                        if (IsRenderingWithComposition)
+                        {
+                            if (DirtyChildrenInternal.Contains(child))
+                            {
+                                child.Render(context);
+                            }
+                            //else
+                            //{
+                            //    child.Arrange(cellRect, child.SizeRequest.Width, child.SizeRequest.Height, scale);
+                            //}
+                        }
+                        else
+                        {
+                            child.Render(context);
+                        }
 
                         tree.Add(new SkiaControlWithRect(child,
                             context.Destination,
@@ -6040,6 +6054,9 @@ namespace DrawnUi.Draw
                     }
                 }
             }
+
+            // Clear dirty tracking since we've processed all changes
+            DirtyChildrenTracker.Clear();
 
             SetRenderingTree(tree);
 
@@ -6371,7 +6388,9 @@ namespace DrawnUi.Draw
 
                     foreach (var dirtyChild in DirtyChildrenInternal)
                     {
-                        var clip = dirtyChild.DirtyRegion;
+                        //adjust by Left,Top,TranslateX,TranslateY
+                        //todo maybe others
+                        var clip = dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion);
                         clip.Offset(offset);
                         clipPreviousCachePath.AddRect(clip);
                     }
@@ -6602,6 +6621,11 @@ namespace DrawnUi.Draw
 
         protected override void InvalidateMeasure()
         {
+            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            {
+                DestroyRenderingObject();
+            }
+
             if (WasMeasured && UpdateLocks < 1)
             {
                 InvalidateMeasureInternal();
@@ -6994,11 +7018,21 @@ namespace DrawnUi.Draw
 
         public virtual void OnChildAdded(SkiaControl child)
         {
+            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            {
+                DirtyChildrenTracker.Add(child);
+            }
+
             OnChildrenChanged();
         }
 
         public virtual void OnChildRemoved(SkiaControl child)
         {
+            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            {
+                DirtyChildrenTracker.Add(child);
+            }
+
             OnChildrenChanged();
         }
 

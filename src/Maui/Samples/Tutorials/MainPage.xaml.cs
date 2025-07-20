@@ -41,7 +41,7 @@ public partial class MainPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            Super.OpenLink("https://taublast.github.io/DrawnUi/samples.html");
+            Super.OpenLink("https://drawnui.net/articles/tutorials.html");
         });
     }
 }

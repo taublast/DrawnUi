@@ -51,7 +51,7 @@ namespace DrawnUI.Tutorials.CustomButton
                 {
                     new SkiaLayout()
                     {
-                        Type = LayoutType.Row,
+                        Type = LayoutType.Row,                        
                         Margin = new Thickness(16, 8),//add your property to customize
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center,

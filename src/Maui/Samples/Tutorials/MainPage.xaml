@@ -99,7 +99,7 @@
                 TextColor="#3333FF">
                 <draw:SkiaLabel.Spans>
 
-                    <draw:TextSpan Text="Read the tutorials" />
+                    <draw:TextSpan Text="Read tutorials at drawnui.net" />
 
                     <draw:TextSpan Text=" " />
 

@@ -6233,6 +6233,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/advanced/ImageComposite.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/ImageComposite.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/advanced/game-ui.md",
       "output": {
         ".html": {

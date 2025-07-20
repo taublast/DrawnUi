@@ -205,6 +205,7 @@ items:
   - DrawnUi.Draw.SkiaImage.SourceImageSize
   - DrawnUi.Draw.SkiaImage.SetAspectScale(System.Int32,System.Int32,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect,System.Single)
   - DrawnUi.Draw.SkiaImage.SetMeasuredAsEmpty(System.Single)
+  - DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaImage.SourceWidth
   - DrawnUi.Draw.SkiaImage.SourceHeight
@@ -584,7 +585,6 @@ items:
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.InitializeMeasuring
-  - DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   - DrawnUi.Draw.SkiaControl.GetContentSizeForAutosizeInPixels
   - DrawnUi.Draw.SkiaControl.SetMeasuredAdaptToContentSize(DrawnUi.Infrastructure.MeasuringConstraints,System.Single)
@@ -3672,6 +3672,31 @@ references:
     name: Single
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  commentId: M:DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  parent: DrawnUi.Draw.SkiaImage
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  name: AvoidRemeasuring(MeasureRequest)
+  nameWithType: SkiaImage.AvoidRemeasuring(MeasureRequest)
+  fullName: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+    name: AvoidRemeasuring
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  - name: (
+  - uid: DrawnUi.Draw.MeasureRequest
+    name: MeasureRequest
+    href: DrawnUi.Draw.MeasureRequest.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+    name: AvoidRemeasuring
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  - name: (
+  - uid: DrawnUi.Draw.MeasureRequest
+    name: MeasureRequest
+    href: DrawnUi.Draw.MeasureRequest.html
   - name: )
 - uid: DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)
@@ -11828,31 +11853,6 @@ references:
     name: InitializeMeasuring
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
   - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-  commentId: M:DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
-  name: AvoidRemeasuring(MeasureRequest)
-  nameWithType: SkiaControl.AvoidRemeasuring(MeasureRequest)
-  fullName: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-    name: AvoidRemeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
-  - name: (
-  - uid: DrawnUi.Draw.MeasureRequest
-    name: MeasureRequest
-    href: DrawnUi.Draw.MeasureRequest.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-    name: AvoidRemeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
-  - name: (
-  - uid: DrawnUi.Draw.MeasureRequest
-    name: MeasureRequest
-    href: DrawnUi.Draw.MeasureRequest.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)

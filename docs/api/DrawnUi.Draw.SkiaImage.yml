@@ -13,6 +13,7 @@ items:
   - DrawnUi.Draw.SkiaImage.Aspect
   - DrawnUi.Draw.SkiaImage.AspectProperty
   - DrawnUi.Draw.SkiaImage.AspectScale
+  - DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaImage.Blur
   - DrawnUi.Draw.SkiaImage.BlurProperty
   - DrawnUi.Draw.SkiaImage.Brightness
@@ -564,7 +565,6 @@ items:
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.InitializeMeasuring
-  - DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   - DrawnUi.Draw.SkiaControl.GetContentSizeForAutosizeInPixels
   - DrawnUi.Draw.SkiaControl.SetMeasuredAdaptToContentSize(DrawnUi.Infrastructure.MeasuringConstraints,System.Single)
@@ -4593,6 +4593,39 @@ items:
   nameWithType.vb: SkiaImage.SetMeasuredAsEmpty(Single)
   fullName.vb: DrawnUi.Draw.SkiaImage.SetMeasuredAsEmpty(Single)
   name.vb: SetMeasuredAsEmpty(Single)
+- uid: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  commentId: M:DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  id: AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  parent: DrawnUi.Draw.SkiaImage
+  langs:
+  - csharp
+  - vb
+  name: AvoidRemeasuring(MeasureRequest)
+  nameWithType: SkiaImage.AvoidRemeasuring(MeasureRequest)
+  fullName: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AvoidRemeasuring
+    path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
+    startLine: 1539
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public override bool AvoidRemeasuring(MeasureRequest request)
+    parameters:
+    - id: request
+      type: DrawnUi.Draw.MeasureRequest
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function AvoidRemeasuring(request As MeasureRequest) As Boolean
+  overridden: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  overload: DrawnUi.Draw.SkiaImage.AvoidRemeasuring*
 - uid: DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)
   id: OnMeasuring(System.Single,System.Single,System.Single)
@@ -4611,7 +4644,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasuring
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1539
+    startLine: 1544
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4653,7 +4686,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceWidth
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1663
+    startLine: 1668
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4684,7 +4717,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceHeight
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1668
+    startLine: 1673
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4715,7 +4748,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateDisplayRect
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1670
+    startLine: 1675
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13121,31 +13154,6 @@ references:
     name: InitializeMeasuring
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
   - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-  commentId: M:DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
-  name: AvoidRemeasuring(MeasureRequest)
-  nameWithType: SkiaControl.AvoidRemeasuring(MeasureRequest)
-  fullName: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-    name: AvoidRemeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
-  - name: (
-  - uid: DrawnUi.Draw.MeasureRequest
-    name: MeasureRequest
-    href: DrawnUi.Draw.MeasureRequest.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
-    name: AvoidRemeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
-  - name: (
-  - uid: DrawnUi.Draw.MeasureRequest
-    name: MeasureRequest
-    href: DrawnUi.Draw.MeasureRequest.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
@@ -31704,6 +31712,44 @@ references:
   name: ScaledSize
   nameWithType: ScaledSize
   fullName: DrawnUi.Draw.ScaledSize
+- uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  commentId: M:DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  name: AvoidRemeasuring(MeasureRequest)
+  nameWithType: SkiaControl.AvoidRemeasuring(MeasureRequest)
+  fullName: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+    name: AvoidRemeasuring
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  - name: (
+  - uid: DrawnUi.Draw.MeasureRequest
+    name: MeasureRequest
+    href: DrawnUi.Draw.MeasureRequest.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+    name: AvoidRemeasuring
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  - name: (
+  - uid: DrawnUi.Draw.MeasureRequest
+    name: MeasureRequest
+    href: DrawnUi.Draw.MeasureRequest.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaImage.AvoidRemeasuring*
+  commentId: Overload:DrawnUi.Draw.SkiaImage.AvoidRemeasuring
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  name: AvoidRemeasuring
+  nameWithType: SkiaImage.AvoidRemeasuring
+  fullName: DrawnUi.Draw.SkiaImage.AvoidRemeasuring
+- uid: DrawnUi.Draw.MeasureRequest
+  commentId: T:DrawnUi.Draw.MeasureRequest
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.MeasureRequest.html
+  name: MeasureRequest
+  nameWithType: MeasureRequest
+  fullName: DrawnUi.Draw.MeasureRequest
 - uid: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl

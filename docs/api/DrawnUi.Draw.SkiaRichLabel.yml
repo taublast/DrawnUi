@@ -32,7 +32,6 @@ items:
   - DrawnUi.Draw.SkiaRichLabel.MaskPrefixBullet
   - DrawnUi.Draw.SkiaRichLabel.MaskPrefixNumbered
   - DrawnUi.Draw.SkiaRichLabel.OnDisposing
-  - DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
   - DrawnUi.Draw.SkiaRichLabel.OnLinkTapped(System.String,System.String)
   - DrawnUi.Draw.SkiaRichLabel.OnSpanTapped(DrawnUi.Draw.TextSpan)
   - DrawnUi.Draw.SkiaRichLabel.PrefixBullet
@@ -170,6 +169,7 @@ items:
   - DrawnUi.Draw.SkiaLabel.SpaceBetweenParagraphs
   - DrawnUi.Draw.SkiaLabel.GetSpaceBetweenLines(System.Single)
   - DrawnUi.Draw.SkiaLabel.ResetTextCalculations
+  - DrawnUi.Draw.SkiaLabel.OnFontUpdated
   - DrawnUi.Draw.SkiaLabel.GliphsInvalidated
   - DrawnUi.Draw.SkiaLabel.LockSetup
   - DrawnUi.Draw.SkiaLabel._fontFamily
@@ -1121,7 +1121,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderBlock
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 61
+    startLine: 63
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1154,7 +1154,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderOrderedListItem
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 193
+    startLine: 195
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1188,7 +1188,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderBulletListItem
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 217
+    startLine: 219
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1217,7 +1217,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderInline
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 241
+    startLine: 243
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1246,7 +1246,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderBlock
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 314
+    startLine: 316
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1275,7 +1275,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddCodeSpan
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 387
+    startLine: 389
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1304,7 +1304,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddLinkSpan
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 399
+    startLine: 401
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1333,7 +1333,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetLinkLabelText
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 416
+    startLine: 418
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1364,7 +1364,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateLineBreak
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 437
+    startLine: 439
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1394,7 +1394,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateLiteral
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 445
+    startLine: 447
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1662,35 +1662,6 @@ items:
     return:
       type: System.String
     content.vb: Public Shared MaskPrefixNumbered As String
-- uid: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  commentId: M:DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  id: OnFontUpdated
-  parent: DrawnUi.Draw.SkiaRichLabel
-  langs:
-  - csharp
-  - vb
-  name: OnFontUpdated()
-  nameWithType: SkiaRichLabel.OnFontUpdated()
-  fullName: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated()
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: OnFontUpdated
-    path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 37
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: A new TypeFace was set
-  example: []
-  syntax:
-    content: protected override void OnFontUpdated()
-    content.vb: Protected Overrides Sub OnFontUpdated()
-  overridden: DrawnUi.Draw.SkiaLabel.OnFontUpdated
-  overload: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated*
 - uid: DrawnUi.Draw.SkiaRichLabel.SpanWithAttributes(DrawnUi.Draw.TextSpan,Microsoft.Maui.Controls.FontAttributes)
   commentId: M:DrawnUi.Draw.SkiaRichLabel.SpanWithAttributes(DrawnUi.Draw.TextSpan,Microsoft.Maui.Controls.FontAttributes)
   id: SpanWithAttributes(DrawnUi.Draw.TextSpan,Microsoft.Maui.Controls.FontAttributes)
@@ -1709,7 +1680,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanWithAttributes
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 54
+    startLine: 47
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1747,7 +1718,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddTextSpan
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 81
+    startLine: 74
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1781,7 +1752,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: standardSymbols
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 190
+    startLine: 183
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1808,7 +1779,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessSpanData
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 197
+    startLine: 190
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1846,7 +1817,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: hadParagraph
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 244
+    startLine: 237
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1873,7 +1844,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isBold
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 245
+    startLine: 238
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1900,7 +1871,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isItalic
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 246
+    startLine: 239
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1927,7 +1898,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isCodeBlock
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 247
+    startLine: 240
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1954,7 +1925,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isHeading1
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 248
+    startLine: 241
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1981,7 +1952,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isHeading2
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 249
+    startLine: 242
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2008,7 +1979,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isStrikethrough
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 250
+    startLine: 243
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2035,7 +2006,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSpanTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 259
+    startLine: 252
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2071,7 +2042,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLinkTappedProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 267
+    startLine: 260
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2098,7 +2069,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLinkTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 272
+    startLine: 265
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2127,7 +2098,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinkTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 278
+    startLine: 271
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2154,7 +2125,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 280
+    startLine: 273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2183,7 +2154,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLinkTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 287
+    startLine: 280
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2217,7 +2188,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StrikeoutColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 297
+    startLine: 290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2244,7 +2215,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StrikeoutColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 304
+    startLine: 297
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2273,7 +2244,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinkColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 310
+    startLine: 303
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2300,7 +2271,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinkColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 317
+    startLine: 310
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2329,7 +2300,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeTextColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 323
+    startLine: 316
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2356,7 +2327,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeTextColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 330
+    startLine: 323
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2385,7 +2356,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBlockBackgroundColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 336
+    startLine: 329
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2412,7 +2383,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBlockBackgroundColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 343
+    startLine: 336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2441,7 +2412,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBackgroundColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 349
+    startLine: 342
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2468,7 +2439,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBackgroundColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 356
+    startLine: 349
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2497,7 +2468,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixBulletProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 362
+    startLine: 355
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2524,7 +2495,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixBullet
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 369
+    startLine: 362
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2553,7 +2524,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixNumberedProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 375
+    startLine: 368
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2580,7 +2551,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixNumbered
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 382
+    startLine: 375
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2609,7 +2580,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineLinkProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 388
+    startLine: 381
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2636,7 +2607,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineLink
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 395
+    startLine: 388
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2665,7 +2636,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineWidthProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 401
+    startLine: 394
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2692,7 +2663,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineWidth
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 411
+    startLine: 404
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4926,6 +4897,25 @@ references:
   - uid: DrawnUi.Draw.SkiaLabel.ResetTextCalculations
     name: ResetTextCalculations
     href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_ResetTextCalculations
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
+  commentId: M:DrawnUi.Draw.SkiaLabel.OnFontUpdated
+  parent: DrawnUi.Draw.SkiaLabel
+  href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
+  name: OnFontUpdated()
+  nameWithType: SkiaLabel.OnFontUpdated()
+  fullName: DrawnUi.Draw.SkiaLabel.OnFontUpdated()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
+    name: OnFontUpdated
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
+    name: OnFontUpdated
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaLabel.GliphsInvalidated
@@ -31660,31 +31650,6 @@ references:
     name: Graphics
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
-- uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
-  commentId: M:DrawnUi.Draw.SkiaLabel.OnFontUpdated
-  parent: DrawnUi.Draw.SkiaLabel
-  href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
-  name: OnFontUpdated()
-  nameWithType: SkiaLabel.OnFontUpdated()
-  fullName: DrawnUi.Draw.SkiaLabel.OnFontUpdated()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
-    name: OnFontUpdated
-    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
-    name: OnFontUpdated
-    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
-  - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated*
-  commentId: Overload:DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  href: DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_OnFontUpdated
-  name: OnFontUpdated
-  nameWithType: SkiaRichLabel.OnFontUpdated
-  fullName: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
 - uid: DrawnUi.Draw.SkiaRichLabel.SpanWithAttributes*
   commentId: Overload:DrawnUi.Draw.SkiaRichLabel.SpanWithAttributes
   href: DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_SpanWithAttributes_DrawnUi_Draw_TextSpan_Microsoft_Maui_Controls_FontAttributes_

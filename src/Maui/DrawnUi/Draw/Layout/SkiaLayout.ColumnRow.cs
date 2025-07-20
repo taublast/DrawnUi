@@ -2217,7 +2217,7 @@ else
                         if (ReserveTemplates > 0)
                         {
                             Tasks.StartDelayed(TimeSpan.FromMilliseconds(50),
-                                () => { ChildrenFactory.FillPool(ReserveTemplates); });
+                                () => { ChildrenFactory.FillPool(visibleElements.Count + ReserveTemplates); });
                         }
                     }
 
