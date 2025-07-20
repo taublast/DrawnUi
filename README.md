@@ -35,10 +35,10 @@ Current development state is _ALPHA for prod_.
 * __Navigate__ on canvas with familiar MAUI Shell techniques 
 
 ## 🌱 What's new
-* `SkiaCacheType.ImageComposite` implementation for `Absolute` layout.
-* Added translation transfroms for `SkiaCacheType.ImageComposite` dirty regions usage.
+* `SkiaCacheType.ImageComposite` implementation for `Absolute` layout
+* Cache recycling improvements
+* Added translation transforms for `SkiaCacheType.ImageComposite` dirty regions usage.
 * Fix `SkiaRichLabel` spans invaldation when font changes for existing label
-
 
 * Recycling cache/SkiaImage surfaces to reduce allocations
 * General layout calculation performance boost
