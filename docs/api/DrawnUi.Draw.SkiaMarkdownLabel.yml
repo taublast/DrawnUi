@@ -83,7 +83,6 @@ items:
   - DrawnUi.Draw.SkiaRichLabel.ColorStrikeout
   - DrawnUi.Draw.SkiaRichLabel.MaskPrefixBullet
   - DrawnUi.Draw.SkiaRichLabel.MaskPrefixNumbered
-  - DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
   - DrawnUi.Draw.SkiaRichLabel.SpanWithAttributes(DrawnUi.Draw.TextSpan,Microsoft.Maui.Controls.FontAttributes)
   - DrawnUi.Draw.SkiaRichLabel.AddTextSpan(System.String,System.Action{DrawnUi.Draw.TextSpan})
   - DrawnUi.Draw.SkiaRichLabel.standardSymbols
@@ -163,6 +162,7 @@ items:
   - DrawnUi.Draw.SkiaLabel.SpaceBetweenParagraphs
   - DrawnUi.Draw.SkiaLabel.GetSpaceBetweenLines(System.Single)
   - DrawnUi.Draw.SkiaLabel.ResetTextCalculations
+  - DrawnUi.Draw.SkiaLabel.OnFontUpdated
   - DrawnUi.Draw.SkiaLabel.GliphsInvalidated
   - DrawnUi.Draw.SkiaLabel.LockSetup
   - DrawnUi.Draw.SkiaLabel._fontFamily
@@ -1788,25 +1788,6 @@ references:
   name: MaskPrefixNumbered
   nameWithType: SkiaRichLabel.MaskPrefixNumbered
   fullName: DrawnUi.Draw.SkiaRichLabel.MaskPrefixNumbered
-- uid: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  commentId: M:DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  parent: DrawnUi.Draw.SkiaRichLabel
-  href: DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_OnFontUpdated
-  name: OnFontUpdated()
-  nameWithType: SkiaRichLabel.OnFontUpdated()
-  fullName: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-    name: OnFontUpdated
-    href: DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_OnFontUpdated
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-    name: OnFontUpdated
-    href: DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_OnFontUpdated
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaRichLabel.SpanWithAttributes(DrawnUi.Draw.TextSpan,Microsoft.Maui.Controls.FontAttributes)
   commentId: M:DrawnUi.Draw.SkiaRichLabel.SpanWithAttributes(DrawnUi.Draw.TextSpan,Microsoft.Maui.Controls.FontAttributes)
   parent: DrawnUi.Draw.SkiaRichLabel
@@ -4187,6 +4168,25 @@ references:
   - uid: DrawnUi.Draw.SkiaLabel.ResetTextCalculations
     name: ResetTextCalculations
     href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_ResetTextCalculations
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
+  commentId: M:DrawnUi.Draw.SkiaLabel.OnFontUpdated
+  parent: DrawnUi.Draw.SkiaLabel
+  href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
+  name: OnFontUpdated()
+  nameWithType: SkiaLabel.OnFontUpdated()
+  fullName: DrawnUi.Draw.SkiaLabel.OnFontUpdated()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
+    name: OnFontUpdated
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLabel.OnFontUpdated
+    name: OnFontUpdated
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnFontUpdated
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaLabel.GliphsInvalidated

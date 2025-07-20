@@ -357,7 +357,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SurfaceIsRecycled
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 119
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -388,7 +388,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Picture
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 121
+    startLine: 122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -417,7 +417,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 123
+    startLine: 124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -446,7 +446,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Bounds
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 125
+    startLine: 126
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -475,7 +475,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecordingArea
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 127
+    startLine: 128
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -504,7 +504,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 129
+    startLine: 130
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -533,7 +533,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 131
+    startLine: 132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -563,7 +563,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 149
+    startLine: 150
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -592,7 +592,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 151
+    startLine: 152
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -621,7 +621,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreserveSourceFromDispose
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 153
+    startLine: 154
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -650,7 +650,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetBitmap
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 155
+    startLine: 156
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -678,7 +678,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 160
+    startLine: 161
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -707,7 +707,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Children
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 162
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

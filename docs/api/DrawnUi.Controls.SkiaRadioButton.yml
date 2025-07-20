@@ -1048,6 +1048,7 @@ items:
   - DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.SkiaRadioButton})
   - DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Controls.SkiaRadioButton,DrawnUi.Draw.DrawingContext})
   - DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaRadioButton})
+  - DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.OnToggled``1(System.Action{DrawnUi.Controls.SkiaRadioButton,System.Boolean})
   - DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32)
   - DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.StartX``1
@@ -23988,6 +23989,83 @@ references:
     href: DrawnUi.Controls.SkiaRadioButton.html
   - name: )
   - name: )
+- uid: DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.OnToggled``1(System.Action{DrawnUi.Controls.SkiaRadioButton,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled__1___0_System_Action___0_System_Boolean__
+  name: OnToggled<SkiaRadioButton>(SkiaRadioButton, Action<SkiaRadioButton, bool>)
+  nameWithType: FluentExtensions.OnToggled<SkiaRadioButton>(SkiaRadioButton, Action<SkiaRadioButton, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnToggled<DrawnUi.Controls.SkiaRadioButton>(DrawnUi.Controls.SkiaRadioButton, System.Action<DrawnUi.Controls.SkiaRadioButton, bool>)
+  nameWithType.vb: FluentExtensions.OnToggled(Of SkiaRadioButton)(SkiaRadioButton, Action(Of SkiaRadioButton, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnToggled(Of DrawnUi.Controls.SkiaRadioButton)(DrawnUi.Controls.SkiaRadioButton, System.Action(Of DrawnUi.Controls.SkiaRadioButton, Boolean))
+  name.vb: OnToggled(Of SkiaRadioButton)(SkiaRadioButton, Action(Of SkiaRadioButton, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnToggled``1(DrawnUi.Controls.SkiaRadioButton,System.Action{DrawnUi.Controls.SkiaRadioButton,System.Boolean})
+    name: OnToggled
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled__1___0_System_Action___0_System_Boolean__
+  - name: <
+  - uid: DrawnUi.Controls.SkiaRadioButton
+    name: SkiaRadioButton
+    href: DrawnUi.Controls.SkiaRadioButton.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaRadioButton
+    name: SkiaRadioButton
+    href: DrawnUi.Controls.SkiaRadioButton.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Controls.SkiaRadioButton
+    name: SkiaRadioButton
+    href: DrawnUi.Controls.SkiaRadioButton.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnToggled``1(DrawnUi.Controls.SkiaRadioButton,System.Action{DrawnUi.Controls.SkiaRadioButton,System.Boolean})
+    name: OnToggled
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled__1___0_System_Action___0_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaRadioButton
+    name: SkiaRadioButton
+    href: DrawnUi.Controls.SkiaRadioButton.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaRadioButton
+    name: SkiaRadioButton
+    href: DrawnUi.Controls.SkiaRadioButton.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaRadioButton
+    name: SkiaRadioButton
+    href: DrawnUi.Controls.SkiaRadioButton.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Controls.SkiaRadioButton.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32)
   commentId: M:DrawnUi.Draw.FluentExtensions.SetGrid``1(``0,System.Int32,System.Int32)
   parent: DrawnUi.Draw.FluentExtensions
@@ -29398,6 +29476,70 @@ references:
   - name: Of
   - name: " "
   - name: T
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled__1___0_System_Action___0_System_Boolean__
+  name: OnToggled<T>(T, Action<T, bool>)
+  nameWithType: FluentExtensions.OnToggled<T>(T, Action<T, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnToggled<T>(T, System.Action<T, bool>)
+  nameWithType.vb: FluentExtensions.OnToggled(Of T)(T, Action(Of T, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnToggled(Of T)(T, System.Action(Of T, Boolean))
+  name.vb: OnToggled(Of T)(T, Action(Of T, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+    name: OnToggled
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled__1___0_System_Action___0_System_Boolean__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+    name: OnToggled
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled__1___0_System_Action___0_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.SetGrid``1(``0,System.Int32,System.Int32)

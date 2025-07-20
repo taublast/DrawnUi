@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ImageComposite Cache Notes | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ImageComposite Cache Notes | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/advanced/ImageComposite.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="imagecomposite-cache-notes">ImageComposite Cache Notes</h1>
+
+<p><code>SkiaCacheType.ImageComposite</code> is a caching strategy that enables partial cache updates by erasing and redrawing only dirty regions while preserving unchanged areas. This provides performance for complex layouts where only specific children change while others remain static.</p>
+<p><code>RenderObjectPrevious</code> is replaced on every draw as a wrapper but it reuses same surface as the previous one was using, erasing/drawing only dirty areas on that surface.</p>
+<p>When something changes inside <code>UseRenderingObject</code> we would return false, also we would check if <code>RenderObjectPreviousNeedsUpdate</code> then kill <code>RenderObjectPrevious</code> inside.</p>
+<p>Upon exiting <code>UseRenderingObject</code> we create a new <code>RenderObject</code> but the used surface would come from <code>RenderObjectPrevious</code> if existing.</p>
+<h2 id="implicated-methods">Implicated Methods</h2>
+<h3 id="invalidating">Invalidating</h3>
+<ul>
+<li><code>OnChildAdded</code> will invalidate previous cache</li>
+<li><code>OnChildRemoved</code> will invalidate previous cache if <code>NeedAutoSize</code></li>
+</ul>
+<h3 id="rendering">Rendering</h3>
+<ul>
+<li><code>SetupRenderingWithComposition</code> called from <code>Paint</code> will:
+<ol>
+<li>Fill <code>DirtyChildrenInternal</code> with calculated dirty regions</li>
+<li>Erase dirty regions</li>
+</ol>
+</li>
+<li><code>PaintTintBackground</code> will paint background in dirty areas</li>
+<li>Every kind of layout type draw dirty children with its own logic when <code>IsRenderingWithComposition</code> is <code>true</code>:
+<ol>
+<li><code>Absolute</code> with <code>RenderViewsList</code></li>
+<li><code>Grid</code> with <code>DrawChildrenGrid</code></li>
+<li>Stack-like with <code>DrawStack</code></li>
+</ol>
+</li>
+</ul>
+<h2 id="invalidation-methods">Invalidation Methods</h2>
+<h3 id="invalidatecachewithprevious"><code>InvalidateCacheWithPrevious()</code></h3>
+<pre><code class="lang-csharp">public virtual void InvalidateCacheWithPrevious()
+{
+    InvalidateCache();
+
+    if (UsingCacheType == SkiaCacheType.ImageComposite)
+    {
+        RenderObjectPreviousNeedsUpdate = true;
+    }
+}
+</code></pre>
+<h3 id="destroyrenderingobject"><code>DestroyRenderingObject()</code></h3>
+<pre><code class="lang-csharp">public void DestroyRenderingObject()
+{
+    RenderObject = null;
+    RenderObjectPreviousNeedsUpdate = true;
+}
+</code></pre>
+<h3 id="key-differences">Key Differences</h3>
+<p><strong><code>InvalidateCacheWithPrevious()</code>:</strong></p>
+<ul>
+<li>Calls <code>InvalidateCache()</code> (sets <code>RenderObjectNeedsUpdate = true</code>)</li>
+<li>Only sets <code>RenderObjectPreviousNeedsUpdate = true</code> for <code>ImageComposite</code> cache type</li>
+<li>Conditional logic based on cache type</li>
+</ul>
+<p><strong><code>DestroyRenderingObject()</code>:</strong></p>
+<ul>
+<li>Immediately destroys current <code>RenderObject</code> (sets to null)</li>
+<li>Always sets <code>RenderObjectPreviousNeedsUpdate = true</code></li>
+<li>Unconditional destruction</li>
+</ul>
+<p>Two methods are needed because:</p>
+<ul>
+<li><code>InvalidateCacheWithPrevious()</code> = &quot;Mark for recreation&quot; (lazy invalidation)</li>
+<li><code>DestroyRenderingObject()</code> = &quot;Destroy immediately&quot; (immediate cleanup)</li>
+</ul>
+<p><strong><code>InvalidateCacheWithPrevious()</code> is used when:</strong></p>
+<ul>
+<li>Child added/removed (you fixed this)</li>
+<li>Layout changes but rendering continues</li>
+<li>Want to preserve current cache until next draw</li>
+</ul>
+<p><strong><code>DestroyRenderingObject()</code> is used when:</strong></p>
+<ul>
+<li>Control becomes invisible (<code>OnVisibilityChanged</code>)</li>
+<li>Immediate memory cleanup needed</li>
+<li>Cache is completely invalid and shouldn't be used</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/advanced/ImageComposite.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

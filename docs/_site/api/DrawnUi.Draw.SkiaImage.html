@@ -1290,9 +1290,6 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring">SkiaControl.InitializeMeasuring()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_">SkiaControl.AvoidRemeasuring(MeasureRequest)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeDefaultContent_System_Boolean_">SkiaControl.InitializeDefaultContent(bool)</a>
     </div>
     <div>
@@ -4942,7 +4939,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceHeight" data-uid="DrawnUi.Draw.SkiaImage.SourceHeight">
   SourceHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1669"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1674"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>From current set Source in points</p>
@@ -5005,7 +5002,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceWidth" data-uid="DrawnUi.Draw.SkiaImage.SourceWidth">
   SourceWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1664"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1669"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>From current set Source in points</p>
@@ -5378,11 +5375,47 @@ public ImageSource Source { get; set; }</code></pre>
 </h2>
 
 
+  <a id="DrawnUi_Draw_SkiaImage_AvoidRemeasuring_" data-uid="DrawnUi.Draw.SkiaImage.AvoidRemeasuring*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_" data-uid="DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)">
+  AvoidRemeasuring(MeasureRequest)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1540"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool AvoidRemeasuring(MeasureRequest request)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>request</code> <a class="xref" href="DrawnUi.Draw.MeasureRequest.html">MeasureRequest</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaImage_CalculateDisplayRect_" data-uid="DrawnUi.Draw.SkiaImage.CalculateDisplayRect*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaImage_CalculateDisplayRect_SkiaSharp_SKRect_System_Single_System_Single_DrawnUi_Draw_DrawImageAlignment_DrawnUi_Draw_DrawImageAlignment_" data-uid="DrawnUi.Draw.SkiaImage.CalculateDisplayRect(SkiaSharp.SKRect,System.Single,System.Single,DrawnUi.Draw.DrawImageAlignment,DrawnUi.Draw.DrawImageAlignment)">
   CalculateDisplayRect(SKRect, float, float, DrawImageAlignment, DrawImageAlignment)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1671"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1676"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5828,7 +5861,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnMeasuring_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)">
   OnMeasuring(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1540"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1545"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Input in POINTS</p>

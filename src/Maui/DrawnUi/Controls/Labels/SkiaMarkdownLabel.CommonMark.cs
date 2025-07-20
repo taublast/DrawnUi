@@ -15,6 +15,8 @@ public partial class SkiaRichLabel : SkiaLabel
         if (IsDisposed || IsDisposing)
             return;
 
+        ReplaceFont();
+
         lock (LockParsing)
         {
             try

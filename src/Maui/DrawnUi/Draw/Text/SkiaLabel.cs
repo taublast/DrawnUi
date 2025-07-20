@@ -1019,7 +1019,7 @@ namespace DrawnUi.Draw
                     InitializeDefaultContent();
 
                     var request = CreateMeasureRequest(widthConstraint, heightConstraint, scale);
-                    if (request.IsSame)
+                    if (AvoidRemeasuring(request))
                     {
                         return MeasuredSize;
                     }
@@ -2925,7 +2925,7 @@ namespace DrawnUi.Draw
 
         public static readonly BindableProperty MaxLinesProperty = BindableProperty.Create(nameof(MaxLines),
             typeof(int), typeof(SkiaLabel), -1,
-            propertyChanged: NeedInvalidateMeasure);
+            propertyChanged: NeedUpdateFont);
 
         /// <summary>
         /// Gets or sets the maximum number of lines to display.

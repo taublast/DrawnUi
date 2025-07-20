@@ -10,6 +10,7 @@ items:
   - DrawnUi.Draw.SvgSpan.Dispose
   - DrawnUi.Draw.SvgSpan.Height
   - DrawnUi.Draw.SvgSpan.Source
+  - DrawnUi.Draw.SvgSpan.SvgString
   - DrawnUi.Draw.SvgSpan.TintColor
   - DrawnUi.Draw.SvgSpan.VerticalAlignement
   - DrawnUi.Draw.SvgSpan.Width
@@ -342,6 +343,35 @@ items:
       type: System.String
     content.vb: Public Property Source As String
   overload: DrawnUi.Draw.SvgSpan.Source*
+- uid: DrawnUi.Draw.SvgSpan.SvgString
+  commentId: P:DrawnUi.Draw.SvgSpan.SvgString
+  id: SvgString
+  parent: DrawnUi.Draw.SvgSpan
+  langs:
+  - csharp
+  - vb
+  name: SvgString
+  nameWithType: SvgSpan.SvgString
+  fullName: DrawnUi.Draw.SvgSpan.SvgString
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/SvgSpan.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SvgString
+    path: ../src/Maui/DrawnUi/Draw/Text/SvgSpan.cs
+    startLine: 96
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string SvgString { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SvgString As String
+  overload: DrawnUi.Draw.SvgSpan.SvgString*
 - uid: DrawnUi.Draw.SvgSpan.Control
   commentId: F:DrawnUi.Draw.SvgSpan.Control
   id: Control
@@ -360,7 +390,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Maui/DrawnUi/Draw/Text/SvgSpan.cs
-    startLine: 95
+    startLine: 112
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -387,7 +417,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Text/SvgSpan.cs
-    startLine: 102
+    startLine: 119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3073,6 +3103,12 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
+- uid: DrawnUi.Draw.SvgSpan.SvgString*
+  commentId: Overload:DrawnUi.Draw.SvgSpan.SvgString
+  href: DrawnUi.Draw.SvgSpan.html#DrawnUi_Draw_SvgSpan_SvgString
+  name: SvgString
+  nameWithType: SvgSpan.SvgString
+  fullName: DrawnUi.Draw.SvgSpan.SvgString
 - uid: DrawnUi.Draw.SkiaSvg
   commentId: T:DrawnUi.Draw.SkiaSvg
   parent: DrawnUi.Draw

@@ -1,16 +1,17 @@
 ---
 title: News Feed Scroller Tutorial
-description: When MAUI CollectionView is not enough.. Think Drawn! DrawnUI News Feed Scroller Tutorial.
+description: When MAUI CollectionView is not enough.. Think Drawn! DrawnUI News Feed Scroller Tutorial with Recycled Cells.
 categories: [MAUI, DrawnUI]
-tags: [drawnui, skiasharp, dotnetmaui]    
+tags: [drawnui, skiasharp, dotnetmaui, recycled-cells]    
 image: /images/scroller.jpg
 ---
 # News Feed Scroller Tutorial
 
 When .NET MAUI CollectionView is not enough.. Think Drawn!  
-We will be building a news feed scroller with mixed content: text posts, images, videos, articles, ads: an infinite scroll of recycled cells with LoadMore mechanics. 
+We will be building a news feed scroller with mixed content: text posts, images, videos, articles, ads: an infinite scroll of **recycled cells** with LoadMore mechanics. 
 
 ## 🚀 This Tutorial Features:
+* **🔄 Recycled cells** - one cell type handles all content variations with memory efficiency
 * **📏 Uneven row heights** - because real content isn't uniform!
 * **✨ Shadows behind cells** - adds visual depth to the interface
 * **🌐 Real internet images** for avatars and banners from actual APIs
@@ -30,15 +31,15 @@ Clone the repo and run the Tutorials project to explore all examples!
  
 ## 🎯 What We Want to Build
 
-A news feed with mixed content types (text posts, images, videos, articles, ads). We will be using a combination of `SkiaScroll` and `SkiaLayout` to obtain a recycled cells scrolling view. We will also use `SkiaDynamicDrawnCell` custom control as our cell base. This is optional - you could use any `SkiaControl` as your cell, but it's a helpful utility for handling BindingContext changes smoothly and provides useful override methods.
+A news feed with mixed content types (text posts, images, videos, articles, ads) using **recycled cells** for maximum performance. We will be using a combination of `SkiaScroll` and `SkiaLayout` to obtain a recycled cells scrolling view. We will also use `SkiaDynamicDrawnCell` custom control as our cell base. This is optional - you could use any `SkiaControl` as your cell, but it's a helpful utility for handling BindingContext changes smoothly and provides useful override methods.
 
 ## ⚙️ The Tech Behind
 
-`SkiaScroll` can scroll any content. When paired with a `SkiaLayout` it can communicate the viewport size/position to its child and retrieve some information back. With special properties `SkiaLayout` can act like a bindable item layout, and inside `SkiaScroll` it can show its full potential with recycling and virtualization! 💪
+`SkiaScroll` can scroll any content. When paired with a `SkiaLayout` it can communicate the viewport size/position to its child and retrieve some information back. With special properties `SkiaLayout` can act like a bindable item layout, and inside `SkiaScroll` it can show its full potential with **recycling and virtualization**! 💪
 
-So what we will do is simply placing a SkiaLayout inside the scroll, defining an ItemTemplate and ItemsSource, plus setting some related properties.
+So what we will do is simply place a SkiaLayout inside the scroll, defining an ItemTemplate and ItemsSource, plus setting some related properties.
 
-Another important point is the databinding for the recycled view - the cell. We'll do it in code-behind for better performance. `SkiaDynamicDrawnCell` helper provides us with a `SetContent` method we can override to update the cell content based on the new BindingContext. This code is wrapped by the helper with a batch update lock, so no intermediate rendering happens. We could also override `ContextPropertyChanged` if we wanted to react to property changes in the bound object (for example `IsOnline` changing for a person and updating the avatar color to green), but we'll keep this tutorial simple.
+Another important point is the data binding for the recycled view - the cell. We'll do it in code-behind for better performance. `SkiaDynamicDrawnCell` helper provides us with a `SetContent` method we can override to update the cell content based on the new BindingContext. This code is wrapped by the helper with a batch update lock, so no intermediate rendering happens. We could also override `ContextPropertyChanged` if we wanted to react to property changes in the bound object (for example `IsOnline` changing for a person and updating the avatar color to green), but we'll keep this tutorial simple.
 
 We will be using real internet resources to get images for avatars and banners to be realistic with performance. We'll also be using shadow effects for visual appeal.
 You can display debugging information over the scroll to see displayed/created/measured number of cells along with FPS.
@@ -48,11 +49,11 @@ With DrawnUI, we can use a layout as a cell that simply shows or hides elements 
 
 ## Performance Key Requirements
 
-### **Stack Optimisations**
+### **Stack Optimizations**
 
 Let's look at critical SkiaLayout properties for this scenario:
 
-` MeasureItemsStrategy="MeasureVisible"`
+`MeasureItemsStrategy="MeasureVisible"`
 
 this **experimental** measurement strategy for `SkiaLayout` works well for large lists with uneven rows. It measures only visible items initially, then progressively measures off-screen items in the background. This can provide good scrolling performance with thousands of items of varying heights. At the 
 
@@ -154,7 +155,7 @@ public class NewsItem
 
 ### 🪽 Scroll and Stack
 
-Thise are friends when it come to creating recycled or "bindablelayout-like" scenario. They interact via `IInsideViewport` interface that content could implement and is implementing in case of `SkiaLayout`:
+These are friends when it comes to creating recycled or "bindable layout-like" scenarios. They interact via `IInsideViewport` interface that content could implement and is implemented in case of `SkiaLayout`:
 
 ```xml
                 <draw:SkiaScroll
@@ -484,10 +485,10 @@ You could enable showing debugging information by uncommenting the following cod
 
 ### 🧠 Key Concept
 
->* In performance critical scenarios we do not use MAUI bindings, we patch cells properties in one frame from code-behind. Notice we do not need UI thread to access properties of drawn virtual controls. If you need thread-safe bindings use DrawnUI fluent extensions, they provide INotifyPropertyChanged oberver pattern that is background thread-friendly. 
+> * In performance critical scenarios we do not use MAUI bindings, we patch cell properties in one frame from code-behind. Notice we do not need UI thread to access properties of drawn virtual controls. If you need thread-safe bindings use DrawnUI fluent extensions, they provide INotifyPropertyChanged observer pattern that is background thread-friendly. 
 
 #### **Core Recycling Pattern**
-The `SetContent` method is called every time `BindingContext` changes for cell, and it's internally wrapped with batch-update lock, so no intermediate rendering happens, very important for performance.
+The `SetContent` method is called every time `BindingContext` changes for the cell, and it's internally wrapped with batch-update lock, so no intermediate rendering happens, very important for performance.
 
 ```csharp
 protected override void SetContent(object ctx)
@@ -529,7 +530,7 @@ private void ConfigureForContentType(NewsItem news)
 ```
 
 #### **Custom Placeholder Drawing**
-When using cache type `ImageDoubleBuffered` we can use `DrawPlaceholder` method to draw a custom placeholder while the first  cache is being prepared in background. Here we simulate an empty cell background layer, we use its existing padding to calculate the exact area. Notice we reuse the SKPaint and it would be disposed when the cell is disposed, instead of creating a new one for each call, keeping the UI-freezing GC collector away as much as possible.
+When using cache type `ImageDoubleBuffered` we can use `DrawPlaceholder` method to draw a custom placeholder while the first cache is being prepared in background. Here we simulate an empty cell background layer, we use its existing padding to calculate the exact area. Notice we reuse the SKPaint and it would be disposed when the cell is disposed, instead of creating a new one for each call, keeping the UI-freezing GC collector away as much as possible.
 
 ```csharp
 public override void DrawPlaceholder(DrawingContext context)
@@ -736,7 +737,7 @@ public class NewsViewModel : BaseViewModel
 DrawnUI gives you the freedom to **just draw what you need**. This tutorial demonstrates a challenging real-world scenario:
 
 ### ✅ **We Accomplished**
-- **One universal cell** handling 5 different content types with uneven heights
+- **One universal recycled cell** handling 5 different content types with uneven heights
 - **Real internet images** from RandomUser.me (avatars) and Picsum Photos (content)
 - **Image preloading** for both avatars and content images using SkiaImageManager
 - **Smart caching strategy** using `UseCache="ImageDoubleBuffered"` with MeasureVisible
@@ -747,10 +748,10 @@ DrawnUI gives you the freedom to **just draw what you need**. This tutorial demo
 - **VirtualisationInflated** for smoother scrolling with pre-inflated items
 - **Debug information** display for monitoring performance
 
-### 🎯 **Performance Remainder**
+### 🎯 **Performance Reminders**
 - **Caching**: `UseCache="ImageDoubleBuffered"` for cells, `UseCache="Image"` for heavy content, `UseCache="Operations"` for simple text and vectors.
 - **Layering**: Separate UI into layers for caching
-- **Debug**: Monitor how your optimizations affect FPS in realtime to notice drastic difference with and without caching and other techniques.
+- **Debug**: Monitor how your optimizations affect FPS in real-time to notice drastic difference with and without caching and other techniques.
 
 ### 🚀 **The DrawnUI Advantage**
-A smooth, efficient news feed that handles the challenging case of uneven row heights while loading real images from the internet. **Draw what you want!** 🎨
+A smooth, efficient news feed that handles the challenging case of uneven row heights while loading real images from the internet using **recycled cells**. **Draw what you want!** 🎨

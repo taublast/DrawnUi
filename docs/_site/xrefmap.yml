@@ -18922,6 +18922,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.FluentExtensions.OnTextChanged
   nameWithType: FluentExtensions.OnTextChanged
+- uid: DrawnUi.Draw.FluentExtensions.OnToggled*
+  name: OnToggled
+  href: api/DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled_
+  commentId: Overload:DrawnUi.Draw.FluentExtensions.OnToggled
+  isSpec: "True"
+  fullName: DrawnUi.Draw.FluentExtensions.OnToggled
+  nameWithType: FluentExtensions.OnToggled
+- uid: DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+  name: OnToggled<T>(T, Action<T, bool>)
+  href: api/DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnToggled__1___0_System_Action___0_System_Boolean__
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnToggled``1(``0,System.Action{``0,System.Boolean})
+  name.vb: OnToggled(Of T)(T, Action(Of T, Boolean))
+  fullName: DrawnUi.Draw.FluentExtensions.OnToggled<T>(T, System.Action<T, bool>)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnToggled(Of T)(T, System.Action(Of T, Boolean))
+  nameWithType: FluentExtensions.OnToggled<T>(T, Action<T, bool>)
+  nameWithType.vb: FluentExtensions.OnToggled(Of T)(T, Action(Of T, Boolean))
 - uid: DrawnUi.Draw.FluentExtensions.SetGrid*
   name: SetGrid
   href: api/DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_SetGrid_
@@ -40257,6 +40273,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaImage.AspectScale
   nameWithType: SkiaImage.AspectScale
+- uid: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  name: AvoidRemeasuring(MeasureRequest)
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_
+  commentId: M:DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  fullName: DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
+  nameWithType: SkiaImage.AvoidRemeasuring(MeasureRequest)
+- uid: DrawnUi.Draw.SkiaImage.AvoidRemeasuring*
+  name: AvoidRemeasuring
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_AvoidRemeasuring_
+  commentId: Overload:DrawnUi.Draw.SkiaImage.AvoidRemeasuring
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaImage.AvoidRemeasuring
+  nameWithType: SkiaImage.AvoidRemeasuring
 - uid: DrawnUi.Draw.SkiaImage.Blur
   name: Blur
   href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_Blur
@@ -49670,19 +49699,6 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaRichLabel.OnDisposing
   nameWithType: SkiaRichLabel.OnDisposing
-- uid: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  name: OnFontUpdated()
-  href: api/DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_OnFontUpdated
-  commentId: M:DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  fullName: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated()
-  nameWithType: SkiaRichLabel.OnFontUpdated()
-- uid: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated*
-  name: OnFontUpdated
-  href: api/DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_OnFontUpdated_
-  commentId: Overload:DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  isSpec: "True"
-  fullName: DrawnUi.Draw.SkiaRichLabel.OnFontUpdated
-  nameWithType: SkiaRichLabel.OnFontUpdated
 - uid: DrawnUi.Draw.SkiaRichLabel.OnLinkTapped(System.String,System.String)
   name: OnLinkTapped(string, string)
   href: api/DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_OnLinkTapped_System_String_System_String_
@@ -60135,6 +60151,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SvgSpan.Source
   nameWithType: SvgSpan.Source
+- uid: DrawnUi.Draw.SvgSpan.SvgString
+  name: SvgString
+  href: api/DrawnUi.Draw.SvgSpan.html#DrawnUi_Draw_SvgSpan_SvgString
+  commentId: P:DrawnUi.Draw.SvgSpan.SvgString
+  fullName: DrawnUi.Draw.SvgSpan.SvgString
+  nameWithType: SvgSpan.SvgString
+- uid: DrawnUi.Draw.SvgSpan.SvgString*
+  name: SvgString
+  href: api/DrawnUi.Draw.SvgSpan.html#DrawnUi_Draw_SvgSpan_SvgString_
+  commentId: Overload:DrawnUi.Draw.SvgSpan.SvgString
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SvgSpan.SvgString
+  nameWithType: SvgSpan.SvgString
 - uid: DrawnUi.Draw.SvgSpan.TintColor
   name: TintColor
   href: api/DrawnUi.Draw.SvgSpan.html#DrawnUi_Draw_SvgSpan_TintColor

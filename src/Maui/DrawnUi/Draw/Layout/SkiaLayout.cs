@@ -1099,14 +1099,7 @@ namespace DrawnUi.Draw
             // Apply all pending structure changes to StackStructure
             ApplyStructureChanges();
 
-            if (Type == LayoutType.Grid || IsStack)
-            {
-                SetupRenderingWithComposition(ctx);
-            }
-            else
-            {
-                DirtyChildrenTracker.Clear();
-            }
+            SetupRenderingWithComposition(ctx);
 
             base.Paint(ctx);
 
@@ -1216,21 +1209,59 @@ namespace DrawnUi.Draw
                     var asSpan = CollectionsMarshal.AsSpan(RenderTree);
                     foreach (var cell in asSpan)
                     {
+                        //adjust by Left,Top,TranslateX,TranslateY
+                        //todo maybe others
                         if (!DirtyChildrenInternal.Contains(cell.Control) &&
                             DirtyChildrenInternal.Any(dirtyChild =>
-                                dirtyChild.DirtyRegion.IntersectsWith(cell.Control.DirtyRegion)))
+                                dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion).IntersectsWith(cell.Control.ApplyTransforms(cell.Control.DirtyRegion))))
                         {
                             DirtyChildrenInternal.Add(cell.Control);
                         }
-                    }
 
-                    DirtyChildrenTracker.Clear();
+                        // Log the current cell's DirtyRegion
+                        /*
+                        var cellRect = cell.Control.DirtyRegion;
+                        Trace.WriteLine($"Checking cell.Control: {cell.Control}, DirtyRegion: X={cellRect.Left}, Y={cellRect.Top}, Width={cellRect.Width}, Height={cellRect.Height}");
+
+                        if (!DirtyChildrenInternal.Contains(cell.Control))
+                        {
+                            bool intersects = false;
+                            foreach (var dirtyChild in DirtyChildrenInternal)
+                            {
+                                var dirtyChildRect = dirtyChild.DirtyRegion;
+                                bool doesIntersect = dirtyChild.DirtyRegion.IntersectsWith(cell.Control.DirtyRegion);
+
+                                // Log the comparison details
+                                Trace.WriteLine($"  Comparing with dirtyChild: {dirtyChild}, DirtyRegion: X={dirtyChildRect.Left}, Y={dirtyChildRect.Top}, Width={dirtyChildRect.Width}, Height={dirtyChildRect.Height}");
+                                Trace.WriteLine($"  Intersects: {doesIntersect}");
+
+                                if (doesIntersect)
+                                {
+                                    intersects = true;
+                                    // Optionally break early if you only need one intersection
+                                    // break;
+                                }
+                            }
+
+                            if (intersects)
+                            {
+                                Trace.WriteLine($"Adding cell.Control: {cell.Control} to DirtyChildrenInternal");
+                                DirtyChildrenInternal.Add(cell.Control);
+                            }
+                        }
+                        else
+                        {
+                            Trace.WriteLine($"Skipping cell.Control: {cell.Control} (already in DirtyChildrenInternal)");
+                        }
+                        */
+                    }
 
                     var count = 0;
                     foreach (var dirtyChild in DirtyChildrenInternal)
                     {
-                        var clip = dirtyChild.DirtyRegion;
+                        var clip = dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion);
                         clip.Offset(offset);
+                        clip.Inflate(0.4f, 0.4f);
 
                         previousCache.Surface.Canvas.DrawRect(clip, PaintErase);
 
@@ -1239,17 +1270,15 @@ namespace DrawnUi.Draw
                 }
                 else
                 {
-                    //Super.Log($"[ImageComposite] {Tag} drawing new");
-
+                    //Debug.WriteLine("[ImageComposite] was rebuild");
                     IsRenderingWithComposition = false;
-                    DirtyChildrenTracker.Clear();
                 }
             }
             else
             {
-                DirtyChildrenTracker.Clear();
                 IsRenderingWithComposition = false;
             }
+
         }
 
 

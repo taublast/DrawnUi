@@ -55,19 +55,27 @@ public partial class SkiaControl
             if (_renderObjectPrevious != value)
             {
                 var kill = _renderObjectPrevious;
-                _renderObjectPrevious = value;
-                if (kill != null
-                    && UsingCacheType != SkiaCacheType.Image
-                    && UsingCacheType == SkiaCacheType.ImageComposite)
+                if (kill != null)
                 {
                     if (kill.Surface != null)
                     {
-                        ReturnSurface(kill.Surface);
+                        if (value == null || value.Surface.Handle != _renderObjectPrevious.Surface.Handle)
+                        {
+                            //recycle surface
+                            ReturnSurface(kill.Surface);
+                        }
                         kill.Surface = null;
+                        //if (_renderObjectPrevious.Type == SkiaCacheType.ImageComposite)
+                        //{
+                        //    kill.Surface = null;
+                        //    kill.Image = null;
+                        //}
                     }
 
                     DisposeObject(kill);
                 }
+
+                _renderObjectPrevious = value;
             }
         }
     }
@@ -393,9 +401,6 @@ public partial class SkiaControl
                 {
                     bool isGpu = usingCacheType == SkiaCacheType.GPU;
                     surface = CreateSurface(width, height, isGpu);
-
-                    // if (usingCacheType == SkiaCacheType.GPU)
-                    //     surface.Canvas.Clear(SKColors.Red);
                 }
 
                 if (surface == null)
@@ -504,24 +509,42 @@ public partial class SkiaControl
             var cache = RenderObject;
             var cacheOffscreen = RenderObjectPrevious;
 
-            if (RenderObjectPrevious != null && RenderObjectPreviousNeedsUpdate)
+            if (UsingCacheType == SkiaCacheType.ImageComposite)
             {
-                cacheOffscreen = null;
-                var kill = RenderObjectPrevious;
-                RenderObjectPrevious = null;
-                RenderObjectPreviousNeedsUpdate = false;
-
-                if (kill != null)
+                if (RenderObjectPreviousNeedsUpdate)
                 {
-                    if (kill.Surface != null)
-                    {
-                        ReturnSurface(kill.Surface);
-                        kill.Surface = null;
-                    }
+                    IsRenderingWithComposition = false;
 
-                    DisposeObject(kill);
+                    cacheOffscreen = null;
+                    cache = null;
+                    RenderObject = null;
+                    RenderObjectPrevious = null;
+
+                    RenderObjectPreviousNeedsUpdate = false;
                 }
             }
+            else
+            {
+                if (RenderObjectPrevious != null && RenderObjectPreviousNeedsUpdate)
+                {
+                    cacheOffscreen = null;
+                    var kill = RenderObjectPrevious;
+                    RenderObjectPrevious = null;
+                    RenderObjectPreviousNeedsUpdate = false;
+
+                    if (kill != null)
+                    {
+                        if (kill.Surface != null)
+                        {
+                            ReturnSurface(kill.Surface);
+                            kill.Surface = null;
+                        }
+
+                        DisposeObject(kill);
+                    }
+                }
+            }
+
 
             if (cache != null)
             {
@@ -1002,8 +1025,12 @@ public partial class SkiaControl
         {
             oldObject = RenderObject;
         }
-        else if (usingCacheType == SkiaCacheType.Image
-                 || usingCacheType == SkiaCacheType.ImageComposite)
+        else if (usingCacheType == SkiaCacheType.ImageComposite)
+        {
+            //possible size mismatch will be checked by CreateRenderingObject
+            oldObject = RenderObjectPrevious;
+        }
+        else if (usingCacheType == SkiaCacheType.Image)
         {
             oldObject = RenderObjectPrevious;
         }
@@ -1019,24 +1046,26 @@ public partial class SkiaControl
             return;
         }
 
-        if (oldObject != null)
-        {
-            if (created.SurfaceIsRecycled)
-            {
-                oldObject.Surface = null;
-            }
+        //if (oldObject != null)
+        //{
 
-            if (!UsesCacheDoubleBuffering && usingCacheType != SkiaCacheType.ImageComposite)
-            {
-                if (oldObject.Surface != null)
-                {
-                    ReturnSurface(oldObject.Surface);
-                    oldObject.Surface = null;
-                }
 
-                DisposeObject(oldObject);
-            }
-        }
+        //    if (!UsesCacheDoubleBuffering && usingCacheType != SkiaCacheType.ImageComposite)
+        //    {
+        //        if (created.SurfaceIsRecycled)
+        //        {
+        //            oldObject.Surface = null;
+        //        }
+        //        else
+        //        if (oldObject.Surface != null)
+        //        {
+        //            ReturnSurface(oldObject.Surface);
+        //            oldObject.Surface = null;
+        //        }
+
+        //        DisposeObject(oldObject);
+        //    }
+        //}
 
         var notValid = RenderObjectNeedsUpdate;
         RenderObject = created;

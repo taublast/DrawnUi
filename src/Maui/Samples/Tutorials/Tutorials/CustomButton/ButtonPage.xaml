@@ -19,6 +19,7 @@
 
             <draw:SkiaStack
                 Tag="MainStack"
+                UseCache="ImageComposite"
                 Spacing="30" Padding="20"
                 HorizontalOptions="Center">
 
