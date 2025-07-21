@@ -447,7 +447,7 @@ namespace DrawnUi.Draw
             get
             {
                 var output =
-                    $"{this.GetType().Name} {Type} Tag: `{Tag}`, {MeasuredSize.Pixels.Width:0}x{MeasuredSize.Pixels.Height:0}, ";
+                    $"{Type} `{Tag}`, {MeasuredSize.Pixels.Width:0}x{MeasuredSize.Pixels.Height:0}, visible {FirstVisibleIndex}-{LastVisibleIndex} ({_countVisible}), ";
 
                 if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
                 {
@@ -1213,7 +1213,8 @@ namespace DrawnUi.Draw
                         //todo maybe others
                         if (!DirtyChildrenInternal.Contains(cell.Control) &&
                             DirtyChildrenInternal.Any(dirtyChild =>
-                                dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion).IntersectsWith(cell.Control.ApplyTransforms(cell.Control.DirtyRegion))))
+                                dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion)
+                                    .IntersectsWith(cell.Control.ApplyTransforms(cell.Control.DirtyRegion))))
                         {
                             DirtyChildrenInternal.Add(cell.Control);
                         }
@@ -1278,7 +1279,6 @@ namespace DrawnUi.Draw
             {
                 IsRenderingWithComposition = false;
             }
-
         }
 
 
@@ -1518,9 +1518,13 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Determines if collection changes should preserve existing measurement structure
         /// </summary>
-        protected virtual bool ShouldPreserveStructureOnCollectionChange
+        protected virtual bool ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs args)
         {
-            get { return StackStructure != null && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible; }
+            return
+                args.Action != NotifyCollectionChangedAction.Reset &&
+                StackStructure != null
+                && StackStructure.Length > 0
+                && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible;
         }
 
 
@@ -1539,7 +1543,7 @@ namespace DrawnUi.Draw
                                 $"OldCount: {args.OldItems?.Count ?? 0}, NewCount: {args.NewItems?.Count ?? 0}");
             }
 
-            if (ShouldPreserveStructureOnCollectionChange)
+            if (ShouldPreserveStructureOnCollectionChange(args))
             {
                 // NEW: Structure-preserving logic for MeasureVisible strategy
                 HandleCollectionChangeWithStructurePreservation(args);
@@ -1548,6 +1552,7 @@ namespace DrawnUi.Draw
 
             lock (LockMeasure)
             {
+
                 // For very rapid changes, fall back to full reset
                 if (ChildrenFactory.TemplatesBusy || ChildrenFactory.TemplesInvalidating)
                 {
@@ -1564,6 +1569,10 @@ namespace DrawnUi.Draw
                     return;
                 }
 
+                if (args.Action == NotifyCollectionChangedAction.Reset)
+                {
+                    ApplyResetChange();
+                }
                 ApplyNewItemsSource = false;
 
                 //we could enter here from a different thread:

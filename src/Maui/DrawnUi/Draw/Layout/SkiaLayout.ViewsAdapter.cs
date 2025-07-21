@@ -1188,7 +1188,7 @@ public class ViewsAdapter : IDisposable
         }
 
         return
-            $"ItemsSource size {_dataContexts.Count}, using cells {_cellsInUseViews.Count}/{PoolSize + _cellsInUseViews.Count}";
+            $"Data:  {_dataContexts.Count}, cells {_cellsInUseViews.Count}/{PoolSize + _cellsInUseViews.Count}";
     }
 
     public int GetChildrenCount()
