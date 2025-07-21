@@ -1166,7 +1166,7 @@ public class ViewsAdapter : IDisposable
     /// <param name="size"></param>
     public void FillPool(int size)
     {
-        if (IsDisposed)
+        if (IsDisposed || !_parent.IsTemplated)
             return;
 
         if (size > 0)

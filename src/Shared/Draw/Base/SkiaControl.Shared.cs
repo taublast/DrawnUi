@@ -6668,6 +6668,11 @@ namespace DrawnUi.Draw
                 return Activator.CreateInstance(ItemTemplateType);
             }
 
+            if (ItemTemplate == null)
+            {
+                return null;
+            }
+
             if (ItemTemplate is DataTemplateSelector selector)
             {
                 //obsolete case for limited compatibility with MAUI
