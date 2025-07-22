@@ -240,11 +240,15 @@
             {
                 PlayWhenAvailable = true;
             }
+
+            Update();
         }
 
         public virtual void Stop()
         {
             Animator.Stop();
+
+            Update();
         }
 
         /// <summary>
