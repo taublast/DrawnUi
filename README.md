@@ -7,7 +7,7 @@
 
 Replace native controls with a Skia Canvas! 🤩 On **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
-Rendering engine with an enhanced layout system, gestures and animations powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
+Rendering engine with a WPF-like like layout system, gestures and animations, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
 * To use inside a usual MAUI app, consume drawn controls by wrapping inside `Canvas` views.
 * To create a totally drawn app with just one `Canvas` as root view, use `SkiaShell` + `SkiaViewSwitcher` for navigation between screens with modals, popups, toasts etc.
@@ -16,8 +16,6 @@ Rendering engine with an enhanced layout system, gestures and animations powered
 * Free to use under the MIT license, a nuget package is available.
 
 Current development state is _ALPHA for prod_.
-
->This is a rendering engine for creating and rendering your own controls, pre-shipped are here for a quick start.
 
 ## 🦸 Features
 
@@ -43,7 +41,9 @@ Current development state is _ALPHA for prod_.
 * Fixed rare crash in layout when ItemTemplate is null
 
 ___Please star ⭐ if you like it!___
- 
+
+> "No sealed code" policy library for creating and rendering custom UI
+
 ## 🎁 Shipped With
 
 * __Base drawn controls__
