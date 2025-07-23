@@ -684,6 +684,12 @@ public class Canvas : DrawnView, IGestureListener
     {
         //Debug.WriteLine($"[Canvas] {touchAction} {type}");
 
+        if (!CanDraw)
+        {
+            //if we got a gesture looks like we went back to visibility again
+            NeedCheckParentVisibility = true;
+        }
+
 #if ANDROID //todo move all this fun to gestures lib now:
         // on some devices like galaxy the screen is too sensitive for panning
         // so it send micro-panning gestures when the finger just went down to screen
