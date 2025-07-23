@@ -12,7 +12,7 @@ Rendering engine with an enhanced layout system, gestures and animations powered
 * To use inside a usual MAUI app, consume drawn controls by wrapping inside `Canvas` views.
 * To create a totally drawn app with just one `Canvas` as root view, use `SkiaShell` + `SkiaViewSwitcher` for navigation between screens with modals, popups, toasts etc.
 * Drawn controls are totally virtual, no native views/handlers.
-* Design in XAML or [code-behind](Fluent.md)
+* Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, a nuget package is available.
 
 Current development state is _ALPHA for prod_.
