@@ -34,7 +34,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaViewAccelerated
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 4
+    startLine: 6
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -292,7 +292,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Uid
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 6
+    startLine: 8
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -324,7 +324,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDraw
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 8
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -357,7 +357,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 10
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -389,7 +389,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanging
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 47
+    startLine: 49
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -423,7 +423,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 69
+    startLine: 71
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -453,7 +453,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Superview
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 114
+    startLine: 116
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -482,7 +482,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 117
+    startLine: 119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -512,7 +512,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 131
+    startLine: 133
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -544,7 +544,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHardwareAccelerated
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 139
+    startLine: 141
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -576,7 +576,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FPS
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 141
+    startLine: 143
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -608,7 +608,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDrawing
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 149
+    startLine: 151
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -640,7 +640,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasDrawn
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 160
+    startLine: 162
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -672,7 +672,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTime
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 161
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -704,7 +704,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SignalFrame
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 163
+    startLine: 165
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -739,18 +739,20 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Views/SkiaViewAccelerated.cs
-    startLine: 168
+    startLine: 170
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
   summary: Safe InvalidateSurface() call. If nanos not specified will generate ittself
   example: []
   syntax:
-    content: public void Update(long nanos)
+    content: public bool Update(long nanos)
     parameters:
     - id: nanos
       type: System.Int64
-    content.vb: Public Sub Update(nanos As Long)
+    return:
+      type: System.Boolean
+    content.vb: Public Function Update(nanos As Long) As Boolean
   overload: DrawnUi.Views.SkiaViewAccelerated.Update*
   implements:
   - DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)

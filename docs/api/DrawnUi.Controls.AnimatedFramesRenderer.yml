@@ -1592,7 +1592,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 244
+    startLine: 246
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1618,7 +1618,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrameAt
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 254
+    startLine: 258
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1655,7 +1655,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFinished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 259
+    startLine: 263
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1681,7 +1681,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStarted
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 264
+    startLine: 268
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1707,7 +1707,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 269
+    startLine: 273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1736,7 +1736,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 281
+    startLine: 285
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1762,7 +1762,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 285
+    startLine: 289
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1788,7 +1788,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWillDisposeWithChildren
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 296
+    startLine: 300
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1820,7 +1820,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Finished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 309
+    startLine: 313
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1849,7 +1849,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Started
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 311
+    startLine: 315
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1876,7 +1876,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 317
+    startLine: 321
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1903,7 +1903,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 331
+    startLine: 335
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1934,7 +1934,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatioProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 337
+    startLine: 341
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1961,7 +1961,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatio
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 348
+    startLine: 352
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1990,7 +1990,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RepeatProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 354
+    startLine: 358
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2017,7 +2017,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Repeat
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 374
+    startLine: 378
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2048,7 +2048,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlayProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 380
+    startLine: 384
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2075,7 +2075,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 385
+    startLine: 389
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

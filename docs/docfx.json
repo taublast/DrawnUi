@@ -99,8 +99,8 @@
       "repo": "https://github.com/taublast/drawnui",
       "branch": "master"
     },
-    "_appLogoPath": "images/drawnuint38.png",
-    "_appFaviconPath": "favicon.ico",
+    "_appLogoPath": "images/draw.svg",
+    "_appFaviconPath":  "images/draw.svg",
     "_disableAffix": false,
     "_disableNavbar": false,
     "_disableSideFilter": false,

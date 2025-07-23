@@ -6666,6 +6666,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/draw.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/draw.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/drawnui.svg",
       "output": {
         "resource": {
@@ -6680,6 +6690,26 @@
       "output": {
         "resource": {
           "relative_path": "images/drawnui38.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/drawnui_bt.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/drawnui_bt.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/drawnui_nt.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/drawnui_nt.svg"
         }
       },
       "version": ""

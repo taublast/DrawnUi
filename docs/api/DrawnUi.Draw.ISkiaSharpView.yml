@@ -56,11 +56,13 @@ items:
   summary: Safe InvalidateSurface() call. If nanos not specified will generate ittself
   example: []
   syntax:
-    content: void Update(long nanos = 0)
+    content: bool Update(long nanos = 0)
     parameters:
     - id: nanos
       type: System.Int64
-    content.vb: Sub Update(nanos As Long = 0)
+    return:
+      type: System.Boolean
+    content.vb: Function Update(nanos As Long = 0) As Boolean
   overload: DrawnUi.Draw.ISkiaSharpView.Update*
   nameWithType.vb: ISkiaSharpView.Update(Long)
   fullName.vb: DrawnUi.Draw.ISkiaSharpView.Update(Long)
@@ -256,6 +258,17 @@ references:
   nameWithType.vb: Long
   fullName.vb: Long
   name.vb: Long
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: System
   commentId: N:System
   isExternal: true

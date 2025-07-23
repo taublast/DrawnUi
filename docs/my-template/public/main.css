@@ -1,9 +1,10 @@
 #logo {
-    margin-left: 4px;
-    margin-right: -7px;
+margin-left: 4px;
+    margin-right: -4px;
     width: 34px;
     margin-top: 0px;
     margin-bottom: 0px;
+    opacity: 0.75;
 }
 
 /* Light mode code styling - uses default DocFX colors */

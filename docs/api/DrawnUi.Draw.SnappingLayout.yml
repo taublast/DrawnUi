@@ -220,7 +220,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.OnItemSourceChanged
   - DrawnUi.Draw.SkiaLayout.ApplyItemsSource
   - DrawnUi.Draw.SkiaLayout.ResetScroll
-  - DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  - DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)
@@ -286,6 +286,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.MeasureList(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.NeedMeasure
   - DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+  - DrawnUi.Draw.SkiaLayout.ApplyResetChange
   - DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
   - DrawnUi.Draw.SkiaLayout.DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   - DrawnUi.Draw.SkiaLayout.EstimatedTotalItems
@@ -4874,13 +4875,34 @@ references:
     href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ResetScroll
   - name: (
   - name: )
-- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  commentId: P:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange
-  name: ShouldPreserveStructureOnCollectionChange
-  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: ShouldPreserveStructureOnCollectionChange
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+    name: ShouldPreserveStructureOnCollectionChange
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  - name: (
+  - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
+    name: NotifyCollectionChangedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs
+  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   commentId: M:DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   parent: DrawnUi.Draw.SkiaLayout
@@ -6297,6 +6319,25 @@ references:
   - uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
     name: ApplyStructureChanges
     href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  commentId: M:DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyResetChange
+  name: ApplyResetChange()
+  nameWithType: SkiaLayout.ApplyResetChange()
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyResetChange()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.ApplyResetChange
+    name: ApplyResetChange
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyResetChange
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.ApplyResetChange
+    name: ApplyResetChange
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyResetChange
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)

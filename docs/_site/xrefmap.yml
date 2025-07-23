@@ -45314,6 +45314,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.ApplyNewItemsSource
   nameWithType: SkiaLayout.ApplyNewItemsSource
+- uid: DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  name: ApplyResetChange()
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyResetChange
+  commentId: M:DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyResetChange()
+  nameWithType: SkiaLayout.ApplyResetChange()
+- uid: DrawnUi.Draw.SkiaLayout.ApplyResetChange*
+  name: ApplyResetChange
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyResetChange_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  nameWithType: SkiaLayout.ApplyResetChange
 - uid: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
   name: ApplyStructureChanges()
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyStructureChanges
@@ -47644,12 +47657,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.ShouldInvalidateByChildren
   nameWithType: SkiaLayout.ShouldInvalidateByChildren
-- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  name: ShouldPreserveStructureOnCollectionChange
-  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange
-  commentId: P:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  name: ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  commentId: M:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs)
 - uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange*
   name: ShouldPreserveStructureOnCollectionChange
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_
@@ -70929,19 +70942,6 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Views.DrawnView.OnSuperviewShouldRenderChanged
   nameWithType: DrawnView.OnSuperviewShouldRenderChanged
-- uid: DrawnUi.Views.DrawnView.OrderedDraw
-  name: OrderedDraw
-  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OrderedDraw
-  commentId: P:DrawnUi.Views.DrawnView.OrderedDraw
-  fullName: DrawnUi.Views.DrawnView.OrderedDraw
-  nameWithType: DrawnView.OrderedDraw
-- uid: DrawnUi.Views.DrawnView.OrderedDraw*
-  name: OrderedDraw
-  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OrderedDraw_
-  commentId: Overload:DrawnUi.Views.DrawnView.OrderedDraw
-  isSpec: "True"
-  fullName: DrawnUi.Views.DrawnView.OrderedDraw
-  nameWithType: DrawnView.OrderedDraw
 - uid: DrawnUi.Views.DrawnView.PaintSystem
   name: PaintSystem
   href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PaintSystem
