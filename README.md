@@ -35,30 +35,10 @@ Current development state is _ALPHA for prod_.
 * __Navigate__ on canvas with familiar MAUI Shell techniques 
 
 ## 🌱 What's new
-* `SkiaCacheType.ImageComposite` implementation for `Absolute` layout
-* Cache recycling improvements
-* Added translation transforms for `SkiaCacheType.ImageComposite` dirty regions usage.
-* Fix `SkiaRichLabel` spans invaldation when font changes for existing label
 
-* Recycling cache/SkiaImage surfaces to reduce allocations
-* General layout calculation performance boost
-* Recycled cells stack MeasureVisible performance boost
-* FirstVisibleIndex/LastVisibleIndex for stacks 
-
-* The nuget package `DrawnUi.Maui` replaces the old package Id, you can still use the old one kept for compatibility for some time.
-* Docs, first appearence inside `/docs`! To teach LMs use `/aidocs` subfolder.
-* Windows x64 doesn't require MSIX mode anymore, thanks to [Tommi Gustafsson](https://github.com/TommiGustafsson-HMP)
-* `SkiaCamera` inside DrawnUi.Maui.Camera: iOS, MacCatalyst, Windows, Android implementations.
-* `SkiaShape` now can contain many `Children` instead of one `Content`. Plus fixes for stroke and other for pixel-perfect rendering.
-* `SkiaImage` rescaling quality fix after for skia v3.
-* `SkiaScroll` added additional mouse wheel support for scrolling on windows, added FirstVisibleIndex, LastVisibleIndex props
-* Stack and absolute layouts now correctly apply one-directional `Fill` of children, might break some legacy UIs (or might not). `Margins` and `Padding` now work properly everywhere.
-* Can override virtual `OnMeasuring`, while `Measure` is not virtual anymore to assure faster screen creation and avoid re-measurements when initializing for the first time.
-* Performance and safety optimizations for accelerated rendering handlers (`SkiaViewAccelerated:SKGLView`) on all platforms.
-* Windows accelerated handler is now synched with display when its refresh rate is >=120.
-* Frame time interpolator adjustments for DrawnUi.Maui.Game.
-* Many other silent fixes and new properties/features.
-* Example apps updated to align with changes.
+* Fluent `OnTapped` uses callback instead of effect
+* Fixed `SkiaLottie` and other `AnimateFramesRenderer` not updating when Started
+* Fixed rare crash in layout when ItemTemplate is null
 
 ___Please star ⭐ if you like it!___
  
@@ -137,6 +117,31 @@ Click here ☝️☝️☝️
 
 ---
 
+## 🌱 What Was New Previously
+
+* `SkiaCacheType.ImageComposite` implementation for `Absolute` layout
+* Cache recycling improvements
+* Added translation transforms for `SkiaCacheType.ImageComposite` dirty regions usage.
+* Fix `SkiaRichLabel` spans invaldation when font changes for existing label
+
+* Recycling cache/SkiaImage surfaces to reduce allocations
+* General layout calculation performance boost
+* Recycled cells stack MeasureVisible performance boost
+* FirstVisibleIndex/LastVisibleIndex for stacks 
+
+* The nuget package `DrawnUi.Maui` replaces the old package Id, you can still use the old one kept for compatibility for some time.
+* Docs, first appearence inside `/docs`! To teach LMs use `/aidocs` subfolder.
+* Windows x64 doesn't require MSIX mode anymore, thanks to [Tommi Gustafsson](https://github.com/TommiGustafsson-HMP)
+* `SkiaCamera` inside DrawnUi.Maui.Camera: iOS, MacCatalyst, Windows, Android implementations.
+* `SkiaShape` now can contain many `Children` instead of one `Content`. Plus fixes for stroke and other for pixel-perfect rendering.
+* `SkiaImage` rescaling quality fix after for skia v3.
+* `SkiaScroll` added additional mouse wheel support for scrolling on windows, added FirstVisibleIndex, LastVisibleIndex props
+* Stack and absolute layouts now correctly apply one-directional `Fill` of children, might break some legacy UIs (or might not). `Margins` and `Padding` now work properly everywhere.
+* Can override virtual `OnMeasuring`, while `Measure` is not virtual anymore to assure faster screen creation and avoid re-measurements when initializing for the first time.
+* Performance and safety optimizations for accelerated rendering handlers (`SkiaViewAccelerated:SKGLView`) on all platforms.
+* Windows accelerated handler is now synched with display when its refresh rate is >=120.
+* Frame time interpolator adjustments for DrawnUi.Maui.Game.
+* Many other silent fixes and new properties/features.
+* Example apps updated to align with changes.
 
 
- 

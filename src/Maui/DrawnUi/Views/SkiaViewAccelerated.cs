@@ -1,4 +1,6 @@
-﻿namespace DrawnUi.Views;
+﻿using HarfBuzzSharp;
+
+namespace DrawnUi.Views;
 
 
 
@@ -166,16 +168,18 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 
     }
 
-    public void Update(long nanos)
+    public bool Update(long nanos)
     {
         if (
             Super.EnableRendering &&
-            this.Handler != null && this.Handler.PlatformView != null  )
+            this.Handler != null && this.Handler.PlatformView != null)
         {
-            IsDrawing = true;
-
             InvalidateSurface();
+
+            return true;
         }
+
+        return false;
     }
 
     private double _fpsAverage;

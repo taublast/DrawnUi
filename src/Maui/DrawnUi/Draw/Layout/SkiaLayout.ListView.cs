@@ -880,7 +880,7 @@ public partial class SkiaLayout
                     break;
 
                 case StructureChangeType.Reset:
-                    ApplyResetChange(change);
+                    ApplyResetChange();
                     break;
 
                 case StructureChangeType.VisibilityChange:
@@ -1307,7 +1307,7 @@ public partial class SkiaLayout
     /// <summary>
     /// Applies Reset changes to StackStructure
     /// </summary>
-    private void ApplyResetChange(StructureChange change)
+    protected void ApplyResetChange()
     {
         Debug.WriteLine($"[StackStructure] Resetting all");
         // Clear everything for reset

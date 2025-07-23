@@ -2021,6 +2021,8 @@ else
         }
 
 
+        private long _countVisible;
+
         /// <summary>
         /// Renders stack/wrap layout.
         /// Returns number of drawn children.
@@ -2148,6 +2150,8 @@ else
                     }
                 }
 
+                _countVisible = visibleElements.Count;
+
                 if (OutputDebug)
                 {
                     Super.Log(
@@ -2175,7 +2179,6 @@ else
                     FirstMeasuredIndex = -1;
                     LastVisibleIndex = -1;
                 }
-
 
                 // Start background measurement if needed
                 if (IsTemplated && structure != null &&

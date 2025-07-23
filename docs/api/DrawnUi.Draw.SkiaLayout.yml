@@ -12,6 +12,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.ApplyItemsSource
   - DrawnUi.Draw.SkiaLayout.ApplyMeasureResult
   - DrawnUi.Draw.SkiaLayout.ApplyNewItemsSource
+  - DrawnUi.Draw.SkiaLayout.ApplyResetChange
   - DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
   - DrawnUi.Draw.SkiaLayout.BackgroundMeasurementProgress
   - DrawnUi.Draw.SkiaLayout.BreakLine
@@ -156,7 +157,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.SetRowSpan(Microsoft.Maui.Controls.BindableObject,System.Int32)
   - DrawnUi.Draw.SkiaLayout.SetupViews
   - DrawnUi.Draw.SkiaLayout.ShouldInvalidateByChildren
-  - DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
+  - DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   - DrawnUi.Draw.SkiaLayout.ShouldTriggerLoadMore(DrawnUi.Draw.ScaledRect)
   - DrawnUi.Draw.SkiaLayout.Split
   - DrawnUi.Draw.SkiaLayout.SplitAlign
@@ -1543,7 +1544,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawStack
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-    startLine: 2027
+    startLine: 2029
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4347,17 +4348,17 @@ items:
     content: public virtual void ResetScroll()
     content.vb: Public Overridable Sub ResetScroll()
   overload: DrawnUi.Draw.SkiaLayout.ResetScroll*
-- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  commentId: P:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  id: ShouldPreserveStructureOnCollectionChange
+- uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  commentId: M:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  id: ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   parent: DrawnUi.Draw.SkiaLayout
   langs:
   - csharp
   - vb
-  name: ShouldPreserveStructureOnCollectionChange
-  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  type: Property
+  name: ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs)
+  nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs)
+  fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+  type: Method
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
@@ -4372,11 +4373,13 @@ items:
   summary: Determines if collection changes should preserve existing measurement structure
   example: []
   syntax:
-    content: protected virtual bool ShouldPreserveStructureOnCollectionChange { get; }
-    parameters: []
+    content: protected virtual bool ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs args)
+    parameters:
+    - id: args
+      type: System.Collections.Specialized.NotifyCollectionChangedEventArgs
     return:
       type: System.Boolean
-    content.vb: Protected Overridable ReadOnly Property ShouldPreserveStructureOnCollectionChange As Boolean
+    content.vb: Protected Overridable Function ShouldPreserveStructureOnCollectionChange(args As NotifyCollectionChangedEventArgs) As Boolean
   overload: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange*
 - uid: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
   commentId: M:DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)
@@ -4396,7 +4399,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnItemsSourceCollectionChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1529
+    startLine: 1533
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4432,7 +4435,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HandleCollectionChangeWithStructurePreservation
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1592
+    startLine: 1601
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4463,7 +4466,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StageStructureChange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1647
+    startLine: 1656
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4494,7 +4497,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportChildVisibilityChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1676
+    startLine: 1685
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4535,7 +4538,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportChildVisibilityChanged
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1688
+    startLine: 1697
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4579,7 +4582,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HandleStructurePreservingAdd
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1711
+    startLine: 1720
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4610,7 +4613,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HandleStructurePreservingRemove
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1752
+    startLine: 1761
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4641,7 +4644,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HandleStructurePreservingReplace
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1793
+    startLine: 1802
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4672,7 +4675,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HandleStructurePreservingMove
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1835
+    startLine: 1844
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4703,7 +4706,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HandleStructurePreservingReset
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1859
+    startLine: 1868
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4734,7 +4737,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RefreshAllViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1882
+    startLine: 1891
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4762,7 +4765,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCacheDebugInfo
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1897
+    startLine: 1906
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4792,7 +4795,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPrintDebug
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1929
+    startLine: 1938
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4821,7 +4824,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutReady
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1951
+    startLine: 1960
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4850,7 +4853,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppearing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1956
+    startLine: 1965
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4880,7 +4883,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappearing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1960
+    startLine: 1969
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4909,7 +4912,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppeared
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1964
+    startLine: 1973
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4939,7 +4942,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappeared
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1968
+    startLine: 1977
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4968,7 +4971,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLoaded
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1972
+    startLine: 1981
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4998,7 +5001,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVisibleChildIndexAt
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1976
+    startLine: 1985
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5035,7 +5038,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildIndexAt
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs
-    startLine: 1993
+    startLine: 2002
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6489,6 +6492,34 @@ items:
     content: public void ApplyStructureChanges()
     content.vb: Public Sub ApplyStructureChanges()
   overload: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges*
+- uid: DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  commentId: M:DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  id: ApplyResetChange
+  parent: DrawnUi.Draw.SkiaLayout
+  langs:
+  - csharp
+  - vb
+  name: ApplyResetChange()
+  nameWithType: SkiaLayout.ApplyResetChange()
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyResetChange()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ApplyResetChange
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 1309
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Applies Reset changes to StackStructure
+  example: []
+  syntax:
+    content: protected void ApplyResetChange()
+    content.vb: Protected Sub ApplyResetChange()
+  overload: DrawnUi.Draw.SkiaLayout.ApplyResetChange*
 - uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
   id: MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)
@@ -34975,16 +35006,10 @@ references:
   fullName: DrawnUi.Draw.SkiaLayout.ResetScroll
 - uid: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
   name: ShouldPreserveStructureOnCollectionChange
   nameWithType: SkiaLayout.ShouldPreserveStructureOnCollectionChange
   fullName: DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange
-- uid: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged*
-  commentId: Overload:DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
-  name: OnItemsSourceCollectionChanged
-  nameWithType: SkiaLayout.OnItemsSourceCollectionChanged
-  fullName: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged
 - uid: System.Collections.Specialized.NotifyCollectionChangedEventArgs
   commentId: T:System.Collections.Specialized.NotifyCollectionChangedEventArgs
   parent: System.Collections.Specialized
@@ -35030,6 +35055,12 @@ references:
     name: Specialized
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.specialized
+- uid: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
+  name: OnItemsSourceCollectionChanged
+  nameWithType: SkiaLayout.OnItemsSourceCollectionChanged
+  fullName: DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged
 - uid: DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation
   href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_System_Collections_Specialized_NotifyCollectionChangedEventArgs_
@@ -35825,6 +35856,12 @@ references:
   name: ApplyStructureChanges
   nameWithType: SkiaLayout.ApplyStructureChanges
   fullName: DrawnUi.Draw.SkiaLayout.ApplyStructureChanges
+- uid: DrawnUi.Draw.SkiaLayout.ApplyResetChange*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.ApplyResetChange
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_ApplyResetChange
+  name: ApplyResetChange
+  nameWithType: SkiaLayout.ApplyResetChange
+  fullName: DrawnUi.Draw.SkiaLayout.ApplyResetChange
 - uid: DrawnUi.Draw.SkiaLayout.MeasureSingleItem*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.MeasureSingleItem
   href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureSingleItem_System_Int32_SkiaSharp_SKRect_System_Single_System_Threading_CancellationToken_System_Boolean_

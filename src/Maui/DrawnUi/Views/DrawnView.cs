@@ -735,13 +735,11 @@ namespace DrawnUi.Views
             Update();
         }
 
-        public bool OrderedDraw { get; protected set; }
         double _lastUpdateTimeNanos;
 
         public void ResetUpdate()
         {
             NeedCheckParentVisibility = true;
-            OrderedDraw = false;
             InvalidatedCanvas = 0;
         }
 
@@ -1459,7 +1457,6 @@ namespace DrawnUi.Views
             }
 
             InvalidatedCanvas = monitor;
-            OrderedDraw = false;
 
             if (!CanDraw || canvas == null)
                 return false;
@@ -2611,7 +2608,6 @@ namespace DrawnUi.Views
 
             if (CanvasView == null)
             {
-                OrderedDraw = false;
                 return;
             }
 
@@ -2681,13 +2677,9 @@ namespace DrawnUi.Views
                         }
                     }
 
-                    OrderedDraw = false;
                 }
             }
-            else
-            {
-                OrderedDraw = false;
-            }
+
         }
 
         protected override void OnParentSet()

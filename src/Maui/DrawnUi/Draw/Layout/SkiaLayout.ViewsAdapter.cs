@@ -1166,7 +1166,7 @@ public class ViewsAdapter : IDisposable
     /// <param name="size"></param>
     public void FillPool(int size)
     {
-        if (IsDisposed)
+        if (IsDisposed || !_parent.IsTemplated)
             return;
 
         if (size > 0)
@@ -1188,7 +1188,7 @@ public class ViewsAdapter : IDisposable
         }
 
         return
-            $"ItemsSource size {_dataContexts.Count}, using cells {_cellsInUseViews.Count}/{PoolSize + _cellsInUseViews.Count}";
+            $"Data:  {_dataContexts.Count}, cells {_cellsInUseViews.Count}/{PoolSize + _cellsInUseViews.Count}";
     }
 
     public int GetChildrenCount()

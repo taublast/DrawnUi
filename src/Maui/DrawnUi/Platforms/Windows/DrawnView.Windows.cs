@@ -92,7 +92,6 @@ namespace DrawnUi.Views
         {
             return
                CanvasView != null && this.Handler != null && this.Handler.PlatformView != null
-               && !OrderedDraw
                && !CanvasView.IsDrawing
                && IsDirty
                && !(UpdateLocks > 0 && StopDrawingWhenUpdateIsLocked)
@@ -106,7 +105,6 @@ namespace DrawnUi.Views
         {
             if (CheckCanDraw())
             {
-                OrderedDraw = true;
                 if (NeedCheckParentVisibility)
                 {
                     CheckElementVisibility(this);
@@ -114,11 +112,7 @@ namespace DrawnUi.Views
                 if (CanDraw)
                 {
                     //Debug.WriteLine($"UPDATE {Tag}");
-                    CanvasView?.Update();
-                }
-                else
-                {
-                    OrderedDraw = false;
+                    CanvasView.Update();
                 }
             }
         }

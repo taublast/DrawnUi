@@ -170,15 +170,17 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
     static bool maybeLowEnd = true;
 
-    public void Update(long nanos)
+    public bool Update(long nanos)
     {
         if (
             Super.EnableRendering &&
             this.Handler != null && this.Handler.PlatformView != null && CanvasSize is { Width: > 0, Height: > 0 })
         {
-            IsDrawing = true;
             InvalidateSurface();
+            return true;
         }
+
+        return false;
     }
 
 

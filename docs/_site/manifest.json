@@ -6666,6 +6666,66 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/draw.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/draw.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/drawnui.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/drawnui.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/drawnui38.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/drawnui38.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/drawnui_bt.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/drawnui_bt.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/drawnui_nt.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/drawnui_nt.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/drawnuint38.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/drawnuint38.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/first.jpg",
       "output": {
         "resource": {
@@ -6680,6 +6740,16 @@
       "output": {
         "resource": {
           "relative_path": "images/firstcode.jpg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
         }
       },
       "version": ""

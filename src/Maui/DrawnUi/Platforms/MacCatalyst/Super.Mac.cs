@@ -191,7 +191,7 @@ namespace DrawnUi.Draw
         static Looper Looper { get; set; }
 
         /// <summary>
-        /// When set to true will run loop upon CADisplayLink hits instead of a timer looper that targets 120 fps
+        /// When set to true will run loop upon CADisplayLink hits instead of a timer looper. Default is true, change at your own risk.
         /// </summary>
         public static bool UseDisplaySync = false;
 

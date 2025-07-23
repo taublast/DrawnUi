@@ -93,18 +93,12 @@ namespace DrawnUi.Views
             {
                 if (CheckCanDraw())
                 {
-                    OrderedDraw = true;
                     if (NeedCheckParentVisibility)
                         CheckElementVisibility(this);
 
                     if (CanDraw)
                     {
-                        //Debug.WriteLine($"UPDATE {Tag}");
-                        CanvasView?.Update();
-                    }
-                    else
-                    {
-                        OrderedDraw = false;
+                        CanvasView.Update();
                     }
                 }
             }

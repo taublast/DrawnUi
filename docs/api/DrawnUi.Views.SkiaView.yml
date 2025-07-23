@@ -770,11 +770,13 @@ items:
   summary: Safe InvalidateSurface() call. If nanos not specified will generate ittself
   example: []
   syntax:
-    content: public void Update(long nanos)
+    content: public bool Update(long nanos)
     parameters:
     - id: nanos
       type: System.Int64
-    content.vb: Public Sub Update(nanos As Long)
+    return:
+      type: System.Boolean
+    content.vb: Public Function Update(nanos As Long) As Boolean
   overload: DrawnUi.Views.SkiaView.Update*
   implements:
   - DrawnUi.Draw.ISkiaSharpView.Update(System.Int64)

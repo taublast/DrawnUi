@@ -76,7 +76,6 @@ public partial class DrawnView
     {
         if (CheckCanDraw())
         {
-            OrderedDraw = true;
             if (NeedCheckParentVisibility)
             {
                 CheckElementVisibility(this);
@@ -84,12 +83,9 @@ public partial class DrawnView
 
             if (CanDraw)
             {
-                CanvasView?.Update();
+                CanvasView.Update();
             }
-            else
-            {
-                OrderedDraw = false;
-            }
+ 
         }
     }
 
@@ -102,7 +98,6 @@ public partial class DrawnView
     public bool CheckCanDraw()
     {
         return
-            !OrderedDraw &&
             IsDirty &&
             CanvasView != null && this.Handler != null && this.Handler.PlatformView != null
                 && !CanvasView.IsDrawing
