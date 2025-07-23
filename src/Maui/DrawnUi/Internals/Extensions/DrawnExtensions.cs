@@ -509,6 +509,98 @@ public static partial class DrawnExtensions
         return tcs.Task;
     }
 
+    public static Task BackgroundColorToAsync(this SkiaControl owner, Color end, uint length = 250, Easing easing = null, CancellationTokenSource cancel = default)
+    {
+        if (cancel == default)
+            cancel = new CancellationTokenSource();
+
+        var start = owner.BackgroundColor ?? Colors.Transparent;
+        
+        ColorBlendAnimator animator = null;
+        var tcs = new TaskCompletionSource<bool>(cancel.Token);
+        tcs.Task.ContinueWith(task =>
+        {
+            animator?.Dispose();
+        });
+
+        animator = new ColorBlendAnimator(owner)
+        {
+            OnStop = () =>
+            {
+                if (animator.WasStarted && !cancel.IsCancellationRequested)
+                {
+                    tcs.SetResult(true);
+                }
+            }
+        };
+        
+        animator.Color1 = start;
+        animator.Color2 = end;
+        animator.Speed = length;
+        animator.Easing = easing ?? Easing.Linear;
+        animator.OnColorChanged = (color) =>
+        {
+            if (!cancel.IsCancellationRequested)
+            {
+                owner.BackgroundColor = color;
+            }
+            else
+            {
+                animator.Stop();
+            }
+        };
+        
+        animator.Start();
+
+        return tcs.Task;
+    }
+
+    public static Task TextColorToAsync(this SkiaLabel owner, Color end, uint length = 250, Easing easing = null, CancellationTokenSource cancel = default)
+    {
+        if (cancel == default)
+            cancel = new CancellationTokenSource();
+
+        var start = owner.TextColor ?? Colors.Transparent;
+        
+        ColorBlendAnimator animator = null;
+        var tcs = new TaskCompletionSource<bool>(cancel.Token);
+        tcs.Task.ContinueWith(task =>
+        {
+            animator?.Dispose();
+        });
+
+        animator = new ColorBlendAnimator(owner)
+        {
+            OnStop = () =>
+            {
+                if (animator.WasStarted && !cancel.IsCancellationRequested)
+                {
+                    tcs.SetResult(true);
+                }
+            }
+        };
+        
+        animator.Color1 = start;
+        animator.Color2 = end;
+        animator.Speed = length;
+        animator.Easing = easing ?? Easing.Linear;
+        animator.OnColorChanged = (color) =>
+        {
+            if (!cancel.IsCancellationRequested)
+            {
+                owner.TextColor = color;
+            }
+            else
+            {
+                animator.Stop();
+            }
+        };
+        
+        animator.Start();
+
+        return tcs.Task;
+    }
+
 
     public static (float RatioX, float RatioY) GetVelocityRatioForChild(this IDrawnBase container,
         ISkiaControl control)
