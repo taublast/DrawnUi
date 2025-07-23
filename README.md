@@ -36,7 +36,9 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
-* Fluent `OnTapped` uses callback instead of effect
+* Animation extensions for label and all controls: `TextColorToAsync` `BackgroundColorToAsync`
+* Fixed `SkiaCheckbox` not triggering event
+* Fluent `OnTapped` uses callback instead of effect, has second overload with gesture info
 * Fixed `SkiaLottie` and other `AnimateFramesRenderer` not updating when Started
 * Fixed rare crash in layout when ItemTemplate is null
 

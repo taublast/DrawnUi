@@ -397,10 +397,14 @@ public class SkiaCheckbox : SkiaToggle
                     ApplyOn();
                 }, cancelAnimation.Token);
             }
+
+            NotifyWasToggled();
+
+            IsInternalCall = false;
         }
         else
         {
-            ApplyProperties();
+            base.OnToggledChanged();
         }
     }
 

@@ -836,7 +836,7 @@ namespace DrawnUi.Draw
         {
             try
             {
-                void onTapped(object s, SkiaControl.ControlTappedEventArgs a)
+                void onTapped(object s, ControlTappedEventArgs a)
                 {
                     action?.Invoke(view);
                 }
@@ -848,6 +848,29 @@ namespace DrawnUi.Draw
                 };
                 //not using effect anymore since they are invoked by parents and we want this to be directly invoked on this view
                 //AddGestures.SetCommandTapped(view, new Command((ctx) => { action?.Invoke(view); }));
+            }
+            catch (Exception e)
+            {
+                Super.Log(e);
+            }
+
+            return view;
+        }
+
+         public static T OnTapped<T>(this T view, Action<T, ControlTappedEventArgs> action) where T : SkiaControl
+        {
+            try
+            {
+                void onTapped(object s, ControlTappedEventArgs a)
+                {
+                    action?.Invoke(view, a);
+                }
+                view.Tapped += onTapped;
+                string subscriptionKey = $"tapped_{Guid.NewGuid()}";
+                view.ExecuteUponDisposal[subscriptionKey] = () =>
+                {
+                    view.Tapped -= onTapped;
+                };
             }
             catch (Exception e)
             {

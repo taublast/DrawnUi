@@ -324,7 +324,7 @@ public class SkiaSwitch : SkiaToggle
         }
         else
         {
-            base.ApplyProperties();
+            base.OnToggledChanged();
         }
     }
 

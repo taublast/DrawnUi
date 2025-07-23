@@ -17,6 +17,20 @@ using SKSize = SkiaSharp.SKSize;
 
 namespace DrawnUi.Draw
 {
+    public class ControlTappedEventArgs : EventArgs
+    {
+        public object Control { get; set; }
+        public SkiaGesturesParameters Parameters { get; set; }
+        public GestureEventProcessingInfo ProcessingInfo { get; set; }
+
+        public ControlTappedEventArgs(object control, SkiaGesturesParameters args, GestureEventProcessingInfo info)
+        {
+            Control = control;
+            Parameters = args;
+            ProcessingInfo = info;
+        }
+    }
+
     [DebuggerDisplay("{DebugString}")]
     public partial class SkiaControl :
         ISkiaGestureListener,
@@ -1398,20 +1412,6 @@ namespace DrawnUi.Draw
         /// WIll be called if a child implements ISkiaGestureListener and was Tapped. If this is set then the Tapped gesture will be consumed by this control after passing it to child.
         /// </summary>
         public event EventHandler<ControlTappedEventArgs> ChildTapped;
-
-        public class ControlTappedEventArgs : EventArgs
-        {
-            public object Control { get; set; }
-            public SkiaGesturesParameters Parameters { get; set; }
-            public GestureEventProcessingInfo ProcessingInfo { get; set; }
-
-            public ControlTappedEventArgs(object control, SkiaGesturesParameters args, GestureEventProcessingInfo info)
-            {
-                Control = control;
-                Parameters = args;
-                ProcessingInfo = info;
-            }
-        }
 
         public SKPoint TransformPointToLocalSpace(SKPoint pointInParentSpace)
         {
