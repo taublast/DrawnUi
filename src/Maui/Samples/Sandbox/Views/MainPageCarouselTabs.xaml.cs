@@ -24,7 +24,7 @@
         }
 
 
-        private void SkiaControl_OnTapped(object sender, SkiaControl.ControlTappedEventArgs e)
+        private void SkiaControl_OnTapped(object sender, ControlTappedEventArgs e)
         {
      
         }

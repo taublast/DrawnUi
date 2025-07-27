@@ -110,7 +110,7 @@ ___Please star ⭐ if you like it!___
  ## ‼️ Development Notes
 
 * .NET 9 only, Maui.Controls 9.0.70 minimum.
-* All files to be consumed (images etc) must be placed inside the MAUI app Resources/Raw folder, subfolders allowed. If you need to load from the native app folder use prefix "file://".
+* All files to be consumed (images etc) must be placed inside the MAUI app Resources/Raw folder, subfolders allowed. If you need to load from the native app folder use prefix "file://". Note that MAUI supports only lowercase filenames of resources and while uppercase might works for you on some plaforms they will not be read on iOS.  
 * Accessibility support is compatible and is on the roadmap.
 
 ## 📕 [Documentation](https://taublast.github.io/DrawnUi/)

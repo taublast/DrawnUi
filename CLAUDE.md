@@ -82,7 +82,7 @@ builder.UseDrawnUi(new()
 
 **Platform Requirements:**
 - Minimum OS versions defined in project files
-- Resources must be in `Resources/Raw` folder with subfolders allowed
+- Resources must be in `Resources/Raw` folder with subfolders allowed, Note that MAUI supports only lowercase filenames of resources and while uppercase might works for you on some plaforms they will not be read on iOS.
 
 ## Important Development Notes
 
