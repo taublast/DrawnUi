@@ -1698,17 +1698,23 @@ public class TemplatedViewsPool : IDisposable
             return null;
 
         var create = CreateTemplate();
-        if (ViewsAdapter.LogEnabled)
-            Super.Log("[ViewsAdapter] created new view !");
 
-        if (create is SkiaControl element)
+        if (create != null)
         {
-            return element;
+            if (ViewsAdapter.LogEnabled)
+                Super.Log("[ViewsAdapter] created new view !");
+
+            if (create is SkiaControl element)
+            {
+                return element;
+            }
+
+            var ctrl = (SkiaControl)create;
+            ctrl.ContextIndex = -1;
+            return ctrl;
         }
 
-        var ctrl = (SkiaControl)create;
-        ctrl.ContextIndex = -1;
-        return ctrl;
+        return null;
     }
 
     public void Reserve()
