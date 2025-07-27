@@ -77,6 +77,7 @@ public class SkiaLottie : AnimatedFramesRenderer
             {
                 frame = Animation.OutPoint;
             }
+
             Animation.SeekFrame(frame);
         }
 
@@ -138,10 +139,11 @@ public class SkiaLottie : AnimatedFramesRenderer
         }
     }
 
-    public static readonly BindableProperty ApplyIsOnWhenNotPlayingProperty = BindableProperty.Create(nameof(ApplyIsOnWhenNotPlaying),
-    typeof(bool),
-    typeof(SkiaLottie),
-    true);
+    public static readonly BindableProperty ApplyIsOnWhenNotPlayingProperty = BindableProperty.Create(
+        nameof(ApplyIsOnWhenNotPlaying),
+        typeof(bool),
+        typeof(SkiaLottie),
+        true);
 
     /// <summary>
     /// Gets or sets whether the IsOn state should be applied when the animation is not playing.
@@ -155,9 +157,9 @@ public class SkiaLottie : AnimatedFramesRenderer
     }
 
     public static readonly BindableProperty IsOnProperty = BindableProperty.Create(nameof(IsOn),
-    typeof(bool),
-    typeof(SkiaLottie),
-    false, propertyChanged: ApplyIsOnProperty);
+        typeof(bool),
+        typeof(SkiaLottie),
+        false, propertyChanged: ApplyIsOnProperty);
 
     /// <summary>
     /// Gets or sets the toggle state for animations with distinct on/off states.
@@ -171,11 +173,13 @@ public class SkiaLottie : AnimatedFramesRenderer
         set { SetValue(IsOnProperty, value); }
     }
 
-    public static readonly BindableProperty DefaultFrameWhenOnProperty = BindableProperty.Create(nameof(DefaultFrameWhenOn),
+    public static readonly BindableProperty DefaultFrameWhenOnProperty = BindableProperty.Create(
+        nameof(DefaultFrameWhenOn),
         typeof(int),
         typeof(SkiaLottie),
         0, propertyChanged: ApplyDefaultFrameWhenOnProperty
     );
+
     /// <summary>
     /// For the case IsOn = True. What frame should we display at start or when stopped. 0 (START) is default, can specify other number. if value is less than 0 then will seek to the last available frame (END).
     /// </summary>
@@ -205,7 +209,6 @@ public class SkiaLottie : AnimatedFramesRenderer
 
     #region COLORS
 
-
     public static readonly BindableProperty ColorsProperty = BindableProperty.Create(
         nameof(Colors),
         typeof(IList<Color>),
@@ -213,7 +216,7 @@ public class SkiaLottie : AnimatedFramesRenderer
         defaultValueCreator: (bindable) =>
         {
             var newCollection = new ObservableCollection<Color>();
-            newCollection.CollectionChanged +=((SkiaLottie)bindable).OnSkiaPropertyColorCollectionChanged;
+            newCollection.CollectionChanged += ((SkiaLottie)bindable).OnSkiaPropertyColorCollectionChanged;
             return newCollection;
         },
         validateValue: (bo, v) => v is IList<Color>,
@@ -240,7 +243,6 @@ public class SkiaLottie : AnimatedFramesRenderer
     }
 
 
-
     private static void ColorsPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         if (bindable is SkiaLottie control)
@@ -249,6 +251,7 @@ public class SkiaLottie : AnimatedFramesRenderer
             {
                 oldCollection.CollectionChanged -= control.OnSkiaPropertyColorCollectionChanged;
             }
+
             if (newvalue is INotifyCollectionChanged newCollection)
             {
                 newCollection.CollectionChanged += control.OnSkiaPropertyColorCollectionChanged;
@@ -256,7 +259,6 @@ public class SkiaLottie : AnimatedFramesRenderer
 
             control.ReloadSource();
         }
-
     }
 
     private void OnSkiaPropertyColorCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -318,7 +320,6 @@ public class SkiaLottie : AnimatedFramesRenderer
             }
 
             CachedAnimations.TryAdd(fileName, json);
-
         }
         catch (Exception e)
         {
@@ -381,13 +382,9 @@ public class SkiaLottie : AnimatedFramesRenderer
             {
                 json = ApplyTint(json, Colors);
             }
-            else
-            if (ColorTint.Alpha > 0)
+            else if (ColorTint.Alpha > 0)
             {
-                json = ApplyTint(json, new List<Color>()
-                {
-                    ColorTint
-                });
+                json = ApplyTint(json, new List<Color>() { ColorTint });
             }
 
             if (ProcessJson != null) json = ProcessJson(json);
@@ -412,17 +409,13 @@ public class SkiaLottie : AnimatedFramesRenderer
 
         try
         {
-            if (Colors.Count>0)
+            if (Colors.Count > 0)
             {
                 json = ApplyTint(json, Colors);
             }
-            else
-            if (ColorTint.Alpha > 0)
+            else if (ColorTint.Alpha > 0)
             {
-                json = ApplyTint(json, new List<Color>()
-                {
-                    ColorTint
-                });
+                json = ApplyTint(json, new List<Color>() { ColorTint });
             }
 
             if (ProcessJson != null) json = ProcessJson(json);
@@ -434,7 +427,6 @@ public class SkiaLottie : AnimatedFramesRenderer
             Super.Log($"[SkiaLottie] LoadSource failed to create animation");
             return null;
         }
- 
     }
 
     public static Stream StreamFromResourceUrl(string url, Assembly assembly = null)
@@ -673,11 +665,10 @@ public class SkiaLottie : AnimatedFramesRenderer
                         SetAnimation(animation, true);
                         return;
                     }
+
                     break;
             }
         }
-   
- 
     }
 
 
@@ -727,21 +718,21 @@ public class SkiaLottie : AnimatedFramesRenderer
             .Distinct(new ColorEqualityComparer())
             .ToList();
 
+        int colorIndex = -1;
+        var newTint = BlackColor;
+
         // Create a mapping from original colors to new tints
         Dictionary<Color, Color> colorMapping = new Dictionary<Color, Color>(new ColorEqualityComparer());
         for (int i = 0; i < uniqueColors.Count; i++)
         {
             var originalColor = uniqueColors[i];
-            Color newTint;
-            if (i < newTints.Count)
+
+            colorIndex++;
+            if (colorIndex < newTints.Count)
             {
-                newTint = newTints[i];
+                newTint = newTints[colorIndex];
             }
-            else
-            {
-                // If there are more unique colors than tints, use the first tint for remaining colors
-                newTint = newTints[0];
-            }
+
             colorMapping[originalColor] = newTint;
         }
 
@@ -767,7 +758,7 @@ public class SkiaLottie : AnimatedFramesRenderer
 
         return lottieJson.ToString();
     }
-
+ 
 
 
     public static void FindColorProperties(JToken token, List<(JToken Token, Color Color)> colorList)
@@ -803,7 +794,6 @@ public class SkiaLottie : AnimatedFramesRenderer
             }
         }
     }
-
 
 
     public static string ColorToRGBHexString(Color color)
