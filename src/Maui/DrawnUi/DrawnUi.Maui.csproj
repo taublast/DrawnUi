@@ -31,6 +31,7 @@
         <PackageTags>maui drawnui skia skiasharp draw ui</PackageTags>
         <PackageIcon>icon128.png</PackageIcon>
         <CreatePackage>false</CreatePackage>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
