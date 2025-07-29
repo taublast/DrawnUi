@@ -17,6 +17,8 @@ using View = Android.Views.View;
 
 namespace DrawnUi;
 
+// main fix: use last size when creating new GLThread otherwise might never be re-rendered if returning to visible tree out of being hidden
+
 public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListener, View.IOnLayoutChangeListener
 {
     public static bool EnableLogging = false;
@@ -28,6 +30,8 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     private IEGLContextFactory eglContextFactory;
     private IEGLWindowSurfaceFactory eglWindowSurfaceFactory;
     private int eglContextClientVersion;
+    private int _height;
+    private int _width;
 
     public SkiaGLTextureView(Context context)
         : base(context)
@@ -84,7 +88,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
         }
 
         this.renderer = renderer;
-        glThread = new GLThread(thisWeakRef);
+        glThread = new GLThread(thisWeakRef, _width, _height);
         glThread.Start();
     }
 
@@ -156,6 +160,9 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     public void OnSurfaceTextureSizeChanged(SurfaceTexture surface, int w, int h)
     {
         glThread.OnWindowResize(w, h);
+
+        _width = w;
+        _height = h;
     }
 
     public void OnPause()
@@ -193,7 +200,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                 glThread.RequestExitAndWait();
             }
 
-            glThread = new GLThread(thisWeakRef);
+            glThread = new GLThread(thisWeakRef, _width, _height);
             if (renderMode != Rendermode.Continuously)
             {
                 glThread.SetRenderMode(renderMode);
@@ -229,7 +236,9 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     public void OnLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight,
         int oldBottom)
     {
-        OnSurfaceTextureSizeChanged(SurfaceTexture, right - left, bottom - top);
+        _width = right - left;
+        _height = bottom - top;
+        OnSurfaceTextureSizeChanged(SurfaceTexture, _width,_height);
     }
 
     [Conditional("DEBUG")]
@@ -497,12 +506,12 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
         private volatile bool renderComplete;
         // End of member variables protected by the sGLThreadManager monitor.
 
-        public GLThread(WeakReference<SkiaGLTextureView> glTextureViewWeakRef)
+        public GLThread(WeakReference<SkiaGLTextureView> glTextureViewWeakRef, int defaultWidth, int defaultHeight)
         {
             threadManager = new GLThreadManager();
-
-            width = 0;
-            height = 0;
+            
+            width = defaultWidth;
+            height = defaultHeight;
             requestRender = true;
             renderMode = Rendermode.Continuously;
             textureViewWeakRef = glTextureViewWeakRef;
