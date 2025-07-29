@@ -10,7 +10,7 @@ using SKPaintSurfaceEventArgs = SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs;
 
 namespace DrawnUi.Controls;
 
-public partial class WinCanvasHandler : ViewHandler<ISKCanvasView, SKXamlCanvas>
+public partial class WinCanvasHandler : ViewHandler<ISKCanvasView, SoftwareWindowsCanvas>
 {
     #region SHARED
 
@@ -41,16 +41,25 @@ public partial class WinCanvasHandler : ViewHandler<ISKCanvasView, SKXamlCanvas>
 
     private SKSizeI lastCanvasSize;
 
-    protected override SKXamlCanvas CreatePlatformView() => new SKXamlCanvas();
+    protected override SoftwareWindowsCanvas CreatePlatformView()
+    {
+        var control = new SoftwareWindowsCanvas();
+        if (VirtualView is DrawnView view)
+        {
+            control.Tag = view.Tag;
+        }
 
-    protected override void ConnectHandler(SKXamlCanvas platformView)
+        return control;
+    }
+
+    protected override void ConnectHandler(SoftwareWindowsCanvas platformView)
     {
         platformView.PaintSurface += OnPaintSurface;
 
         base.ConnectHandler(platformView);
     }
 
-    protected override void DisconnectHandler(SKXamlCanvas platformView)
+    protected override void DisconnectHandler(SoftwareWindowsCanvas platformView)
     {
         platformView.PaintSurface -= OnPaintSurface;
 
@@ -87,8 +96,6 @@ public partial class WinCanvasHandler : ViewHandler<ISKCanvasView, SKXamlCanvas>
             return;
 
     }
-
-    // helper methods
 
     private void OnPaintSurface(object? sender, SkiaSharp.Views.Windows.SKPaintSurfaceEventArgs e)
     {
