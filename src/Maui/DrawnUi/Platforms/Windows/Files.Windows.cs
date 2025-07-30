@@ -16,10 +16,29 @@ namespace DrawnUi.Infrastructure
 
         public static List<string> ListAssets(string sub)
         {
-            StorageFolder installFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            StorageFolder subfolder = installFolder.GetFolderAsync(sub).GetAwaiter().GetResult();
-            IReadOnlyList<StorageFile> files = subfolder.GetFilesAsync().GetAwaiter().GetResult();
-            return files.Select(f => f.Name).ToList();
+            //MSIX
+            try
+            {
+                StorageFolder installFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                StorageFolder subfolder = installFolder.GetFolderAsync(sub).GetAwaiter().GetResult();
+                IReadOnlyList<StorageFile> files = subfolder.GetFilesAsync().GetAwaiter().GetResult();
+                return files.Select(f => f.Name).ToList();
+            }
+            catch (Exception e)
+            {
+                //UNPACKAGED
+                string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string subfolderPath = Path.Combine(appDirectory, sub);
+
+                if (!Directory.Exists(subfolderPath))
+                {
+                    return new List<string>();
+                }
+
+                return Directory.GetFiles(subfolderPath)
+                    .Select(Path.GetFileName)
+                    .ToList();
+            }
         }
 
         public static void Share(string message, IEnumerable<string> fullFilenames)
