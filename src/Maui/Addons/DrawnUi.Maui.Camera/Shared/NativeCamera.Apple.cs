@@ -699,13 +699,13 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var orientation = metaData["Orientation"].ToString().ToInteger();
                 var props = image.Properties;
 
-#if DEBUG
-                var exif = image.Properties.Exif;
-                foreach (var key in exif.Dictionary.Keys)
-                {
-                    Debug.WriteLine($"{key}: {exif.Dictionary[key]}");
-                }
-#endif
+//#if DEBUG
+//                var exif = image.Properties.Exif;
+//                foreach (var key in exif.Dictionary.Keys)
+//                {
+//                    Debug.WriteLine($"{key}: {exif.Dictionary[key]}");
+//                }
+//#endif
 
                 var rotation = 0;
                 bool flipHorizontal, flipVertical; //unused
@@ -1106,6 +1106,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     #region Orientation Handling
 
+    /// <summary>
+    /// This rotates the preview frame for providing a correctly-rotated preview
+    /// </summary>
+    /// <param name="bitmap"></param>
+    /// <param name="sensor"></param>
+    /// <returns></returns>
     public SKBitmap HandleOrientation(SKBitmap bitmap, double sensor)
     {
         SKBitmap rotated;

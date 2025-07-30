@@ -15,16 +15,25 @@ public partial class SkiaCamera : SkiaControl
     /// <param name="createdImage"></param>
     /// <returns></returns>
     public virtual SKImage RenderCapturedPhoto(CapturedImage captured, SkiaLayout overlay,
-        Action<SkiaImage> createdImage = null)
+        Action<SkiaImage> createdImage = null, SKColor? background=null, bool rotate=true)
     {
+
         var scaleOverlay = GetRenderingScaleFor(captured.Image.Width, captured.Image.Height);
         double zoomCapturedPhotoX = TextureScale;
         double zoomCapturedPhotoY = TextureScale;
 
+        var rotation = rotate ? captured.Rotation : 0;
+
+        if (background == null)
+        {
+            background = SKColors.Black;
+        }
+
         var width = captured.Image.Width;
         var height = captured.Image.Height;
 
-        if (captured.Rotation == 90 || captured.Rotation == 270)
+
+        if (rotation == 90 || rotation == 270)
         {
             height = captured.Image.Width;
             width = captured.Image.Height;
@@ -41,7 +50,7 @@ public partial class SkiaCamera : SkiaControl
             }
 
             SKCanvas canvas = surface.Canvas;
-            canvas.Clear(SKColors.Black);
+            canvas.Clear(background.Value);
 
             //create offscreen rendering context
             var context = new SkiaDrawingContext()
@@ -55,9 +64,8 @@ public partial class SkiaCamera : SkiaControl
             {
                 Tag = "Render",
                 LoadSourceOnFirstDraw = true,
-                WidthRequest = info.Width,
-                HeightRequest = info.Height,
                 VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
                 IsClippedToBounds = false, //do not clip sides after rotation if any
                 AddEffect = this.Effect,
                 Aspect = TransformAspect.None,
@@ -68,22 +76,18 @@ public partial class SkiaCamera : SkiaControl
                         .Image) //must not dispose bitmap after that, it's used by preview outside
             };
 
-            if (captured.Rotation != 0)
+            if (rotation != 0)
             {
-                var transfromRotation = (float)captured.Rotation;
-                if (captured.Facing == CameraPosition.Selfie)
-                {
-                    transfromRotation = (float)((360 - captured.Rotation) % 360);
-                }
-
-                image.Rotation = -transfromRotation;
+                var transformRotation = (float)captured.Rotation;
+                image.Rotation = -transformRotation;
             }
 
             createdImage?.Invoke(image);
 
             var ctx = new DrawingContext(context, destination, 1, null);
             image.Render(ctx);
-            overlay.Render(ctx.WithScale(scaleOverlay));
+
+            overlay?.Render(ctx.WithScale(scaleOverlay));
 
             surface.Canvas.Flush();
             return surface.Snapshot();
