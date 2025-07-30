@@ -94,10 +94,28 @@
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
     </ItemGroup>
 
+    <!-- Define SIMULATOR symbol for iOS ARM64 simulator builds -->
+    <PropertyGroup Condition="$(TargetFramework.Contains('ios')) == true AND $(RuntimeIdentifier.Contains('simulator')) == true">
+        <DefineConstants>$(DefineConstants);SIMULATOR</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup Condition="$(TargetFramework.Contains('ios')) == true">
+        <PackageReference Include="ImageCaching.Nuke" Version="2.0.13" />
+    </ItemGroup>
+
     <ItemGroup Condition="$(TargetFramework.Contains('catalyst')) == true">
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
+        <PackageReference Include="ImageCaching.Nuke" Version="2.0.13" />
     </ItemGroup>
-    
+
+    <!-- Fix long path issue for Windows when DrawnUi is referenced directly -->
+    <Target Name="HandleLongPaths"
+            Condition="'$(TargetFramework)' == 'net9.0-ios' AND $([MSBuild]::IsOSPlatform('windows'))">
+        <Exec Command="robocopy &quot;$(NuGetPackageRoot)imagecaching.nuke&quot; &quot;$(OutputPath)ImageCaching.Nuke.resources&quot; /E /XO /NFL /NDL /NJH /NJS /NC /NS"
+              ContinueOnError="true"
+              IgnoreExitCode="true" />
+    </Target>
+
     <!-- FIX for Windows unpackaged mode when library is referenced directly -->
     <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
         <None Include="Platforms/Windows/Natives/libEGL.dll">
