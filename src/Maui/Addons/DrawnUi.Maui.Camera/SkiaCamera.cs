@@ -123,13 +123,8 @@ public partial class SkiaCamera : SkiaControl
     {
         return new SkiaImage()
         {
-            IsParentIndependent=true,
             LoadSourceOnFirstDraw = true,
-#if WINDOWS || MACCATALYST
-            RescalingQuality = SKFilterQuality.Low,
-#else
             RescalingQuality = SKFilterQuality.None,
-#endif
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
             Aspect = this.Aspect,
@@ -142,6 +137,7 @@ public partial class SkiaCamera : SkiaControl
         if (Display == null)
         {
             Display = CreatePreview();
+            Display.IsParentIndependent = true;
             Display.AddEffect = Effect;
             Display.SetParent(this);
             OnDisplayReady();
@@ -595,7 +591,7 @@ public partial class SkiaCamera : SkiaControl
 
     public virtual void Start()
     {
-        IsOn = true;
+        IsOn = true; //haha
     }
 
     private static void PowerChanged(BindableObject bindable, object oldvalue, object newvalue)

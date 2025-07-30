@@ -1,61 +1,43 @@
 ﻿# SkiaCamera
 
-Camera control drawn with SkiaSharp, part of DrawnUI for for .NET MAUI, supports iOS, MacCatalyst, Android and Windows.
-## Why another Camera addon:
+Camera control drawn with SkiaSharp, part of DrawnUI for for .NET MAUI.
 
-- [ ] **Renders on a hardware-accelerated SkiaSharp canvas** with all the power of Skia rendering.
-- [ ] **Post-process captured bitmap** with SkiaSharp and DrawnUi, apply effects, watermark etc.
-- [ ] **Live preview frames provided in a convenient form** to integrate with AI/ML.
-- [ ] **Manual camera selection** to access ultra-wide, telephoto etc by index or by front/back.
-- [ ] **Inject custom EXIF**, save GPS locations etc.
-- [ ] **Cares about going to background** or foreground to automatically stop/resume camera.
-- [ ] **Developer-first design**, open for customization with overrides/events,
-- [ ] **Used in real-world cases**, open for changes and evolving.
+**For iOS, MacCatalyst, Android and Windows**.
 
+## Features:
 
-## 🎯 **Dual-Channel Architecture**
+- **Renders on a hardware-accelerated SkiaSharp canvas** with all the power of Skia rendering.
+- **Post-process captured bitmap** with SkiaSharp and DrawnUi, apply effects, overlay watermark etc.
+- **Live preview frames in a convenient form** to integrate with AI/ML.
+- **Manual camera selection** to access ultra-wide, telephoto etc by index or by front/back.
+- **Inject custom EXIF**, save GPS locations etc!
+- **Cares about going to background** or foreground to automatically stop/resume camera.
+- **Developer-first design**, open for customization with overrides/events,
 
-SkiaCamera provides **two independent processing channels** that you control separately:
+## **Dual-Channel Architecture**
 
-### 📹 **Channel 1: Live Preview Processing**
-- **Real-time effects** applied to camera preview (30-60 FPS)
-- **AI/ML frame analysis** for object detection, face recognition
-- **Live transformations** with custom SKSL shaders
-- **Interactive filters** for user experience
-- **Performance optimized** for continuous processing
+SkiaCamera provides **two independent processing channels** to be processed:
 
-### 📸 **Channel 2: Captured Photo Processing**
-- **High-quality still processing** independent of preview
-- **Professional post-processing** with different effects than preview
-- **Watermark application** and overlay rendering
-- **Metadata preservation** and custom data injection
-- **Export-ready output** with full resolution
+* 📹 Live Preview
+* 📸 Captured Photo
 
 > **💡 Key Insight**: Preview effects ≠ Capture effects. You can show a vintage filter in preview while capturing the raw photo, or apply completely different processing to each channel.
 
-## Key Features
-
-* **Dual processing channels**: Independent preview and capture pipelines
-* **Live preview frames**: Perfect for AI/ML processing and real-time effects
-* **Still capture results**: High-quality photos with separate processing pipeline
-* **Hardware acceleration**: GPU-powered SkiaSharp rendering on both channels
-* **Custom SKSL shaders**: Professional effects on preview and/or capture
-* **Manual camera selection**: Choose any available camera by index, perfect for devices with multiple cameras
-
-## Platform Support
-
-| Platform | Status | Implementation |
-|----------|--------|----------------|
-| Android | ✅ Complete | Camera2 API with CameraX |
-| iOS | ✅ Complete | AVFoundation (shared with macCatalyst) |
-| MacCatalyst | ✅ Complete | AVFoundation (shared with iOS) |
-| Windows | ✅ Complete | MediaCapture with WinRT APIs |
-
 ## Installation
 
+Install nuget package:
+
+```bash
+dotnet add package DrawnUi.Maui.Camera
 ```
-//todo add drawnui.maui.camera nuget etc
+
+Initialize DrawnUi inside `MauiProgram.cs`:
+
+```csharp
+builder.UseDrawnUi();
 ```
+
+[Read more about DrawnUi initialization](https://drawnui.net/articles/getting-started.html).
 
 ## Set up permissions
 
@@ -104,7 +86,7 @@ If you want to geo-tag photos (get and save GPS location metadata) add this:
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
-## Complete Usage Guide
+## Usage Guide
 
 ### 1. XAML Declaration
 
@@ -171,7 +153,7 @@ private void SwitchCamera()
 }
 ```
 
-#### Manual Camera Selection (NEW)
+#### Manual Camera Selection
 ```csharp
 // Get available cameras
 var cameras = await camera.GetAvailableCamerasAsync();
