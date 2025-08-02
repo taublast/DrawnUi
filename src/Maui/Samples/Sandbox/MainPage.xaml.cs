@@ -36,7 +36,7 @@ public partial class MainPage : BasePageCodeBehind
 #endif
     }
 
-    private void TappedSelectPage(object sender, SkiaControl.ControlTappedEventArgs controlTappedEventArgs)
+    private void TappedSelectPage(object sender, ControlTappedEventArgs controlTappedEventArgs)
     {
         if (sender is SkiaButton btn)
         {

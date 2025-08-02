@@ -25,12 +25,12 @@ namespace DrawnUi.Infrastructure
         [DllImport(WindowsModernLibraryName, EntryPoint = "glDeleteSync")]
         public static extern void DeleteSync(IntPtr sync);
 
-        public const uint GL_SYNC_GPU_COMMANDS_COMPLETE = 0x9117;
-        public const uint GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001;
-        public const uint GL_ALREADY_SIGNALED = 0x911A;
-        public const uint GL_CONDITION_SATISFIED = 0x911C;
-        public const uint GL_TIMEOUT_EXPIRED = 0x911B;
-        public const ulong GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFF;
+        public static readonly uint GL_SYNC_GPU_COMMANDS_COMPLETE = 0x9117;
+        public static readonly uint GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001;
+        public static readonly uint GL_ALREADY_SIGNALED = 0x911A;
+        public static readonly uint GL_CONDITION_SATISFIED = 0x911C;
+        public static readonly uint GL_TIMEOUT_EXPIRED = 0x911B;
+        public static readonly ulong GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFF;
 
         #endregion
 
@@ -66,118 +66,118 @@ namespace DrawnUi.Infrastructure
         #region Constants
 
         // Framebuffer Constants
-        public const int FramebufferBinding = 0x8CA6;
-        public const int RenderbufferBinding = 0x8CA7;
-        public const int Framebuffer = 0x8D40;
-        public const int Renderbuffer = 0x8D41;
+        public static readonly int FramebufferBinding = 0x8CA6;
+        public static readonly int RenderbufferBinding = 0x8CA7;
+        public static readonly int Framebuffer = 0x8D40;
+        public static readonly int Renderbuffer = 0x8D41;
 
         // Color Format Constants
-        public const int Bgra8Ext = 0x93A1;
+        public static readonly int Bgra8Ext = 0x93A1;
 
         // Information Constants
-        public const int Version = 0x1F02;
-        public const int Extensions = 0x1F03;
+        public static readonly int Version = 0x1F02;
+        public static readonly int Extensions = 0x1F03;
 
         // Buffer Parameters
-        public const int SubpixelBits = 0x0D50;
-        public const int RedBits = 0x0D52;
-        public const int GreenBits = 0x0D53;
-        public const int BlueBits = 0x0D54;
-        public const int AlphaBits = 0x0D55;
-        public const int DepthBits = 0x0D56;
-        public const int StencilBits = 0x0D57;
-        public const int Samples = 0x80A9;
+        public static readonly int SubpixelBits = 0x0D50;
+        public static readonly int RedBits = 0x0D52;
+        public static readonly int GreenBits = 0x0D53;
+        public static readonly int BlueBits = 0x0D54;
+        public static readonly int AlphaBits = 0x0D55;
+        public static readonly int DepthBits = 0x0D56;
+        public static readonly int StencilBits = 0x0D57;
+        public static readonly int Samples = 0x80A9;
 
         // Clear Mask Constants
-        public const int DepthBufferBit = 0x00000100;
-        public const int StencilBufferBit = 0x00000400;
-        public const int ColorBufferBit = 0x00004000;
+        public static readonly int DepthBufferBit = 0x00000100;
+        public static readonly int StencilBufferBit = 0x00000400;
+        public static readonly int ColorBufferBit = 0x00004000;
 
         // Filtering Constants
-        public const int Nearest = 0x2600;
+        public static readonly int Nearest = 0x2600;
 
         // Frame Buffer Extensions
-        public const int ReadFramebufferAngle = 0x8CA8;
-        public const int DrawFramebufferAngle = 0x8CA9;
-        public const int DrawFramebufferBindingAngle = 0x8CA6;
-        public const int ReadFramebufferBindingAngle = 0x8CAA;
+        public static readonly int ReadFramebufferAngle = 0x8CA8;
+        public static readonly int DrawFramebufferAngle = 0x8CA9;
+        public static readonly int DrawFramebufferBindingAngle = 0x8CA6;
+        public static readonly int ReadFramebufferBindingAngle = 0x8CAA;
 
         // Renderbuffer Parameters
-        public const int RenderbufferWidth = 0x8D42;
-        public const int RenderbufferHeight = 0x8D43;
-        public const int RenderbufferInternalFormat = 0x8D44;
-        public const int RenderbufferRedSize = 0x8D50;
-        public const int RenderbufferGreenSize = 0x8D51;
-        public const int RenderbufferBlueSize = 0x8D52;
-        public const int RenderbufferAlphaSize = 0x8D53;
-        public const int RenderbufferDepthSize = 0x8D54;
-        public const int RenderbufferStencilSize = 0x8D55;
+        public static readonly int RenderbufferWidth = 0x8D42;
+        public static readonly int RenderbufferHeight = 0x8D43;
+        public static readonly int RenderbufferInternalFormat = 0x8D44;
+        public static readonly int RenderbufferRedSize = 0x8D50;
+        public static readonly int RenderbufferGreenSize = 0x8D51;
+        public static readonly int RenderbufferBlueSize = 0x8D52;
+        public static readonly int RenderbufferAlphaSize = 0x8D53;
+        public static readonly int RenderbufferDepthSize = 0x8D54;
+        public static readonly int RenderbufferStencilSize = 0x8D55;
 
         // Attachment Constants
-        public const int ColorAttachment0 = 0x8CE0;
-        public const int DepthAttachment = 0x8D00;
-        public const int StencilAttachment = 0x8D20;
+        public static readonly int ColorAttachment0 = 0x8CE0;
+        public static readonly int DepthAttachment = 0x8D00;
+        public static readonly int StencilAttachment = 0x8D20;
 
         // Depth/Stencil Constants
-        public const int DepthComponent16 = 0x81A5;
-        public const int DepthStencilOes = 0x84F9;
-        public const int UnsignedInt_24_8_Oes = 0x84FA;
-        public const int Depth24Stencil8Oes = 0x88F0;
+        public static readonly int DepthComponent16 = 0x81A5;
+        public static readonly int DepthStencilOes = 0x84F9;
+        public static readonly int UnsignedInt_24_8_Oes = 0x84FA;
+        public static readonly int Depth24Stencil8Oes = 0x88F0;
 
         #endregion
 
         #region LEGACY CONSTANTS
 
-        public const int GL_FRAMEBUFFER_BINDING = 0x8CA6;
-        public const int GL_RENDERBUFFER_BINDING = 0x8CA7;
+        public static readonly uint GL_FRAMEBUFFER_BINDING = 0x8CA6;
+        public static readonly int GL_RENDERBUFFER_BINDING = 0x8CA7;
 
-        public const int GL_BGRA8_EXT = 0x93A1;
-        public const int GL_VERSION = 0x1F02;
-        public const int GL_EXTENSIONS = 0x1F03;
+        public static readonly int GL_BGRA8_EXT = 0x93A1;
+        public static readonly int GL_VERSION = 0x1F02;
+        public static readonly int GL_EXTENSIONS = 0x1F03;
 
         // GetPName
-        public const int GL_SUBPIXEL_BITS = 0x0D50;
-        public const int GL_RED_BITS = 0x0D52;
-        public const int GL_GREEN_BITS = 0x0D53;
-        public const int GL_BLUE_BITS = 0x0D54;
-        public const int GL_ALPHA_BITS = 0x0D55;
-        public const int GL_DEPTH_BITS = 0x0D56;
-        public const int GL_STENCIL_BITS = 0x0D57;
-        public const int GL_SAMPLES = 0x80A9;
+        public static readonly int GL_SUBPIXEL_BITS = 0x0D50;
+        public static readonly int GL_RED_BITS = 0x0D52;
+        public static readonly int GL_GREEN_BITS = 0x0D53;
+        public static readonly int GL_BLUE_BITS = 0x0D54;
+        public static readonly int GL_ALPHA_BITS = 0x0D55;
+        public static readonly int GL_DEPTH_BITS = 0x0D56;
+        public static readonly uint GL_STENCIL_BITS = 0x0D57;
+        public static readonly uint GL_SAMPLES = 0x80A9;
 
         // ClearBufferMask
-        public const int GL_DEPTH_BUFFER_BIT = 0x00000100;
-        public const int GL_STENCIL_BUFFER_BIT = 0x00000400;
-        public const int GL_COLOR_BUFFER_BIT = 0x00004000;
+        public static readonly int GL_DEPTH_BUFFER_BIT = 0x00000100;
+        public static readonly int GL_STENCIL_BUFFER_BIT = 0x00000400;
+        public static readonly int GL_COLOR_BUFFER_BIT = 0x00004000;
 
-        public const int GL_NEAREST = 0x2600;
+        public static readonly int GL_NEAREST = 0x2600;
 
-        public const int GL_READ_FRAMEBUFFER_ANGLE = 0x8CA8;
-        public const int GL_DRAW_FRAMEBUFFER_ANGLE = 0x8CA9;
-        public const int GL_DRAW_FRAMEBUFFER_BINDING_ANGLE = 0x8CA6;
-        public const int GL_READ_FRAMEBUFFER_BINDING_ANGLE = 0x8CAA;
+        public static readonly int GL_READ_FRAMEBUFFER_ANGLE = 0x8CA8;
+        public static readonly int GL_DRAW_FRAMEBUFFER_ANGLE = 0x8CA9;
+        public static readonly int GL_DRAW_FRAMEBUFFER_BINDING_ANGLE = 0x8CA6;
+        public static readonly int GL_READ_FRAMEBUFFER_BINDING_ANGLE = 0x8CAA;
 
         // Framebuffer Object
-        public const int GL_FRAMEBUFFER = 0x8D40;
-        public const int GL_RENDERBUFFER = 0x8D41;
+        public static readonly int GL_FRAMEBUFFER = 0x8D40;
+        public static readonly int GL_RENDERBUFFER = 0x8D41;
 
-        public const int GL_RENDERBUFFER_WIDTH = 0x8D42;
-        public const int GL_RENDERBUFFER_HEIGHT = 0x8D43;
-        public const int GL_RENDERBUFFER_INTERNAL_FORMAT = 0x8D44;
-        public const int GL_RENDERBUFFER_RED_SIZE = 0x8D50;
-        public const int GL_RENDERBUFFER_GREEN_SIZE = 0x8D51;
-        public const int GL_RENDERBUFFER_BLUE_SIZE = 0x8D52;
-        public const int GL_RENDERBUFFER_ALPHA_SIZE = 0x8D53;
-        public const int GL_RENDERBUFFER_DEPTH_SIZE = 0x8D54;
-        public const int GL_RENDERBUFFER_STENCIL_SIZE = 0x8D55;
-        public const int GL_COLOR_ATTACHMENT0 = 0x8CE0;
-        public const int GL_DEPTH_ATTACHMENT = 0x8D00;
-        public const int GL_STENCIL_ATTACHMENT = 0x8D20;
+        public static readonly int GL_RENDERBUFFER_WIDTH = 0x8D42;
+        public static readonly int GL_RENDERBUFFER_HEIGHT = 0x8D43;
+        public static readonly int GL_RENDERBUFFER_INTERNAL_FORMAT = 0x8D44;
+        public static readonly int GL_RENDERBUFFER_RED_SIZE = 0x8D50;
+        public static readonly int GL_RENDERBUFFER_GREEN_SIZE = 0x8D51;
+        public static readonly int GL_RENDERBUFFER_BLUE_SIZE = 0x8D52;
+        public static readonly int GL_RENDERBUFFER_ALPHA_SIZE = 0x8D53;
+        public static readonly int GL_RENDERBUFFER_DEPTH_SIZE = 0x8D54;
+        public static readonly int GL_RENDERBUFFER_STENCIL_SIZE = 0x8D55;
+        public static readonly int GL_COLOR_ATTACHMENT0 = 0x8CE0;
+        public static readonly int GL_DEPTH_ATTACHMENT = 0x8D00;
+        public static readonly int GL_STENCIL_ATTACHMENT = 0x8D20;
 
-        public const int GL_DEPTH_COMPONENT16 = 0x81A5;
-        public const int GL_DEPTH_STENCIL_OES = 0x84F9;
-        public const int GL_UNSIGNED_INT_24_8_OES = 0x84FA;
-        public const int GL_DEPTH24_STENCIL8_OES = 0x88F0;
+        public static readonly int GL_DEPTH_COMPONENT16 = 0x81A5;
+        public static readonly int GL_DEPTH_STENCIL_OES = 0x84F9;
+        public static readonly int GL_UNSIGNED_INT_24_8_OES = 0x84FA;
+        public static readonly int GL_DEPTH24_STENCIL8_OES = 0x88F0;
 
         #endregion
 
@@ -564,21 +564,21 @@ namespace DrawnUi.Infrastructure
         public static extern void Uniform1i(int location, int value);
 
         // Constants
-        public const uint GL_TEXTURE_MIN_FILTER = 0x2801;
-        public const uint GL_TEXTURE_MAG_FILTER = 0x2800;
-        public const uint GL_TEXTURE_2D = 0x0DE1;
-        public const uint GL_QUADS = 0x0007; // Not used anymore, but kept for reference
-        public const uint GL_RGBA = 0x1908;
-        public const uint GL_UNSIGNED_BYTE = 0x1401;
-        public const uint GL_DEPTH_TEST = 0x0B71;
-        public const uint GL_ARRAY_BUFFER = 0x8892;
-        public const uint GL_STATIC_DRAW = 0x88E4;
-        public const uint GL_FLOAT = 0x1406;
-        public const uint GL_TRIANGLES = 0x0004;
-        public const uint GL_VERTEX_SHADER = 0x8B31;
-        public const uint GL_FRAGMENT_SHADER = 0x8B30;
-        public const uint GL_COMPILE_STATUS = 0x8B81;
-        public const uint GL_LINK_STATUS = 0x8B82;
+        public static readonly uint GL_TEXTURE_MIN_FILTER = 0x2801;
+        public static readonly uint GL_TEXTURE_MAG_FILTER = 0x2800;
+        public static readonly uint GL_TEXTURE_2D = 0x0DE1;
+        public static readonly uint GL_QUADS = 0x0007; // Not used anymore, but kept for reference
+        public static readonly uint GL_RGBA = 0x1908;
+        public static readonly uint GL_UNSIGNED_BYTE = 0x1401;
+        public static readonly uint GL_DEPTH_TEST = 0x0B71;
+        public static readonly uint GL_ARRAY_BUFFER = 0x8892;
+        public static readonly uint GL_STATIC_DRAW = 0x88E4;
+        public static readonly uint GL_FLOAT = 0x1406;
+        public static readonly uint GL_TRIANGLES = 0x0004;
+        public static readonly uint GL_VERTEX_SHADER = 0x8B31;
+        public static readonly uint GL_FRAGMENT_SHADER = 0x8B30;
+        public static readonly uint GL_COMPILE_STATUS = 0x8B81;
+        public static readonly uint GL_LINK_STATUS = 0x8B82;
 
         #endregion
     }
@@ -755,5 +755,7 @@ namespace DrawnUi.Infrastructure
                 return "libGLESv2";
         }
     }
+
+
 
 }

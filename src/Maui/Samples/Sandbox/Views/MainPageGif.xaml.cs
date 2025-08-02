@@ -34,7 +34,7 @@
             }
         }
 
-        private void SkiaButton_OnTapped(object sender, SkiaControl.ControlTappedEventArgs controlTappedEventArgs)
+        private void SkiaButton_OnTapped(object sender, ControlTappedEventArgs controlTappedEventArgs)
         {
             MainThread.BeginInvokeOnMainThread(() => //for maui bindings..
             {

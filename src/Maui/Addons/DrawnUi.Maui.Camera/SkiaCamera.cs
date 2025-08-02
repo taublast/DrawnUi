@@ -123,13 +123,8 @@ public partial class SkiaCamera : SkiaControl
     {
         return new SkiaImage()
         {
-            IsParentIndependent=true,
             LoadSourceOnFirstDraw = true,
-#if WINDOWS || MACCATALYST
-            RescalingQuality = SKFilterQuality.Low,
-#else
             RescalingQuality = SKFilterQuality.None,
-#endif
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
             Aspect = this.Aspect,
@@ -142,6 +137,7 @@ public partial class SkiaCamera : SkiaControl
         if (Display == null)
         {
             Display = CreatePreview();
+            Display.IsParentIndependent = true;
             Display.AddEffect = Effect;
             Display.SetParent(this);
             OnDisplayReady();
@@ -207,7 +203,7 @@ public partial class SkiaCamera : SkiaControl
 
         while (IsTakingPhoto)
         {
-            await Task.Delay(150);
+            await Task.Delay(60);
         }
 
         IsBusy = false;
@@ -263,20 +259,20 @@ public partial class SkiaCamera : SkiaControl
     /// <param name="reorient"></param>
     /// <param name="album"></param>
     /// <returns></returns>
-    public async Task<string> SaveToGallery(CapturedImage captured, bool reorient, string album = null)
+    public async Task<string> SaveToGalleryAsync(CapturedImage captured, bool reorient, string album = null)
     {
         var filename = GenerateJpgFileName();
 
-        await using var stream = CreateOutputStream(captured, reorient);
+        var rotation = reorient ? captured.Rotation : 0;
+
+        await using var stream = CreateOutputStreamRotated(captured, reorient);
         if (stream != null)
         {
             using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
 
             var filenameOutput = GenerateJpgFileName();
 
-            //tofo apply gps etc
-
-            var path = await NativeControl.SaveJpgStreamToGallery(exifStream, filename, captured.Rotation,
+            var path = await NativeControl.SaveJpgStreamToGallery(exifStream, filename, rotation,
                 captured.Meta, album);
 
             if (!string.IsNullOrEmpty(path))
@@ -375,7 +371,7 @@ public partial class SkiaCamera : SkiaControl
     }
 
 
-    public Stream CreateOutputStream(CapturedImage captured,
+    public Stream CreateOutputStreamRotated(CapturedImage captured,
         bool reorient,
         SKEncodedImageFormat format = SKEncodedImageFormat.Jpeg,
         int quality = 90)
@@ -595,7 +591,7 @@ public partial class SkiaCamera : SkiaControl
 
     public virtual void Start()
     {
-        IsOn = true;
+        IsOn = true; //haha
     }
 
     private static void PowerChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -724,20 +720,7 @@ public partial class SkiaCamera : SkiaControl
     {
     }
 
-    private bool _IsBusy;
-
-    public bool IsBusy
-    {
-        get { return _IsBusy; }
-        set
-        {
-            if (_IsBusy != value)
-            {
-                _IsBusy = value;
-                OnPropertyChanged();
-            }
-        }
-    }
+ 
 
 
     private bool _IsTakingPhoto;
@@ -1657,6 +1640,17 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(IsOnProperty, value); }
     }
 
+    public static readonly BindableProperty IsBusyProperty = BindableProperty.Create(
+        nameof(IsBusy),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    public bool IsBusy
+    {
+        get { return (bool)GetValue(IsBusyProperty); }
+        set { SetValue(IsBusyProperty, value); }
+    }
 
     public static readonly BindableProperty PickerModeProperty = BindableProperty.Create(
         nameof(PickerMode),

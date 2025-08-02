@@ -5,6 +5,9 @@ namespace DrawnUi.Camera;
 public partial class Metadata
 {
     // Main properties
+    /// <summary>
+    /// Usually used to rotate the photo in gallery. Set to 1 to avoid rotating.
+    /// </summary>
     public int? Orientation { get; set; }
     public int? ISO { get; set; }
     public double? FocalLength { get; set; }
@@ -76,6 +79,55 @@ public partial class Metadata
     public string ImageUniqueId { get; set; }
     public string SpectralSensitivity { get; set; }
 
+    /// <summary>
+    /// Camera firmware version - iPhone expects this
+    /// </summary>
+    public string FirmwareVersion { get; set; }
+
+    /// <summary>
+    /// Maximum aperture value of lens
+    /// </summary>
+    public double? MaxApertureValue { get; set; }
+
+    /// <summary>
+    /// Subject distance in meters
+    /// </summary>
+    public double? SubjectDistance { get; set; }
+
+    /// <summary>
+    /// Light source type (e.g., daylight, fluorescent)
+    /// </summary>
+    public string LightSource { get; set; }
+
+    /// <summary>
+    /// File source (usually 3 for digital camera)
+    /// </summary>
+    public string FileSource { get; set; }
+
+    /// <summary>
+    /// Component configuration for color space
+    /// </summary>
+    public string ComponentsConfiguration { get; set; }
+
+    /// <summary>
+    /// Compressed bits per pixel
+    /// </summary>
+    public double? CompressedBitsPerPixel { get; set; }
+
+    /// <summary>
+    /// User comments in EXIF
+    /// </summary>
+    public string UserComment { get; set; }
+
+    /// <summary>
+    /// FlashPix version 
+    /// </summary>
+    public string FlashPixVersion { get; set; }
+
+    /// <summary>
+    /// Related sound file
+    /// </summary>
+    public string RelatedSoundFile { get; set; }
 
     /// <summary>
     /// Converts a double value to rational format for EXIF data

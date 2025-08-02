@@ -4,16 +4,17 @@ namespace DrawnUi.Draw;
 
 public partial class SkiaImageManager
 {
-
     /*
      if (handler is IPlatformViewHandler platformViewHandler && platformViewHandler.ViewController is not null)
        {
-       	var provider = handler.GetRequiredService<IImageSourceServiceProvider>();
-       	platformViewHandler.ViewController.View?.UpdateBackground(page, provider);
+        var provider = handler.GetRequiredService<IImageSourceServiceProvider>();
+        platformViewHandler.ViewController.View?.UpdateBackground(page, provider);
        }
      */
 
     public static bool UseGlide = true;
+
+    static string PrefixNative = "native://";
 
     public static async Task<SKBitmap> LoadImageOnPlatformAsync(ImageSource source, CancellationToken cancel)
     {
@@ -22,17 +23,13 @@ public partial class SkiaImageManager
 
         try
         {
-            if (source is UriImageSource withUri)
+            if (source is UriImageSource uriSource)
             {
-                var pfx = "native://";
-                var url = withUri.Uri.ToString();
-                if (url.Contains(pfx))
+                var url = uriSource.Uri.AbsoluteUri;
+                if (url.Contains(PrefixNative))
                 {
-                    var native = url.Replace(pfx, string.Empty).Trim('/');
-                    source = new FileImageSource()
-                    {
-                        File = native
-                    };
+                    var native = url.Replace(PrefixNative, string.Empty).Trim('/');
+                    source = new FileImageSource() { File = native };
                     var handlerFile = source.GetHandler();
                     var nativeFile = await handlerFile.LoadImageAsync(source, Platform.CurrentActivity, cancel);
                     if (nativeFile != null)
@@ -51,12 +48,13 @@ public partial class SkiaImageManager
                             SkiaImageManager.TraceLog($"[LoadImageOnPlatformAsync-GLIDE] loaded {source} ToSKBitmap");
                             return glide.ToSKBitmap();
                         }
+
                         SkiaImageManager.TraceLog($"[LoadImageOnPlatformAsync-GLIDE] loaded NULL for {source}");
                         return null;
                     }
                     else
                     {
-                        return await LoadImageFromInternetAsync(withUri, cancel);
+                        return await LoadImageFromInternetAsync(uriSource, cancel);
                     }
                 }
             }
@@ -74,7 +72,6 @@ public partial class SkiaImageManager
                 SkiaImageManager.TraceLog($"[LoadImageOnPlatformAsync] loaded {source} ToSKBitmap");
                 return androidBitmap.ToSKBitmap();
             }
-
         }
         catch (TaskCanceledException)
         {
@@ -88,5 +85,4 @@ public partial class SkiaImageManager
         SkiaImageManager.TraceLog($"[LoadImageOnPlatformAsync] loaded NULL for {source}");
         return null;
     }
-
 }

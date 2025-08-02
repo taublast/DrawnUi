@@ -1,4 +1,5 @@
-﻿using HarfBuzzSharp;
+﻿using DrawnUi.Controls;
+using HarfBuzzSharp;
 
 namespace DrawnUi.Views;
 
@@ -235,7 +236,7 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 
 #if WINDOWS
             //fix handler renderer didn't render first frame at startup for skiasharp v3
-            if (Handler?.PlatformView is SkiaSharp.Views.Windows.SKXamlCanvas canvas)
+            if (Handler?.PlatformView is SoftwareWindowsCanvas canvas)
             {
                 if (double.IsNaN(canvas.Height) || double.IsNaN(canvas.Width))
                 {

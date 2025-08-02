@@ -8,29 +8,29 @@ namespace DrawnUi.Draw
     {
         public static void ConfigureHandlers(IMauiHandlersCollection handlers)
         {
-            bool useFullScreen = false;
             if (StartupSettings != null && StartupSettings.MobileIsFullscreen)
             {
-                useFullScreen = StartupSettings.MobileIsFullscreen;
-            }
-            var useSafeArea = !useFullScreen;
+                bool useFullScreen = StartupSettings.MobileIsFullscreen;
 
-            PageHandler.Mapper.AppendToMapping("Custom", (h, v) =>
-                 {
-                     if (v is Microsoft.Maui.Controls.Page page)
-                     {
-                         Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page.SetUseSafeArea(page, useSafeArea);
-                     }
-                 });
+                var useSafeArea = !useFullScreen;
 
-            LayoutHandler.Mapper.AppendToMapping("Custom", (h, v) =>
-            {
-                if (v is Layout layout)
+                PageHandler.Mapper.AppendToMapping("Custom", (h, v) =>
                 {
-                    layout.IgnoreSafeArea = useFullScreen;
-                }
-            });
+                    if (v is Microsoft.Maui.Controls.Page page)
+                    {
+                        Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page.SetUseSafeArea(page, useSafeArea);
+                    }
+                });
 
+                LayoutHandler.Mapper.AppendToMapping("Custom", (h, v) =>
+                {
+                    if (v is Layout layout)
+                    {
+                        layout.IgnoreSafeArea = useFullScreen;
+                    }
+                });
+            }
+            
             handlers.AddHandler(typeof(DrawnUiBasePage), typeof(DrawnUiBasePageHandler));
             handlers.AddHandler(typeof(MauiEntry), typeof(MauiEntryHandler));
             handlers.AddHandler(typeof(MauiEditor), typeof(MauiEditorHandler));

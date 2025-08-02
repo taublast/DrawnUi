@@ -21,9 +21,20 @@ public class SkiaGif : AnimatedFramesRenderer
             LoadSourceOnFirstDraw = false,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
+            Aspect = TransformAspect.AspectFitFill
         };
 
+        ApplyAspect();
+
         Display.SetParent(this);
+    }
+
+    protected void ApplyAspect()
+    {
+        if (Display != null)
+        {
+            Display.Aspect = this.Aspect;
+        }
     }
 
     protected virtual void LayoutDisplay()
@@ -341,6 +352,27 @@ public class SkiaGif : AnimatedFramesRenderer
     {
         get => (string)GetValue(SourceProperty);
         set => SetValue(SourceProperty, value);
+    }
+
+    public static readonly BindableProperty AspectProperty = BindableProperty.Create(nameof(Aspect),
+        typeof(TransformAspect),
+        typeof(SkiaGif),
+        TransformAspect.AspectFitFill,
+        propertyChanged: ApplyAspectProperty);
+
+    private static void ApplyAspectProperty(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaGif control)
+        {
+            control.ApplyAspect();
+        }
+    }
+
+
+    public TransformAspect Aspect
+    {
+        get => (TransformAspect)GetValue(AspectProperty);
+        set => SetValue(AspectProperty, value);
     }
 
 }

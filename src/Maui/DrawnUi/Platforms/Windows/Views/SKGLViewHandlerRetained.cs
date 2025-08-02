@@ -8,7 +8,16 @@ namespace DrawnUi.Views
         private GRContext? lastGRContext;
         //private SKTouchHandler? touchHandler;
 
-        protected override SKSwapChainPanelRetained CreatePlatformView() => new MauiSkSwapChainPanelRetained();
+        protected override SKSwapChainPanelRetained CreatePlatformView()
+        {
+            var control = new MauiSkSwapChainPanelRetained();
+            if (VirtualView is DrawnView view)
+            {
+                control.Tag = view.Tag;
+            }
+
+            return control;
+        }
 
         protected override void ConnectHandler(SKSwapChainPanelRetained platformView)
         {

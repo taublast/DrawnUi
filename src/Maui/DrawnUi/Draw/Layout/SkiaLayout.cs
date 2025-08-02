@@ -1963,6 +1963,13 @@ namespace DrawnUi.Draw
             base.OnLayoutReady();
         }
 
+        protected override void OnLayoutChanged()
+        {
+            base.OnLayoutChanged();
+
+            _visibleAreaCache = null;
+        }
+
         public virtual void OnAppearing()
         {
         }

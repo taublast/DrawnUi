@@ -665,7 +665,10 @@ namespace DrawnUi.Views
 
         private void OnNeedUpdate(object sender, EventArgs e)
         {
-            UpdateGlobal();
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                UpdateGlobal();
+            });
         }
 
         protected virtual void UpdateGlobal()

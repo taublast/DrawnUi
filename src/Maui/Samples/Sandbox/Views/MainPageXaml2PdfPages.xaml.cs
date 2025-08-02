@@ -44,12 +44,12 @@ namespace Sandbox.Views
             }
         }
 
-        private void SkiaButton_OnTapped(object sender, SkiaControl.ControlTappedEventArgs controlTappedEventArgs)
+        private void SkiaButton_OnTapped(object sender, ControlTappedEventArgs controlTappedEventArgs)
         {
             _ = CreatePdfPages(new SKSize(4.13f, 2.11f), 150);
         }
 
-        private void SkiaButton_OnTapped2(object sender, SkiaControl.ControlTappedEventArgs controlTappedEventArgs)
+        private void SkiaButton_OnTapped2(object sender, ControlTappedEventArgs controlTappedEventArgs)
         {
             _ = CreatePdfPages(Pdf.GetPaperSizeInInches(PaperFormat.A6), 150);
         }

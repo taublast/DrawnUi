@@ -126,25 +126,43 @@ namespace DrawnUi.Draw
 
         public static UIStatusBarStyle? OrderedStyle { get; set; }
 
+        public static UIViewController? GetCurrentViewController()
+        {
+            try
+            {
+                return Platform.GetCurrentUIViewController();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+
+            return null;
+        }
+
         public static void SetBlackTextStatusBar()
         {
-            Debug.WriteLine("[StatusBar] BLACK");
-
-            var controller = Platform.GetCurrentUIViewController();
-
-            if (controller == null || controller.NavigationController == null)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                OrderedStyle = UIStatusBarStyle.DarkContent;
+                Debug.WriteLine("[StatusBar] BLACK");
 
-                UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.DarkContent, false);
-                controller.SetNeedsStatusBarAppearanceUpdate();
+                var controller = GetCurrentViewController();
 
-            }
-            else
-            {
-                OrderedStyle = null;
-                controller.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
-            }
+                if (controller == null || controller.NavigationController == null)
+                {
+                    OrderedStyle = UIStatusBarStyle.DarkContent;
+
+                    UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.DarkContent, false);
+                    controller?.SetNeedsStatusBarAppearanceUpdate();
+
+                }
+                else
+                {
+                    OrderedStyle = null;
+                    controller.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
+                }
+            });
+            
         }
 
         public static void SetWhiteTextStatusBar()
@@ -154,13 +172,13 @@ namespace DrawnUi.Draw
                 // Update the UI
                 Debug.WriteLine("[StatusBar] WHITE");
 
-                var controller = Platform.GetCurrentUIViewController();
+                var controller = GetCurrentViewController();
                 if (controller == null || controller.NavigationController == null)
                 {
                     OrderedStyle = UIStatusBarStyle.LightContent;
 
                     UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
-                    controller.SetNeedsStatusBarAppearanceUpdate();
+                    controller?.SetNeedsStatusBarAppearanceUpdate();
                 }
                 else
                 {
@@ -168,8 +186,6 @@ namespace DrawnUi.Draw
                     controller.NavigationController.NavigationBar.BarStyle = UIBarStyle.Black;
                 }
             });
-
-
 
         }
 
@@ -181,7 +197,7 @@ namespace DrawnUi.Draw
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 Debug.WriteLine("[StatusBar] HIDDEN");
-                var controller = Platform.GetCurrentUIViewController();
+                var controller = GetCurrentViewController();
 
                 UIApplication.SharedApplication.SetStatusBarHidden(true, UIStatusBarAnimation.Fade);
                 controller?.SetNeedsStatusBarAppearanceUpdate();
@@ -196,7 +212,7 @@ namespace DrawnUi.Draw
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 Debug.WriteLine("[StatusBar] VISIBLE");
-                var controller = Platform.GetCurrentUIViewController();
+                var controller = GetCurrentViewController();
 
                 UIApplication.SharedApplication.SetStatusBarHidden(false, UIStatusBarAnimation.Fade);
                 controller?.SetNeedsStatusBarAppearanceUpdate();
@@ -211,7 +227,7 @@ namespace DrawnUi.Draw
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 Debug.WriteLine("[StatusBar] INVISIBLE (black on black)");
-                var controller = Platform.GetCurrentUIViewController();
+                var controller = GetCurrentViewController();
 
                 if (controller == null || controller.NavigationController == null)
                 {

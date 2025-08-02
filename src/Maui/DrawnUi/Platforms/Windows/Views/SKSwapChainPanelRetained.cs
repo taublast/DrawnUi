@@ -1,12 +1,17 @@
 ﻿using System.Collections.Concurrent;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using SkiaSharp.Views.Windows;
+using Windows.Foundation;
+using Windows.UI.Core;
 
 namespace DrawnUi.Views
 {
+
     /// <summary>
     /// SwapChain panel with retained surface rendering for improved performance
     /// </summary>
-    public class SKSwapChainPanelRetained : AngleSwapChainPanel
+    public class SKSwapChainPanelRetained : AngleAcceleratedView //AngleSwapChainPanel
     {
         public Guid Uid = Guid.NewGuid();
 
@@ -23,7 +28,9 @@ namespace DrawnUi.Views
         private readonly object _surfaceLock = new();
 
         public SKSize CanvasSize => _lastSize;
+
         public GRContext GRContext => _context;
+
         public event EventHandler<SkiaSharp.Views.Windows.SKPaintGLSurfaceEventArgs> PaintSurface;
 
         /// <summary>
