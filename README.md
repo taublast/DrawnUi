@@ -36,11 +36,10 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
-* Animation extensions for label and all controls: `TextColorToAsync` `BackgroundColorToAsync`
-* Fixed `SkiaCheckbox` not triggering event
-* Fluent `OnTapped` uses callback instead of effect, has second overload with gesture info
-* Fixed `SkiaLottie` and other `AnimateFramesRenderer` not updating when Started
-* Fixed rare crash in layout when ItemTemplate is null
+* iOS images caching with `ImageCaching.Nuke` for urls
+* Fix Android and Apple SKGLView not updating after view returned back to visible tree after being out of the tree. This is that case in MAUI when you navigate away from a page and when you return the canvas is either blank or frozen.
+* Camera improvements
+* Some other fixes
 
 ___Please star ⭐ if you like it!___
  
@@ -121,6 +120,12 @@ Click here ☝️☝️☝️
 
 ## 🌱 What Was New Previously
 
+* Animation extensions for label and all controls: `TextColorToAsync` `BackgroundColorToAsync`
+* Fixed `SkiaCheckbox` not triggering event
+* Fluent `OnTapped` uses callback instead of effect, has second overload with gesture info
+* Fixed `SkiaLottie` and other `AnimateFramesRenderer` not updating when Started
+* Fixed rare crash in layout when ItemTemplate is null
+* 
 * `SkiaCacheType.ImageComposite` implementation for `Absolute` layout
 * Cache recycling improvements
 * Added translation transforms for `SkiaCacheType.ImageComposite` dirty regions usage.
