@@ -37,7 +37,7 @@ Initialize DrawnUi inside `MauiProgram.cs`:
 builder.UseDrawnUi();
 ```
 
-[Read more about DrawnUi initialization](https://drawnui.net/articles/getting-started.html).
+[Read more about DrawnUi initialization](https://taublast.github.io/DrawnUi/articles/getting-started.html).
 
 ## Set up permissions
 
