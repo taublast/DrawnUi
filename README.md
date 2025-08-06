@@ -34,10 +34,8 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
-* iOS images caching with `ImageCaching.Nuke` for urls
-* Fix Android and Apple SKGLView not updating after view returned back to visible tree after being out of the tree. This is that case in MAUI when you navigate away from a page and when you return the canvas is either blank or frozen.
-* Camera improvements
-* Some other fixes
+* SkiaCheckBox/SkiaRadioButton to consume TAP gesture only
+* OnGlobalUpdate will not invalidate scale/children
 
 ___Please star ⭐ if you like it!___
 
@@ -120,6 +118,9 @@ Click here ☝️☝️☝️
 
 ## 🌱 What Was New Previously
 
+* iOS images caching with `ImageCaching.Nuke` for urls
+* Fix Android and Apple SKGLView not updating after view returned back to visible tree after being out of the tree. This is that case in MAUI when you navigate away from a page and when you return the canvas is either blank or frozen.
+ 
 * Animation extensions for label and all controls: `TextColorToAsync` `BackgroundColorToAsync`
 * Fixed `SkiaCheckbox` not triggering event
 * Fluent `OnTapped` uses callback instead of effect, has second overload with gesture info

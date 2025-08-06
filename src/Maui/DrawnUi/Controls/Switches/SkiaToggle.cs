@@ -10,17 +10,13 @@ public class SkiaToggle : SkiaLayout
 {
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
-        if (args.Type == TouchActionResult.Up)
-        {
-            return base.ProcessGestures(args, apply);
-        }
-
         if (args.Type == TouchActionResult.Tapped)
         {
             IsToggled = !IsToggled;
+            return this;
         }
 
-        return this;
+        return base.ProcessGestures(args, apply);
     }
 
     protected override void OnLayoutChanged()

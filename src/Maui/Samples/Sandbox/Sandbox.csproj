@@ -136,7 +136,7 @@
     <None Remove="Resources\Raw\Svg\dotnet_bot.svg" />
 
     <!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FEFEFE" />
 
     <!-- Splash Screen -->
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#FEFEFE" BaseSize="180,180" />

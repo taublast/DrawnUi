@@ -167,6 +167,8 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
                 IsToggled = true;
                 return this;
             }
+
+            return null;
         }
 
         return base.ProcessGestures(args, apply);
