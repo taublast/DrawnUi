@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.DrawnUi", "Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeBenchmarks", "Tests\Benchmarks\SomeBenchmarks.csproj", "{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorials", "Maui\Samples\Tutorials\Tutorials.csproj", "{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{809FE1DE-DCE9-2383-C3DD-1B21F336EB34} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{B8F7A5C3-1234-5678-9ABC-DEF012345678} = {5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3} = {8ED244C1-6F60-4954-BC7F-98D827EA31CC}
+		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}
