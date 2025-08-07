@@ -105,7 +105,6 @@
 
     <ItemGroup Condition="$(TargetFramework.Contains('catalyst')) == true">
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
-        <PackageReference Include="ImageCaching.Nuke" Version="2.0.13" />
     </ItemGroup>
 
     <!-- Fix long path issue for Windows when DrawnUi is referenced directly -->

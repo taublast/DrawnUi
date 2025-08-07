@@ -3,7 +3,10 @@ using System.Reflection;
 using Foundation;
 using SkiaSharp.Views.iOS;
 using UIKit;
+
+#if IOS
 using Xamarin.Nuke;
+#endif
 
 namespace DrawnUi.Draw;
 
@@ -43,6 +46,8 @@ public partial class SkiaImageManager
                         return iosImage.ToSKBitmap();
                     }
                 }
+
+                #if IOS
                 else
                 if (UseNuke)
                 {
@@ -56,6 +61,7 @@ public partial class SkiaImageManager
                     TraceLog($"[LoadImageOnPlatformAsync-NUKE] loaded NULL for {source}");
                     return null;
                 }
+                #endif
 
                 return await LoadImageFromInternetAsync(uriSource, cancel);
             }
@@ -100,6 +106,7 @@ public partial class SkiaImageManager
     }
 }
 
+#if IOS
 
 public static class NukeExtensions
 {
@@ -180,6 +187,8 @@ public static class NukeExtensions
         }
     }
 
+
+
     /// <summary>
     /// Loads an image from the specified ImageSource using Nuke, caching the original and returning it as a UIImage.
     /// </summary>
@@ -209,6 +218,7 @@ public static class NukeExtensions
         // Load the image using Nuke, ensuring original size is preserved
         return await LoadCachedImageAsync(url, token);
     }
+
 
     public static Task<UIImage?> LoadCachedImageAsync(NSUrl url, CancellationToken token, Action<string>? onFail = null)
     {
@@ -251,7 +261,11 @@ public static class NukeExtensions
         DataLoader.Shared.RemoveAllCachedResponses();
         ImageCache.Shared.RemoveAll();
     }
-     
-}
 
  
+
+}
+
+#endif
+
+
