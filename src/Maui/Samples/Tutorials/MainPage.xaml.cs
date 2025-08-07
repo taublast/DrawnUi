@@ -37,7 +37,7 @@ public partial class MainPage : ContentPage
         await Shell.Current.GoToAsync("button");
     }
 
-    private void LinkTutorialsTapped(object sender, SkiaControl.ControlTappedEventArgs e)
+    private void LinkTutorialsTapped(object sender, ControlTappedEventArgs e)
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {

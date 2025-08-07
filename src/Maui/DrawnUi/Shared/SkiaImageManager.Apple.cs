@@ -4,7 +4,7 @@ using Foundation;
 using SkiaSharp.Views.iOS;
 using UIKit;
 
-#if IOS
+#if USENUKE
 using Xamarin.Nuke;
 #endif
 
@@ -47,7 +47,7 @@ public partial class SkiaImageManager
                     }
                 }
 
-                #if IOS
+                #if USENUKE
                 else
                 if (UseNuke)
                 {
@@ -106,7 +106,7 @@ public partial class SkiaImageManager
     }
 }
 
-#if IOS
+#if USENUKE
 
 public static class NukeExtensions
 {
