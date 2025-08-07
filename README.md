@@ -38,7 +38,7 @@ Current development state is _ALPHA for prod_.
 
 * SkiaCheckBox/SkiaRadioButton to consume TAP gesture only
 * OnGlobalUpdate will not invalidate scale/children
-* Fix tutorials compilation
+* Fix tutorials compilation, Nuke caching disabled by hotfix until proper bindings are created
 
 ___Please star ⭐ if you like it!___
  

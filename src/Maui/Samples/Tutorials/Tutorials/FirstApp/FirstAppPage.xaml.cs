@@ -11,7 +11,7 @@ public partial class FirstAppPage : ContentPage
         InitializeComponent();
     }
 
-    private async void OnButtonClicked(object sender, SkiaControl.ControlTappedEventArgs e)
+    private async void OnButtonClicked(object sender, ControlTappedEventArgs e)
     {
         clickCount++;
         ClickLabel.Text = $"Button clicked {clickCount} times! 🎉";

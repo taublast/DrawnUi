@@ -10,13 +10,4 @@
               OverwriteReadOnlyFiles="true" />
     </Target>
 
-    <!-- Solve long path issue for Windows when DrawnUi is installed via NuGet -->
-    <Target Name="HandleLongPaths"
-            BeforeTargets="Build"
-            Condition="'$(TargetFramework)' == 'net9.0-ios' AND $([MSBuild]::IsOSPlatform('windows'))">
-        <Exec Command="robocopy &quot;$(NuGetPackageRoot)imagecaching.nuke&quot; &quot;$(OutputPath)ImageCaching.Nuke.resources&quot; /E /XO /NFL /NDL /NJH /NJS /NC /NS"
-              ContinueOnError="true"
-              IgnoreExitCode="true" />
-    </Target>
-
 </Project>
