@@ -2160,60 +2160,37 @@ else
 
                 OnBeforeDrawingVisibleChildren(ctx, structure, visibleElements);
 
-                if (visibleElements.Count > 0)
+                if (visibleElements.Count > 1)
                 {
-                    // Compute visible range deterministically by ControlIndex
-                    int minControlIndex = int.MaxValue;
-                    int maxControlIndex = -1;
-                    foreach (var e in visibleElements)
-                    {
-                        if (e.ControlIndex < minControlIndex) minControlIndex = e.ControlIndex;
-                        if (e.ControlIndex > maxControlIndex) maxControlIndex = e.ControlIndex;
-                    }
-
+                    visibleElements.Sort((a, b) => a.ZIndex.CompareTo(b.ZIndex));
                     if (IsTemplated)
                     {
-                        FirstVisibleIndex = minControlIndex;
-                        LastVisibleIndex = maxControlIndex;
+                        FirstMeasuredIndex = visibleElements[0].ControlIndex;
+                        LastVisibleIndex = visibleElements[visibleElements.Count - 1].ControlIndex;
                     }
                     else
                     {
-                        // Non-templated path uses traversal indices computed during pass 1
-                        FirstVisibleIndex = firstVisibleIndex;
+                        FirstMeasuredIndex = firstVisibleIndex;
                         LastVisibleIndex = lastVisibleIndex;
-                    }
-
-                    // Preserve original ZIndex sorting for actual draw order
-                    if (visibleElements.Count > 1)
-                    {
-                        visibleElements.Sort((a, b) => a.ZIndex.CompareTo(b.ZIndex));
                     }
                 }
                 else
                 {
-                    // No visible elements this pass
-                    FirstVisibleIndex = -1;
+                    FirstMeasuredIndex = -1;
                     LastVisibleIndex = -1;
                 }
 
                 // Start background measurement if needed
-                bool noPendingChanges;
-                lock (_structureChangesLock)
-                {
-                    noPendingChanges = _pendingStructureChanges.Count == 0;
-                }
-
                 if (IsTemplated && structure != null &&
                     MeasureItemsStrategy == MeasuringStrategy.MeasureVisible &&
                     ItemsSource != null &&
-                    LastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
-                    !IsBackgroundMeasuring && noPendingChanges)
+                    lastVisibleIndex < ItemsSource.Count - 1 && // More items to measure
+                    !IsBackgroundMeasuring && _pendingStructureChanges.Count == 0)
                 {
                     // We have unmeasured items beyond visible area
-                    // Start from the contiguous head to avoid gaps (even if user scrolled fast)
-                    var nextUnmeasuredIndex = Math.Max(0, LastMeasuredIndex + 1);
+                    var nextUnmeasuredIndex = lastVisibleIndex + 1;
 
-                    // Skip any indices already measured (defensive against races)
+                    // Check if we already have measurements cached
                     while (nextUnmeasuredIndex < ItemsSource.Count &&
                            _measuredItems.ContainsKey(nextUnmeasuredIndex))
                     {
@@ -2222,7 +2199,6 @@ else
 
                     if (nextUnmeasuredIndex < ItemsSource.Count)
                     {
-                        Debug.WriteLine($"[StartBackgroundMeasurement] from DrawStack at {nextUnmeasuredIndex}");
                         StartBackgroundMeasurement(ctx.Destination, ctx.Scale, nextUnmeasuredIndex);
                     }
                 }
@@ -2336,17 +2312,14 @@ else
                                             {
                                                 Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = true,
                                             };
-                                            lock (_structureChangesLock)
+                                            _pendingStructureChanges.Add(new StructureChange
                                             {
-                                                _pendingStructureChanges.Add(new StructureChange
-                                                {
-                                                    OffsetOthers = cell.OffsetOthers,
-                                                    Type = StructureChangeType.SingleItemUpdate,
-                                                    StartIndex = child.ContextIndex,
-                                                    Count = 1,
-                                                    MeasuredItems = new List<MeasuredItemInfo> { measuredItem }
-                                                });
-                                            }
+                                                OffsetOthers = cell.OffsetOthers,
+                                                Type = StructureChangeType.SingleItemUpdate,
+                                                StartIndex = child.ContextIndex,
+                                                Count = 1,
+                                                MeasuredItems = new List<MeasuredItemInfo> { measuredItem }
+                                            });
 
                                             cell.OffsetOthers = Vector2.Zero;
                                         }

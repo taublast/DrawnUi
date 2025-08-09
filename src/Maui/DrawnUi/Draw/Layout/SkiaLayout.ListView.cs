@@ -213,7 +213,20 @@ public partial class SkiaLayout
         lock (_measurementLock)
         {
             if (_isBackgroundMeasuring)
-                return;
+            {
+                // If we're already measuring at or beyond this index, skip duplicate measurement
+                if (_backgroundMeasurementProgress >= startFromIndex)
+                {
+                    Debug.WriteLine(
+                        $"[StartBackgroundMeasurement] Already measuring beyond index {startFromIndex} (progress: {_backgroundMeasurementProgress}), skipping duplicate measurement");
+                    return;
+                }
+
+                // If we're measuring a range that would overlap with the requested range
+                // Cancel the existing measurement to avoid conflicts
+                Debug.WriteLine(
+                    $"[StartBackgroundMeasurement] Current measurement progress {_backgroundMeasurementProgress} < {startFromIndex}, cancelling to restart from new position");
+            }
         }
 
         // Cancel any existing background measurement
@@ -280,8 +293,6 @@ public partial class SkiaLayout
         var scale = RenderingScale;
 
         // Start targeted background measurement
-        Debug.WriteLine($"[StartBackgroundMeasurement] from RemeasureSingleItemInBackground at {itemIndex}");
-
         StartBackgroundMeasurement(constraints, scale, itemIndex, context);
 
         Debug.WriteLine(
@@ -612,7 +623,6 @@ public partial class SkiaLayout
             {
                 Debug.WriteLine(
                     $"[MeasureList] COMPLETED: Measured {measuredCount} items, estimated total size: {(Type == LayoutType.Column ? stackHeight : stackWidth):F1}px. Background measurement started for remaining {itemsCount - measuredCount} items.");
-                Repaint();
             }
 
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
@@ -805,7 +815,7 @@ public partial class SkiaLayout
         // Get all pending changes atomically
         lock (_structureChangesLock)
         {
-            if (_pendingStructureChanges.Count == 0)
+            if (LatestStackStructure == null || _pendingStructureChanges.Count == 0)
                 return;
 
             // Copy and clear in one atomic operation
@@ -815,106 +825,85 @@ public partial class SkiaLayout
 
         // Process all changes outside the lock for maximum performance
 
-        // Sort background measurement changes by starting ControlIndex to ensure deterministic processing
-        var backgroundChanges = new List<StructureChange>();
-        var otherChanges = new List<StructureChange>();
         foreach (var change in changesToProcess)
-        {
-            if (change.Type == StructureChangeType.BackgroundMeasurement)
-            {
-                backgroundChanges.Add(change);
-            }
-            else
-            {
-                otherChanges.Add(change);
-            }
-        }
-
-        // Compute a stable key for background batches (min ControlIndex of batch)
-        backgroundChanges.Sort((a, b) =>
-        {
-            int aMin = a.MeasuredItems != null && a.MeasuredItems.Count > 0 ? a.MeasuredItems.Min(x => x.Cell.ControlIndex) : int.MaxValue;
-            int bMin = b.MeasuredItems != null && b.MeasuredItems.Count > 0 ? b.MeasuredItems.Min(x => x.Cell.ControlIndex) : int.MaxValue;
-            return aMin.CompareTo(bMin);
-        });
-
-        // Apply other changes first (adds/removes/etc.)
-        foreach (var change in otherChanges)
         {
             switch (change.Type)
             {
+                case StructureChangeType.BackgroundMeasurement:
+                    if (change.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    ApplyBackgroundMeasurementChange(change);
+                    break;
+
                 case StructureChangeType.Add:
-                    if (change.Count == 0) continue;
+                    if (change.Count == 0)
+                    {
+                        continue;
+                    }
+
                     ApplyAddChange(change);
                     break;
+
                 case StructureChangeType.Remove:
-                    if (change.Count == 0) continue;
+                    if (change.Count == 0)
+                    {
+                        continue;
+                    }
+
                     ApplyRemoveChange(change);
                     break;
+
                 case StructureChangeType.Replace:
-                    if (change.Count == 0) continue;
+                    if (change.Count == 0)
+                    {
+                        continue;
+                    }
+
                     ApplyReplaceChange(change);
                     break;
+
                 case StructureChangeType.Move:
-                    if (change.Count == 0) continue;
+                    if (change.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    if (change.Count == 0)
+                    {
+                        continue;
+                    }
+
                     ApplyMoveChange(change);
                     break;
+
                 case StructureChangeType.Reset:
                     ApplyResetChange();
                     break;
+
                 case StructureChangeType.VisibilityChange:
-                    if (change.Count == 0) continue;
+                    if (change.Count == 0)
+                    {
+                        continue;
+                    }
+
                     ApplyVisibilityChange(change);
                     break;
+
                 case StructureChangeType.SingleItemUpdate:
                     ApplySingleItemUpdateChange(change);
                     break;
+
                 default:
                     Debug.WriteLine($"[ApplyStructureChanges] Unknown change type: {change.Type}");
                     break;
             }
         }
 
-        // Apply background measurement changes in order, enforcing contiguity for appends
-        int appliedBg = 0;
-        foreach (var change in backgroundChanges)
-        {
-            if (change.Count == 0) continue;
-
-            // Contiguity enforcement for append sequences
-            //if (!change.IsInsertOperation)
-            //{
-            //    int minIndex = change.MeasuredItems.Min(x => x.Cell.ControlIndex);
-            //    if (LastMeasuredIndex >= 0 && minIndex > LastMeasuredIndex + 1)
-            //    {
-            //        // Gap detected; requeue this change for next frame
-            //        lock (_structureChangesLock)
-            //        {
-            //            _pendingStructureChanges.Add(change);
-            //        }
-            //        continue;
-            //    }
-            //}
-
-            ApplyBackgroundMeasurementChange(change);
-            appliedBg++;
-
-            // Optional: Only one append per frame to keep UI responsive
-            if (!change.IsInsertOperation)
-            {
-                break;
-            }
-        }
-
-        // If we didn’t apply all background changes, ensure another frame will process the rest
-        int remaining = backgroundChanges.Count - appliedBg;
-        if (remaining > 0)
-        {
-            Repaint();
-        }
-
         Debug.WriteLine(
-            $"[StackStructure] Applied {otherChanges.Count + appliedBg} structure changes (+{remaining} queued). Measured: {MeasuredItemsPercentage:P1}");
+            $"[StackStructure] Applied {changesToProcess.Count} structure changes. Measured: {MeasuredItemsPercentage:P1}");
     }
 
     /// <summary>
@@ -949,10 +938,10 @@ public partial class SkiaLayout
             {
                 if (change.IsInsertOperation && change.InsertAtIndex.HasValue)
                 {
-                    // Insert rows at the correct position in measured structure
-                    if (LatestMeasuredStackStructure == null)
+                    // Insert rows at the correct position in existing structure
+                    if (StackStructure == null)
                     {
-                        StackStructureMeasured = new LayoutStructure(allRows);
+                        StackStructure = new LayoutStructure(allRows);
                     }
                     else
                     {
@@ -961,14 +950,14 @@ public partial class SkiaLayout
                 }
                 else
                 {
-                    // Append rows to end in measured structure
-                    if (LatestMeasuredStackStructure == null)
+                    // Append rows to end
+                    if (StackStructure == null)
                     {
-                        StackStructureMeasured = new LayoutStructure(allRows);
+                        StackStructure = new LayoutStructure(allRows);
                     }
                     else
                     {
-                        AppendRowsToStructureMeasured(allRows);
+                        StackStructure.Append(allRows);
                     }
                 }
 
@@ -993,7 +982,7 @@ public partial class SkiaLayout
     private void ApplyOffsetCompensationForBackgroundMeasurement(StructureChange change)
     {
         var startingPos = change.StartingPosition;
-        var currentStructure = LatestMeasuredStackStructure;
+        var currentStructure = LatestStackStructure;
 
         if (currentStructure == null || currentStructure.GetCount() == 0)
             return;
@@ -1132,36 +1121,39 @@ public partial class SkiaLayout
         // For now, we'll use a simplified approach since DynamicGrid doesn't have direct insert
         // We'll rebuild the structure with the new rows inserted at the correct position
 
-        var existing = LatestMeasuredStackStructure;
-        var existingCells = existing?.GetChildren().ToList() ?? new List<ControlInStack>();
+        var existingCells = StackStructure.GetChildren().ToList();
         var allCells = new List<ControlInStack>();
 
         // Add cells before insert position
         allCells.AddRange(existingCells.Where(c => c.ControlIndex < insertAtIndex));
 
-        // Add new rows
+        // Add new cells
         foreach (var row in newRows)
         {
             allCells.AddRange(row);
         }
 
-        // Add remaining cells after insert position
-        allCells.AddRange(existingCells.Where(c => c.ControlIndex >= insertAtIndex));
-
-        // Rebuild rows based on Split configuration
-        var rebuiltRows = new List<List<ControlInStack>>();
-        var currentRow = new List<ControlInStack>();
-        int columnsCount = (Split > 0) ? Split : 1;
-        var spacing = Spacing;
-
-        for (int i = 0; i < allCells.Count; i++)
+        // Add cells after insert position (with shifted indices)
+        var cellsAfter = existingCells.Where(c => c.ControlIndex >= insertAtIndex).ToList();
+        foreach (var cell in cellsAfter)
         {
-            currentRow.Add(allCells[i]);
+            cell.ControlIndex += newRows.SelectMany(r => r).Count(); // Shift indices
+        }
 
-            if (currentRow.Count == columnsCount)
+        allCells.AddRange(cellsAfter);
+
+        // Rebuild structure with all cells
+        var rebuiltRows = new List<List<ControlInStack>>();
+        var columnsCount = (Split > 0) ? Split : 1;
+        var currentRow = new List<ControlInStack>(columnsCount);
+
+        foreach (var cell in allCells.OrderBy(c => c.ControlIndex))
+        {
+            currentRow.Add(cell);
+            if (currentRow.Count >= columnsCount)
             {
                 rebuiltRows.Add(currentRow);
-                currentRow = new List<ControlInStack>();
+                currentRow = new List<ControlInStack>(columnsCount);
             }
         }
 
@@ -1170,8 +1162,8 @@ public partial class SkiaLayout
             rebuiltRows.Add(currentRow);
         }
 
-        // Replace the measured structure
-        StackStructureMeasured = new LayoutStructure(rebuiltRows);
+        // Replace the entire structure
+        StackStructure = new LayoutStructure(rebuiltRows);
 
         Debug.WriteLine($"[StackStructure] Rebuilt with {newRows.Count} rows inserted at index {insertAtIndex}");
     }
@@ -1193,8 +1185,6 @@ public partial class SkiaLayout
         // Get current constraints from last measurement
         var constraints = new SKRect(0, 0, _lastMeasuredForWidth, _lastMeasuredForHeight);
         var scale = RenderingScale;
-
-        Debug.WriteLine($"[StartBackgroundMeasurement] from TriggerInsertAwareBackgroundMeasurement at {insertAtIndex}");
 
         // Start background measurement with insert context
         StartBackgroundMeasurement(constraints, scale, insertAtIndex, context);
@@ -1892,7 +1882,7 @@ public partial class SkiaLayout
         BackgroundMeasurementContext context = null)
     {
         // Special case for single item remeasurement
-        if (ItemsSource==null || context?.IsSingleItemRemeasurement == true && context.SingleItemIndex.HasValue)
+        if (context?.IsSingleItemRemeasurement == true && context.SingleItemIndex.HasValue)
         {
             MeasureSingleItem(context.SingleItemIndex.Value, constraints, scale, cancellationToken, true);
             return;
@@ -2471,17 +2461,9 @@ public partial class SkiaLayout
 
     private void AppendRowsToStructureMeasured(List<List<ControlInStack>> rows)
     {
-        var structure = LatestMeasuredStackStructure?.Clone() ?? new LayoutStructure(rows);
-        if (structure != null && structure != StackStructureMeasured)
-        {
-            structure.Append(rows);
-            StackStructureMeasured = structure;
-        }
-        else if (structure != null)
-        {
-            structure.Append(rows);
-            StackStructureMeasured = structure;
-        }
+        var structure = LatestStackStructure.Clone();
+        structure.Append(rows);
+        StackStructureMeasured = structure;
     }
 
     public int MeasureAdditionalItems(int batchSize, int aheadCount, float scale)
