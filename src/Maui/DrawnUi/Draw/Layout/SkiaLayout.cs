@@ -1700,9 +1700,8 @@ namespace DrawnUi.Draw
             if (!IsTemplated)
                 return;
 
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.VisibilityChange, MeasureStamp)
             {
-                Type = StructureChangeType.VisibilityChange,
                 StartIndex = startIndex,
                 Count = count,
                 IsVisible = isVisible
@@ -1730,9 +1729,8 @@ namespace DrawnUi.Draw
             CancelBackgroundMeasurement();
 
             // Stage the Add change for rendering pipeline
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.Add, MeasureStamp)
             {
-                Type = StructureChangeType.Add,
                 StartIndex = args.NewStartingIndex,
                 Count = args.NewItems?.Count ?? 0,
                 Items = args.NewItems?.Cast<object>().ToList()
@@ -1771,9 +1769,8 @@ namespace DrawnUi.Draw
             CancelBackgroundMeasurement();
 
             // Stage the Remove change for rendering pipeline
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.Remove, MeasureStamp)
             {
-                Type = StructureChangeType.Remove,
                 StartIndex = args.OldStartingIndex,
                 Count = args.OldItems?.Count ?? 0
             });
@@ -1812,9 +1809,8 @@ namespace DrawnUi.Draw
             CancelBackgroundMeasurement();
 
             // Stage the Replace change for rendering pipeline
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.Replace, MeasureStamp)
             {
-                Type = StructureChangeType.Replace,
                 StartIndex = args.NewStartingIndex,
                 Count = args.NewItems?.Count ?? 0,
                 Items = args.NewItems?.Cast<object>().ToList()
