@@ -221,6 +221,10 @@ namespace DrawnUi.Draw
                 //when scrolling we will pass changed area to be rendered
                 //most suitable for large content
                 var inflated = ContentViewport.Pixels;
+                if (ContentViewport.Pixels.IsEmpty)
+                {
+                    return ContentRectWithOffset; //do not inflate empty area
+                }
                 inflated.Inflate(inflateByPixels.X, inflateByPixels.Y);
                 return ScaledRect.FromPixels(inflated, RenderingScale);
             }

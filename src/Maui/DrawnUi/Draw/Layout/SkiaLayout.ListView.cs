@@ -840,7 +840,7 @@ public partial class SkiaLayout
         {
             if (change.Stamp != MeasureStamp)
             {
-                continue;
+                continue; //fixes fast remeasuring artifacts
             }
 
             switch (change.Type)
