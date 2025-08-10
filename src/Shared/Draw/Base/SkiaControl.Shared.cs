@@ -6562,7 +6562,7 @@ namespace DrawnUi.Draw
         /// Will invoke InvalidateInternal on controls and subviews
         /// </summary>
         /// <param name="control"></param>
-        void InvalidateChildren(SkiaControl control)
+        protected virtual void InvalidateChildren(SkiaControl control)
         {
             if (control != null)
             {
