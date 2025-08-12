@@ -20,6 +20,9 @@ This page highlights the latest updates, features, and improvements in DrawnUi.M
 * **Platform Support**: iOS, MacCatalyst, Windows, Android implementations
 * **Package**: Available in `DrawnUi.Maui.Camera`
 * **Integration**: Seamlessly integrates with DrawnUI canvas rendering
+* **Advanced Flash Control**: Independent preview torch and capture flash modes
+* **Property-Based API**: Modern `FlashMode` property with MVVM support
+* **Extensible Design**: Ready for future features like strobe modes
 
 #### Enhanced SkiaShape
 * **Multiple Children**: Now can contain many `Children` instead of one `Content`

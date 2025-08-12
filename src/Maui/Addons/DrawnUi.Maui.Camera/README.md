@@ -111,6 +111,7 @@ If you want to geo-tag photos (get and save GPS location metadata) add this:
 | `CameraIndex` | `int` | `-1` | Manual camera selection index (when `Facing = Manual`) |
 | `IsOn` | `bool` | `false` | Camera power state - use this to start/stop camera |
 | `CapturePhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview` |
+| `FlashMode` | `FlashMode` | `Off` | Preview torch mode: `Off`, `On`, `Strobe` |
 | `CaptureFlashMode` | `CaptureFlashMode` | `Auto` | Flash mode for capture: `Off`, `Auto`, `On` |
 | `IsFlashSupported` | `bool` | - | Whether flash is available (read-only) |
 | `IsAutoFlashSupported` | `bool` | - | Whether auto flash is supported (read-only) |
@@ -141,9 +142,13 @@ SkiaCamera provides comprehensive flash control for both preview torch and still
 
 #### Preview Torch Control
 ```csharp
-// Turn on/off torch for preview (affects live camera view)
-camera.TurnOnFlash();   // Enable torch
-camera.TurnOffFlash();  // Disable torch
+// Property-based approach
+camera.FlashMode = FlashMode.Off;   // Disable torch
+camera.FlashMode = FlashMode.On;    // Enable torch
+camera.FlashMode = FlashMode.Strobe; // Strobe mode (future feature)
+
+// Get current torch mode
+var currentMode = camera.GetFlashMode();
 ```
 
 #### Capture Flash Mode Control
@@ -172,13 +177,31 @@ var currentMode = camera.GetCaptureFlashMode();
 ```xml
 <camera:SkiaCamera
     x:Name="CameraControl"
+    FlashMode="Off"
     CaptureFlashMode="Auto"
     Facing="Default" />
 ```
 
-#### Flash Mode Cycling Example
+#### Flash Mode Cycling Examples
 ```csharp
-private void OnFlashButtonClicked()
+// Preview torch cycling
+private void OnTorchButtonClicked()
+{
+    var currentMode = camera.FlashMode;
+    var nextMode = currentMode switch
+    {
+        FlashMode.Off => FlashMode.On,
+        FlashMode.On => FlashMode.Off,
+        FlashMode.Strobe => FlashMode.Off, // Future feature
+        _ => FlashMode.Off
+    };
+
+    camera.FlashMode = nextMode;
+    UpdateTorchButtonUI(nextMode);
+}
+
+// Capture flash cycling
+private void OnCaptureFlashButtonClicked()
 {
     var currentMode = camera.CaptureFlashMode;
     var nextMode = currentMode switch
@@ -190,15 +213,16 @@ private void OnFlashButtonClicked()
     };
 
     camera.CaptureFlashMode = nextMode;
-    UpdateFlashButtonUI(nextMode);
+    UpdateCaptureFlashButtonUI(nextMode);
 }
 ```
 
 **Important Notes:**
-- `TurnOnFlash()`/`TurnOffFlash()` controls preview torch (live view)
+- `FlashMode` property controls preview torch (live view)
 - `CaptureFlashMode` controls flash behavior during photo capture
 - These are independent - you can have torch off but capture flash on Auto
 - Flash capabilities vary by device and camera (front/back)
+- Property-based approach provides excellent MVVM support and extensibility
 
 #### Flash Control Architecture
 
@@ -206,7 +230,7 @@ SkiaCamera implements a **dual-channel flash system** that separates preview ill
 
 **🔦 Preview Torch Channel**
 - Controls LED torch for live camera preview
-- Methods: `TurnOnFlash()`, `TurnOffFlash()`
+- **Property**: `FlashMode` (Off/On/Strobe)
 - Use case: Illumination while composing shots
 - Platform: Uses torch/flashlight APIs
 
@@ -228,15 +252,19 @@ SkiaCamera implements a **dual-channel flash system** that separates preview ill
 
 ```csharp
 // Scenario 1: Night photography with preview torch
-camera.TurnOnFlash();                    // Light up preview for composition
-camera.CaptureFlashMode = CaptureFlashMode.On;  // Ensure flash fires for photo
+camera.FlashMode = FlashMode.On;                 // Light up preview for composition
+camera.CaptureFlashMode = CaptureFlashMode.On;   // Ensure flash fires for photo
 
 // Scenario 2: Daylight with auto flash backup
-camera.TurnOffFlash();                   // No preview torch needed
+camera.FlashMode = FlashMode.Off;                // No preview torch needed
 camera.CaptureFlashMode = CaptureFlashMode.Auto; // Flash only if needed
 
 // Scenario 3: Silent/stealth mode
-camera.TurnOffFlash();                   // No preview light
+camera.FlashMode = FlashMode.Off;                // No preview light
+camera.CaptureFlashMode = CaptureFlashMode.Off;  // No capture flash
+
+// Scenario 4: Future strobe mode for special effects
+camera.FlashMode = FlashMode.Strobe;             // Blinking torch (future feature)
 camera.CaptureFlashMode = CaptureFlashMode.Off;  // No capture flash
 ```
 
@@ -821,7 +849,8 @@ public bool IsBusy { get; }                       // Processing state (read-only
 public CaptureQuality CapturePhotoQuality { get; set; } // Photo quality
 public CaptureFlashMode CaptureFlashMode { get; set; }   // Flash mode for capture
 
-// Flash Capabilities
+// Flash Control
+public FlashMode FlashMode { get; set; }                 // Preview torch mode
 public bool IsFlashSupported { get; }                   // Flash availability
 public bool IsAutoFlashSupported { get; }               // Auto flash support
 public SkiaImageEffect Effect { get; set; }       // Real-time simple color filters
@@ -844,15 +873,15 @@ public async Task TakePicture()
 public void FlashScreen(Color color, long duration = 250)
 
 // Camera Controls
-public void TurnOnFlash()
-public void TurnOffFlash()
 public void SetZoom(double value)
 
-// Flash Control for Capture
-public void SetCaptureFlashMode(CaptureFlashMode mode)
-public CaptureFlashMode GetCaptureFlashMode()
-public bool IsFlashSupported { get; }
-public bool IsAutoFlashSupported { get; }
+// Flash Control
+public void SetFlashMode(FlashMode mode)                 // Preview torch control
+public FlashMode GetFlashMode()                          // Get current torch mode
+public void SetCaptureFlashMode(CaptureFlashMode mode)   // Capture flash control
+public CaptureFlashMode GetCaptureFlashMode()            // Get current capture mode
+public bool IsFlashSupported { get; }                   // Flash availability
+public bool IsAutoFlashSupported { get; }               // Auto flash support
 ```
 
 ### Events
@@ -870,6 +899,7 @@ public event EventHandler<double> Zoomed;
 public enum CameraPosition { Default, Selfie, Manual }
 public enum CameraState { Off, On, Error }
 public enum CaptureQuality { Max, Medium, Low, Preview }
+public enum FlashMode { Off, On, Strobe }
 public enum CaptureFlashMode { Off, Auto, On }
 public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
 ```

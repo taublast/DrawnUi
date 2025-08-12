@@ -237,6 +237,25 @@ public partial class SkiaCamera : SkiaControl
         //todo
     }
 
+
+    /// <summary>
+    /// Sets the flash mode for still image capture
+    /// </summary>
+    /// <param name="mode">Flash mode to use for capture</param>
+    public virtual void SetCaptureFlashMode(CaptureFlashMode mode)
+    {
+        CaptureFlashMode = mode;
+    }
+
+    /// <summary>
+    /// Gets the current capture flash mode
+    /// </summary>
+    /// <returns>Current capture flash mode</returns>
+    public virtual CaptureFlashMode GetCaptureFlashMode()
+    {
+        return CaptureFlashMode;
+    }
+
     private static int filenamesCounter = 0;
 
     /// <summary>
@@ -696,9 +715,10 @@ public partial class SkiaCamera : SkiaControl
         OnPropertyChanged(nameof(IsFlashSupported));
         OnPropertyChanged(nameof(IsAutoFlashSupported));
 
-        // Apply current capture flash mode to native control
+        // Apply current flash modes to native control
         if (NativeControl != null)
         {
+            NativeControl.SetFlashMode(FlashMode);
             NativeControl.SetCaptureFlashMode(CaptureFlashMode);
         }
     }
@@ -1293,6 +1313,30 @@ public partial class SkiaCamera : SkiaControl
     public bool IsAutoFlashSupported
     {
         get { return NativeControl?.IsAutoFlashSupported() ?? false; }
+    }
+
+    public static readonly BindableProperty FlashModeProperty = BindableProperty.Create(
+        nameof(FlashMode),
+        typeof(FlashMode),
+        typeof(SkiaCamera),
+        FlashMode.Off,
+        propertyChanged: OnFlashModeChanged);
+
+    /// <summary>
+    /// Flash mode for preview torch. Controls LED torch for live camera preview.
+    /// </summary>
+    public FlashMode FlashMode
+    {
+        get { return (FlashMode)GetValue(FlashModeProperty); }
+        set { SetValue(FlashModeProperty, value); }
+    }
+
+    private static void OnFlashModeChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaCamera camera && camera.NativeControl != null)
+        {
+            camera.NativeControl.SetFlashMode((FlashMode)newValue);
+        }
     }
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(

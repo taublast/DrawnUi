@@ -54,6 +54,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private readonly object _lockPreview = new();
     private CapturedImage _preview;
     bool _cameraUnitInitialized;
+    FlashMode _flashMode = FlashMode.Off;
     CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
     // Frame processing throttling - only prevent concurrent processing
@@ -429,7 +430,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             _session.StartRunning();
             State = CameraProcessorState.Enabled;
-            
+
+            // Apply current flash modes after session starts
+            ApplyFlashMode();
+
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 DeviceDisplay.Current.KeepScreenOn = true;
@@ -476,33 +480,18 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    public void TurnOnFlash()
+    public void SetFlashMode(FlashMode mode)
     {
-        if (!_flashSupported || _deviceInput?.Device == null)
-            return;
-
-        NSError error;
-        if (_deviceInput.Device.LockForConfiguration(out error))
-        {
-            try
-            {
-                if (_deviceInput.Device.HasTorch)
-                {
-                    _deviceInput.Device.TorchMode = AVCaptureTorchMode.On;
-                }
-                if (_deviceInput.Device.HasFlash)
-                {
-                    _deviceInput.Device.FlashMode = AVCaptureFlashMode.On;
-                }
-            }
-            finally
-            {
-                _deviceInput.Device.UnlockForConfiguration();
-            }
-        }
+        _flashMode = mode;
+        ApplyFlashMode();
     }
 
-    public void TurnOffFlash()
+    public FlashMode GetFlashMode()
+    {
+        return _flashMode;
+    }
+
+    private void ApplyFlashMode()
     {
         if (!_flashSupported || _deviceInput?.Device == null)
             return;
@@ -514,11 +503,20 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             {
                 if (_deviceInput.Device.HasTorch)
                 {
-                    _deviceInput.Device.TorchMode = AVCaptureTorchMode.Off;
-                }
-                if (_deviceInput.Device.HasFlash)
-                {
-                    _deviceInput.Device.FlashMode = AVCaptureFlashMode.Off;
+                    switch (_flashMode)
+                    {
+                        case FlashMode.Off:
+                            _deviceInput.Device.TorchMode = AVCaptureTorchMode.Off;
+                            break;
+                        case FlashMode.On:
+                            _deviceInput.Device.TorchMode = AVCaptureTorchMode.On;
+                            break;
+                        case FlashMode.Strobe:
+                            // Future implementation for strobe mode
+                            // For now, treat as On
+                            _deviceInput.Device.TorchMode = AVCaptureTorchMode.On;
+                            break;
+                    }
                 }
             }
             finally

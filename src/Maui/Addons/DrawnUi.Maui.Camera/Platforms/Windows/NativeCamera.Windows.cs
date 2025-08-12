@@ -116,6 +116,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private volatile CapturedImage _preview;
     private DeviceInformation _cameraDevice;
     private MediaFrameSource _frameSource;
+    FlashMode _flashMode = FlashMode.Off;
     CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
@@ -946,6 +947,12 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
 
         await StartFrameReaderAsync();
+
+        // Apply current flash modes after camera starts
+        if (State == CameraProcessorState.Enabled)
+        {
+            ApplyFlashMode();
+        }
     }
 
     public async void Stop(bool force = false)
@@ -983,33 +990,46 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
-    public void TurnOnFlash()
+    public void SetFlashMode(FlashMode mode)
     {
-        if (_flashSupported && _mediaCapture != null)
-        {
-            try
-            {
-                _mediaCapture.VideoDeviceController.FlashControl.Enabled = true;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"[NativeCameraWindows] TurnOnFlash error: {e}");
-            }
-        }
+        _flashMode = mode;
+        ApplyFlashMode();
     }
 
-    public void TurnOffFlash()
+    public FlashMode GetFlashMode()
     {
-        if (_flashSupported && _mediaCapture != null)
+        return _flashMode;
+    }
+
+    private void ApplyFlashMode()
+    {
+        if (!_flashSupported || _mediaCapture == null)
+            return;
+
+        try
         {
-            try
+            var flashControl = _mediaCapture.VideoDeviceController.FlashControl;
+
+            switch (_flashMode)
             {
-                _mediaCapture.VideoDeviceController.FlashControl.Enabled = false;
+                case FlashMode.Off:
+                    flashControl.Enabled = false;
+                    break;
+                case FlashMode.On:
+                    flashControl.Enabled = true;
+                    flashControl.Auto = false;
+                    break;
+                case FlashMode.Strobe:
+                    // Future implementation for strobe mode
+                    // For now, treat as On
+                    flashControl.Enabled = true;
+                    flashControl.Auto = false;
+                    break;
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"[NativeCameraWindows] TurnOffFlash error: {e}");
-            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] ApplyFlashMode error: {e}");
         }
     }
 

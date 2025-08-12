@@ -90,36 +90,36 @@ public partial class MainPageCamera : BasePageCodeBehind
     {
         try
         {
-            // Cycle through capture flash modes: Off -> Auto -> On -> Off...
-            var currentMode = CameraControl.CaptureFlashMode;
+            // Cycle through preview flash modes: Off -> On -> Off...
+            var currentMode = CameraControl.FlashMode;
             var nextMode = currentMode switch
             {
-                CaptureFlashMode.Off => CaptureFlashMode.Auto,
-                CaptureFlashMode.Auto => CaptureFlashMode.On,
-                CaptureFlashMode.On => CaptureFlashMode.Off,
-                _ => CaptureFlashMode.Auto
+                FlashMode.Off => FlashMode.On,
+                FlashMode.On => FlashMode.Off,
+                FlashMode.Strobe => FlashMode.Off, // Future feature
+                _ => FlashMode.Off
             };
 
-            CameraControl.CaptureFlashMode = nextMode;
+            CameraControl.FlashMode = nextMode;
 
-            // Update UI based on capture flash mode
+            // Update UI based on flash mode
             switch (nextMode)
             {
-                case CaptureFlashMode.Off:
-                    FlashButton.Text = "Flash: Off";
+                case FlashMode.Off:
+                    FlashButton.Text = "Torch: Off";
                     FlashButton.BackgroundColor = Colors.DarkGray;
                     break;
-                case CaptureFlashMode.Auto:
-                    FlashButton.Text = "Flash: Auto";
-                    FlashButton.BackgroundColor = Colors.Blue;
-                    break;
-                case CaptureFlashMode.On:
-                    FlashButton.Text = "Flash: On";
+                case FlashMode.On:
+                    FlashButton.Text = "Torch: On";
                     FlashButton.BackgroundColor = Colors.Orange;
+                    break;
+                case FlashMode.Strobe:
+                    FlashButton.Text = "Torch: Strobe";
+                    FlashButton.BackgroundColor = Colors.Purple;
                     break;
             }
 
-            StatusLabel.Text = $"Camera Status: Capture flash mode set to {nextMode}";
+            StatusLabel.Text = $"Camera Status: Preview torch mode set to {nextMode}";
         }
         catch (Exception ex)
         {

@@ -5,8 +5,17 @@ public interface INativeCamera : IDisposable
     void Stop(bool force = false);
     void Start();
 
-    void TurnOnFlash();
-    void TurnOffFlash();
+    /// <summary>
+    /// Sets the flash mode for preview torch
+    /// </summary>
+    /// <param name="mode">Flash mode for preview torch</param>
+    void SetFlashMode(FlashMode mode);
+
+    /// <summary>
+    /// Gets the current flash mode for preview torch
+    /// </summary>
+    /// <returns>Current flash mode</returns>
+    FlashMode GetFlashMode();
 
     /// <summary>
     /// Sets the flash mode for still image capture
