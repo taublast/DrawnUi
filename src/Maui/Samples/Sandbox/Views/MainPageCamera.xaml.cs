@@ -90,22 +90,36 @@ public partial class MainPageCamera : BasePageCodeBehind
     {
         try
         {
-            _flashOn = !_flashOn;
-            
-            if (_flashOn)
+            // Cycle through capture flash modes: Off -> Auto -> On -> Off...
+            var currentMode = CameraControl.CaptureFlashMode;
+            var nextMode = currentMode switch
             {
-                CameraControl.TurnOnFlash();
-                FlashButton.Text = "Flash On";
-                FlashButton.BackgroundColor = Colors.Orange;
-            }
-            else
+                CaptureFlashMode.Off => CaptureFlashMode.Auto,
+                CaptureFlashMode.Auto => CaptureFlashMode.On,
+                CaptureFlashMode.On => CaptureFlashMode.Off,
+                _ => CaptureFlashMode.Auto
+            };
+
+            CameraControl.CaptureFlashMode = nextMode;
+
+            // Update UI based on capture flash mode
+            switch (nextMode)
             {
-                CameraControl.TurnOffFlash();
-                FlashButton.Text = "Flash Off";
-                FlashButton.BackgroundColor = Colors.DarkGray;
+                case CaptureFlashMode.Off:
+                    FlashButton.Text = "Flash: Off";
+                    FlashButton.BackgroundColor = Colors.DarkGray;
+                    break;
+                case CaptureFlashMode.Auto:
+                    FlashButton.Text = "Flash: Auto";
+                    FlashButton.BackgroundColor = Colors.Blue;
+                    break;
+                case CaptureFlashMode.On:
+                    FlashButton.Text = "Flash: On";
+                    FlashButton.BackgroundColor = Colors.Orange;
+                    break;
             }
-            
-            StatusLabel.Text = $"Camera Status: Flash {(_flashOn ? "enabled" : "disabled")}";
+
+            StatusLabel.Text = $"Camera Status: Capture flash mode set to {nextMode}";
         }
         catch (Exception ex)
         {

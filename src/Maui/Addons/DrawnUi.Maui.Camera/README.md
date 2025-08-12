@@ -10,6 +10,7 @@ Camera control drawn with SkiaSharp, part of DrawnUI for for .NET MAUI.
 - **Post-process captured bitmap** with SkiaSharp and DrawnUi, apply effects, overlay watermark etc.
 - **Live preview frames in a convenient form** to integrate with AI/ML.
 - **Manual camera selection** to access ultra-wide, telephoto etc by index or by front/back.
+- **Advanced flash control** with independent preview torch and capture flash modes (Off/Auto/On).
 - **Inject custom EXIF**, save GPS locations etc!
 - **Cares about going to background** or foreground to automatically stop/resume camera.
 - **Developer-first design**, open for customization with overrides/events,
@@ -110,6 +111,9 @@ If you want to geo-tag photos (get and save GPS location metadata) add this:
 | `CameraIndex` | `int` | `-1` | Manual camera selection index (when `Facing = Manual`) |
 | `IsOn` | `bool` | `false` | Camera power state - use this to start/stop camera |
 | `CapturePhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview` |
+| `CaptureFlashMode` | `CaptureFlashMode` | `Auto` | Flash mode for capture: `Off`, `Auto`, `On` |
+| `IsFlashSupported` | `bool` | - | Whether flash is available (read-only) |
+| `IsAutoFlashSupported` | `bool` | - | Whether auto flash is supported (read-only) |
 | `Effect` | `SkiaImageEffect` | `None` | Real-time effects: `None`, `Sepia`, `BlackAndWhite`, `Pastel` |
 | `Zoom` | `double` | `1.0` | Camera zoom level |
 | `ZoomLimitMin/Max` | `double` | `1.0/10.0` | Zoom constraints |
@@ -131,7 +135,112 @@ camera.IsOn = false; // Stop camera
 - `IsOn = true`: Proper lifecycle management, handles permissions, app backgrounding
 - `Start()`: Direct method call, bypasses safety checks
 
-### 4. Camera Selection
+### 4. Flash Control
+
+SkiaCamera provides comprehensive flash control for both preview torch and still image capture:
+
+#### Preview Torch Control
+```csharp
+// Turn on/off torch for preview (affects live camera view)
+camera.TurnOnFlash();   // Enable torch
+camera.TurnOffFlash();  // Disable torch
+```
+
+#### Capture Flash Mode Control
+```csharp
+// Set flash mode for still image capture
+camera.CaptureFlashMode = CaptureFlashMode.Off;   // No flash
+camera.CaptureFlashMode = CaptureFlashMode.Auto;  // Auto flash based on lighting
+camera.CaptureFlashMode = CaptureFlashMode.On;    // Always flash
+
+// Check flash capabilities
+if (camera.IsFlashSupported)
+{
+    // Flash is available on this camera
+    if (camera.IsAutoFlashSupported)
+    {
+        // Auto flash mode is supported
+        camera.CaptureFlashMode = CaptureFlashMode.Auto;
+    }
+}
+
+// Get current capture flash mode
+var currentMode = camera.GetCaptureFlashMode();
+```
+
+#### XAML Binding
+```xml
+<camera:SkiaCamera
+    x:Name="CameraControl"
+    CaptureFlashMode="Auto"
+    Facing="Default" />
+```
+
+#### Flash Mode Cycling Example
+```csharp
+private void OnFlashButtonClicked()
+{
+    var currentMode = camera.CaptureFlashMode;
+    var nextMode = currentMode switch
+    {
+        CaptureFlashMode.Off => CaptureFlashMode.Auto,
+        CaptureFlashMode.Auto => CaptureFlashMode.On,
+        CaptureFlashMode.On => CaptureFlashMode.Off,
+        _ => CaptureFlashMode.Auto
+    };
+
+    camera.CaptureFlashMode = nextMode;
+    UpdateFlashButtonUI(nextMode);
+}
+```
+
+**Important Notes:**
+- `TurnOnFlash()`/`TurnOffFlash()` controls preview torch (live view)
+- `CaptureFlashMode` controls flash behavior during photo capture
+- These are independent - you can have torch off but capture flash on Auto
+- Flash capabilities vary by device and camera (front/back)
+
+#### Flash Control Architecture
+
+SkiaCamera implements a **dual-channel flash system** that separates preview illumination from capture flash:
+
+**🔦 Preview Torch Channel**
+- Controls LED torch for live camera preview
+- Methods: `TurnOnFlash()`, `TurnOffFlash()`
+- Use case: Illumination while composing shots
+- Platform: Uses torch/flashlight APIs
+
+**📸 Capture Flash Channel**
+- Controls flash behavior during photo capture
+- Property: `CaptureFlashMode` (Off/Auto/On)
+- Use case: Optimal lighting for still photos
+- Platform: Uses camera flash APIs
+
+**Platform Implementation Details:**
+
+| Platform | Preview Torch | Capture Flash | Auto Flash |
+|----------|---------------|---------------|------------|
+| **Android** | `FlashMode.Torch` | `FlashMode.Single` + `ControlAEMode` | ✅ `OnAutoFlash` |
+| **iOS/macOS** | `AVCaptureTorchMode` | `AVCaptureFlashMode` | ✅ `Auto` mode |
+| **Windows** | `FlashControl.Enabled` | `FlashControl.Auto` | ✅ Auto detection |
+
+**Real-World Usage Scenarios:**
+
+```csharp
+// Scenario 1: Night photography with preview torch
+camera.TurnOnFlash();                    // Light up preview for composition
+camera.CaptureFlashMode = CaptureFlashMode.On;  // Ensure flash fires for photo
+
+// Scenario 2: Daylight with auto flash backup
+camera.TurnOffFlash();                   // No preview torch needed
+camera.CaptureFlashMode = CaptureFlashMode.Auto; // Flash only if needed
+
+// Scenario 3: Silent/stealth mode
+camera.TurnOffFlash();                   // No preview light
+camera.CaptureFlashMode = CaptureFlashMode.Off;  // No capture flash
+```
+
+### 5. Camera Selection
 
 #### Automatic Selection (Default)
 ```csharp
@@ -710,6 +819,11 @@ public bool IsBusy { get; }                       // Processing state (read-only
 
 // Capture Settings
 public CaptureQuality CapturePhotoQuality { get; set; } // Photo quality
+public CaptureFlashMode CaptureFlashMode { get; set; }   // Flash mode for capture
+
+// Flash Capabilities
+public bool IsFlashSupported { get; }                   // Flash availability
+public bool IsAutoFlashSupported { get; }               // Auto flash support
 public SkiaImageEffect Effect { get; set; }       // Real-time simple color filters
 
 // Zoom & Limits
@@ -733,6 +847,12 @@ public void FlashScreen(Color color, long duration = 250)
 public void TurnOnFlash()
 public void TurnOffFlash()
 public void SetZoom(double value)
+
+// Flash Control for Capture
+public void SetCaptureFlashMode(CaptureFlashMode mode)
+public CaptureFlashMode GetCaptureFlashMode()
+public bool IsFlashSupported { get; }
+public bool IsAutoFlashSupported { get; }
 ```
 
 ### Events
@@ -750,6 +870,7 @@ public event EventHandler<double> Zoomed;
 public enum CameraPosition { Default, Selfie, Manual }
 public enum CameraState { Off, On, Error }
 public enum CaptureQuality { Max, Medium, Low, Preview }
+public enum CaptureFlashMode { Off, Auto, On }
 public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
 ```
 
@@ -764,6 +885,7 @@ public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
 | **Capture failures** | Storage permissions | Verify write permissions |
 | **Performance issues** | Unoptimized preview processing | Cache controls, limit frame processing |
 | **Manual selection fails** | Invalid `CameraIndex` | Verify index is 0 to `cameras.Count-1` |
+| **Flash not working** | Flash not supported or wrong mode | Check `IsFlashSupported` and use correct `CaptureFlashMode` |
 | **App crashes on camera switch** | Rapid camera changes | Add delays between camera operations |
 | **Memory leaks** | Event handlers not removed | Properly dispose and unsubscribe events |
 
@@ -892,7 +1014,7 @@ if (camera.State == CameraState.On && !camera.IsBusy)
 - [x] **Real-time preview effects** (Sepia, B&W, Pastel)
 - [x] **Photo capture** with metadata and custom rendering applied
 - [x] **Zoom control**
-- [x] **Flash control**
+- [x] **Advanced flash control** (independent preview torch and capture flash modes)
 - [x] **Event-driven architecture** for MVVM patterns
 - [x] **Permission handling** with built-in checks
 - [x] **State management** with proper lifecycle

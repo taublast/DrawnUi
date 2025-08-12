@@ -30,7 +30,7 @@ public partial class SkiaCamera
         Zoomed?.Invoke(this, value);
     }
 
-    public void OpenFileInGallery(string imageFilePath)
+    public static void OpenFileInGallery(string imageFilePath)
     {
         try
         {

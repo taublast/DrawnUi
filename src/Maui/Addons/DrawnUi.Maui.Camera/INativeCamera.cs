@@ -9,6 +9,30 @@ public interface INativeCamera : IDisposable
     void TurnOffFlash();
 
     /// <summary>
+    /// Sets the flash mode for still image capture
+    /// </summary>
+    /// <param name="mode">Flash mode to use for capture</param>
+    void SetCaptureFlashMode(CaptureFlashMode mode);
+
+    /// <summary>
+    /// Gets the current capture flash mode
+    /// </summary>
+    /// <returns>Current capture flash mode</returns>
+    CaptureFlashMode GetCaptureFlashMode();
+
+    /// <summary>
+    /// Gets whether flash is supported on this camera
+    /// </summary>
+    /// <returns>True if flash is supported</returns>
+    bool IsFlashSupported();
+
+    /// <summary>
+    /// Gets whether auto flash mode is supported on this camera
+    /// </summary>
+    /// <returns>True if auto flash is supported</returns>
+    bool IsAutoFlashSupported();
+
+    /// <summary>
     /// If you get the preview via this method you are now responsible to dispose it yourself to avoid memory leaks.
     /// </summary>
     /// <returns></returns>

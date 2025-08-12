@@ -18,6 +18,8 @@ public partial class SkiaCamera
         NativeControl?.TurnOffFlash();
     }
 
+ 
+
     public virtual void SetZoom(double value)
     {
         // Hardware zoom not supported on Android currently, using manual scaling
@@ -35,7 +37,7 @@ public partial class SkiaCamera
     }
 
 
-    public void OpenFileInGallery(string imageFilePath)
+    public static void OpenFileInGallery(string imageFilePath)
     {
         // Create a new Intent
         Intent intent = new Intent();

@@ -116,6 +116,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private volatile CapturedImage _preview;
     private DeviceInformation _cameraDevice;
     private MediaFrameSource _frameSource;
+    CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
@@ -1012,6 +1013,57 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
+    public void SetCaptureFlashMode(CaptureFlashMode mode)
+    {
+        _captureFlashMode = mode;
+    }
+
+    public CaptureFlashMode GetCaptureFlashMode()
+    {
+        return _captureFlashMode;
+    }
+
+    public bool IsFlashSupported()
+    {
+        return _flashSupported;
+    }
+
+    public bool IsAutoFlashSupported()
+    {
+        return _flashSupported; // Windows supports auto flash when flash is available
+    }
+
+    private void SetFlashModeForCapture()
+    {
+        if (!_flashSupported || _mediaCapture == null)
+            return;
+
+        try
+        {
+            var flashControl = _mediaCapture.VideoDeviceController.FlashControl;
+
+            switch (_captureFlashMode)
+            {
+                case CaptureFlashMode.Off:
+                    flashControl.Enabled = false;
+                    flashControl.Auto = false;
+                    break;
+                case CaptureFlashMode.Auto:
+                    flashControl.Enabled = true;
+                    flashControl.Auto = true;
+                    break;
+                case CaptureFlashMode.On:
+                    flashControl.Enabled = true;
+                    flashControl.Auto = false;
+                    break;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] SetFlashModeForCapture error: {e}");
+        }
+    }
+
     /// <summary>
     /// WIll be correct from correct thread hopefully
     /// </summary>
@@ -1178,6 +1230,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         try
         {
             Debug.WriteLine("[NativeCameraWindows] Taking picture...");
+
+            // Set flash mode for capture
+            SetFlashModeForCapture();
 
             // Create image encoding properties for high quality JPEG
             var imageProperties = ImageEncodingProperties.CreateJpeg();

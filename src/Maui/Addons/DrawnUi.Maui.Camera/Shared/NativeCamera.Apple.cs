@@ -54,6 +54,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private readonly object _lockPreview = new();
     private CapturedImage _preview;
     bool _cameraUnitInitialized;
+    CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
     // Frame processing throttling - only prevent concurrent processing
     private volatile bool _isProcessingFrame = false;
@@ -527,6 +528,59 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
+    public void SetCaptureFlashMode(CaptureFlashMode mode)
+    {
+        _captureFlashMode = mode;
+    }
+
+    public CaptureFlashMode GetCaptureFlashMode()
+    {
+        return _captureFlashMode;
+    }
+
+    public bool IsFlashSupported()
+    {
+        return _flashSupported;
+    }
+
+    public bool IsAutoFlashSupported()
+    {
+        return _flashSupported; // iOS supports auto flash when flash is available
+    }
+
+    private void SetFlashModeForCapture()
+    {
+        if (!_flashSupported || _deviceInput?.Device == null)
+            return;
+
+        NSError error;
+        if (_deviceInput.Device.LockForConfiguration(out error))
+        {
+            try
+            {
+                if (_deviceInput.Device.HasFlash)
+                {
+                    switch (_captureFlashMode)
+                    {
+                        case CaptureFlashMode.Off:
+                            _deviceInput.Device.FlashMode = AVCaptureFlashMode.Off;
+                            break;
+                        case CaptureFlashMode.Auto:
+                            _deviceInput.Device.FlashMode = AVCaptureFlashMode.Auto;
+                            break;
+                        case CaptureFlashMode.On:
+                            _deviceInput.Device.FlashMode = AVCaptureFlashMode.On;
+                            break;
+                    }
+                }
+            }
+            finally
+            {
+                _deviceInput.Device.UnlockForConfiguration();
+            }
+        }
+    }
+
     public void SetZoom(float zoom)
     {
         if (_deviceInput?.Device == null)
@@ -687,6 +741,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         return;
                     }
                 }
+
+                // Set flash mode for capture
+                SetFlashModeForCapture();
 
                 var videoConnection = _stillImageOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
                 var sampleBuffer = await _stillImageOutput.CaptureStillImageTaskAsync(videoConnection);

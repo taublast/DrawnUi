@@ -1222,6 +1222,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
     bool _isTorchOn;
+    CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
     public void TurnOnFlash()
     {
@@ -1279,21 +1280,46 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    public void SetCaptureFlashMode(CaptureFlashMode mode)
+    {
+        _captureFlashMode = mode;
+    }
+
+    public CaptureFlashMode GetCaptureFlashMode()
+    {
+        return _captureFlashMode;
+    }
+
+    public bool IsFlashSupported()
+    {
+        return mFlashSupported;
+    }
+
+    public bool IsAutoFlashSupported()
+    {
+        return mFlashSupported; // Android supports auto flash when flash is available
+    }
+
     public void SetCapturingStillOptions(CaptureRequest.Builder requestBuilder)
     {
         requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
 
         if (mFlashSupported)
         {
-            if (_isTorchOn)
+            switch (_captureFlashMode)
             {
-                requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                requestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Torch);
-            }
-            else
-            {
-                requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.OnAutoFlash);
-                requestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Off);
+                case CaptureFlashMode.Off:
+                    requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    requestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Off);
+                    break;
+                case CaptureFlashMode.Auto:
+                    requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.OnAutoFlash);
+                    requestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Off);
+                    break;
+                case CaptureFlashMode.On:
+                    requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    requestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Single);
+                    break;
             }
         }
     }

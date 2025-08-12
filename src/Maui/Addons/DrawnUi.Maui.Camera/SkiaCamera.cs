@@ -669,6 +669,7 @@ public partial class SkiaCamera : SkiaControl
         {
 #if ONPLATFORM
             CreateNative();
+            OnNativeControlCreated();
 #endif
         }
 
@@ -684,6 +685,22 @@ public partial class SkiaCamera : SkiaControl
         //IsOn = true;
 
         NativeControl?.Start();
+    }
+
+    /// <summary>
+    /// Called after native control is created to notify property changes
+    /// </summary>
+    protected virtual void OnNativeControlCreated()
+    {
+        // Notify that flash capability properties may have changed
+        OnPropertyChanged(nameof(IsFlashSupported));
+        OnPropertyChanged(nameof(IsAutoFlashSupported));
+
+        // Apply current capture flash mode to native control
+        if (NativeControl != null)
+        {
+            NativeControl.SetCaptureFlashMode(CaptureFlashMode);
+        }
     }
 
     #region SkiaCamera xam control
@@ -1238,6 +1255,45 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(CapturePhotoQualityProperty, value); }
     }
 
+    public static readonly BindableProperty CaptureFlashModeProperty = BindableProperty.Create(
+        nameof(CaptureFlashMode),
+        typeof(CaptureFlashMode),
+        typeof(SkiaCamera),
+        CaptureFlashMode.Auto,
+        propertyChanged: OnCaptureFlashModeChanged);
+
+    /// <summary>
+    /// Flash mode for still image capture. Controls whether flash fires during photo capture.
+    /// </summary>
+    public CaptureFlashMode CaptureFlashMode
+    {
+        get { return (CaptureFlashMode)GetValue(CaptureFlashModeProperty); }
+        set { SetValue(CaptureFlashModeProperty, value); }
+    }
+
+    private static void OnCaptureFlashModeChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaCamera camera && camera.NativeControl != null)
+        {
+            camera.NativeControl.SetCaptureFlashMode((CaptureFlashMode)newValue);
+        }
+    }
+
+    /// <summary>
+    /// Gets whether flash is supported on the current camera
+    /// </summary>
+    public bool IsFlashSupported
+    {
+        get { return NativeControl?.IsFlashSupported() ?? false; }
+    }
+
+    /// <summary>
+    /// Gets whether auto flash mode is supported on the current camera
+    /// </summary>
+    public bool IsAutoFlashSupported
+    {
+        get { return NativeControl?.IsAutoFlashSupported() ?? false; }
+    }
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(
         nameof(Type),

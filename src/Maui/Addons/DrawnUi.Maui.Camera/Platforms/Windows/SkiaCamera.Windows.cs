@@ -28,7 +28,7 @@ public partial class SkiaCamera : SkiaControl
         Zoomed?.Invoke(this, value);
     }
 
-    public void OpenFileInGallery(string imageFilePath)
+    public static void OpenFileInGallery(string imageFilePath)
     {
         Task.Run(async () =>
         {
