@@ -36,9 +36,8 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
-* SkiaCheckBox/SkiaRadioButton to consume TAP gesture only
-* OnGlobalUpdate will not invalidate scale/children
-* Fix tutorials compilation, Nuke caching disabled by hotfix until proper bindings are created
+* `SkiaCamera` flash/torch enhancements
+* Recycled cells scrolls fixes
 
 ___Please star ⭐ if you like it!___
  
@@ -119,6 +118,10 @@ Click here ☝️☝️☝️
 
 ## 🌱 What Was New Previously
 
+* SkiaCheckBox/SkiaRadioButton to consume TAP gesture only
+* OnGlobalUpdate will not invalidate scale/children
+* Fix tutorials compilation, Nuke caching disabled by hotfix until proper bindings are created
+* 
 * iOS images caching with `ImageCaching.Nuke` for urls
 * Fix Android and Apple SKGLView not updating after view returned back to visible tree after being out of the tree. This is that case in MAUI when you navigate away from a page and when you return the canvas is either blank or frozen.
  
