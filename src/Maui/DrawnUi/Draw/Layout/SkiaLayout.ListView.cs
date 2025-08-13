@@ -89,6 +89,13 @@ public partial class SkiaLayout
     /// </summary>
     public class StructureChange
     {
+        public StructureChange(StructureChangeType type, long stamp)
+        {
+            Type = type;
+            Stamp = stamp;
+        }
+
+        public long Stamp { get; set; }
         public StructureChangeType Type { get; set; }
         public Vector2? OffsetOthers { get; set; }
         public int StartIndex { get; set; }
@@ -301,6 +308,8 @@ public partial class SkiaLayout
 
     private int _listAdditionalMeasurements;
 
+    protected long MeasureStamp;
+
     /// <summary>
     /// Enhanced MeasureList with background measurement support
     /// </summary>
@@ -308,6 +317,8 @@ public partial class SkiaLayout
     {
         // Cancel any ongoing background measurement when starting fresh measurement
         CancelBackgroundMeasurement();
+
+        MeasureStamp++;
 
         if (IsTemplated && ItemsSource.Count > 0)
         {
@@ -773,7 +784,7 @@ public partial class SkiaLayout
             // Stage for rendering pipeline integration
             lock (_structureChangesLock)
             {
-                _pendingStructureChanges.Add(new StructureChange
+                _pendingStructureChanges.Add(new StructureChange(StructureChangeType.BackgroundMeasurement, MeasureStamp)
                 {
                     Type = StructureChangeType.BackgroundMeasurement,
                     MeasuredItems = measuredBatch,
@@ -827,6 +838,11 @@ public partial class SkiaLayout
 
         foreach (var change in changesToProcess)
         {
+            if (change.Stamp != MeasureStamp)
+            {
+                continue; //fixes fast remeasuring artifacts
+            }
+
             switch (change.Type)
             {
                 case StructureChangeType.BackgroundMeasurement:
@@ -1274,14 +1290,13 @@ public partial class SkiaLayout
         Debug.WriteLine($"[StackStructure] Replacing {change.Count} items at index {change.StartIndex}");
 
         // For Replace: Split into Remove + Add in same frame
-        var removeChange = new StructureChange
+        var removeChange = new StructureChange(StructureChangeType.Remove, MeasureStamp)
         {
-            Type = StructureChangeType.Remove, StartIndex = change.StartIndex, Count = change.Count
+            StartIndex = change.StartIndex, Count = change.Count
         };
 
-        var addChange = new StructureChange
+        var addChange = new StructureChange(StructureChangeType.Add, MeasureStamp)
         {
-            Type = StructureChangeType.Add,
             StartIndex = change.StartIndex,
             Count = change.Count,
             Items = change.Items
@@ -2026,9 +2041,8 @@ public partial class SkiaLayout
                 {
                     lock (_structureChangesLock)
                     {
-                        _pendingStructureChanges.Add(new StructureChange
+                        _pendingStructureChanges.Add(new StructureChange(StructureChangeType.SingleItemUpdate, MeasureStamp)
                         {
-                            Type = StructureChangeType.SingleItemUpdate,
                             StartIndex = itemIndex,
                             Count = 1,
                             MeasuredItems = new List<MeasuredItemInfo> { measuredItem }

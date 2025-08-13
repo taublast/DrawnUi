@@ -41,6 +41,38 @@ public partial class SkiaScroll
 
     protected float _viewportOffsetX;
 
+    /// <summary>
+    /// 0.0 - 1.0
+    /// </summary>
+    public double ScrollProgressY
+    {
+        get
+        {
+            if (ContentOffsetBounds.Height == 0)
+            {
+                return 0;
+            }
+
+            return 1 - (ContentOffsetBounds.Height + InternalViewportOffset.Pixels.Y) / ContentOffsetBounds.Height;
+        }
+    }
+
+    /// <summary>
+    /// 0.0 - 1.0
+    /// </summary>
+    public double ScrollProgressX
+    {
+        get
+        {
+            if (ContentOffsetBounds.Width == 0)
+            {
+                return 0;
+            }
+
+            return 1 - (ContentOffsetBounds.Width + InternalViewportOffset.Pixels.X) / ContentOffsetBounds.Width;
+        }
+    }
+
     protected virtual void InitializeViewport(float scale)
     {
         _loadMoreTriggeredAt = 0;

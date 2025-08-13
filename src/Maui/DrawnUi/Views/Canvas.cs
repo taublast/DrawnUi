@@ -686,8 +686,12 @@ public class Canvas : DrawnView, IGestureListener
 
         if (!CanDraw)
         {
-            //if we got a gesture looks like we went back to visibility again
+            // if we got a gesture looks like we went back to visibility again
+            // but do NOT process gestures received when we are not rendering this view
+            // could break any presumed logic
             NeedCheckParentVisibility = true;
+            Repaint();
+            return;
         }
 
 #if ANDROID //todo move all this fun to gestures lib now:

@@ -2160,22 +2160,36 @@ else
 
                 OnBeforeDrawingVisibleChildren(ctx, structure, visibleElements);
 
-                if (visibleElements.Count > 1)
+                if (visibleElements.Count > 0)
                 {
-                    visibleElements.Sort((a, b) => a.ZIndex.CompareTo(b.ZIndex));
                     if (IsTemplated)
                     {
-                        FirstMeasuredIndex = visibleElements[0].ControlIndex;
-                        LastVisibleIndex = visibleElements[visibleElements.Count - 1].ControlIndex;
+                        int minControlIndex = int.MaxValue;
+                        int maxControlIndex = -1;
+                        foreach (var e in visibleElements)
+                        {
+                            if (e.ControlIndex < minControlIndex) minControlIndex = e.ControlIndex;
+                            if (e.ControlIndex > maxControlIndex) maxControlIndex = e.ControlIndex;
+                        }
+
+                        //FirstMeasuredIndex = visibleElements[0].ControlIndex;
+                        //LastVisibleIndex = visibleElements[visibleElements.Count - 1].ControlIndex;
+                        FirstVisibleIndex = minControlIndex;
+                        LastVisibleIndex = maxControlIndex;
                     }
                     else
                     {
+                        //visibleElements.Sort((a, b) => a.ZIndex.CompareTo(b.ZIndex));
+
                         FirstMeasuredIndex = firstVisibleIndex;
+                        FirstVisibleIndex = firstVisibleIndex;
                         LastVisibleIndex = lastVisibleIndex;
                     }
+ 
                 }
                 else
                 {
+                    FirstVisibleIndex = -1;
                     FirstMeasuredIndex = -1;
                     LastVisibleIndex = -1;
                 }
@@ -2312,10 +2326,9 @@ else
                                             {
                                                 Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = true,
                                             };
-                                            _pendingStructureChanges.Add(new StructureChange
+                                            _pendingStructureChanges.Add(new StructureChange(StructureChangeType.SingleItemUpdate, MeasureStamp)
                                             {
                                                 OffsetOthers = cell.OffsetOthers,
-                                                Type = StructureChangeType.SingleItemUpdate,
                                                 StartIndex = child.ContextIndex,
                                                 Count = 1,
                                                 MeasuredItems = new List<MeasuredItemInfo> { measuredItem }

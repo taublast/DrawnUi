@@ -221,8 +221,11 @@ SkiaCamera is a specialized control that provides camera functionality directly 
 
 ```xml
 <draw:SkiaCamera
-    IsPreviewEnabled="True"
-    CameraFacing="Back"
+    x:Name="CameraControl"
+    IsOn="True"
+    Facing="Default"
+    FlashMode="Off"
+    CaptureFlashMode="Auto"
     WidthRequest="300"
     HeightRequest="400" />
 ```
@@ -231,10 +234,13 @@ SkiaCamera is a specialized control that provides camera functionality directly 
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `IsPreviewEnabled` | bool | true | Whether to show camera preview |
-| `CameraFacing` | CameraFacing | Back | Camera to use (Front/Back) |
-| `FlashMode` | FlashMode | Off | Flash mode (Off/On/Auto) |
-| `IsRecording` | bool | false | Whether currently recording video |
+| `IsOn` | bool | false | Camera power state - use this to start/stop camera |
+| `Facing` | CameraPosition | Default | Camera selection: Default (back), Selfie (front), Manual |
+| `FlashMode` | FlashMode | Off | Preview torch mode: Off, On, Strobe |
+| `CaptureFlashMode` | CaptureFlashMode | Auto | Flash mode for capture: Off, Auto, On |
+| `CapturePhotoQuality` | CaptureQuality | Max | Photo quality: Max, Medium, Low, Preview |
+| `IsFlashSupported` | bool | - | Whether flash is available (read-only) |
+| `Zoom` | double | 1.0 | Camera zoom level |
 
 ### Examples
 
@@ -243,8 +249,11 @@ SkiaCamera is a specialized control that provides camera functionality directly 
 <draw:SkiaLayout Type="Column" Spacing="10">
     <draw:SkiaCamera
         x:Name="Camera"
-        IsPreviewEnabled="True"
-        CameraFacing="Back"
+        IsOn="True"
+        Facing="Default"
+        FlashMode="Off"
+        CaptureFlashMode="Auto"
+        CapturePhotoQuality="Medium"
         WidthRequest="300"
         HeightRequest="400" />
 
@@ -252,6 +261,9 @@ SkiaCamera is a specialized control that provides camera functionality directly 
         <draw:SkiaButton
             Text="Capture"
             Clicked="OnCaptureClicked" />
+        <draw:SkiaButton
+            Text="Toggle Torch"
+            Clicked="OnToggleTorchClicked" />
         <draw:SkiaButton
             Text="Switch Camera"
             Clicked="OnSwitchCameraClicked" />
@@ -266,7 +278,7 @@ private async void OnCaptureClicked(object sender, EventArgs e)
 {
     try
     {
-        var photo = await Camera.CapturePhotoAsync();
+        var photo = await Camera.TakePictureAsync();
         if (photo != null)
         {
             // Handle captured photo
@@ -280,10 +292,106 @@ private async void OnCaptureClicked(object sender, EventArgs e)
     }
 }
 
+private void OnToggleTorchClicked(object sender, EventArgs e)
+{
+    // Toggle preview torch using property-based approach
+    Camera.FlashMode = Camera.FlashMode == FlashMode.Off
+        ? FlashMode.On
+        : FlashMode.Off;
+}
+
 private void OnSwitchCameraClicked(object sender, EventArgs e)
 {
-    Camera.CameraFacing = Camera.CameraFacing == CameraFacing.Back
-        ? CameraFacing.Front
-        : CameraFacing.Back;
+    Camera.Facing = Camera.Facing == CameraPosition.Default
+        ? CameraPosition.Selfie
+        : CameraPosition.Default;
 }
+```
+
+### Flash Control
+
+SkiaCamera provides comprehensive flash control with independent preview torch and capture flash modes:
+
+```csharp
+// Preview torch control
+Camera.FlashMode = FlashMode.Off;    // Disable torch
+Camera.FlashMode = FlashMode.On;     // Enable torch
+Camera.FlashMode = FlashMode.Strobe; // Strobe mode (future feature)
+
+// Capture flash control
+Camera.CaptureFlashMode = CaptureFlashMode.Off;   // No flash
+Camera.CaptureFlashMode = CaptureFlashMode.Auto;  // Auto flash
+Camera.CaptureFlashMode = CaptureFlashMode.On;    // Always flash
+
+// Check flash capabilities
+if (Camera.IsFlashSupported)
+{
+    // Flash is available on this camera
+    Camera.FlashMode = FlashMode.On;
+}
+```
+
+**Key Features:**
+- **Independent Control**: Preview torch and capture flash work separately
+- **Property-Based API**: Modern, bindable properties for MVVM scenarios
+- **Clean API**: Simple property-based approach without legacy methods
+- **Future Extensibility**: Ready for strobe and other advanced flash modes
+
+### Gallery Integration
+
+SkiaCamera provides `OpenFileInGallery()` method to open captured photos in the system gallery:
+
+```csharp
+private async void OnCaptureClicked(object sender, EventArgs e)
+{
+    try
+    {
+        var photo = await Camera.TakePictureAsync();
+        if (photo != null)
+        {
+            // Save photo to file
+            var fileName = $"photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg";
+            var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
+
+            using var fileStream = File.Create(filePath);
+            using var data = photo.Encode(SKEncodedImageFormat.Jpeg, 90);
+            data.SaveTo(fileStream);
+
+            // Open in system gallery
+            Camera.OpenFileInGallery(filePath);
+        }
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert("Error", $"Failed to open in gallery: {ex.Message}", "OK");
+    }
+}
+```
+
+**Android FileProvider Setup Required:**
+
+For Android, you must configure a FileProvider in `AndroidManifest.xml`:
+
+```xml
+<application>
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+    </provider>
+</application>
+```
+
+Create `Platforms/Android/Resources/xml/file_paths.xml`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path name="my_images" path="Pictures" />
+    <cache-path name="my_cache" path="." />
+</paths>
 ```

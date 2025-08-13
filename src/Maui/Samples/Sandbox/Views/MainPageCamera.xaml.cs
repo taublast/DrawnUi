@@ -90,22 +90,36 @@ public partial class MainPageCamera : BasePageCodeBehind
     {
         try
         {
-            _flashOn = !_flashOn;
-            
-            if (_flashOn)
+            // Cycle through preview flash modes: Off -> On -> Off...
+            var currentMode = CameraControl.FlashMode;
+            var nextMode = currentMode switch
             {
-                CameraControl.TurnOnFlash();
-                FlashButton.Text = "Flash On";
-                FlashButton.BackgroundColor = Colors.Orange;
-            }
-            else
+                FlashMode.Off => FlashMode.On,
+                FlashMode.On => FlashMode.Off,
+                FlashMode.Strobe => FlashMode.Off, // Future feature
+                _ => FlashMode.Off
+            };
+
+            CameraControl.FlashMode = nextMode;
+
+            // Update UI based on flash mode
+            switch (nextMode)
             {
-                CameraControl.TurnOffFlash();
-                FlashButton.Text = "Flash Off";
-                FlashButton.BackgroundColor = Colors.DarkGray;
+                case FlashMode.Off:
+                    FlashButton.Text = "Torch: Off";
+                    FlashButton.BackgroundColor = Colors.DarkGray;
+                    break;
+                case FlashMode.On:
+                    FlashButton.Text = "Torch: On";
+                    FlashButton.BackgroundColor = Colors.Orange;
+                    break;
+                case FlashMode.Strobe:
+                    FlashButton.Text = "Torch: Strobe";
+                    FlashButton.BackgroundColor = Colors.Purple;
+                    break;
             }
-            
-            StatusLabel.Text = $"Camera Status: Flash {(_flashOn ? "enabled" : "disabled")}";
+
+            StatusLabel.Text = $"Camera Status: Preview torch mode set to {nextMode}";
         }
         catch (Exception ex)
         {

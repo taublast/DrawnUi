@@ -4,16 +4,7 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera : SkiaControl
 {
-    public virtual void TurnOnFlash()
-    {
-        NativeControl?.TurnOnFlash();
-    }
-
-    public virtual void TurnOffFlash()
-    {
-        NativeControl?.TurnOffFlash();
-    }
-
+  
     public virtual void SetZoom(double value)
     {
         TextureScale = value;
@@ -28,7 +19,7 @@ public partial class SkiaCamera : SkiaControl
         Zoomed?.Invoke(this, value);
     }
 
-    public void OpenFileInGallery(string imageFilePath)
+    public static void OpenFileInGallery(string imageFilePath)
     {
         Task.Run(async () =>
         {

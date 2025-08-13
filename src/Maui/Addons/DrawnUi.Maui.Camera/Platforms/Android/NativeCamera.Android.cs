@@ -1222,28 +1222,49 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
     bool _isTorchOn;
+    FlashMode _flashMode = FlashMode.Off;
+    CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
-    public void TurnOnFlash()
+    public void SetFlashMode(FlashMode mode)
     {
-        if (mCameraDevice == null || CaptureSession == null)
-        {
-            throw new InvalidOperationException("Camera not initialized or capture session not started.");
-        }
+        _flashMode = mode;
+        ApplyFlashMode();
+    }
+
+    public FlashMode GetFlashMode()
+    {
+        return _flashMode;
+    }
+
+    private void ApplyFlashMode()
+    {
+        if (mCameraDevice == null || CaptureSession == null || !mFlashSupported)
+            return;
 
         try
         {
-            // Update the capture request builder to turn on the flash
-            if (mFlashSupported)
+            switch (_flashMode)
             {
-                mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Torch);
-
-                // Apply this updated request to the session
-                mPreviewRequest = mPreviewRequestBuilder.Build();
-                CaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
-
-                _isTorchOn = true;
+                case FlashMode.Off:
+                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Off);
+                    _isTorchOn = false;
+                    break;
+                case FlashMode.On:
+                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                    _isTorchOn = true;
+                    break;
+                case FlashMode.Strobe:
+                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                    _isTorchOn = true;
+                    break;
             }
+
+            // Apply the updated request to the session
+            mPreviewRequest = mPreviewRequestBuilder.Build();
+            CaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
         }
         catch (Exception e)
         {
@@ -1251,32 +1272,65 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
-    public void TurnOffFlash()
+    public void SetCaptureFlashMode(CaptureFlashMode mode)
+    {
+        _captureFlashMode = mode;
+        // Reset AE state to clear any cached flash settings
+        ResetAutoExposureState();
+    }
+
+    private void ResetAutoExposureState()
     {
         if (mCameraDevice == null || CaptureSession == null)
-        {
-            throw new InvalidOperationException("Camera not initialized or capture session not started.");
-        }
+            return;
 
         try
         {
-            // Update the capture request builder to turn on the flash
-            if (mFlashSupported)
+            // Reset AE state by triggering AE precapture
+            var resetRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
+
+            // Copy current preview settings
+            switch (_flashMode)
             {
-                mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.OnAutoFlash);
-                mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Off);
-
-                // Apply this updated request to the session
-                mPreviewRequest = mPreviewRequestBuilder.Build();
-                CaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
-
-                _isTorchOn = false;
+                case FlashMode.Off:
+                    resetRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    resetRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Off);
+                    break;
+                case FlashMode.On:
+                    resetRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    resetRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                    break;
+                case FlashMode.Strobe:
+                    resetRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    resetRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                    break;
             }
+
+            // Reset AE state
+            resetRequestBuilder.Set(CaptureRequest.ControlAePrecaptureTrigger, (int)ControlAEPrecaptureTrigger.Cancel);
+
+            var resetRequest = resetRequestBuilder.Build();
+            CaptureSession.Capture(resetRequest, mCaptureCallback, mBackgroundHandler);
         }
         catch (Exception e)
         {
-            Trace.WriteLine(e);
+            Trace.WriteLine($"[CAMERA] ResetAutoExposureState error: {e}");
         }
+    }
+
+    public CaptureFlashMode GetCaptureFlashMode()
+    {
+        return _captureFlashMode;
+    }
+
+    public bool IsFlashSupported()
+    {
+        return mFlashSupported;
+    }
+
+    public bool IsAutoFlashSupported()
+    {
+        return mFlashSupported; // Android supports auto flash when flash is available
     }
 
     public void SetCapturingStillOptions(CaptureRequest.Builder requestBuilder)
@@ -1285,15 +1339,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         if (mFlashSupported)
         {
-            if (_isTorchOn)
+            switch (_captureFlashMode)
             {
-                requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                requestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Torch);
-            }
-            else
-            {
-                requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.OnAutoFlash);
-                requestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Off);
+                case CaptureFlashMode.Off:
+                    requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    requestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Off);
+                    break;
+                case CaptureFlashMode.Auto:
+                    requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.OnAutoFlash);
+                    requestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Off);
+                    break;
+                case CaptureFlashMode.On:
+                    requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                    requestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Single);
+                    break;
             }
         }
     }
@@ -1349,8 +1408,30 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
 
+            // Apply current flash mode to preview request builder
             if (mFlashSupported)
-                mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)FlashMode.Torch);
+            {
+                switch (_flashMode)
+                {
+                    case FlashMode.Off:
+                        mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Off);
+                        _isTorchOn = false;
+                        break;
+                    case FlashMode.On:
+                        mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                        _isTorchOn = true;
+                        break;
+                    case FlashMode.Strobe:
+                        // Future implementation for strobe mode
+                        // For now, treat as On
+                        mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                        _isTorchOn = true;
+                        break;
+                }
+            }
 
             mCameraDevice.CreateCaptureSession(
                 new List<Surface> { mImageReaderPreview.Surface, mImageReaderPhoto.Surface },

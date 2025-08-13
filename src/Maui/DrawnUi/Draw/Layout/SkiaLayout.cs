@@ -603,40 +603,9 @@ namespace DrawnUi.Draw
 
         protected bool templatesInvalidated;
 
-        public override void InvalidateWithChildren()
-        {
-            if (ChildrenFactory == null)
-                return;
-
-            if (IsTemplated)
-            {
-                //todo cannot really spam this if we find out we need this need to find some
-                //more optimizations to minimize the lag from recreating templates
-                //ChildrenFactory.TemplatesInvalidated = true;
-
-                OnItemSourceChanged();
-            }
-
-            base.InvalidateWithChildren();
-        }
-
-        //protected override void OnChildAdded(SkiaControl child)
-        //{
-        //    base.OnChildAdded(child);
-
-        //    needUpdateViews = true;
-        //}
-
-        //protected override void OnChildRemoved(SkiaControl child)
-        //{
-        //    base.OnChildRemoved(child);
-
-        //    needUpdateViews = true;
-        //}
-
         public override void InvalidateViewsList()
         {
-            base.InvalidateViewsList(); //_orderedChildren = null;
+            base.InvalidateViewsList(); 
 
             ActualizeSubviews();
         }
@@ -863,6 +832,16 @@ namespace DrawnUi.Draw
 
                 if (!CheckAndSetupIfEmpty())
                 {
+                    if (IsTemplated) //fix threads conflict when templates are initialized in background thread
+                    {
+                        var canMeasureTemplates = ChildrenFactory.TemplatesAvailable || force;
+
+                        if (!canMeasureTemplates)
+                            return ScaledSize.CreateEmpty(request.Scale);
+
+                        ChildrenFactory.InvalidateAllPooledCells();
+                    }
+
                     switch (Type)
                     {
                         case LayoutType.Absolute:
@@ -878,17 +857,12 @@ namespace DrawnUi.Draw
                         case LayoutType.Row:
                             if (IsTemplated) //fix threads conflict when templates are initialized in background thread
                             {
-                                var canMeasureTemplates = ChildrenFactory.TemplatesAvailable || force;
-
-                                if (!canMeasureTemplates)
-                                    return ScaledSize.CreateEmpty(request.Scale);
-
                                 if (MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
                                 {
                                     ContentSize = MeasureList(constraints.Content, request.Scale);
                                     break;
                                 }
-
+                                
                                 ContentSize = MeasureStackTemplated(constraints.Content, request.Scale);
                             }
                             else
@@ -899,14 +873,6 @@ namespace DrawnUi.Draw
                             break;
 
                         case LayoutType.Wrap:
-                            if (IsTemplated) //fix threads conflict when templates are initialized in background thread
-                            {
-                                var canMeasureTemplates = ChildrenFactory.TemplatesAvailable || force;
-
-                                if (!canMeasureTemplates)
-                                    return ScaledSize.CreateEmpty(request.Scale);
-                            }
-
                             ContentSize = MeasureWrap(constraints.Content, request.Scale);
                             break;
 
@@ -1700,9 +1666,8 @@ namespace DrawnUi.Draw
             if (!IsTemplated)
                 return;
 
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.VisibilityChange, MeasureStamp)
             {
-                Type = StructureChangeType.VisibilityChange,
                 StartIndex = startIndex,
                 Count = count,
                 IsVisible = isVisible
@@ -1730,9 +1695,8 @@ namespace DrawnUi.Draw
             CancelBackgroundMeasurement();
 
             // Stage the Add change for rendering pipeline
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.Add, MeasureStamp)
             {
-                Type = StructureChangeType.Add,
                 StartIndex = args.NewStartingIndex,
                 Count = args.NewItems?.Count ?? 0,
                 Items = args.NewItems?.Cast<object>().ToList()
@@ -1771,9 +1735,8 @@ namespace DrawnUi.Draw
             CancelBackgroundMeasurement();
 
             // Stage the Remove change for rendering pipeline
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.Remove, MeasureStamp)
             {
-                Type = StructureChangeType.Remove,
                 StartIndex = args.OldStartingIndex,
                 Count = args.OldItems?.Count ?? 0
             });
@@ -1812,9 +1775,8 @@ namespace DrawnUi.Draw
             CancelBackgroundMeasurement();
 
             // Stage the Replace change for rendering pipeline
-            StageStructureChange(new StructureChange
+            StageStructureChange(new StructureChange(StructureChangeType.Replace, MeasureStamp)
             {
-                Type = StructureChangeType.Replace,
                 StartIndex = args.NewStartingIndex,
                 Count = args.NewItems?.Count ?? 0,
                 Items = args.NewItems?.Cast<object>().ToList()

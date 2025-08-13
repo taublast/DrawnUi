@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using Microsoft.Maui.Controls;
 using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace DrawnUi.Draw;
@@ -136,7 +138,7 @@ public class ViewsAdapter : IDisposable
     #region INITIALIZE
 
     /// <summary>
-    /// Main method to initialize templates, can use InitializeTemplatesInBackground as an option. 
+    /// Main method to initialize templates, can use InitializeTemplatesInBackground as an option.
     /// </summary>
     /// <param name="template"></param>
     /// <param name="dataContexts"></param>
@@ -1002,7 +1004,7 @@ public class ViewsAdapter : IDisposable
                             view.Parent = _parent;
                         }
 
-                        if (view.ContextIndex != index || view.BindingContext != context) //index == 0 || 
+                        if (view.ContextIndex != index || view.BindingContext != context) //index == 0 ||
                         {
                             view.ContextIndex = index;
                             var ctx = view.BindingContext;
@@ -1022,7 +1024,7 @@ public class ViewsAdapter : IDisposable
             }
             catch (ObjectDisposedException ex)
             {
-                // View disposed between checks 
+                // View disposed between checks
                 if (LogEnabled)
                     Trace.WriteLine(
                         $"[ViewsAdapter] View {view.Uid} disposed during binding context set: {ex.Message}");
@@ -1068,7 +1070,7 @@ public class ViewsAdapter : IDisposable
     }
 
     /// <summary>
-    /// Holds visible prepared views with appropriate context, index is inside ItemsSource 
+    /// Holds visible prepared views with appropriate context, index is inside ItemsSource
     /// </summary>
     private readonly Dictionary<int, SkiaControl> _cellsInUseViews = new(256);
 
@@ -1175,6 +1177,27 @@ public class ViewsAdapter : IDisposable
             {
                 _templatedViewsPool.Reserve();
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Invalidates all existing cells currently stored in the recycling pools (generic, sized, and standalone).
+    /// Use this when container constraints change so pooled cells are forced to re-measure next time they are reused.
+    /// </summary>
+    public void InvalidateAllPooledCells()
+    {
+        if (IsDisposed)
+            return;
+
+        lock (_lockTemplates)
+        {
+            foreach (var kvp in _cellsInUseViews.ToArray())
+            {
+                _cellsInUseViews.Remove(kvp.Key);
+                ReleaseViewToPool(kvp.Value);
+            }
+            _templatedViewsPool?.InvalidateAll();
         }
     }
 
@@ -1349,6 +1372,7 @@ public class ViewsAdapter : IDisposable
 
             SkiaControl view = _templatedViewsPool.GetStandalone();
             view.IsParentIndependent = true;
+            view.NeedMeasure = true;
             return view;
         }
     }
@@ -1614,15 +1638,15 @@ public class TemplatedViewsPool : IDisposable
 
         // Convert stack to array for efficient searching
         var stackArray = stack.ToArray();
-        
+
         // Search only top 10 items for performance (or full stack if smaller)
         var searchLimit = Math.Min(10, stackArray.Length);
-        
+
         for (int i = 0; i < searchLimit; i++)
         {
             var view = stackArray[i];
-            if (view != null && !view.IsDisposed && 
-                view.BindingContext != null && 
+            if (view != null && !view.IsDisposed &&
+                view.BindingContext != null &&
                 view.BindingContext.Equals(bindingContext))
             {
                 // Found matching view - remove it from stack
@@ -1630,7 +1654,7 @@ public class TemplatedViewsPool : IDisposable
                 return view;
             }
         }
-        
+
         return null; // No matching view found
     }
 
@@ -1647,7 +1671,7 @@ public class TemplatedViewsPool : IDisposable
         // Convert to list, remove item, rebuild stack
         var items = stack.ToList();
         items.Remove(viewToRemove);
-        
+
         stack.Clear();
         for (int i = items.Count - 1; i >= 0; i--)
         {
@@ -1846,7 +1870,7 @@ public class TemplatedViewsPool : IDisposable
                 {
                     view = GetViewWithMatchingBindingContext(stack, bindingContext);
                 }
-                
+
                 // Fall back to normal pop if no match found
                 if (view == null)
                 {
@@ -1860,7 +1884,7 @@ public class TemplatedViewsPool : IDisposable
                 {
                     view = GetViewWithMatchingBindingContext(_genericPool, bindingContext);
                 }
-                
+
                 if (view == null && _genericPool.Count > 0)
                     view = _genericPool.Pop();
 
@@ -1911,6 +1935,42 @@ public class TemplatedViewsPool : IDisposable
             {
                 _dispose?.Invoke(viewModel);
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Invalidate all views held inside all internal pools so they will be re-measured on next use.
+    /// Does not remove or modify pool contents; only marks controls as needing measure/layout.
+    /// </summary>
+    public void InvalidateAll()
+    {
+        lock (_syncLock)
+        {
+            if (IsDisposing)
+                return;
+
+            void InvalidateStack(Stack<SkiaControl> stack)
+            {
+                if (stack == null || stack.Count == 0)
+                    return;
+
+                foreach (var view in stack)
+                {
+                    if (view != null && !view.IsDisposed && !view.IsDisposing)
+                    {
+                        view.InvalidateWithChildren();
+                    }
+                }
+            }
+
+            InvalidateStack(_genericPool);
+            foreach (var kvp in _heightPools)
+            {
+                InvalidateStack(kvp.Value);
+            }
+
+            InvalidateStack(_standalonePool);
         }
     }
 }
