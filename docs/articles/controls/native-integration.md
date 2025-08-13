@@ -336,3 +336,62 @@ if (Camera.IsFlashSupported)
 - **Property-Based API**: Modern, bindable properties for MVVM scenarios
 - **Clean API**: Simple property-based approach without legacy methods
 - **Future Extensibility**: Ready for strobe and other advanced flash modes
+
+### Gallery Integration
+
+SkiaCamera provides `OpenFileInGallery()` method to open captured photos in the system gallery:
+
+```csharp
+private async void OnCaptureClicked(object sender, EventArgs e)
+{
+    try
+    {
+        var photo = await Camera.TakePictureAsync();
+        if (photo != null)
+        {
+            // Save photo to file
+            var fileName = $"photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg";
+            var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
+
+            using var fileStream = File.Create(filePath);
+            using var data = photo.Encode(SKEncodedImageFormat.Jpeg, 90);
+            data.SaveTo(fileStream);
+
+            // Open in system gallery
+            Camera.OpenFileInGallery(filePath);
+        }
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert("Error", $"Failed to open in gallery: {ex.Message}", "OK");
+    }
+}
+```
+
+**Android FileProvider Setup Required:**
+
+For Android, you must configure a FileProvider in `AndroidManifest.xml`:
+
+```xml
+<application>
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+    </provider>
+</application>
+```
+
+Create `Platforms/Android/Resources/xml/file_paths.xml`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path name="my_images" path="Pictures" />
+    <cache-path name="my_cache" path="." />
+</paths>
+```

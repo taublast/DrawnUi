@@ -21,23 +21,6 @@ using static AVFoundation.AVMetadataIdentifiers;
 
 namespace DrawnUi.Camera;
 
-// Lightweight container for raw frame data - no SKImage creation
-internal class RawFrameData : IDisposable
-{
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public int BytesPerRow { get; set; }
-    public DateTime Time { get; set; }
-    public Rotation CurrentRotation { get; set; }
-    public CameraPosition Facing { get; set; }
-    public int Orientation { get; set; }
-    public byte[] PixelData { get; set; } // Copy pixel data to avoid CVPixelBuffer lifetime issues
-
-    public void Dispose()
-    {
-        PixelData = null; // Let GC handle byte array
-    }
-}
 
 public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate
 {
@@ -879,34 +862,58 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
+    /// <summary>
+    /// Saves JPEG stream to iOS Photos gallery and returns the assets-library URL
+    /// </summary>
+    /// <param name="stream">Image stream</param>
+    /// <param name="filename">Original filename</param>
+    /// <param name="cameraSavedRotation">Camera rotation</param>
+    /// <param name="meta">Image metadata</param>
+    /// <param name="album">Album name (optional)</param>
+    /// <returns>assets-library:// URL to reference the saved photo</returns>
     public async Task<string> SaveJpgStreamToGallery(Stream stream, string filename, double cameraSavedRotation, Metadata meta, string album)
     {
         try
         {
             var data = NSData.FromStream(stream);
-            
-            bool complete = false;
-            string resultPath = null;
 
+            bool complete = false;
+            string resultUrl = null;
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
                 var options = new PHAssetResourceCreationOptions
                 {
                     OriginalFilename = filename
                 };
-
                 var creationRequest = PHAssetCreationRequest.CreationRequestForAsset();
                 creationRequest.AddResource(PHAssetResourceType.Photo, data, options);
 
+                // Add to specific album if provided
+                if (!string.IsNullOrEmpty(album))
+                {
+                    // Find or create album and add asset to it
+                    var albumCollection = FindOrCreateAlbum(album);
+                    if (albumCollection != null)
+                    {
+                        var albumChangeRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                        albumChangeRequest?.AddAssets(new PHObject[] { creationRequest.PlaceholderForCreatedAsset });
+                    }
+                }
+
+                // Get the placeholder for the asset being created
+                var placeholder = creationRequest.PlaceholderForCreatedAsset;
+                if (placeholder != null)
+                {
+                    // Generate assets-library URL using the local identifier
+                    var assetIdentifier = placeholder.LocalIdentifier;
+                    resultUrl = $"assets-library://asset/asset.JPG?id={assetIdentifier}";
+                }
             }, (success, error) =>
             {
-                if (success)
-                {
-                    resultPath = filename;
-                }
-                else
+                if (!success)
                 {
                     Console.WriteLine($"SaveJpgStreamToGallery error: {error}");
+                    resultUrl = null;
                 }
                 complete = true;
             });
@@ -916,7 +923,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 await Task.Delay(10);
             }
 
-            return resultPath;
+            return resultUrl;
         }
         catch (Exception e)
         {
@@ -924,6 +931,77 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             return null;
         }
     }
+
+    /// <summary>
+    /// Finds existing album or creates new one
+    /// </summary>
+    /// <param name="albumName">Album name</param>
+    /// <returns>PHAssetCollection for the album</returns>
+    private PHAssetCollection FindOrCreateAlbum(string albumName)
+    {
+        try
+        {
+            // First try to find existing album
+            var fetchOptions = new PHFetchOptions();
+            fetchOptions.Predicate = NSPredicate.FromFormat($"title = '{albumName}'");
+            var existingAlbums = PHAssetCollection.FetchAssetCollections(PHAssetCollectionType.Album, PHAssetCollectionSubtype.Any, fetchOptions);
+
+            if (existingAlbums.Count > 0)
+            {
+                return existingAlbums.FirstObject as PHAssetCollection;
+            }
+
+            // Create new album if not found
+            string albumIdentifier = null;
+            bool createComplete = false;
+
+            PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                var createRequest = PHAssetCollectionChangeRequest.CreateAssetCollection(albumName);
+                albumIdentifier = createRequest.PlaceholderForCreatedAssetCollection.LocalIdentifier;
+            }, (success, error) =>
+            {
+                if (!success)
+                {
+                    Console.WriteLine($"Failed to create album '{albumName}': {error}");
+                }
+                createComplete = true;
+            });
+
+            // Wait for creation to complete
+            while (!createComplete)
+            {
+                Task.Delay(10).Wait();
+            }
+
+            if (!string.IsNullOrEmpty(albumIdentifier))
+            {
+                // Fetch the created album by identifier - need correct API here
+                // For now, search by name again as workaround
+                var newFetchOptions = new PHFetchOptions();
+                newFetchOptions.Predicate = NSPredicate.FromFormat($"title = '{albumName}'");
+                var newAlbums = PHAssetCollection.FetchAssetCollections(PHAssetCollectionType.Album, PHAssetCollectionSubtype.Any, newFetchOptions);
+                return newAlbums.FirstObject as PHAssetCollection;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error finding/creating album '{albumName}': {ex}");
+        }
+
+        return null;
+    }
+    /// <summary>
+    /// Trims identifier to remove unwanted suffixes
+    /// </summary>
+    /// <param name="identifier">Full identifier</param>
+    /// <returns>Trimmed identifier</returns>
+    private static string TrimIdentifier(string identifier)
+    {
+        var index = identifier.IndexOf('/');
+        return index >= 0 ? identifier.Substring(0, index) : identifier;
+    }
+
 
     #endregion
 

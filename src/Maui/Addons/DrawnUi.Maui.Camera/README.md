@@ -87,6 +87,33 @@ If you want to geo-tag photos (get and save GPS location metadata) add this:
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
+#### FileProvider Setup (Required for OpenFileInGallery)
+
+To use the `OpenFileInGallery()` method, you must configure a FileProvider. Add this inside the `<application>` tag in `AndroidManifest.xml`:
+
+```xml
+<provider
+    android:name="androidx.core.content.FileProvider"
+    android:authorities="${applicationId}.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+</provider>
+```
+
+Create `Platforms/Android/Resources/xml/file_paths.xml`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path name="my_images" path="Pictures" />
+    <external-files-path name="my_movies" path="Movies" />
+    <cache-path name="my_cache" path="." />
+</paths>
+```
+
 ## Usage Guide
 
 ### 1. XAML Declaration
@@ -247,6 +274,39 @@ SkiaCamera implements a **dual-channel flash system** that separates preview ill
 | **Android** | `FlashMode.Torch` | `FlashMode.Single` + `ControlAEMode` | ✅ `OnAutoFlash` |
 | **iOS/macOS** | `AVCaptureTorchMode` | `AVCaptureFlashMode` | ✅ `Auto` mode |
 | **Windows** | `FlashControl.Enabled` | `FlashControl.Auto` | ✅ Auto detection |
+
+### 5. Opening Files in Gallery
+
+Use `OpenFileInGallery()` to open captured photos in the system gallery app:
+
+```csharp
+private async void OnCaptureSuccess(object sender, CapturedImage captured)
+{
+    try
+    {
+        // Save the captured image
+        var fileName = $"photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg";
+        var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
+
+        // Save SKImage to file
+        using var fileStream = File.Create(filePath);
+        using var data = captured.Image.Encode(SKEncodedImageFormat.Jpeg, 90);
+        data.SaveTo(fileStream);
+
+        // Open in gallery
+        camera.OpenFileInGallery(filePath);
+    }
+    catch (Exception ex)
+    {
+        Debug.WriteLine($"Error opening file in gallery: {ex.Message}");
+    }
+}
+```
+
+**Platform Requirements:**
+- **Android**: Requires FileProvider configuration (see setup section above)
+- **iOS/macOS**: Works out of the box
+- **Windows**: Opens with default photo viewer
 
 **Real-World Usage Scenarios:**
 
@@ -871,6 +931,7 @@ public static void CheckPermissions(Action<bool> callback)
 // Capture Operations
 public async Task TakePicture()
 public void FlashScreen(Color color, long duration = 250)
+public void OpenFileInGallery(string filePath)               // Open file in system gallery
 
 // Camera Controls
 public void SetZoom(double value)
@@ -917,6 +978,9 @@ public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
 | **Manual selection fails** | Invalid `CameraIndex` | Verify index is 0 to `cameras.Count-1` |
 | **Flash not working** | Flash not supported or wrong mode | Check `IsFlashSupported` and use correct `CaptureFlashMode` |
 | **App crashes on camera switch** | Rapid camera changes | Add delays between camera operations |
+| **OpenFileInGallery fails (Android)** | FileProvider not configured | Add FileProvider to AndroidManifest.xml (see setup) |
+| **"Failed to find configured root"** | Invalid file_paths.xml | Check file is in declared FileProvider paths |
+| **FileUriExposedException** | Missing FileProvider | Configure FileProvider with correct authority |
 | **Memory leaks** | Event handlers not removed | Properly dispose and unsubscribe events |
 
 ### Debug Tips

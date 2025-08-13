@@ -25,26 +25,45 @@ public partial class SkiaCamera
     }
 
 
+    /// <summary>
+    /// Opens a file in the gallery app
+    /// </summary>
+    /// <param name="imageFilePath">File path or content URI</param>
     public static void OpenFileInGallery(string imageFilePath)
     {
-        // Create a new Intent
         Intent intent = new Intent();
-
-        // Set the Intent action to ACTION_VIEW (view the data)
         intent.SetAction(Intent.ActionView);
 
-        // Create a Uri from the file path
-        var photoUri = FileProvider.GetUriForFile(Platform.AppContext, Platform.AppContext.PackageName + ".provider", new Java.IO.File(imageFilePath));
+        Android.Net.Uri photoUri;
 
-        // Set the Intent data to the Uri
+        // Check if it's already a content URI
+        if (imageFilePath.StartsWith("content://"))
+        {
+            // Already a content URI, use it directly
+            photoUri = Android.Net.Uri.Parse(imageFilePath);
+        }
+        else
+        {
+            // It's a file path, convert using FileProvider
+            var file = new Java.IO.File(imageFilePath);
+
+            // Verify the file exists
+            if (!file.Exists())
+            {
+                throw new FileNotFoundException($"File not found: {imageFilePath}");
+            }
+
+            photoUri = FileProvider.GetUriForFile(
+                Platform.AppContext,
+                Platform.AppContext.PackageName + ".provider",
+                file);
+        }
+
         intent.SetDataAndType(photoUri, "image/*");
-
-        // Grant temporary permission to external app to use FileProvider
         intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.GrantReadUriPermission);
-
-        // Start the external activity
         Platform.AppContext.StartActivity(intent);
     }
+
 
     public virtual Metadata CreateMetadata()
     {
