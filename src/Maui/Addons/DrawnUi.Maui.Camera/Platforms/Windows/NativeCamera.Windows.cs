@@ -1084,6 +1084,56 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
+    private (uint width, uint height) GetBestCaptureResolution()
+    {
+        try
+        {
+            if (_frameSource?.SupportedFormats == null || !_frameSource.SupportedFormats.Any())
+            {
+                Debug.WriteLine("[NativeCameraWindows] No supported formats available, using fallback resolution");
+                return (1920, 1080); // Fallback to original hardcoded values
+            }
+
+            // Get all available resolutions sorted by total pixels (descending)
+            var availableResolutions = _frameSource.SupportedFormats
+                .Select(format => new
+                {
+                    Width = format.VideoFormat.Width,
+                    Height = format.VideoFormat.Height,
+                    TotalPixels = format.VideoFormat.Width * format.VideoFormat.Height,
+                    AspectRatio = (double)format.VideoFormat.Width / format.VideoFormat.Height
+                })
+                .Distinct()
+                .OrderByDescending(r => r.TotalPixels)
+                .ToList();
+
+            Debug.WriteLine($"[NativeCameraWindows] Available resolutions:");
+            foreach (var res in availableResolutions)
+            {
+                Debug.WriteLine($"  {res.Width}x{res.Height} ({res.TotalPixels:N0} pixels, AR: {res.AspectRatio:F2})");
+            }
+
+            // Select resolution based on CapturePhotoQuality setting
+            var selectedResolution = FormsControl.CapturePhotoQuality switch
+            {
+                CaptureQuality.Max => availableResolutions.First(), // Highest resolution
+                CaptureQuality.Medium => availableResolutions.Skip(availableResolutions.Count / 3).First(), // ~66% down the list
+                CaptureQuality.Low => availableResolutions.Skip(2 * availableResolutions.Count / 3).First(), // ~33% down the list
+                CaptureQuality.Preview => availableResolutions.LastOrDefault(r => r.Width >= 640 && r.Height >= 480)
+                                         ?? availableResolutions.Last(), // Smallest usable resolution
+                _ => availableResolutions.First()
+            };
+
+            Debug.WriteLine($"[NativeCameraWindows] Selected resolution for {FormsControl.CapturePhotoQuality}: {selectedResolution.Width}x{selectedResolution.Height}");
+            return (selectedResolution.Width, selectedResolution.Height);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] GetBestCaptureResolution error: {e}");
+            return (1920, 1080); // Fallback to original hardcoded values
+        }
+    }
+
     /// <summary>
     /// WIll be correct from correct thread hopefully
     /// </summary>
@@ -1254,10 +1304,15 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             // Set flash mode for capture
             SetFlashModeForCapture();
 
-            // Create image encoding properties for high quality JPEG
+            // Create image encoding properties using camera's actual capabilities
             var imageProperties = ImageEncodingProperties.CreateJpeg();
-            imageProperties.Width = 1920; // Set higher resolution for still capture
-            imageProperties.Height = 1080;
+
+            // Get the best available resolution from camera capabilities
+            var (width, height) = GetBestCaptureResolution();
+            imageProperties.Width = width;
+            imageProperties.Height = height;
+
+            Debug.WriteLine($"[NativeCameraWindows] Using capture resolution: {width}x{height}");
 
             // Capture photo to stream
             using var stream = new InMemoryRandomAccessStream();
