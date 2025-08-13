@@ -24,6 +24,7 @@ public partial class SkiaCamera
         Zoomed?.Invoke(this, value);
     }
 
+
     /// <summary>
     /// Opens a file or displays a photo from assets-library URL
     /// </summary>
@@ -388,6 +389,112 @@ public partial class SkiaCamera
         }
 
         return cameras;
+    }
+
+    protected async Task<List<CaptureFormat>> GetAvailableCaptureFormatsPlatform()
+    {
+        var formats = new List<CaptureFormat>();
+
+        try
+        {
+            await Task.Run(() =>
+            {
+                var deviceTypes = new AVFoundation.AVCaptureDeviceType[]
+                {
+                    AVFoundation.AVCaptureDeviceType.BuiltInWideAngleCamera,
+                    AVFoundation.AVCaptureDeviceType.BuiltInTelephotoCamera,
+                    AVFoundation.AVCaptureDeviceType.BuiltInUltraWideCamera
+                };
+
+                if (UIKit.UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
+                {
+                    deviceTypes = deviceTypes.Concat(new[]
+                    {
+                        AVFoundation.AVCaptureDeviceType.BuiltInDualCamera,
+                        AVFoundation.AVCaptureDeviceType.BuiltInTripleCamera
+                    }).ToArray();
+                }
+
+                var discoverySession = AVFoundation.AVCaptureDeviceDiscoverySession.Create(
+                    deviceTypes,
+                    AVFoundation.AVMediaTypes.Video,
+                    AVFoundation.AVCaptureDevicePosition.Unspecified);
+
+                // Find current camera device or use default
+                var currentDevice = discoverySession.Devices.FirstOrDefault(d =>
+                    (Facing == CameraPosition.Selfie && d.Position == AVFoundation.AVCaptureDevicePosition.Front) ||
+                    (Facing == CameraPosition.Default && d.Position == AVFoundation.AVCaptureDevicePosition.Back))
+                    ?? discoverySession.Devices.FirstOrDefault();
+
+                if (currentDevice != null)
+                {
+                    // Get unique still image dimensions (remove duplicates)
+                    var uniqueResolutions = currentDevice.Formats
+                        .Where(f => f.HighResolutionStillImageDimensions.Width > 0 && f.HighResolutionStillImageDimensions.Height > 0)
+                        .Select(f => f.HighResolutionStillImageDimensions)
+                        .GroupBy(dims => new { dims.Width, dims.Height })
+                        .Select(group => group.First())
+                        .OrderByDescending(dims => dims.Width * dims.Height)
+                        .ToList();
+
+                    Console.WriteLine($"[SkiaCameraApple] Found {uniqueResolutions.Count} unique still image formats:");
+
+                    for (int i = 0; i < uniqueResolutions.Count; i++)
+                    {
+                        var dims = uniqueResolutions[i];
+                        Console.WriteLine($"  [{i}] {dims.Width}x{dims.Height}");
+
+                        formats.Add(new CaptureFormat
+                        {
+                            Width = (int)dims.Width,
+                            Height = (int)dims.Height,
+                            FormatId = $"ios_still_{currentDevice.UniqueID}_{i}"
+                        });
+                    }
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SkiaCameraApple] Error getting capture formats: {ex.Message}");
+        }
+
+        return formats;
+    }
+
+    /// <summary>
+    /// Updates preview format to match current capture format aspect ratio.
+    /// iOS implementation: Reselects device format since iOS uses single format for both preview and capture.
+    /// </summary>
+    protected virtual void UpdatePreviewFormatForAspectRatio()
+    {
+        if (NativeControl is NativeCamera appleCamera)
+        {
+            Console.WriteLine("[SkiaCameraApple] Updating preview format for aspect ratio match");
+
+            // iOS uses a single AVCaptureDeviceFormat for both preview and capture
+            // We need to reselect the optimal format based on new capture quality settings
+            Task.Run(async () =>
+            {
+                try
+                {
+                    // Trigger format reselection by restarting camera session
+                    appleCamera.Stop();
+
+                    // Small delay to ensure cleanup
+                    await Task.Delay(100);
+
+                    // Restart - this will call SelectOptimalFormat() with new settings
+                    appleCamera.Start();
+
+                    Console.WriteLine("[SkiaCameraApple] Camera session restarted for format change");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[SkiaCameraApple] Error updating preview format: {ex.Message}");
+                }
+            });
+        }
     }
 
     /// <summary>

@@ -20,5 +20,10 @@ public enum CaptureQuality
 	/// <summary>
 	/// Will be sending image from preview as still capture without taking a real still picture, make sure you have preview enabled
 	/// </summary>
-	Preview
+	Preview,
+
+	/// <summary>
+	/// Manual capture size selection - use ManualCaptureSize property to specify exact dimensions
+	/// </summary>
+	Manual
 }

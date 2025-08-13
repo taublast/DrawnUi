@@ -472,14 +472,18 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] Available format: {format.VideoFormat.Width}x{format.VideoFormat.Height} @ {fps:F1} FPS");
         }
 
-        var preferredFormat = _frameSource.SupportedFormats.FirstOrDefault(format =>
-            format.VideoFormat.Width >= 640 &&
-            format.VideoFormat.Height >= 480);
+        // Get target aspect ratio from capture format
+        var (captureWidth, captureHeight) = GetBestCaptureResolution();
+        double targetAspectRatio = (double)captureWidth / captureHeight;
+
+        Debug.WriteLine($"[NativeCameraWindows] Target capture resolution: {captureWidth}x{captureHeight} (AR: {targetAspectRatio:F2})");
+
+        var preferredFormat = ChooseOptimalPreviewFormat(_frameSource.SupportedFormats, targetAspectRatio);
 
         if (preferredFormat != null)
         {
             var fps = preferredFormat.FrameRate.Numerator / (double)preferredFormat.FrameRate.Denominator;
-            Debug.WriteLine($"[NativeCameraWindows] Setting frame source format: {preferredFormat.VideoFormat.Width}x{preferredFormat.VideoFormat.Height} @ {fps:F1} FPS");
+            Debug.WriteLine($"[NativeCameraWindows] Setting preview format: {preferredFormat.VideoFormat.Width}x{preferredFormat.VideoFormat.Height} @ {fps:F1} FPS (AR: {(double)preferredFormat.VideoFormat.Width / preferredFormat.VideoFormat.Height:F2})");
             await _frameSource.SetFormatAsync(preferredFormat);
         }
         else
@@ -1121,6 +1125,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 CaptureQuality.Low => availableResolutions.Skip(2 * availableResolutions.Count / 3).First(), // ~33% down the list
                 CaptureQuality.Preview => availableResolutions.LastOrDefault(r => r.Width >= 640 && r.Height >= 480)
                                          ?? availableResolutions.Last(), // Smallest usable resolution
+                CaptureQuality.Manual => GetManualResolution(availableResolutions, FormsControl.CaptureFormatIndex),
                 _ => availableResolutions.First()
             };
 
@@ -1132,6 +1137,100 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] GetBestCaptureResolution error: {e}");
             return (1920, 1080); // Fallback to original hardcoded values
         }
+    }
+
+    private static dynamic GetManualResolution(IEnumerable<dynamic> availableResolutions, int formatIndex)
+    {
+        var resolutionsList = availableResolutions.ToList();
+
+        if (formatIndex >= 0 && formatIndex < resolutionsList.Count)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Using manual format index {formatIndex}");
+            return resolutionsList[formatIndex];
+        }
+        else
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
+            return resolutionsList.First();
+        }
+    }
+
+    /// <summary>
+    /// Choose optimal preview format that matches the target aspect ratio.
+    /// IMPORTANT: Prioritizes HIGH FPS (≥24fps) and LOW RESOLUTION for smooth performance.
+    /// </summary>
+    private static Windows.Media.Capture.Frames.MediaFrameFormat ChooseOptimalPreviewFormat(
+        IReadOnlyList<Windows.Media.Capture.Frames.MediaFrameFormat> availableFormats,
+        double targetAspectRatio)
+    {
+        const double aspectRatioTolerance = 0.1; // 10% tolerance
+        const int minWidth = 640;
+        const int minHeight = 480;
+        const int maxPreviewWidth = 1920;  // Cap preview resolution for performance
+        const int maxPreviewHeight = 1080;
+        const double minFps = 24.0;        // Minimum acceptable FPS for smooth preview
+        const double preferredFps = 30.0;  // Preferred FPS
+
+        // First, filter formats that are suitable for preview with good FPS
+        var suitableFormats = new List<(Windows.Media.Capture.Frames.MediaFrameFormat format, double aspectRatioDiff, int totalPixels, double fps)>();
+
+        foreach (var format in availableFormats)
+        {
+            var width = format.VideoFormat.Width;
+            var height = format.VideoFormat.Height;
+            var fps = format.FrameRate.Numerator / (double)format.FrameRate.Denominator;
+
+            // Skip formats that are too small, too large, or have terrible FPS
+            if (width < minWidth || height < minHeight ||
+                width > maxPreviewWidth || height > maxPreviewHeight ||
+                fps < minFps)
+                continue;
+
+            double aspectRatio = (double)width / height;
+            double aspectRatioDiff = Math.Abs(targetAspectRatio - aspectRatio);
+            double normalizedDiff = aspectRatioDiff / targetAspectRatio;
+
+            // Only consider formats within aspect ratio tolerance
+            if (normalizedDiff <= aspectRatioTolerance)
+            {
+                suitableFormats.Add((format, aspectRatioDiff, (int)(width * height), fps));
+            }
+        }
+
+        Windows.Media.Capture.Frames.MediaFrameFormat bestMatch = null;
+
+        if (suitableFormats.Any())
+        {
+            // Priority: 1) Good aspect ratio, 2) High FPS (≥30), 3) Small resolution
+            bestMatch = suitableFormats
+                .OrderBy(f => f.aspectRatioDiff)                           // Best aspect ratio match first
+                .ThenByDescending(f => f.fps >= preferredFps ? 1 : 0)      // Prefer ≥30 FPS
+                .ThenByDescending(f => f.fps)                              // Then highest FPS
+                .ThenBy(f => f.totalPixels)                                // Then smallest resolution
+                .First().format;
+
+            var selectedInfo = suitableFormats.First(f => f.format == bestMatch);
+            Debug.WriteLine($"[NativeCameraWindows] Selected SMOOTH preview: {bestMatch.VideoFormat.Width}x{bestMatch.VideoFormat.Height} @ {selectedInfo.fps:F1} FPS (AR diff: {selectedInfo.aspectRatioDiff:F4})");
+        }
+        else
+        {
+            // Fallback: Find format with good FPS, ignore aspect ratio if needed
+            bestMatch = availableFormats
+                .Where(f => f.VideoFormat.Width >= minWidth && f.VideoFormat.Height >= minHeight &&
+                           f.VideoFormat.Width <= maxPreviewWidth && f.VideoFormat.Height <= maxPreviewHeight)
+                .Where(f => f.FrameRate.Numerator / (double)f.FrameRate.Denominator >= minFps)
+                .OrderByDescending(f => f.FrameRate.Numerator / (double)f.FrameRate.Denominator)  // Highest FPS first
+                .ThenBy(f => f.VideoFormat.Width * f.VideoFormat.Height)                          // Then smallest resolution
+                .FirstOrDefault();
+
+            if (bestMatch != null)
+            {
+                var fps = bestMatch.FrameRate.Numerator / (double)bestMatch.FrameRate.Denominator;
+                Debug.WriteLine($"[NativeCameraWindows] Fallback to SMOOTH format (ignoring AR): {bestMatch.VideoFormat.Width}x{bestMatch.VideoFormat.Height} @ {fps:F1} FPS");
+            }
+        }
+
+        return bestMatch;
     }
 
     /// <summary>
@@ -1150,6 +1249,60 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 _preview = null; // Transfer ownership - renderer will dispose the SKImage 
             }
             return preview;
+        }
+    }
+
+    /// <summary>
+    /// Updates preview format to match current capture format aspect ratio
+    /// </summary>
+    public async Task UpdatePreviewFormatAsync()
+    {
+        try
+        {
+            if (_frameSource?.SupportedFormats == null)
+            {
+                Debug.WriteLine("[NativeCameraWindows] No frame source available for preview format update");
+                return;
+            }
+
+            // Get target aspect ratio from current capture format
+            var (captureWidth, captureHeight) = GetBestCaptureResolution();
+            double targetAspectRatio = (double)captureWidth / captureHeight;
+
+            Debug.WriteLine($"[NativeCameraWindows] Updating preview format to match capture AR: {targetAspectRatio:F2} ({captureWidth}x{captureHeight})");
+
+            // Find optimal preview format
+            var newPreviewFormat = ChooseOptimalPreviewFormat(_frameSource.SupportedFormats, targetAspectRatio);
+
+            if (newPreviewFormat != null)
+            {
+                // Stop frame reader
+                if (_frameReader != null)
+                {
+                    await _frameReader.StopAsync();
+                }
+
+                // Set new format
+                await _frameSource.SetFormatAsync(newPreviewFormat);
+
+                var fps = newPreviewFormat.FrameRate.Numerator / (double)newPreviewFormat.FrameRate.Denominator;
+                Debug.WriteLine($"[NativeCameraWindows] Updated preview format: {newPreviewFormat.VideoFormat.Width}x{newPreviewFormat.VideoFormat.Height} @ {fps:F1} FPS");
+
+                // Restart frame reader
+                if (_frameReader != null)
+                {
+                    var result = await _frameReader.StartAsync();
+                    Debug.WriteLine($"[NativeCameraWindows] Frame reader restart result: {result}");
+                }
+            }
+            else
+            {
+                Debug.WriteLine("[NativeCameraWindows] No suitable preview format found for aspect ratio update");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Error updating preview format: {ex}");
         }
     }
 

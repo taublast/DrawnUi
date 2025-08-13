@@ -259,19 +259,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         var allFormats = videoDevice.Formats.ToList();
         AVCaptureDeviceFormat format = null;
-        
-        if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
-        {
-            format = allFormats.Where(x => x.MultiCamSupported)
-                .OrderByDescending(x => x.HighResolutionStillImageDimensions.Width)
-                .FirstOrDefault();
-        }
 
-        if (format == null)
-        {
-            format = allFormats.OrderByDescending(x => x.HighResolutionStillImageDimensions.Width)
-                .FirstOrDefault();
-        }
+        // Select format based on CapturePhotoQuality setting
+        format = SelectOptimalFormat(allFormats, FormsControl.CapturePhotoQuality);
 
         NSError error;
         if (videoDevice.LockForConfiguration(out error))
@@ -396,7 +386,60 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         UpdateDetectOrientation();
     }
 
- 
+    private AVCaptureDeviceFormat SelectOptimalFormat(List<AVCaptureDeviceFormat> allFormats, CaptureQuality quality)
+    {
+        // Filter formats and sort by resolution
+        var availableFormats = allFormats
+            .Where(f => f.HighResolutionStillImageDimensions.Width > 0 && f.HighResolutionStillImageDimensions.Height > 0)
+            .OrderByDescending(f => f.HighResolutionStillImageDimensions.Width * f.HighResolutionStillImageDimensions.Height)
+            .ToList();
+
+        if (!availableFormats.Any())
+        {
+            Console.WriteLine("[NativeCameraiOS] No valid formats found, using first available");
+            return allFormats.FirstOrDefault();
+        }
+
+        Console.WriteLine($"[NativeCameraiOS] Available formats for quality {quality}:");
+        foreach (var fmt in availableFormats)
+        {
+            var dims = fmt.HighResolutionStillImageDimensions;
+            Console.WriteLine($"  {dims.Width}x{dims.Height} ({dims.Width * dims.Height:N0} pixels)");
+        }
+
+        AVCaptureDeviceFormat selectedFormat = quality switch
+        {
+            CaptureQuality.Max => availableFormats.First(), // Highest resolution
+            CaptureQuality.Medium => availableFormats.Skip(availableFormats.Count / 3).FirstOrDefault() ?? availableFormats.First(),
+            CaptureQuality.Low => availableFormats.Skip(2 * availableFormats.Count / 3).FirstOrDefault() ?? availableFormats.Last(),
+            CaptureQuality.Preview => availableFormats.LastOrDefault(f =>
+                f.HighResolutionStillImageDimensions.Width >= 640 &&
+                f.HighResolutionStillImageDimensions.Height >= 480) ?? availableFormats.Last(),
+            CaptureQuality.Manual => GetManualFormat(availableFormats, FormsControl.CaptureFormatIndex),
+            _ => availableFormats.First()
+        };
+
+        var selectedDims = selectedFormat.HighResolutionStillImageDimensions;
+        Console.WriteLine($"[NativeCameraiOS] Selected format: {selectedDims.Width}x{selectedDims.Height} for quality {quality}");
+
+        return selectedFormat;
+    }
+
+    private AVCaptureDeviceFormat GetManualFormat(List<AVCaptureDeviceFormat> availableFormats, int formatIndex)
+    {
+        if (formatIndex >= 0 && formatIndex < availableFormats.Count)
+        {
+            Console.WriteLine($"[NativeCameraiOS] Using manual format index {formatIndex}");
+            return availableFormats[formatIndex];
+        }
+        else
+        {
+            Console.WriteLine($"[NativeCameraiOS] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
+            return availableFormats.First();
+        }
+    }
+
+
 
     #endregion
 

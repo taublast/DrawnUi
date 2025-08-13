@@ -316,6 +316,27 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
+    /// Get available capture formats/resolutions for the current camera.
+    /// Use with CaptureFormatIndex when CapturePhotoQuality is set to Manual.
+    /// Formats are cached when camera is initialized.
+    /// </summary>
+    /// <returns>List of available capture formats</returns>
+    public virtual async Task<List<CaptureFormat>> GetAvailableCaptureFormatsAsync()
+    {
+        // Return cached formats if available
+        if (_availableCaptureFormats != null)
+            return _availableCaptureFormats;
+
+#if ONPLATFORM
+        // If not cached, detect and cache them
+        _availableCaptureFormats = await GetAvailableCaptureFormatsPlatform();
+        return _availableCaptureFormats;
+#else
+        return new List<CaptureFormat>();
+#endif
+    }
+
+    /// <summary>
     /// Refreshes and returns the list of available cameras
     /// </summary>
     /// <returns>List of available cameras</returns>
@@ -325,7 +346,19 @@ public partial class SkiaCamera : SkiaControl
         return await GetAvailableCamerasInternal();
     }
 
+    /// <summary>
+    /// Refreshes and returns the list of available capture formats for current camera
+    /// </summary>
+    /// <returns>List of available capture formats</returns>
+    public virtual async Task<List<CaptureFormat>> RefreshAvailableCaptureFormatsAsync()
+    {
+        _availableCaptureFormats = null; // Clear cache
+        return await GetAvailableCaptureFormatsAsync();
+    }
+
+ 
     private List<CameraInfo> _availableCameras;
+    private List<CaptureFormat> _availableCaptureFormats;
 
     /// <summary>
     /// Internal method to get available cameras with caching
@@ -1221,6 +1254,9 @@ public partial class SkiaCamera : SkiaControl
     {
         if (bindable is SkiaCamera control)
         {
+            // Clear cached formats when camera changes
+            control._availableCaptureFormats = null;
+
             if (control.State == CameraState.On)
             {
                 control.StopInternal();
@@ -1234,6 +1270,19 @@ public partial class SkiaCamera : SkiaControl
             {
                 control.Start();
             }
+        }
+    }
+
+    private static void OnCaptureFormatChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (bindable is SkiaCamera control && control.State == CameraState.On)
+        {
+            // When capture format changes, update preview to match aspect ratio
+            Debug.WriteLine($"[SkiaCamera] Capture format changed: {oldvalue} -> {newvalue}");
+
+#if ONPLATFORM
+            control.UpdatePreviewFormatForAspectRatio();
+#endif
         }
     }
 
@@ -1264,7 +1313,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(CapturePhotoQuality),
         typeof(CaptureQuality),
         typeof(SkiaCamera),
-        CaptureQuality.Max);
+        CaptureQuality.Max, propertyChanged: OnCaptureFormatChanged);
 
     /// <summary>
     /// Photo capture quality
@@ -1273,6 +1322,23 @@ public partial class SkiaCamera : SkiaControl
     {
         get { return (CaptureQuality)GetValue(CapturePhotoQualityProperty); }
         set { SetValue(CapturePhotoQualityProperty, value); }
+    }
+
+    public static readonly BindableProperty CaptureFormatIndexProperty = BindableProperty.Create(
+        nameof(CaptureFormatIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        0, propertyChanged: OnCaptureFormatChanged);
+
+    /// <summary>
+    /// Index of capture format when CapturePhotoQuality is set to Manual.
+    /// Selects from the array of available capture formats/resolutions.
+    /// Use GetAvailableCaptureFormats() to see available options.
+    /// </summary>
+    public int CaptureFormatIndex
+    {
+        get { return (int)GetValue(CaptureFormatIndexProperty); }
+        set { SetValue(CaptureFormatIndexProperty, value); }
     }
 
     public static readonly BindableProperty CaptureFlashModeProperty = BindableProperty.Create(
