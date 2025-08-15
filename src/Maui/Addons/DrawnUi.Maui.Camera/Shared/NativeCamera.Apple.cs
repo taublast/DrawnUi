@@ -12,6 +12,7 @@ using CoreVideo;
 using DrawnUi.Controls;
 using Foundation;
 using ImageIO;
+using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Media;
 using Photos;
 using SkiaSharp;
@@ -260,6 +261,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         var allFormats = videoDevice.Formats.ToList();
         AVCaptureDeviceFormat format = null;
 
+        SetupStillFormats(allFormats);
+
         // Select format based on CapturePhotoQuality setting
         format = SelectOptimalFormat(allFormats, FormsControl.CapturePhotoQuality);
 
@@ -268,23 +271,23 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             if (videoDevice.SmoothAutoFocusSupported)
                 videoDevice.SmoothAutoFocusEnabled = true;
-                
+
             videoDevice.ActiveFormat = format;
-            
+
             // Ensure exposure is set to continuous auto exposure during setup
             if (videoDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
             {
                 videoDevice.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
                 System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Set initial exposure mode to ContinuousAutoExposure");
             }
-            
+
             // Reset exposure bias to neutral
             if (videoDevice.MinExposureTargetBias != videoDevice.MaxExposureTargetBias)
             {
                 videoDevice.SetExposureTargetBias(0, null);
                 System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Reset exposure bias to 0");
             }
-            
+
             videoDevice.UnlockForConfiguration();
         }
 
@@ -335,10 +338,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             // Configure video data output BEFORE adding to session
             _session.AddOutput(_videoDataOutput);
             _videoDataOutput.AlwaysDiscardsLateVideoFrames = true;
-            _videoDataOutput.WeakVideoSettings = new NSDictionary(CVPixelBuffer.PixelFormatTypeKey, 
+            _videoDataOutput.WeakVideoSettings = new NSDictionary(CVPixelBuffer.PixelFormatTypeKey,
                 CVPixelFormatType.CV32BGRA);
             _videoDataOutput.SetSampleBufferDelegate(this, _videoDataOutputQueue);
-            
+
             // Set initial video orientation from the connection
             var videoConnection = _videoDataOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
             if (videoConnection != null && videoConnection.SupportsVideoOrientation)
@@ -386,13 +389,119 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         UpdateDetectOrientation();
     }
 
-    private AVCaptureDeviceFormat SelectOptimalFormat(List<AVCaptureDeviceFormat> allFormats, CaptureQuality quality)
+    public List<CaptureFormat> StillFormats {get; protected set;}
+
+    private void SetupStillFormats(List<AVCaptureDeviceFormat> allFormats)
     {
-        // Filter formats and sort by resolution
+        var formats = new List<CaptureFormat>();
+
+        try
+        {
+            if (allFormats != null)
+            {
+                var filtered = GetFilteredFormats(allFormats);
+
+                var uniqueResolutions = filtered
+                .Select(f => f.HighResolutionStillImageDimensions)
+                .GroupBy(dims => new { dims.Width, dims.Height })
+                .Select(group => group.First())
+                .OrderByDescending(dims => dims.Width * dims.Height)
+                .ToList();
+
+                Console.WriteLine($"[SkiaCameraApple] Found {uniqueResolutions.Count} unique still image formats:");
+
+                for (int i = 0; i < uniqueResolutions.Count; i++)
+                {
+                    var dims = uniqueResolutions[i];
+                    Console.WriteLine($"  [{i}] {dims.Width}x{dims.Height}");
+
+                    formats.Add(new CaptureFormat
+                    {
+                        Width = (int)dims.Width,
+                        Height = (int)dims.Height,
+                        FormatId = $"{dims.Width}x{dims.Height}"
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SkiaCameraApple] Error getting capture formats: {ex.Message}");
+        }
+
+        StillFormats = formats;
+    }
+
+    /// <summary>
+    /// Filter formats and sort by resolution
+    /// </summary>
+    /// <param name="allFormats"></param>
+    /// <returns></returns>
+    public List<AVCaptureDeviceFormat> GetFilteredFormats(IEnumerable<AVCaptureDeviceFormat> allFormats)
+    {
         var availableFormats = allFormats
             .Where(f => f.HighResolutionStillImageDimensions.Width > 0 && f.HighResolutionStillImageDimensions.Height > 0)
-            .OrderByDescending(f => f.HighResolutionStillImageDimensions.Width * f.HighResolutionStillImageDimensions.Height)
+            .Select(f => new {
+                Format = f,
+                VideoDims = (f.FormatDescription as CMVideoFormatDescription)?.Dimensions ?? new CMVideoDimensions()
+            })
+            .Where(f => IsPreviewSizeSuitable(f.VideoDims))
+            .OrderByDescending(f => f.Format.HighResolutionStillImageDimensions.Width * f.Format.HighResolutionStillImageDimensions.Height)
+            .Select(f => f.Format)
             .ToList();
+
+        return availableFormats;
+    }
+
+    /// <summary>
+    /// Determines if video dimensions are suitable for preview
+    /// </summary>
+    /// <param name="dimensions"></param>
+    /// <returns></returns>
+    private bool IsPreviewSizeSuitable(CMVideoDimensions dimensions)
+    {
+        var width = dimensions.Width;
+        var height = dimensions.Height;
+
+        // Minimum resolution threshold
+        if (width < 640 || height < 480)
+            return false;
+
+        // STRICT MAXIMUM for preview performance - NO 4K video preview!
+        var videoPixels = width * height;
+        var maxVideoPixels = 1920 * 1080; // Absolute maximum: 1080p
+
+        if (videoPixels > maxVideoPixels)
+            return false;
+
+        // Reject unusual aspect ratios that might indicate non-standard formats
+        var aspectRatio = (double)width / height;
+        if (aspectRatio < 0.5 || aspectRatio > 2.5)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Format details structure for AOT compatibility
+    /// </summary>
+    private struct FormatDetail
+    {
+        public AVCaptureDeviceFormat Format { get; init; }
+        public CMVideoDimensions StillDims { get; init; }
+        public CMVideoDimensions VideoDims { get; init; }
+        public int StillPixels { get; init; }
+    }
+
+    /// <summary>
+    /// Select optimal format based on quality requirements
+    /// </summary>
+    /// <param name="allFormats"></param>
+    /// <param name="quality"></param>
+    /// <returns></returns>
+    private AVCaptureDeviceFormat SelectOptimalFormat(List<AVCaptureDeviceFormat> allFormats, CaptureQuality quality)
+    {
+        var availableFormats = GetFilteredFormats(allFormats);
 
         if (!availableFormats.Any())
         {
@@ -400,46 +509,117 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             return allFormats.FirstOrDefault();
         }
 
-        Console.WriteLine($"[NativeCameraiOS] Available formats for quality {quality}:");
-        foreach (var fmt in availableFormats)
+        var formatDetails = availableFormats.Select(f => new FormatDetail
         {
-            var dims = fmt.HighResolutionStillImageDimensions;
-            Console.WriteLine($"  {dims.Width}x{dims.Height} ({dims.Width * dims.Height:N0} pixels)");
+            Format = f,
+            StillDims = f.HighResolutionStillImageDimensions,
+            VideoDims = (f.FormatDescription as CMVideoFormatDescription)?.Dimensions ?? new CMVideoDimensions(),
+            StillPixels = f.HighResolutionStillImageDimensions.Width * f.HighResolutionStillImageDimensions.Height
+        }).ToList();
+
+        Console.WriteLine($"[NativeCameraiOS] Available formats for quality {quality}:");
+        foreach (var detail in formatDetails)
+        {
+            Console.WriteLine($"  Still: {detail.StillDims.Width}x{detail.StillDims.Height} ({detail.StillPixels:N0} pixels), Video: {detail.VideoDims.Width}x{detail.VideoDims.Height}");
         }
 
-        AVCaptureDeviceFormat selectedFormat = quality switch
+        var selectedDetail = quality switch
         {
-            CaptureQuality.Max => availableFormats.First(), // Highest resolution
-            CaptureQuality.Medium => availableFormats.Skip(availableFormats.Count / 3).FirstOrDefault() ?? availableFormats.First(),
-            CaptureQuality.Low => availableFormats.Skip(2 * availableFormats.Count / 3).FirstOrDefault() ?? availableFormats.Last(),
-            CaptureQuality.Preview => availableFormats.LastOrDefault(f =>
-                f.HighResolutionStillImageDimensions.Width >= 640 &&
-                f.HighResolutionStillImageDimensions.Height >= 480) ?? availableFormats.Last(),
-            CaptureQuality.Manual => GetManualFormat(availableFormats, FormsControl.CaptureFormatIndex),
-            _ => availableFormats.First()
+            CaptureQuality.Max => formatDetails.First(),
+            CaptureQuality.Medium => SelectFormatByQuality(formatDetails, 0.33),
+            CaptureQuality.Low => SelectFormatByQuality(formatDetails, 0.67),
+            CaptureQuality.Preview => SelectPreviewFormat(formatDetails),
+            CaptureQuality.Manual => GetManualFormatDetail(formatDetails, FormsControl.CaptureFormatIndex),
+            _ => formatDetails.First()
         };
 
-        var selectedDims = selectedFormat.HighResolutionStillImageDimensions;
-        Console.WriteLine($"[NativeCameraiOS] Selected format: {selectedDims.Width}x{selectedDims.Height} for quality {quality}");
+        Console.WriteLine($"[NativeCameraiOS] Selected format: Still {selectedDetail.StillDims.Width}x{selectedDetail.StillDims.Height}, Video {selectedDetail.VideoDims.Width}x{selectedDetail.VideoDims.Height} for quality {quality}");
+
+        return selectedDetail.Format;
+    }
+
+    /// <summary>
+    /// Select format by quality percentile
+    /// </summary>
+    /// <param name="formatDetails"></param>
+    /// <param name="percentile"></param>
+    /// <returns></returns>
+    private FormatDetail SelectFormatByQuality(List<FormatDetail> formatDetails, double percentile)
+    {
+        var index = (int)(formatDetails.Count * percentile);
+        var result = formatDetails.Skip(index).FirstOrDefault();
+        return result.Format != null ? result : formatDetails.First();
+    }
+
+    /// <summary>
+    /// Select optimal format for preview quality
+    /// </summary>
+    /// <param name="formatDetails"></param>
+    /// <returns></returns>
+    private FormatDetail SelectPreviewFormat(List<FormatDetail> formatDetails)
+    {
+        // For preview, prioritize reasonable video dimensions for smooth performance
+        var videoPixelLimit = 1920 * 1080; // Max 1080p video for good performance
+
+        var result = formatDetails
+            .Where(d => d.VideoDims.Width * d.VideoDims.Height <= videoPixelLimit)
+            .Where(d => d.StillDims.Width >= 1920 && d.StillDims.Height >= 1080) // Still want decent still quality
+            .OrderByDescending(d => d.VideoDims.Width * d.VideoDims.Height) // Pick the best video quality within limit
+            .FirstOrDefault();
+
+        // Fallback: if no format meets both criteria, pick smallest video dimensions
+        if (result.Format == null)
+        {
+            result = formatDetails
+                .OrderBy(d => d.VideoDims.Width * d.VideoDims.Height)
+                .First();
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Get manual format by index from StillFormats array
+    /// </summary>
+    /// <param name="formatDetails"></param>
+    /// <param name="formatIndex"></param>
+    /// <returns></returns>
+    private FormatDetail GetManualFormatDetail(List<FormatDetail> formatDetails, int formatIndex)
+    {
+        if (formatIndex < 0 || formatIndex >= StillFormats.Count)
+        {
+            Console.WriteLine($"[NativeCameraiOS] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
+            return formatDetails.First();
+        }
+
+        // Get the desired still resolution from StillFormats
+        var desiredFormat = StillFormats[formatIndex];
+        Debug.WriteLine($"[NativeCameraiOS] Manual selection: looking for still format {desiredFormat.Width}x{desiredFormat.Height}");
+
+        // Find all formats that match the desired still resolution
+        // Note: formatDetails already contains only formats with acceptable video dimensions from GetFilteredFormats
+        var matchingFormats = formatDetails
+            .Where(d => d.StillDims.Width == desiredFormat.Width && d.StillDims.Height == desiredFormat.Height)
+            .ToList();
+
+        if (!matchingFormats.Any())
+        {
+            Console.WriteLine($"[NativeCameraiOS] No formats found with still resolution {desiredFormat.Width}x{desiredFormat.Height} and acceptable video dimensions");
+            Console.WriteLine($"[NativeCameraiOS] Available formats all have acceptable video dimensions, selecting best still quality");
+            return formatDetails.First(); // Best still quality with acceptable video
+        }
+
+        // All matching formats already have acceptable video dimensions, so pick the best one
+        // Prefer video resolution closest to 720p for optimal performance
+        var preferredVideoPixels = 1280 * 720;
+        var selectedFormat = matchingFormats
+            .OrderBy(f => Math.Abs((f.VideoDims.Width * f.VideoDims.Height) - preferredVideoPixels))
+            .First();
+
+        Console.WriteLine($"[NativeCameraiOS] Manual selection: selected still {selectedFormat.StillDims.Width}x{selectedFormat.StillDims.Height}, video {selectedFormat.VideoDims.Width}x{selectedFormat.VideoDims.Height}");
 
         return selectedFormat;
     }
-
-    private AVCaptureDeviceFormat GetManualFormat(List<AVCaptureDeviceFormat> availableFormats, int formatIndex)
-    {
-        if (formatIndex >= 0 && formatIndex < availableFormats.Count)
-        {
-            Console.WriteLine($"[NativeCameraiOS] Using manual format index {formatIndex}");
-            return availableFormats[formatIndex];
-        }
-        else
-        {
-            Console.WriteLine($"[NativeCameraiOS] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
-            return availableFormats.First();
-        }
-    }
-
-
 
     #endregion
 

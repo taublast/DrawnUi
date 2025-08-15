@@ -131,7 +131,7 @@ public partial class SkiaCamera
         //SubscribeToNativeControl();
     }
 
-    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform()
+    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 

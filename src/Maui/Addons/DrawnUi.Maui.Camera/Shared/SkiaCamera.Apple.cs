@@ -334,7 +334,7 @@ public partial class SkiaCamera
         NativeControl = new NativeCamera(this);
     }
 
-    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform()
+    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 
@@ -397,62 +397,10 @@ public partial class SkiaCamera
 
         try
         {
-            await Task.Run(() =>
+            if (NativeControl is NativeCamera native)
             {
-                var deviceTypes = new AVFoundation.AVCaptureDeviceType[]
-                {
-                    AVFoundation.AVCaptureDeviceType.BuiltInWideAngleCamera,
-                    AVFoundation.AVCaptureDeviceType.BuiltInTelephotoCamera,
-                    AVFoundation.AVCaptureDeviceType.BuiltInUltraWideCamera
-                };
-
-                if (UIKit.UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
-                {
-                    deviceTypes = deviceTypes.Concat(new[]
-                    {
-                        AVFoundation.AVCaptureDeviceType.BuiltInDualCamera,
-                        AVFoundation.AVCaptureDeviceType.BuiltInTripleCamera
-                    }).ToArray();
-                }
-
-                var discoverySession = AVFoundation.AVCaptureDeviceDiscoverySession.Create(
-                    deviceTypes,
-                    AVFoundation.AVMediaTypes.Video,
-                    AVFoundation.AVCaptureDevicePosition.Unspecified);
-
-                // Find current camera device or use default
-                var currentDevice = discoverySession.Devices.FirstOrDefault(d =>
-                    (Facing == CameraPosition.Selfie && d.Position == AVFoundation.AVCaptureDevicePosition.Front) ||
-                    (Facing == CameraPosition.Default && d.Position == AVFoundation.AVCaptureDevicePosition.Back))
-                    ?? discoverySession.Devices.FirstOrDefault();
-
-                if (currentDevice != null)
-                {
-                    // Get unique still image dimensions (remove duplicates)
-                    var uniqueResolutions = currentDevice.Formats
-                        .Where(f => f.HighResolutionStillImageDimensions.Width > 0 && f.HighResolutionStillImageDimensions.Height > 0)
-                        .Select(f => f.HighResolutionStillImageDimensions)
-                        .GroupBy(dims => new { dims.Width, dims.Height })
-                        .Select(group => group.First())
-                        .OrderByDescending(dims => dims.Width * dims.Height)
-                        .ToList();
-
-                    Console.WriteLine($"[SkiaCameraApple] Found {uniqueResolutions.Count} unique still image formats:");
-
-                    for (int i = 0; i < uniqueResolutions.Count; i++)
-                    {
-                        var dims = uniqueResolutions[i];
-                        Console.WriteLine($"  [{i}] {dims.Width}x{dims.Height}");
-
-                        formats.Add(new CaptureFormat
-                        {
-                            Width = (int)dims.Width,
-                            Height = (int)dims.Height,
-                            FormatId = $"ios_still_{currentDevice.UniqueID}_{i}"
-                        });
-                    }
-                }
-            });
+                formats = native.StillFormats;
+            }
         }
         catch (Exception ex)
         {

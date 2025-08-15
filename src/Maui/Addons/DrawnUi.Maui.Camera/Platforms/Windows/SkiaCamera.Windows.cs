@@ -69,7 +69,7 @@ public partial class SkiaCamera : SkiaControl
         Debug.WriteLine("[SkiaCameraWindows] Native camera created");
     }
 
-    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform()
+    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 

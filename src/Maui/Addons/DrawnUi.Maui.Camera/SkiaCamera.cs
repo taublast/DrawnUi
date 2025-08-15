@@ -99,7 +99,6 @@ public partial class SkiaCamera : SkiaControl
 
     #endregion
 
-
     #region Display
 
     public SkiaImage Display { get; protected set; }
@@ -323,58 +322,24 @@ public partial class SkiaCamera : SkiaControl
     /// <returns>List of available capture formats</returns>
     public virtual async Task<List<CaptureFormat>> GetAvailableCaptureFormatsAsync()
     {
-        // Return cached formats if available
-        if (_availableCaptureFormats != null)
-            return _availableCaptureFormats;
-
 #if ONPLATFORM
         // If not cached, detect and cache them
-        _availableCaptureFormats = await GetAvailableCaptureFormatsPlatform();
-        return _availableCaptureFormats;
+        return await GetAvailableCaptureFormatsPlatform();
 #else
         return new List<CaptureFormat>();
 #endif
     }
-
-    /// <summary>
-    /// Refreshes and returns the list of available cameras
-    /// </summary>
-    /// <returns>List of available cameras</returns>
-    public virtual async Task<List<CameraInfo>> RefreshAvailableCamerasAsync()
-    {
-        _availableCameras = null; // Clear cache
-        return await GetAvailableCamerasInternal();
-    }
-
-    /// <summary>
-    /// Refreshes and returns the list of available capture formats for current camera
-    /// </summary>
-    /// <returns>List of available capture formats</returns>
-    public virtual async Task<List<CaptureFormat>> RefreshAvailableCaptureFormatsAsync()
-    {
-        _availableCaptureFormats = null; // Clear cache
-        return await GetAvailableCaptureFormatsAsync();
-    }
-
- 
-    private List<CameraInfo> _availableCameras;
-    private List<CaptureFormat> _availableCaptureFormats;
-
+    
     /// <summary>
     /// Internal method to get available cameras with caching
     /// </summary>
-    protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal()
+    protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal(bool refresh=false)
     {
-        if (_availableCameras != null)
-            return _availableCameras;
-
 #if ONPLATFORM
-        _availableCameras = await GetAvailableCamerasPlatform();
-#else
-                _availableCameras = new List<CameraInfo>();
+        return await GetAvailableCamerasPlatform(refresh);
 #endif
 
-        return _availableCameras;
+        return new List<CameraInfo>();
     }
 
     #endregion
@@ -1254,9 +1219,6 @@ public partial class SkiaCamera : SkiaControl
     {
         if (bindable is SkiaCamera control)
         {
-            // Clear cached formats when camera changes
-            control._availableCaptureFormats = null;
-
             if (control.State == CameraState.On)
             {
                 control.StopInternal();
@@ -1409,7 +1371,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(Type),
         typeof(CameraType),
         typeof(SkiaCamera),
-        CameraType.Default);
+        CameraType.Default, propertyChanged: NeedRestart);
 
     /// <summary>
     /// To be implemented
