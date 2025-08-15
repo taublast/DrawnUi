@@ -10,6 +10,7 @@ Camera control drawn with SkiaSharp, part of DrawnUI for for .NET MAUI.
 - **Post-process captured bitmap** with SkiaSharp and DrawnUi, apply effects, overlay watermark etc.
 - **Live preview frames in a convenient form** to integrate with AI/ML.
 - **Manual camera selection** to access ultra-wide, telephoto etc by index or by front/back.
+- **Precise capture format control** with manual resolution selection and automatic preview aspect ratio matching.
 - **Advanced flash control** with independent preview torch and capture flash modes (Off/Auto/On).
 - **Inject custom EXIF**, save GPS locations etc!
 - **Cares about going to background** or foreground to automatically stop/resume camera.
@@ -137,7 +138,8 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 | `Facing` | `CameraPosition` | `Default` | Camera selection: `Default` (back), `Selfie` (front), `Manual` |
 | `CameraIndex` | `int` | `-1` | Manual camera selection index (when `Facing = Manual`) |
 | `IsOn` | `bool` | `false` | Camera power state - use this to start/stop camera |
-| `CapturePhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview` |
+| `CapturePhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview`, `Manual` |
+| `CaptureFormatIndex` | `int` | `0` | Format index for manual capture (when `CapturePhotoQuality = Manual`) |
 | `FlashMode` | `FlashMode` | `Off` | Preview torch mode: `Off`, `On`, `Strobe` |
 | `CaptureFlashMode` | `CaptureFlashMode` | `Auto` | Flash mode for capture: `Off`, `Auto`, `On` |
 | `IsFlashSupported` | `bool` | - | Whether flash is available (read-only) |
@@ -275,7 +277,143 @@ SkiaCamera implements a **dual-channel flash system** that separates preview ill
 | **iOS/macOS** | `AVCaptureTorchMode` | `AVCaptureFlashMode` | ✅ `Auto` mode |
 | **Windows** | `FlashControl.Enabled` | `FlashControl.Auto` | ✅ Auto detection |
 
-### 5. Opening Files in Gallery
+### 5. Capture Format Selection
+
+SkiaCamera provides **precise control over capture resolution and aspect ratio** with automatic preview synchronization:
+
+#### Quality Presets
+```csharp
+// Quick quality selection
+camera.CapturePhotoQuality = CaptureQuality.Max;     // Highest resolution
+camera.CapturePhotoQuality = CaptureQuality.Medium;  // Balanced quality/size
+camera.CapturePhotoQuality = CaptureQuality.Low;     // Fastest capture
+camera.CapturePhotoQuality = CaptureQuality.Preview; // Smallest usable size
+```
+
+#### Manual Format Selection
+```csharp
+// Get available capture formats for current camera
+var formats = await camera.GetAvailableCaptureFormatsAsync();
+
+// Display format picker
+var options = formats.Select((format, index) =>
+    $"[{index}] {format.Width}x{format.Height}, {format.AspectRatioString}"
+).ToArray();
+
+var result = await DisplayActionSheet("Select Capture Format", "Cancel", null, options);
+
+if (!string.IsNullOrEmpty(result))
+{
+    var selectedIndex = Array.IndexOf(options, result);
+    if (selectedIndex >= 0)
+    {
+        // Set manual capture mode with selected format
+        camera.CapturePhotoQuality = CaptureQuality.Manual;
+        camera.CaptureFormatIndex = selectedIndex;
+
+        // Preview automatically adjusts to match aspect ratio!
+        var selectedFormat = formats[selectedIndex];
+        Debug.WriteLine($"Selected: {selectedFormat.Description}");
+    }
+}
+```
+
+#### Format Information
+```csharp
+// CaptureFormat provides detailed information
+foreach (var format in formats)
+{
+    Console.WriteLine($"Resolution: {format.Width}x{format.Height}");
+    Console.WriteLine($"Aspect Ratio: {format.AspectRatioString}"); // "16:9", "4:3", etc.
+    Console.WriteLine($"Total Pixels: {format.TotalPixels:N0}");
+    Console.WriteLine($"Description: {format.Description}");
+    Console.WriteLine($"Platform ID: {format.FormatId}");
+}
+```
+
+#### Automatic Preview Synchronization
+
+**🎯 Key Feature**: When you change capture format, preview automatically adjusts to match the aspect ratio:
+
+```csharp
+// Before: Preview might be 16:9, capture might be 4:3 (letterboxing!)
+camera.CapturePhotoQuality = CaptureQuality.Manual;
+camera.CaptureFormatIndex = 2; // Select 4000x3000 (4:3)
+
+// After: Preview automatically switches to 4:3 aspect ratio
+// Result: True WYSIWYG - what you see is what you capture!
+```
+
+**Platform Implementation:**
+- **Android**: Uses `ChooseOptimalSize()` with aspect ratio matching
+- **iOS/macOS**: Single format controls both preview and capture
+- **Windows**: Dynamic preview format switching with `ChooseOptimalPreviewFormat()`
+
+#### Format Caching & Performance
+```csharp
+// Formats are cached when camera initializes
+var formats = await camera.GetAvailableCaptureFormatsAsync(); // Fast - uses cache
+
+// Force refresh when camera changes
+await camera.RefreshAvailableCaptureFormatsAsync(); // Slower - re-detects
+
+// Cache is automatically cleared when:
+// - Camera facing changes (Front ↔ Back)
+// - Manual camera index changes
+// - Camera restarts
+```
+
+#### Example: Professional Camera App
+```csharp
+private async void OnFormatSelectionClicked()
+{
+    try
+    {
+        var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
+
+        // Group by aspect ratio for better UX
+        var groupedFormats = formats
+            .GroupBy(f => f.AspectRatioString)
+            .OrderByDescending(g => g.Key == "16:9") // Prioritize 16:9
+            .ThenByDescending(g => g.Key == "4:3")   // Then 4:3
+            .ToList();
+
+        var options = new List<string>();
+        var formatMap = new Dictionary<string, (int index, CaptureFormat format)>();
+
+        foreach (var group in groupedFormats)
+        {
+            options.Add($"--- {group.Key} Aspect Ratio ---");
+
+            foreach (var format in group.OrderByDescending(f => f.TotalPixels))
+            {
+                var index = formats.IndexOf(format);
+                var megapixels = format.TotalPixels / 1_000_000.0;
+                var option = $"{format.Width}x{format.Height} ({megapixels:F1}MP)";
+
+                options.Add(option);
+                formatMap[option] = (index, format);
+            }
+        }
+
+        var result = await DisplayActionSheet("Select Resolution", "Cancel", null, options.ToArray());
+
+        if (formatMap.TryGetValue(result, out var selection))
+        {
+            CameraControl.CapturePhotoQuality = CaptureQuality.Manual;
+            CameraControl.CaptureFormatIndex = selection.index;
+
+            StatusLabel.Text = $"📸 {selection.format.Description}";
+        }
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert("Error", $"Failed to get formats: {ex.Message}", "OK");
+    }
+}
+```
+
+### 6. Opening Files in Gallery
 
 Use `OpenFileInGallery()` to open captured photos in the system gallery app:
 
@@ -907,6 +1045,7 @@ public bool IsBusy { get; }                       // Processing state (read-only
 
 // Capture Settings
 public CaptureQuality CapturePhotoQuality { get; set; } // Photo quality
+public int CaptureFormatIndex { get; set; }             // Manual format index
 public CaptureFlashMode CaptureFlashMode { get; set; }   // Flash mode for capture
 
 // Flash Control
@@ -927,6 +1066,10 @@ public double ZoomLimitMax { get; set; }          // Maximum zoom
 public async Task<List<CameraInfo>> GetAvailableCamerasAsync()
 public async Task<List<CameraInfo>> RefreshAvailableCamerasAsync()
 public static void CheckPermissions(Action<bool> callback)
+
+// Capture Format Management
+public async Task<List<CaptureFormat>> GetAvailableCaptureFormatsAsync()
+public async Task<List<CaptureFormat>> RefreshAvailableCaptureFormatsAsync()
 
 // Capture Operations
 public async Task TakePicture()
@@ -955,11 +1098,36 @@ public event EventHandler<string> OnError;
 public event EventHandler<double> Zoomed;
 ```
 
+### Data Classes
+```csharp
+// Capture format information
+public class CaptureFormat
+{
+    public int Width { get; set; }                    // Width in pixels
+    public int Height { get; set; }                   // Height in pixels
+    public int TotalPixels => Width * Height;         // Total pixel count
+    public double AspectRatio => (double)Width / Height; // Decimal aspect ratio
+    public string AspectRatioString { get; }          // Standard notation ("16:9", "4:3")
+    public string FormatId { get; set; }              // Platform-specific identifier
+    public string Description { get; }               // Human-readable description
+}
+
+// Camera information
+public class CameraInfo
+{
+    public string Id { get; set; }                    // Platform camera ID
+    public string Name { get; set; }                  // Display name
+    public CameraPosition Position { get; set; }      // Camera position
+    public int Index { get; set; }                    // Camera index
+    public bool HasFlash { get; set; }                // Flash availability
+}
+```
+
 ### Enums
 ```csharp
 public enum CameraPosition { Default, Selfie, Manual }
 public enum CameraState { Off, On, Error }
-public enum CaptureQuality { Max, Medium, Low, Preview }
+public enum CaptureQuality { Max, Medium, Low, Preview, Manual }
 public enum FlashMode { Off, On, Strobe }
 public enum CaptureFlashMode { Off, Auto, On }
 public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }

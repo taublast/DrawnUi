@@ -69,7 +69,7 @@ public partial class SkiaCamera : SkiaControl
         Debug.WriteLine("[SkiaCameraWindows] Native camera created");
     }
 
-    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform()
+    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 
@@ -108,6 +108,102 @@ public partial class SkiaCamera : SkiaControl
         }
 
         return cameras;
+    }
+
+    protected async Task<List<CaptureFormat>> GetAvailableCaptureFormatsPlatform()
+    {
+        var formats = new List<CaptureFormat>();
+
+        try
+        {
+            var devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(Windows.Devices.Enumeration.DeviceClass.VideoCapture);
+
+            // Find current camera device or use default
+            var currentDevice = devices.FirstOrDefault(d =>
+                (Facing == CameraPosition.Selfie && d.EnclosureLocation?.Panel == Windows.Devices.Enumeration.Panel.Front) ||
+                (Facing == CameraPosition.Default && d.EnclosureLocation?.Panel == Windows.Devices.Enumeration.Panel.Back))
+                ?? devices.FirstOrDefault();
+
+            if (currentDevice != null)
+            {
+                var frameSourceGroups = await Windows.Media.Capture.Frames.MediaFrameSourceGroup.FindAllAsync();
+                var selectedGroup = frameSourceGroups.FirstOrDefault(g =>
+                    g.SourceInfos.Any(si => si.DeviceInformation?.Id == currentDevice.Id));
+
+                if (selectedGroup != null)
+                {
+                    using var mediaCapture = new Windows.Media.Capture.MediaCapture();
+                    var settings = new Windows.Media.Capture.MediaCaptureInitializationSettings
+                    {
+                        SourceGroup = selectedGroup,
+                        SharingMode = Windows.Media.Capture.MediaCaptureSharingMode.SharedReadOnly,
+                        StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.Video,
+                        MemoryPreference = Windows.Media.Capture.MediaCaptureMemoryPreference.Cpu
+                    };
+
+                    await mediaCapture.InitializeAsync(settings);
+
+                    var frameSource = mediaCapture.FrameSources.Values.FirstOrDefault(s =>
+                        s.Info.MediaStreamType == Windows.Media.Capture.MediaStreamType.VideoRecord);
+
+                    if (frameSource?.SupportedFormats != null)
+                    {
+                        // Get unique resolutions (remove duplicates from different pixel formats)
+                        var uniqueResolutions = frameSource.SupportedFormats
+                            .Where(f => f.VideoFormat.Width > 0 && f.VideoFormat.Height > 0)
+                            .GroupBy(f => new { f.VideoFormat.Width, f.VideoFormat.Height })
+                            .Select(group => group.First())
+                            .OrderByDescending(f => f.VideoFormat.Width * f.VideoFormat.Height)
+                            .ToList();
+
+                        Debug.WriteLine($"[SkiaCameraWindows] Found {uniqueResolutions.Count} unique video formats:");
+
+                        for (int i = 0; i < uniqueResolutions.Count; i++)
+                        {
+                            var format = uniqueResolutions[i];
+                            Debug.WriteLine($"  [{i}] {format.VideoFormat.Width}x{format.VideoFormat.Height}");
+
+                            formats.Add(new CaptureFormat
+                            {
+                                Width = (int)format.VideoFormat.Width,
+                                Height = (int)format.VideoFormat.Height,
+                                FormatId = $"windows_{currentDevice.Id}_{i}"
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCameraWindows] Error getting capture formats: {ex.Message}");
+        }
+
+        return formats;
+    }
+
+    /// <summary>
+    /// Updates preview format to match current capture format aspect ratio
+    /// </summary>
+    protected virtual void UpdatePreviewFormatForAspectRatio()
+    {
+        if (NativeControl is NativeCamera windowsCamera)
+        {
+            Debug.WriteLine("[SkiaCameraWindows] Updating preview format for aspect ratio match");
+
+            // Trigger preview format update in native camera
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await windowsCamera.UpdatePreviewFormatAsync();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[SkiaCameraWindows] Error updating preview format: {ex.Message}");
+                }
+            });
+        }
     }
 
     /// <summary>

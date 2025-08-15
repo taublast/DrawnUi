@@ -24,6 +24,41 @@ public partial class SkiaCamera
         Zoomed?.Invoke(this, value);
     }
 
+    /// <summary>
+    /// Updates preview format to match current capture format aspect ratio.
+    /// Android implementation: Restarts camera session to apply new format selection.
+    /// </summary>
+    protected virtual void UpdatePreviewFormatForAspectRatio()
+    {
+        if (NativeControl is NativeCamera androidCamera)
+        {
+            System.Diagnostics.Debug.WriteLine("[SkiaCameraAndroid] Updating preview format for aspect ratio match");
+
+            // Android's ChooseOptimalSize() automatically matches aspect ratios during setup
+            // We need to restart the camera session to apply the new capture format
+            Task.Run(async () =>
+            {
+                try
+                {
+                    // Stop current session
+                    androidCamera.Stop();
+
+                    // Small delay to ensure cleanup
+                    await Task.Delay(100);
+
+                    // Restart with new format - this will trigger ChooseOptimalSize()
+                    // with the new capture format as aspect ratio target
+                    androidCamera.Start();
+
+                    System.Diagnostics.Debug.WriteLine("[SkiaCameraAndroid] Camera session restarted for format change");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[SkiaCameraAndroid] Error updating preview format: {ex.Message}");
+                }
+            });
+        }
+    }
 
     /// <summary>
     /// Opens a file in the gallery app
@@ -96,7 +131,7 @@ public partial class SkiaCamera
         //SubscribeToNativeControl();
     }
 
-    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform()
+    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 
@@ -144,6 +179,79 @@ public partial class SkiaCamera
         return cameras;
     }
 
+    protected async Task<List<CaptureFormat>> GetAvailableCaptureFormatsPlatform()
+    {
+        var formats = new List<CaptureFormat>();
+
+        try
+        {
+            var context = Platform.CurrentActivity ?? Android.App.Application.Context;
+            var manager = (Android.Hardware.Camera2.CameraManager)context.GetSystemService(Android.Content.Context.CameraService);
+            var cameraIds = manager.GetCameraIdList();
+
+            // Find camera matching current facing preference
+            string selectedCameraId = "0"; // Default fallback
+
+            foreach (var cameraId in cameraIds)
+            {
+                var characteristics = manager.GetCameraCharacteristics(cameraId);
+                var facing = (Java.Lang.Integer)characteristics.Get(Android.Hardware.Camera2.CameraCharacteristics.LensFacing);
+
+                if (facing != null)
+                {
+                    var position = facing.IntValue() switch
+                    {
+                        (int)Android.Hardware.Camera2.LensFacing.Front => CameraPosition.Selfie,
+                        (int)Android.Hardware.Camera2.LensFacing.Back => CameraPosition.Default,
+                        _ => CameraPosition.Default
+                    };
+
+                    // Use this camera if it matches our facing preference
+                    if (position == Facing)
+                    {
+                        selectedCameraId = cameraId;
+                        break;
+                    }
+                }
+            }
+
+            var selectedCharacteristics = manager.GetCameraCharacteristics(selectedCameraId);
+            var map = (Android.Hardware.Camera2.Params.StreamConfigurationMap)selectedCharacteristics.Get(Android.Hardware.Camera2.CameraCharacteristics.ScalerStreamConfigurationMap);
+
+            if (map != null)
+            {
+                // Use YUV420888 format as that's what Android NativeCamera uses for still capture
+                // The final output is converted to JPEG, but the camera capabilities are based on YUV
+                var stillSizes = map.GetOutputSizes((int)Android.Graphics.ImageFormatType.Yuv420888)
+                    .Where(size => size.Width > 0 && size.Height > 0)
+                    .GroupBy(size => new { size.Width, size.Height }) // Remove any potential duplicates
+                    .Select(group => group.First())
+                    .OrderByDescending(size => size.Width * size.Height)
+                    .ToList();
+
+                System.Diagnostics.Debug.WriteLine($"[SkiaCameraAndroid] Found {stillSizes.Count} unique YUV420 still capture formats:");
+
+                for (int i = 0; i < stillSizes.Count; i++)
+                {
+                    var size = stillSizes[i];
+                    System.Diagnostics.Debug.WriteLine($"  [{i}] {size.Width}x{size.Height}");
+
+                    formats.Add(new CaptureFormat
+                    {
+                        Width = size.Width,
+                        Height = size.Height,
+                        FormatId = $"android_yuv_{selectedCameraId}_{i}"
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SkiaCameraAndroid] Error getting capture formats: {ex.Message}");
+        }
+
+        return formats;
+    }
 
     public void DisableOtherCameras(bool all = false)
     {

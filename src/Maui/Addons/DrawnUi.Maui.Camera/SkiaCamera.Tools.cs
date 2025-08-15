@@ -97,6 +97,9 @@ public partial class SkiaCamera : SkiaControl
 
     #region Measure Brightness
 
+    public static int SpotPoints = 15;
+    public static int ExposurePoints = 300;
+
     /// <summary>
     /// Analyzes pixel luminance in a specific area of the frame (shared across all platforms)
     /// </summary>
@@ -114,7 +117,7 @@ public partial class SkiaCamera : SkiaControl
         var height = frame.Height;
 
         // Define sampling area based on metering mode - in points, then convert to pixels
-        int sampleSizePoints = meteringMode == MeteringMode.Spot ? 60 : 300;
+        int sampleSizePoints = meteringMode == MeteringMode.Spot ? SpotPoints : ExposurePoints;
         int sampleSizePixels = (int)(sampleSizePoints * renderingScale);
 
         int centerX = width / 2;

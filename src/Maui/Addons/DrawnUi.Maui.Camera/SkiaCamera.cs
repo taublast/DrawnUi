@@ -99,7 +99,6 @@ public partial class SkiaCamera : SkiaControl
 
     #endregion
 
-
     #region Display
 
     public SkiaImage Display { get; protected set; }
@@ -316,32 +315,31 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Refreshes and returns the list of available cameras
+    /// Get available capture formats/resolutions for the current camera.
+    /// Use with CaptureFormatIndex when CapturePhotoQuality is set to Manual.
+    /// Formats are cached when camera is initialized.
     /// </summary>
-    /// <returns>List of available cameras</returns>
-    public virtual async Task<List<CameraInfo>> RefreshAvailableCamerasAsync()
+    /// <returns>List of available capture formats</returns>
+    public virtual async Task<List<CaptureFormat>> GetAvailableCaptureFormatsAsync()
     {
-        _availableCameras = null; // Clear cache
-        return await GetAvailableCamerasInternal();
+#if ONPLATFORM
+        // If not cached, detect and cache them
+        return await GetAvailableCaptureFormatsPlatform();
+#else
+        return new List<CaptureFormat>();
+#endif
     }
-
-    private List<CameraInfo> _availableCameras;
-
+    
     /// <summary>
     /// Internal method to get available cameras with caching
     /// </summary>
-    protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal()
+    protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal(bool refresh=false)
     {
-        if (_availableCameras != null)
-            return _availableCameras;
-
 #if ONPLATFORM
-        _availableCameras = await GetAvailableCamerasPlatform();
-#else
-                _availableCameras = new List<CameraInfo>();
+        return await GetAvailableCamerasPlatform(refresh);
 #endif
 
-        return _availableCameras;
+        return new List<CameraInfo>();
     }
 
     #endregion
@@ -1237,6 +1235,19 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    private static void OnCaptureFormatChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (bindable is SkiaCamera control && control.State == CameraState.On)
+        {
+            // When capture format changes, update preview to match aspect ratio
+            Debug.WriteLine($"[SkiaCamera] Capture format changed: {oldvalue} -> {newvalue}");
+
+#if ONPLATFORM
+            control.UpdatePreviewFormatForAspectRatio();
+#endif
+        }
+    }
+
     public CameraPosition Facing
     {
         get { return (CameraPosition)GetValue(FacingProperty); }
@@ -1264,7 +1275,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(CapturePhotoQuality),
         typeof(CaptureQuality),
         typeof(SkiaCamera),
-        CaptureQuality.Max);
+        CaptureQuality.Max, propertyChanged: OnCaptureFormatChanged);
 
     /// <summary>
     /// Photo capture quality
@@ -1273,6 +1284,23 @@ public partial class SkiaCamera : SkiaControl
     {
         get { return (CaptureQuality)GetValue(CapturePhotoQualityProperty); }
         set { SetValue(CapturePhotoQualityProperty, value); }
+    }
+
+    public static readonly BindableProperty CaptureFormatIndexProperty = BindableProperty.Create(
+        nameof(CaptureFormatIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        0, propertyChanged: OnCaptureFormatChanged);
+
+    /// <summary>
+    /// Index of capture format when CapturePhotoQuality is set to Manual.
+    /// Selects from the array of available capture formats/resolutions.
+    /// Use GetAvailableCaptureFormats() to see available options.
+    /// </summary>
+    public int CaptureFormatIndex
+    {
+        get { return (int)GetValue(CaptureFormatIndexProperty); }
+        set { SetValue(CaptureFormatIndexProperty, value); }
     }
 
     public static readonly BindableProperty CaptureFlashModeProperty = BindableProperty.Create(
@@ -1343,7 +1371,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(Type),
         typeof(CameraType),
         typeof(SkiaCamera),
-        CameraType.Default);
+        CameraType.Default, propertyChanged: NeedRestart);
 
     /// <summary>
     /// To be implemented

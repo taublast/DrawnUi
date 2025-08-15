@@ -693,6 +693,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         return optimalSize;
     }
 
+
+
     public bool ManualZoomEnabled = true;
 
     private void OnScaleChanged(object sender, TouchEffect.WheelEventArgs e)
@@ -887,6 +889,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     case CaptureQuality.Low:
                         selectedSize = validSizes.Last();
+                        break;
+
+                    case CaptureQuality.Manual:
+                        // Use specific format index
+                        var formatIndex = FormsControl.CaptureFormatIndex;
+                        if (formatIndex >= 0 && formatIndex < validSizes.Count)
+                        {
+                            selectedSize = validSizes[formatIndex];
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"[NativeCameraAndroid] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
+                            selectedSize = validSizes.First();
+                        }
                         break;
 
                     default:

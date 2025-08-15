@@ -24,6 +24,7 @@ public partial class SkiaCamera
         Zoomed?.Invoke(this, value);
     }
 
+
     /// <summary>
     /// Opens a file or displays a photo from assets-library URL
     /// </summary>
@@ -333,7 +334,7 @@ public partial class SkiaCamera
         NativeControl = new NativeCamera(this);
     }
 
-    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform()
+    protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 
@@ -388,6 +389,60 @@ public partial class SkiaCamera
         }
 
         return cameras;
+    }
+
+    protected async Task<List<CaptureFormat>> GetAvailableCaptureFormatsPlatform()
+    {
+        var formats = new List<CaptureFormat>();
+
+        try
+        {
+            if (NativeControl is NativeCamera native)
+            {
+                formats = native.StillFormats;
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SkiaCameraApple] Error getting capture formats: {ex.Message}");
+        }
+
+        return formats;
+    }
+
+    /// <summary>
+    /// Updates preview format to match current capture format aspect ratio.
+    /// iOS implementation: Reselects device format since iOS uses single format for both preview and capture.
+    /// </summary>
+    protected virtual void UpdatePreviewFormatForAspectRatio()
+    {
+        if (NativeControl is NativeCamera appleCamera)
+        {
+            Console.WriteLine("[SkiaCameraApple] Updating preview format for aspect ratio match");
+
+            // iOS uses a single AVCaptureDeviceFormat for both preview and capture
+            // We need to reselect the optimal format based on new capture quality settings
+            Task.Run(async () =>
+            {
+                try
+                {
+                    // Trigger format reselection by restarting camera session
+                    appleCamera.Stop();
+
+                    // Small delay to ensure cleanup
+                    await Task.Delay(100);
+
+                    // Restart - this will call SelectOptimalFormat() with new settings
+                    appleCamera.Start();
+
+                    Console.WriteLine("[SkiaCameraApple] Camera session restarted for format change");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[SkiaCameraApple] Error updating preview format: {ex.Message}");
+                }
+            });
+        }
     }
 
     /// <summary>
