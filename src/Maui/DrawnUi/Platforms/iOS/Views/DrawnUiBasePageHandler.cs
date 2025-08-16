@@ -53,7 +53,9 @@ public class DrawnUiBasePageHandler : PageHandler
         {
             get
             {
-                return false;
+                if (DrawnExtensions.StartupSettings != null && DrawnExtensions.StartupSettings.MobileIsFullscreen.HasValue && DrawnExtensions.StartupSettings.MobileIsFullscreen.Value)
+                    return false;
+                return base.AutomaticallyAdjustsScrollViewInsets;
             }
             set
             {
@@ -65,7 +67,10 @@ public class DrawnUiBasePageHandler : PageHandler
         {
             get
             {
-                return UIEdgeInsets.Zero;
+                if (DrawnExtensions.StartupSettings != null && DrawnExtensions.StartupSettings.MobileIsFullscreen.HasValue && DrawnExtensions.StartupSettings.MobileIsFullscreen.Value)
+                    return UIEdgeInsets.Zero;
+
+                return base.AdditionalSafeAreaInsets;
             }
             set
             {

@@ -8,9 +8,9 @@ namespace DrawnUi.Draw
     {
         public static void ConfigureHandlers(IMauiHandlersCollection handlers)
         {
-            if (StartupSettings != null && StartupSettings.MobileIsFullscreen)
+            if (StartupSettings != null && StartupSettings.MobileIsFullscreen.HasValue)
             {
-                bool useFullScreen = StartupSettings.MobileIsFullscreen;
+                bool useFullScreen = StartupSettings.MobileIsFullscreen.Value;
 
                 var useSafeArea = !useFullScreen;
 
