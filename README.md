@@ -36,8 +36,7 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
-* `SkiaCamera` flash/torch enhancements
-* Recycled cells scrolls fixes
+* FIX DrawnUiBasePage iOS not respecting MAUI SafeInsets
 
 ___Please star ⭐ if you like it!___
  
@@ -117,6 +116,9 @@ Click here ☝️☝️☝️
 ---
 
 ## 🌱 What Was New Previously
+
+* `SkiaCamera` flash/torch enhancements
+* Recycled cells scrolls fixes
 
 * SkiaCheckBox/SkiaRadioButton to consume TAP gesture only
 * OnGlobalUpdate will not invalidate scale/children

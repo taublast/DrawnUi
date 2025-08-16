@@ -200,9 +200,9 @@ public static partial class DrawnExtensions
                 void AttachActivity(Android.App.Activity activity)
                 {
 
-                    if (StartupSettings != null)
+                    if (StartupSettings != null && StartupSettings.MobileIsFullscreen.HasValue)
                     {
-                        if (StartupSettings.MobileIsFullscreen)
+                        if (StartupSettings.MobileIsFullscreen.Value)
                         {
                             Super.SetFullScreen(activity);
                         }
@@ -265,9 +265,9 @@ public static partial class DrawnExtensions
 
                 android.OnNewIntent((activity, intent) =>
                 {
-                    if (StartupSettings != null)
+                    if (StartupSettings != null && StartupSettings.MobileIsFullscreen.HasValue)
                     {
-                        if (StartupSettings.MobileIsFullscreen)
+                        if (StartupSettings.MobileIsFullscreen.Value)
                         {
                             Super.SetFullScreen(activity);
                         }

@@ -11,7 +11,7 @@ namespace DrawnUi.Views;
 /// If you put this inside some Maui control like Grid whatever expect more GC collections during animations making them somewhat less fluid.
 /// </summary>
 [ContentProperty("Content")]
-public class Canvas : DrawnView, IGestureListener
+public class Canvas : DrawnView, IGestureListener, ISafeAreaView
 {
     //protected override void OnFinalizeRendering()
     //{
@@ -19,6 +19,15 @@ public class Canvas : DrawnView, IGestureListener
 
     //    DumpDebug();
     //}
+
+    public static readonly BindableProperty IgnoreSafeAreaProperty =
+        BindableProperty.Create(nameof(IgnoreSafeArea), typeof(bool), typeof(Layout), false);
+
+    public bool IgnoreSafeArea
+    {
+        get => (bool)GetValue(IgnoreSafeAreaProperty);
+        set => SetValue(IgnoreSafeAreaProperty, value);
+    }
 
     public override void SetChildren(IEnumerable<SkiaControl> views)
     {

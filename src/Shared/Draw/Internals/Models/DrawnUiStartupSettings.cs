@@ -17,7 +17,7 @@ public class DrawnUiStartupSettings
     /// <summary>
     /// Avoid safe insets and remove system ui like status bar etc if supported by platform
     /// </summary>
-    public bool MobileIsFullscreen { get; set; }
+    public bool? MobileIsFullscreen { get; set; }
 
     /// <summary>
     /// Listen to desktop keyboard keys with KeyboardManager. Windows and Catalyst available.
