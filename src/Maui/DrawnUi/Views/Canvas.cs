@@ -11,23 +11,19 @@ namespace DrawnUi.Views;
 /// If you put this inside some Maui control like Grid whatever expect more GC collections during animations making them somewhat less fluid.
 /// </summary>
 [ContentProperty("Content")]
-public class Canvas : DrawnView, IGestureListener, ISafeAreaView
+public class Canvas : DrawnView, IGestureListener
 {
+    //not implementing ISafeAreaView
+    //because actually on ios gestures coordinates come inside view not accounting for insets
+    //breaking logic, so until gestures on ios accounr for safeinsets we pass
+    //if you need safe insets applied to this wrap inside Maui Grid for example
+
     //protected override void OnFinalizeRendering()
     //{
     //    base.OnFinalizeRendering();
 
     //    DumpDebug();
     //}
-
-    public static readonly BindableProperty IgnoreSafeAreaProperty =
-        BindableProperty.Create(nameof(IgnoreSafeArea), typeof(bool), typeof(Layout), false);
-
-    public bool IgnoreSafeArea
-    {
-        get => (bool)GetValue(IgnoreSafeAreaProperty);
-        set => SetValue(IgnoreSafeAreaProperty, value);
-    }
 
     public override void SetChildren(IEnumerable<SkiaControl> views)
     {
@@ -691,7 +687,7 @@ public class Canvas : DrawnView, IGestureListener, ISafeAreaView
     /// <param name="touchAction"></param>
     public virtual void OnGestureEvent(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)
     {
-        //Debug.WriteLine($"[Canvas] {touchAction} {type}");
+        Debug.WriteLine($"[Canvas] {touchAction} {args1.Location}");
 
         if (!CanDraw)
         {
