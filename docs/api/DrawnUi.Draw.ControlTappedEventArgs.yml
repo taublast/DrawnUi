@@ -1,39 +1,40 @@
 ### YamlMime:ManagedReference
 items:
-- uid: DrawnUi.Draw.CellWIthHeight
-  commentId: T:DrawnUi.Draw.CellWIthHeight
-  id: CellWIthHeight
+- uid: DrawnUi.Draw.ControlTappedEventArgs
+  commentId: T:DrawnUi.Draw.ControlTappedEventArgs
+  id: ControlTappedEventArgs
   parent: DrawnUi.Draw
   children:
-  - DrawnUi.Draw.CellWIthHeight.#ctor(System.Single,DrawnUi.Draw.SkiaControl)
-  - DrawnUi.Draw.CellWIthHeight.Height
-  - DrawnUi.Draw.CellWIthHeight.view
+  - DrawnUi.Draw.ControlTappedEventArgs.#ctor(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.ControlTappedEventArgs.Control
+  - DrawnUi.Draw.ControlTappedEventArgs.Parameters
+  - DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo
   langs:
   - csharp
   - vb
-  name: CellWIthHeight
-  nameWithType: CellWIthHeight
-  fullName: DrawnUi.Draw.CellWIthHeight
+  name: ControlTappedEventArgs
+  nameWithType: ControlTappedEventArgs
+  fullName: DrawnUi.Draw.ControlTappedEventArgs
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
-    id: CellWIthHeight
-    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 7
+    id: ControlTappedEventArgs
+    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
+    startLine: 19
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: 'public record CellWIthHeight : IEquatable<CellWIthHeight>'
-    content.vb: Public Class CellWIthHeight Implements IEquatable(Of CellWIthHeight)
+    content: 'public class ControlTappedEventArgs : EventArgs'
+    content.vb: Public Class ControlTappedEventArgs Inherits EventArgs
   inheritance:
   - System.Object
-  implements:
-  - System.IEquatable{DrawnUi.Draw.CellWIthHeight}
+  - System.EventArgs
   inheritedMembers:
+  - System.EventArgs.Empty
   - System.Object.Equals(System.Object)
   - System.Object.Equals(System.Object,System.Object)
   - System.Object.GetHashCode
@@ -43,98 +44,129 @@ items:
   - System.Object.ToString
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-- uid: DrawnUi.Draw.CellWIthHeight.#ctor(System.Single,DrawnUi.Draw.SkiaControl)
-  commentId: M:DrawnUi.Draw.CellWIthHeight.#ctor(System.Single,DrawnUi.Draw.SkiaControl)
-  id: '#ctor(System.Single,DrawnUi.Draw.SkiaControl)'
-  parent: DrawnUi.Draw.CellWIthHeight
+- uid: DrawnUi.Draw.ControlTappedEventArgs.Control
+  commentId: P:DrawnUi.Draw.ControlTappedEventArgs.Control
+  id: Control
+  parent: DrawnUi.Draw.ControlTappedEventArgs
   langs:
   - csharp
   - vb
-  name: CellWIthHeight(float, SkiaControl)
-  nameWithType: CellWIthHeight.CellWIthHeight(float, SkiaControl)
-  fullName: DrawnUi.Draw.CellWIthHeight.CellWIthHeight(float, DrawnUi.Draw.SkiaControl)
+  name: Control
+  nameWithType: ControlTappedEventArgs.Control
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.Control
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Control
+    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public object Control { get; set; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public Property Control As Object
+  overload: DrawnUi.Draw.ControlTappedEventArgs.Control*
+- uid: DrawnUi.Draw.ControlTappedEventArgs.Parameters
+  commentId: P:DrawnUi.Draw.ControlTappedEventArgs.Parameters
+  id: Parameters
+  parent: DrawnUi.Draw.ControlTappedEventArgs
+  langs:
+  - csharp
+  - vb
+  name: Parameters
+  nameWithType: ControlTappedEventArgs.Parameters
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.Parameters
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Parameters
+    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SkiaGesturesParameters Parameters { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaGesturesParameters
+    content.vb: Public Property Parameters As SkiaGesturesParameters
+  overload: DrawnUi.Draw.ControlTappedEventArgs.Parameters*
+- uid: DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo
+  commentId: P:DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo
+  id: ProcessingInfo
+  parent: DrawnUi.Draw.ControlTappedEventArgs
+  langs:
+  - csharp
+  - vb
+  name: ProcessingInfo
+  nameWithType: ControlTappedEventArgs.ProcessingInfo
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ProcessingInfo
+    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public GestureEventProcessingInfo ProcessingInfo { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.GestureEventProcessingInfo
+    content.vb: Public Property ProcessingInfo As GestureEventProcessingInfo
+  overload: DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo*
+- uid: DrawnUi.Draw.ControlTappedEventArgs.#ctor(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.ControlTappedEventArgs.#ctor(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  id: '#ctor(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)'
+  parent: DrawnUi.Draw.ControlTappedEventArgs
+  langs:
+  - csharp
+  - vb
+  name: ControlTappedEventArgs(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: ControlTappedEventArgs.ControlTappedEventArgs(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.ControlTappedEventArgs(object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 7
+    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
+    startLine: 25
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public CellWIthHeight(float Height, SkiaControl view)
+    content: public ControlTappedEventArgs(object control, SkiaGesturesParameters args, GestureEventProcessingInfo info)
     parameters:
-    - id: Height
-      type: System.Single
-    - id: view
-      type: DrawnUi.Draw.SkiaControl
-    content.vb: Public Sub New(Height As Single, view As SkiaControl)
-  overload: DrawnUi.Draw.CellWIthHeight.#ctor*
-  nameWithType.vb: CellWIthHeight.New(Single, SkiaControl)
-  fullName.vb: DrawnUi.Draw.CellWIthHeight.New(Single, DrawnUi.Draw.SkiaControl)
-  name.vb: New(Single, SkiaControl)
-- uid: DrawnUi.Draw.CellWIthHeight.Height
-  commentId: P:DrawnUi.Draw.CellWIthHeight.Height
-  id: Height
-  parent: DrawnUi.Draw.CellWIthHeight
-  langs:
-  - csharp
-  - vb
-  name: Height
-  nameWithType: CellWIthHeight.Height
-  fullName: DrawnUi.Draw.CellWIthHeight.Height
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Height
-    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 7
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public float Height { get; init; }
-    parameters: []
-    return:
-      type: System.Single
-    content.vb: Public Property Height As Single
-  overload: DrawnUi.Draw.CellWIthHeight.Height*
-- uid: DrawnUi.Draw.CellWIthHeight.view
-  commentId: P:DrawnUi.Draw.CellWIthHeight.view
-  id: view
-  parent: DrawnUi.Draw.CellWIthHeight
-  langs:
-  - csharp
-  - vb
-  name: view
-  nameWithType: CellWIthHeight.view
-  fullName: DrawnUi.Draw.CellWIthHeight.view
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: view
-    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 7
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public SkiaControl view { get; init; }
-    parameters: []
-    return:
-      type: DrawnUi.Draw.SkiaControl
-    content.vb: Public Property view As SkiaControl
-  overload: DrawnUi.Draw.CellWIthHeight.view*
+    - id: control
+      type: System.Object
+    - id: args
+      type: DrawnUi.Draw.SkiaGesturesParameters
+    - id: info
+      type: DrawnUi.Draw.GestureEventProcessingInfo
+    content.vb: Public Sub New(control As Object, args As SkiaGesturesParameters, info As GestureEventProcessingInfo)
+  overload: DrawnUi.Draw.ControlTappedEventArgs.#ctor*
+  nameWithType.vb: ControlTappedEventArgs.New(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName.vb: DrawnUi.Draw.ControlTappedEventArgs.New(Object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  name.vb: New(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -169,39 +201,22 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
-- uid: System.IEquatable{DrawnUi.Draw.CellWIthHeight}
-  commentId: T:System.IEquatable{DrawnUi.Draw.CellWIthHeight}
+- uid: System.EventArgs
+  commentId: T:System.EventArgs
   parent: System
-  definition: System.IEquatable`1
-  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
-  name: IEquatable<CellWIthHeight>
-  nameWithType: IEquatable<CellWIthHeight>
-  fullName: System.IEquatable<DrawnUi.Draw.CellWIthHeight>
-  nameWithType.vb: IEquatable(Of CellWIthHeight)
-  fullName.vb: System.IEquatable(Of DrawnUi.Draw.CellWIthHeight)
-  name.vb: IEquatable(Of CellWIthHeight)
-  spec.csharp:
-  - uid: System.IEquatable`1
-    name: IEquatable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
-  - name: <
-  - uid: DrawnUi.Draw.CellWIthHeight
-    name: CellWIthHeight
-    href: DrawnUi.Draw.CellWIthHeight.html
-  - name: '>'
-  spec.vb:
-  - uid: System.IEquatable`1
-    name: IEquatable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Draw.CellWIthHeight
-    name: CellWIthHeight
-    href: DrawnUi.Draw.CellWIthHeight.html
-  - name: )
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventargs
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.EventArgs.Empty
+  commentId: F:System.EventArgs.Empty
+  parent: System.EventArgs
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventargs.empty
+  name: Empty
+  nameWithType: EventArgs.Empty
+  fullName: System.EventArgs.Empty
 - uid: System.Object.Equals(System.Object)
   commentId: M:System.Object.Equals(System.Object)
   parent: System.Object
@@ -459,34 +474,6 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: System.IEquatable`1
-  commentId: T:System.IEquatable`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
-  name: IEquatable<T>
-  nameWithType: IEquatable<T>
-  fullName: System.IEquatable<T>
-  nameWithType.vb: IEquatable(Of T)
-  fullName.vb: System.IEquatable(Of T)
-  name.vb: IEquatable(Of T)
-  spec.csharp:
-  - uid: System.IEquatable`1
-    name: IEquatable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
-  - name: <
-  - name: T
-  - name: '>'
-  spec.vb:
-  - uid: System.IEquatable`1
-    name: IEquatable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
 - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
   commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
   isExternal: true
@@ -546,42 +533,44 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
-- uid: DrawnUi.Draw.CellWIthHeight.#ctor*
-  commentId: Overload:DrawnUi.Draw.CellWIthHeight.#ctor
-  href: DrawnUi.Draw.CellWIthHeight.html#DrawnUi_Draw_CellWIthHeight__ctor_System_Single_DrawnUi_Draw_SkiaControl_
-  name: CellWIthHeight
-  nameWithType: CellWIthHeight.CellWIthHeight
-  fullName: DrawnUi.Draw.CellWIthHeight.CellWIthHeight
-  nameWithType.vb: CellWIthHeight.New
-  fullName.vb: DrawnUi.Draw.CellWIthHeight.New
-  name.vb: New
-- uid: System.Single
-  commentId: T:System.Single
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.single
-  name: float
-  nameWithType: float
-  fullName: float
-  nameWithType.vb: Single
-  fullName.vb: Single
-  name.vb: Single
-- uid: DrawnUi.Draw.SkiaControl
-  commentId: T:DrawnUi.Draw.SkiaControl
+- uid: DrawnUi.Draw.ControlTappedEventArgs.Control*
+  commentId: Overload:DrawnUi.Draw.ControlTappedEventArgs.Control
+  href: DrawnUi.Draw.ControlTappedEventArgs.html#DrawnUi_Draw_ControlTappedEventArgs_Control
+  name: Control
+  nameWithType: ControlTappedEventArgs.Control
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.Control
+- uid: DrawnUi.Draw.ControlTappedEventArgs.Parameters*
+  commentId: Overload:DrawnUi.Draw.ControlTappedEventArgs.Parameters
+  href: DrawnUi.Draw.ControlTappedEventArgs.html#DrawnUi_Draw_ControlTappedEventArgs_Parameters
+  name: Parameters
+  nameWithType: ControlTappedEventArgs.Parameters
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.Parameters
+- uid: DrawnUi.Draw.SkiaGesturesParameters
+  commentId: T:DrawnUi.Draw.SkiaGesturesParameters
   parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaControl.html
-  name: SkiaControl
-  nameWithType: SkiaControl
-  fullName: DrawnUi.Draw.SkiaControl
-- uid: DrawnUi.Draw.CellWIthHeight.Height*
-  commentId: Overload:DrawnUi.Draw.CellWIthHeight.Height
-  href: DrawnUi.Draw.CellWIthHeight.html#DrawnUi_Draw_CellWIthHeight_Height
-  name: Height
-  nameWithType: CellWIthHeight.Height
-  fullName: DrawnUi.Draw.CellWIthHeight.Height
-- uid: DrawnUi.Draw.CellWIthHeight.view*
-  commentId: Overload:DrawnUi.Draw.CellWIthHeight.view
-  href: DrawnUi.Draw.CellWIthHeight.html#DrawnUi_Draw_CellWIthHeight_view
-  name: view
-  nameWithType: CellWIthHeight.view
-  fullName: DrawnUi.Draw.CellWIthHeight.view
+  href: DrawnUi.Draw.SkiaGesturesParameters.html
+  name: SkiaGesturesParameters
+  nameWithType: SkiaGesturesParameters
+  fullName: DrawnUi.Draw.SkiaGesturesParameters
+- uid: DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo*
+  commentId: Overload:DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo
+  href: DrawnUi.Draw.ControlTappedEventArgs.html#DrawnUi_Draw_ControlTappedEventArgs_ProcessingInfo
+  name: ProcessingInfo
+  nameWithType: ControlTappedEventArgs.ProcessingInfo
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo
+- uid: DrawnUi.Draw.GestureEventProcessingInfo
+  commentId: T:DrawnUi.Draw.GestureEventProcessingInfo
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  name: GestureEventProcessingInfo
+  nameWithType: GestureEventProcessingInfo
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo
+- uid: DrawnUi.Draw.ControlTappedEventArgs.#ctor*
+  commentId: Overload:DrawnUi.Draw.ControlTappedEventArgs.#ctor
+  href: DrawnUi.Draw.ControlTappedEventArgs.html#DrawnUi_Draw_ControlTappedEventArgs__ctor_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: ControlTappedEventArgs
+  nameWithType: ControlTappedEventArgs.ControlTappedEventArgs
+  fullName: DrawnUi.Draw.ControlTappedEventArgs.ControlTappedEventArgs
+  nameWithType.vb: ControlTappedEventArgs.New
+  fullName.vb: DrawnUi.Draw.ControlTappedEventArgs.New
+  name.vb: New

@@ -1380,6 +1380,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ControlTappedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ControlTappedEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ControlTappedEventArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.ControlsTracker.yml",
       "output": {
         ".html": {

@@ -295,8 +295,11 @@
 <p>SkiaCamera is a specialized control that provides camera functionality directly within the DrawnUI canvas. It allows you to capture photos and video while maintaining the performance and visual consistency of the DrawnUI rendering pipeline.</p>
 <h3 id="basic-usage-1">Basic Usage</h3>
 <pre><code class="lang-xml">&lt;draw:SkiaCamera
-    IsPreviewEnabled=&quot;True&quot;
-    CameraFacing=&quot;Back&quot;
+    x:Name=&quot;CameraControl&quot;
+    IsOn=&quot;True&quot;
+    Facing=&quot;Default&quot;
+    FlashMode=&quot;Off&quot;
+    CaptureFlashMode=&quot;Auto&quot;
     WidthRequest=&quot;300&quot;
     HeightRequest=&quot;400&quot; /&gt;
 </code></pre>
@@ -312,28 +315,46 @@
 </thead>
 <tbody>
 <tr>
-<td><code>IsPreviewEnabled</code></td>
+<td><code>IsOn</code></td>
 <td>bool</td>
-<td>true</td>
-<td>Whether to show camera preview</td>
+<td>false</td>
+<td>Camera power state - use this to start/stop camera</td>
 </tr>
 <tr>
-<td><code>CameraFacing</code></td>
-<td>CameraFacing</td>
-<td>Back</td>
-<td>Camera to use (Front/Back)</td>
+<td><code>Facing</code></td>
+<td>CameraPosition</td>
+<td>Default</td>
+<td>Camera selection: Default (back), Selfie (front), Manual</td>
 </tr>
 <tr>
 <td><code>FlashMode</code></td>
 <td>FlashMode</td>
 <td>Off</td>
-<td>Flash mode (Off/On/Auto)</td>
+<td>Preview torch mode: Off, On, Strobe</td>
 </tr>
 <tr>
-<td><code>IsRecording</code></td>
+<td><code>CaptureFlashMode</code></td>
+<td>CaptureFlashMode</td>
+<td>Auto</td>
+<td>Flash mode for capture: Off, Auto, On</td>
+</tr>
+<tr>
+<td><code>CapturePhotoQuality</code></td>
+<td>CaptureQuality</td>
+<td>Max</td>
+<td>Photo quality: Max, Medium, Low, Preview</td>
+</tr>
+<tr>
+<td><code>IsFlashSupported</code></td>
 <td>bool</td>
-<td>false</td>
-<td>Whether currently recording video</td>
+<td>-</td>
+<td>Whether flash is available (read-only)</td>
+</tr>
+<tr>
+<td><code>Zoom</code></td>
+<td>double</td>
+<td>1.0</td>
+<td>Camera zoom level</td>
 </tr>
 </tbody>
 </table>
@@ -342,8 +363,11 @@
 &lt;draw:SkiaLayout Type=&quot;Column&quot; Spacing=&quot;10&quot;&gt;
     &lt;draw:SkiaCamera
         x:Name=&quot;Camera&quot;
-        IsPreviewEnabled=&quot;True&quot;
-        CameraFacing=&quot;Back&quot;
+        IsOn=&quot;True&quot;
+        Facing=&quot;Default&quot;
+        FlashMode=&quot;Off&quot;
+        CaptureFlashMode=&quot;Auto&quot;
+        CapturePhotoQuality=&quot;Medium&quot;
         WidthRequest=&quot;300&quot;
         HeightRequest=&quot;400&quot; /&gt;
 
@@ -351,6 +375,9 @@
         &lt;draw:SkiaButton
             Text=&quot;Capture&quot;
             Clicked=&quot;OnCaptureClicked&quot; /&gt;
+        &lt;draw:SkiaButton
+            Text=&quot;Toggle Torch&quot;
+            Clicked=&quot;OnToggleTorchClicked&quot; /&gt;
         &lt;draw:SkiaButton
             Text=&quot;Switch Camera&quot;
             Clicked=&quot;OnSwitchCameraClicked&quot; /&gt;
@@ -362,7 +389,7 @@
 {
     try
     {
-        var photo = await Camera.CapturePhotoAsync();
+        var photo = await Camera.TakePictureAsync();
         if (photo != null)
         {
             // Handle captured photo
@@ -376,12 +403,94 @@
     }
 }
 
+private void OnToggleTorchClicked(object sender, EventArgs e)
+{
+    // Toggle preview torch using property-based approach
+    Camera.FlashMode = Camera.FlashMode == FlashMode.Off
+        ? FlashMode.On
+        : FlashMode.Off;
+}
+
 private void OnSwitchCameraClicked(object sender, EventArgs e)
 {
-    Camera.CameraFacing = Camera.CameraFacing == CameraFacing.Back
-        ? CameraFacing.Front
-        : CameraFacing.Back;
+    Camera.Facing = Camera.Facing == CameraPosition.Default
+        ? CameraPosition.Selfie
+        : CameraPosition.Default;
 }
+</code></pre>
+<h3 id="flash-control">Flash Control</h3>
+<p>SkiaCamera provides comprehensive flash control with independent preview torch and capture flash modes:</p>
+<pre><code class="lang-csharp">// Preview torch control
+Camera.FlashMode = FlashMode.Off;    // Disable torch
+Camera.FlashMode = FlashMode.On;     // Enable torch
+Camera.FlashMode = FlashMode.Strobe; // Strobe mode (future feature)
+
+// Capture flash control
+Camera.CaptureFlashMode = CaptureFlashMode.Off;   // No flash
+Camera.CaptureFlashMode = CaptureFlashMode.Auto;  // Auto flash
+Camera.CaptureFlashMode = CaptureFlashMode.On;    // Always flash
+
+// Check flash capabilities
+if (Camera.IsFlashSupported)
+{
+    // Flash is available on this camera
+    Camera.FlashMode = FlashMode.On;
+}
+</code></pre>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li><strong>Independent Control</strong>: Preview torch and capture flash work separately</li>
+<li><strong>Property-Based API</strong>: Modern, bindable properties for MVVM scenarios</li>
+<li><strong>Clean API</strong>: Simple property-based approach without legacy methods</li>
+<li><strong>Future Extensibility</strong>: Ready for strobe and other advanced flash modes</li>
+</ul>
+<h3 id="gallery-integration">Gallery Integration</h3>
+<p>SkiaCamera provides <code>OpenFileInGallery()</code> method to open captured photos in the system gallery:</p>
+<pre><code class="lang-csharp">private async void OnCaptureClicked(object sender, EventArgs e)
+{
+    try
+    {
+        var photo = await Camera.TakePictureAsync();
+        if (photo != null)
+        {
+            // Save photo to file
+            var fileName = $&quot;photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg&quot;;
+            var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
+
+            using var fileStream = File.Create(filePath);
+            using var data = photo.Encode(SKEncodedImageFormat.Jpeg, 90);
+            data.SaveTo(fileStream);
+
+            // Open in system gallery
+            Camera.OpenFileInGallery(filePath);
+        }
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert(&quot;Error&quot;, $&quot;Failed to open in gallery: {ex.Message}&quot;, &quot;OK&quot;);
+    }
+}
+</code></pre>
+<p><strong>Android FileProvider Setup Required:</strong></p>
+<p>For Android, you must configure a FileProvider in <code>AndroidManifest.xml</code>:</p>
+<pre><code class="lang-xml">&lt;application&gt;
+    &lt;provider
+        android:name=&quot;androidx.core.content.FileProvider&quot;
+        android:authorities=&quot;${applicationId}.fileprovider&quot;
+        android:exported=&quot;false&quot;
+        android:grantUriPermissions=&quot;true&quot;&gt;
+        &lt;meta-data
+            android:name=&quot;android.support.FILE_PROVIDER_PATHS&quot;
+            android:resource=&quot;@xml/file_paths&quot; /&gt;
+    &lt;/provider&gt;
+&lt;/application&gt;
+</code></pre>
+<p>Create <code>Platforms/Android/Resources/xml/file_paths.xml</code>:</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;paths xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;external-files-path name=&quot;my_images&quot; path=&quot;Pictures&quot; /&gt;
+    &lt;cache-path name=&quot;my_cache&quot; path=&quot;.&quot; /&gt;
+&lt;/paths&gt;
 </code></pre>
 
 </article>

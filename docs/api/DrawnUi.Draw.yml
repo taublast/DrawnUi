@@ -43,6 +43,7 @@ items:
   - DrawnUi.Draw.ContextArguments
   - DrawnUi.Draw.ContrastEffect
   - DrawnUi.Draw.ControlInStack
+  - DrawnUi.Draw.ControlTappedEventArgs
   - DrawnUi.Draw.ControlsTracker
   - DrawnUi.Draw.CriticallyDampedSpringTimingParameters
   - DrawnUi.Draw.CriticallyDampedSpringTimingVectorParameters
@@ -190,7 +191,6 @@ items:
   - DrawnUi.Draw.SkiaCheckbox
   - DrawnUi.Draw.SkiaControl
   - DrawnUi.Draw.SkiaControl.CacheValidityType
-  - DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
   - DrawnUi.Draw.SkiaControl.ParentMeasureRequest
   - DrawnUi.Draw.SkiaControlWithRect
   - DrawnUi.Draw.SkiaControlsObservable
@@ -522,28 +522,6 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.CacheValidityType
     name: CacheValidityType
     href: DrawnUi.Draw.SkiaControl.CacheValidityType.html
-- uid: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
-  commentId: T:DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
-  href: DrawnUi.Draw.SkiaControl.html
-  name: SkiaControl.ControlTappedEventArgs
-  nameWithType: SkiaControl.ControlTappedEventArgs
-  fullName: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
-    name: ControlTappedEventArgs
-    href: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs.html
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
-    name: ControlTappedEventArgs
-    href: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs.html
 - uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
   commentId: T:DrawnUi.Draw.SkiaControl.ParentMeasureRequest
   href: DrawnUi.Draw.SkiaControl.html
@@ -1814,6 +1792,12 @@ references:
   name: VisualLayer
   nameWithType: VisualLayer
   fullName: DrawnUi.Draw.VisualLayer
+- uid: DrawnUi.Draw.ControlTappedEventArgs
+  commentId: T:DrawnUi.Draw.ControlTappedEventArgs
+  href: DrawnUi.Draw.ControlTappedEventArgs.html
+  name: ControlTappedEventArgs
+  nameWithType: ControlTappedEventArgs
+  fullName: DrawnUi.Draw.ControlTappedEventArgs
 - uid: DrawnUi.Draw.Snapping
   commentId: T:DrawnUi.Draw.Snapping
   href: DrawnUi.Draw.Snapping.html

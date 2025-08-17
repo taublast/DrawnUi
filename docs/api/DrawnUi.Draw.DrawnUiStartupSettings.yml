@@ -130,11 +130,11 @@ items:
   summary: Avoid safe insets and remove system ui like status bar etc if supported by platform
   example: []
   syntax:
-    content: public bool MobileIsFullscreen { get; set; }
+    content: public bool? MobileIsFullscreen { get; set; }
     parameters: []
     return:
-      type: System.Boolean
-    content.vb: Public Property MobileIsFullscreen As Boolean
+      type: System.Nullable{System.Boolean}
+    content.vb: Public Property MobileIsFullscreen As Boolean?
   overload: DrawnUi.Draw.DrawnUiStartupSettings.MobileIsFullscreen*
 - uid: DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard
   commentId: P:DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard
@@ -657,6 +657,35 @@ references:
   name: MobileIsFullscreen
   nameWithType: DrawnUiStartupSettings.MobileIsFullscreen
   fullName: DrawnUi.Draw.DrawnUiStartupSettings.MobileIsFullscreen
+- uid: System.Nullable{System.Boolean}
+  commentId: T:System.Nullable{System.Boolean}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool?
+  nameWithType: bool?
+  fullName: bool?
+  nameWithType.vb: Boolean?
+  fullName.vb: Boolean?
+  name.vb: Boolean?
+  spec.csharp:
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '?'
+  spec.vb:
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '?'
+- uid: DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard*
+  commentId: Overload:DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard
+  href: DrawnUi.Draw.DrawnUiStartupSettings.html#DrawnUi_Draw_DrawnUiStartupSettings_UseDesktopKeyboard
+  name: UseDesktopKeyboard
+  nameWithType: DrawnUiStartupSettings.UseDesktopKeyboard
+  fullName: DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard
 - uid: System.Boolean
   commentId: T:System.Boolean
   parent: System
@@ -668,12 +697,6 @@ references:
   nameWithType.vb: Boolean
   fullName.vb: Boolean
   name.vb: Boolean
-- uid: DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard*
-  commentId: Overload:DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard
-  href: DrawnUi.Draw.DrawnUiStartupSettings.html#DrawnUi_Draw_DrawnUiStartupSettings_UseDesktopKeyboard
-  name: UseDesktopKeyboard
-  nameWithType: DrawnUiStartupSettings.UseDesktopKeyboard
-  fullName: DrawnUi.Draw.DrawnUiStartupSettings.UseDesktopKeyboard
 - uid: DrawnUi.Draw.DrawnUiStartupSettings.Startup*
   commentId: Overload:DrawnUi.Draw.DrawnUiStartupSettings.Startup
   href: DrawnUi.Draw.DrawnUiStartupSettings.html#DrawnUi_Draw_DrawnUiStartupSettings_Startup

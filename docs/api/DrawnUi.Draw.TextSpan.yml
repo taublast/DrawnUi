@@ -1106,10 +1106,10 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public event EventHandler<SkiaControl.ControlTappedEventArgs> Tapped
+    content: public event EventHandler<ControlTappedEventArgs> Tapped
     return:
-      type: System.EventHandler{DrawnUi.Draw.SkiaControl.ControlTappedEventArgs}
-    content.vb: Public Event Tapped As EventHandler(Of SkiaControl.ControlTappedEventArgs)
+      type: System.EventHandler{DrawnUi.Draw.ControlTappedEventArgs}
+    content.vb: Public Event Tapped As EventHandler(Of ControlTappedEventArgs)
 - uid: DrawnUi.Draw.TextSpan.ParentControl
   commentId: P:DrawnUi.Draw.TextSpan.ParentControl
   id: ParentControl
@@ -4236,30 +4236,26 @@ references:
     name: Input
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.windows.input
-- uid: System.EventHandler{DrawnUi.Draw.SkiaControl.ControlTappedEventArgs}
-  commentId: T:System.EventHandler{DrawnUi.Draw.SkiaControl.ControlTappedEventArgs}
+- uid: System.EventHandler{DrawnUi.Draw.ControlTappedEventArgs}
+  commentId: T:System.EventHandler{DrawnUi.Draw.ControlTappedEventArgs}
   parent: System
   definition: System.EventHandler`1
   href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
-  name: EventHandler<SkiaControl.ControlTappedEventArgs>
-  nameWithType: EventHandler<SkiaControl.ControlTappedEventArgs>
-  fullName: System.EventHandler<DrawnUi.Draw.SkiaControl.ControlTappedEventArgs>
-  nameWithType.vb: EventHandler(Of SkiaControl.ControlTappedEventArgs)
-  fullName.vb: System.EventHandler(Of DrawnUi.Draw.SkiaControl.ControlTappedEventArgs)
-  name.vb: EventHandler(Of SkiaControl.ControlTappedEventArgs)
+  name: EventHandler<ControlTappedEventArgs>
+  nameWithType: EventHandler<ControlTappedEventArgs>
+  fullName: System.EventHandler<DrawnUi.Draw.ControlTappedEventArgs>
+  nameWithType.vb: EventHandler(Of ControlTappedEventArgs)
+  fullName.vb: System.EventHandler(Of DrawnUi.Draw.ControlTappedEventArgs)
+  name.vb: EventHandler(Of ControlTappedEventArgs)
   spec.csharp:
   - uid: System.EventHandler`1
     name: EventHandler
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
   - name: <
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
     name: ControlTappedEventArgs
-    href: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs.html
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
   - name: '>'
   spec.vb:
   - uid: System.EventHandler`1
@@ -4269,13 +4265,9 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
     name: ControlTappedEventArgs
-    href: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs.html
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
   - name: )
 - uid: System.EventHandler`1
   commentId: T:System.EventHandler`1

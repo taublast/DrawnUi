@@ -12,6 +12,7 @@ items:
   - DrawnUi.Draw.TemplatedViewsPool.Dispose(System.Boolean)
   - DrawnUi.Draw.TemplatedViewsPool.Get(System.Single,System.Object)
   - DrawnUi.Draw.TemplatedViewsPool.GetStandalone
+  - DrawnUi.Draw.TemplatedViewsPool.InvalidateAll
   - DrawnUi.Draw.TemplatedViewsPool.IsDisposing
   - DrawnUi.Draw.TemplatedViewsPool.MaxDistinctHeights
   - DrawnUi.Draw.TemplatedViewsPool.MaxSize
@@ -33,7 +34,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatedViewsPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1551
+    startLine: 1575
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -72,7 +73,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateTemplate
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1553
+    startLine: 1577
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -101,7 +102,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1554
+    startLine: 1578
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -130,7 +131,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1555
+    startLine: 1579
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -157,7 +158,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1567
+    startLine: 1591
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -193,7 +194,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Size
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1575
+    startLine: 1599
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -222,7 +223,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxDistinctHeights
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1590
+    startLine: 1614
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -251,7 +252,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1657
+    startLine: 1681
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -283,7 +284,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1688
+    startLine: 1712
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -313,7 +314,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reserve
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1713
+    startLine: 1743
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -339,7 +340,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetStandalone
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1733
+    startLine: 1763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -367,7 +368,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnStandalone
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1751
+    startLine: 1781
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -396,7 +397,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearStandalonePool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1762
+    startLine: 1792
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -422,7 +423,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1778
+    startLine: 1808
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -458,7 +459,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Return
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1871
+    startLine: 1901
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -474,6 +475,37 @@ items:
   nameWithType.vb: TemplatedViewsPool.Return(SkiaControl, Integer)
   fullName.vb: DrawnUi.Draw.TemplatedViewsPool.Return(DrawnUi.Draw.SkiaControl, Integer)
   name.vb: Return(SkiaControl, Integer)
+- uid: DrawnUi.Draw.TemplatedViewsPool.InvalidateAll
+  commentId: M:DrawnUi.Draw.TemplatedViewsPool.InvalidateAll
+  id: InvalidateAll
+  parent: DrawnUi.Draw.TemplatedViewsPool
+  langs:
+  - csharp
+  - vb
+  name: InvalidateAll()
+  nameWithType: TemplatedViewsPool.InvalidateAll()
+  fullName: DrawnUi.Draw.TemplatedViewsPool.InvalidateAll()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvalidateAll
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1945
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Invalidate all views held inside all internal pools so they will be re-measured on next use.
+
+    Does not remove or modify pool contents; only marks controls as needing measure/layout.
+  example: []
+  syntax:
+    content: public void InvalidateAll()
+    content.vb: Public Sub InvalidateAll()
+  overload: DrawnUi.Draw.TemplatedViewsPool.InvalidateAll*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -1095,3 +1127,9 @@ references:
   name: Return
   nameWithType: TemplatedViewsPool.Return
   fullName: DrawnUi.Draw.TemplatedViewsPool.Return
+- uid: DrawnUi.Draw.TemplatedViewsPool.InvalidateAll*
+  commentId: Overload:DrawnUi.Draw.TemplatedViewsPool.InvalidateAll
+  href: DrawnUi.Draw.TemplatedViewsPool.html#DrawnUi_Draw_TemplatedViewsPool_InvalidateAll
+  name: InvalidateAll
+  nameWithType: TemplatedViewsPool.InvalidateAll
+  fullName: DrawnUi.Draw.TemplatedViewsPool.InvalidateAll

@@ -304,6 +304,9 @@ items:
   - uid: DrawnUi.Draw.ControlInStack
     name: ControlInStack
     type: Class
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    type: Class
   - uid: DrawnUi.Draw.ControlsTracker
     name: ControlsTracker
     type: Class
@@ -745,9 +748,6 @@ items:
   - uid: DrawnUi.Draw.SkiaControl.CacheValidityType
     name: SkiaControl.CacheValidityType
     type: Enum
-  - uid: DrawnUi.Draw.SkiaControl.ControlTappedEventArgs
-    name: SkiaControl.ControlTappedEventArgs
-    type: Class
   - uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
     name: SkiaControl.ParentMeasureRequest
     type: Struct

@@ -8,7 +8,10 @@ items:
   - DrawnUi.Controls.SkiaGif.#ctor
   - DrawnUi.Controls.SkiaGif.#ctor(DrawnUi.Draw.SkiaImage)
   - DrawnUi.Controls.SkiaGif.Animation
+  - DrawnUi.Controls.SkiaGif.ApplyAspect
   - DrawnUi.Controls.SkiaGif.ApplySpeed
+  - DrawnUi.Controls.SkiaGif.Aspect
+  - DrawnUi.Controls.SkiaGif.AspectProperty
   - DrawnUi.Controls.SkiaGif.Display
   - DrawnUi.Controls.SkiaGif.Error
   - DrawnUi.Controls.SkiaGif.GetAnimatorParent
@@ -489,6 +492,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ApplyBindingContext
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
   - DrawnUi.Draw.SkiaControl.BindingContextWasSet
+  - DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
   - DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
@@ -624,6 +628,7 @@ items:
   - DrawnUi.Draw.SkiaControl.InvalidateChildrenTree
   - DrawnUi.Draw.SkiaControl.OutputDebug
   - DrawnUi.Draw.SkiaControl.InvalidateWithChildren
+  - DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.WillInvalidateMeasure
   - DrawnUi.Draw.SkiaControl.NeedInvalidateMeasure(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaControl.NeedDraw(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
@@ -886,6 +891,7 @@ items:
   - DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Controls.SkiaGif,System.Object},System.String[])
   - DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.SkiaGif})
   - DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Controls.SkiaGif,DrawnUi.Draw.DrawingContext})
+  - DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaGif,DrawnUi.Draw.ControlTappedEventArgs})
   - DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaGif})
   - DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32)
   - DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32,System.Int32,System.Int32)
@@ -920,6 +926,7 @@ items:
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.AnimateExtensions.FadeOut(System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.AnimateExtensions.Translate(System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.DrawnExtensions.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.StaticResourcesExtensions.FindParentByType``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.FindMauiContext(System.Boolean)
@@ -987,6 +994,32 @@ items:
   nameWithType.vb: SkiaGif.New()
   fullName.vb: DrawnUi.Controls.SkiaGif.New()
   name.vb: New()
+- uid: DrawnUi.Controls.SkiaGif.ApplyAspect
+  commentId: M:DrawnUi.Controls.SkiaGif.ApplyAspect
+  id: ApplyAspect
+  parent: DrawnUi.Controls.SkiaGif
+  langs:
+  - csharp
+  - vb
+  name: ApplyAspect()
+  nameWithType: SkiaGif.ApplyAspect()
+  fullName: DrawnUi.Controls.SkiaGif.ApplyAspect()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ApplyAspect
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected void ApplyAspect()
+    content.vb: Protected Sub ApplyAspect()
+  overload: DrawnUi.Controls.SkiaGif.ApplyAspect*
 - uid: DrawnUi.Controls.SkiaGif.LayoutDisplay
   commentId: M:DrawnUi.Controls.SkiaGif.LayoutDisplay
   id: LayoutDisplay
@@ -1005,7 +1038,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutDisplay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 28
+    startLine: 39
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1031,7 +1064,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateMeasure
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 34
+    startLine: 45
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1060,7 +1093,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 47
+    startLine: 58
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1095,7 +1128,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimatorParent
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 53
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1125,7 +1158,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 63
+    startLine: 74
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1156,7 +1189,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorUpdated
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 72
+    startLine: 83
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1192,7 +1225,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorSeeking
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 83
+    startLine: 94
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1227,7 +1260,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorInitializing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 94
+    startLine: 105
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1255,7 +1288,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 107
+    startLine: 118
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1283,7 +1316,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _animation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 120
+    startLine: 131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1310,7 +1343,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Animation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 121
+    startLine: 132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1339,7 +1372,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 137
+    startLine: 148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1373,7 +1406,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 174
+    startLine: 185
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1407,7 +1440,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Success
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 193
+    startLine: 204
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1436,7 +1469,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Error
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 198
+    startLine: 209
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1465,7 +1498,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 200
+    startLine: 211
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1491,7 +1524,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 277
+    startLine: 288
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1529,7 +1562,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 332
+    startLine: 343
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1556,7 +1589,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
-    startLine: 339
+    startLine: 350
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1567,6 +1600,62 @@ items:
       type: System.String
     content.vb: Public Property Source As String
   overload: DrawnUi.Controls.SkiaGif.Source*
+- uid: DrawnUi.Controls.SkiaGif.AspectProperty
+  commentId: F:DrawnUi.Controls.SkiaGif.AspectProperty
+  id: AspectProperty
+  parent: DrawnUi.Controls.SkiaGif
+  langs:
+  - csharp
+  - vb
+  name: AspectProperty
+  nameWithType: SkiaGif.AspectProperty
+  fullName: DrawnUi.Controls.SkiaGif.AspectProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AspectProperty
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
+    startLine: 356
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public static readonly BindableProperty AspectProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly AspectProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaGif.Aspect
+  commentId: P:DrawnUi.Controls.SkiaGif.Aspect
+  id: Aspect
+  parent: DrawnUi.Controls.SkiaGif
+  langs:
+  - csharp
+  - vb
+  name: Aspect
+  nameWithType: SkiaGif.Aspect
+  fullName: DrawnUi.Controls.SkiaGif.Aspect
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Aspect
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs
+    startLine: 371
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public TransformAspect Aspect { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.TransformAspect
+    content.vb: Public Property Aspect As TransformAspect
+  overload: DrawnUi.Controls.SkiaGif.Aspect*
 references:
 - uid: DrawnUi.Controls
   commentId: N:DrawnUi.Controls
@@ -10337,6 +10426,13 @@ references:
   name: BindingContextWasSet
   nameWithType: SkiaControl.BindingContextWasSet
   fullName: DrawnUi.Draw.SkiaControl.BindingContextWasSet
+- uid: DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
+  commentId: P:DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_BindingsContextCacheWasRendered
+  name: BindingsContextCacheWasRendered
+  nameWithType: SkiaControl.BindingsContextCacheWasRendered
+  fullName: DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
 - uid: DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   commentId: M:DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   parent: DrawnUi.Draw.SkiaControl
@@ -13535,6 +13631,31 @@ references:
     name: InvalidateWithChildren
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateWithChildren
   - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_
+  name: InvalidateChildren(SkiaControl)
+  nameWithType: SkiaControl.InvalidateChildren(SkiaControl)
+  fullName: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+    name: InvalidateChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+    name: InvalidateChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.WillInvalidateMeasure
   commentId: P:DrawnUi.Draw.SkiaControl.WillInvalidateMeasure
@@ -20925,6 +21046,81 @@ references:
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
+- uid: DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaGif,DrawnUi.Draw.ControlTappedEventArgs})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  name: OnTapped<SkiaGif>(SkiaGif, Action<SkiaGif, ControlTappedEventArgs>)
+  nameWithType: FluentExtensions.OnTapped<SkiaGif>(SkiaGif, Action<SkiaGif, ControlTappedEventArgs>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnTapped<DrawnUi.Controls.SkiaGif>(DrawnUi.Controls.SkiaGif, System.Action<DrawnUi.Controls.SkiaGif, DrawnUi.Draw.ControlTappedEventArgs>)
+  nameWithType.vb: FluentExtensions.OnTapped(Of SkiaGif)(SkiaGif, Action(Of SkiaGif, ControlTappedEventArgs))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnTapped(Of DrawnUi.Controls.SkiaGif)(DrawnUi.Controls.SkiaGif, System.Action(Of DrawnUi.Controls.SkiaGif, DrawnUi.Draw.ControlTappedEventArgs))
+  name.vb: OnTapped(Of SkiaGif)(SkiaGif, Action(Of SkiaGif, ControlTappedEventArgs))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(DrawnUi.Controls.SkiaGif,System.Action{DrawnUi.Controls.SkiaGif,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: <
+  - uid: DrawnUi.Controls.SkiaGif
+    name: SkiaGif
+    href: DrawnUi.Controls.SkiaGif.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaGif
+    name: SkiaGif
+    href: DrawnUi.Controls.SkiaGif.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Controls.SkiaGif
+    name: SkiaGif
+    href: DrawnUi.Controls.SkiaGif.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(DrawnUi.Controls.SkiaGif,System.Action{DrawnUi.Controls.SkiaGif,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaGif
+    name: SkiaGif
+    href: DrawnUi.Controls.SkiaGif.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaGif
+    name: SkiaGif
+    href: DrawnUi.Controls.SkiaGif.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaGif
+    name: SkiaGif
+    href: DrawnUi.Controls.SkiaGif.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: )
+  - name: )
 - uid: DrawnUi.Controls.SkiaGif.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaGif})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0})
   parent: DrawnUi.Draw.FluentExtensions
@@ -22949,6 +23145,83 @@ references:
     name: Double
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  parent: DrawnUi.Draw.DrawnExtensions
+  definition: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  nameWithType: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, uint, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  nameWithType.vb: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, UInteger, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
   - name: ','
   - name: " "
   - uid: System.UInt32
@@ -25750,6 +26023,68 @@ references:
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  name: OnTapped<T>(T, Action<T, ControlTappedEventArgs>)
+  nameWithType: FluentExtensions.OnTapped<T>(T, Action<T, ControlTappedEventArgs>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnTapped<T>(T, System.Action<T, DrawnUi.Draw.ControlTappedEventArgs>)
+  nameWithType.vb: FluentExtensions.OnTapped(Of T)(T, Action(Of T, ControlTappedEventArgs))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnTapped(Of T)(T, System.Action(Of T, DrawnUi.Draw.ControlTappedEventArgs))
+  name.vb: OnTapped(Of T)(T, Action(Of T, ControlTappedEventArgs))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0})
   isExternal: true
@@ -27547,6 +27882,82 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
   - name: )
+- uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  isExternal: true
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  nameWithType: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, uint, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  nameWithType.vb: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, UInteger, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
 - uid: DrawnUi.Draw.StaticResourcesExtensions.FindParentByType``1(DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Draw.StaticResourcesExtensions.FindParentByType``1(DrawnUi.Draw.SkiaControl)
   href: DrawnUi.Draw.StaticResourcesExtensions.html#DrawnUi_Draw_StaticResourcesExtensions_FindParentByType__1_DrawnUi_Draw_SkiaControl_
@@ -27831,6 +28242,12 @@ references:
   nameWithType.vb: SkiaGif.New
   fullName.vb: DrawnUi.Controls.SkiaGif.New
   name.vb: New
+- uid: DrawnUi.Controls.SkiaGif.ApplyAspect*
+  commentId: Overload:DrawnUi.Controls.SkiaGif.ApplyAspect
+  href: DrawnUi.Controls.SkiaGif.html#DrawnUi_Controls_SkiaGif_ApplyAspect
+  name: ApplyAspect
+  nameWithType: SkiaGif.ApplyAspect
+  fullName: DrawnUi.Controls.SkiaGif.ApplyAspect
 - uid: DrawnUi.Controls.SkiaGif.LayoutDisplay*
   commentId: Overload:DrawnUi.Controls.SkiaGif.LayoutDisplay
   href: DrawnUi.Controls.SkiaGif.html#DrawnUi_Controls_SkiaGif_LayoutDisplay
@@ -28371,3 +28788,16 @@ references:
   name: Source
   nameWithType: SkiaGif.Source
   fullName: DrawnUi.Controls.SkiaGif.Source
+- uid: DrawnUi.Controls.SkiaGif.Aspect*
+  commentId: Overload:DrawnUi.Controls.SkiaGif.Aspect
+  href: DrawnUi.Controls.SkiaGif.html#DrawnUi_Controls_SkiaGif_Aspect
+  name: Aspect
+  nameWithType: SkiaGif.Aspect
+  fullName: DrawnUi.Controls.SkiaGif.Aspect
+- uid: DrawnUi.Draw.TransformAspect
+  commentId: T:DrawnUi.Draw.TransformAspect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.TransformAspect.html
+  name: TransformAspect
+  nameWithType: TransformAspect
+  fullName: DrawnUi.Draw.TransformAspect
