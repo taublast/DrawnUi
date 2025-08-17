@@ -6,7 +6,7 @@
         
         <ApplicationId>com.companyname.sandbox3</ApplicationId>
         <ApplicationIdGuid>330e07b0-ebc2-4fde-9ac8-074d5c3269b3</ApplicationIdGuid>
-        <ApplicationTitle>Sandbox v3</ApplicationTitle>
+        <ApplicationTitle>DrawnUI Sandbox</ApplicationTitle>
         <OutputType>Exe</OutputType>
         <RootNamespace>Sandbox</RootNamespace>
         <UseMaui>true</UseMaui>

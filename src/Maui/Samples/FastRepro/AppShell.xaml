@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:sandbox="clr-namespace:Sandbox"
+    xmlns:mauiApp8="clr-namespace:MauiApp8"
     Title="DrawnUI for .NET MAUI"
     Shell.FlyoutBehavior="Disabled">
 
@@ -32,9 +33,15 @@
         ContentTemplate="{DataTemplate sandbox:AppThemeTestPage}"
         Route="MainPage" />-->
 
-    <ShellContent
+    <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:MainPageSpinner}"
-        Route="MainPage" />
+        Route="MainPage" />-->
+
+    <ShellContent
+    Title="DrawnUI for .NET MAUI"
+    ContentTemplate="{DataTemplate mauiApp8:ReproEditors}"
+    Route="MainPage" />
+
 
 </Shell>

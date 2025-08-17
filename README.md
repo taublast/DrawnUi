@@ -34,7 +34,8 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
-* FIX DrawnUiBasePage iOS not respecting MAUI SafeInsets
+* FIX ImageDoubleBuffered cache not rebuilding when control wasn't updated while cache was destroyed
+* FIX DrawnUiBasePage not respecting MAUI SafeInsets on iOS
 
 ___Please star ⭐ if you like it!___
 

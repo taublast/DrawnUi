@@ -249,8 +249,8 @@ namespace Sandbox
                         }
                         if (lazyParent != null)
                         {
-                            lazyParent.TrackChildAsDirtyme;
-                            me.Parent.InvalidateByChildme;
+                            //lazyParent.TrackChildAsDirtyme;
+                            //me.Parent.InvalidateByChildme;
                         }
                         else
                         {
