@@ -8,7 +8,7 @@
         
         <ApplicationId>com.drawnioui.repro</ApplicationId>
         <ApplicationIdGuid>330e66b0-efc2-4fde-9ac8-074d5c3299b3</ApplicationIdGuid>
-        <ApplicationTitle>Sandbox v3</ApplicationTitle>
+        <ApplicationTitle>Repro DrawnUI</ApplicationTitle>
         <OutputType>Exe</OutputType>
         <RootNamespace>Sandbox</RootNamespace>
         <UseMaui>true</UseMaui>
@@ -116,7 +116,7 @@
 
 	<ItemGroup>
         <!--https://github.com/BretJohnson/hot-preview-->
-        <PackageReference Include="HotPreview.App.Maui" Version="0.12.6" />
+        <!--<PackageReference Include="HotPreview.App.Maui" Version="0.12.6" />-->
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
         <!--<PackageReference Include="DrawnUi.Maui" Version="1.6.2.5" />-->
@@ -143,6 +143,18 @@
 
     <ItemGroup>
       <Folder Include="Extensions\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="ReproEditors.xaml.cs">
+        <DependentUpon>ReproEditors.xaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="ReproEditors.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
     </ItemGroup>
 
  
