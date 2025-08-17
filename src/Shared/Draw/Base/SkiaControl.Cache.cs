@@ -508,6 +508,7 @@ public partial class SkiaControl
         {
             var cache = RenderObject;
             var cacheOffscreen = RenderObjectPrevious;
+            var needBuild = false;
 
             if (UsingCacheType == SkiaCacheType.ImageComposite)
             {
@@ -531,7 +532,7 @@ public partial class SkiaControl
                     var kill = RenderObjectPrevious;
                     RenderObjectPrevious = null;
                     RenderObjectPreviousNeedsUpdate = false;
-
+                    needBuild = true;
                     if (kill != null)
                     {
                         if (kill.Surface != null)
@@ -544,7 +545,6 @@ public partial class SkiaControl
                     }
                 }
             }
-
 
             if (cache != null)
             {
@@ -589,7 +589,6 @@ public partial class SkiaControl
 
             if (UsesCacheDoubleBuffering)
             {
-                var needBuild = false;
                 lock (LockDraw)
                 {
                     if (cache == null && cacheOffscreen != null)
@@ -608,10 +607,6 @@ public partial class SkiaControl
                     else
                     {
                         DrawPlaceholder(context);
-                        if (cache == null && cacheOffscreen == null)
-                        {
-                            needBuild = true;
-                        }
                     }
 
                     Monitor.PulseAll(LockDraw);
