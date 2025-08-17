@@ -36,9 +36,7 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
-* FIX DrawPlaceholder call when cache was already rendered
-* FIX ImageDoubleBuffered cache not rebuilding when control wasn't updated while cache was destroyed
-* FIX DrawnUiBasePage not respecting MAUI SafeInsets on iOS
+* FIX default content size overriding explicit required
 
 ___Please star ⭐ if you like it!___
  
@@ -118,6 +116,10 @@ Click here ☝️☝️☝️
 ---
 
 ## 🌱 What Was New Previously
+
+* FIX DrawPlaceholder call when cache was already rendered
+* FIX ImageDoubleBuffered cache not rebuilding when control wasn't updated while cache was destroyed
+* FIX DrawnUiBasePage not respecting MAUI SafeInsets on iOS
 
 * `SkiaCamera` flash/torch enhancements
 * Recycled cells scrolls fixes
