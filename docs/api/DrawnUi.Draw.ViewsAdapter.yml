@@ -26,6 +26,7 @@ items:
   - DrawnUi.Draw.ViewsAdapter.GetViewsIterator
   - DrawnUi.Draw.ViewsAdapter.InitializeSoft(System.Boolean,System.Collections.IList,System.Int32)
   - DrawnUi.Draw.ViewsAdapter.InitializeTemplates(System.Collections.Specialized.NotifyCollectionChangedEventArgs,System.Func{System.Object},System.Collections.IList,System.Int32,System.Int32)
+  - DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells
   - DrawnUi.Draw.ViewsAdapter.IsDisposed
   - DrawnUi.Draw.ViewsAdapter.LogEnabled
   - DrawnUi.Draw.ViewsAdapter.MarkAllViewsAsHidden
@@ -58,7 +59,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewsAdapter
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 10
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -99,7 +100,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LogEnabled
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 12
+    startLine: 14
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -126,7 +127,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FillPoolInBackgroundAsync
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 25
+    startLine: 27
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -164,7 +165,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CancelBackgroundPoolFilling
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 102
+    startLine: 104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -192,7 +193,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FillPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 117
+    startLine: 119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -233,7 +234,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeTemplates
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 144
+    startLine: 146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -279,7 +280,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeSoft
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 228
+    startLine: 230
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -315,7 +316,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _HandleSmartCollectionChange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 400
+    startLine: 402
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -357,7 +358,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReleaseViewInUse
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 712
+    startLine: 714
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -391,7 +392,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetViewForIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 733
+    startLine: 735
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -443,7 +444,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrCreateViewForIndexInternal
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 814
+    startLine: 816
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -481,7 +482,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReleaseViewToPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 855
+    startLine: 857
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -519,7 +520,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 910
+    startLine: 912
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -546,7 +547,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 913
+    startLine: 915
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -578,7 +579,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 918
+    startLine: 920
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -608,7 +609,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateVisibleViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 935
+    startLine: 937
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -634,7 +635,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeVisibleViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 949
+    startLine: 951
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -660,7 +661,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 965
+    startLine: 967
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -686,7 +687,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachView
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 974
+    startLine: 976
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -722,7 +723,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PoolMaxSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1043
+    startLine: 1045
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -751,7 +752,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PoolSize
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1056
+    startLine: 1058
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -780,7 +781,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MarkAllViewsAsHidden
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1075
+    startLine: 1077
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -806,7 +807,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MarkViewAsHidden
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1087
+    startLine: 1089
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -838,7 +839,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddedMore
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1115
+    startLine: 1117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -867,7 +868,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddMoreToPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1122
+    startLine: 1124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -905,7 +906,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FillPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1146
+    startLine: 1148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -945,7 +946,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FillPool
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1166
+    startLine: 1168
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -965,6 +966,37 @@ items:
   nameWithType.vb: ViewsAdapter.FillPool(Integer)
   fullName.vb: DrawnUi.Draw.ViewsAdapter.FillPool(Integer)
   name.vb: FillPool(Integer)
+- uid: DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells
+  commentId: M:DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells
+  id: InvalidateAllPooledCells
+  parent: DrawnUi.Draw.ViewsAdapter
+  langs:
+  - csharp
+  - vb
+  name: InvalidateAllPooledCells()
+  nameWithType: ViewsAdapter.InvalidateAllPooledCells()
+  fullName: DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvalidateAllPooledCells
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
+    startLine: 1187
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Invalidates all existing cells currently stored in the recycling pools (generic, sized, and standalone).
+
+    Use this when container constraints change so pooled cells are forced to re-measure next time they are reused.
+  example: []
+  syntax:
+    content: public void InvalidateAllPooledCells()
+    content.vb: Public Sub InvalidateAllPooledCells()
+  overload: DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells*
 - uid: DrawnUi.Draw.ViewsAdapter.GetDebugInfo
   commentId: M:DrawnUi.Draw.ViewsAdapter.GetDebugInfo
   id: GetDebugInfo
@@ -983,7 +1015,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDebugInfo
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1182
+    startLine: 1205
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1011,7 +1043,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildrenCount
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1193
+    startLine: 1216
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1039,7 +1071,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _lockTemplates
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1217
+    startLine: 1240
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1066,7 +1098,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplesInvalidating
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1222
+    startLine: 1245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1093,7 +1125,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatesInvalidated
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1226
+    startLine: 1249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1122,7 +1154,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatesBusy
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1239
+    startLine: 1262
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1149,7 +1181,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateViews
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1245
+    startLine: 1268
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1181,7 +1213,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TemplatesAvailable
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1257
+    startLine: 1280
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1212,7 +1244,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetViewsIterator
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1267
+    startLine: 1290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1240,7 +1272,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeWrapper
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1314
+    startLine: 1337
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1266,7 +1298,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrintDebugVisible
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1326
+    startLine: 1349
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1292,7 +1324,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplateInstance
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1340
+    startLine: 1363
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1320,7 +1352,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReleaseTemplateInstance
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1360
+    startLine: 1384
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2125,6 +2157,12 @@ references:
   name: AddMoreToPool
   nameWithType: ViewsAdapter.AddMoreToPool
   fullName: DrawnUi.Draw.ViewsAdapter.AddMoreToPool
+- uid: DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells*
+  commentId: Overload:DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells
+  href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_InvalidateAllPooledCells
+  name: InvalidateAllPooledCells
+  nameWithType: ViewsAdapter.InvalidateAllPooledCells
+  fullName: DrawnUi.Draw.ViewsAdapter.InvalidateAllPooledCells
 - uid: DrawnUi.Draw.ViewsAdapter.GetDebugInfo*
   commentId: Overload:DrawnUi.Draw.ViewsAdapter.GetDebugInfo
   href: DrawnUi.Draw.ViewsAdapter.html#DrawnUi_Draw_ViewsAdapter_GetDebugInfo

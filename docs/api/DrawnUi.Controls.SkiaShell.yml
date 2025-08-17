@@ -213,6 +213,7 @@ items:
   - DrawnUi.Views.BasePageReloadable.IsDisposed
   - DrawnUi.Views.DrawnUiBasePage.KeyboardResized(System.Double)
   - DrawnUi.Views.DrawnUiBasePage.OnKeyboardResized(System.Double)
+  - DrawnUi.Views.DrawnUiBasePage.KeyboardSize
   - Microsoft.Maui.Controls.ContentPage.ContentProperty
   - Microsoft.Maui.Controls.ContentPage.HideSoftInputOnTappedProperty
   - Microsoft.Maui.Controls.ContentPage.OnBindingContextChanged
@@ -5413,6 +5414,13 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.double
   - name: )
+- uid: DrawnUi.Views.DrawnUiBasePage.KeyboardSize
+  commentId: P:DrawnUi.Views.DrawnUiBasePage.KeyboardSize
+  parent: DrawnUi.Views.DrawnUiBasePage
+  href: DrawnUi.Views.DrawnUiBasePage.html#DrawnUi_Views_DrawnUiBasePage_KeyboardSize
+  name: KeyboardSize
+  nameWithType: DrawnUiBasePage.KeyboardSize
+  fullName: DrawnUi.Views.DrawnUiBasePage.KeyboardSize
 - uid: Microsoft.Maui.Controls.ContentPage.ContentProperty
   commentId: F:Microsoft.Maui.Controls.ContentPage.ContentProperty
   parent: Microsoft.Maui.Controls.ContentPage

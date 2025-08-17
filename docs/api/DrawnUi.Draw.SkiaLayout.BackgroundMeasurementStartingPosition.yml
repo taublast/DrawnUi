@@ -24,7 +24,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundMeasurementStartingPosition
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 110
+    startLine: 117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -66,7 +66,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastRow
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 112
+    startLine: 119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -95,7 +95,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastCol
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 113
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -124,7 +124,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ExpectedStartX
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 114
+    startLine: 121
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -153,7 +153,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ExpectedStartY
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 115
+    startLine: 122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -182,7 +182,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutType
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 116
+    startLine: 123
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Struct DrawnView.TimedDisposable | DrawnUI for .NET MAUI </title>
+      <title>Class ControlTappedEventArgs | DrawnUI for .NET MAUI </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct DrawnView.TimedDisposable | DrawnUI for .NET MAUI ">
+      <meta name="title" content="Class ControlTappedEventArgs | DrawnUI for .NET MAUI ">
       
       <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
       <link rel="icon" href="../images/draw.svg">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Views_DrawnView_TimedDisposable.md&amp;value=---%0Auid%3A%20DrawnUi.Views.DrawnView.TimedDisposable%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Draw_ControlTappedEventArgs.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.ControlTappedEventArgs%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -84,16 +84,16 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="DrawnUi.Views.DrawnView.TimedDisposable">
+        <article data-uid="DrawnUi.Draw.ControlTappedEventArgs">
 
 
 
-  <h1 id="DrawnUi_Views_DrawnView_TimedDisposable" data-uid="DrawnUi.Views.DrawnView.TimedDisposable" class="text-break">
-Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/DrawnView.cs/#L1640"><i class="bi bi-code-slash"></i></a>
+  <h1 id="DrawnUi_Draw_ControlTappedEventArgs" data-uid="DrawnUi.Draw.ControlTappedEventArgs" class="text-break">
+Class ControlTappedEventArgs  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Shared.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Views.html">Views</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Draw.html">Draw</a></dd></dl>
   <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
   </div>
 
@@ -101,41 +101,49 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct DrawnView.TimedDisposable : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class ControlTappedEventArgs : EventArgs</code></pre>
   </div>
 
 
 
 
-
-  <dl class="typelist implements">
-    <dt>Implements</dt>
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
     <dd>
-      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventargs">EventArgs</a></div>
+      <div><span class="xref">ControlTappedEventArgs</span></div>
     </dd>
   </dl>
+
 
 
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventargs.empty">EventArgs.Empty</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
     </div>
     <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
     </div>
   </dd></dl>
 
@@ -155,23 +163,27 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
 </h2>
 
 
-  <a id="DrawnUi_Views_DrawnView_TimedDisposable__ctor_" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.#ctor*"></a>
+  <a id="DrawnUi_Draw_ControlTappedEventArgs__ctor_" data-uid="DrawnUi.Draw.ControlTappedEventArgs.#ctor*"></a>
 
-  <h3 id="DrawnUi_Views_DrawnView_TimedDisposable__ctor_System_IDisposable_" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.#ctor(System.IDisposable)">
-  TimedDisposable(IDisposable)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/DrawnView.cs/#L1645"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Draw_ControlTappedEventArgs__ctor_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.ControlTappedEventArgs.#ctor(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
+  ControlTappedEventArgs(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Shared.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimedDisposable(IDisposable disposable)</code></pre>
+    <pre><code class="lang-csharp hljs">public ControlTappedEventArgs(object control, SkiaGesturesParameters args, GestureEventProcessingInfo info)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>disposable</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></dt>
+    <dt><code>control</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+    <dt><code>args</code> <a class="xref" href="DrawnUi.Draw.SkiaGesturesParameters.html">SkiaGesturesParameters</a></dt>
+    <dd></dd>
+    <dt><code>info</code> <a class="xref" href="DrawnUi.Draw.GestureEventProcessingInfo.html">GestureEventProcessingInfo</a></dt>
     <dd></dd>
   </dl>
 
@@ -190,18 +202,18 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
 </h2>
 
 
-  <a id="DrawnUi_Views_DrawnView_TimedDisposable_Disposable_" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.Disposable*"></a>
+  <a id="DrawnUi_Draw_ControlTappedEventArgs_Control_" data-uid="DrawnUi.Draw.ControlTappedEventArgs.Control*"></a>
 
-  <h3 id="DrawnUi_Views_DrawnView_TimedDisposable_Disposable" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.Disposable">
-  Disposable
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/DrawnView.cs/#L1642"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Draw_ControlTappedEventArgs_Control" data-uid="DrawnUi.Draw.ControlTappedEventArgs.Control">
+  Control
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Shared.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IDisposable Disposable { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public object Control { get; set; }</code></pre>
   </div>
 
 
@@ -210,7 +222,7 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
     <dd></dd>
   </dl>
 
@@ -221,18 +233,18 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
 
 
 
-  <a id="DrawnUi_Views_DrawnView_TimedDisposable_EnqueuedTime_" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime*"></a>
+  <a id="DrawnUi_Draw_ControlTappedEventArgs_Parameters_" data-uid="DrawnUi.Draw.ControlTappedEventArgs.Parameters*"></a>
 
-  <h3 id="DrawnUi_Views_DrawnView_TimedDisposable_EnqueuedTime" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.EnqueuedTime">
-  EnqueuedTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/DrawnView.cs/#L1643"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Draw_ControlTappedEventArgs_Parameters" data-uid="DrawnUi.Draw.ControlTappedEventArgs.Parameters">
+  Parameters
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Shared.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DateTime EnqueuedTime { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public SkiaGesturesParameters Parameters { get; set; }</code></pre>
   </div>
 
 
@@ -241,7 +253,7 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></dt>
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaGesturesParameters.html">SkiaGesturesParameters</a></dt>
     <dd></dd>
   </dl>
 
@@ -252,29 +264,29 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
 
 
 
-  <h2 class="section" id="methods">Methods
-</h2>
+  <a id="DrawnUi_Draw_ControlTappedEventArgs_ProcessingInfo_" data-uid="DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo*"></a>
 
-
-  <a id="DrawnUi_Views_DrawnView_TimedDisposable_Dispose_" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.Dispose*"></a>
-
-  <h3 id="DrawnUi_Views_DrawnView_TimedDisposable_Dispose" data-uid="DrawnUi.Views.DrawnView.TimedDisposable.Dispose">
-  Dispose()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/DrawnView.cs/#L1651"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Draw_ControlTappedEventArgs_ProcessingInfo" data-uid="DrawnUi.Draw.ControlTappedEventArgs.ProcessingInfo">
+  ProcessingInfo
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Shared.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+    <pre><code class="lang-csharp hljs">public GestureEventProcessingInfo ProcessingInfo { get; set; }</code></pre>
   </div>
 
 
 
 
 
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.GestureEventProcessingInfo.html">GestureEventProcessingInfo</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -287,7 +299,7 @@ Struct DrawnView.TimedDisposable  <a class="header-action link-secondary" title=
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/DrawnView.cs/#L1640" class="edit-link">Edit this page</a>
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Base/SkiaControl.Shared.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -360,9 +360,6 @@ It provides no gestures support by itsself.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_templatesInvalidated">SkiaLayout.templatesInvalidated</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvalidateWithChildren">SkiaLayout.InvalidateWithChildren()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvalidateViewsList">SkiaLayout.InvalidateViewsList()</a>
     </div>
     <div>
@@ -667,6 +664,9 @@ It provides no gestures support by itsself.</p>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RemeasureSingleItemInBackground_System_Int32_">SkiaLayout.RemeasureSingleItemInBackground(int)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStamp">SkiaLayout.MeasureStamp</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureList_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureList(SKRect, float)</a>
@@ -1800,6 +1800,9 @@ It provides no gestures support by itsself.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_BindingContextWasSet">SkiaControl.BindingContextWasSet</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_BindingsContextCacheWasRendered">SkiaControl.BindingsContextCacheWasRendered</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnBindingContextChanged">SkiaControl.OnBindingContextChanged()</a>
     </div>
     <div>
@@ -2167,6 +2170,12 @@ It provides no gestures support by itsself.</p>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OutputDebug">SkiaControl.OutputDebug</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateWithChildren">SkiaControl.InvalidateWithChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_">SkiaControl.InvalidateChildren(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_WillInvalidateMeasure">SkiaControl.WillInvalidateMeasure</a>
@@ -2870,6 +2879,9 @@ It provides no gestures support by itsself.</p>
       <a class="xref" href="DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_AnimateRangeAsync_DrawnUi_Draw_SkiaControl_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_">DrawnExtensions.AnimateRangeAsync(SkiaControl, Action&lt;double&gt;, double, double, uint, Easing, CancellationTokenSource)</a>
   </div>
   <div>
+      <a class="xref" href="DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_">DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)</a>
+  </div>
+  <div>
       <a class="xref" href="DrawnUi.Draw.StaticResourcesExtensions.html#DrawnUi_Draw_StaticResourcesExtensions_FindParentByType__1_DrawnUi_Draw_SkiaControl_">StaticResourcesExtensions.FindParentByType&lt;T&gt;(SkiaControl)</a>
   </div>
   <div>
@@ -2976,6 +2988,9 @@ It provides no gestures support by itsself.</p>
   </div>
   <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__">FluentExtensions.OnPaint&lt;T&gt;(T, Action&lt;T, DrawingContext&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__">FluentExtensions.OnTapped&lt;T&gt;(T, Action&lt;T, ControlTappedEventArgs&gt;)</a>
   </div>
   <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0__">FluentExtensions.OnTapped&lt;T&gt;(T, Action&lt;T&gt;)</a>
@@ -3119,7 +3134,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorFrameOffProperty" data-uid="DrawnUi.Draw.SkiaToggle.ColorFrameOffProperty">
   ColorFrameOffProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L206"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3149,7 +3164,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorFrameOnProperty" data-uid="DrawnUi.Draw.SkiaToggle.ColorFrameOnProperty">
   ColorFrameOnProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L182"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3179,7 +3194,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorThumbOffProperty" data-uid="DrawnUi.Draw.SkiaToggle.ColorThumbOffProperty">
   ColorThumbOffProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L194"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3209,7 +3224,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorThumbOnProperty" data-uid="DrawnUi.Draw.SkiaToggle.ColorThumbOnProperty">
   ColorThumbOnProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L170"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3239,7 +3254,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_CommandTappedParameterProperty" data-uid="DrawnUi.Draw.SkiaToggle.CommandTappedParameterProperty">
   CommandTappedParameterProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L151"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3269,7 +3284,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_CommandTappedProperty" data-uid="DrawnUi.Draw.SkiaToggle.CommandTappedProperty">
   CommandTappedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L139"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3299,7 +3314,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_CommandToggledProperty" data-uid="DrawnUi.Draw.SkiaToggle.CommandToggledProperty">
   CommandToggledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L82"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3329,7 +3344,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_DefaultValueProperty" data-uid="DrawnUi.Draw.SkiaToggle.DefaultValueProperty">
   DefaultValueProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L109"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3359,7 +3374,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_IsAnimatedProperty" data-uid="DrawnUi.Draw.SkiaToggle.IsAnimatedProperty">
   IsAnimatedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L218"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3389,7 +3404,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_IsInternalCall" data-uid="DrawnUi.Draw.SkiaToggle.IsInternalCall">
   IsInternalCall
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3419,7 +3434,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_IsToggledProperty" data-uid="DrawnUi.Draw.SkiaToggle.IsToggledProperty">
   IsToggledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L91"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3449,7 +3464,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_RespondsToGesturesProperty" data-uid="DrawnUi.Draw.SkiaToggle.RespondsToGesturesProperty">
   RespondsToGesturesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L127"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3484,7 +3499,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorFrameOff" data-uid="DrawnUi.Draw.SkiaToggle.ColorFrameOff">
   ColorFrameOff
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L212"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3515,7 +3530,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorFrameOn" data-uid="DrawnUi.Draw.SkiaToggle.ColorFrameOn">
   ColorFrameOn
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L188"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3546,7 +3561,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorThumbOff" data-uid="DrawnUi.Draw.SkiaToggle.ColorThumbOff">
   ColorThumbOff
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L200"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3577,7 +3592,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ColorThumbOn" data-uid="DrawnUi.Draw.SkiaToggle.ColorThumbOn">
   ColorThumbOn
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L180"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L176"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3608,7 +3623,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_CommandTapped" data-uid="DrawnUi.Draw.SkiaToggle.CommandTapped">
   CommandTapped
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L145"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3639,7 +3654,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_CommandTappedParameter" data-uid="DrawnUi.Draw.SkiaToggle.CommandTappedParameter">
   CommandTappedParameter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L157"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3670,7 +3685,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_CommandToggled" data-uid="DrawnUi.Draw.SkiaToggle.CommandToggled">
   CommandToggled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L85"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3701,7 +3716,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_DefaultValue" data-uid="DrawnUi.Draw.SkiaToggle.DefaultValue">
   DefaultValue
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L121"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3732,7 +3747,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_IsAnimated" data-uid="DrawnUi.Draw.SkiaToggle.IsAnimated">
   IsAnimated
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L228"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L224"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3763,7 +3778,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_IsToggled" data-uid="DrawnUi.Draw.SkiaToggle.IsToggled">
   IsToggled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L103"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3794,7 +3809,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_RespondsToGestures" data-uid="DrawnUi.Draw.SkiaToggle.RespondsToGestures">
   RespondsToGestures
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L137"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3829,7 +3844,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ApplyProperties" data-uid="DrawnUi.Draw.SkiaToggle.ApplyProperties">
   ApplyProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base call Update()</p>
@@ -3856,7 +3871,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_ChangeDefaultValue" data-uid="DrawnUi.Draw.SkiaToggle.ChangeDefaultValue">
   ChangeDefaultValue()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3882,7 +3897,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_NeedUpdateProperties_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_" data-uid="DrawnUi.Draw.SkiaToggle.NeedUpdateProperties(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)">
   NeedUpdateProperties(BindableObject, object, object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L163"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3917,7 +3932,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_NotifyWasToggled" data-uid="DrawnUi.Draw.SkiaToggle.NotifyWasToggled">
   NotifyWasToggled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L51"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3943,7 +3958,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_OnDisposing" data-uid="DrawnUi.Draw.SkiaToggle.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -3970,7 +3985,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_OnLayoutChanged" data-uid="DrawnUi.Draw.SkiaToggle.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3996,7 +4011,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_OnToggledChanged" data-uid="DrawnUi.Draw.SkiaToggle.OnToggledChanged">
   OnToggledChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base calls ApplyProperties()</p>
@@ -4064,7 +4079,7 @@ It provides no gestures support by itsself.</p>
 
   <h3 id="DrawnUi_Draw_SkiaToggle_Toggled" data-uid="DrawnUi.Draw.SkiaToggle.Toggled">
   Toggled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs/#L70"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

@@ -5,6 +5,7 @@ items:
   id: SkiaLayout.StructureChange
   parent: DrawnUi.Draw
   children:
+  - DrawnUi.Draw.SkiaLayout.StructureChange.#ctor(DrawnUi.Draw.SkiaLayout.StructureChangeType,System.Int64)
   - DrawnUi.Draw.SkiaLayout.StructureChange.Count
   - DrawnUi.Draw.SkiaLayout.StructureChange.InsertAtIndex
   - DrawnUi.Draw.SkiaLayout.StructureChange.IsInsertOperation
@@ -12,6 +13,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.StructureChange.Items
   - DrawnUi.Draw.SkiaLayout.StructureChange.MeasuredItems
   - DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
+  - DrawnUi.Draw.SkiaLayout.StructureChange.Stamp
   - DrawnUi.Draw.SkiaLayout.StructureChange.StartIndex
   - DrawnUi.Draw.SkiaLayout.StructureChange.StartingPosition
   - DrawnUi.Draw.SkiaLayout.StructureChange.TargetIndex
@@ -49,6 +51,69 @@ items:
   - System.Object.ToString
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.#ctor(DrawnUi.Draw.SkiaLayout.StructureChangeType,System.Int64)
+  commentId: M:DrawnUi.Draw.SkiaLayout.StructureChange.#ctor(DrawnUi.Draw.SkiaLayout.StructureChangeType,System.Int64)
+  id: '#ctor(DrawnUi.Draw.SkiaLayout.StructureChangeType,System.Int64)'
+  parent: DrawnUi.Draw.SkiaLayout.StructureChange
+  langs:
+  - csharp
+  - vb
+  name: StructureChange(StructureChangeType, long)
+  nameWithType: SkiaLayout.StructureChange.StructureChange(SkiaLayout.StructureChangeType, long)
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.StructureChange(DrawnUi.Draw.SkiaLayout.StructureChangeType, long)
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 91
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public StructureChange(SkiaLayout.StructureChangeType type, long stamp)
+    parameters:
+    - id: type
+      type: DrawnUi.Draw.SkiaLayout.StructureChangeType
+    - id: stamp
+      type: System.Int64
+    content.vb: Public Sub New(type As SkiaLayout.StructureChangeType, stamp As Long)
+  overload: DrawnUi.Draw.SkiaLayout.StructureChange.#ctor*
+  nameWithType.vb: SkiaLayout.StructureChange.New(SkiaLayout.StructureChangeType, Long)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.StructureChange.New(DrawnUi.Draw.SkiaLayout.StructureChangeType, Long)
+  name.vb: New(StructureChangeType, Long)
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Stamp
+  commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.Stamp
+  id: Stamp
+  parent: DrawnUi.Draw.SkiaLayout.StructureChange
+  langs:
+  - csharp
+  - vb
+  name: Stamp
+  nameWithType: SkiaLayout.StructureChange.Stamp
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Stamp
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Stamp
+    path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
+    startLine: 97
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public long Stamp { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property Stamp As Long
+  overload: DrawnUi.Draw.SkiaLayout.StructureChange.Stamp*
 - uid: DrawnUi.Draw.SkiaLayout.StructureChange.Type
   commentId: P:DrawnUi.Draw.SkiaLayout.StructureChange.Type
   id: Type
@@ -67,7 +132,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 91
+    startLine: 98
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -96,7 +161,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetOthers
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 92
+    startLine: 99
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -125,7 +190,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 93
+    startLine: 100
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -154,7 +219,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 94
+    startLine: 101
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -183,7 +248,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Items
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 95
+    startLine: 102
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -212,7 +277,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TargetIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 96
+    startLine: 103
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -241,7 +306,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredItems
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 97
+    startLine: 104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -270,7 +335,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InsertAtIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 98
+    startLine: 105
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -299,7 +364,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsInsertOperation
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 99
+    startLine: 106
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -328,7 +393,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 100
+    startLine: 107
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -357,7 +422,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartingPosition
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 103
+    startLine: 110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -718,12 +783,15 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
-- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Type*
-  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.Type
-  href: DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Type
-  name: Type
-  nameWithType: SkiaLayout.StructureChange.Type
-  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Type
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.#ctor*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.#ctor
+  href: DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange__ctor_DrawnUi_Draw_SkiaLayout_StructureChangeType_System_Int64_
+  name: StructureChange
+  nameWithType: SkiaLayout.StructureChange.StructureChange
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.StructureChange
+  nameWithType.vb: SkiaLayout.StructureChange.New
+  fullName.vb: DrawnUi.Draw.SkiaLayout.StructureChange.New
+  name.vb: New
 - uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
   commentId: T:DrawnUi.Draw.SkiaLayout.StructureChangeType
   parent: DrawnUi.Draw
@@ -747,6 +815,29 @@ references:
   - uid: DrawnUi.Draw.SkiaLayout.StructureChangeType
     name: StructureChangeType
     href: DrawnUi.Draw.SkiaLayout.StructureChangeType.html
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Stamp*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.Stamp
+  href: DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Stamp
+  name: Stamp
+  nameWithType: SkiaLayout.StructureChange.Stamp
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Stamp
+- uid: DrawnUi.Draw.SkiaLayout.StructureChange.Type*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.Type
+  href: DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_Type
+  name: Type
+  nameWithType: SkiaLayout.StructureChange.Type
+  fullName: DrawnUi.Draw.SkiaLayout.StructureChange.Type
 - uid: DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.StructureChange.OffsetOthers
   href: DrawnUi.Draw.SkiaLayout.StructureChange.html#DrawnUi_Draw_SkiaLayout_StructureChange_OffsetOthers

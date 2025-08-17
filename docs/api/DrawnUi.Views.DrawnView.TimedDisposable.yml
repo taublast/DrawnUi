@@ -23,7 +23,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TimedDisposable
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1636
+    startLine: 1639
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -59,7 +59,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Disposable
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1638
+    startLine: 1641
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -88,7 +88,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueuedTime
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1639
+    startLine: 1642
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -117,7 +117,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1641
+    startLine: 1644
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -149,7 +149,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1647
+    startLine: 1650
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

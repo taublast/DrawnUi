@@ -1380,6 +1380,9 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_BindingContextWasSet">SkiaControl.BindingContextWasSet</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_BindingsContextCacheWasRendered">SkiaControl.BindingsContextCacheWasRendered</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnBindingContextChanged">SkiaControl.OnBindingContextChanged()</a>
     </div>
     <div>
@@ -1783,6 +1786,9 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateWithChildren">SkiaControl.InvalidateWithChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_">SkiaControl.InvalidateChildren(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_WillInvalidateMeasure">SkiaControl.WillInvalidateMeasure</a>
@@ -2573,6 +2579,9 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__">FluentExtensions.OnPaint&lt;T&gt;(T, Action&lt;T, DrawingContext&gt;)</a>
   </div>
   <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__">FluentExtensions.OnTapped&lt;T&gt;(T, Action&lt;T, ControlTappedEventArgs&gt;)</a>
+  </div>
+  <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0__">FluentExtensions.OnTapped&lt;T&gt;(T, Action&lt;T&gt;)</a>
   </div>
   <div>
@@ -2675,6 +2684,9 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
       <a class="xref" href="DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_AnimateRangeAsync_DrawnUi_Draw_SkiaControl_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_">DrawnExtensions.AnimateRangeAsync(SkiaControl, Action&lt;double&gt;, double, double, uint, Easing, CancellationTokenSource)</a>
   </div>
   <div>
+      <a class="xref" href="DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_">DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)</a>
+  </div>
+  <div>
       <a class="xref" href="DrawnUi.Draw.StaticResourcesExtensions.html#DrawnUi_Draw_StaticResourcesExtensions_FindParentByType__1_DrawnUi_Draw_SkiaControl_">StaticResourcesExtensions.FindParentByType&lt;T&gt;(SkiaControl)</a>
   </div>
   <div>
@@ -2736,7 +2748,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif__ctor_DrawnUi_Draw_SkiaImage_" data-uid="DrawnUi.Controls.SkiaGif.#ctor(DrawnUi.Draw.SkiaImage)">
   SkiaGif(SkiaImage)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For building custom controls</p>
@@ -2769,9 +2781,39 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
 
 
+  <h3 id="DrawnUi_Controls_SkiaGif_AspectProperty" data-uid="DrawnUi.Controls.SkiaGif.AspectProperty">
+  AspectProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L357"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty AspectProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <h3 id="DrawnUi_Controls_SkiaGif_SourceProperty" data-uid="DrawnUi.Controls.SkiaGif.SourceProperty">
   SourceProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L344"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2801,7 +2843,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif__animation" data-uid="DrawnUi.Controls.SkiaGif._animation">
   _animation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L132"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2836,7 +2878,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_Animation" data-uid="DrawnUi.Controls.SkiaGif.Animation">
   Animation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2853,6 +2895,37 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
     <dt><a class="xref" href="DrawnUi.Controls.GifAnimation.html">GifAnimation</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Controls_SkiaGif_Aspect_" data-uid="DrawnUi.Controls.SkiaGif.Aspect*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaGif_Aspect" data-uid="DrawnUi.Controls.SkiaGif.Aspect">
+  Aspect
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L372"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformAspect Aspect { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.TransformAspect.html">TransformAspect</a></dt>
     <dd></dd>
   </dl>
 
@@ -2898,7 +2971,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_Source" data-uid="DrawnUi.Controls.SkiaGif.Source">
   Source
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L340"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L351"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2929,11 +3002,37 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 </h2>
 
 
+  <a id="DrawnUi_Controls_SkiaGif_ApplyAspect_" data-uid="DrawnUi.Controls.SkiaGif.ApplyAspect*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaGif_ApplyAspect" data-uid="DrawnUi.Controls.SkiaGif.ApplyAspect">
+  ApplyAspect()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void ApplyAspect()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaGif_ApplySpeed_" data-uid="DrawnUi.Controls.SkiaGif.ApplySpeed*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaGif_ApplySpeed" data-uid="DrawnUi.Controls.SkiaGif.ApplySpeed">
   ApplySpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L119"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2959,7 +3058,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_GetAnimatorParent" data-uid="DrawnUi.Controls.SkiaGif.GetAnimatorParent">
   GetAnimatorParent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2990,7 +3089,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_InvalidateMeasure" data-uid="DrawnUi.Controls.SkiaGif.InvalidateMeasure">
   InvalidateMeasure()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Marks the current measure of an element as invalidated.</p>
@@ -3017,7 +3116,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_LayoutDisplay" data-uid="DrawnUi.Controls.SkiaGif.LayoutDisplay">
   LayoutDisplay()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3043,7 +3142,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_LoadSource_System_String_" data-uid="DrawnUi.Controls.SkiaGif.LoadSource(System.String)">
   LoadSource(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L289"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is not replacing current animation, only pre-loading! Use SetAnimation after that if needed.</p>
@@ -3080,7 +3179,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_OnAnimatorInitializing" data-uid="DrawnUi.Controls.SkiaGif.OnAnimatorInitializing">
   OnAnimatorInitializing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L106"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3106,7 +3205,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_OnAnimatorSeeking_System_Double_" data-uid="DrawnUi.Controls.SkiaGif.OnAnimatorSeeking(System.Double)">
   OnAnimatorSeeking(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L95"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>called by Seek</p>
@@ -3138,7 +3237,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_OnAnimatorUpdated_System_Double_" data-uid="DrawnUi.Controls.SkiaGif.OnAnimatorUpdated(System.Double)">
   OnAnimatorUpdated(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L84"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>invoked by internal animator</p>
@@ -3170,7 +3269,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_ReloadSource" data-uid="DrawnUi.Controls.SkiaGif.ReloadSource">
   ReloadSource()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L212"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3196,7 +3295,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_RenderFrame_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Controls.SkiaGif.RenderFrame(DrawnUi.Draw.DrawingContext)">
   RenderFrame(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3227,7 +3326,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_SetAnimation_DrawnUi_Controls_GifAnimation_System_Boolean_" data-uid="DrawnUi.Controls.SkiaGif.SetAnimation(DrawnUi.Controls.GifAnimation,System.Boolean)">
   SetAnimation(GifAnimation, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L149"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3260,7 +3359,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_Start_System_Int32_" data-uid="DrawnUi.Controls.SkiaGif.Start(System.Int32)">
   Start(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L186"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3294,7 +3393,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_Error" data-uid="DrawnUi.Controls.SkiaGif.Error">
   Error
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L210"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Happens when loaded with error from <code>Source</code>. Will pass exception.</p>
@@ -3325,7 +3424,7 @@ Class SkiaGif  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="DrawnUi_Controls_SkiaGif_Success" data-uid="DrawnUi.Controls.SkiaGif.Success">
   Success
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/SkiaGif.cs/#L205"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Happens when loaded fine from <code>Source</code>. Will pass source as string.</p>

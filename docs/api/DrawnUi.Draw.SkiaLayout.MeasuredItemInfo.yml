@@ -22,7 +22,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredItemInfo
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 176
+    startLine: 183
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Cell
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 178
+    startLine: 185
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -90,7 +90,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastAccessed
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 179
+    startLine: 186
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -119,7 +119,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsInViewport
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 180
+    startLine: 187
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

@@ -111,7 +111,7 @@ A: Subclass <code>SkiaControl</code> for custom, <code>SkiaLayout</code> for con
 <p><strong>Q: Can I embed native MAUI controls inside DrawnUI?</strong><br>
 A: Yes! Use <code>SkiaMauiElement</code> to embed native MAUI controls like WebView inside your DrawnUI canvas. This allows you to combine the best of both worlds.</p>
 <p><strong>Q: Can I use MAUI's default <code>Resources/Images</code> folder?</strong><br>
-A: Sorry, no, drawn resources lives inside <code>Resources/Raw</code> and subfolders.</p>
+A: Sorry, no, drawn resources lives inside <code>Resources/Raw</code> and subfolders. Note that MAUI supports only lowercase filenames of resources and while uppercase might works for you on some plaforms they will not be read on iOS.</p>
 <p><strong>Q: How do I change SkiaSvg source not from file/url?</strong><br>
 A: set <code>SvgString</code> property to svg text string.</p>
 <p><strong>Q: Why my scroll is resetting at all time while Iproperly use ObservableCollection for LoadMore?</strong><br>

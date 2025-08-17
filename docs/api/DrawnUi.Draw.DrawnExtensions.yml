@@ -8,8 +8,10 @@ items:
   - DrawnUi.Draw.DrawnExtensions.AddFont(Microsoft.Maui.Hosting.IFontCollection,System.String,System.String,DrawnUi.Draw.FontWeight)
   - DrawnUi.Draw.DrawnExtensions.AddFont(Microsoft.Maui.Hosting.IFontCollection,System.String,System.String,System.Int32)
   - DrawnUi.Draw.DrawnExtensions.AnimateRangeAsync(DrawnUi.Draw.SkiaControl,System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
   - DrawnUi.Draw.DrawnExtensions.StartupSettings
+  - DrawnUi.Draw.DrawnExtensions.TextColorToAsync(DrawnUi.Draw.SkiaLabel,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.DrawnExtensions.UseDrawnUi(Microsoft.Maui.Hosting.MauiAppBuilder,DrawnUi.Draw.DrawnUiStartupSettings)
   langs:
   - csharp
@@ -234,6 +236,92 @@ items:
   nameWithType.vb: DrawnExtensions.AnimateRangeAsync(SkiaControl, Action(Of Double), Double, Double, UInteger, Easing, CancellationTokenSource)
   fullName.vb: DrawnUi.Draw.DrawnExtensions.AnimateRangeAsync(DrawnUi.Draw.SkiaControl, System.Action(Of Double), Double, Double, UInteger, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
   name.vb: AnimateRangeAsync(SkiaControl, Action(Of Double), Double, Double, UInteger, Easing, CancellationTokenSource)
+- uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  id: BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.DrawnExtensions
+  langs:
+  - csharp
+  - vb
+  name: BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  nameWithType: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, uint, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BackgroundColorToAsync
+    path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+    startLine: 511
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task BackgroundColorToAsync(this SkiaControl owner, Color end, uint length = 250, Easing easing = null, CancellationTokenSource cancel = null)
+    parameters:
+    - id: owner
+      type: DrawnUi.Draw.SkiaControl
+    - id: end
+      type: Microsoft.Maui.Graphics.Color
+    - id: length
+      type: System.UInt32
+    - id: easing
+      type: Microsoft.Maui.Easing
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function BackgroundColorToAsync(owner As SkiaControl, [end] As Color, length As UInteger = 250, easing As Easing = Nothing, cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync*
+  nameWithType.vb: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, UInteger, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+- uid: DrawnUi.Draw.DrawnExtensions.TextColorToAsync(DrawnUi.Draw.SkiaLabel,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.TextColorToAsync(DrawnUi.Draw.SkiaLabel,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  id: TextColorToAsync(DrawnUi.Draw.SkiaLabel,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.DrawnExtensions
+  langs:
+  - csharp
+  - vb
+  name: TextColorToAsync(SkiaLabel, Color, uint, Easing, CancellationTokenSource)
+  nameWithType: DrawnExtensions.TextColorToAsync(SkiaLabel, Color, uint, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.DrawnExtensions.TextColorToAsync(DrawnUi.Draw.SkiaLabel, Microsoft.Maui.Graphics.Color, uint, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TextColorToAsync
+    path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+    startLine: 557
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static Task TextColorToAsync(this SkiaLabel owner, Color end, uint length = 250, Easing easing = null, CancellationTokenSource cancel = null)
+    parameters:
+    - id: owner
+      type: DrawnUi.Draw.SkiaLabel
+    - id: end
+      type: Microsoft.Maui.Graphics.Color
+    - id: length
+      type: System.UInt32
+    - id: easing
+      type: Microsoft.Maui.Easing
+    - id: cancel
+      type: System.Threading.CancellationTokenSource
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Shared Function TextColorToAsync(owner As SkiaLabel, [end] As Color, length As UInteger = 250, easing As Easing = Nothing, cancel As CancellationTokenSource = Nothing) As Task
+  overload: DrawnUi.Draw.DrawnExtensions.TextColorToAsync*
+  nameWithType.vb: DrawnExtensions.TextColorToAsync(SkiaLabel, Color, UInteger, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.TextColorToAsync(DrawnUi.Draw.SkiaLabel, Microsoft.Maui.Graphics.Color, UInteger, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: TextColorToAsync(SkiaLabel, Color, UInteger, Easing, CancellationTokenSource)
 - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
   commentId: M:DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
   id: GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
@@ -253,7 +341,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVelocityRatioForChild
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 512
+    startLine: 604
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -848,6 +936,70 @@ references:
     name: Tasks
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync*
+  commentId: Overload:DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: BackgroundColorToAsync
+  nameWithType: DrawnExtensions.BackgroundColorToAsync
+  fullName: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.DrawnExtensions.TextColorToAsync*
+  commentId: Overload:DrawnUi.Draw.DrawnExtensions.TextColorToAsync
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_TextColorToAsync_DrawnUi_Draw_SkiaLabel_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: TextColorToAsync
+  nameWithType: DrawnExtensions.TextColorToAsync
+  fullName: DrawnUi.Draw.DrawnExtensions.TextColorToAsync
+- uid: DrawnUi.Draw.SkiaLabel
+  commentId: T:DrawnUi.Draw.SkiaLabel
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLabel.html
+  name: SkiaLabel
+  nameWithType: SkiaLabel
+  fullName: DrawnUi.Draw.SkiaLabel
 - uid: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild*
   commentId: Overload:DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild
   href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_GetVelocityRatioForChild_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_ISkiaControl_

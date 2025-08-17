@@ -510,6 +510,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ApplyBindingContext
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
   - DrawnUi.Draw.SkiaControl.BindingContextWasSet
+  - DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
   - DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
@@ -645,6 +646,7 @@ items:
   - DrawnUi.Draw.SkiaControl.InvalidateChildrenTree
   - DrawnUi.Draw.SkiaControl.OutputDebug
   - DrawnUi.Draw.SkiaControl.InvalidateWithChildren
+  - DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.WillInvalidateMeasure
   - DrawnUi.Draw.SkiaControl.NeedInvalidateMeasure(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaControl.NeedDraw(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
@@ -908,6 +910,7 @@ items:
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.SkiaLottie})
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
+  - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.ControlTappedEventArgs})
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaLottie})
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32)
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32,System.Int32,System.Int32)
@@ -942,6 +945,7 @@ items:
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.AnimateExtensions.FadeOut(System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.AnimateExtensions.Translate(System.Numerics.Vector2,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.DrawnExtensions.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.StaticResourcesExtensions.FindParentByType``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.FindMauiContext(System.Boolean)
@@ -1140,7 +1144,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 85
+    startLine: 86
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1168,7 +1172,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Animation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 126
+    startLine: 127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1197,7 +1201,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIsOnWhenNotPlayingProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 140
+    startLine: 141
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1224,7 +1228,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIsOnWhenNotPlaying
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 150
+    startLine: 152
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1260,7 +1264,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOnProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 156
+    startLine: 158
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1287,7 +1291,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOn
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 167
+    startLine: 169
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1325,7 +1329,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameWhenOnProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 173
+    startLine: 175
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1352,7 +1356,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameWhenOn
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 181
+    startLine: 185
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1383,7 +1387,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTintProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 187
+    startLine: 191
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1410,7 +1414,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 198
+    startLine: 202
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1446,7 +1450,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorsProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 208
+    startLine: 211
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1473,7 +1477,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Colors
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 223
+    startLine: 226
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1502,7 +1506,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 269
+    startLine: 271
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1529,7 +1533,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 281
+    startLine: 283
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1565,7 +1569,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 287
+    startLine: 289
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1596,7 +1600,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadLocalJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 300
+    startLine: 302
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1630,7 +1634,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 335
+    startLine: 336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1668,7 +1672,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 407
+    startLine: 404
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1702,7 +1706,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StreamFromResourceUrl
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 439
+    startLine: 431
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1738,7 +1742,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnJsonLoaded
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 470
+    startLine: 462
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1779,7 +1783,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadAnimationFromJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 480
+    startLine: 472
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1817,7 +1821,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 499
+    startLine: 491
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1851,7 +1855,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 546
+    startLine: 538
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1880,7 +1884,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorUpdated
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 562
+    startLine: 554
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1916,7 +1920,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 573
+    startLine: 565
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1944,7 +1948,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorInitializing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 586
+    startLine: 578
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1972,7 +1976,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckCanStartAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 599
+    startLine: 591
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2002,7 +2006,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorStarting
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 604
+    startLine: 596
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2030,7 +2034,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToStart
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 609
+    startLine: 601
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2056,7 +2060,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToEnd
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 618
+    startLine: 610
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2082,7 +2086,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 629
+    startLine: 621
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2108,7 +2112,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 715
+    startLine: 706
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2135,7 +2139,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyTint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 717
+    startLine: 708
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2171,7 +2175,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindColorProperties
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 772
+    startLine: 763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2205,7 +2209,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToRGBHexString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 808
+    startLine: 798
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2236,7 +2240,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToHexString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 816
+    startLine: 806
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2267,7 +2271,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToArrayString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 826
+    startLine: 816
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2298,7 +2302,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToXamarinColorFromHex
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 836
+    startLine: 826
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2332,7 +2336,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToXamarinColor
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 865
+    startLine: 855
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2366,7 +2370,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 883
+    startLine: 873
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2397,7 +2401,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateSaturation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 899
+    startLine: 889
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -11097,6 +11101,13 @@ references:
   name: BindingContextWasSet
   nameWithType: SkiaControl.BindingContextWasSet
   fullName: DrawnUi.Draw.SkiaControl.BindingContextWasSet
+- uid: DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
+  commentId: P:DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_BindingsContextCacheWasRendered
+  name: BindingsContextCacheWasRendered
+  nameWithType: SkiaControl.BindingsContextCacheWasRendered
+  fullName: DrawnUi.Draw.SkiaControl.BindingsContextCacheWasRendered
 - uid: DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   commentId: M:DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   parent: DrawnUi.Draw.SkiaControl
@@ -14295,6 +14306,31 @@ references:
     name: InvalidateWithChildren
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateWithChildren
   - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_
+  name: InvalidateChildren(SkiaControl)
+  nameWithType: SkiaControl.InvalidateChildren(SkiaControl)
+  fullName: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+    name: InvalidateChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateChildren(DrawnUi.Draw.SkiaControl)
+    name: InvalidateChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateChildren_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.WillInvalidateMeasure
   commentId: P:DrawnUi.Draw.SkiaControl.WillInvalidateMeasure
@@ -21704,6 +21740,81 @@ references:
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
+- uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.ControlTappedEventArgs})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  name: OnTapped<SkiaLottie>(SkiaLottie, Action<SkiaLottie, ControlTappedEventArgs>)
+  nameWithType: FluentExtensions.OnTapped<SkiaLottie>(SkiaLottie, Action<SkiaLottie, ControlTappedEventArgs>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnTapped<DrawnUi.Controls.SkiaLottie>(DrawnUi.Controls.SkiaLottie, System.Action<DrawnUi.Controls.SkiaLottie, DrawnUi.Draw.ControlTappedEventArgs>)
+  nameWithType.vb: FluentExtensions.OnTapped(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, ControlTappedEventArgs))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnTapped(Of DrawnUi.Controls.SkiaLottie)(DrawnUi.Controls.SkiaLottie, System.Action(Of DrawnUi.Controls.SkiaLottie, DrawnUi.Draw.ControlTappedEventArgs))
+  name.vb: OnTapped(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, ControlTappedEventArgs))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: <
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: )
+  - name: )
 - uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaLottie})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0})
   parent: DrawnUi.Draw.FluentExtensions
@@ -23728,6 +23839,83 @@ references:
     name: Double
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  parent: DrawnUi.Draw.DrawnExtensions
+  definition: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  nameWithType: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, uint, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  nameWithType.vb: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, UInteger, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
   - name: ','
   - name: " "
   - uid: System.UInt32
@@ -26529,6 +26717,68 @@ references:
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  name: OnTapped<T>(T, Action<T, ControlTappedEventArgs>)
+  nameWithType: FluentExtensions.OnTapped<T>(T, Action<T, ControlTappedEventArgs>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnTapped<T>(T, System.Action<T, DrawnUi.Draw.ControlTappedEventArgs>)
+  nameWithType.vb: FluentExtensions.OnTapped(Of T)(T, Action(Of T, ControlTappedEventArgs))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnTapped(Of T)(T, System.Action(Of T, DrawnUi.Draw.ControlTappedEventArgs))
+  name.vb: OnTapped(Of T)(T, Action(Of T, ControlTappedEventArgs))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
+    name: OnTapped
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnTapped__1___0_System_Action___0_DrawnUi_Draw_ControlTappedEventArgs__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlTappedEventArgs
+    name: ControlTappedEventArgs
+    href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0})
   isExternal: true
@@ -28307,6 +28557,82 @@ references:
     name: Double
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
+- uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  isExternal: true
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  name: BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  nameWithType: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, uint, Easing, CancellationTokenSource)
+  fullName: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, uint, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  nameWithType.vb: DrawnExtensions.BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl, Microsoft.Maui.Graphics.Color, UInteger, Microsoft.Maui.Easing, System.Threading.CancellationTokenSource)
+  name.vb: BackgroundColorToAsync(SkiaControl, Color, UInteger, Easing, CancellationTokenSource)
+  spec.csharp:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Easing
+    name: Easing
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationTokenSource
+    name: CancellationTokenSource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtokensource
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+    name: BackgroundColorToAsync
+    href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_BackgroundColorToAsync_DrawnUi_Draw_SkiaControl_Microsoft_Maui_Graphics_Color_System_UInt32_Microsoft_Maui_Easing_System_Threading_CancellationTokenSource_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Graphics.Color
+    name: Color
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
   - name: ','
   - name: " "
   - uid: System.UInt32

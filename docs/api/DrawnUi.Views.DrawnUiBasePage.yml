@@ -7,6 +7,7 @@ items:
   children:
   - DrawnUi.Views.DrawnUiBasePage.#ctor
   - DrawnUi.Views.DrawnUiBasePage.KeyboardResized(System.Double)
+  - DrawnUi.Views.DrawnUiBasePage.KeyboardSize
   - DrawnUi.Views.DrawnUiBasePage.OnKeyboardResized(System.Double)
   langs:
   - csharp
@@ -317,7 +318,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DrawnUiBasePage.cs
-    startLine: 8
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -346,7 +347,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyboardResized
     path: ../src/Maui/DrawnUi/Views/DrawnUiBasePage.cs
-    startLine: 13
+    startLine: 15
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -378,7 +379,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnKeyboardResized
     path: ../src/Maui/DrawnUi/Views/DrawnUiBasePage.cs
-    startLine: 19
+    startLine: 21
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -394,6 +395,37 @@ items:
   nameWithType.vb: DrawnUiBasePage.OnKeyboardResized(Double)
   fullName.vb: DrawnUi.Views.DrawnUiBasePage.OnKeyboardResized(Double)
   name.vb: OnKeyboardResized(Double)
+- uid: DrawnUi.Views.DrawnUiBasePage.KeyboardSize
+  commentId: P:DrawnUi.Views.DrawnUiBasePage.KeyboardSize
+  id: KeyboardSize
+  parent: DrawnUi.Views.DrawnUiBasePage
+  langs:
+  - csharp
+  - vb
+  name: KeyboardSize
+  nameWithType: DrawnUiBasePage.KeyboardSize
+  fullName: DrawnUi.Views.DrawnUiBasePage.KeyboardSize
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DrawnUiBasePage.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: KeyboardSize
+    path: ../src/Maui/DrawnUi/Views/DrawnUiBasePage.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  summary: Will be set to the current keyboard size
+  example: []
+  syntax:
+    content: public double KeyboardSize { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property KeyboardSize As Double
+  overload: DrawnUi.Views.DrawnUiBasePage.KeyboardSize*
 references:
 - uid: DrawnUi.Views
   commentId: N:DrawnUi.Views
@@ -5603,3 +5635,9 @@ references:
   name: OnKeyboardResized
   nameWithType: DrawnUiBasePage.OnKeyboardResized
   fullName: DrawnUi.Views.DrawnUiBasePage.OnKeyboardResized
+- uid: DrawnUi.Views.DrawnUiBasePage.KeyboardSize*
+  commentId: Overload:DrawnUi.Views.DrawnUiBasePage.KeyboardSize
+  href: DrawnUi.Views.DrawnUiBasePage.html#DrawnUi_Views_DrawnUiBasePage_KeyboardSize
+  name: KeyboardSize
+  nameWithType: DrawnUiBasePage.KeyboardSize
+  fullName: DrawnUi.Views.DrawnUiBasePage.KeyboardSize
