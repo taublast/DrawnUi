@@ -608,6 +608,10 @@ public partial class SkiaControl
                     else
                     {
                         DrawPlaceholder(context);
+                        if (cache == null && cacheOffscreen == null)
+                        {
+                            needBuild = true;
+                        }
                     }
 
                     Monitor.PulseAll(LockDraw);
