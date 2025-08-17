@@ -9,6 +9,7 @@
     <Import_RootNamespace>Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ControlTappedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ObservableAttachedItemsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\VisualLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControl.Cache.cs" />

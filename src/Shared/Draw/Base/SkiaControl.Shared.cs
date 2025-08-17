@@ -17,20 +17,6 @@ using SKSize = SkiaSharp.SKSize;
 
 namespace DrawnUi.Draw
 {
-    public class ControlTappedEventArgs : EventArgs
-    {
-        public object Control { get; set; }
-        public SkiaGesturesParameters Parameters { get; set; }
-        public GestureEventProcessingInfo ProcessingInfo { get; set; }
-
-        public ControlTappedEventArgs(object control, SkiaGesturesParameters args, GestureEventProcessingInfo info)
-        {
-            Control = control;
-            Parameters = args;
-            ProcessingInfo = info;
-        }
-    }
-
     [DebuggerDisplay("{DebugString}")]
     public partial class SkiaControl :
         ISkiaGestureListener,
@@ -364,14 +350,14 @@ namespace DrawnUi.Draw
 
         protected virtual void SetDefaultMinimumContentSize(double width, double height)
         {
-            if (width > 0)
+            if (width > 0 && WidthRequest<0)
             {
                 if (this.MinimumWidthRequest < 0 && HorizontalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumWidthRequest < 0))
                     this.MinimumWidthRequest = width;
             }
 
-            if (height > 0)
+            if (height > 0 && HeightRequest<0)
             {
                 if (this.MinimumHeightRequest < 0 && VerticalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumHeightRequest < 0))
@@ -381,14 +367,14 @@ namespace DrawnUi.Draw
 
         protected virtual void SetDefaultContentSize(double width, double height)
         {
-            if (width > 0)
+            if (width > 0 && WidthRequest < 0)
             {
                 if (this.WidthRequest < 0 && HorizontalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || HeightRequest < 0))
                     this.WidthRequest = width;
             }
 
-            if (height > 0)
+            if (height > 0 && HeightRequest < 0)
             {
                 if (this.HeightRequest < 0 && VerticalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || WidthRequest < 0))
