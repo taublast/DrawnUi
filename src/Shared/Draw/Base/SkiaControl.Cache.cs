@@ -566,7 +566,8 @@ public partial class SkiaControl
                         }
                         else
                         {
-                            DrawPlaceholder(context);
+                            if (!BindingsContextCacheWasRendered)
+                                DrawPlaceholder(context);
                         }
                     }
                     else
@@ -601,12 +602,14 @@ public partial class SkiaControl
                         }
                         else
                         {
-                            DrawPlaceholder(context);
+                            if (!BindingsContextCacheWasRendered)
+                                DrawPlaceholder(context);
                         }
                     }
                     else
                     {
-                        DrawPlaceholder(context);
+                        if (!BindingsContextCacheWasRendered)
+                            DrawPlaceholder(context);
                     }
 
                     Monitor.PulseAll(LockDraw);
@@ -880,7 +883,8 @@ public partial class SkiaControl
                     //record to cache and paint 
                     if (UsesCacheDoubleBuffering)
                     {
-                        DrawPlaceholder(clone);
+                        if (!BindingsContextCacheWasRendered)
+                            DrawPlaceholder(clone);
 
                         //use cloned struct in another thread 
                         PushToOffscreenRendering(() =>
@@ -903,6 +907,10 @@ public partial class SkiaControl
                         CreateRenderingObjectAndPaint(clone, recordArea,
                             (ctx) => { PaintWithEffects(ctx.WithDestination(DrawingRect)); });
                     }
+                }
+                else
+                {
+                    BindingsContextCacheWasRendered = true;
                 }
             }
             else

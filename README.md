@@ -34,6 +34,7 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
+* FIX DrawPlaceholder call when cache was already rendered
 * FIX ImageDoubleBuffered cache not rebuilding when control wasn't updated while cache was destroyed
 * FIX DrawnUiBasePage not respecting MAUI SafeInsets on iOS
 

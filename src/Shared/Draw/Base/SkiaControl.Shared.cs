@@ -4312,6 +4312,7 @@ namespace DrawnUi.Draw
 
         public event EventHandler ApplyingBindingContext;
         protected bool BindingContextWasSet { get; set; }
+        protected bool BindingsContextCacheWasRendered { get; set; }
 
         /// <summary>
         /// First Maui will apply bindings to your controls, then it would call OnBindingContextChanged, so beware on not to break bindings.
@@ -4322,6 +4323,7 @@ namespace DrawnUi.Draw
                 return;
 
             BindingContextWasSet = true;
+            BindingsContextCacheWasRendered = false;
 
             try
             {

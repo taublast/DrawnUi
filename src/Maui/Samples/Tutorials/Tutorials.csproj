@@ -17,6 +17,10 @@
 
     </PropertyGroup>
 
+    <ItemGroup Condition="'$(UseSource)' != 'true'">
+        <PackageReference Include="DrawnUi.Maui" Version="1.6.2.25" />
+    </ItemGroup>
+
 	<PropertyGroup>
         <WindowsPackageType>None</WindowsPackageType>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
@@ -68,10 +72,6 @@
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
-    <ItemGroup Condition="'$(UseSource)' != 'true'">
-        <PackageReference Include="DrawnUi.Maui" Version="1.6.2.24" />
-    </ItemGroup>
 
     <ItemGroup>
         <!--https://github.com/BretJohnson/hot-preview-->
