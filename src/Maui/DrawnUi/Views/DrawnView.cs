@@ -675,7 +675,7 @@ namespace DrawnUi.Views
         {
             NeedCheckParentVisibility = true;
             NeedGlobalRefreshCount++;
-            //RenderingScale = -1;
+            RenderingScale = -1;
             //InvalidateChildren();
             Update();
         }
