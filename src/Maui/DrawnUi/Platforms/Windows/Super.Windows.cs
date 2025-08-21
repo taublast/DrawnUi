@@ -175,20 +175,6 @@ namespace DrawnUi.Draw
             }
         }
 
-        /// <summary>
-        /// Lists assets inside the Resources/Raw subfolder
-        /// </summary>
-        /// <param name="subfolder"></param>
-        /// <returns></returns>
-        public static List<string> ListAssets(string subfolder)
-        {
-            StorageFolder installFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            StorageFolder sub = installFolder.GetFolderAsync(subfolder).GetAwaiter().GetResult();
-            IReadOnlyList<StorageFile> files = sub.GetFilesAsync().GetAwaiter().GetResult();
-
-            return files.Select(f => f.Name).ToList();
-        }
-
         public static async Task<byte[]> CaptureScreenshotAsync()
         {
             var screen = await Screenshot.CaptureAsync();
@@ -203,7 +189,6 @@ namespace DrawnUi.Draw
                 }
             }
         }
-
 
         /// <summary>
         /// Prevents display from auto-turning off  Everytime you set this the setting will be applied.

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://drawnui.net/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Block crawling of unnecessary files
+Disallow: /_site/
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.map$

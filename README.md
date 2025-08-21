@@ -36,6 +36,8 @@ Current development state is _ALPHA for prod_.
 
 ## 🌱 What's new
 
+* FIX Windows scale other than 1 issue
+* FIX ZoomContent scale quality and pan limits
 * FIX default content size overriding explicit required
 
 ___Please star ⭐ if you like it!___
