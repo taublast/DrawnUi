@@ -1,11 +1,13 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Windows.Foundation;
+using Microsoft.UI.Xaml.Controls;
+using Newtonsoft.Json.Linq;
 using Windows.Foundation.Collections;
 using WinRT;
-using Size = Windows.Foundation.Size;
-using EGLDisplay = System.IntPtr;
-using EGLContext = System.IntPtr;
 using EGLConfig = System.IntPtr;
+using EGLContext = System.IntPtr;
+using EGLDisplay = System.IntPtr;
 using EGLSurface = System.IntPtr;
+using Size = Windows.Foundation.Size;
 
 namespace DrawnUi.Views
 {
@@ -90,6 +92,18 @@ namespace DrawnUi.Views
             PropertySet surfaceCreationProperties = new PropertySet();
             surfaceCreationProperties.Add(Egl.EGLNativeWindowTypeProperty, panel);
 
+            // If a render surface size is specified, add it to the surface creation properties
+            if (renderSurfaceSize.HasValue)
+            {
+                PropertySetExtensions.AddSize(surfaceCreationProperties, Egl.EGLRenderSurfaceSizeProperty, renderSurfaceSize.Value);
+            }
+
+            // If a resolution scale is specified, add it to the surface creation properties
+            if (resolutionScale.HasValue)
+            {
+                PropertySetExtensions.AddSingle(surfaceCreationProperties, Egl.EGLRenderResolutionScaleProperty, resolutionScale.Value);
+            }
+
             var inspectable = surfaceCreationProperties.As<IInspectable>();
             if (inspectable?.ThisPtr == IntPtr.Zero)
             {
@@ -104,6 +118,8 @@ namespace DrawnUi.Views
 
             eglSurface = surface;
         }
+
+
 
         public void GetSurfaceDimensions(out int width, out int height)
         {
