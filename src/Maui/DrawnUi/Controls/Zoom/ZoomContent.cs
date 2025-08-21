@@ -6,7 +6,7 @@ namespace DrawnUi.Draw;
 
 /// <summary>
 /// Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.
-/// 
+///
 /// DEBUG INSTRUCTIONS:
 /// - Key debug outputs are enabled for pan movements and clamp operations
 /// - Call DumpDebugState() manually to get a full state dump
@@ -187,34 +187,97 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
         return (scaledDestination, useScale);
     }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static float Clampf(float v, float min, float max)
+        {
+            if (v < min) return min;
+            if (v > max) return max;
+            return v;
+        }
+
+        /// <summary>
+        /// Clamp OffsetImage so that the zoomed content stays within the viewport bounds.
+        /// Uses the same scale math as ComputeContentScale to derive legal pan ranges.
+        /// </summary>
+        private void ClampOffsetImage(SKRect viewport, float scale)
+        {
+            // If not zoomed in, keep centered and no panning
+            if (ViewportZoom <= 1.0)
+            {
+                if (!OffsetImage.Equals(SKPoint.Empty))
+                {
+                    Debug.WriteLine("[ClampOffsetImage] Not zoomed, resetting OffsetImage to (0,0)");
+                }
+                OffsetImage = SKPoint.Empty;
+                return;
+            }
+
+            // Mirror ComputeContentScale's math
+            var useScale = scale / (float)ViewportZoom; // child render scale
+            var destScale = 1 + (scale - useScale);     // expansion of destination rect around center
+
+            // With MAUI Content.Scale removed, the final visual size is governed by destScale only.
+            // Allowed pan ranges in screen-space are ±(diff / (2 * destScale)).
+            var diffW = viewport.Width * destScale - viewport.Width;
+            var diffH = viewport.Height * destScale - viewport.Height;
+
+            var canPanX = diffW > 0f;
+            var canPanY = diffH > 0f;
+
+            float minX = 0, maxX = 0, minY = 0, maxY = 0;
+
+            if (canPanX)
+            {
+                var halfRangeX = (float)(diffW / (2f * destScale));
+                minX = -halfRangeX;
+                maxX = halfRangeX;
+            }
+
+            if (canPanY)
+            {
+                var halfRangeY = (float)(diffH / (2f * destScale));
+                minY = -halfRangeY;
+                maxY = halfRangeY;
+            }
+
+            var before = OffsetImage;
+
+            // Force to zero on axes that can't pan (content not larger than viewport)
+            var newX = canPanX ? Clampf(OffsetImage.X, minX, maxX) : 0f;
+            var newY = canPanY ? Clampf(OffsetImage.Y, minY, maxY) : 0f;
+
+            //if (!before.X.Equals(newX) || !before.Y.Equals(newY))
+            //{
+            //    Debug.WriteLine($"[ClampOffsetImage] CLAMPED! Before={before} After=({newX:F2},{newY:F2}) XRange=[{minX:F2},{maxX:F2}] YRange=[{minY:F2},{maxY:F2}] destScale={destScale:F3} zoom={ViewportZoom:F3} scale={scale:F3}");
+            //}
+
+            OffsetImage = new SKPoint(newX, newY);
+        }
+
+        private void TryClampWithLastViewport()
+        {
+            if (_lastViewportScale > 0 && _lastViewportRect.Width > 0 && _lastViewportRect.Height > 0)
+            {
+                ClampOffsetImage(_lastViewportRect, _lastViewportScale);
+            }
+        }
+
+
     protected override int DrawViews(DrawingContext context)
     {
-        //ClampOffsetImage(context.Destination, context.Scale);
+        // First clamp with current viewport to avoid overscroll
+        ClampOffsetImage(context.Destination, context.Scale);
+
+        // Remember the last viewport/scale so gesture handlers can clamp immediately
+        _lastViewportRect = context.Destination;
+        _lastViewportScale = context.Scale;
 
         var use = ComputeContentScale(context.Destination, context.Scale, OffsetImage);
 
         var useScale = use.Scale;
-        if (use.Scale < 1)
-        {
-            Content.Scale = 1 + ViewportZoom - context.Scale;
-            useScale = 1;
-        }
-        else
-        {
-            Content.Scale = 1;
-        }
 
-        // DEBUG OUTPUT - Reduced frequency, uncomment when needed
-        // Debug.WriteLine($"[DrawViews]");
-        // Debug.WriteLine($"  context.Destination={context.Destination}");
-        // Debug.WriteLine($"  context.Scale={context.Scale:F3}");
-        // Debug.WriteLine($"  OffsetImage={OffsetImage}");
-        // Debug.WriteLine($"  use.ScaledDestination={use.ScaledDestination}");
-        // Debug.WriteLine($"  use.Scale={use.Scale:F3}");
-        // Debug.WriteLine($"  Content.Scale={Content.Scale:F3}");
-
-        // Additional debug info about content bounds - uncomment when needed
-        // DebugContentBounds(context.Destination, context.Scale);
+        // Ensure we never pass a scale below 1 to avoid low-res rendering paths.
+        //if (useScale < 1f) useScale = 1f;
 
         return base.DrawViews(context.WithDestination(use.ScaledDestination).WithScale(useScale));
     }
@@ -232,6 +295,11 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
     protected SKPoint OffsetImage;
 
     protected PointF _panStarted;
+
+
+        // Cache of the last viewport destination and scale used for drawing
+        private SKRect _lastViewportRect;
+        private float _lastViewportScale;
 
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
@@ -259,6 +327,11 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                         OffsetImage = new(
                             (float)(OffsetImage.X - moved.Width * PanSpeed),
                             (float)(OffsetImage.Y - moved.Height * PanSpeed));
+
+                        // Immediate clamp using last viewport (if available)
+                        TryClampWithLastViewport();
+
+                        //Debug.WriteLine($"[Pan/Wheel] Offset after move+clamp: {OffsetImage}");
                     }
 
                     _lastPinch = args.Event.Wheel.Scale;
@@ -315,6 +388,10 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                         OffsetImage = new(
                             (float)(OffsetImage.X - deltaX * PanSpeed),
                             (float)(OffsetImage.Y - deltaY * PanSpeed));
+
+                        // Immediate clamp using last viewport (if available)
+                        TryClampWithLastViewport();
+                        //Debug.WriteLine($"[Pan/Manipulation] Offset after move+clamp: {OffsetImage}");
                     }
                 }
             }
