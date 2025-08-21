@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.ShapesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:PreviewTests="clr-namespace:PreviewTests"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:DataType="PreviewTests:MainPageViewModel"
+    BackgroundColor="#000000">
+
+
+    <Grid
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
+        <views:DebugCanvas
+            x:Name="MainCanvas"
+            BackgroundColor="DarkSeaGreen"
+            Gestures="Enabled"
+            HorizontalOptions="Fill"
+            Tag="Main"
+            VerticalOptions="Fill">
+
+            <draw:SkiaLayout
+                HorizontalOptions="Fill"
+                Tag="Wrapper"
+                VerticalOptions="Fill">
+
+                <draw:SkiaLayout
+                    Margin="0"
+                    Padding="0"
+                    BackgroundColor="#11000000"
+                    ColumnDefinitions="*,*"
+                    DefaultRowDefinition="150"
+                    HorizontalOptions="Fill"
+                    RowSpacing="1"
+                    Type="Grid"
+                    VerticalOptions="Fill">
+
+                    <draw:SkiaShape
+                        Padding="16"
+                        BackgroundColor="CornflowerBlue"
+                        HorizontalOptions="Fill"
+                        Points="0.1, 0.1; 0.9, 0.1; 0.5, 0.9;"
+                        StrokeColor="Black"
+                        StrokeWidth="3"
+                        Type="Polygon"
+                        VerticalOptions="Fill">
+                        <draw:SkiaImage
+                            Aspect="AspectFit"
+                            HorizontalOptions="Center"
+                            Source="car.png"
+                            TranslationY="-22"
+                            VerticalOptions="Center" />
+                        <draw:SkiaShape.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Opacity="0.33"
+                                Radius="2"
+                                Offset="3,3" />
+                        </draw:SkiaShape.Shadow>
+                    </draw:SkiaShape>
+
+                    <draw:SkiaShape
+                        Grid.Column="1"
+                        Background="Yellow"
+                        HorizontalOptions="Fill"
+                        Points="{x:Static draw:SkiaShape.PolygonStar}"
+                        StrokeColor="Black"
+                        StrokeWidth="3"
+                        Type="Polygon"
+                        VerticalOptions="Fill">
+                        <draw:SkiaImage
+                            Aspect="AspectFit"
+                            Background="Yellow"
+                            HorizontalOptions="Center"
+                            Source="car.png"
+                            VerticalOptions="Center" />
+                    </draw:SkiaShape>
+
+
+                    <draw:SkiaShape
+                        Grid.Row="1"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Fill"
+                        StrokeColor="White"
+                        StrokePath="8,8"
+                        StrokeWidth="5.0"
+                        Type="Circle"
+                        UseCache="Operations"
+                        VerticalOptions="Fill">
+                        <draw:SkiaShape.StrokeGradient>
+
+                            <draw:SkiaGradient
+                                EndXRatio="0.8"
+                                EndYRatio="0.8"
+                                StartXRatio="0.2"
+                                StartYRatio="0.2"
+                                Type="Linear">
+                                <draw:SkiaGradient.Colors>
+                                    <Color>#777777</Color>
+                                    <Color>Gray</Color>
+                                </draw:SkiaGradient.Colors>
+                            </draw:SkiaGradient>
+
+                        </draw:SkiaShape.StrokeGradient>
+
+                        <draw:SkiaImage
+                            BackgroundColor="GreenYellow"
+                            HorizontalOptions="Fill"
+                            Source="car.png"
+                            VerticalOptions="Fill" />
+                    </draw:SkiaShape>
+
+                    <draw:SkiaShape
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="8"
+                        Padding="8"
+                        BackgroundColor="White"
+                        CornerRadius="12,12,12,0"
+                        HorizontalOptions="Fill"
+                        StrokeColor="Black"
+                        StrokeWidth="3"
+                        UseCache="Operations"
+                        VerticalOptions="Fill">
+
+                        <draw:SkiaLayout Type="Column">
+                            <draw:SkiaLabel Text="Text 1" />
+                            <draw:SkiaLabel Text="Text 2" />
+                        </draw:SkiaLayout>
+
+
+                    </draw:SkiaShape>
+
+                    <draw:SkiaShape
+                        Grid.Row="2"
+                        Margin="16"
+                        BackgroundColor="DarkSalmon"
+                        HeightRequest="50"
+                        HorizontalOptions="Fill"
+                        Rotation="-45"
+                        StrokeColor="Black"
+                        StrokeWidth="3"
+                        Type="Ellipse"
+                        UseCache="Operations"
+                        VerticalOptions="Center">
+                        <draw:SkiaLabel
+                            AutoFont="True"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Text="😀"
+                            VerticalOptions="Center">
+                            <draw:SkiaLabel.Shadow>
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.33"
+                                    Radius="2"
+                                    Offset="2,2" />
+                            </draw:SkiaLabel.Shadow>
+                        </draw:SkiaLabel>
+                    </draw:SkiaShape>
+
+                    <!--  MAP ROUTE  -->
+                    <draw:SkiaShape
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="16"
+                        HorizontalOptions="Fill"
+                        SmoothPoints="1"
+                        StrokeColor="Black"
+                        StrokePath="16,8"
+                        StrokeWidth="3"
+                        Type="Line"
+                        UseCache="Operations"
+                        VerticalOptions="Fill">
+                        <draw:SkiaShape.Points>
+                            <draw:SkiaPoint
+                                X="0.0"
+                                Y="1.0" />
+                            <draw:SkiaPoint
+                                X="0.2"
+                                Y="0.8" />
+                            <draw:SkiaPoint
+                                X="0.0"
+                                Y="0.6" />
+                            <draw:SkiaPoint
+                                X="0.8"
+                                Y="0.0" />
+                        </draw:SkiaShape.Points>
+                    </draw:SkiaShape>
+
+                    <draw:SkiaSvg
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        HeightRequest="28"
+                        HorizontalOptions="Center"
+                        LockRatio="1"
+                        TintColor="Black"
+                        VerticalOptions="Center">
+                        <![CDATA[ 
+                    <svg fill="#000000" width="800px" height="800px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <title>pin</title>
+                    <path d="M4 12q0-3.264 1.6-6.016t4.384-4.352 6.016-1.632 6.016 1.632 4.384 4.352 1.6 6.016q0 1.376-0.672 3.2t-1.696 3.68-2.336 3.776-2.56 3.584-2.336 2.944-1.728 2.080l-0.672 0.736q-0.256-0.256-0.672-0.768t-1.696-2.016-2.368-3.008-2.528-3.52-2.368-3.84-1.696-3.616-0.672-3.232zM8 12q0 3.328 2.336 5.664t5.664 2.336 5.664-2.336 2.336-5.664-2.336-5.632-5.664-2.368-5.664 2.368-2.336 5.632z"></path>
+                    </svg>
+                            ]]>
+                    </draw:SkiaSvg>
+
+                    <!--
+                        section height is 15pt because
+                        row height is 150, and points use 0.1 of it
+                    -->
+                    <draw:SkiaShape
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Margin="16"
+                        BackgroundColor="#220000FF"
+                        HorizontalOptions="Fill"
+                        SmoothPoints="0.9"
+                        StrokeColor="Black"
+                        StrokeWidth="3"
+                        Type="Polygon"
+                        UseCache="Operations"
+                        VerticalOptions="Fill">
+                        <draw:SkiaShape.Points>
+                            <draw:SkiaPoint
+                                X="0.0"
+                                Y="0.8" />
+                            <draw:SkiaPoint
+                                X="0.0"
+                                Y="0.7" />
+                            <draw:SkiaPoint
+                                X="1.0"
+                                Y="0.2" />
+                            <draw:SkiaPoint
+                                X="1.0"
+                                Y="0.3" />
+
+                        </draw:SkiaShape.Points>
+                    </draw:SkiaShape>
+
+                </draw:SkiaLayout>
+
+                <controls:ButtonToRoot />
+
+                <draw:SkiaLabelFps
+                    Margin="0,0,4,24"
+                    BackgroundColor="DarkRed"
+                    HorizontalOptions="End"
+                    Rotation="-45"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    ZIndex="100" />
+
+            </draw:SkiaLayout>
+
+
+        </views:DebugCanvas>
+
+    </Grid>
+
+</views:BasePageCodeBehind>

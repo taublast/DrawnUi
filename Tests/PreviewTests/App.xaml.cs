@@ -12,19 +12,20 @@ namespace PreviewTests
 
             MainPage = new AppShell();
 
-            var mask = "MainPage";
+            var suffix = "Page";
 
             var xamlResources = this.GetType().Assembly
                 .GetCustomAttributes<XamlResourceIdAttribute>();
 
             MainPages = xamlResources
-                .Where(x => x.Type.Name.Contains(mask)
+                .Where(x => x.Type.Name.EndsWith(suffix)
                 && !x.Type.Name.ToLower().Contains("dev")
-
-                && x.Type.Name != mask)
+                && x.Type.Name != "MainPage"
+                && x.Type.Name != "TestPage"
+                && x.Type.Name != "TestPage2")
                 .Select(s => new MainPageVariant()
                 {
-                    Name = s.Type.Name.Replace(mask, string.Empty),
+                    Name = s.Type.Name.Replace(suffix, string.Empty),
                     Type = s.Type
                 }).ToList();
         }
