@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.TestPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="using:PreviewTests.Views.Controls"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+    xmlns:PreviewTests="clr-namespace:PreviewTests"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    BackgroundColor="#000000">
+
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+
+        <draw:Canvas
+            BackgroundColor="DarkSlateBlue"
+            Gestures="Enabled"
+            RenderingMode = "Accelerated"
+            HorizontalOptions="Fill"
+            Tag="Main"
+            VerticalOptions="Fill">
+
+            <draw:SkiaLayout
+                HorizontalOptions="Fill"
+                Tag="Wrapper"
+                VerticalOptions="Fill">
+
+                <draw:SkiaImage
+                    Aspect="AspectFit"
+                    HeightRequest="200"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Description="Image"
+                    Source="{Binding Source={x:Reference ThisPage}, Path=ImageBytes, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                    WidthRequest="200" />
+
+                <!--<draw:SkiaShape
+                    BackgroundColor="White"
+                    VerticalOptions="Center"
+                    StrokeWidth="0"
+                    HorizontalOptions="Center"
+                    HeightRequest="44"
+                    LockRatio="1"
+                    Type="Circle">
+                    <draw:SkiaShape.Shadows>
+
+                        <draw:SkiaShadow
+                            Blur="3"
+                            Opacity="0.33"
+                            X="4"
+                            Y="4"
+                            Color="Black" />
+
+                    </draw:SkiaShape.Shadows>
+
+                    <draw:SkiaShape
+                        PathData="M0,0L15.825011,8.0009766 31.650999,15.997986 15.825011,23.998993 0,32 0,15.997986z"
+                        HeightRequest="16"
+                        LockRatio="1"
+                        BackgroundColor="Black"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Type="Path" />
+
+                </draw:SkiaShape>-->
+
+                <draw:SkiaLabelFps
+                    Margin="0,0,4,24"
+                    BackgroundColor="DarkRed"
+                    HorizontalOptions="End"
+                    Rotation="-45"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    ZIndex="100" />
+
+            </draw:SkiaLayout>
+
+        </draw:Canvas>
+    </Grid>
+
+</views:BasePageCodeBehind>

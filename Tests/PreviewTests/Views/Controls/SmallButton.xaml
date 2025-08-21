@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaButton
+    x:Class="PreviewTests.Views.Controls.SmallButton"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    ApplyEffect="Ripple"
+    HeightRequest="36"
+    IsClippedToBounds="True"
+    TouchEffectColor="White"
+    UseCache="Image"
+    WidthRequest="150">
+
+    <!--
+        we cannot have relative bindings in this xaml (because the root is not Element?)
+        {Binding Source={RelativeSource AncestorType={x:Type draw:SkiaButton}}, Path=Text}
+        So we will set the text in code-behind
+    -->
+    <draw:SkiaShape
+        BackgroundColor="CornflowerBlue"
+        CornerRadius="20"
+        HorizontalOptions="Fill"
+        IsClippedToBounds="True"
+        StrokeColor="Gainsboro"
+        StrokeWidth="1.5"
+        Tag="MainFrame"
+        VerticalOptions="Fill" />
+
+    <!--  we could put text inside shape btw.. fontgame is not vertically aligned by font author so we add margin -->
+    <draw:SkiaLabel
+        HorizontalOptions="Center"
+        Style="{x:StaticResource SkiaLabelDefaultStyle}"
+        Tag="MainLabel"
+        FontFamily="FontGame"
+        TextColor="White"
+        LineHeight="1.0"
+        Margin="0,0,0,2"
+        VerticalOptions="Center" />
+
+</draw:SkiaButton>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<draw:SkiaLayout
+    x:Class="PreviewTests.View1"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw">
+
+    <!--  bugged on propose to text DisplayException  -->
+
+    <draw:SkiaLabel Text="{x:StaticResource Unexisting}" />
+
+</draw:SkiaLayout>

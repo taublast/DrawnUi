@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaSlider
+    x:Class="PreviewTests.Views.Controls.DrawnSlider"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    x:Name="ThisSlider"
+    AvailableWidthAdjustment="1.5"
+    HorizontalOptions="Fill"
+    MinimumWidthRequest="64"
+    SliderHeight="35"
+    Tag="SliderFun"
+    Type="Column"
+    UseCache="ImageDoubleBuffered">
+
+    <draw:SkiaSlider.Resources>
+        <ResourceDictionary />
+    </draw:SkiaSlider.Resources>
+
+    <!--  MAIN GRID  -->
+    <draw:SkiaLayout
+        x:Name="ThisSliderGrid"
+        HeightRequest="{Binding Source={x:Reference ThisSlider}, Path=SliderHeight}"
+        HorizontalOptions="Fill"
+        Tag="Trail"
+        VerticalOptions="Start">
+
+        <!--  TRAIL  -->
+        <draw:SkiaShape
+            BackgroundColor="{StaticResource Gray300}"
+            CornerRadius="6"
+            HeightRequest="8"
+            HorizontalOptions="Fill"
+            StrokeColor="{StaticResource Gray400}"
+            StrokeWidth="2"
+            UseCache="Operations"
+            VerticalOptions="Center" />
+
+        <!--  SELECTED TRAIL  -->
+        <draw:SliderTrail
+            BackgroundColor="{StaticResource ColorPrimary}"
+            CornerRadius="6"
+            HeightRequest="10"
+            HorizontalOptions="Start"
+            ModifyXPosEnd="10"
+            SideOffset="0"
+            StrokeBlendMode="Color"
+            StrokeColor="{StaticResource ColorPrimaryDark}"
+            StrokeWidth="2"
+            Tag="SelectedTrail"
+            VerticalOptions="Center"
+            XPos="0"
+            XPosEnd="{Binding Source={x:Reference EndThumb}, Path=TranslationX}" />
+
+        <!--  THUMB  -->
+        <draw:SliderThumb
+            x:Name="EndThumb"
+            HeightRequest="{Binding Source={x:Reference ThisSliderGrid}, Path=Height}"
+            TranslationX="{Binding Source={x:Reference ThisSlider}, Path=EndThumbX}"
+            UseCache="Image"
+            WidthRequest="{Binding Source={x:Reference ThisSliderGrid}, Path=Height}">
+
+            <draw:SkiaShape
+                Margin="4"
+                BackgroundColor="{StaticResource ColorPrimary}"
+                HorizontalOptions="Fill"
+                StrokeColor="{StaticResource ColorPrimaryDark}"
+                StrokeWidth="1"
+                Type="Circle"
+                VerticalOptions="Fill">
+                <draw:SkiaShape.Shadows>
+
+                    <draw:SkiaShadow
+                        Blur="2"
+                        Opacity="0.5"
+                        X="1"
+                        Y="1"
+                        Color="{StaticResource ColorPrimaryDark}" />
+
+                </draw:SkiaShape.Shadows>
+
+                <draw:SkiaShape
+                    BackgroundColor="White"
+                    HorizontalOptions="Center"
+                    LockRatio="1"
+                    Type="Circle"
+                    VerticalOptions="Center"
+                    WidthRequest="6" />
+
+            </draw:SkiaShape>
+
+        </draw:SliderThumb>
+
+    </draw:SkiaLayout>
+
+</draw:SkiaSlider>

@@ -1,0 +1,2 @@
+namespace SpaceShooter.Game;
+

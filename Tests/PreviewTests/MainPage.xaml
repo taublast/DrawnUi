@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="using:PreviewTests.Views.Controls"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+    xmlns:PreviewTests="clr-namespace:PreviewTests"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="PreviewTests:MainPageViewModel"
+    BackgroundColor="#000000">
+
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+
+        <draw:Canvas
+            BackgroundColor="DarkSlateBlue"
+            Gestures="Enabled"
+            HorizontalOptions="Fill"
+            RenderingMode="Accelerated"
+            Tag="Main"
+            VerticalOptions="Fill">
+
+            <draw:SkiaLayout
+                HorizontalOptions="Fill"
+                Tag="Wrapper"
+                VerticalOptions="Fill">
+
+                <draw:SkiaScroll HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                    <draw:SkiaLayout
+                        HorizontalOptions="Fill"
+                        Spacing="1"
+                        Tag="ScrollContent"
+                        Type="Column"
+                        UseCache="None">
+
+                        <!--
+                            we set ImageDoubleBuffered to be able to fast redraw
+                            the whole scroll even if image drawing with new effects might be slow
+                        -->
+                        <draw:SkiaImage
+                            Aspect="AspectFit"
+                            HeightRequest="185"
+                            HorizontalOptions="Center"
+                            LoadSourceOnFirstDraw="False"
+                            SemanticProperties.Description="dot net maui drawn ui"
+                            SemanticProperties.Hint="image of a car"
+                            Source="car.png"
+                            Tag="Car"
+                            UseCache="ImageDoubleBuffered">
+
+                            <draw:SkiaControl.VisualEffects>
+
+                                <!--<draw:BlurEffect Amount="5" />-->
+
+                                <!--  global  -->
+                                <draw:DropShadowEffect
+                                    x:DataType="PreviewTests:MainPageViewModel"
+                                    Blur="8"
+                                    X="1"
+                                    Y="2"
+                                    Color="{Binding SelectedColor}" />
+
+                                <!--  local  -->
+                                <draw:ChainDropShadowsEffect>
+                                    <draw:SkiaShadow
+                                        Blur="3"
+                                        Opacity="1"
+                                        Tag="Watch"
+                                        X="-4"
+                                        Y="-4"
+                                        Color="#00FF00" />
+                                    <draw:SkiaShadow
+                                        Blur="3"
+                                        Opacity="1"
+                                        X="4"
+                                        Y="4"
+                                        Color="#0000FF" />
+                                </draw:ChainDropShadowsEffect>
+
+                                <draw:ChainColorPresetEffect Preset="Sepia" />
+
+                            </draw:SkiaControl.VisualEffects>
+                        </draw:SkiaImage>
+
+                        <controls:SliderColor
+                            x:Name="Slider"
+                            Margin="0,-16,0,16"
+                            DefaultColor="Red"
+                            HorizontalOptions="Center"
+                            Max="1"
+                            Min="0"
+                            MinMaxStringFormat="P0"
+                            SelectedColor="{Binding SelectedColor}"
+                            Step="0.001"
+                            Tag="Slider"
+                            UseCache="Operations"
+                            WidthRequest="200" />
+
+                        <!--
+                            if you have effects sometimes
+                            might need to cache with area around
+                        -->
+                        <!--  TEXT cached image  -->
+                        <draw:SkiaLayout
+                            Margin="0,-10,0,0"
+                            Padding="10"
+                            HorizontalOptions="Center"
+                            Tag="SetMainpageText"
+                            UseCache="Image">
+                            <draw:SkiaLabel
+                                FontSize="24"
+                                StrokeColor="Red"
+                                Tag="Title"
+                                Text="SET MAINPAGE"
+                                TextColor="Wheat">
+                                <draw:SkiaControl.VisualEffects>
+                                    <draw:DropShadowEffect
+                                        Blur="5"
+                                        X="0"
+                                        Y="0"
+                                        Color="#FF2222" />
+                                </draw:SkiaControl.VisualEffects>
+                            </draw:SkiaLabel>
+                        </draw:SkiaLayout>
+
+                        <!--  BUTTONS cached ImageComposite  -->
+                        <draw:SkiaLayout
+                            x:Name="Buttons"
+                            HorizontalOptions="Center"
+                            IsVisible="True"
+                            ItemsSource="{Binding Source={x:Reference ThisPage}, Path=ButtonsList}"
+                            Spacing="0"
+                            Split="0"
+                            Tag="Buttons"
+                            Type="Wrap"
+                            UseCache="ImageComposite">
+
+                            <draw:SkiaLayout.ItemTemplate>
+                                <DataTemplate x:DataType="PreviewTests:MainPageVariant">
+
+
+                                    <draw:SkiaLayout
+                                        Padding="16"
+                                        HorizontalOptions="Start"
+                                        Tag="Button"
+                                        UseCache="Image">
+
+                                        <draw:SkiaButton
+                                            BackgroundColor="{StaticResource ColorPrimary}"
+                                            CornerRadius="6"
+                                            FontFamily="FontGame"
+                                            FontSize="11"
+                                            Tapped="TappedSelectPage"
+                                            Text="{Binding Name}"
+                                            TextColor="#ccffffff"
+                                            TextStrokeColor="#99FF0000"
+                                            WidthRequest="150">
+                                            <draw:SkiaControl.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
+                                                    TargetType="draw:SkiaButton"
+                                                    Value="False">
+                                                    <Setter Property="TextColor" Value="#ffffff" />
+                                                    <Setter Property="TextStrokeColor" Value="#CCFF3333" />
+                                                    <Setter Property="TranslationX" Value="0" />
+                                                    <Setter Property="TranslationY" Value="0" />
+                                                    <Setter Property="VisualEffects">
+                                                        <generic:List x:TypeArguments="draw:SkiaEffect">
+                                                            <draw:DropShadowEffect
+                                                                Blur="2"
+                                                                X="2"
+                                                                Y="2"
+                                                                Color="#cc222222" />
+                                                        </generic:List>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
+                                                    TargetType="draw:SkiaButton"
+                                                    Value="True">
+                                                    <Setter Property="TextColor" Value="#FF4444" />
+                                                    <Setter Property="TextStrokeColor" Value="#EEFF0000" />
+                                                    <Setter Property="TranslationX" Value="1" />
+                                                    <Setter Property="TranslationY" Value="1" />
+                                                    <Setter Property="VisualEffects">
+                                                        <generic:List x:TypeArguments="draw:SkiaEffect">
+                                                            <draw:DropShadowEffect
+                                                                Blur="2"
+                                                                X="1"
+                                                                Y="1"
+                                                                Color="#22222222" />
+                                                        </generic:List>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </draw:SkiaControl.Triggers>
+                                        </draw:SkiaButton>
+
+                                    </draw:SkiaLayout>
+                                </DataTemplate>
+                            </draw:SkiaLayout.ItemTemplate>
+
+                        </draw:SkiaLayout>
+
+                    </draw:SkiaLayout>
+
+                </draw:SkiaScroll>
+
+            
+                <draw:SkiaLabelFps
+                    Margin="0,0,4,24"
+                    BackgroundColor="DarkRed"
+                    HorizontalOptions="End"
+                    Rotation="-45"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    ZIndex="100">
+
+                </draw:SkiaLabelFps>
+
+            </draw:SkiaLayout>
+
+        </draw:Canvas>
+    </Grid>
+
+</views:BasePageCodeBehind>

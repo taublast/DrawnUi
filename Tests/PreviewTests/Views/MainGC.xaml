@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.MainGC"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="demo:MainPageViewModel"
+    BackgroundColor="Transparent">
+
+
+    <!--<controls1:SKGLView
+        HorizontalOptions="Fill"
+        HasRenderLoop="True"
+        VerticalOptions="Fill"
+        PaintSurface="OnPaintSurface"
+        EnableTouchEvents="False"  />-->
+
+    <draw:DrawnView
+        BackgroundColor="Blue"
+        RenderingMode = "Accelerated"
+        HorizontalOptions="Fill"
+        Tag="MainPage"
+        UpdateMode="Constant"
+        VerticalOptions="Fill" />
+
+    <!--<draw:DrawnView
+        UpdateMode="Dynamic"
+        x:Name="MainCanvas"
+        Margin="0,0,0,32"
+        BackgroundColor="Blue"
+        RenderingMode = "Accelerated"
+        HorizontalOptions="Fill"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            BackgroundColor="Red"
+            HorizontalOptions="Fill"
+            AddMarginTop="24"
+            VerticalOptions="Fill">
+
+            <partials:ScreenFun
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill" />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,84"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End" />
+
+
+        </draw:SkiaLayout>
+
+
+    </draw:DrawnView>-->
+
+</views:BasePageCodeBehind>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<game1:MauiGame
+    x:Class="SpaceShooter.Game.SpaceShooter"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:game="clr-namespace:SpaceShooter.Game"
+    xmlns:game1="clr-namespace:DrawnUi.Gaming;assembly=DrawnUi.Maui.Game"
+    x:DataType="game:SpaceShooter"
+    BackgroundColor="#000011"
+    HorizontalOptions="Fill"
+    IsClippedToBounds="True"
+    Tag="Game"
+    VerticalOptions="Fill">
+
+    <!--  STARS BACKGROUND  -->
+    <draw:SkiaLayout
+        HorizontalOptions="Fill"
+        UseCache="Image"
+        VerticalOptions="Fill"
+        ZIndex="-1">
+
+        <draw:SkiaImage
+            Aspect="AspectCover"
+            HorizontalOptions="Fill"
+            Opacity="0.375"
+            Source="Space/Sprites/nebula.jpg"
+            VerticalOptions="Fill" />
+
+        <draw:SkiaImageTiles
+            HorizontalOptions="Fill"
+            Opacity="0.5"
+            Source="Space/Sprites/stars.png"
+            TileAspect="Cover"
+            TileHeight="300"
+            TileWidth="300"
+            VerticalOptions="Fill" />
+
+    </draw:SkiaLayout>
+
+    <!--  STARS PARALLAX  -->
+    <draw:SkiaImageTiles
+        x:Name="ParallaxLayer"
+        HorizontalOptions="Fill"
+        Source="Space/Sprites/stars.png"
+        Tag="ParallaxLayer"
+        TileAspect="Cover"
+        TileCacheType="Image"
+        TileHeight="600"
+        TileWidth="600"
+        VerticalOptions="Fill" />
+
+    <!--  SCORE  -->
+    <draw:SkiaLabel
+        x:Name="LabelScore"
+        Margin="16"
+        BackgroundColor="Transparent"
+        FillBlendMode="Color"
+        FontFamily="FontGameExtraBold"
+        FontSize="24"
+        HorizontalOptions="Start"
+        MaxLines="1"
+        StrokeColor="Black"
+        StrokeWidth="2"
+        TextColor="White"
+        UseCache="Image"
+        ZIndex="110">
+
+        <draw:SkiaControl.UseCache>
+            <OnPlatform x:TypeArguments="draw:SkiaCacheType">
+                <On Platform="WinUI">Operations</On>
+            </OnPlatform>
+        </draw:SkiaControl.UseCache>
+
+        <draw:SkiaLabel.FillGradient>
+
+            <draw:SkiaGradient
+                EndXRatio="0"
+                EndYRatio="1"
+                StartXRatio="0"
+                StartYRatio="0"
+                Type="Linear">
+                <draw:SkiaGradient.Colors>
+                    <Color>White</Color>
+                    <Color>Yellow</Color>
+                    <Color>Orange</Color>
+                    <Color>Red</Color>
+                    <Color>DarkRed</Color>
+                </draw:SkiaGradient.Colors>
+            </draw:SkiaGradient>
+
+        </draw:SkiaLabel.FillGradient>
+    </draw:SkiaLabel>
+
+    <!--  HI SCORE  -->
+    <draw:SkiaLabel
+        x:Name="LabelHiScore"
+        Margin="16"
+        BackgroundColor="Transparent"
+        FillBlendMode="Color"
+        FontFamily="FontGameExtraBold"
+        FontSize="24"
+        HorizontalOptions="End"
+        MaxLines="1"
+        Opacity="0.9"
+        StrokeColor="Black"
+        StrokeWidth="2"
+        TextColor="White"
+        UseCache="Image"
+        ZIndex="110">
+
+        <draw:SkiaControl.UseCache>
+            <OnPlatform x:TypeArguments="draw:SkiaCacheType">
+                <On Platform="WinUI">Operations</On>
+            </OnPlatform>
+        </draw:SkiaControl.UseCache>
+
+        <draw:SkiaLabel.FillGradient>
+
+            <draw:SkiaGradient
+                EndXRatio="0"
+                EndYRatio="1"
+                StartXRatio="0"
+                StartYRatio="0"
+                Type="Linear">
+                <draw:SkiaGradient.Colors>
+                    <Color>White</Color>
+                    <Color>Yellow</Color>
+                    <Color>Orange</Color>
+                    <Color>Red</Color>
+                    <Color>DarkRed</Color>
+                </draw:SkiaGradient.Colors>
+            </draw:SkiaGradient>
+
+        </draw:SkiaLabel.FillGradient>
+    </draw:SkiaLabel>
+
+    <!--  PLAYER  -->
+    <draw:SkiaImage
+        x:Name="Player"
+        Aspect="AspectFitFill"
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Source="Space/Sprites/player.png"
+        TranslationY="-40"
+        UseCache="Image"
+        VerticalOptions="End"
+        WidthRequest="60"
+        ZIndex="5" />
+
+    <!--  SHIELD EXPLOSION  -->
+    <draw:SkiaLottie
+        x:Name="PlayerShieldExplosion"
+        AutoPlay="False"
+        DefaultFrame="-1"
+        HorizontalOptions="Center"
+        LockRatio="1"
+        Opacity="0.75"
+        Source="Space/Lottie/crash.json"
+        SpeedRatio="0.6"
+        Tag="ShieldExplosion"
+        TranslationX="0"
+        TranslationY="-44"
+        UseCache="ImageDoubleBuffered"
+        VerticalOptions="End"
+        WidthRequest="110"
+        ZIndex="4" />
+
+    <!--  PLAYER SHIELD  -->
+    <draw:SkiaLottie
+        x:Name="PlayerShield"
+        AutoPlay="True"
+        HorizontalOptions="Center"
+        LockRatio="1"
+        Opacity="0.66"
+        Repeat="-1"
+        Source="Space/Lottie/shield.json"
+        SpeedRatio="0.5"
+        Tag="PlayerShield"
+        TranslationY="6"
+        UseCache="Operations"
+        VerticalOptions="End"
+        WidthRequest="130"
+        ZIndex="4" />
+
+    <!--  HEALTH BAR  -->
+    <game:HealthBar
+        x:Name="HealthBar"
+        x:DataType="game:SpaceShooter"
+        HeightRequest="4"
+        HorizontalOptions="Center"
+        Tag="Health"
+        TranslationY="-28"
+        UseCache="ImageDoubleBuffered"
+        VerticalOptions="End"
+        WidthRequest="40"
+        ZIndex="6"
+        Value="{Binding Health}" />
+
+    <!--  MOTHER EARTH  -->
+    <draw:SkiaImage
+        x:Name="ImagePlanet"
+        Aspect="AspectCover"
+        HeightRequest="45"
+        HorizontalOptions="Fill"
+        Opacity="0.95"
+        Source="Space/Sprites/earth.png"
+        UseCache="GPU"
+        VerticalOffset="26"
+        VerticalOptions="End"
+        ZIndex="1" />
+
+    <!--  DIALOG  -->
+    <draw:SkiaLayout
+        Margin="50"
+        x:DataType="game:SpaceShooter"
+        HeightRequest="-1"
+        HorizontalOptions="Center"
+        IsVisible="{Binding ShowDialog}"
+        MinimumHeightRequest="50"
+        MinimumWidthRequest="300"
+        VerticalOptions="Center"
+        ZIndex="200">
+
+        <!--  background layer  -->
+        <draw:SkiaLayout
+            Padding="16"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"
+            ZIndex="-1">
+
+            <draw:SkiaShape
+                CornerRadius="14"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+
+                <draw:SkiaBackdrop
+                    BackgroundColor="#22000000"
+                    Blur="3"
+                    HorizontalOptions="Fill"
+                    Tag="Blur"
+                    VerticalOptions="Fill"
+                    ZIndex="-1" />
+
+            </draw:SkiaShape>
+
+        </draw:SkiaLayout>
+
+        <!--  front layer cached  -->
+        <draw:SkiaLayout
+            Padding="17"
+            HorizontalOptions="Fill"
+            UseCache="GPU">
+
+            <draw:SkiaShape
+                Margin="0"
+                BackgroundColor="Black"
+                ClipBackgroundColor="True"
+                CornerRadius="17"
+                HorizontalOptions="Fill"
+                StrokeColor="Black"
+                StrokeWidth="1"
+                VerticalOptions="Start">
+
+                <draw:SkiaShape.StrokeGradient>
+
+                    <draw:SkiaGradient
+                        EndXRatio="1"
+                        EndYRatio="1"
+                        StartXRatio="0"
+                        StartYRatio="0"
+                        Type="Linear">
+                        <draw:SkiaGradient.Colors>
+                            <Color>#6666ff66</Color>
+                            <Color>#66339933</Color>
+                        </draw:SkiaGradient.Colors>
+                    </draw:SkiaGradient>
+
+                </draw:SkiaShape.StrokeGradient>
+
+                <draw:SkiaShape.Shadows>
+                    <draw:SkiaShadow
+                        Blur="8"
+                        Opacity="0.15"
+                        X="0"
+                        Y="0"
+                        Color="#00ff00" />
+
+                </draw:SkiaShape.Shadows>
+
+                <draw:SkiaLayout HorizontalOptions="Fill" VerticalOptions="Start">
+
+                    <draw:SkiaImage
+                        Aspect="AspectCover"
+                        HorizontalOptions="Fill"
+                        Opacity="0.25"
+                        Source="Space/Sprites/nebula.jpg"
+                        VerticalOptions="Fill"
+                        ZIndex="-1" />
+
+                    <!--  StackLayout  -->
+                    <draw:SkiaLayout
+                        Padding="16,20,16,24"
+                        HorizontalOptions="Fill"
+                        Spacing="24"
+                        Type="Column"
+                        VerticalOptions="Start">
+
+                        <draw:SkiaLabel
+                            x:DataType="game:SpaceShooter"
+                            CharacterSpacing="2.5"
+                            FontFamily="FontGameExtraBold"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            LineSpacing="1.2"
+                            StrokeColor="#44FF0000"
+                            StrokeWidth="1.5"
+                            Text="{Binding DialogMessage}"
+                            TextColor="#33FF44"
+                            VerticalOptions="Start">
+                            <draw:SkiaLabel.FillGradient>
+
+                                <draw:SkiaGradient
+                                    EndXRatio="0"
+                                    EndYRatio="1"
+                                    StartXRatio="0"
+                                    StartYRatio="0"
+                                    Type="Linear">
+                                    <draw:SkiaGradient.Colors>
+                                        <Color>White</Color>
+                                        <Color>Yellow</Color>
+                                        <Color>Orange</Color>
+                                        <Color>Red</Color>
+                                        <Color>DarkRed</Color>
+                                    </draw:SkiaGradient.Colors>
+                                </draw:SkiaGradient>
+
+                            </draw:SkiaLabel.FillGradient>
+                        </draw:SkiaLabel>
+
+                        <!--  BUTTON  -->
+                        <draw:SkiaShape
+                            draw:AddGestures.CommandTapped="{Binding CommandPressedOk}"
+                            x:DataType="game:SpaceShooter"
+                            BackgroundColor="#33000000"
+                            CornerRadius="8"
+                            HeightRequest="34"
+                            HorizontalOptions="Center"
+                            StrokeColor="#cc33FF44"
+                            StrokeWidth="0.55"
+                            Tag="DialogBtn"
+                            WidthRequest="90">
+
+                            <draw:SkiaLabel
+                                x:DataType="game:SpaceShooter"
+                                CharacterSpacing="1.75"
+                                FontFamily="FontGameMedium"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                StrokeColor="#2233FF44"
+                                StrokeWidth="1.5"
+                                Text="{Binding DialogButton}"
+                                TextColor="#cc33FF44"
+                                VerticalOptions="Center" />
+
+                        </draw:SkiaShape>
+
+                    </draw:SkiaLayout>
+
+                </draw:SkiaLayout>
+
+            </draw:SkiaShape>
+
+
+        </draw:SkiaLayout>
+
+    </draw:SkiaLayout>
+
+</game1:MauiGame>

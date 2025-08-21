@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.MainPageDrawnSpans"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    BackgroundColor="White">
+
+    <draw:Canvas
+        Margin="0,32,0,0"
+        BackgroundColor="White"
+        Gestures="Enabled"
+        RenderingMode = "Accelerated"
+        HorizontalOptions="Fill"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            Tag="Wrapper"
+            VerticalOptions="Fill">
+
+            <draw:SkiaScroll HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                <draw:SkiaLayout
+                    Padding="20,20,20,20"
+                    HorizontalOptions="Fill"
+                    Spacing="20"
+                    Type="Column"
+                    UseCache="ImageComposite">
+
+                    <draw:SkiaLabel
+                        Padding="8"
+                        AddMarginBottom="16"
+                        BackgroundColor="Gainsboro"
+                        FallbackCharacter="?"
+                        FontFamily="FontText"
+                        FontSize="15"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="Start"
+                        LineSpacing="1.5"
+                        TextColor="Black">
+
+                        <draw:TextSpan
+                            FontSize="20"
+                            IsBold="True"
+                            IsItalic="False"
+                            Text="S"
+                            TextColor="Red" />
+
+                        <draw:TextSpan Text="pans below are " />
+
+
+                        <draw:TextSpan
+                            BackgroundColor="Black"
+                            FontSize="20"
+                            IsBold="True"
+                            Text="SVG"
+                            TextColor="White" />
+
+                        <draw:TextSpan Text=" files mixed with text" />
+
+                    </draw:SkiaLabel>
+
+                    <draw:SkiaLabel
+                        FontFamily="FontText"
+                        FontSize="15"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        LineHeightUniform="False"
+                        TextColor="#3333FF">
+                        <draw:SkiaLabel.Spans>
+
+                            <draw:TextSpan Text="Make your purchase at www.something.com" />
+
+                            <draw:TextSpan Text=" " />
+
+                            <draw:SvgSpan
+                                Width="17"
+                                Height="17"
+                                Source="Images/linkout.svg"
+                                TintColor="#3333FF"
+                                VerticalAlignement="Center" />
+
+                        </draw:SkiaLabel.Spans>
+
+                    </draw:SkiaLabel>
+
+
+                    <draw:SkiaLabel
+                        Padding="16,0,16,0"
+                        BackgroundColor="Transparent"
+                        FontFamily="FontText"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        LineHeightUniform="False"
+                        TextColor="#222222">
+                        <draw:SkiaLabel.Spans>
+
+                            <draw:TextSpan Text="Look who " />
+
+                            <draw:SvgSpan
+                                Width="50"
+                                Height="50"
+                                Source="Images/dotnetbot.svg"
+                                VerticalAlignement="Start" />
+
+                            <draw:TextSpan Text="says hello! From the bottom of the " />
+
+                            <draw:SvgSpan
+                                Width="20"
+                                Height="20"
+                                Source="Images/loveheart.svg"
+                                TintColor="HotPink"
+                                VerticalAlignement="End" />
+
+                            <draw:TextSpan Text="!" />
+
+                        </draw:SkiaLabel.Spans>
+
+                    </draw:SkiaLabel>
+
+
+
+                </draw:SkiaLayout>
+
+            </draw:SkiaScroll>
+
+            <controls:ButtonToRoot />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+
+</views:BasePageCodeBehind>

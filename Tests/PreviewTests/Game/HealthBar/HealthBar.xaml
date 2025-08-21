@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaShape
+    x:Class="SpaceShooter.Game.HealthBar"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:spaceShooter="clr-namespace:SpaceShooter.Game"
+    x:Name="ThisControlBar"
+    BackgroundColor="#000066"
+    CornerRadius="3"
+    HeightRequest="6"
+    HorizontalOptions="Fill"
+    IgnoreChildrenInvalidations="True"
+    StrokeColor="Black"
+    StrokeWidth="0.5"
+    Tag="Health">
+
+    <draw:SkiaShape.FillGradient>
+
+        <draw:SkiaGradient
+            EndXRatio="1"
+            EndYRatio="0"
+            Opacity="0.60"
+            StartXRatio="0"
+            StartYRatio="0"
+            Type="Linear">
+
+            <draw:SkiaGradient.Colors>
+                <Color>#ee281D</Color>
+                <Color>#F0E70B</Color>
+                <Color>#65FF10</Color>
+                <Color>#65FF10</Color>
+            </draw:SkiaGradient.Colors>
+
+            <draw:SkiaGradient.ColorPositions>
+                <x:Double>0.0</x:Double>
+                <x:Double>0.3</x:Double>
+                <x:Double>0.4</x:Double>
+                <x:Double>1.0</x:Double>
+            </draw:SkiaGradient.ColorPositions>
+
+        </draw:SkiaGradient>
+
+    </draw:SkiaShape.FillGradient>
+
+    <draw:SkiaShape.StrokeGradient>
+
+        <draw:SkiaGradient
+            EndXRatio="0.2"
+            EndYRatio="0.8"
+            StartXRatio="0.2"
+            StartYRatio="0.2"
+            Type="Linear">
+            <draw:SkiaGradient.Colors>
+                <Color>#000022</Color>
+                <Color>#42464B</Color>
+            </draw:SkiaGradient.Colors>
+        </draw:SkiaGradient>
+
+    </draw:SkiaShape.StrokeGradient>
+
+    <!--  INVERTED PLUS <=  -->
+    <!--
+        "{Binding Source={x:Reference ThisControlBar},
+        Path=Value}"
+        ColorPositions="{Binding Source={x:Reference ThisControlBar}, Path=Points}"
+    -->
+    <spaceShooter:SignalInverter
+        x:Name="Inverter"
+        BackgroundColor="Black"
+        HorizontalOptions="End"
+        VerticalOptions="Fill"
+        ZIndex="100">
+
+        <draw:SkiaControl.FillGradient>
+            <draw:SkiaGradient
+                ColorPositions="{Binding Source={x:Reference Inverter}, Path=Points}"
+                EndXRatio="1"
+                EndYRatio="0"
+                Opacity="1"
+                StartXRatio="0"
+                StartYRatio="0"
+                Type="Linear">
+                <draw:SkiaGradient.Colors>
+                    <Color>#00000022</Color>
+                    <Color>#000022</Color>
+                    <Color>#000022</Color>
+                </draw:SkiaGradient.Colors>
+
+                <!--<draw:SkiaGradient.ColorPositions>
+                            <x:Double>0.0</x:Double>
+                            <x:Double>0.05</x:Double>
+                            <x:Double>1.0</x:Double>
+                        </draw:SkiaGradient.ColorPositions>-->
+
+            </draw:SkiaGradient>
+        </draw:SkiaControl.FillGradient>
+
+    </spaceShooter:SignalInverter>
+
+
+</draw:SkiaShape>

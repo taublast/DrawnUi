@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.MainPageGame"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:game="clr-namespace:SpaceShooter.Game"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="demo:MainPageViewModel"
+    BackgroundColor="#000000">
+
+    <ContentPage.Resources>
+        <ResourceDictionary />
+    </ContentPage.Resources>
+
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+
+        <draw:Canvas
+            Gestures="Enabled"
+            RenderingMode = "Accelerated"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+
+            <draw:SkiaLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                <game:SpaceShooter />
+
+                <controls:ButtonToRoot />
+
+                <draw:SkiaLabelFps
+                    Margin="0,0,4,24"
+                    BackgroundColor="DarkRed"
+                    HorizontalOptions="End"
+                    Rotation="-45"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    ZIndex="100" />
+
+            </draw:SkiaLayout>
+
+        </draw:Canvas>
+    </Grid>
+
+
+
+</views:BasePageCodeBehind>

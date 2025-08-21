@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaCheckbox
+    x:Class="PreviewTests.Views.Controls.DrawnCheckbox"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    x:Name="ThisControl"
+    ColorFrameOff="{StaticResource ColorPrimary}"
+    ColorFrameOn="{StaticResource ColorPrimary}"
+    ColorThumbOff="{StaticResource ColorPrimary}"
+    ColorThumbOn="{StaticResource ColorPrimary}"
+    HeightRequest="24"
+    UseCache="Image"
+    WidthRequest="24">
+
+
+    <!--  OFF  -->
+    <draw:SkiaShape
+        CornerRadius="4"
+        HorizontalOptions="Fill"
+        StrokeWidth="2"
+        Tag="FrameOff"
+        Type="Rectangle"
+        UseCache="Image"
+        VerticalOptions="Fill" />
+
+    <!--  ON  -->
+    <draw:SkiaShape
+        BackgroundColor="{StaticResource ColorPrimary}"
+        CornerRadius="4"
+        HorizontalOptions="Fill"
+        StrokeWidth="2"
+        Tag="FrameOn"
+        Type="Rectangle"
+        UseCache="Image"
+        VerticalOptions="Fill">
+        <!--<draw:SkiaControl.Triggers>
+            <DataTrigger
+                Binding="{Binding Source={x:Reference ThisControl}, Path=IsToggled}"
+                TargetType="draw:SkiaShape"
+                Value="False">
+                <Setter Property="StrokeColor" Value="{StaticResource Gray400}" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Source={x:Reference ThisControl}, Path=IsToggled}"
+                TargetType="draw:SkiaShape"
+                Value="True">
+                <Setter Property="StrokeColor" Value="{StaticResource ColorPrimaryDark}" />
+            </DataTrigger>
+        </draw:SkiaControl.Triggers>-->
+
+        <draw:SkiaSvg
+            Margin="2"
+            HorizontalOptions="Fill"
+            TintColor="White"
+            VerticalOptions="Fill">
+            <x:String>
+                <![CDATA[ 
+                                     
+                <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                
+             ]]>
+            </x:String>
+        </draw:SkiaSvg>
+
+    </draw:SkiaShape>
+
+</draw:SkiaCheckbox>
+

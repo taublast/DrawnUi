@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.MainPageMauiGraphics"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:aloha="clr-namespace:PreviewTests.Views.Aloha"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:gestures="clr-namespace:AppoMobi.Maui.Gestures;assembly=AppoMobi.Maui.Gestures"
+    xmlns:mauiGraphics="clr-namespace:DrawnUiGraphics;assembly=DrawnUi.MauiGraphics"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="demo:MainPageViewModel">
+
+    <ContentPage.Resources>
+        <views:ClockDrawable x:Key="clockDrawable" />
+    </ContentPage.Resources>
+
+    <draw:Canvas
+        Gestures="Enabled"
+        RenderingMode = "Accelerated"
+        HorizontalOptions="Fill"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            x:Name="MainLayout"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <mauiGraphics:SkiaMauiGraphics
+                BackgroundColor="Black"
+                Drawable="{StaticResource clockDrawable}"
+                HorizontalOptions="Fill"
+                Tag="Content"
+                VerticalOptions="Fill" />
+
+            <draw:SkiaLabel
+                Margin="50,0"
+                Padding="2"
+                AddMarginBottom="80"
+                BackgroundColor="#33000000"
+                FontSize="16"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Consume and enhance existing Maui Graphics controls"
+                TextColor="White"
+                VerticalOptions="End" />
+
+            <controls:ButtonToRoot />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>

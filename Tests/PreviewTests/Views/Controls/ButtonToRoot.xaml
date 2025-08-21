@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaLayout
+    x:Class="PreviewTests.Views.Controls.ButtonToRoot"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+    Padding="8"
+    Tag="BtnRoot"
+    UseCache="GPU"
+    VerticalOptions="End"
+    ZIndex="100">
+
+    <!--  wrapper+padding let sus save shadow in cache  -->
+
+    <draw:SkiaButton
+        BackgroundColor="{StaticResource ColorPrimary}"
+        CornerRadius="12"
+        FontSize="11"
+        HeightRequest="40"
+        LockRatio="1"
+        Tapped="GoToRoot">
+
+        <draw:SkiaControl.Triggers>
+            <DataTrigger
+                Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
+                TargetType="draw:SkiaControl"
+                Value="False">
+                <Setter Property="TranslationX" Value="0" />
+                <Setter Property="TranslationY" Value="0" />
+                <Setter Property="VisualEffects">
+                    <generic:List x:TypeArguments="draw:SkiaEffect">
+                        <draw:DropShadowEffect
+                            Blur="2"
+                            X="2"
+                            Y="2"
+                            Color="#cc222222" />
+                    </generic:List>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
+                TargetType="draw:SkiaControl"
+                Value="True">
+                <Setter Property="TranslationX" Value="1" />
+                <Setter Property="TranslationY" Value="1" />
+                <Setter Property="VisualEffects">
+                    <generic:List x:TypeArguments="draw:SkiaEffect">
+                        <draw:DropShadowEffect
+                            Blur="2"
+                            X="1"
+                            Y="1"
+                            Color="#22222222" />
+                    </generic:List>
+                </Setter>
+            </DataTrigger>
+        </draw:SkiaControl.Triggers>
+
+        <draw:SkiaShape
+            HorizontalOptions="Fill"
+            Tag="BtnShape"
+            VerticalOptions="Fill">
+
+            <draw:SkiaSvg
+                HeightRequest="24"
+                HorizontalOptions="Center"
+                LockRatio="1"
+                SvgString="{x:StaticResource SvgReturn}"
+                TintColor="#55ffffff"
+                VerticalOptions="Center" />
+
+        </draw:SkiaShape>
+
+    </draw:SkiaButton>
+
+</draw:SkiaLayout>

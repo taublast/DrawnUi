@@ -1,0 +1,64 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;  // Texture
+uniform float2 iOffset;  // Top-left corner of DrawingRect
+uniform float2 iOrigin; // Mouse drag started here
+
+uniform float  progress;         // Animation progress (0.0 -> 1.0)
+
+/*
+This shader is ported from the original Apple shader presented at WWDC 2024.
+For more details, see the session here: https://developer.apple.com/videos/play/wwdc2024/10151/
+Credit to Apple for the original implementation.
+Credits to Raouf Rahiche for the GLSL version that was used to create this SKSL.
+*/
+
+const float duration = 5.0; //this is the solved animation duration at speed 1
+const float amplitude = 0.1; // Default amplitude of the ripple
+const float frequency = 10.0; // Default frequency of the ripple
+const float decay = 2.0; // Default decay rate of the ripple
+const float speed = 1.0; // Default speed of the ripple
+
+half4 main(float2 fragCoord) 
+{
+    // Precompute the scale factor
+    float2 scale = iImageResolution.xy / iResolution.xy;
+
+    // Normalize the coordinates
+    vec2 uv = (fragCoord - iOffset) / iResolution.xy;
+
+    // Get the cursor position and normalize it
+    vec2 origin = iMouse.xy / iResolution.xy;
+
+    // Calculate the distance and direction from the origin
+    vec2 direction = uv - origin;
+    float distance = length(direction);
+
+    // Calculate the delay based on the distance
+    float delay = distance / speed;
+
+    // Adapt the time for the delay and clamp to 0
+    float time = max(0.0, progress * duration - delay);
+
+    // Calculate the ripple amount
+    float rippleAmount = amplitude * sin(frequency * time) * exp(-decay * time);
+
+    // Normalize the direction vector
+    vec2 n = direction / distance;
+
+    // Calculate the new position by adding the ripple effect
+    vec2 newPosition = uv + rippleAmount * n;
+   
+    // Sample the texture at the new position
+    vec3 color = iImage1.eval(newPosition * iResolution.xy * scale).rgb;
+
+    // Lighten or darken the color based on the ripple amount
+    color += 0.3 * (rippleAmount / amplitude);
+
+    // Set the fragment color
+    half4 fragColor = vec4(color, 1.0);
+    
+    return fragColor;
+}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.MainPageMarkdown"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:gestures="clr-namespace:AppoMobi.Maui.Gestures;assembly=AppoMobi.Maui.Gestures"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    BackgroundColor="Gray">
+
+    <Grid
+        Padding="0,0,0,8"
+        HorizontalOptions="Fill"
+        VerticalOptions="FillAndExpand">
+
+        <draw:Canvas
+            RenderingMode = "Accelerated"
+            Margin="32,64"
+            BackgroundColor="#66000000"
+            Gestures="Enabled"
+            HorizontalOptions="Fill"
+            Tag="Warning"
+            VerticalOptions="Center">
+
+            <draw:SkiaLayout
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+
+                <draw:SkiaScroll
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start">
+                    <draw:SkiaLayout HorizontalOptions="Fill">
+
+                        <draw:SkiaLayout
+                            UseCache="ImageComposite"
+                            Padding="6"
+                            BackgroundColor="Black"
+                            HorizontalOptions="Fill"
+                            Tag="SkiaStack"
+                            Type="Column">
+
+                            <draw:SkiaRichLabel
+                                x:Name="LabelMarkdown"
+                                FontSize="13"
+                                HorizontalOptions="Center"
+                                LinkTapped="OnLinkTapped"
+                                ParagraphSpacing="0.6"
+                                TextColor="White" />
+
+                            <!--  BTN  -->
+                            <controls:SmallButton
+                                Margin="0,16"
+                                HorizontalOptions="Center"
+                                Text="BUTTON" />
+
+                        </draw:SkiaLayout>
+                    </draw:SkiaLayout>
+                </draw:SkiaScroll>
+
+                <controls:ButtonToRoot />
+
+                <!--  FPS  -->
+                <draw:SkiaLabelFps
+                    Margin="0,0,4,84"
+                    BackgroundColor="DarkRed"
+                    ForceRefresh="False"
+                    HorizontalOptions="End"
+                    Rotation="-45"
+                    TextColor="White"
+                    VerticalOptions="End" />
+
+            </draw:SkiaLayout>
+        </draw:Canvas>
+
+
+    </Grid>
+
+</views:BasePageCodeBehind>

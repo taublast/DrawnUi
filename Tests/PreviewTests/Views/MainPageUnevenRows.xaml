@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.MainPageUnevenRows"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="demo:MainPageViewModel"
+    BackgroundColor="#333333">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="TestStyle" TargetType="draw:SkiaLabel">
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <draw:Canvas
+        Margin="0,32,0,0"
+        x:DataType="demo:MockChatViewModel"
+        Gestures="Enabled"
+        RenderingMode = "Accelerated"
+        HeightRequest="500"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        WidthRequest="350">
+
+        <draw:SkiaLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+
+            <draw:SkiaScroll
+                x:Name="MainScroll"
+                BackgroundColor="Black"
+                Bounces="True"
+                ChangeDistancePanned="1.2"
+                FrictionScrolled="0.6"
+                HorizontalOptions="Fill"
+                RefreshEnabled="False"
+                Scrolled="OnScrolled"
+                VerticalOptions="Fill"
+                WidthRequest="300">
+
+                <!--  for dynamic height cells: ItemSizingStrategy="MeasureAllItems"  -->
+
+
+                <!--
+                    for supersmooth like in scrollview scrolling we need to create a "paged" scrollview 
+                    actually working on it
+                    
+                    Meanwhile:
+                    
+                    RecyclingTemplate="Enabled" !!!
+                    ItemSizingStrategy="MeasureAllItems" same as ListView.UnevenRows = True
+                -->
+
+                <draw:SkiaLayout
+                    x:Name="StackCells"
+                    BackgroundColor="White"
+                    HorizontalOptions="Fill"
+                    ItemsSource="{Binding Items}"
+                    MeasureItemsStrategy="MeasureAll"
+                    RecyclingTemplate="Enabled"
+                    Type="Column"
+                    VirtualisationInflated="0">
+
+                    <draw:SkiaLayout.ItemTemplate>
+                        <DataTemplate x:DataType="demo:ChatMessage">
+
+                            <draw:SkiaLayout UseCache="ImageDoubleBuffered">
+
+                                <draw:SkiaShape
+                                    x:Name="MainFrame"
+                                    Margin="8,4"
+                                    Padding="16,10"
+                                    BackgroundColor="#8D5BBC"
+                                    CornerRadius="8">
+
+                                    <draw:SkiaLabel
+                                        FontSize="13"
+                                        Tag="LabelText"
+                                        Text="{Binding Text}"
+                                        TextColor="White" />
+
+                                </draw:SkiaShape>
+
+                            </draw:SkiaLayout>
+
+                        </DataTemplate>
+
+                    </draw:SkiaLayout.ItemTemplate>
+
+                </draw:SkiaLayout>
+
+            </draw:SkiaScroll>
+
+            <draw:SkiaButton VerticalOptions="Start" HorizontalOptions="End" Text="Refresh" Tapped="SkiaControl_OnTapped"/>
+
+            <controls:ButtonToRoot />
+
+            <draw:SkiaLabel
+                Margin="8,0,8,50"
+                BackgroundColor="Black"
+                HorizontalOptions="Start"
+                InputTransparent="True"
+                Text="{Binding Source={x:Reference StackCells}, Path=DebugString}"
+                TextColor="Lime"
+                VerticalOptions="End" />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+
+
+
+
+
+
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>

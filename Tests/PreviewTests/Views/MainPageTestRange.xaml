@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.Controls.MainPageTestRange"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    BackgroundColor="White">
+
+    <draw:Canvas
+        Gestures="Enabled"
+        HorizontalOptions="Fill"
+        RenderingMode="Accelerated"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            Tag="Wrapper"
+            VerticalOptions="Fill">
+
+            <draw:SkiaScroll
+                BackgroundColor="WhiteSmoke"
+                HorizontalOptions="Fill"
+                IgnoreWrongDirection="True"
+                Tag="Scroll"
+                VerticalOptions="Fill">
+
+                <draw:SkiaStack
+                    Padding="20"
+                    UseCache="ImageComposite"
+                    Spacing="20">
+
+                    <draw:SkiaLabel
+                        FontSize="24"
+                        Text="UNDER CONSTRUCTION, not ready yet"
+                        TextColor="Black" />
+
+                    <!-- Test SkiaSlider backward compatibility -->
+                    <draw:SkiaLabel
+                        FontSize="18"
+                        Text="SkiaSlider (Backward Compatibility Test)"
+                        TextColor="DarkBlue" />
+
+                    <draw:SkiaSlider
+                        x:Name="TestSlider"
+                        ControlStyle="Cupertino"
+                        End="50"
+                        Max="100"
+                        Min="0"
+                        TrackColor="LightGray"
+                        TrackSelectedColor="Blue" />
+
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="{Binding Source={x:Reference TestSlider}, Path=End, StringFormat='Slider Value: {0:F1}'}"
+                        TextColor="Black" />
+
+                    <!-- Test Ranged Slider for backward compatibility -->
+                    <draw:SkiaLabel
+                        FontSize="18"
+                        Text="Ranged SkiaSlider (Backward Compatibility Test)"
+                        TextColor="DarkBlue" />
+
+                    <draw:SkiaSlider
+                        x:Name="RangedSlider"
+                        ControlStyle="Cupertino"
+                        EnableRange="True"
+                        Start="20"
+                        End="80"
+                        Max="100"
+                        Min="0"
+                        TrackColor="LightGray"
+                        TrackSelectedColor="Green" />
+
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="{Binding Source={x:Reference RangedSlider}, Path=Start, StringFormat='Range Start: {0:F1}'}"
+                        TextColor="Black" />
+
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="{Binding Source={x:Reference RangedSlider}, Path=End, StringFormat='Range End: {0:F1}'}"
+                        TextColor="Black" />
+
+                    <!-- Test SkiaLinearProgress -->
+                    <draw:SkiaLabel
+                        FontSize="18"
+
+                        Text="SkiaLinearProgress (New Control)"
+                        TextColor="DarkGreen" />
+
+                    <!-- Default style -->
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="Default Style:"
+                        TextColor="Black" />
+                    <draw:SkiaProgress
+                        x:Name="ProgressDefault"
+                        Max="100"
+                        Min="0"
+                        Value="30" />
+
+                    <!-- Cupertino style -->
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="Cupertino Style:"
+                        TextColor="Black" />
+                    <draw:SkiaProgress
+                        x:Name="ProgressCupertino"
+                        ControlStyle="Cupertino"
+                        Max="100"
+                        Min="0"
+                        Value="60" />
+
+                    <!-- Material style -->
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="Material Style:"
+                        TextColor="Black" />
+                    <draw:SkiaProgress
+                        x:Name="ProgressMaterial"
+                        ControlStyle="Material"
+                        Max="100"
+                        Min="0"
+                        Value="80" />
+
+                    <!-- Windows style -->
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="Windows Style:"
+                        TextColor="Black" />
+                    <draw:SkiaProgress
+                        x:Name="ProgressWindows"
+                        ControlStyle="Windows"
+                        Max="100"
+                        Min="0"
+                        Value="45" />
+
+                    <!-- Custom colors -->
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        Text="Custom Colors:"
+                        TextColor="Black" />
+                    <draw:SkiaProgress
+                        x:Name="ProgressCustom"
+                        Max="100"
+                        Min="0"
+                        ProgressColor="Red"
+                        TrackColor="Pink"
+                        Value="70" />
+
+                    <!-- Test buttons -->
+                    <draw:SkiaLayout
+                        HorizontalOptions="Center"
+                        Spacing="10"
+                        Type="Row">
+
+                        <draw:SkiaButton
+                            x:Name="BtnIncrease"
+                            BackgroundColor="Green"
+                            Text="Increase"
+                            TextColor="White" />
+
+                        <draw:SkiaButton
+                            x:Name="BtnDecrease"
+                            BackgroundColor="Red"
+                            Text="Decrease"
+                            TextColor="White" />
+
+                    </draw:SkiaLayout>
+                </draw:SkiaStack>
+
+            </draw:SkiaScroll>
+
+            <controls:ButtonToRoot />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+
+</views:BasePageCodeBehind>
