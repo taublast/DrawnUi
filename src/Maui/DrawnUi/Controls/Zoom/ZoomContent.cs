@@ -1,19 +1,29 @@
 ﻿using DrawnUi.Draw;
-using DrawnUi.Draw;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace DrawnUi.Draw;
 
 /// <summary>
-/// Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.TODO add animated movement
+/// Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.
+/// 
+/// DEBUG INSTRUCTIONS:
+/// - Key debug outputs are enabled for pan movements and clamp operations
+/// - Call DumpDebugState() manually to get a full state dump
+/// - Uncomment debug sections in DrawViews, MeasureContent, ComputeContentScale for frame-by-frame debugging
+/// - Watch for [ClampOffsetImage] CLAMPED! messages to see when pan limits are hit
+/// - The DebugSummary provides comprehensive state when hitting pan limits
 /// </summary>
 public class ZoomContent : ContentLayout, ISkiaGestureListener
 {
+    public ZoomContent()
+    {
+        IsClippedToBounds = true;
+    }
+
     protected override void OnBindingContextChanged()
     {
         base.OnBindingContextChanged();
-
         Reset();
     }
 
@@ -35,6 +45,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
         typeof(double),
         typeof(ZoomContent),
         0.1);
+
     public double ZoomMin
     {
         get { return (double)GetValue(ZoomMinProperty); }
@@ -45,6 +56,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
         typeof(double),
         typeof(ZoomContent),
         10.0);
+
     public double ZoomMax
     {
         get { return (double)GetValue(ZoomMaxProperty); }
@@ -67,7 +79,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
         0.9);
 
     /// <summary>
-    /// How much of finger movement will afect zoom change
+    /// How much of finger movement will affect zoom change
     /// </summary>
     public double ZoomSpeed
     {
@@ -79,6 +91,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
         typeof(bool),
         typeof(ZoomContent),
         false);
+
     public bool ZoomLocked
     {
         get { return (bool)GetValue(ZoomLockedProperty); }
@@ -89,7 +102,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
         nameof(PanSpeed),
         typeof(double),
         typeof(ZoomContent),
-        1.75);
+        1.0);
 
     public double PanSpeed
     {
@@ -103,45 +116,17 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
     {
         if (bindable is ZoomContent control)
         {
+            Debug.WriteLine($"[ApplyZoom] ViewportZoom changed: {oldvalue} -> {newvalue}");
             control.Content?.InvalidateWithChildren();
             control.Update();
         }
     }
-
-    /*
-    public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, SKPoint offsetCenter, float scale)
-    {
-
-        //todo apply offsetCenter but clamp, not letting beyond possible boundaries
-
-        var useScale = scale / (float)ViewportZoom;
-        var scaleDifference = scale - useScale;
-
-        // Calculate the original center in pixels
-        float centerX = destination.Left + destination.Width / 2.0f;
-        float centerY = destination.Top + destination.Height / 2.0f;
-
-        // Calculate the dimensions of the scaled rectangle
-        float newWidth = destination.Width * (1 + scaleDifference);
-        float newHeight = destination.Height * (1 + scaleDifference);
-
-        // Calculate the top-left corner of the scaled rectangle, ensuring it scales around the provided center point
-        float newLeft = centerX - (newWidth / 2);
-        float newTop = centerY - (newHeight / 2);
-
-        // Create the scaled rectangle
-        var scaledDestination = new SKRect(newLeft, newTop, newLeft + newWidth, newTop + newHeight);
-
-        return (scaledDestination, useScale);
-    }
-    */
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected float ScalePixels(float value)
     {
         var useScale = RenderingScale / (float)ViewportZoom;
         var scaleDifference = RenderingScale - useScale;
-
         return value * (1 + scaleDifference);
     }
 
@@ -149,49 +134,64 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
     protected float ScalePoints(double value)
     {
         var useScale = RenderingScale / (float)ViewportZoom;
-
         return (float)(value * useScale);
     }
 
+    protected SKRect ContentScaledRect = SKRect.Empty;
 
-    public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, SKPoint offsetCenter, float scale)
+    /// <summary>
+    /// Computes the scaled destination rectangle and scale for content rendering.
+    /// OffsetImage is expected to be in screen/pixel coordinates relative to the viewport.
+    /// </summary>
+    public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, float scale,
+        SKPoint offsetPixels)
     {
+        // Calculate the actual scale to use for rendering the content
         var useScale = scale / (float)ViewportZoom;
+
+        // When scale=1 and ViewportZoom=2, we want the destination to be 2x bigger
+        // The scaleDifference approach accounts for parent scaling
         var scaleDifference = scale - useScale;
-        var applyScale = 1 + scaleDifference;
+        var destScale = 1 + scaleDifference;
 
-        var scaledDestination = new SKRect(destination.Left * applyScale, destination.Top * applyScale, destination.Right * applyScale, destination.Bottom * applyScale);
-        var offsetScaled = new SKPoint(offsetCenter.X * applyScale, offsetCenter.Y * applyScale);
-        var offsetToCenter = new SKPoint(-(scaledDestination.Width - destination.Width) / 2f, -(scaledDestination.Height - destination.Height) / 2f);
+        // Scale the destination rectangle
+        ContentScaledRect = new SKRect(
+            destination.Left * destScale,
+            destination.Top * destScale,
+            destination.Right * destScale,
+            destination.Bottom * destScale);
 
-        var moveX = Math.Clamp(offsetScaled.X, offsetToCenter.X, -offsetToCenter.X);
-        var moveY = Math.Clamp(offsetScaled.Y, offsetToCenter.Y, -offsetToCenter.Y);
-        scaledDestination.Offset(offsetToCenter.X + moveX, offsetToCenter.Y + moveY);
+        var scaledDestination = ContentScaledRect;
 
-        //scaledDestination.Offset(offsetToCenter);
+        var diffWidth = scaledDestination.Width - destination.Width;
+        var diffHeight = scaledDestination.Height - destination.Height;
 
-        return (scaledDestination, useScale);
-    }
+        // Calculate the center offset to center the zoomed content
+        var centerOffsetX = -diffWidth / 2f;
+        var centerOffsetY = -diffHeight / 2f;
 
+        // Apply the pan offset directly (already in pixel coordinates)
 
+        //var moveX = Math.Clamp(offsetPixels.X, -ContentSize.Pixels.Width / 2, ContentSize.Pixels.Width / 2);
 
-    public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, float scale, SKPoint offsetCenter)
-    {
-        // First, get the scaled rectangle without considering the pinch center
-        var (scaledDestination, useScale) = ComputeContentScale(destination, offsetCenter, scale);
+        var offsetX = offsetPixels.X * destScale;
+        var offsetY = offsetPixels.Y * destScale;
+
+        scaledDestination.Offset(centerOffsetX, centerOffsetY); //zoomed to center
+
+        // Apply the clamped offsets
+        scaledDestination.Offset(offsetX, offsetY);
+
+        //Trace.WriteLine($"[X] {moveX}");
 
         return (scaledDestination, useScale);
     }
 
     protected override int DrawViews(DrawingContext context)
     {
-        var offset = OffsetImage;
-        if (context.Scale == 1)
-        {
-            offset = SKPoint.Empty;
-        }
+        //ClampOffsetImage(context.Destination, context.Scale);
 
-        var use = ComputeContentScale(context.Destination, context.Scale, offset);
+        var use = ComputeContentScale(context.Destination, context.Scale, OffsetImage);
 
         var useScale = use.Scale;
         if (use.Scale < 1)
@@ -204,37 +204,38 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
             Content.Scale = 1;
         }
 
+        // DEBUG OUTPUT - Reduced frequency, uncomment when needed
+        // Debug.WriteLine($"[DrawViews]");
+        // Debug.WriteLine($"  context.Destination={context.Destination}");
+        // Debug.WriteLine($"  context.Scale={context.Scale:F3}");
+        // Debug.WriteLine($"  OffsetImage={OffsetImage}");
+        // Debug.WriteLine($"  use.ScaledDestination={use.ScaledDestination}");
+        // Debug.WriteLine($"  use.Scale={use.Scale:F3}");
+        // Debug.WriteLine($"  Content.Scale={Content.Scale:F3}");
+
+        // Additional debug info about content bounds - uncomment when needed
+        // DebugContentBounds(context.Destination, context.Scale);
+
         return base.DrawViews(context.WithDestination(use.ScaledDestination).WithScale(useScale));
     }
 
-    protected override ScaledSize MeasureContent(IEnumerable<SkiaControl> children, SKRect destination, float scale)
-    {
-        var offset = OffsetImage;
-        if (scale == 1)
-        {
-            offset = SKPoint.Empty;
-        }
-
-        var use = ComputeContentScale(destination, scale, offset);
-
-        return base.MeasureContent(children, use.ScaledDestination, use.Scale);
-    }
 
     double _lastPinch = 0;
     double _zoom = 1;
-
     PointF _pinchCenter;
-
     bool _wasPinching;
     bool _wasPanning;
 
+    /// <summary>
+    /// Pan offset in screen/pixel coordinates
+    /// </summary>
     protected SKPoint OffsetImage;
 
     protected PointF _panStarted;
 
+
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
-
         if (args.Type == TouchActionResult.Wheel)
         {
             _wasPinching = true;
@@ -254,46 +255,39 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                     if (PanningMode == PanningModeType.TwoFingers || PanningMode == PanningModeType.Enabled)
                     {
                         var moved = args.Event.Wheel.Center - _pinchCenter;
-
+                        // Direct 1:1 movement in screen space
                         OffsetImage = new(
-                            (float)(OffsetImage.X - (ScalePoints(PanSpeed) * moved.Width / RenderingScale)),
-                            (float)(OffsetImage.Y - (ScalePoints(PanSpeed) * moved.Height / RenderingScale)));
+                            (float)(OffsetImage.X - moved.Width * PanSpeed),
+                            (float)(OffsetImage.Y - moved.Height * PanSpeed));
                     }
 
                     _lastPinch = args.Event.Wheel.Scale;
                     _zoom += delta;
-
-                    //Debug.WriteLine($"[ZOOM] got {args.Event.Pinch.Scale:0.000}, delta {delta:0.00} -> {_zoom:0.00}");
-
                     _pinchCenter = args.Event.Wheel.Center;
 
-                    SetZoom(_zoom, false); //todo
-
+                    SetZoom(_zoom, false);
                     _zoom = ViewportZoom;
                 }
                 else
                 {
-                    //attach
                     _lastPinch = args.Event.Wheel.Scale;
 
                     if (!_wasPanning)
                         _pinchCenter = args.Event.Wheel.Center;
                     else
                     {
-                        var inverseOffsetX = (float)(OffsetImage.X / ScalePoints(PanSpeed)) * RenderingScale;
-                        var inverseOffsetY = (float)(OffsetImage.Y / ScalePoints(PanSpeed)) * RenderingScale;
-
-                        _pinchCenter = new(args.Event.Wheel.Center.X - inverseOffsetX, args.Event.Wheel.Center.Y - inverseOffsetY);
-
+                        _pinchCenter = new(
+                            args.Event.Wheel.Center.X - OffsetImage.X,
+                            args.Event.Wheel.Center.Y - OffsetImage.Y);
                     }
 
                     LastValue = -1;
                 }
+
                 return this;
             }
         }
-        else
-        if (args.Type == TouchActionResult.Panning)
+        else if (args.Type == TouchActionResult.Panning)
         {
             if (args.Event.Manipulation != null)
             {
@@ -306,9 +300,9 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                 _zoom = ViewportZoom;
                 _wasPinching = true;
 
-                var deltatX = args.Event.Manipulation.Center.X - args.Event.Manipulation.PreviousCenter.X;
-                var deltatY = args.Event.Manipulation.Center.Y - args.Event.Manipulation.PreviousCenter.Y;
-                var offset = OffsetImage;
+                var deltaX = args.Event.Manipulation.Center.X - args.Event.Manipulation.PreviousCenter.X;
+                var deltaY = args.Event.Manipulation.Center.Y - args.Event.Manipulation.PreviousCenter.Y;
+
                 if (_zoom == 1)
                 {
                     OffsetImage = SKPoint.Empty;
@@ -317,7 +311,10 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                 {
                     if (PanningMode == PanningModeType.Enabled || PanningMode == PanningModeType.TwoFingers)
                     {
-                        OffsetImage = new((float)(offset.X - deltatX * PanSpeed), (float)(offset.Y - deltatY * PanSpeed));
+                        // Direct 1:1 movement in screen space
+                        OffsetImage = new(
+                            (float)(OffsetImage.X - deltaX * PanSpeed),
+                            (float)(OffsetImage.Y - deltaY * PanSpeed));
                     }
                 }
             }
@@ -331,41 +328,47 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
 
                 if (CompareDoubles(ViewportZoom, 1, 0.001))
                 {
-                    return null; //let us be panned by parent control
+                    OffsetImage = SKPoint.Empty;
+                    return null;
                 }
 
-                if (PanningMode == PanningModeType.OneFinger && args.Event.NumberOfTouches < 2 || PanningMode == PanningModeType.Enabled)
+                if ((PanningMode == PanningModeType.OneFinger && args.Event.NumberOfTouches < 2) ||
+                    PanningMode == PanningModeType.Enabled)
                 {
                     if (!_wasPanning)
                     {
                         _panStarted = args.Event.Location;
+                        _wasPanning = true;
+                        //Debug.WriteLine($"[Pan] Started at {_panStarted}");
                     }
 
-                    _wasPanning = true;
-
-                    var deltatX = args.Event.Location.X - _panStarted.X;
+                    var deltaX = args.Event.Location.X - _panStarted.X;
                     var deltaY = args.Event.Location.Y - _panStarted.Y;
 
                     _panStarted = args.Event.Location;
 
-                    OffsetImage = new((float)(OffsetImage.X - ScalePoints(PanSpeed) * deltatX / RenderingScale),
-                        (float)(OffsetImage.Y - ScalePoints(PanSpeed) * deltaY / RenderingScale));
-
+                    // Direct 1:1 movement in screen space for natural panning
+                    // Finger "sticks" to the content
+                    OffsetImage = new(
+                        (float)(OffsetImage.X - deltaX * PanSpeed),
+                        (float)(OffsetImage.Y - deltaY * PanSpeed));
                 }
 
                 Update();
-
-                return this;  //absorb
+                return this;
             }
         }
-        else
-        if (args.Type == TouchActionResult.Up)
+        else if (args.Type == TouchActionResult.Up)
         {
-            if (args.Event.NumberOfTouches < 2 && ViewportZoom == 1)
+            if (args.Event.NumberOfTouches < 2)
             {
-                OffsetImage = SKPoint.Empty;
+                if (ViewportZoom == 1)
+                {
+                    OffsetImage = SKPoint.Empty;
+                }
+
+                _wasPanning = false;
             }
-            _wasPanning = false;
         }
 
         if (!_wasPinching)
@@ -379,61 +382,22 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
             _wasPinching = false;
 
             if (ViewportZoom == 1.0)
+            {
+                OffsetImage = SKPoint.Empty;
                 _wasPanning = false;
+            }
         }
 
-        return this; //absorb
+        return this;
     }
-
-
-    private void ClampOffsetImage(SKRect destination, float scale)
-    {
-        var useScale = scale / (float)ViewportZoom;
-
-        float scaledContentWidth = Content.MeasuredSize.Units.Width * useScale;
-        float scaledContentHeight = Content.MeasuredSize.Units.Height * useScale;
-
-        // Calculate boundaries for clamping
-        float maxOffsetX = Math.Max(0, (scaledContentWidth - destination.Width) / 2);
-        float minOffsetX = -maxOffsetX;
-        float maxOffsetY = Math.Max(0, (scaledContentHeight - destination.Height) / 2);
-        float minOffsetY = -maxOffsetY;
-
-        OffsetImage = new SKPoint(
-            Math.Clamp(OffsetImage.X, minOffsetX, maxOffsetX),
-            Math.Clamp(OffsetImage.Y, minOffsetY, maxOffsetY)
-        );
-    }
-
-    private float GetMaxOffsetX(float scale)
-    {
-        float scaledContentWidth = Content.MeasuredSize.Units.Width * scale;
-        return Math.Max(0, (scaledContentWidth - Content.Destination.Width) / 2);
-    }
-
-    private float GetMinOffsetX(float scale)
-    {
-        return -GetMaxOffsetX(scale);
-    }
-
-    private float GetMaxOffsetY(float scale)
-    {
-        float scaledContentHeight = Content.MeasuredSize.Units.Height * scale;
-        return Math.Max(0, (scaledContentHeight - Content.Destination.Height) / 2);
-    }
-
-    private float GetMinOffsetY(float scale)
-    {
-        return -GetMaxOffsetY(scale);
-    }
-
 
     public void Reset()
     {
         _lastPinch = 0;
         _zoom = 1;
         _wasPinching = false;
-
+        _wasPanning = false;
+        OffsetImage = SKPoint.Empty;
         ViewportZoom = 1;
     }
 
@@ -441,11 +405,12 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
     {
         if (zoom < ZoomMin)
             zoom = ZoomMin;
-        else
-        if (zoom > ZoomMax)
+        else if (zoom > ZoomMax)
             zoom = ZoomMax;
 
         Value = zoom;
+
+        Debug.WriteLine($"[SetZoom] zoom={zoom:F3}, animate={animate}, LastValue={LastValue:F3}");
 
         if (LastValue != Value)
         {
@@ -468,23 +433,33 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                         (value) =>
                         {
                             ViewportZoom = value;
+                            if (ViewportZoom <= 1.0)
+                            {
+                                OffsetImage = SKPoint.Empty;
+                            }
                         },
                         start, end, 150, Easing.Linear);
                 }
-
             }
             else
             {
                 ViewportZoom = zoom;
+                if (ViewportZoom <= 1.0)
+                {
+                    OffsetImage = SKPoint.Empty;
+                }
             }
         }
 
         LastValue = Value;
 
         if (Value == 1)
+        {
             _pinchCenter = PointF.Zero;
+            OffsetImage = SKPoint.Empty;
+        }
 
-        //Debug.WriteLine($"[ZOOM] {ViewportZoom:0.000}");
+        Debug.WriteLine($"[SetZoom] Final ViewportZoom={ViewportZoom:F3}, OffsetImage={OffsetImage}");
     }
 
     protected RangeAnimator _animatorValue;
@@ -500,13 +475,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
     {
         if (_animatorValue == null)
         {
-            _animatorValue = new(this)
-            {
-                //OnStop = () =>
-                //{
-                //    //SetValue(Value);
-                //}
-            };
+            _animatorValue = new(this);
         }
     }
 }
