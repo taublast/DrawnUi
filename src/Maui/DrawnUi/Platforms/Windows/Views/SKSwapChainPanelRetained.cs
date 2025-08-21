@@ -11,7 +11,7 @@ namespace DrawnUi.Views
     /// <summary>
     /// SwapChain panel with retained surface rendering for improved performance
     /// </summary>
-    public class SKSwapChainPanelRetained : AngleAcceleratedView //AngleSwapChainPanel
+    public class SKSwapChainPanelRetained : AngleSwapChainPanel//AngleAcceleratedView
     {
         public Guid Uid = Guid.NewGuid();
 
