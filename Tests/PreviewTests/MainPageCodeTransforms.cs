@@ -3,6 +3,7 @@ using Canvas = DrawnUi.Views.Canvas;
 
 namespace PreviewTests
 {
+    [Preview<Canvas>]
     public class TestCanvas : Canvas
     {
         protected override void Draw(DrawingContext context)

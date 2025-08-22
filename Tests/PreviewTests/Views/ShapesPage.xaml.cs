@@ -20,6 +20,7 @@ public partial class ShapesPage : BasePageCodeBehind
 
 }
 
+[AutoGeneratePreview(false)]
 public class DebugCanvas : Canvas
 {
 

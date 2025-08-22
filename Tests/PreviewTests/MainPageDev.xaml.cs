@@ -10,6 +10,7 @@ using Canvas = DrawnUi.Views.Canvas;
 
 namespace PreviewTests;
 
+[AutoGeneratePreview(false)]
 public class MyCanvas : Canvas
 {
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
