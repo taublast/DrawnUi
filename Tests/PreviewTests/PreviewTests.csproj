@@ -13,7 +13,7 @@
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
 
-        <UseHotPreviewNuget>false</UseHotPreviewNuget>
+        <UseHotPreviewNuget>true</UseHotPreviewNuget>
     </PropertyGroup>
 
 	<PropertyGroup>
@@ -160,15 +160,9 @@
 	</ItemGroup>
 
     <ItemGroup Condition="'$(UseHotPreviewNuget)' == 'true'">
-        <PackageReference Include="HotPreview.App.Maui" Version="0.14.31" />
+        <PackageReference Include="HotPreview.App.Maui" Version="0.16.58" />
     </ItemGroup>
     <Import Condition="'$(UseHotPreviewNuget)' == 'false'" Project="..\..\..\hot-preview\src\platforms\HotPreview.App.Maui\build\LocalTest.targets" />
-
-    <!--https://github.com/BretJohnson/hot-preview-->
-    <!-- !!! uncomment this if you install dotnet tool hotpreviews !!! -->
-    <!--<ItemGroup Condition="$(Configuration) == 'Debug'">
-    <PackageReference Include="HotPreview.App.Maui" Version="0.14.31" />
-    </ItemGroup>-->
 
     <ItemGroup>
  
