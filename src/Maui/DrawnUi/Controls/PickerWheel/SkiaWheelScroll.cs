@@ -12,6 +12,16 @@ namespace DrawnUi.Controls
             return false;
         }
 
+        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        {
+            var consumed = base.ProcessGestures(args, apply);
+            if (consumed == null && (args.Type != TouchActionResult.Up || args.Type != TouchActionResult.Tapped))
+            {
+                consumed = this;
+            }
+            return consumed;
+        }
+
         public string DebugWheel => ItemsWrapper?.DebugString;
 
         protected readonly Sk3dView Helper3dChildren = new();
