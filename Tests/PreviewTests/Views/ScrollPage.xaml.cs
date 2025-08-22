@@ -1,5 +1,6 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaScroll>]
     public partial class ScrollPage
     {
 

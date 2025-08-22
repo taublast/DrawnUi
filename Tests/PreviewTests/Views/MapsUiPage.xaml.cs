@@ -3,6 +3,7 @@ using BruTile;
 using BruTile.Cache;
 using BruTile.Predefined;
 using BruTile.Web;
+using DrawnUi.MapsUi;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Projections;
@@ -13,6 +14,7 @@ using Mapsui.Widgets.ButtonWidgets;
 
 namespace PreviewTests.Views
 {
+    [Preview<SkiaMapsUi>]
     public partial class MapsUiPage
     {
 

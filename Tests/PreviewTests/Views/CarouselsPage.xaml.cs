@@ -1,5 +1,7 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaCarousel>]
+
     public partial class CarouselsPage
     {
 

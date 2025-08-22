@@ -1,5 +1,8 @@
+using DrawnUiGraphics;
+
 namespace PreviewTests.Views
 {
+    [Preview<SkiaMauiGraphics>]
     public partial class MauiGraphicsPage 
     {
 

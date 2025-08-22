@@ -1,5 +1,6 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaGif>]
     public partial class GifPage
     {
 

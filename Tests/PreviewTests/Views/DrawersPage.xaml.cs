@@ -1,5 +1,6 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaDrawer>]
     public partial class DrawersPage
     {
 

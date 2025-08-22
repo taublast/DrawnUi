@@ -1,5 +1,6 @@
 global using DrawnUi.Draw;
 global using SkiaSharp;
+global using HotPreview;
 using Microsoft.Extensions.Logging;
 
 namespace PreviewTests

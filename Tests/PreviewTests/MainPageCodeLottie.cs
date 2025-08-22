@@ -13,6 +13,7 @@ namespace PreviewTests
         }
     }
 
+    [Preview<SkiaLottie>]
     public class MainPageCodeLottie : BasePageCodeBehind, IDisposable
     {
         Canvas Canvas;

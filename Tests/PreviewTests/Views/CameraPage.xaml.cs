@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 namespace PreviewTests.Views;
 
+[Preview<SkiaCamera>]
 public partial class CameraPage : BasePageCodeBehind
 {
     private bool _flashOn = false;

@@ -1,5 +1,6 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaLabel>]
     public partial class DrawnSpansPage
     {
 
