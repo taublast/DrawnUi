@@ -1,0 +1,28 @@
+﻿
+// minimum number of squares (when the effect is at its highest level)
+const ivec2 squaresMin = ivec2(20); // make it a constant as it doesn't need to be changed
+const int steps = 50; // make it a constant as it doesn't need to be changed
+
+
+// Author: gre
+// License: MIT
+// forked from https://gist.github.com/benraziel/c528607361d90a072e98
+
+vec4 transition(vec2 uv, float dist, vec2 squareSize) {
+    vec2 p = dist > 0.0 ? (floor(uv / squareSize) + 0.5) * squareSize : uv;
+    return mix(getFromColor(p), getToColor(p), progress);
+}
+
+ half4 main(float2 fragCoord) {
+    // Normalize the coordinates
+    float2 normCoord = (fragCoord - iOffset) / iResolution;
+    normCoord.y = 1.0 - normCoord.y;
+
+    // Calculate variables inside main
+    float d = min(progress, 1.0 - progress);
+    float dist = steps > 0 ? ceil(d * float(steps)) / float(steps) : d;
+    vec2 squareSize = 2.0 * dist / vec2(squaresMin);
+    
+    half4 fragColor = transition(normCoord, dist, squareSize);
+    return fragColor;
+}

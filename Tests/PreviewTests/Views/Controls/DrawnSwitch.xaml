@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaSwitch
+    x:Class="PreviewTests.Views.Controls.DrawnSwitch"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    x:Name="ThisControl"
+    ColorFrameOff="{StaticResource Gray300}"
+    ColorFrameOn="{StaticResource ColorPrimary}"
+    ColorThumbOff="{StaticResource ColorPrimary}"
+    ColorThumbOn="{StaticResource ColorPrimary}"
+    HeightRequest="30"
+    UseCache="Image"
+    WidthRequest="50">
+
+    <!--  TRAY  -->
+    <draw:SkiaShape
+        Margin="4,8"
+        CornerRadius="7"
+        HeightRequest="15"
+        HorizontalOptions="Fill"
+        StrokeColor="{StaticResource ColorPrimaryDark}"
+        StrokeWidth="1"
+        Tag="Frame"
+        Type="Rectangle"
+        UseCache="Image"
+        VerticalOptions="Center">
+        <draw:SkiaControl.Triggers>
+            <DataTrigger
+                Binding="{Binding Source={x:Reference ThisControl}, Path=IsToggled}"
+                TargetType="draw:SkiaShape"
+                Value="False">
+                <Setter Property="StrokeColor" Value="{StaticResource Gray400}" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Source={x:Reference ThisControl}, Path=IsToggled}"
+                TargetType="draw:SkiaShape"
+                Value="True">
+                <Setter Property="StrokeColor" Value="{StaticResource ColorPrimaryDark}" />
+            </DataTrigger>
+        </draw:SkiaControl.Triggers>
+    </draw:SkiaShape>
+
+    <!--  THUMB  -->
+    <draw:SkiaShape
+        x:Name="ThumbRef"
+        Margin="4,0"
+        HorizontalOptions="Start"
+        LockRatio="1"
+        Tag="Thumb"
+        Type="Circle"
+        VerticalOptions="Center"
+        WidthRequest="26">
+
+        <draw:SkiaShape.Shadows>
+
+            <draw:SkiaShadow
+                Blur="2"
+                Opacity="0.5"
+                X="1"
+                Y="1"
+                Color="Black" />
+
+        </draw:SkiaShape.Shadows>
+
+        <draw:SkiaShape
+            BackgroundColor="White"
+            HorizontalOptions="Center"
+            LockRatio="1"
+            Type="Circle"
+            VerticalOptions="Center"
+            WidthRequest="6" />
+
+    </draw:SkiaShape>
+
+</draw:SkiaSwitch>
+

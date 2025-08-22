@@ -1,0 +1,135 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // Texture
+uniform shader iImage2;          // Texture for reflection
+uniform float2 iOffset;          // Top-left corner of DrawingRect
+uniform float2 iOrigin;          // Mouse drag started here
+
+uniform float2 origins[10];      // Array for multiple mouse positions
+uniform float  progresses[10];   // Array for multiple animation progresses (0.0 -> 1.0)
+
+/*
+This shader is ported from the original Apple shader presented at WWDC 2024.
+For more details, see the session here: https://developer.apple.com/videos/play/wwdc2024/10151/
+Credit to Apple for the original implementation.
+Credits to Raouf Rahiche for the GLSL single ripple version that was used to create this SKSL.
+SKSL port + multi-ripples + reflection by Nick Kovalsky
+*/
+
+
+const float duration = 5.0;      // This is the solved animation duration at speed 1
+const float amplitude = 0.015;     // Default amplitude of the ripple
+const float frequency = 15.0;    // Default frequency of the ripple
+const float decay = 2.0;         // Default decay rate of the ripple
+const float speed = 0.8;         // Default speed of the ripple
+const float rippleIntensity = 0.05;
+
+const float reflectionIntensity = 0.15;
+const float minReflectionIntensity = 1.5; // minimum reflection visible
+
+const vec3 waterTint = vec3(0.1, 0.2, 0.5);
+
+// Define separate reflection angles to simulate 3D viewing perspective
+const float reflectionAngleX = 5.0; // viewing perspective on X axis
+const float reflectionAngleY = 5.0; // viewing perspective on Y axis
+const float reflectionAngleZ = 1.0; // viewing perspective on Z axis
+
+half4 main(float2 fragCoord) 
+{
+    // Precompute the scale factor
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+    float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+    vec2 uv = (fragCoord - iOffset) / iResolution.xy;
+
+    // Sample the base color
+    half4 baseColor = iImage1.eval(inputCoord);
+
+    // Initialize the combined displacement vector
+    vec2 combinedDisplacement = vec2(0.0, 0.0);
+
+    // Loop through the ripples
+    for (int i = 0; i < 10; i++) 
+    {
+        float progress = progresses[i];
+        vec2 mouse = origins[i];
+
+        if (progress >= 0.0 && progress <= 1.0) 
+        {
+            // Get the cursor position and normalize it
+            vec2 origin = mouse / iResolution.xy;
+
+            // Calculate the distance and direction from the origin
+            vec2 direction = uv - origin;
+            float distance = length(direction);
+
+            // Calculate the delay based on the distance
+            float delay = distance / speed;
+
+            // Adapt the time for the delay and clamp to 0
+            float time = max(0.0, progress * duration - delay);
+
+            // Calculate the ripple amount
+            float rippleAmount = amplitude * sin(frequency * time) * exp(-decay * time);
+
+            // Normalize the direction vector
+            vec2 n = direction / distance;
+
+            // Accumulate the displacement caused by this ripple
+            combinedDisplacement += rippleAmount * n;
+        }
+    }
+
+    // Calculate the final position by applying the combined displacement
+    vec2 finalPosition = uv + combinedDisplacement;
+
+     // Sample the texture at the new combined position
+    vec3 finalColor = iImage1.eval(finalPosition * iResolution.xy * renderingScale).rgb;
+
+    // Define viewing direction using reflection angles
+    vec2 viewingDirection = normalize(vec2(reflectionAngleX, reflectionAngleY));
+
+    // Calculate Fresnel effect
+    float fresnelEffect = pow(1.0 - dot(normalize(combinedDisplacement), viewingDirection), 3.0);
+
+    // Adapt reflection intensity with Fresnel effect
+    float reflectionFactor = fresnelEffect * clamp(length(combinedDisplacement) / amplitude, 0.0, 1.0);
+
+    // Ensure minimum reflection intensity
+    reflectionFactor = max(reflectionFactor, minReflectionIntensity);
+
+    // Calculate dynamic perturbation factor based on combined displacement
+    float dynamicPerturbationFactor = length(combinedDisplacement) * 10000.0; // Adapt factor based on ripple strength
+
+    // Calculate perturbation
+    vec2 perturbation = vec2(sin(finalPosition.x * dynamicPerturbationFactor), cos(finalPosition.y * dynamicPerturbationFactor)) * 0.05;
+
+    // Calculate 3D angle-based offsets
+    vec2 angleOffsetX = vec2(reflectionAngleX * combinedDisplacement.y, reflectionAngleX * combinedDisplacement.x);
+    vec2 angleOffsetY = vec2(reflectionAngleY * combinedDisplacement.y, reflectionAngleY * combinedDisplacement.x);
+    vec2 angleOffsetZ = vec2(reflectionAngleZ * combinedDisplacement.y, reflectionAngleZ * combinedDisplacement.x);
+
+    // Combine all 3D offsets
+    vec2 angleOffset = angleOffsetX + angleOffsetY + angleOffsetZ;
+
+    // Apply angle offset and perturbation to get final distorted coordinates for reflection
+    vec2 distortedCoord = finalPosition + angleOffset + perturbation;
+
+    // Sample the distorted reflection texture
+    vec3 reflectionColor = iImage2.eval(distortedCoord * iResolution.xy * renderingScale).rgb;
+
+    // Tint the reflection color based on water color
+    vec3 tintedReflectionColor = mix(reflectionColor, reflectionColor * waterTint, 0.5);
+
+    // Lighten or darken the color based on the combined ripple amount
+    finalColor += rippleIntensity * (length(combinedDisplacement) / amplitude);
+
+    // Blend the reflection with the base color
+    finalColor = mix(finalColor, tintedReflectionColor, reflectionFactor * reflectionIntensity);
+
+    // Set the fragment color
+    half4 fragColor = vec4(finalColor, 1.0);
+
+    return fragColor;
+}

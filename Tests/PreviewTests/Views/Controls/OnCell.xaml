@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PreviewTests.Views.Controls.OnCell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:gestures="clr-namespace:AppoMobi.Maui.Gestures;assembly=AppoMobi.Maui.Gestures"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    x:Name="ThisPage"
+    x:DataType="demo:MainPageViewModel">
+
+    <draw:Canvas
+        Gestures="Enabled"
+        RenderingMode = "Accelerated"
+        Tag="MainPage">
+
+
+        <draw:SkiaLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+
+            <!--  Simulate SwipeView  -->
+            <draw:SkiaDrawnCell
+                draw:AddGestures.AnimationTapped="Ripple"
+                HeightRequest="120"
+                HorizontalOptions="Fill"
+                IsClippedToBounds="True"
+                Tag="ListCell"
+                VerticalOptions="Center">
+
+
+                <!--  cell content is inside drawer, controls will be behind  -->
+                <draw:SkiaDrawer
+                    x:Name="TestControl"
+                    AmplitudeSize="60"
+                    Direction="FromLeft"
+                    HorizontalOptions="Fill"
+                    IsOpen="True"
+                    VerticalOptions="Fill"
+                    ZIndex="1">
+
+                    <!--  usual cell content  -->
+                    <draw:SkiaShape
+                        Margin="4,2"
+                        CornerRadius="8"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill">
+
+                        <draw:SkiaControl.FillGradient>
+
+                            <draw:SkiaGradient
+                                EndXRatio="1"
+                                EndYRatio="1"
+                                StartXRatio="0"
+                                StartYRatio="0"
+                                Type="Linear">
+                                <draw:SkiaGradient.Colors>
+                                    <Color>#222222</Color>
+                                    <Color>#666666</Color>
+                                </draw:SkiaGradient.Colors>
+                            </draw:SkiaGradient>
+
+                        </draw:SkiaControl.FillGradient>
+
+                        <draw:SkiaShape
+                            HorizontalOptions="Fill"
+                            Tag="Shadow"
+                            VerticalOptions="Fill">
+                            <draw:SkiaShape.FillGradient>
+                                <draw:SkiaGradient
+                                    EndXRatio="0"
+                                    EndYRatio="1"
+                                    StartXRatio="0"
+                                    StartYRatio="0"
+                                    Type="Linear">
+                                    <draw:SkiaGradient.Colors>
+                                        <Color>#00000000</Color>
+                                        <Color>#33000000</Color>
+                                        <Color>#F0000000</Color>
+                                    </draw:SkiaGradient.Colors>
+                                    <draw:SkiaGradient.ColorPositions>
+                                        <x:Double>0.4</x:Double>
+                                        <x:Double>0.5</x:Double>
+                                        <x:Double>1.0</x:Double>
+                                    </draw:SkiaGradient.ColorPositions>
+                                </draw:SkiaGradient>
+                            </draw:SkiaShape.FillGradient>
+                        </draw:SkiaShape>
+
+                        <draw:SkiaLabel
+                            Margin="16,0"
+                            FontSize="20"
+                            LineBreakMode="TailTruncation"
+                            MaxLines="1"
+                            Style="{x:StaticResource SkiaLabelDefaultStyle}"
+                            Tag="LabelTitle"
+                            Text="Title"
+                            TextColor="White"
+                            TranslationY="10"
+                            VerticalOptions="Center" />
+
+                        <draw:SkiaLabel
+                            Margin="16,0"
+                            FontSize="10"
+                            LineBreakMode="TailTruncation"
+                            LineSpacing="-2"
+                            MaxLines="2"
+                            Style="{x:StaticResource SkiaLabelDefaultStyle}"
+                            Tag="LabelDesc"
+                            Text="Description"
+                            TextColor="White"
+                            TranslationY="30"
+                            VerticalOptions="Center" />
+
+                        <draw:SkiaLabel
+                            Margin="8"
+                            FontSize="30"
+                            HorizontalOptions="End"
+                            MaxLines="1"
+                            Style="{x:StaticResource SkiaLabelDefaultStyle}"
+                            Tag="LabelId"
+                            Text="ID"
+                            TextColor="Red" />
+
+                    </draw:SkiaShape>
+
+                </draw:SkiaDrawer>
+
+                <!--  cell controls behind using Z order  -->
+                <draw:SkiaLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+
+                    <draw:SkiaShape
+                        Margin="0,0,12,0"
+                        BackgroundColor="Red"
+                        CornerRadius="8"
+                        HeightRequest="40"
+                        HorizontalOptions="End"
+                        LockRatio="1"
+                        VerticalOptions="Center" />
+
+                </draw:SkiaLayout>
+
+            </draw:SkiaDrawnCell>
+
+
+            <!--  software button  -->
+            <draw:SkiaButton
+                Margin="10"
+                CommandTapped="{Binding CommandTest}"
+                HorizontalOptions="End"
+                Tapped="SkiaButton_Tapped"
+                Text="Toggle"
+                TranslationY="50"
+                VerticalOptions="Start" />
+
+            <draw:SkiaLabel
+                Margin="16"
+                BackgroundColor="Black"
+                FontSize="20"
+                Text="{Binding SelectedIndex}"
+                TextColor="Red" />
+
+            <draw:SkiaLabel
+                Margin="16"
+                BackgroundColor="Black"
+                FontSize="20"
+                Text="{Binding Source={x:Reference TestControl}, Path=InTransition}"
+                TextColor="Red"
+                TranslationY="80" />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+</ContentPage>

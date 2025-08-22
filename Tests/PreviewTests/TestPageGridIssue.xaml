@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.TestPageGridIssue"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="using:PreviewTests.Views.Controls"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+    xmlns:PreviewTests="clr-namespace:PreviewTests"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:DataType="PreviewTests:MainPageViewModel">
+
+    <draw:Canvas BackgroundColor="Black">
+        <draw:SkiaLayout
+            DefaultRowDefinition="Auto"
+            RowDefinitions="*, 170, Auto"
+            Type="Grid">
+
+            <draw:SkiaShape
+                HorizontalOptions="Fill"
+                Type="Rectangle"
+                VerticalOptions="Fill">
+                <draw:SkiaShape.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0.0" Color="Yellow" />
+                        <GradientStop Offset="0.25" Color="Red" />
+                        <GradientStop Offset="0.75" Color="Blue" />
+                        <GradientStop Offset="1.0" Color="LimeGreen" />
+                    </LinearGradientBrush>
+                </draw:SkiaShape.Background>
+            </draw:SkiaShape>
+
+            <draw:SkiaShape
+                Grid.Row="1"
+                Type="Rectangle">
+                <draw:SkiaShape.Background>
+                    <RadialGradientBrush Center="0.5,0.5">
+                        <GradientStop Offset="0.1" Color="Red" />
+                        <GradientStop Offset="1.0" Color="DarkBlue" />
+                    </RadialGradientBrush>
+                </draw:SkiaShape.Background>
+            </draw:SkiaShape>
+
+            <draw:SkiaShape
+                Grid.Row="2"
+                BackgroundColor="Green"
+                FillBlendMode="Screen"
+                HorizontalOptions="Fill"
+                Type="Rectangle">
+
+                <draw:SkiaShape.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Offset="0.1" Color="#9A90FF" />
+                        <GradientStop Offset="1.0" Color="#594DD2" />
+                    </LinearGradientBrush>
+                </draw:SkiaShape.Background>
+
+                <draw:SkiaLayout
+                    ColumnDefinitions="*, *"
+                    HorizontalOptions="Fill"
+                    Type="Grid">
+
+                    <draw:SkiaLabel
+                        HorizontalOptions="Center"
+                        Text="test" />
+
+                    <draw:SkiaLabel
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        Text="test" />
+
+                </draw:SkiaLayout>
+            </draw:SkiaShape>
+
+        </draw:SkiaLayout>
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>

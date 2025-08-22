@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.MainPageDev"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:PreviewTests="clr-namespace:PreviewTests"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="PreviewTests:MainPageDev">
+
+    <draw:Canvas 
+        
+        Gestures="Enabled"
+        BackgroundColor="DarkKhaki"
+        VerticalOptions="Fill" HorizontalOptions="Fill">
+        <draw:SkiaLayer VerticalOptions="Fill">
+
+            <draw:SkiaShape
+                Margin="8"
+                Padding="8"
+                BackgroundColor="White"
+                CornerRadius="12,12,12,0"
+                WidthRequest="150"
+                StrokeColor="Black"
+                StrokeWidth="1"
+                HeightRequest="90"
+                UseCache="Operations"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <draw:SkiaLayout Type="Column">
+                    <draw:SkiaLabel Text="Text 10" />
+                    <draw:SkiaLabel Text="Text 2" />
+                </draw:SkiaLayout>
+
+
+            </draw:SkiaShape>
+
+        </draw:SkiaLayer>
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>
