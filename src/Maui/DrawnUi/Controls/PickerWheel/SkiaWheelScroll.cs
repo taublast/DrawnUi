@@ -803,7 +803,8 @@ namespace DrawnUi.Controls
 
             ViewportOffsetY = -targetY / RenderingScale;
 
-            if (index == 0)
+            // Align clamping baseline only for non-loop mode
+            if (!Loop && index == 0)
             {
                 _zeroOffset = -targetY / RenderingScale;
             }
@@ -813,10 +814,15 @@ namespace DrawnUi.Controls
 
         public override Vector2 ClampOffset(float x, float y, SKRect contentOffsetBounds, bool strict = false)
         {
+            // In loop mode we do not translate clamping with _zeroOffset.
+            // That translation is only meaningful for non-loop wheels, where index 0
+            // is anchored to one physical end. Loop has no ends; avoid skewing bounds.
+            if (Loop)
+            {
+                return base.ClampOffset(x, y, contentOffsetBounds, strict);
+            }
+
             var ret = base.ClampOffset(x, y - _zeroOffset, contentOffsetBounds, strict);
-
-            //Debug.WriteLine($"Tuned {y - _zeroOffset} => {ret.Y + _zeroOffset}");
-
             return new(ret.X, ret.Y + _zeroOffset);
         }
 
