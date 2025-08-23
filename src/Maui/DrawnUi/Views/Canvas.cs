@@ -687,7 +687,7 @@ public class Canvas : DrawnView, IGestureListener
     /// <param name="touchAction"></param>
     public virtual void OnGestureEvent(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)
     {
-        Debug.WriteLine($"[Canvas] {touchAction} {args1.Location}");
+        //Debug.WriteLine($"[Canvas] {touchAction} {args1.Location}");
 
         if (!CanDraw)
         {
