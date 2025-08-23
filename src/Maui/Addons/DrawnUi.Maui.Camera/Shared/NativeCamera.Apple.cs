@@ -877,6 +877,35 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     /// <summary>
+    /// Gets the currently selected capture format
+    /// </summary>
+    /// <returns>Current capture format or null if not available</returns>
+    public CaptureFormat GetCurrentCaptureFormat()
+    {
+        try
+        {
+            if (_deviceInput?.Device?.ActiveFormat != null)
+            {
+                var activeFormat = _deviceInput.Device.ActiveFormat;
+                var stillDimensions = activeFormat.HighResolutionStillImageDimensions;
+
+                return new CaptureFormat
+                {
+                    Width = (int)stillDimensions.Width,
+                    Height = (int)stillDimensions.Height,
+                    FormatId = $"ios_{_deviceInput.Device.UniqueID}_{stillDimensions.Width}x{stillDimensions.Height}"
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[NativeCameraiOS] GetCurrentCaptureFormat error: {ex.Message}");
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Gets the manual exposure capabilities and recommended settings for the camera
     /// </summary>
     /// <returns>Camera manual exposure range information</returns>

@@ -224,8 +224,11 @@ SkiaCamera is a specialized control that provides camera functionality directly 
     x:Name="CameraControl"
     IsOn="True"
     Facing="Default"
+    CameraIndex="-1"
     FlashMode="Off"
     CaptureFlashMode="Auto"
+    CapturePhotoQuality="Medium"
+    CaptureFormatIndex="0"
     WidthRequest="300"
     HeightRequest="400" />
 ```
@@ -236,11 +239,20 @@ SkiaCamera is a specialized control that provides camera functionality directly 
 |----------|------|---------|-------------|
 | `IsOn` | bool | false | Camera power state - use this to start/stop camera |
 | `Facing` | CameraPosition | Default | Camera selection: Default (back), Selfie (front), Manual |
+| `CameraIndex` | int | -1 | Manual camera selection index (when Facing = Manual) |
+| `State` | CameraState | - | Current camera state (read-only) |
+| `IsBusy` | bool | - | Processing state (read-only) |
 | `FlashMode` | FlashMode | Off | Preview torch mode: Off, On, Strobe |
 | `CaptureFlashMode` | CaptureFlashMode | Auto | Flash mode for capture: Off, Auto, On |
-| `CapturePhotoQuality` | CaptureQuality | Max | Photo quality: Max, Medium, Low, Preview |
+| `CapturePhotoQuality` | CaptureQuality | Max | Photo quality: Max, Medium, Low, Preview, Manual |
+| `CaptureFormatIndex` | int | 0 | Format index for manual capture (when CapturePhotoQuality = Manual) |
+| `CurrentStillCaptureFormat` | CaptureFormat | - | Currently selected capture format (read-only) |
 | `IsFlashSupported` | bool | - | Whether flash is available (read-only) |
+| `IsAutoFlashSupported` | bool | - | Whether auto flash is supported (read-only) |
 | `Zoom` | double | 1.0 | Camera zoom level |
+| `ZoomLimitMin` | double | 1.0 | Minimum zoom level |
+| `ZoomLimitMax` | double | 10.0 | Maximum zoom level |
+| `Effect` | SkiaImageEffect | - | Real-time color filters for preview |
 
 ### Examples
 
@@ -278,18 +290,23 @@ private async void OnCaptureClicked(object sender, EventArgs e)
 {
     try
     {
-        var photo = await Camera.TakePictureAsync();
-        if (photo != null)
-        {
-            // Handle captured photo
-            await SavePhotoAsync(photo);
-        }
+        await Camera.TakePicture();
+        // Photo will be delivered via CaptureSuccess event
     }
     catch (Exception ex)
     {
         // Handle error
         await DisplayAlert("Error", $"Failed to capture photo: {ex.Message}", "OK");
     }
+}
+
+private void OnCaptureSuccess(object sender, CapturedImage captured)
+{
+    // Handle captured photo
+    MainThread.BeginInvokeOnMainThread(async () =>
+    {
+        await SavePhotoAsync(captured);
+    });
 }
 
 private void OnToggleTorchClicked(object sender, EventArgs e)
@@ -337,6 +354,132 @@ if (Camera.IsFlashSupported)
 - **Clean API**: Simple property-based approach without legacy methods
 - **Future Extensibility**: Ready for strobe and other advanced flash modes
 
+### Camera Management
+
+SkiaCamera provides comprehensive camera enumeration and selection capabilities:
+
+```csharp
+// Get available cameras
+var cameras = await Camera.GetAvailableCamerasAsync();
+foreach (var camera in cameras)
+{
+    Debug.WriteLine($"Camera {camera.Index}: {camera.Name} ({camera.Position})");
+    Debug.WriteLine($"  ID: {camera.Id}");
+    Debug.WriteLine($"  Has Flash: {camera.HasFlash}");
+}
+
+// Manual camera selection
+Camera.Facing = CameraPosition.Manual;
+Camera.CameraIndex = 2; // Select third camera
+Camera.IsOn = true;
+
+// Automatic selection
+Camera.Facing = CameraPosition.Default; // Back camera
+Camera.Facing = CameraPosition.Selfie;  // Front camera
+```
+
+### Capture Format Management
+
+Control capture resolution and quality with flexible format selection:
+
+```csharp
+// Quality presets
+Camera.CapturePhotoQuality = CaptureQuality.Max;     // Highest resolution
+Camera.CapturePhotoQuality = CaptureQuality.Medium;  // Balanced quality/size
+Camera.CapturePhotoQuality = CaptureQuality.Low;     // Fastest capture
+Camera.CapturePhotoQuality = CaptureQuality.Preview; // Smallest usable size
+
+// Manual format selection
+var formats = await Camera.GetAvailableCaptureFormatsAsync();
+Camera.CapturePhotoQuality = CaptureQuality.Manual;
+Camera.CaptureFormatIndex = 0; // Select first format
+
+// Read current format
+var currentFormat = Camera.CurrentStillCaptureFormat;
+if (currentFormat != null)
+{
+    Debug.WriteLine($"Current: {currentFormat.Width}x{currentFormat.Height}");
+    Debug.WriteLine($"Aspect: {currentFormat.AspectRatioString}");
+    Debug.WriteLine($"Pixels: {currentFormat.TotalPixels:N0}");
+}
+```
+
+### Core Methods
+
+```csharp
+// Camera Management
+public async Task<List<CameraInfo>> GetAvailableCamerasAsync()
+public async Task<List<CameraInfo>> RefreshAvailableCamerasAsync()
+public static void CheckPermissions(Action<bool> callback)
+
+// Capture Format Management
+public async Task<List<CaptureFormat>> GetAvailableCaptureFormatsAsync()
+public async Task<List<CaptureFormat>> RefreshAvailableCaptureFormatsAsync()
+public CaptureFormat CurrentStillCaptureFormat { get; }
+
+// Capture Operations
+public async Task TakePicture()
+public void FlashScreen(Color color, long duration = 250)
+public void OpenFileInGallery(string filePath)
+
+// Camera Controls
+public void SetZoom(double value)
+
+// Flash Control Methods
+public void SetFlashMode(FlashMode mode)
+public FlashMode GetFlashMode()
+public void SetCaptureFlashMode(CaptureFlashMode mode)
+public CaptureFlashMode GetCaptureFlashMode()
+```
+
+### Events
+
+```csharp
+public event EventHandler<CapturedImage> CaptureSuccess;
+public event EventHandler<Exception> CaptureFailed;
+public event EventHandler<LoadedImageSource> NewPreviewSet;
+public event EventHandler<CameraState> StateChanged;
+public event EventHandler<string> OnError;
+public event EventHandler<double> Zoomed;
+```
+
+### Data Classes
+
+```csharp
+// Capture format information
+public class CaptureFormat
+{
+    public int Width { get; set; }                    // Width in pixels
+    public int Height { get; set; }                   // Height in pixels
+    public int TotalPixels => Width * Height;         // Total pixel count
+    public double AspectRatio => (double)Width / Height; // Decimal aspect ratio
+    public string AspectRatioString { get; }          // Standard notation ("16:9", "4:3")
+    public string FormatId { get; set; }              // Platform-specific identifier
+    public string Description { get; }               // Human-readable description
+}
+
+// Camera information
+public class CameraInfo
+{
+    public string Id { get; set; }                    // Platform camera ID
+    public string Name { get; set; }                  // Display name
+    public CameraPosition Position { get; set; }      // Camera position
+    public int Index { get; set; }                    // Camera index
+    public bool HasFlash { get; set; }                // Flash availability
+}
+```
+
+### Enums
+
+```csharp
+public enum CameraPosition { Default, Selfie, Manual }
+public enum CameraState { Off, On, Error }
+public enum CaptureQuality { Max, Medium, Low, Preview, Manual }
+public enum FlashMode { Off, On, Strobe }
+public enum CaptureFlashMode { Off, Auto, On }
+public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
+```
+
 ### Gallery Integration
 
 SkiaCamera provides `OpenFileInGallery()` method to open captured photos in the system gallery:
@@ -346,20 +489,29 @@ private async void OnCaptureClicked(object sender, EventArgs e)
 {
     try
     {
-        var photo = await Camera.TakePictureAsync();
-        if (photo != null)
-        {
-            // Save photo to file
-            var fileName = $"photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg";
-            var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
+        await Camera.TakePicture();
+        // Photo will be delivered via CaptureSuccess event
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert("Error", $"Failed to capture photo: {ex.Message}", "OK");
+    }
+}
 
-            using var fileStream = File.Create(filePath);
-            using var data = photo.Encode(SKEncodedImageFormat.Jpeg, 90);
-            data.SaveTo(fileStream);
+private async void OnCaptureSuccess(object sender, CapturedImage captured)
+{
+    try
+    {
+        // Save photo to file
+        var fileName = $"photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg";
+        var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
 
-            // Open in system gallery
-            Camera.OpenFileInGallery(filePath);
-        }
+        using var fileStream = File.Create(filePath);
+        using var data = captured.Image.Encode(SKEncodedImageFormat.Jpeg, 90);
+        data.SaveTo(fileStream);
+
+        // Open in system gallery
+        Camera.OpenFileInGallery(filePath);
     }
     catch (Exception ex)
     {

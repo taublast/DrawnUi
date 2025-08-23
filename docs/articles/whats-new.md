@@ -22,6 +22,12 @@ This page highlights the latest updates, features, and improvements in DrawnUi.M
 * **Integration**: Seamlessly integrates with DrawnUI canvas rendering
 * **Advanced Flash Control**: Independent preview torch and capture flash modes
 * **Property-Based API**: Modern `FlashMode` property with MVVM support
+* **Camera Management**: `GetAvailableCamerasAsync()` for camera enumeration
+* **Manual Camera Selection**: `CameraIndex` property for precise camera control
+* **Capture Format Control**: `GetAvailableCaptureFormatsAsync()` and `CurrentStillCaptureFormat` property
+* **Quality Presets**: Max, Medium, Low, Preview, and Manual capture quality modes
+* **Format Selection**: Manual format selection with `CaptureFormatIndex` property
+* **Cross-Platform Format Info**: Consistent `CaptureFormat` structure across all platforms
 * **Extensible Design**: Ready for future features like strobe modes
 
 #### Enhanced SkiaShape
