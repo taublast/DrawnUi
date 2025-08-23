@@ -269,7 +269,7 @@ namespace DrawnUi.Draw
         {
             ChildrenFactory = new(this);
 
-            PostponeInvalidation(nameof(ApplyItemsSource), ApplyItemsSource);
+            //PostponeInvalidation(nameof(ApplyItemsSource), ApplyItemsSource);
             //OnItemSourceChanged();
         }
 
