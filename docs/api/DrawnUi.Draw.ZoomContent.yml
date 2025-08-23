@@ -5,12 +5,12 @@ items:
   id: ZoomContent
   parent: DrawnUi.Draw
   children:
-  - DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single)
+  - DrawnUi.Draw.ZoomContent.#ctor
   - DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,System.Single,SkiaSharp.SKPoint)
+  - DrawnUi.Draw.ZoomContent.ContentScaledRect
   - DrawnUi.Draw.ZoomContent.DrawViews(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.ZoomContent.InitializeAnimator
   - DrawnUi.Draw.ZoomContent.LastValue
-  - DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.ZoomContent.OffsetImage
   - DrawnUi.Draw.ZoomContent.OnBindingContextChanged
   - DrawnUi.Draw.ZoomContent.PanSpeed
@@ -49,11 +49,25 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomContent
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 10
+    startLine: 16
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.TODO add animated movement
+  summary: >-
+    Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.
+
+
+    DEBUG INSTRUCTIONS:
+
+    - Key debug outputs are enabled for pan movements and clamp operations
+
+    - Call DumpDebugState() manually to get a full state dump
+
+    - Uncomment debug sections in DrawViews, MeasureContent, ComputeContentScale for frame-by-frame debugging
+
+    - Watch for [ClampOffsetImage] CLAMPED! messages to see when pan limits are hit
+
+    - The DebugSummary provides comprehensive state when hitting pan limits
   example: []
   syntax:
     content: 'public class ZoomContent : ContentLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IDisposable, IVisibilityAware, IWithContent, ISkiaGestureListener'
@@ -646,6 +660,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
   - DrawnUi.Draw.SkiaControl.BindingContextWasSet
@@ -1088,6 +1103,35 @@ items:
   - Microsoft.Maui.Controls.VisualElement.DrawnUi.Draw.StaticResourcesExtensions.GetAllWithMyselfParents
   - Microsoft.Maui.IView.DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ZoomContent.#ctor
+  commentId: M:DrawnUi.Draw.ZoomContent.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Draw.ZoomContent
+  langs:
+  - csharp
+  - vb
+  name: ZoomContent()
+  nameWithType: ZoomContent.ZoomContent()
+  fullName: DrawnUi.Draw.ZoomContent.ZoomContent()
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ZoomContent()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Draw.ZoomContent.#ctor*
+  nameWithType.vb: ZoomContent.New()
+  fullName.vb: DrawnUi.Draw.ZoomContent.New()
+  name.vb: New()
 - uid: DrawnUi.Draw.ZoomContent.OnBindingContextChanged
   commentId: M:DrawnUi.Draw.ZoomContent.OnBindingContextChanged
   id: OnBindingContextChanged
@@ -1106,7 +1150,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnBindingContextChanged
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 12
+    startLine: 23
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1135,7 +1179,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PanningModeProperty
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 21
+    startLine: 31
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1162,7 +1206,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PanningMode
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 27
+    startLine: 37
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1191,7 +1235,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMinProperty
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 33
+    startLine: 43
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1218,7 +1262,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMin
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 37
+    startLine: 48
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1247,7 +1291,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMaxProperty
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 43
+    startLine: 54
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1274,7 +1318,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMax
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 47
+    startLine: 59
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1303,7 +1347,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewportZoomProperty
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 53
+    startLine: 65
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1330,7 +1374,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewportZoom
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 58
+    startLine: 70
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1359,7 +1403,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomSpeedProperty
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 64
+    startLine: 76
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1386,11 +1430,11 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomSpeed
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 71
+    startLine: 83
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: How much of finger movement will afect zoom change
+  summary: How much of finger movement will affect zoom change
   example: []
   syntax:
     content: public double ZoomSpeed { get; set; }
@@ -1417,7 +1461,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomLockedProperty
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 77
+    startLine: 89
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1444,7 +1488,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomLocked
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 81
+    startLine: 94
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1473,7 +1517,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PanSpeedProperty
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 87
+    startLine: 100
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1500,7 +1544,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PanSpeed
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 93
+    startLine: 106
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1529,7 +1573,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScalePixels
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 138
+    startLine: 124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1563,7 +1607,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScalePoints
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 147
+    startLine: 132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1579,44 +1623,33 @@ items:
   nameWithType.vb: ZoomContent.ScalePoints(Double)
   fullName.vb: DrawnUi.Draw.ZoomContent.ScalePoints(Double)
   name.vb: ScalePoints(Double)
-- uid: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single)
-  commentId: M:DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single)
-  id: ComputeContentScale(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single)
+- uid: DrawnUi.Draw.ZoomContent.ContentScaledRect
+  commentId: F:DrawnUi.Draw.ZoomContent.ContentScaledRect
+  id: ContentScaledRect
   parent: DrawnUi.Draw.ZoomContent
   langs:
   - csharp
   - vb
-  name: ComputeContentScale(SKRect, SKPoint, float)
-  nameWithType: ZoomContent.ComputeContentScale(SKRect, SKPoint, float)
-  fullName: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect, SkiaSharp.SKPoint, float)
-  type: Method
+  name: ContentScaledRect
+  nameWithType: ZoomContent.ContentScaledRect
+  fullName: DrawnUi.Draw.ZoomContent.ContentScaledRect
+  type: Field
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
-    id: ComputeContentScale
+    id: ContentScaledRect
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 156
+    startLine: 139
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, SKPoint offsetCenter, float scale)
-    parameters:
-    - id: destination
-      type: SkiaSharp.SKRect
-    - id: offsetCenter
-      type: SkiaSharp.SKPoint
-    - id: scale
-      type: System.Single
+    content: protected SKRect ContentScaledRect
     return:
-      type: System.ValueTuple{SkiaSharp.SKRect,System.Single}
-    content.vb: Public Function ComputeContentScale(destination As SKRect, offsetCenter As SKPoint, scale As Single) As (ScaledDestination As SKRect, Scale As Single)
-  overload: DrawnUi.Draw.ZoomContent.ComputeContentScale*
-  nameWithType.vb: ZoomContent.ComputeContentScale(SKRect, SKPoint, Single)
-  fullName.vb: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect, SkiaSharp.SKPoint, Single)
-  name.vb: ComputeContentScale(SKRect, SKPoint, Single)
+      type: SkiaSharp.SKRect
+    content.vb: Protected ContentScaledRect As SKRect
 - uid: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,System.Single,SkiaSharp.SKPoint)
   commentId: M:DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,System.Single,SkiaSharp.SKPoint)
   id: ComputeContentScale(SkiaSharp.SKRect,System.Single,SkiaSharp.SKPoint)
@@ -1635,22 +1668,27 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ComputeContentScale
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 177
+    startLine: 145
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
+  summary: >-
+    Computes the scaled destination rectangle and scale for content rendering.
+
+    OffsetImage is expected to be in screen/pixel coordinates relative to the viewport.
+  example: []
   syntax:
-    content: public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, float scale, SKPoint offsetCenter)
+    content: public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, float scale, SKPoint offsetPixels)
     parameters:
     - id: destination
       type: SkiaSharp.SKRect
     - id: scale
       type: System.Single
-    - id: offsetCenter
+    - id: offsetPixels
       type: SkiaSharp.SKPoint
     return:
       type: System.ValueTuple{SkiaSharp.SKRect,System.Single}
-    content.vb: Public Function ComputeContentScale(destination As SKRect, scale As Single, offsetCenter As SKPoint) As (ScaledDestination As SKRect, Scale As Single)
+    content.vb: Public Function ComputeContentScale(destination As SKRect, scale As Single, offsetPixels As SKPoint) As (ScaledDestination As SKRect, Scale As Single)
   overload: DrawnUi.Draw.ZoomContent.ComputeContentScale*
   nameWithType.vb: ZoomContent.ComputeContentScale(SKRect, Single, SKPoint)
   fullName.vb: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect, Single, SkiaSharp.SKPoint)
@@ -1673,7 +1711,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawViews
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 185
+    startLine: 265
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1694,50 +1732,6 @@ items:
     content.vb: Protected Overrides Function DrawViews(context As DrawingContext) As Integer
   overridden: DrawnUi.Draw.SkiaLayout.DrawViews(DrawnUi.Draw.DrawingContext)
   overload: DrawnUi.Draw.ZoomContent.DrawViews*
-- uid: DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  commentId: M:DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  id: MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  parent: DrawnUi.Draw.ZoomContent
-  langs:
-  - csharp
-  - vb
-  name: MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
-  nameWithType: ZoomContent.MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
-  fullName: DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: MeasureContent
-    path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 209
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Measuring as absolute layout for passed children
-  example: []
-  syntax:
-    content: protected override ScaledSize MeasureContent(IEnumerable<SkiaControl> children, SKRect destination, float scale)
-    parameters:
-    - id: children
-      type: System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl}
-      description: ''
-    - id: destination
-      type: SkiaSharp.SKRect
-    - id: scale
-      type: System.Single
-      description: ''
-    return:
-      type: DrawnUi.Draw.ScaledSize
-      description: ''
-    content.vb: Protected Overrides Function MeasureContent(children As IEnumerable(Of SkiaControl), destination As SKRect, scale As Single) As ScaledSize
-  overridden: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  overload: DrawnUi.Draw.ZoomContent.MeasureContent*
-  nameWithType.vb: ZoomContent.MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
-  fullName.vb: DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
-  name.vb: MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
 - uid: DrawnUi.Draw.ZoomContent.OffsetImage
   commentId: F:DrawnUi.Draw.ZoomContent.OffsetImage
   id: OffsetImage
@@ -1756,10 +1750,12 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetImage
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 230
+    startLine: 294
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
+  summary: Pan offset in screen/pixel coordinates
+  example: []
   syntax:
     content: protected SKPoint OffsetImage
     return:
@@ -1783,7 +1779,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _panStarted
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 232
+    startLine: 296
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1810,7 +1806,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 234
+    startLine: 304
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1845,7 +1841,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 430
+    startLine: 470
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1871,7 +1867,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetZoom
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 439
+    startLine: 480
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1905,7 +1901,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _animatorValue
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 489
+    startLine: 541
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1932,7 +1928,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastValue
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 494
+    startLine: 546
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1961,7 +1957,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 496
+    startLine: 548
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1988,7 +1984,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeAnimator
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 498
+    startLine: 550
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13806,6 +13802,73 @@ references:
     name: Double
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContent
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContent
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: ','
   - name: " "
   - uid: System.Single
@@ -32349,6 +32412,15 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ZoomContent.#ctor*
+  commentId: Overload:DrawnUi.Draw.ZoomContent.#ctor
+  href: DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent__ctor
+  name: ZoomContent
+  nameWithType: ZoomContent.ZoomContent
+  fullName: DrawnUi.Draw.ZoomContent.ZoomContent
+  nameWithType.vb: ZoomContent.New
+  fullName.vb: DrawnUi.Draw.ZoomContent.New
+  name.vb: New
 - uid: DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   commentId: M:DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   parent: DrawnUi.Draw.SkiaControl
@@ -32476,12 +32548,6 @@ references:
   name: ScalePoints
   nameWithType: ZoomContent.ScalePoints
   fullName: DrawnUi.Draw.ZoomContent.ScalePoints
-- uid: DrawnUi.Draw.ZoomContent.ComputeContentScale*
-  commentId: Overload:DrawnUi.Draw.ZoomContent.ComputeContentScale
-  href: DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_ComputeContentScale_SkiaSharp_SKRect_SkiaSharp_SKPoint_System_Single_
-  name: ComputeContentScale
-  nameWithType: ZoomContent.ComputeContentScale
-  fullName: DrawnUi.Draw.ZoomContent.ComputeContentScale
 - uid: SkiaSharp.SKRect
   commentId: T:SkiaSharp.SKRect
   parent: SkiaSharp
@@ -32490,6 +32556,19 @@ references:
   name: SKRect
   nameWithType: SKRect
   fullName: SkiaSharp.SKRect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.ZoomContent.ComputeContentScale*
+  commentId: Overload:DrawnUi.Draw.ZoomContent.ComputeContentScale
+  href: DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_ComputeContentScale_SkiaSharp_SKRect_System_Single_SkiaSharp_SKPoint_
+  name: ComputeContentScale
+  nameWithType: ZoomContent.ComputeContentScale
+  fullName: DrawnUi.Draw.ZoomContent.ComputeContentScale
 - uid: SkiaSharp.SKPoint
   commentId: T:SkiaSharp.SKPoint
   parent: SkiaSharp
@@ -32555,13 +32634,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: SkiaSharp
-  commentId: N:SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp
-  name: SkiaSharp
-  nameWithType: SkiaSharp
-  fullName: SkiaSharp
 - uid: System.ValueTuple`2
   commentId: T:System.ValueTuple`2
   name: (T1, T2)
@@ -32630,119 +32702,6 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
-- uid: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  parent: DrawnUi.Draw.SkiaControl
-  isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
-  name: MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
-  nameWithType: SkiaControl.MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
-  fullName: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
-  nameWithType.vb: SkiaControl.MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
-  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
-  name.vb: MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-    name: MeasureContent
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
-  - name: (
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  - name: <
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: '>'
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-    name: MeasureContent
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
-  - name: (
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
-- uid: DrawnUi.Draw.ZoomContent.MeasureContent*
-  commentId: Overload:DrawnUi.Draw.ZoomContent.MeasureContent
-  href: DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
-  name: MeasureContent
-  nameWithType: ZoomContent.MeasureContent
-  fullName: DrawnUi.Draw.ZoomContent.MeasureContent
-- uid: System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl}
-  commentId: T:System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl}
-  parent: System.Collections.Generic
-  definition: System.Collections.Generic.IEnumerable`1
-  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  name: IEnumerable<SkiaControl>
-  nameWithType: IEnumerable<SkiaControl>
-  fullName: System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>
-  nameWithType.vb: IEnumerable(Of SkiaControl)
-  fullName.vb: System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl)
-  name.vb: IEnumerable(Of SkiaControl)
-  spec.csharp:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  - name: <
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: '>'
-  spec.vb:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: )
-- uid: DrawnUi.Draw.ScaledSize
-  commentId: T:DrawnUi.Draw.ScaledSize
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.ScaledSize.html
-  name: ScaledSize
-  nameWithType: ScaledSize
-  fullName: DrawnUi.Draw.ScaledSize
 - uid: Microsoft.Maui.Graphics.PointF
   commentId: T:Microsoft.Maui.Graphics.PointF
   parent: Microsoft.Maui.Graphics

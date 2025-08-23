@@ -222,6 +222,7 @@ items:
   derivedClasses:
   - DrawnUi.Controls.GridLayout
   - DrawnUi.Controls.ScrollPickerLabelContainer
+  - DrawnUi.Controls.ScrollPickerLabelLayout
   - DrawnUi.Controls.ScrollPickerWheel
   - DrawnUi.Controls.SkiaDecoratedGrid
   - DrawnUi.Controls.SkiaDrawnCell

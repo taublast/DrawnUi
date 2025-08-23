@@ -942,7 +942,15 @@ No periodic cleanup needed - controls clean up themselves!</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="DrawnUi.Draw.ZoomContent.html">ZoomContent</a></dt>
-      <dd><p>Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.TODO add animated movement</p>
+      <dd><p>Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.</p>
+<p>DEBUG INSTRUCTIONS:</p>
+<ul>
+<li>Key debug outputs are enabled for pan movements and clamp operations</li>
+<li>Call DumpDebugState() manually to get a full state dump</li>
+<li>Uncomment debug sections in DrawViews, MeasureContent, ComputeContentScale for frame-by-frame debugging</li>
+<li>Watch for [ClampOffsetImage] CLAMPED! messages to see when pan limits are hit</li>
+<li>The DebugSummary provides comprehensive state when hitting pan limits</li>
+</ul>
 </dd>
     </dl>
     <dl class="jumplist">

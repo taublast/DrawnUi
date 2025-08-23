@@ -1,6 +1,91 @@
-- name: Articles
-  href: articles/
-  homepage: articles/index.md
+- name: Home
+  href: index.md
+
+- name: Getting Started
+  items:
+    - name: Installation and Setup
+      href: articles/getting-started.md
+    - name: Porting Native to Drawn
+      href: articles/porting-maui.md
+
+- name: Tutorials
+  href: articles/tutorials.md
+  items:
+    - name: Tutorials Overview
+      href: articles/tutorials.md
+    - name: Your First Drawn App (XAML)
+      href: articles/first-app.md
+    - name: Your First Drawn App (C# Fluent)
+      href: articles/first-app-code.md
+    - name: Interactive Cards
+      href: articles/interactive-cards.md
+    - name: A Custom Drawn Control
+      href: articles/interactive-button.md
+    - name: News Feed Scroller
+      href: articles/news-feed-tutorial.md
+
+- name: Controls
+  href: articles/controls/index.md
+  items:
+    - name: Controls Overview
+      href: articles/controls/index.md
+    - name: Buttons
+      href: articles/controls/buttons.md
+    - name: Switches and Toggles
+      href: articles/controls/switches.md
+    - name: Input Controls
+      href: articles/controls/input.md
+    - name: Layout Controls
+      href: articles/controls/layouts.md
+    - name: Scroll Views
+      href: articles/controls/scroll.md
+    - name: Carousels
+      href: articles/controls/carousels.md
+    - name: Drawers
+      href: articles/controls/drawers.md
+    - name: Native Integration
+      href: articles/controls/native-integration.md
+    - name: Shapes
+      href: articles/controls/shapes.md
+    - name: Text and Labels
+      href: articles/controls/text.md
+    - name: Images
+      href: articles/controls/images.md
+    - name: Sprites
+      href: articles/controls/sprites.md
+    - name: Animations
+      href: articles/controls/animations.md
+    - name: Navigation Shell
+      href: articles/controls/shell.md
+
+- name: Advanced
+  href: articles/advanced/index.md
+  items:
+    - name: Layout System Architecture
+      href: articles/advanced/layout-system.md
+    - name: Gestures & Touch Input
+      href: articles/advanced/gestures.md
+    - name: Platform-Specific Styling
+      href: articles/advanced/platform-styling.md
+    - name: Gradients
+      href: articles/advanced/gradients.md
+    - name: Fluent C# Extensions
+      href: articles/fluent-extensions.md
+    - name: SkiaScroll & Virtualization
+      href: articles/advanced/skiascroll.md
+    - name: Theme Bindings
+      href: articles/advanced/theme-binding.md
+    - name: Drawing Pipeline
+      href: articles/drawing-pipeline.md
+    - name: Game UI & Interactive Games
+      href: articles/advanced/game-ui.md
+
+- name: Sample Apps
+  href: articles/sample-apps.md
+
+- name: FAQ
+  href: articles/faq.md
+
 - name: API
   href: api/
   homepage: api/index.md

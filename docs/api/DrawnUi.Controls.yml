@@ -19,6 +19,7 @@ items:
   - DrawnUi.Controls.NavigationSource
   - DrawnUi.Controls.RadioButtons
   - DrawnUi.Controls.ScrollPickerLabelContainer
+  - DrawnUi.Controls.ScrollPickerLabelLayout
   - DrawnUi.Controls.ScrollPickerWheel
   - DrawnUi.Controls.SkiaCarousel
   - DrawnUi.Controls.SkiaDecoratedGrid
@@ -440,6 +441,12 @@ references:
   name: ScrollPickerWheel
   nameWithType: ScrollPickerWheel
   fullName: DrawnUi.Controls.ScrollPickerWheel
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout
+  commentId: T:DrawnUi.Controls.ScrollPickerLabelLayout
+  href: DrawnUi.Controls.ScrollPickerLabelLayout.html
+  name: ScrollPickerLabelLayout
+  nameWithType: ScrollPickerLabelLayout
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout
 - uid: DrawnUi.Controls.SkiaWheelPicker
   commentId: T:DrawnUi.Controls.SkiaWheelPicker
   href: DrawnUi.Controls.SkiaWheelPicker.html

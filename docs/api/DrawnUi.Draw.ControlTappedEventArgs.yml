@@ -18,12 +18,12 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlTappedEventArgs
-    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 19
+    path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
+    startLine: 2
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -57,12 +57,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
-    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 21
+    path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
+    startLine: 4
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -86,12 +86,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Parameters
-    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 22
+    path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
+    startLine: 5
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -115,12 +115,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessingInfo
-    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 23
+    path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
+    startLine: 6
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -144,12 +144,12 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 25
+    path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
+    startLine: 8
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
