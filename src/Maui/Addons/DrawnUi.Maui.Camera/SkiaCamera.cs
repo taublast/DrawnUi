@@ -1695,11 +1695,24 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    protected override void OnMeasured()
+    {
+        base.OnMeasured();
+
+        if (Display != null)
+        {
+            Display.Aspect = this.Aspect;
+        }
+    }
+
     protected override void OnLayoutChanged()
     {
         base.OnLayoutChanged();
 
-        Display.Aspect = this.Aspect;
+        if (Display != null)
+        {
+            Display.Aspect = this.Aspect; //todo check do we still need this now
+        }
     }
 
     //public static readonly BindableProperty DisplayModeProperty = BindableProperty.Create(
