@@ -55,31 +55,31 @@ Let's look at critical SkiaLayout properties for this scenario:
 
 `MeasureItemsStrategy="MeasureVisible"`
 
-this **experimental** measurement strategy for `SkiaLayout` works well for large lists with uneven rows. It measures only visible items initially, then progressively measures off-screen items in the background. This can provide good scrolling performance with thousands of items of varying heights. At the 
+this **experimental** measurement strategy for `SkiaLayout` works well for large lists with uneven rows. It measures only visible items initially, then progressively measures off-screen items in the background. This can provide good scrolling performance with thousands of items of varying heights.
 
 `ReserveTemplates="10"`
 
-The layout views adapter creates new istances of cells only when needed. When a new one is instantiated this can create a UI lag spike. This property indicates that we want it to pre-create a specifc number of cells, to avoid a potential lag spike when the user just starts scrolling and new cells are created. This would not be needed for "same size" type of rows, but for "uneven rows" adapter tries to have some reasonable number of cells for different heights to return appropriate one from the pool when requested.
+The layout views adapter creates new instances of cells only when needed. When a new one is instantiated this can create a UI lag spike. This property indicates that we want it to pre-create a specific number of cells, to avoid a potential lag spike when the user just starts scrolling and new cells are created. This would not be needed for "same size" type of rows, but for "uneven rows" adapter tries to have some reasonable number of cells for different heights to return appropriate one from the pool when requested.
 
 `VirtualisationInflated="200"`
 
-We are drawing only cells visible inside scrolling viewport, but with double-buffered cache we want cells to start rendering before they enter the viewport, to avoid seing unrendered content. This property defines how much of the hidden content out of visible bounds should be considered visible for rendering.
+We are drawing only cells visible inside scrolling viewport, but with double-buffered cache we want cells to start rendering before they enter the viewport, to avoid seeing unrendered content. This property defines how much of the hidden content out of visible bounds should be considered visible for rendering.
 
 ### **Scroll Optimisations**
 
-Let's take a look what spices we added to ou scroll:
+Let's take a look what spices we added to our scroll:
 
 `LoadMoreOffset="500"`
 
-It would ask content's permission to execute LoadMoreCommand by calling `IInsideViewport.ShouldTriggerLoadMore` when the user scrolls within 500 points (not pixels) of the end of the content. This allows our stack to make a decision about when to load more data, more spicifically it would allow it only if the background measurement of the existing content ended.
+It would ask content's permission to execute LoadMoreCommand by calling `IInsideViewport.ShouldTriggerLoadMore` when the user scrolls within 500 points (not pixels) of the end of the content. This allows our stack to make a decision about when to load more data, more specifically it would allow it only if the background measurement of the existing content ended.
 
 `FrictionScrolled` and `ChangeVelocityScrolled`
 
-Notice we customized scrolling to stop faster with `FrictionScrolled` for news feed case were user would read content but help kick swipes with `ChangeVelocityScrolled`.
+Notice we customized scrolling to stop faster with `FrictionScrolled` for news feed case where user would read content but help kick swipes with `ChangeVelocityScrolled`.
 
 ### **Layering**
 
-When designed a drawn UI, it's important to think about layering and caching. We know that there would be a static layer with unchanged data, and one that would be redrawn when something changes, for example image gets loaded from internet. In such case we would want to fast-draw static layer from cache and rebuild the dynamic one.  Our background has a shadow effect, so we cache it into a separate layer with `SkiaShape` and draw content on top. If you would want to clip your content with the shape form your would just need to wrap it with a shape if same parameters than the background layer. 
+When designing a drawn UI, it's important to think about layering and caching. We know that there would be a static layer with unchanged data, and one that would be redrawn when something changes, for example image gets loaded from internet. In such case we would want to fast-draw static layer from cache and rebuild the dynamic one. Our background has a shadow effect, so we cache it into a separate layer with `SkiaShape` and draw content on top. If you would want to clip your content with the shape form you would just need to wrap it with a shape of same parameters as the background layer.
 
 ```xml
     <!--cached background layer with shadow-->
@@ -503,7 +503,7 @@ protected override void SetContent(object ctx)
 ```
 
 #### **Smart Content Configuration**
-Since we paint what we need instead of using MAUI `DataTemplateSelector`, we can simply hide/show elements based on content type. The hide/show concent is very efficient with virtual controls, hidden controls do not participate in layout and drawing and they since they do not create any native views they affect no pressure.
+Since we paint what we need instead of using MAUI `DataTemplateSelector`, we can simply hide/show elements based on content type. The hide/show concept is very efficient with virtual controls, hidden controls do not participate in layout and drawing and since they do not create any native views they affect no pressure.
 
 ```csharp
 private void ConfigureForContentType(NewsItem news)
@@ -535,10 +535,10 @@ When using cache type `ImageDoubleBuffered` we can use `DrawPlaceholder` method 
 ```csharp
 public override void DrawPlaceholder(DrawingContext context)
 {
-        var margins = BackgroundLayer.Padding;
-        var area =
-                new SKRect((float)(context.Destination.Left + margins.Left * context.Scale),
-            (float)(context.Destination.Top + margins.Top * context.Scale),
+    var margins = BackgroundLayer.Padding;
+    var area = new SKRect(
+        (float)(context.Destination.Left + margins.Left * context.Scale),
+        (float)(context.Destination.Top + margins.Top * context.Scale),
         (float)(context.Destination.Right - margins.Right * context.Scale),
         (float)(context.Destination.Bottom - margins.Bottom * context.Scale));
 
@@ -569,10 +569,8 @@ public override void OnWillDisposeWithChildren()
 
 
 ```csharp
- 
 public class NewsDataProvider
 {
- 
     private void ConfigureItemByType(NewsItem item)
     {
         switch (item.Type)
@@ -649,10 +647,8 @@ public class NewsDataProvider
 You would see something you'd normally expect in our viewmodel:
 
 ```csharp
-
 public class NewsViewModel : BaseViewModel
 {
- 
     public ObservableRangeCollection<NewsItem> NewsItems { get; }
 
     public ICommand RefreshCommand { get; }
@@ -728,7 +724,6 @@ public class NewsViewModel : BaseViewModel
         }
     }
 }
- 
 ```
 
 

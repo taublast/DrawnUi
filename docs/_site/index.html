@@ -103,7 +103,7 @@
     </p>
     <div style="margin-top: 30px;">
       <a href="articles/getting-started.html" style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 0 10px; box-shadow: 0 4px 15px rgba(37,99,235,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease;">
-        🚀 Get Started
+        🔨 Setup Guide
       </a>
       <a href="https://github.com/taublast/DrawnUi" style="background: rgba(255,255,255,0.12); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 0 10px; border: 2px solid rgba(255,255,255,0.22); backdrop-filter: blur(2px);">
         ⭐ Star on GitHub
@@ -318,12 +318,11 @@ window.addEventListener('load', function() {
   }, 500);
 });
 </script>
-<h2 id="-quick-start">⚡ Quick Start</h2>
 <div style="background: #1a202c; color: #e2e8f0; padding: 25px; border-radius: 8px; margin: 20px 0;">
-<p><strong>1. Install the package:</strong></p>
+<p><strong>1. Install:</strong></p>
 <pre><code class="lang-bash">dotnet add package DrawnUi.Maui
 </code></pre>
-<p><strong>2. Initialize in MauiProgram.cs:</strong></p>
+<p><strong>2. Initialize:</strong></p>
 <pre><code class="lang-csharp">public static MauiApp CreateMauiApp()
 {
     var builder = MauiApp.CreateBuilder();
@@ -334,10 +333,10 @@ window.addEventListener('load', function() {
     return builder.Build();
 }
 </code></pre>
-<p><strong>3. Start building amazing UIs:</strong></p>
+<p><strong>3. Draw:</strong></p>
 <pre><code class="lang-xml">&lt;ContentPage xmlns:draw=&quot;http://schemas.taublast.com/drawnUi/2022/maui&quot;&gt;
     &lt;draw:Canvas&gt;
-        &lt;draw:SkiaButton Text=&quot;Hello DrawnUI!&quot; /&gt;
+        &lt;draw:SkiaLabel FontSize=&quot;15&quot; Text=&quot;Drawn with SkiaSharp!&quot; /&gt;
     &lt;/draw:Canvas&gt;
 &lt;/ContentPage&gt;
 </code></pre>

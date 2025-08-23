@@ -20,7 +20,7 @@ description: Hardware-accelerated rendering engine for .NET MAUI built on SkiaSh
     </p>
     <div style="margin-top: 30px;">
       <a href="articles/getting-started.md" style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 0 10px; box-shadow: 0 4px 15px rgba(37,99,235,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease;">
-        🚀 Get Started
+        🔨 Setup Guide
       </a>
       <a href="https://github.com/taublast/DrawnUi" style="background: rgba(255,255,255,0.12); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 0 10px; border: 2px solid rgba(255,255,255,0.22); backdrop-filter: blur(2px);">
         ⭐ Star on GitHub
@@ -239,16 +239,15 @@ window.addEventListener('load', function() {
 });
 </script>
 
-## ⚡ Quick Start
-
 <div style="background: #1a202c; color: #e2e8f0; padding: 25px; border-radius: 8px; margin: 20px 0;">
 
-**1. Install the package:**
+
+**1. Install:**
 ```bash
 dotnet add package DrawnUi.Maui
 ```
 
-**2. Initialize in MauiProgram.cs:**
+**2. Initialize:**
 ```csharp
 public static MauiApp CreateMauiApp()
 {
@@ -261,11 +260,11 @@ public static MauiApp CreateMauiApp()
 }
 ```
 
-**3. Start building amazing UIs:**
+**3. Draw:**
 ```xml
 <ContentPage xmlns:draw="http://schemas.taublast.com/drawnUi/2022/maui">
     <draw:Canvas>
-        <draw:SkiaButton Text="Hello DrawnUI!" />
+        <draw:SkiaLabel FontSize="15" Text="Drawn with SkiaSharp!" />
     </draw:Canvas>
 </ContentPage>
 ```

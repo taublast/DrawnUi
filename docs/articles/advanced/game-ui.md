@@ -2,7 +2,7 @@
 
 DrawnUi is not just for business apps — with direct SkiaSharp rendering, real-time animation, and flexible input handling, you can create everything from simple arcade games to rich, animated dashboards.
 
-Mainly tested for  scenarios 
+Check out [Breakout (Bricks Breaker) source code](https://github.com/taublast/DrawnUi.Breakout)
 
 ## Why Use DrawnUi for 2D-Games?
 
