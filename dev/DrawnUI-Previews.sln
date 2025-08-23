@@ -5,21 +5,21 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.Maui.Camera", "Maui\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj", "{DD2D491D-7046-41D2-A00E-FE65CBADE85E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.Maui.Camera", "..\src\Maui\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj", "{DD2D491D-7046-41D2-A00E-FE65CBADE85E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.Maui.Game", "Maui\Addons\DrawnUi.Maui.Game\DrawnUi.Maui.Game.csproj", "{793E382E-815C-42A2-B045-44FF930BED07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.Maui.Game", "..\src\Maui\Addons\DrawnUi.Maui.Game\DrawnUi.Maui.Game.csproj", "{793E382E-815C-42A2-B045-44FF930BED07}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.MauiGraphics", "Maui\Addons\DrawnUi.MauiGraphics\DrawnUi.MauiGraphics.csproj", "{E1A7A5B7-8B7A-43CC-888B-4CF97783AFB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.MauiGraphics", "..\src\Maui\Addons\DrawnUi.MauiGraphics\DrawnUi.MauiGraphics.csproj", "{E1A7A5B7-8B7A-43CC-888B-4CF97783AFB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8ED244C1-6F60-4954-BC7F-98D827EA31CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{1BECAEC0-5BCC-49FE-AB0B-0677D78C3D0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\src\Tests\UnitTests\UnitTests.csproj", "{1BECAEC0-5BCC-49FE-AB0B-0677D78C3D0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"
 	ProjectSection(SolutionItems) = preProject
-		Maui\Directory.Build.props = Maui\Directory.Build.props
-		Directory.Build.props = Directory.Build.props
-		Directory.Build.targets = Directory.Build.targets
+		..\src\Maui\Directory.Build.props = ..\src\Maui\Directory.Build.props
+		..\src\Directory.Build.props = ..\src\Directory.Build.props
+		..\src\Directory.Build.targets = ..\src\Directory.Build.targets
 		..\nugets\githubupload.bat = ..\nugets\githubupload.bat
 		..\nugets\makenugets.bat = ..\nugets\makenugets.bat
 		..\nugets\movenugets.bat = ..\nugets\movenugets.bat
@@ -27,25 +27,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DrawnUi.Shared", "Shared\DrawnUi.Shared.shproj", "{83974207-9636-48DD-BDB3-98EDECBB1107}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DrawnUi.Shared", "..\src\Shared\DrawnUi.Shared.shproj", "{83974207-9636-48DD-BDB3-98EDECBB1107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui.MapsUi", "Maui\Addons\DrawnUi.Maui.MapsUi\DrawnUi.Maui.MapsUi.csproj", "{FADF6785-E873-6CD3-764C-E3A98456EAF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui.MapsUi", "..\src\Maui\Addons\DrawnUi.Maui.MapsUi\DrawnUi.Maui.MapsUi.csproj", "{FADF6785-E873-6CD3-764C-E3A98456EAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Maui\Samples\Sandbox\Sandbox.csproj", "{809FE1DE-DCE9-2383-C3DD-1B21F336EB34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "..\src\Maui\Samples\Sandbox\Sandbox.csproj", "{809FE1DE-DCE9-2383-C3DD-1B21F336EB34}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{5D20AA90-6969-D8BD-9DCD-8634F4692FDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui", "Maui\DrawnUi\DrawnUi.Maui.csproj", "{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui", "..\src\Maui\DrawnUi\DrawnUi.Maui.csproj", "{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.DrawnUi", "Maui\MetaPackage\AppoMobi.Maui.DrawnUi\AppoMobi.Maui.DrawnUi.csproj", "{B8F7A5C3-1234-5678-9ABC-DEF012345678}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeBenchmarks", "..\src\Tests\Benchmarks\SomeBenchmarks.csproj", "{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeBenchmarks", "Tests\Benchmarks\SomeBenchmarks.csproj", "{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorials", "Maui\Samples\Tutorials\Tutorials.csproj", "{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorials", "..\src\Maui\Samples\Tutorials\Tutorials.csproj", "{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreviewTests", "..\Tests\PreviewTests\PreviewTests.csproj", "{D2EEA793-E660-88EE-5881-3076142BC8EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastRepro", "Maui\Samples\FastRepro\FastRepro.csproj", "{DA3890E5-27F6-AFA3-CE6A-B32052050764}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastRepro", "..\src\Maui\Samples\FastRepro\FastRepro.csproj", "{DA3890E5-27F6-AFA3-CE6A-B32052050764}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotPreview.App.Maui", "..\..\hot-preview\src\platforms\HotPreview.App.Maui\HotPreview.App.Maui.csproj", "{6C450864-055B-3BAD-9A4F-4D8BDCFF4EF4}"
 EndProject
@@ -91,10 +89,6 @@ Global
 		{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8F7A5C3-1234-5678-9ABC-DEF012345678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8F7A5C3-1234-5678-9ABC-DEF012345678}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8F7A5C3-1234-5678-9ABC-DEF012345678}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8F7A5C3-1234-5678-9ABC-DEF012345678}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -136,7 +130,6 @@ Global
 		{1BECAEC0-5BCC-49FE-AB0B-0677D78C3D0B} = {8ED244C1-6F60-4954-BC7F-98D827EA31CC}
 		{FADF6785-E873-6CD3-764C-E3A98456EAF8} = {5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}
 		{809FE1DE-DCE9-2383-C3DD-1B21F336EB34} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
-		{B8F7A5C3-1234-5678-9ABC-DEF012345678} = {5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3} = {8ED244C1-6F60-4954-BC7F-98D827EA31CC}
 		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{D2EEA793-E660-88EE-5881-3076142BC8EC} = {8ED244C1-6F60-4954-BC7F-98D827EA31CC}
@@ -149,7 +142,7 @@ Global
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Shared\Shared.projitems*{83974207-9636-48dd-bdb3-98edecbb1107}*SharedItemsImports = 13
-		Shared\Shared.projitems*{93e119b1-4378-87df-2dd2-a818d1e6c2a2}*SharedItemsImports = 5
+		..\src\Shared\Shared.projitems*{83974207-9636-48dd-bdb3-98edecbb1107}*SharedItemsImports = 13
+		..\src\Shared\Shared.projitems*{93e119b1-4378-87df-2dd2-a818d1e6c2a2}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
