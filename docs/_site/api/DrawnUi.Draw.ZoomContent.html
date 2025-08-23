@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Draw_ZoomContent.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.ZoomContent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/main/apiSpec/new?filename=DrawnUi_Draw_ZoomContent.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.ZoomContent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -89,7 +89,7 @@
 
 
   <h1 id="DrawnUi_Draw_ZoomContent" data-uid="DrawnUi.Draw.ZoomContent" class="text-break">
-Class ZoomContent  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L11"><i class="bi bi-code-slash"></i></a>
+Class ZoomContent  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,15 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
   <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.TODO add animated movement</p>
+  <div class="markdown summary"><p>Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.</p>
+<p>DEBUG INSTRUCTIONS:</p>
+<ul>
+<li>Key debug outputs are enabled for pan movements and clamp operations</li>
+<li>Call DumpDebugState() manually to get a full state dump</li>
+<li>Uncomment debug sections in DrawViews, MeasureContent, ComputeContentScale for frame-by-frame debugging</li>
+<li>Watch for [ClampOffsetImage] CLAMPED! messages to see when pan limits are hit</li>
+<li>The DebugSummary provides comprehensive state when hitting pan limits</li>
+</ul>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -1805,6 +1813,9 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureChild_DrawnUi_Draw_SkiaControl_System_Double_System_Double_System_Single_">SkiaControl.MeasureChild(SkiaControl, double, double, float)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_">SkiaControl.MeasureContent(IEnumerable&lt;SkiaControl&gt;, SKRect, float)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetInheritedBindingContext_System_Object_">SkiaControl.SetInheritedBindingContext(object)</a>
     </div>
     <div>
@@ -3138,14 +3149,74 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
 
 
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="DrawnUi_Draw_ZoomContent__ctor_" data-uid="DrawnUi.Draw.ZoomContent.#ctor*"></a>
+
+  <h3 id="DrawnUi_Draw_ZoomContent__ctor" data-uid="DrawnUi.Draw.ZoomContent.#ctor">
+  ZoomContent()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ZoomContent()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="fields">Fields
 </h2>
 
 
 
+  <h3 id="DrawnUi_Draw_ZoomContent_ContentScaledRect" data-uid="DrawnUi.Draw.ZoomContent.ContentScaledRect">
+  ContentScaledRect
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SKRect ContentScaledRect</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <h3 id="DrawnUi_Draw_ZoomContent_LastValue" data-uid="DrawnUi.Draw.ZoomContent.LastValue">
   LastValue
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L495"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L547"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Last ViewportZoom value we are animating from</p>
@@ -3176,10 +3247,11 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_OffsetImage" data-uid="DrawnUi.Draw.ZoomContent.OffsetImage">
   OffsetImage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L295"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Pan offset in screen/pixel coordinates</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -3206,7 +3278,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_PanSpeedProperty" data-uid="DrawnUi.Draw.ZoomContent.PanSpeedProperty">
   PanSpeedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L101"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3236,7 +3308,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_PanningModeProperty" data-uid="DrawnUi.Draw.ZoomContent.PanningModeProperty">
   PanningModeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3266,7 +3338,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_Value" data-uid="DrawnUi.Draw.ZoomContent.Value">
   Value
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L497"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L549"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3296,7 +3368,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ViewportZoomProperty" data-uid="DrawnUi.Draw.ZoomContent.ViewportZoomProperty">
   ViewportZoomProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L66"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3326,7 +3398,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomLockedProperty" data-uid="DrawnUi.Draw.ZoomContent.ZoomLockedProperty">
   ZoomLockedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L90"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3356,7 +3428,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomMaxProperty" data-uid="DrawnUi.Draw.ZoomContent.ZoomMaxProperty">
   ZoomMaxProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L55"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3386,7 +3458,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomMinProperty" data-uid="DrawnUi.Draw.ZoomContent.ZoomMinProperty">
   ZoomMinProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L44"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3416,7 +3488,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomSpeedProperty" data-uid="DrawnUi.Draw.ZoomContent.ZoomSpeedProperty">
   ZoomSpeedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L77"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3446,7 +3518,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent__animatorValue" data-uid="DrawnUi.Draw.ZoomContent._animatorValue">
   _animatorValue
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L490"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L542"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3476,7 +3548,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent__panStarted" data-uid="DrawnUi.Draw.ZoomContent._panStarted">
   _panStarted
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L233"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L297"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3511,7 +3583,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_PanSpeed" data-uid="DrawnUi.Draw.ZoomContent.PanSpeed">
   PanSpeed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3542,7 +3614,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_PanningMode" data-uid="DrawnUi.Draw.ZoomContent.PanningMode">
   PanningMode
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3573,7 +3645,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ViewportZoom" data-uid="DrawnUi.Draw.ZoomContent.ViewportZoom">
   ViewportZoom
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L71"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3604,7 +3676,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomLocked" data-uid="DrawnUi.Draw.ZoomContent.ZoomLocked">
   ZoomLocked
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L95"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3635,7 +3707,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomMax" data-uid="DrawnUi.Draw.ZoomContent.ZoomMax">
   ZoomMax
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3666,7 +3738,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomMin" data-uid="DrawnUi.Draw.ZoomContent.ZoomMin">
   ZoomMin
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3697,10 +3769,10 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_ZoomSpeed" data-uid="DrawnUi.Draw.ZoomContent.ZoomSpeed">
   ZoomSpeed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L84"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>How much of finger movement will afect zoom change</p>
+  <div class="markdown level1 summary"><p>How much of finger movement will affect zoom change</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -3731,56 +3803,18 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <a id="DrawnUi_Draw_ZoomContent_ComputeContentScale_" data-uid="DrawnUi.Draw.ZoomContent.ComputeContentScale*"></a>
 
-  <h3 id="DrawnUi_Draw_ZoomContent_ComputeContentScale_SkiaSharp_SKRect_SkiaSharp_SKPoint_System_Single_" data-uid="DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single)">
-  ComputeContentScale(SKRect, SKPoint, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L157"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, SKPoint offsetCenter, float scale)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>destination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
-    <dd></dd>
-    <dt><code>offsetCenter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
-    <dd></dd>
-    <dt><code>scale</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-skiasharp.skrect,system.single-.scaleddestination">ScaledDestination</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-skiasharp.skrect,system.single-.scale">Scale</a>)</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="DrawnUi_Draw_ZoomContent_ComputeContentScale_" data-uid="DrawnUi.Draw.ZoomContent.ComputeContentScale*"></a>
-
   <h3 id="DrawnUi_Draw_ZoomContent_ComputeContentScale_SkiaSharp_SKRect_System_Single_SkiaSharp_SKPoint_" data-uid="DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,System.Single,SkiaSharp.SKPoint)">
   ComputeContentScale(SKRect, float, SKPoint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L146"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Computes the scaled destination rectangle and scale for content rendering.
+OffsetImage is expected to be in screen/pixel coordinates relative to the viewport.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, float scale, SKPoint offsetCenter)</code></pre>
+    <pre><code class="lang-csharp hljs">public (SKRect ScaledDestination, float Scale) ComputeContentScale(SKRect destination, float scale, SKPoint offsetPixels)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -3789,7 +3823,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
     <dd></dd>
     <dt><code>scale</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
     <dd></dd>
-    <dt><code>offsetCenter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dt><code>offsetPixels</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
     <dd></dd>
   </dl>
 
@@ -3813,7 +3847,7 @@ Class ZoomContent  <a class="header-action link-secondary" title="View source" h
 
   <h3 id="DrawnUi_Draw_ZoomContent_DrawViews_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.ZoomContent.DrawViews(DrawnUi.Draw.DrawingContext)">
   DrawViews(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base method will call RenderViewsList.
@@ -3851,7 +3885,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_ZoomContent_InitializeAnimator" data-uid="DrawnUi.Draw.ZoomContent.InitializeAnimator">
   InitializeAnimator()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L499"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L551"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3873,52 +3907,11 @@ Return number of drawn views.</p>
 
 
 
-  <a id="DrawnUi_Draw_ZoomContent_MeasureContent_" data-uid="DrawnUi.Draw.ZoomContent.MeasureContent*"></a>
-
-  <h3 id="DrawnUi_Draw_ZoomContent_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)">
-  MeasureContent(IEnumerable&lt;SkiaControl&gt;, SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L210"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Measuring as absolute layout for passed children</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override ScaledSize MeasureContent(IEnumerable&lt;SkiaControl&gt; children, SKRect destination, float scale)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>children</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a>&gt;</dt>
-    <dd></dd>
-    <dt><code>destination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
-    <dd></dd>
-    <dt><code>scale</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
   <a id="DrawnUi_Draw_ZoomContent_OnBindingContextChanged_" data-uid="DrawnUi.Draw.ZoomContent.OnBindingContextChanged*"></a>
 
   <h3 id="DrawnUi_Draw_ZoomContent_OnBindingContextChanged" data-uid="DrawnUi.Draw.ZoomContent.OnBindingContextChanged">
   OnBindingContextChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>First Maui will apply bindings to your controls, then it would call OnBindingContextChanged, so beware on not to break bindings.</p>
@@ -3945,7 +3938,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_ZoomContent_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.ZoomContent.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L235"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L305"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3983,7 +3976,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_ZoomContent_Reset" data-uid="DrawnUi.Draw.ZoomContent.Reset">
   Reset()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L431"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L471"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4009,7 +4002,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_ZoomContent_ScalePixels_System_Single_" data-uid="DrawnUi.Draw.ZoomContent.ScalePixels(System.Single)">
   ScalePixels(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L139"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L125"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4045,7 +4038,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_ZoomContent_ScalePoints_System_Double_" data-uid="DrawnUi.Draw.ZoomContent.ScalePoints(System.Double)">
   ScalePoints(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4081,7 +4074,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_ZoomContent_SetZoom_System_Double_System_Boolean_" data-uid="DrawnUi.Draw.ZoomContent.SetZoom(System.Double,System.Boolean)">
   SetZoom(double, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L440"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L481"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4114,7 +4107,7 @@ Return number of drawn views.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L11" class="edit-link">Edit this page</a>
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs/#L17" class="edit-link">Edit this page</a>
         </div>
 
 

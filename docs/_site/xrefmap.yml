@@ -1960,6 +1960,121 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.ScrollPickerLabelContainer.UpdateControl
   nameWithType: ScrollPickerLabelContainer.UpdateControl
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout
+  name: ScrollPickerLabelLayout
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html
+  commentId: T:DrawnUi.Controls.ScrollPickerLabelLayout
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout
+  nameWithType: ScrollPickerLabelLayout
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.#ctor
+  name: ScrollPickerLabelLayout()
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout__ctor
+  commentId: M:DrawnUi.Controls.ScrollPickerLabelLayout.#ctor
+  name.vb: New()
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ScrollPickerLabelLayout()
+  fullName.vb: DrawnUi.Controls.ScrollPickerLabelLayout.New()
+  nameWithType: ScrollPickerLabelLayout.ScrollPickerLabelLayout()
+  nameWithType.vb: ScrollPickerLabelLayout.New()
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.#ctor*
+  name: ScrollPickerLabelLayout
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout__ctor_
+  commentId: Overload:DrawnUi.Controls.ScrollPickerLabelLayout.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ScrollPickerLabelLayout
+  fullName.vb: DrawnUi.Controls.ScrollPickerLabelLayout.New
+  nameWithType: ScrollPickerLabelLayout.ScrollPickerLabelLayout
+  nameWithType.vb: ScrollPickerLabelLayout.New
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.ColorText
+  name: ColorText
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_ColorText
+  commentId: P:DrawnUi.Controls.ScrollPickerLabelLayout.ColorText
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ColorText
+  nameWithType: ScrollPickerLabelLayout.ColorText
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.ColorText*
+  name: ColorText
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_ColorText_
+  commentId: Overload:DrawnUi.Controls.ScrollPickerLabelLayout.ColorText
+  isSpec: "True"
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ColorText
+  nameWithType: ScrollPickerLabelLayout.ColorText
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextProperty
+  name: ColorTextProperty
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_ColorTextProperty
+  commentId: F:DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextProperty
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextProperty
+  nameWithType: ScrollPickerLabelLayout.ColorTextProperty
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelected
+  name: ColorTextSelected
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_ColorTextSelected
+  commentId: P:DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelected
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelected
+  nameWithType: ScrollPickerLabelLayout.ColorTextSelected
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelected*
+  name: ColorTextSelected
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_ColorTextSelected_
+  commentId: Overload:DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelected
+  isSpec: "True"
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelected
+  nameWithType: ScrollPickerLabelLayout.ColorTextSelected
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelectedProperty
+  name: ColorTextSelectedProperty
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_ColorTextSelectedProperty
+  commentId: F:DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelectedProperty
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.ColorTextSelectedProperty
+  nameWithType: ScrollPickerLabelLayout.ColorTextSelectedProperty
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.IsSelected
+  name: IsSelected
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_IsSelected
+  commentId: P:DrawnUi.Controls.ScrollPickerLabelLayout.IsSelected
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.IsSelected
+  nameWithType: ScrollPickerLabelLayout.IsSelected
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.IsSelected*
+  name: IsSelected
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_IsSelected_
+  commentId: Overload:DrawnUi.Controls.ScrollPickerLabelLayout.IsSelected
+  isSpec: "True"
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.IsSelected
+  nameWithType: ScrollPickerLabelLayout.IsSelected
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.OnBindingContextChanged
+  name: OnBindingContextChanged()
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_OnBindingContextChanged
+  commentId: M:DrawnUi.Controls.ScrollPickerLabelLayout.OnBindingContextChanged
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.OnBindingContextChanged()
+  nameWithType: ScrollPickerLabelLayout.OnBindingContextChanged()
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.OnBindingContextChanged*
+  name: OnBindingContextChanged
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_OnBindingContextChanged_
+  commentId: Overload:DrawnUi.Controls.ScrollPickerLabelLayout.OnBindingContextChanged
+  isSpec: "True"
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.OnBindingContextChanged
+  nameWithType: ScrollPickerLabelLayout.OnBindingContextChanged
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateContext(DrawnUi.Controls.WheelCellInfo)
+  name: UpdateContext(WheelCellInfo)
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_UpdateContext_DrawnUi_Controls_WheelCellInfo_
+  commentId: M:DrawnUi.Controls.ScrollPickerLabelLayout.UpdateContext(DrawnUi.Controls.WheelCellInfo)
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateContext(DrawnUi.Controls.WheelCellInfo)
+  nameWithType: ScrollPickerLabelLayout.UpdateContext(WheelCellInfo)
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateContext*
+  name: UpdateContext
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_UpdateContext_
+  commentId: Overload:DrawnUi.Controls.ScrollPickerLabelLayout.UpdateContext
+  isSpec: "True"
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateContext
+  nameWithType: ScrollPickerLabelLayout.UpdateContext
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateControl
+  name: UpdateControl()
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_UpdateControl
+  commentId: M:DrawnUi.Controls.ScrollPickerLabelLayout.UpdateControl
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateControl()
+  nameWithType: ScrollPickerLabelLayout.UpdateControl()
+- uid: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateControl*
+  name: UpdateControl
+  href: api/DrawnUi.Controls.ScrollPickerLabelLayout.html#DrawnUi_Controls_ScrollPickerLabelLayout_UpdateControl_
+  commentId: Overload:DrawnUi.Controls.ScrollPickerLabelLayout.UpdateControl
+  isSpec: "True"
+  fullName: DrawnUi.Controls.ScrollPickerLabelLayout.UpdateControl
+  nameWithType: ScrollPickerLabelLayout.UpdateControl
 - uid: DrawnUi.Controls.ScrollPickerWheel
   name: ScrollPickerWheel
   href: api/DrawnUi.Controls.ScrollPickerWheel.html
@@ -11714,19 +11829,63 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaWheelScroll.DrawVirtual
   nameWithType: SkiaWheelScroll.DrawVirtual
-- uid: DrawnUi.Controls.SkiaWheelScroll.FadeOpacity
-  name: FadeOpacity
-  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeOpacity
-  commentId: P:DrawnUi.Controls.SkiaWheelScroll.FadeOpacity
-  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeOpacity
-  nameWithType: SkiaWheelScroll.FadeOpacity
-- uid: DrawnUi.Controls.SkiaWheelScroll.FadeOpacity*
-  name: FadeOpacity
-  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeOpacity_
-  commentId: Overload:DrawnUi.Controls.SkiaWheelScroll.FadeOpacity
+- uid: DrawnUi.Controls.SkiaWheelScroll.Fade
+  name: Fade
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_Fade
+  commentId: P:DrawnUi.Controls.SkiaWheelScroll.Fade
+  fullName: DrawnUi.Controls.SkiaWheelScroll.Fade
+  nameWithType: SkiaWheelScroll.Fade
+- uid: DrawnUi.Controls.SkiaWheelScroll.Fade*
+  name: Fade
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_Fade_
+  commentId: Overload:DrawnUi.Controls.SkiaWheelScroll.Fade
   isSpec: "True"
-  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeOpacity
-  nameWithType: SkiaWheelScroll.FadeOpacity
+  fullName: DrawnUi.Controls.SkiaWheelScroll.Fade
+  nameWithType: SkiaWheelScroll.Fade
+- uid: DrawnUi.Controls.SkiaWheelScroll.FadeMin
+  name: FadeMin
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeMin
+  commentId: P:DrawnUi.Controls.SkiaWheelScroll.FadeMin
+  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeMin
+  nameWithType: SkiaWheelScroll.FadeMin
+- uid: DrawnUi.Controls.SkiaWheelScroll.FadeMin*
+  name: FadeMin
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeMin_
+  commentId: Overload:DrawnUi.Controls.SkiaWheelScroll.FadeMin
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeMin
+  nameWithType: SkiaWheelScroll.FadeMin
+- uid: DrawnUi.Controls.SkiaWheelScroll.FadeMinProperty
+  name: FadeMinProperty
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeMinProperty
+  commentId: F:DrawnUi.Controls.SkiaWheelScroll.FadeMinProperty
+  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeMinProperty
+  nameWithType: SkiaWheelScroll.FadeMinProperty
+- uid: DrawnUi.Controls.SkiaWheelScroll.FadeProperty
+  name: FadeProperty
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeProperty
+  commentId: F:DrawnUi.Controls.SkiaWheelScroll.FadeProperty
+  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeProperty
+  nameWithType: SkiaWheelScroll.FadeProperty
+- uid: DrawnUi.Controls.SkiaWheelScroll.FadeStrength
+  name: FadeStrength
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeStrength
+  commentId: P:DrawnUi.Controls.SkiaWheelScroll.FadeStrength
+  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeStrength
+  nameWithType: SkiaWheelScroll.FadeStrength
+- uid: DrawnUi.Controls.SkiaWheelScroll.FadeStrength*
+  name: FadeStrength
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeStrength_
+  commentId: Overload:DrawnUi.Controls.SkiaWheelScroll.FadeStrength
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeStrength
+  nameWithType: SkiaWheelScroll.FadeStrength
+- uid: DrawnUi.Controls.SkiaWheelScroll.FadeStrengthProperty
+  name: FadeStrengthProperty
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_FadeStrengthProperty
+  commentId: F:DrawnUi.Controls.SkiaWheelScroll.FadeStrengthProperty
+  fullName: DrawnUi.Controls.SkiaWheelScroll.FadeStrengthProperty
+  nameWithType: SkiaWheelScroll.FadeStrengthProperty
 - uid: DrawnUi.Controls.SkiaWheelScroll.GetCellPositionForIndex(System.Int32)
   name: GetCellPositionForIndex(int)
   href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_GetCellPositionForIndex_System_Int32_
@@ -11772,6 +11931,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaWheelScroll.HapticEnabled
   nameWithType: SkiaWheelScroll.HapticEnabled
+- uid: DrawnUi.Controls.SkiaWheelScroll.HapticEnabledProperty
+  name: HapticEnabledProperty
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_HapticEnabledProperty
+  commentId: F:DrawnUi.Controls.SkiaWheelScroll.HapticEnabledProperty
+  fullName: DrawnUi.Controls.SkiaWheelScroll.HapticEnabledProperty
+  nameWithType: SkiaWheelScroll.HapticEnabledProperty
 - uid: DrawnUi.Controls.SkiaWheelScroll.Helper3dChildren
   name: Helper3dChildren
   href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_Helper3dChildren
@@ -11935,25 +12100,6 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaWheelScroll.OnSelectedIndexChanged
   nameWithType: SkiaWheelScroll.OnSelectedIndexChanged
-- uid: DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength
-  name: OpacityFadeStrength
-  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_OpacityFadeStrength
-  commentId: P:DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength
-  fullName: DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength
-  nameWithType: SkiaWheelScroll.OpacityFadeStrength
-- uid: DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength*
-  name: OpacityFadeStrength
-  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_OpacityFadeStrength_
-  commentId: Overload:DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength
-  isSpec: "True"
-  fullName: DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength
-  nameWithType: SkiaWheelScroll.OpacityFadeStrength
-- uid: DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrengthProperty
-  name: OpacityFadeStrengthProperty
-  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_OpacityFadeStrengthProperty
-  commentId: F:DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrengthProperty
-  fullName: DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrengthProperty
-  nameWithType: SkiaWheelScroll.OpacityFadeStrengthProperty
 - uid: DrawnUi.Controls.SkiaWheelScroll.PaintSelectionIndicator(DrawnUi.Draw.DrawingContext)
   name: PaintSelectionIndicator(DrawingContext)
   href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_PaintSelectionIndicator_DrawnUi_Draw_DrawingContext_
@@ -11983,6 +12129,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaWheelScroll.PositionViewport
   nameWithType: SkiaWheelScroll.PositionViewport
+- uid: DrawnUi.Controls.SkiaWheelScroll.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  name: ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  commentId: M:DrawnUi.Controls.SkiaWheelScroll.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  fullName: DrawnUi.Controls.SkiaWheelScroll.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  nameWithType: SkiaWheelScroll.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+- uid: DrawnUi.Controls.SkiaWheelScroll.ProcessGestures*
+  name: ProcessGestures
+  href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_ProcessGestures_
+  commentId: Overload:DrawnUi.Controls.SkiaWheelScroll.ProcessGestures
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaWheelScroll.ProcessGestures
+  nameWithType: SkiaWheelScroll.ProcessGestures
 - uid: DrawnUi.Controls.SkiaWheelScroll.ScrollToIndex(System.Int32,System.Boolean,System.Single)
   name: ScrollToIndex(int, bool, float)
   href: api/DrawnUi.Controls.SkiaWheelScroll.html#DrawnUi_Controls_SkiaWheelScroll_ScrollToIndex_System_Int32_System_Boolean_System_Single_
@@ -63761,15 +63920,25 @@ references:
   commentId: T:DrawnUi.Draw.ZoomContent
   fullName: DrawnUi.Draw.ZoomContent
   nameWithType: ZoomContent
-- uid: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single)
-  name: ComputeContentScale(SKRect, SKPoint, float)
-  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_ComputeContentScale_SkiaSharp_SKRect_SkiaSharp_SKPoint_System_Single_
-  commentId: M:DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single)
-  name.vb: ComputeContentScale(SKRect, SKPoint, Single)
-  fullName: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect, SkiaSharp.SKPoint, float)
-  fullName.vb: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect, SkiaSharp.SKPoint, Single)
-  nameWithType: ZoomContent.ComputeContentScale(SKRect, SKPoint, float)
-  nameWithType.vb: ZoomContent.ComputeContentScale(SKRect, SKPoint, Single)
+- uid: DrawnUi.Draw.ZoomContent.#ctor
+  name: ZoomContent()
+  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent__ctor
+  commentId: M:DrawnUi.Draw.ZoomContent.#ctor
+  name.vb: New()
+  fullName: DrawnUi.Draw.ZoomContent.ZoomContent()
+  fullName.vb: DrawnUi.Draw.ZoomContent.New()
+  nameWithType: ZoomContent.ZoomContent()
+  nameWithType.vb: ZoomContent.New()
+- uid: DrawnUi.Draw.ZoomContent.#ctor*
+  name: ZoomContent
+  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent__ctor_
+  commentId: Overload:DrawnUi.Draw.ZoomContent.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: DrawnUi.Draw.ZoomContent.ZoomContent
+  fullName.vb: DrawnUi.Draw.ZoomContent.New
+  nameWithType: ZoomContent.ZoomContent
+  nameWithType.vb: ZoomContent.New
 - uid: DrawnUi.Draw.ZoomContent.ComputeContentScale(SkiaSharp.SKRect,System.Single,SkiaSharp.SKPoint)
   name: ComputeContentScale(SKRect, float, SKPoint)
   href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_ComputeContentScale_SkiaSharp_SKRect_System_Single_SkiaSharp_SKPoint_
@@ -63786,6 +63955,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ZoomContent.ComputeContentScale
   nameWithType: ZoomContent.ComputeContentScale
+- uid: DrawnUi.Draw.ZoomContent.ContentScaledRect
+  name: ContentScaledRect
+  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_ContentScaledRect
+  commentId: F:DrawnUi.Draw.ZoomContent.ContentScaledRect
+  fullName: DrawnUi.Draw.ZoomContent.ContentScaledRect
+  nameWithType: ZoomContent.ContentScaledRect
 - uid: DrawnUi.Draw.ZoomContent.DrawViews(DrawnUi.Draw.DrawingContext)
   name: DrawViews(DrawingContext)
   href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_DrawViews_DrawnUi_Draw_DrawingContext_
@@ -63818,22 +63993,6 @@ references:
   commentId: F:DrawnUi.Draw.ZoomContent.LastValue
   fullName: DrawnUi.Draw.ZoomContent.LastValue
   nameWithType: ZoomContent.LastValue
-- uid: DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  name: MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
-  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
-  commentId: M:DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
-  name.vb: MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
-  fullName: DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
-  fullName.vb: DrawnUi.Draw.ZoomContent.MeasureContent(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
-  nameWithType: ZoomContent.MeasureContent(IEnumerable<SkiaControl>, SKRect, float)
-  nameWithType.vb: ZoomContent.MeasureContent(IEnumerable(Of SkiaControl), SKRect, Single)
-- uid: DrawnUi.Draw.ZoomContent.MeasureContent*
-  name: MeasureContent
-  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_MeasureContent_
-  commentId: Overload:DrawnUi.Draw.ZoomContent.MeasureContent
-  isSpec: "True"
-  fullName: DrawnUi.Draw.ZoomContent.MeasureContent
-  nameWithType: ZoomContent.MeasureContent
 - uid: DrawnUi.Draw.ZoomContent.OffsetImage
   name: OffsetImage
   href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_OffsetImage

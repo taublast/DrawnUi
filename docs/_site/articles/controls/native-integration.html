@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/native-integration.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/main/docs/articles/controls/native-integration.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -298,8 +298,11 @@
     x:Name=&quot;CameraControl&quot;
     IsOn=&quot;True&quot;
     Facing=&quot;Default&quot;
+    CameraIndex=&quot;-1&quot;
     FlashMode=&quot;Off&quot;
     CaptureFlashMode=&quot;Auto&quot;
+    CapturePhotoQuality=&quot;Medium&quot;
+    CaptureFormatIndex=&quot;0&quot;
     WidthRequest=&quot;300&quot;
     HeightRequest=&quot;400&quot; /&gt;
 </code></pre>
@@ -327,6 +330,24 @@
 <td>Camera selection: Default (back), Selfie (front), Manual</td>
 </tr>
 <tr>
+<td><code>CameraIndex</code></td>
+<td>int</td>
+<td>-1</td>
+<td>Manual camera selection index (when Facing = Manual)</td>
+</tr>
+<tr>
+<td><code>State</code></td>
+<td>CameraState</td>
+<td>-</td>
+<td>Current camera state (read-only)</td>
+</tr>
+<tr>
+<td><code>IsBusy</code></td>
+<td>bool</td>
+<td>-</td>
+<td>Processing state (read-only)</td>
+</tr>
+<tr>
 <td><code>FlashMode</code></td>
 <td>FlashMode</td>
 <td>Off</td>
@@ -342,7 +363,19 @@
 <td><code>CapturePhotoQuality</code></td>
 <td>CaptureQuality</td>
 <td>Max</td>
-<td>Photo quality: Max, Medium, Low, Preview</td>
+<td>Photo quality: Max, Medium, Low, Preview, Manual</td>
+</tr>
+<tr>
+<td><code>CaptureFormatIndex</code></td>
+<td>int</td>
+<td>0</td>
+<td>Format index for manual capture (when CapturePhotoQuality = Manual)</td>
+</tr>
+<tr>
+<td><code>CurrentStillCaptureFormat</code></td>
+<td>CaptureFormat</td>
+<td>-</td>
+<td>Currently selected capture format (read-only)</td>
 </tr>
 <tr>
 <td><code>IsFlashSupported</code></td>
@@ -351,10 +384,34 @@
 <td>Whether flash is available (read-only)</td>
 </tr>
 <tr>
+<td><code>IsAutoFlashSupported</code></td>
+<td>bool</td>
+<td>-</td>
+<td>Whether auto flash is supported (read-only)</td>
+</tr>
+<tr>
 <td><code>Zoom</code></td>
 <td>double</td>
 <td>1.0</td>
 <td>Camera zoom level</td>
+</tr>
+<tr>
+<td><code>ZoomLimitMin</code></td>
+<td>double</td>
+<td>1.0</td>
+<td>Minimum zoom level</td>
+</tr>
+<tr>
+<td><code>ZoomLimitMax</code></td>
+<td>double</td>
+<td>10.0</td>
+<td>Maximum zoom level</td>
+</tr>
+<tr>
+<td><code>Effect</code></td>
+<td>SkiaImageEffect</td>
+<td>-</td>
+<td>Real-time color filters for preview</td>
 </tr>
 </tbody>
 </table>
@@ -389,18 +446,23 @@
 {
     try
     {
-        var photo = await Camera.TakePictureAsync();
-        if (photo != null)
-        {
-            // Handle captured photo
-            await SavePhotoAsync(photo);
-        }
+        await Camera.TakePicture();
+        // Photo will be delivered via CaptureSuccess event
     }
     catch (Exception ex)
     {
         // Handle error
         await DisplayAlert(&quot;Error&quot;, $&quot;Failed to capture photo: {ex.Message}&quot;, &quot;OK&quot;);
     }
+}
+
+private void OnCaptureSuccess(object sender, CapturedImage captured)
+{
+    // Handle captured photo
+    MainThread.BeginInvokeOnMainThread(async () =&gt;
+    {
+        await SavePhotoAsync(captured);
+    });
 }
 
 private void OnToggleTorchClicked(object sender, EventArgs e)
@@ -444,26 +506,141 @@ if (Camera.IsFlashSupported)
 <li><strong>Clean API</strong>: Simple property-based approach without legacy methods</li>
 <li><strong>Future Extensibility</strong>: Ready for strobe and other advanced flash modes</li>
 </ul>
+<h3 id="camera-management">Camera Management</h3>
+<p>SkiaCamera provides comprehensive camera enumeration and selection capabilities:</p>
+<pre><code class="lang-csharp">// Get available cameras
+var cameras = await Camera.GetAvailableCamerasAsync();
+foreach (var camera in cameras)
+{
+    Debug.WriteLine($&quot;Camera {camera.Index}: {camera.Name} ({camera.Position})&quot;);
+    Debug.WriteLine($&quot;  ID: {camera.Id}&quot;);
+    Debug.WriteLine($&quot;  Has Flash: {camera.HasFlash}&quot;);
+}
+
+// Manual camera selection
+Camera.Facing = CameraPosition.Manual;
+Camera.CameraIndex = 2; // Select third camera
+Camera.IsOn = true;
+
+// Automatic selection
+Camera.Facing = CameraPosition.Default; // Back camera
+Camera.Facing = CameraPosition.Selfie;  // Front camera
+</code></pre>
+<h3 id="capture-format-management">Capture Format Management</h3>
+<p>Control capture resolution and quality with flexible format selection:</p>
+<pre><code class="lang-csharp">// Quality presets
+Camera.CapturePhotoQuality = CaptureQuality.Max;     // Highest resolution
+Camera.CapturePhotoQuality = CaptureQuality.Medium;  // Balanced quality/size
+Camera.CapturePhotoQuality = CaptureQuality.Low;     // Fastest capture
+Camera.CapturePhotoQuality = CaptureQuality.Preview; // Smallest usable size
+
+// Manual format selection
+var formats = await Camera.GetAvailableCaptureFormatsAsync();
+Camera.CapturePhotoQuality = CaptureQuality.Manual;
+Camera.CaptureFormatIndex = 0; // Select first format
+
+// Read current format
+var currentFormat = Camera.CurrentStillCaptureFormat;
+if (currentFormat != null)
+{
+    Debug.WriteLine($&quot;Current: {currentFormat.Width}x{currentFormat.Height}&quot;);
+    Debug.WriteLine($&quot;Aspect: {currentFormat.AspectRatioString}&quot;);
+    Debug.WriteLine($&quot;Pixels: {currentFormat.TotalPixels:N0}&quot;);
+}
+</code></pre>
+<h3 id="core-methods">Core Methods</h3>
+<pre><code class="lang-csharp">// Camera Management
+public async Task&lt;List&lt;CameraInfo&gt;&gt; GetAvailableCamerasAsync()
+public async Task&lt;List&lt;CameraInfo&gt;&gt; RefreshAvailableCamerasAsync()
+public static void CheckPermissions(Action&lt;bool&gt; callback)
+
+// Capture Format Management
+public async Task&lt;List&lt;CaptureFormat&gt;&gt; GetAvailableCaptureFormatsAsync()
+public async Task&lt;List&lt;CaptureFormat&gt;&gt; RefreshAvailableCaptureFormatsAsync()
+public CaptureFormat CurrentStillCaptureFormat { get; }
+
+// Capture Operations
+public async Task TakePicture()
+public void FlashScreen(Color color, long duration = 250)
+public void OpenFileInGallery(string filePath)
+
+// Camera Controls
+public void SetZoom(double value)
+
+// Flash Control Methods
+public void SetFlashMode(FlashMode mode)
+public FlashMode GetFlashMode()
+public void SetCaptureFlashMode(CaptureFlashMode mode)
+public CaptureFlashMode GetCaptureFlashMode()
+</code></pre>
+<h3 id="events">Events</h3>
+<pre><code class="lang-csharp">public event EventHandler&lt;CapturedImage&gt; CaptureSuccess;
+public event EventHandler&lt;Exception&gt; CaptureFailed;
+public event EventHandler&lt;LoadedImageSource&gt; NewPreviewSet;
+public event EventHandler&lt;CameraState&gt; StateChanged;
+public event EventHandler&lt;string&gt; OnError;
+public event EventHandler&lt;double&gt; Zoomed;
+</code></pre>
+<h3 id="data-classes">Data Classes</h3>
+<pre><code class="lang-csharp">// Capture format information
+public class CaptureFormat
+{
+    public int Width { get; set; }                    // Width in pixels
+    public int Height { get; set; }                   // Height in pixels
+    public int TotalPixels =&gt; Width * Height;         // Total pixel count
+    public double AspectRatio =&gt; (double)Width / Height; // Decimal aspect ratio
+    public string AspectRatioString { get; }          // Standard notation (&quot;16:9&quot;, &quot;4:3&quot;)
+    public string FormatId { get; set; }              // Platform-specific identifier
+    public string Description { get; }               // Human-readable description
+}
+
+// Camera information
+public class CameraInfo
+{
+    public string Id { get; set; }                    // Platform camera ID
+    public string Name { get; set; }                  // Display name
+    public CameraPosition Position { get; set; }      // Camera position
+    public int Index { get; set; }                    // Camera index
+    public bool HasFlash { get; set; }                // Flash availability
+}
+</code></pre>
+<h3 id="enums">Enums</h3>
+<pre><code class="lang-csharp">public enum CameraPosition { Default, Selfie, Manual }
+public enum CameraState { Off, On, Error }
+public enum CaptureQuality { Max, Medium, Low, Preview, Manual }
+public enum FlashMode { Off, On, Strobe }
+public enum CaptureFlashMode { Off, Auto, On }
+public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
+</code></pre>
 <h3 id="gallery-integration">Gallery Integration</h3>
 <p>SkiaCamera provides <code>OpenFileInGallery()</code> method to open captured photos in the system gallery:</p>
 <pre><code class="lang-csharp">private async void OnCaptureClicked(object sender, EventArgs e)
 {
     try
     {
-        var photo = await Camera.TakePictureAsync();
-        if (photo != null)
-        {
-            // Save photo to file
-            var fileName = $&quot;photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg&quot;;
-            var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
+        await Camera.TakePicture();
+        // Photo will be delivered via CaptureSuccess event
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert(&quot;Error&quot;, $&quot;Failed to capture photo: {ex.Message}&quot;, &quot;OK&quot;);
+    }
+}
 
-            using var fileStream = File.Create(filePath);
-            using var data = photo.Encode(SKEncodedImageFormat.Jpeg, 90);
-            data.SaveTo(fileStream);
+private async void OnCaptureSuccess(object sender, CapturedImage captured)
+{
+    try
+    {
+        // Save photo to file
+        var fileName = $&quot;photo_{DateTime.Now:yyyyMMdd_HHmmss}.jpg&quot;;
+        var filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
 
-            // Open in system gallery
-            Camera.OpenFileInGallery(filePath);
-        }
+        using var fileStream = File.Create(filePath);
+        using var data = captured.Image.Encode(SKEncodedImageFormat.Jpeg, 90);
+        data.SaveTo(fileStream);
+
+        // Open in system gallery
+        Camera.OpenFileInGallery(filePath);
     }
     catch (Exception ex)
     {
@@ -496,7 +673,7 @@ if (Camera.IsFlashSupported)
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/controls/native-integration.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/taublast/drawnui/blob/main/docs/articles/controls/native-integration.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

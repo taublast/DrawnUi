@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/master/apiSpec/new?filename=DrawnUi_Controls_SkiaWheelScroll.md&amp;value=---%0Auid%3A%20DrawnUi.Controls.SkiaWheelScroll%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/main/apiSpec/new?filename=DrawnUi_Controls_SkiaWheelScroll.md&amp;value=---%0Auid%3A%20DrawnUi.Controls.SkiaWheelScroll%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -806,9 +806,6 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ClampOffsetHard_System_Single_System_Single_">SkiaScroll.ClampOffsetHard(float, float)</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaScroll.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ProcessGesturesForPlanes_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaScroll.ProcessGesturesForPlanes(SkiaGesturesParameters, GestureEventProcessingInfo)</a>
@@ -3489,7 +3486,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_DataSource" data-uid="DrawnUi.Controls.SkiaWheelScroll.DataSource">
   DataSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L31"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3517,9 +3514,129 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
 
 
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_FadeMinProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeMinProperty">
+  FadeMinProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty FadeMinProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_FadeProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeProperty">
+  FadeProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty FadeProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_FadeStrengthProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeStrengthProperty">
+  FadeStrengthProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty FadeStrengthProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_HapticEnabledProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.HapticEnabledProperty">
+  HapticEnabledProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty HapticEnabledProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_Helper3dChildren" data-uid="DrawnUi.Controls.SkiaWheelScroll.Helper3dChildren">
   Helper3dChildren
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3549,7 +3666,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_ItemsWrapper" data-uid="DrawnUi.Controls.SkiaWheelScroll.ItemsWrapper">
   ItemsWrapper
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3579,7 +3696,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_LinesColorProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.LinesColorProperty">
   LinesColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3609,7 +3726,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_LoopProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.LoopProperty">
   LoopProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L84"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3637,39 +3754,9 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
 
 
-  <h3 id="DrawnUi_Controls_SkiaWheelScroll_OpacityFadeStrengthProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrengthProperty">
-  OpacityFadeStrengthProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L77"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly BindableProperty OpacityFadeStrengthProperty</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_SelectedIndexProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.SelectedIndexProperty">
   SelectedIndexProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L168"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3699,7 +3786,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_VisibleItemCountProperty" data-uid="DrawnUi.Controls.SkiaWheelScroll.VisibleItemCountProperty">
   VisibleItemCountProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L203"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3734,7 +3821,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_CellsCount" data-uid="DrawnUi.Controls.SkiaWheelScroll.CellsCount">
   CellsCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L867"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L925"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3765,7 +3852,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_CellsPool" data-uid="DrawnUi.Controls.SkiaWheelScroll.CellsPool">
   CellsPool
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L29"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3796,7 +3883,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_DebugWheel" data-uid="DrawnUi.Controls.SkiaWheelScroll.DebugWheel">
   DebugWheel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3823,18 +3910,18 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
 
 
-  <a id="DrawnUi_Controls_SkiaWheelScroll_FadeOpacity_" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeOpacity*"></a>
+  <a id="DrawnUi_Controls_SkiaWheelScroll_Fade_" data-uid="DrawnUi.Controls.SkiaWheelScroll.Fade*"></a>
 
-  <h3 id="DrawnUi_Controls_SkiaWheelScroll_FadeOpacity" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeOpacity">
-  FadeOpacity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_Fade" data-uid="DrawnUi.Controls.SkiaWheelScroll.Fade">
+  Fade
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool FadeOpacity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool Fade { get; set; }</code></pre>
   </div>
 
 
@@ -3854,18 +3941,82 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
 
 
+  <a id="DrawnUi_Controls_SkiaWheelScroll_FadeMin_" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeMin*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_FadeMin" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeMin">
+  FadeMin
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How much the alpha at edges if fading is enabled. Default id 0.05f.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float FadeMin { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Controls_SkiaWheelScroll_FadeStrength_" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeStrength*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_FadeStrength" data-uid="DrawnUi.Controls.SkiaWheelScroll.FadeStrength">
+  FadeStrength
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How much the alpha fading is pronounced. 0-1. Default id 0.2f.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float FadeStrength { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaWheelScroll_HapticEnabled_" data-uid="DrawnUi.Controls.SkiaWheelScroll.HapticEnabled*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_HapticEnabled" data-uid="DrawnUi.Controls.SkiaWheelScroll.HapticEnabled">
   HapticEnabled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L66"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool HapticEnabled { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool HapticEnabled { get; set; }</code></pre>
   </div>
 
 
@@ -3889,7 +4040,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_HorizontalChildAlignement" data-uid="DrawnUi.Controls.SkiaWheelScroll.HorizontalChildAlignement">
   HorizontalChildAlignement
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3920,7 +4071,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_ItemHeight" data-uid="DrawnUi.Controls.SkiaWheelScroll.ItemHeight">
   ItemHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L153"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3951,7 +4102,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_ItemsSourceCount" data-uid="DrawnUi.Controls.SkiaWheelScroll.ItemsSourceCount">
   ItemsSourceCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L896"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L954"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3982,7 +4133,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_LinesColor" data-uid="DrawnUi.Controls.SkiaWheelScroll.LinesColor">
   LinesColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L102"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4013,7 +4164,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_Loop" data-uid="DrawnUi.Controls.SkiaWheelScroll.Loop">
   Loop
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L90"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4040,43 +4191,11 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
 
 
-  <a id="DrawnUi_Controls_SkiaWheelScroll_OpacityFadeStrength_" data-uid="DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength*"></a>
-
-  <h3 id="DrawnUi_Controls_SkiaWheelScroll_OpacityFadeStrength" data-uid="DrawnUi.Controls.SkiaWheelScroll.OpacityFadeStrength">
-  OpacityFadeStrength
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L86"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>How much the alpha fading is pronounced. 0-1. Default id 0.2f.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public float OpacityFadeStrength { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="DrawnUi_Controls_SkiaWheelScroll_SelectedIndex_" data-uid="DrawnUi.Controls.SkiaWheelScroll.SelectedIndex*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_SelectedIndex" data-uid="DrawnUi.Controls.SkiaWheelScroll.SelectedIndex">
   SelectedIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the index of the currently selected item</p>
@@ -4108,7 +4227,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_Use3d" data-uid="DrawnUi.Controls.SkiaWheelScroll.Use3d">
   Use3d
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4139,7 +4258,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_UseSpacing" data-uid="DrawnUi.Controls.SkiaWheelScroll.UseSpacing">
   UseSpacing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L871"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L929"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4170,7 +4289,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_VisibleCellsCountHalf" data-uid="DrawnUi.Controls.SkiaWheelScroll.VisibleCellsCountHalf">
   VisibleCellsCountHalf
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L868"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L926"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4201,7 +4320,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_VisibleItemCount" data-uid="DrawnUi.Controls.SkiaWheelScroll.VisibleItemCount">
   VisibleItemCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L172"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L217"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4232,7 +4351,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_WheelHalfHeight" data-uid="DrawnUi.Controls.SkiaWheelScroll.WheelHalfHeight">
   WheelHalfHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L869"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L927"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4263,7 +4382,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_WheelScrollingOffset" data-uid="DrawnUi.Controls.SkiaWheelScroll.WheelScrollingOffset">
   WheelScrollingOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L139"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4294,7 +4413,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_WheelVerticalCenter" data-uid="DrawnUi.Controls.SkiaWheelScroll.WheelVerticalCenter">
   WheelVerticalCenter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L870"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L928"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4329,7 +4448,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_ActualizeSelectedIndex" data-uid="DrawnUi.Controls.SkiaWheelScroll.ActualizeSelectedIndex">
   ActualizeSelectedIndex()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L678"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L730"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Updates the SelectedIndex property based on current scroll position</p>
@@ -4356,7 +4475,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_ApplyVisibleItemCount" data-uid="DrawnUi.Controls.SkiaWheelScroll.ApplyVisibleItemCount">
   ApplyVisibleItemCount()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L340"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4418,7 +4537,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_CheckNeedToSnap" data-uid="DrawnUi.Controls.SkiaWheelScroll.CheckNeedToSnap">
   CheckNeedToSnap()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L631"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L683"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4449,7 +4568,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_ClampOffset_System_Single_System_Single_SkiaSharp_SKRect_System_Boolean_" data-uid="DrawnUi.Controls.SkiaWheelScroll.ClampOffset(System.Single,System.Single,SkiaSharp.SKRect,System.Boolean)">
   ClampOffset(float, float, SKRect, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L772"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L825"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4491,7 +4610,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_CreateDefaultContent" data-uid="DrawnUi.Controls.SkiaWheelScroll.CreateDefaultContent">
   CreateDefaultContent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L240"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4517,7 +4636,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_DrawVirtual_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Controls.SkiaWheelScroll.DrawVirtual(DrawnUi.Draw.DrawingContext)">
   DrawVirtual(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L232"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L277"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is called when scrolling changes when in UseVirtual mode, override this to draw custom content</p>
@@ -4549,7 +4668,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_GetCellPositionForIndex_System_Int32_" data-uid="DrawnUi.Controls.SkiaWheelScroll.GetCellPositionForIndex(System.Int32)">
   GetCellPositionForIndex(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L942"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L1000"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4585,7 +4704,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_GetIndexAtCellPosition_System_Int32_" data-uid="DrawnUi.Controls.SkiaWheelScroll.GetIndexAtCellPosition(System.Int32)">
   GetIndexAtCellPosition(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L955"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L1013"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4621,7 +4740,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_IsIndexValid_System_Int32_" data-uid="DrawnUi.Controls.SkiaWheelScroll.IsIndexValid(System.Int32)">
   IsIndexValid(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L884"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L942"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4657,7 +4776,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_MeasureContent_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Controls.SkiaWheelScroll.MeasureContent(System.Single,System.Single,System.Single)">
   MeasureContent(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L202"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L247"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Calculate the value that will be set to ContentSize after that</p>
@@ -4698,7 +4817,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_OnLayoutChanged" data-uid="DrawnUi.Controls.SkiaWheelScroll.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L221"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4724,7 +4843,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_OnScrollCompleted" data-uid="DrawnUi.Controls.SkiaWheelScroll.OnScrollCompleted">
   OnScrollCompleted()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L666"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L718"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This triggers smapping checks and actions</p>
@@ -4751,7 +4870,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_OnSelectedIndexChanged_System_Int32_" data-uid="DrawnUi.Controls.SkiaWheelScroll.OnSelectedIndexChanged(System.Int32)">
   OnSelectedIndexChanged(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Raises the SelectedIndexChanged event</p>
@@ -4783,7 +4902,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_PaintSelectionIndicator_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Controls.SkiaWheelScroll.PaintSelectionIndicator(DrawnUi.Draw.DrawingContext)">
   PaintSelectionIndicator(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L527"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L579"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Draw selection indicator lines if needed</p>
@@ -4815,7 +4934,7 @@ Class SkiaWheelScroll  <a class="header-action link-secondary" title="View sourc
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_PositionViewport_SkiaSharp_SKRect_SkiaSharp_SKPoint_System_Single_System_Single_System_Boolean_" data-uid="DrawnUi.Controls.SkiaWheelScroll.PositionViewport(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single,System.Single,System.Boolean)">
   PositionViewport(SKRect, SKPoint, float, float, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L603"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L655"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Input offset parameters in PIXELS.
@@ -4860,11 +4979,49 @@ Creates a valid ViewportRect inside.</p>
 
 
 
+  <a id="DrawnUi_Controls_SkiaWheelScroll_ProcessGestures_" data-uid="DrawnUi.Controls.SkiaWheelScroll.ProcessGestures*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaWheelScroll_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Controls.SkiaWheelScroll.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
+  ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>args</code> <a class="xref" href="DrawnUi.Draw.SkiaGesturesParameters.html">SkiaGesturesParameters</a></dt>
+    <dd></dd>
+    <dt><code>apply</code> <a class="xref" href="DrawnUi.Draw.GestureEventProcessingInfo.html">GestureEventProcessingInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaWheelScroll_ScrollToIndex_" data-uid="DrawnUi.Controls.SkiaWheelScroll.ScrollToIndex*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_ScrollToIndex_System_Int32_System_Boolean_System_Single_" data-uid="DrawnUi.Controls.SkiaWheelScroll.ScrollToIndex(System.Int32,System.Boolean,System.Single)">
   ScrollToIndex(int, bool, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L818"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L876"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4899,7 +5056,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_SetContentSize" data-uid="DrawnUi.Controls.SkiaWheelScroll.SetContentSize">
   SetContentSize()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L209"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L254"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4925,7 +5082,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_Snap_System_Single_" data-uid="DrawnUi.Controls.SkiaWheelScroll.Snap(System.Single)">
   Snap(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L640"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L692"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4956,7 +5113,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_StartToFlingFrom_DrawnUi_Draw_ScrollFlingAnimator_System_Single_System_Single_" data-uid="DrawnUi.Controls.SkiaWheelScroll.StartToFlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)">
   StartToFlingFrom(ScrollFlingAnimator, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L562"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L614"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initiates a fling animation that precisely mirrors the Xamarin Android implementation</p>
@@ -5000,7 +5157,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Controls_SkiaWheelScroll_SelectedIndexChanged" data-uid="DrawnUi.Controls.SkiaWheelScroll.SelectedIndexChanged">
   SelectedIndexChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Event raised when the selected index changes</p>

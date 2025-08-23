@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.ProgressPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    x:Name="ThisPage"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    ios:Page.UseSafeArea="True"
+    x:DataType="demo:MainPageViewModel">
+
+    <draw:Canvas
+        Gestures="Enabled"
+        RenderingMode = "Accelerated"
+        HorizontalOptions="Fill"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            BackgroundColor="Black"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <controls:CircularProgress
+                Margin="64"
+                AccentColor="Red"
+                AutoSizeText="100%"
+                CommandOnAnimated="{Binding CommandProgressAnimated}"
+                FontColor="Red"
+                FontFamily="FontText"
+                PathColor="Gray"
+                TextFormat="{}{0:0}%"
+                TransitionSpeedMs="{Binding ProgressSpeed}"
+                VerticalOptions="Center"
+                Value="{Binding Progress}" />
+
+            <draw:SkiaButton
+                CommandTapped="{Binding CommandProgressStart}"
+                HorizontalOptions="Center"
+                Text="Test"
+                TranslationY="-32"
+                VerticalOptions="End" />
+            
+            <draw:SkiaLabel
+                Margin="50,0"
+                Padding="2"
+                AddMarginBottom="80"
+                BackgroundColor="#33000000"
+                FontSize="16"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Custom drawn control example"
+                TextColor="White"
+                VerticalOptions="End" />
+
+            <controls:ButtonToRoot/>
+
+            <!--  FPS  -->
+            <draw:SkiaLabelFps
+                Margin="0,0,4,84"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End" />
+
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>

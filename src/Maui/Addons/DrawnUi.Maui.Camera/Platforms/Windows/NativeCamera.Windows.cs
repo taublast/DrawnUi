@@ -1431,6 +1431,36 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     }
 
     /// <summary>
+    /// Gets the currently selected capture format
+    /// </summary>
+    /// <returns>Current capture format or null if not available</returns>
+    public CaptureFormat GetCurrentCaptureFormat()
+    {
+        try
+        {
+            // For Windows, we need to get the current capture resolution that would be used
+            // This is determined by the CapturePhotoQuality and CaptureFormatIndex settings
+            var (width, height) = GetBestCaptureResolution();
+
+            if (width > 0 && height > 0)
+            {
+                return new CaptureFormat
+                {
+                    Width = (int)width,
+                    Height = (int)height,
+                    FormatId = $"windows_{_cameraDevice?.Id}_{width}x{height}"
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] GetCurrentCaptureFormat error: {ex.Message}");
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Gets the manual exposure capabilities and recommended settings for the camera (not supported on Windows)
     /// </summary>
     /// <returns>Camera manual exposure range information indicating no support</returns>

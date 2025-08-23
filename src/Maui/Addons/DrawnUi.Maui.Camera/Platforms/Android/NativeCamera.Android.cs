@@ -136,6 +136,32 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
     /// <summary>
+    /// Gets the currently selected capture format
+    /// </summary>
+    /// <returns>Current capture format or null if not available</returns>
+    public CaptureFormat GetCurrentCaptureFormat()
+    {
+        try
+        {
+            if (CaptureWidth > 0 && CaptureHeight > 0)
+            {
+                return new CaptureFormat
+                {
+                    Width = CaptureWidth,
+                    Height = CaptureHeight,
+                    FormatId = $"android_{CameraId}_{CaptureWidth}x{CaptureHeight}"
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[NativeCameraAndroid] GetCurrentCaptureFormat error: {ex.Message}");
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Gets the manual exposure capabilities and recommended settings for the camera
     /// </summary>
     /// <returns>Camera manual exposure range information</returns>

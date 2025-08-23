@@ -87,6 +87,12 @@ public interface INativeCamera : IDisposable
     bool SetManualExposure(float iso, float shutterSpeed);
 
     /// <summary>
+    /// Gets the currently selected capture format
+    /// </summary>
+    /// <returns>Current capture format or null if not available</returns>
+    CaptureFormat GetCurrentCaptureFormat();
+
+    /// <summary>
     /// Sets the camera to automatic exposure mode
     /// </summary>
     void SetAutoExposure();

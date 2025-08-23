@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.TestPage2"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="using:PreviewTests.Views.Controls"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+    xmlns:PreviewTests="clr-namespace:PreviewTests"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:DataType="PreviewTests:MainPageViewModel"
+    BackgroundColor="#000000">
+
+    <ScrollView>
+        <StackLayout HeightRequest="1000">
+
+            <draw:Canvas
+                BackgroundColor="DarkSlateBlue"
+                Gestures="Lock"
+                RenderingMode = "Accelerated"
+                HorizontalOptions="Fill">
+
+                <draw:SkiaLayout
+                    HorizontalOptions="Fill"
+                    Tag="Wrapper"
+                    VerticalOptions="Fill">
+
+                    <draw:SkiaLayout Type="Column">
+
+
+                        <draw:SkiaLabel
+                            DropShadowColor="#33333333"
+                            DropShadowSize="4"
+                            FontFamily="FontTextTitle"
+                            FontSize="44"
+                            HorizontalOptions="Center"
+                            StrokeColor="White"
+                            StrokeWidth="2"
+                            Text="PreviewTests"
+                            UseCache="Image"
+                            VerticalOptions="Center">
+                            <draw:SkiaLabel.FillGradient>
+
+                                <draw:SkiaGradient
+                                    EndXRatio="0"
+                                    EndYRatio="1"
+                                    StartXRatio="0"
+                                    StartYRatio="0"
+                                    Type="Linear">
+                                    <draw:SkiaGradient.Colors>
+                                        <Color>White</Color>
+                                        <Color>Yellow</Color>
+                                        <Color>Orange</Color>
+                                        <Color>Red</Color>
+                                        <Color>DarkRed</Color>
+                                    </draw:SkiaGradient.Colors>
+                                </draw:SkiaGradient>
+
+                            </draw:SkiaLabel.FillGradient>
+                        </draw:SkiaLabel>
+
+                        <!--  one from the PreviewTests project  -->
+                        <controls:SliderColor
+                            Margin="32,0"
+                            HeightRequest="50" />
+
+                    </draw:SkiaLayout>
+
+                    <draw:SkiaLabelFps
+                        Margin="0,0,4,24"
+                        BackgroundColor="DarkRed"
+                        HorizontalOptions="End"
+                        Rotation="-45"
+                        TextColor="White"
+                        VerticalOptions="End"
+                        ZIndex="100">
+
+                    </draw:SkiaLabelFps>
+
+                </draw:SkiaLayout>
+
+            </draw:Canvas>
+
+        </StackLayout>
+    </ScrollView>
+
+</views:BasePageCodeBehind>

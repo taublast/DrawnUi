@@ -318,6 +318,23 @@ if (!string.IsNullOrEmpty(result))
 }
 ```
 
+#### Reading Current Format
+```csharp
+// Get the currently selected capture format
+var currentFormat = camera.CurrentStillCaptureFormat;
+if (currentFormat != null)
+{
+    Debug.WriteLine($"Current capture format: {currentFormat.Description}");
+    Debug.WriteLine($"Resolution: {currentFormat.Width}x{currentFormat.Height}");
+    Debug.WriteLine($"Aspect ratio: {currentFormat.AspectRatioString}");
+    Debug.WriteLine($"Total pixels: {currentFormat.TotalPixels:N0}");
+}
+
+// This works regardless of whether CapturePhotoQuality is set to:
+// - Max, Medium, Low, Preview (automatic selection)
+// - Manual (using CaptureFormatIndex)
+```
+
 #### Format Information
 ```csharp
 // CaptureFormat provides detailed information
@@ -1070,6 +1087,7 @@ public static void CheckPermissions(Action<bool> callback)
 // Capture Format Management
 public async Task<List<CaptureFormat>> GetAvailableCaptureFormatsAsync()
 public async Task<List<CaptureFormat>> RefreshAvailableCaptureFormatsAsync()
+public CaptureFormat CurrentStillCaptureFormat { get; }           // Currently selected format
 
 // Capture Operations
 public async Task TakePicture()
@@ -1273,9 +1291,12 @@ if (camera.State == CameraState.On && !camera.IsBusy)
 - [x] **Hardware-accelerated rendering** with SkiaSharp
 - [x] **Manual camera selection** by index with enumeration
 - [x] **Automatic camera selection** (front/back)
+- [x] **Camera enumeration** with `GetAvailableCamerasAsync()`
+- [x] **Capture format management** with `GetAvailableCaptureFormatsAsync()` and `CurrentStillCaptureFormat`
+- [x] **Custom resolution selection** for capture with quality presets and manual format selection
 - [x] **Real-time preview effects** (Sepia, B&W, Pastel)
 - [x] **Photo capture** with metadata and custom rendering applied
-- [x] **Zoom control**
+- [x] **Zoom control** with configurable limits
 - [x] **Advanced flash control** (independent preview torch and capture flash modes)
 - [x] **Event-driven architecture** for MVVM patterns
 - [x] **Permission handling** with built-in checks
@@ -1283,10 +1304,10 @@ if (camera.State == CameraState.On && !camera.IsBusy)
 - [x] **Performance optimization** with GPU caching and acceleration
 
 ### 🚧 ToDo
-- [ ] **Manual camera controls** (focus, exposure, ISO, white balance), already here but still using internally only, need to expose.
-- [ ] **Custom resolution selection** for capture and preview, actually auto-selecting, need to expose customization.
-- [ ] **Camera capability detection** (zoom ranges, supported formats), need to combine available cameras list with camera units list and expose.
-- [ ] **Video recording**
+- [ ] **Manual camera controls** (focus, exposure, ISO, white balance) - partially implemented, need to expose more controls
+- [ ] **Camera capability detection** (zoom ranges, supported formats) - need to combine available cameras list with camera units list and expose
+- [ ] **Video recording** support
+- [ ] **Preview format customization** - currently auto-selected to match capture aspect ratio
 
 
 ## References

@@ -72,6 +72,9 @@ items:
   - uid: DrawnUi.Controls.ScrollPickerLabelContainer
     name: ScrollPickerLabelContainer
     type: Class
+  - uid: DrawnUi.Controls.ScrollPickerLabelLayout
+    name: ScrollPickerLabelLayout
+    type: Class
   - uid: DrawnUi.Controls.ScrollPickerWheel
     name: ScrollPickerWheel
     type: Class

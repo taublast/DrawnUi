@@ -5,7 +5,8 @@ namespace DrawnUi.Controls
         public SkiaWheelStack()
         {
             Type = LayoutType.Column;
-            RecyclingTemplate = RecyclingTemplate.Disabled;
+            //RecyclingTemplate = RecyclingTemplate.Enabled;
+            //MeasureItemsStrategy = MeasuringStrategy.MeasureFirst;
             Spacing = 0;
         }
 

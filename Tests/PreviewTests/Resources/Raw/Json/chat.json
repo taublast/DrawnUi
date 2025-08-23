@@ -1,0 +1,186 @@
+[
+  {
+    "Id": "5780b25e-05bb-4ab5-adea-7e063f2faeb7",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Hey, how's it going?",
+    "CreatedTime": "2023-12-24T19:16:33.076485"
+  },
+  {
+    "Id": "64ae95b8-7bc5-4a97-9b72-74d5b3f0f5e3",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Pretty good, thanks! How about you?",
+    "CreatedTime": "2023-12-24T19:21:33.076677"
+  },
+  {
+    "Id": "2d02da39-3279-40cb-9ca7-6056a0b94948",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "I'm doing well. Just enjoying the weekend.",
+    "CreatedTime": "2023-12-24T19:21:33.076727"
+  },
+  {
+    "Id": "7cec311b-c248-44d8-aff5-f63f14f96dc5",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Nice. Got any plans?",
+    "CreatedTime": "2023-12-24T19:26:33.076771"
+  },
+  {
+    "Id": "afd58829-4c4e-44e0-9dcd-86ca03eba281",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Just going to relax and maybe catch a movie.",
+    "CreatedTime": "2023-12-24T19:26:33.076813"
+  },
+  {
+    "Id": "21af61e2-ae1c-46f0-9f32-b20e3af181ea",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Sounds like a perfect weekend. What movie are you planning to watch?",
+    "CreatedTime": "2023-12-24T19:31:33.076859"
+  },
+  {
+    "Id": "7c5d82e3-de6f-4bf0-9685-128c1ebb19e2",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "I'm thinking of watching the new sci-fi film that just came out.",
+    "CreatedTime": "2023-12-24T19:31:33.076901"
+  },
+  {
+    "Id": "af877ab3-b62c-4935-9623-fad401cbc22e",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Oh, I've heard good things about it. Let me know how it is!",
+    "CreatedTime": "2023-12-24T19:36:33.076942"
+  },
+  {
+    "Id": "9fa9ef9e-3b7f-4449-8b53-858041c97e0b",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Definitely will do. Are you up to anything fun?",
+    "CreatedTime": "2023-12-24T19:36:33.076983"
+  },
+  {
+    "Id": "0dd1d7ca-6d56-45d2-a9da-e505866d48bc",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Just some hiking and a bit of reading.",
+    "CreatedTime": "2023-12-24T19:37:33.076983"
+  },
+
+  {
+    "Id": "5780b25e-05bb-4ab5-adea-7e063f2faeb7",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Hey, how's it going?",
+    "CreatedTime": "2023-12-24T19:16:33.076485"
+  },
+  {
+    "Id": "64ae95b8-7bc5-4a97-9b72-74d5b3f0f5e3",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Pretty good, thanks! How about you?",
+    "CreatedTime": "2023-12-24T19:21:33.076677"
+  },
+  {
+    "Id": "2d02da39-3279-40cb-9ca7-6056a0b94948",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "I'm doing well. Just enjoying the weekend.",
+    "CreatedTime": "2023-12-24T19:21:33.076727"
+  },
+  {
+    "Id": "7cec311b-c248-44d8-aff5-f63f14f96dc5",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Nice. Got any plans?",
+    "CreatedTime": "2023-12-24T19:26:33.076771"
+  },
+  {
+    "Id": "afd58829-4c4e-44e0-9dcd-86ca03eba281",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Just going to relax and maybe catch a movie.",
+    "CreatedTime": "2023-12-24T19:26:33.076813"
+  },
+  {
+    "Id": "21af61e2-ae1c-46f0-9f32-b20e3af181ea",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Sounds like a perfect weekend. What movie are you planning to watch?",
+    "CreatedTime": "2023-12-24T19:31:33.076859"
+  },
+  {
+    "Id": "7c5d82e3-de6f-4bf0-9685-128c1ebb19e2",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "I'm thinking of watching the new sci-fi film that just came out.",
+    "CreatedTime": "2023-12-24T19:31:33.076901"
+  },
+  {
+    "Id": "af877ab3-b62c-4935-9623-fad401cbc22e",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Oh, I've heard good things about it. Let me know how it is!",
+    "CreatedTime": "2023-12-24T19:36:33.076942"
+  },
+  {
+    "Id": "9fa9ef9e-3b7f-4449-8b53-858041c97e0b",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Definitely will do. Are you up to anything fun?",
+    "CreatedTime": "2023-12-24T19:36:33.076983"
+  },
+  {
+    "Id": "0dd1d7ca-6d56-45d2-a9da-e505866d48bc",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Just some hiking and a bit of reading.",
+    "CreatedTime": "2023-12-24T19:37:33.076983"
+  },
+
+
+  {
+    "Id": "5780b25e-05bb-4ab5-adea-7e063f2faeb7",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Hey, how's it going?",
+    "CreatedTime": "2023-12-24T19:16:33.076485"
+  },
+  {
+    "Id": "64ae95b8-7bc5-4a97-9b72-74d5b3f0f5e3",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Pretty good, thanks! How about you?",
+    "CreatedTime": "2023-12-24T19:21:33.076677"
+  },
+  {
+    "Id": "2d02da39-3279-40cb-9ca7-6056a0b94948",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "I'm doing well. Just enjoying the weekend.",
+    "CreatedTime": "2023-12-24T19:21:33.076727"
+  },
+  {
+    "Id": "7cec311b-c248-44d8-aff5-f63f14f96dc5",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Nice. Got any plans?",
+    "CreatedTime": "2023-12-24T19:26:33.076771"
+  },
+  {
+    "Id": "afd58829-4c4e-44e0-9dcd-86ca03eba281",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Just going to relax and maybe catch a movie.",
+    "CreatedTime": "2023-12-24T19:26:33.076813"
+  },
+  {
+    "Id": "21af61e2-ae1c-46f0-9f32-b20e3af181ea",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Sounds like a perfect weekend. What movie are you planning to watch? REPEAT: Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch? Sounds like a perfect weekend. What movie are you planning to watch?",
+    "CreatedTime": "2023-12-24T19:31:33.076859"
+  },
+  {
+    "Id": "7c5d82e3-de6f-4bf0-9685-128c1ebb19e2",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "I'm thinking of watching the new sci-fi film that just came out.",
+    "CreatedTime": "2023-12-24T19:31:33.076901"
+  },
+  {
+    "Id": "af877ab3-b62c-4935-9623-fad401cbc22e",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Oh, I've heard good things about it. Let me know how it is!",
+    "CreatedTime": "2023-12-24T19:36:33.076942"
+  },
+  {
+    "Id": "9fa9ef9e-3b7f-4449-8b53-858041c97e0b",
+    "Author": "71980d5c-2659-4ccb-ba79-e4433514fae5",
+    "Text": "Definitely will do. Are you up to anything fun?",
+    "CreatedTime": "2023-12-24T19:36:33.076983"
+  },
+  {
+    "Id": "0dd1d7ca-6d56-45d2-a9da-e505866d48bc",
+    "Author": "1c2a3d9e-a0e9-4bd2-ae25-8718211e5f59",
+    "Text": "Just some hiking and a bit of reading.",
+    "CreatedTime": "2023-12-24T19:37:33.076983"
+  }
+
+]

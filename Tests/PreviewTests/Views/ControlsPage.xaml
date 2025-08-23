@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.ControlsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="demo:MainPageViewModel">
+
+    <draw:Canvas
+        Gestures="Enabled"
+        HorizontalOptions="Fill"
+        RenderingMode="Accelerated"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            Tag="Wrapper"
+            VerticalOptions="Fill">
+
+            <draw:SkiaScroll
+                BackgroundColor="WhiteSmoke"
+                HorizontalOptions="Fill"
+                IgnoreWrongDirection="True"
+                Tag="Scroll"
+                VerticalOptions="Fill">
+
+                <draw:SkiaLayout
+                    HorizontalOptions="Fill"
+                    Tag="Wrapper"
+                    Type="Column"
+                    UseCache="ImageComposite">
+
+                    <draw:SkiaLayout
+                        Margin="16,20,16,16"
+                        AddMarginTop="10"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Fill"
+                        Spacing="16"
+                        Split="0"
+                        Tag="Radio1"
+                        Type="Wrap"
+                        UseCache="ImageComposite">
+
+
+
+                        <controls:DrawnRadioButton Text="Flowers" />
+
+                        <controls:DrawnRadioButton HorizontalOptions="Start" Text="Food" />
+
+                        <controls:DrawnRadioButton Text="Origami" />
+
+                        <controls:DrawnRadioButton Text="Lego Bricks" />
+
+                        <controls:DrawnRadioButton Tag="CheckMe" Text="Something else" />
+
+                        <controls:DrawnRadioButton Text="Various" />
+
+                    </draw:SkiaLayout>
+
+                    <!--  todo bugged FontAttributes="Bold"  -->
+
+                    <draw:SkiaLayout
+                        Padding="32,32"
+                        HorizontalOptions="Center"
+                        Spacing="24"
+                        Tag="Content"
+                        Type="Wrap"
+                        UseCache="ImageComposite"
+                        WidthRequest="-1">
+
+                        <!--  Controls inside frame  -->
+                        <draw:SkiaLayout ExpandDirtyRegion="1">
+
+                            <draw:SkiaShape
+                                AddMarginTop="10"
+                                CornerRadius="12"
+                                HorizontalOptions="Fill"
+                                StrokeColor="Black"
+                                StrokeWidth="-1"
+                                VerticalOptions="Fill" />
+
+                            <draw:SkiaLabel
+                                Margin="16,0,0,0"
+                                Padding="4,0"
+                                BackgroundColor="WhiteSmoke"
+                                Text="Radio Buttons" />
+
+                            <draw:SkiaLayout
+                                Margin="20"
+                                AddMarginTop="14"
+                                DynamicColumns="True"
+                                Spacing="12"
+                                Split="-1"
+                                SplitAlign="True"
+                                Tag="Radio2"
+                                Type="Wrap"
+                                UseCache="ImageComposite">
+
+                                <controls:DrawnRadioButton Text="Flowers" />
+
+                                <controls:DrawnRadioButton Text="Food" />
+
+                                <controls:DrawnRadioButton Text="Origami" />
+
+                                <controls:DrawnRadioButton Text="Lego Bricks" />
+
+                                <controls:DrawnRadioButton Text="Something else" />
+
+                                <controls:DrawnRadioButton Text="Various" />
+
+                            </draw:SkiaLayout>
+
+                        </draw:SkiaLayout>
+
+                        <!--  CUPERTINO  -->
+                        <draw:SkiaLayout ExpandDirtyRegion="1">
+
+                            <draw:SkiaShape
+                                AddMarginTop="10"
+                                CornerRadius="12"
+                                HorizontalOptions="Fill"
+                                StrokeColor="Black"
+                                StrokeWidth="1.0"
+                                VerticalOptions="Fill" />
+
+                            <draw:SkiaLabel
+                                Margin="16,0,0,0"
+                                Padding="4,0"
+                                BackgroundColor="WhiteSmoke"
+                                Text="Cupertino" />
+
+                            <draw:SkiaLayout
+                                Margin="20"
+                                AddMarginTop="14"
+                                DynamicColumns="True"
+                                Spacing="12"
+                                Split="-1"
+                                SplitAlign="True"
+                                Tag="Radio2"
+                                Type="Wrap"
+                                UseCache="ImageComposite">
+
+                                <draw:SkiaSwitch ControlStyle="Cupertino" VerticalOptions="Center" />
+                                <draw:SkiaCheckbox ControlStyle="Cupertino" VerticalOptions="Center" />
+                                <draw:SkiaButton ControlStyle="Cupertino" Text="Button" />
+
+                            </draw:SkiaLayout>
+
+                        </draw:SkiaLayout>
+
+                        <!--  MATERIAL  -->
+                        <draw:SkiaLayout ExpandDirtyRegion="1">
+
+                            <draw:SkiaShape
+                                AddMarginTop="10"
+                                CornerRadius="12"
+                                HorizontalOptions="Fill"
+                                StrokeColor="Black"
+                                StrokeWidth="1.0"
+                                VerticalOptions="Fill" />
+
+                            <draw:SkiaLabel
+                                Margin="16,0,0,0"
+                                Padding="4,0"
+                                BackgroundColor="WhiteSmoke"
+                                Text="Material" />
+
+                            <draw:SkiaLayout
+                                Margin="20"
+                                AddMarginTop="14"
+                                DynamicColumns="True"
+                                Spacing="12"
+                                Split="-1"
+                                SplitAlign="True"
+                                Tag="Radio2"
+                                Type="Wrap"
+                                UseCache="ImageComposite">
+
+                                <draw:SkiaSwitch ControlStyle="Material" VerticalOptions="Center" />
+                                <draw:SkiaCheckbox ControlStyle="Material" VerticalOptions="Center" />
+                                <draw:SkiaButton ControlStyle="Material" Text="Button" />
+
+                            </draw:SkiaLayout>
+
+                        </draw:SkiaLayout>
+
+                        <!--  WINDOWS  -->
+                        <draw:SkiaLayout ExpandDirtyRegion="1">
+
+                            <draw:SkiaShape
+                                AddMarginTop="10"
+                                CornerRadius="12"
+                                HorizontalOptions="Fill"
+                                StrokeColor="Black"
+                                StrokeWidth="1.0"
+                                VerticalOptions="Fill" />
+
+                            <draw:SkiaLabel
+                                Margin="16,0,0,0"
+                                Padding="4,0"
+                                BackgroundColor="WhiteSmoke"
+                                Text="Windows" />
+
+                            <draw:SkiaLayout
+                                Margin="20"
+                                AddMarginTop="14"
+                                DynamicColumns="True"
+                                Spacing="12"
+                                Split="-1"
+                                SplitAlign="True"
+                                Tag="Radio2"
+                                Type="Wrap"
+                                UseCache="ImageComposite">
+
+                                <draw:SkiaSwitch ControlStyle="Windows" VerticalOptions="Center" />
+                                <draw:SkiaCheckbox ControlStyle="Windows" VerticalOptions="Center" />
+                                <draw:SkiaButton ControlStyle="Windows" Text="Button" />
+
+                            </draw:SkiaLayout>
+
+                        </draw:SkiaLayout>
+
+                        <!--<controls:DrawnSwitch />
+
+                        <controls:DrawnSlider />
+
+                        <controls:DrawnCheckbox VerticalOptions="End" />-->
+
+                        <!--  default stuff  -->
+
+                        <!--<draw:SkiaSwitch />
+
+                        <draw:SkiaCheckbox VerticalOptions="Center" />-->
+
+
+                    </draw:SkiaLayout>
+
+                </draw:SkiaLayout>
+
+            </draw:SkiaScroll>
+
+            <controls:ButtonToRoot />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>

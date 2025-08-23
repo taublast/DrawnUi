@@ -1,0 +1,319 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+        
+        <ApplicationId>com.companyname.previewtests</ApplicationId>
+        <ApplicationIdGuid>330e07b0-ebc2-4fde-9ac8-074d5c3269b3</ApplicationIdGuid>
+        <ApplicationTitle>DrawnUI PreviewTests</ApplicationTitle>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>PreviewTests</RootNamespace>
+        <UseMaui>true</UseMaui>
+        <SingleProject>true</SingleProject>
+        <ImplicitUsings>enable</ImplicitUsings>
+
+        <UseHotPreviewNuget>true</UseHotPreviewNuget>
+        
+    </PropertyGroup>
+
+	<PropertyGroup>
+        <WindowsPackageType>None</WindowsPackageType>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
+        <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
+        <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net*-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+        <CodesignKey>iPhone Developer</CodesignKey>
+	</PropertyGroup>
+   
+  <ItemGroup>
+	  <MauiImage Include="Resources\Raw\Svg\dotnet_bot.svg">
+	    <BaseSize>168,208</BaseSize>
+	  </MauiImage>
+	</ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <!--<EnableLLVM>True</EnableLLVM>-->
+    <Optimize>True</Optimize>
+    <!--<RunAOTCompilation>True</RunAOTCompilation>
+    <PublishTrimmed>True</PublishTrimmed>
+    <MtouchUseLlvm>True</MtouchUseLlvm>-->
+    <AndroidEnableSGenConcurrent>True</AndroidEnableSGenConcurrent>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net*-android|AnyCPU'">
+      <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net*-android|AnyCPU'">
+    <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="$(TargetFramework.Contains('ios')) == true">
+    <ProvisioningType>manual</ProvisioningType>
+  </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.70" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseHotPreviewNuget)' == 'true'">
+        <PackageReference Include="HotPreview.App.Maui" Version="0.16.58" />
+    </ItemGroup>
+
+    <Import Condition="'$(UseHotPreviewNuget)' == 'false'" Project="..\..\..\hot-preview\src\platforms\HotPreview.App.Maui\build\LocalTest.targets" />
+
+    <ItemGroup Condition="'$(UseHotPreviewNuget)' == 'false'">
+        <ProjectReference Include="..\..\..\hot-preview\src\HotPreview.AppBuildTasks\HotPreview.AppBuildTasks.csproj" />
+        <ProjectReference Include="..\..\..\hot-preview\src\HotPreview.SharedModel\HotPreview.SharedModel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Maui\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
+        <ProjectReference Include="..\..\src\Maui\Addons\DrawnUi.Maui.Game\DrawnUi.Maui.Game.csproj" />
+        <ProjectReference Include="..\..\src\Maui\Addons\DrawnUi.Maui.MapsUi\DrawnUi.Maui.MapsUi.csproj" />
+        <ProjectReference Include="..\..\src\Maui\Addons\DrawnUi.MauiGraphics\DrawnUi.MauiGraphics.csproj" />
+    </ItemGroup>
+
+  <ItemGroup>
+
+    <None Remove="Resources\Fonts\Orbitron-Black.ttf" />
+
+    <None Remove="Resources\Fonts\Orbitron-Bold.ttf" />
+
+    <None Remove="Resources\Fonts\Orbitron-ExtraBold.ttf" />
+
+    <None Remove="Resources\Fonts\Orbitron-Medium.ttf" />
+
+    <None Remove="Resources\Fonts\Orbitron-Regular.ttf" />
+
+    <None Remove="Resources\Fonts\Orbitron-SemiBold.ttf" />
+
+    <None Remove="Resources\Images\" />
+
+    <None Remove="Resources\Raw\Anims\hair.webp" />
+
+    <None Remove="Resources\Raw\baboon.jpg" />
+
+    <None Remove="Resources\Raw\dotnet_bot.png" />
+
+    <None Remove="Resources\Raw\Images\8.jpg" />
+
+    <None Remove="Resources\Raw\Images\glass2.jpg" />
+
+    <None Remove="Resources\Raw\Images\hugrobot2.jpg" />
+
+    <None Remove="Resources\Raw\Images\monkey1.jpg" />
+
+    <None Remove="Resources\Raw\Lottie\cross.json" />
+
+    <None Remove="Resources\Raw\Lottie\Loader.json" />
+
+    <None Remove="Resources\Raw\Lottie\ok.json" />
+
+    <None Remove="Resources\Raw\Lottie\robot.json" />
+
+    <None Remove="Resources\Raw\Markdown.md" />
+
+    <None Remove="Resources\Raw\Shaders\apple.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\invert.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\ripples.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transdoorway.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transfade.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\linearblur.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\pagecurl.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\pagecurlbtm.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\radial.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\rectangle.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\rectanglecrop.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\squeeze.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\squeezewire.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\stereoviewer.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\swap.sksl" />
+
+    <None Remove="Resources\Raw\Shaders\transitions\_template.sksl" />
+
+    <None Remove="Resources\Raw\Space\Sprites\glass.jpg" />
+
+    <None Remove="Resources\Raw\Svg\dotnet_bot.svg" />
+
+    <!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FEFEFE" />
+
+    <!-- Splash Screen -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#FEFEFE" BaseSize="180,180" />
+
+		<!-- Images -->
+		<!--<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />-->
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Remove="Models\**" />
+	</ItemGroup>
+    
+    <ItemGroup>
+
+        <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+ 
+    <EmbeddedResource Update="Resources\Strings\ResStrings.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>ResStrings.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    
+    </ItemGroup>
+
+
+  <ItemGroup>
+    <MauiAsset Update="Resources\Raw\Images\glass2.jpg">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Lottie\cross.json">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Lottie\Loader.json">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Lottie\robot.json">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Lottie\ok.json">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\ripples.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\apple.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transfade.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transdoorway.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\pagecurlbtm.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\stereoviewer.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\rectanglecrop.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\rectangle.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\radial.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\squeezewire.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\swap.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\squeeze.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\linearblur.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\_template.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Shaders\transitions\pagecurl.sksl">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Space\Sprites\glass.jpg">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+    <MauiAsset Update="Resources\Raw\Svg\dotnet_bot.svg">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </MauiAsset>
+  </ItemGroup>
+
+   
+    
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+    
+ 
+    
+        <!-- Exclude NuGet native assets to avoid conflicts -->
+        <!--<ItemGroup>
+        <PackageReference Include="HarfBuzzSharp.NativeAssets.Win32" Version="8.3.0.1">
+            <ExcludeAssets>native</ExcludeAssets>
+        </PackageReference>
+    </ItemGroup>-->
+
+    <!-- Windows x64 files -->
+    <!--<ItemGroup>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\windows\x64\*.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\windows\x64\*.pdb">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+    </ItemGroup>-->
+
+    <!-- WinUI x64 files -->
+    <!--<ItemGroup>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\winui\x64\*.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+        <Content Include="..\..\..\..\..\SkiaSharpFork\output\native\winui\x64\*.pdb">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win10-x64\native\%(Filename)%(Extension)</PackagePath>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="SkiaSharp.Views.WinUI.Native.Projection">
+        <HintPath>..\..\..\..\..\SkiaSharpFork\output\native\winui\any\SkiaSharp.Views.WinUI.Native.Projection.dll</HintPath>
+      </Reference>
+    </ItemGroup>-->
+
+
+ 
+</Project>
+ 

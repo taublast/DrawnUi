@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.AlohaKitPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:aloha="clr-namespace:PreviewTests.Views.Aloha"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:gestures="clr-namespace:AppoMobi.Maui.Gestures;assembly=AppoMobi.Maui.Gestures"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="thisView"
+    ios:Page.UseSafeArea="True"
+    x:DataType="demo:MainPageViewModel">
+
+
+
+    <draw:Canvas
+        BackgroundColor="Black"
+        Gestures="Enabled"
+        RenderingMode = "Accelerated"
+        HorizontalOptions="Fill"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            x:Name="MainLayout"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <!--  https://github.com/jsuarezruiz/AlohaKit.Controls  -->
+
+            <aloha:SkiaMultiBarChart
+                Margin="24,0,24,0"
+                AxisLinesColor="LightGray"
+                AxisLinesFontSize="11"
+                AxisLinesStrokeSize="0.9"
+                BackgroundColor="Gainsboro"
+                ChartMargin="0"
+                ColumnNames="{Binding Source={x:Reference thisView}, Path=ColumnNames}"
+                DisplayHorizontalAxisLines="True"
+                DisplayVerticalAxisLines="True"
+                EnableEntryAnimations="True"
+                Entries="{Binding Source={x:Reference thisView}, Path=MultiSeriesChartCollection}"
+                FooterLabelsMargin="8"
+                FooterLabelsTextSize="10"
+                GroupStyles="{Binding Source={x:Reference thisView}, Path=MultiSeriesChartStyles}"
+                HeaderValuesMargin="20"
+                HeightRequest="200"
+                HorizontalOptions="Fill"
+                IsLabelTextTruncationEnabled="True"
+                PathsColorOpacity="0.6"
+                ReanimateOnPropertyChanged="True"
+                VerticalOptions="Center" />
+
+            <draw:SkiaLabel
+                Margin="50,0"
+                Padding="2"
+                AddMarginBottom="80"
+                BackgroundColor="#33000000"
+                FontSize="16"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Consume Maui Graphics AlohaKit library by Javier Suárez"
+                TextColor="White"
+                VerticalOptions="End" />
+            
+            <controls:ButtonToRoot />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>

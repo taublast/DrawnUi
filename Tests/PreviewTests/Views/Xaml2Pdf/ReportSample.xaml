@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaLayout
+    x:Class="PreviewTests.Views.Xaml2Pdf.ReportSample"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:strings="clr-namespace:PreviewTests.Resources.Strings"
+    HorizontalOptions="Fill"
+    Tag="ReportWrapper">
+
+    <draw:SkiaShape
+        Margin="16"
+        Padding="16"
+        CornerRadius="8"
+        HorizontalOptions="Fill"
+        StrokeColor="Black"
+        StrokeWidth="1">
+
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            Spacing="12"
+            Tag="ReportColumn"
+            Type="Column">
+
+            <draw:SkiaLabel
+                Tag="ReportTitle"
+                Text="This is a report sample, we will use different controls inside. We are using a localized Markdown text from app resources below:" />
+
+            <draw:SkiaRichLabel
+                BackgroundColor="Gainsboro"
+                FontSize="13"
+                HorizontalOptions="Fill"
+                LinkColor="Blue"
+                Text="{x:Static strings:ResStrings.MarkdownTest}"
+                TextColor="Black" />
+
+            <draw:SkiaLayout
+                HorizontalOptions="Fill"
+                Type="Absolute">
+
+                <draw:SkiaImage
+                    HeightRequest="71"
+                    LoadSourceOnFirstDraw="False"
+                    Success="SkiaImage_OnOnSuccess"
+                    Source="Images/8.jpg"
+                    WidthRequest="90" />
+
+                <!--  rest will take grid  -->
+                <draw:SkiaDecoratedGrid
+                    Margin="100,0,0,0"
+                    ColumnDefinitions="1*,1*,1*,1*"
+                    HorizontalOptions="Fill"
+                    RowDefinitions="30,40"
+                    Type="Grid">
+
+                    <!--  header  -->
+                    <draw:SkiaLabel
+                        Grid.Column="0"
+                        FontFamily="FontText"
+                        HorizontalOptions="Center"
+                        Text="WinUI"
+                        VerticalOptions="Center" />
+
+                    <draw:SkiaLabel
+                        Grid.Column="1"
+                        FontFamily="FontText"
+                        HorizontalOptions="Center"
+                        Text="Android"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+
+                    <draw:SkiaLabel
+                        Grid.Column="2"
+                        HorizontalOptions="Center"
+                        Text="iOS"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+
+                    <draw:SkiaLabel
+                        Grid.Column="3"
+                        HorizontalOptions="Center"
+                        Text="MacCatalyst"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+
+                    <!--  data  -->
+                    <draw:SkiaLabel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontFamily="FontText"
+                        HorizontalOptions="Center"
+                        Text="Yes"
+                        TextColor="Green"
+                        VerticalOptions="Center" />
+
+                    <draw:SkiaLabel
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontFamily="FontText"
+                        HorizontalOptions="Center"
+                        Text="Yes"
+                        TextColor="Green"
+                        VerticalOptions="Center" />
+
+                    <draw:SkiaLabel
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        HorizontalOptions="Center"
+                        Text="Yes"
+                        TextColor="Green"
+                        VerticalOptions="Center" />
+
+                    <draw:SkiaLabel
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        HorizontalOptions="Center"
+                        Text="Yes"
+                        TextColor="Green"
+                        VerticalOptions="Center" />
+
+                </draw:SkiaDecoratedGrid>
+
+            </draw:SkiaLayout>
+
+            <!--  Export data from viewmodel  -->
+            <draw:SkiaLabel
+                Text="{Binding BindableText}"
+                TextColor="Red" />
+
+
+        </draw:SkiaLayout>
+
+    </draw:SkiaShape>
+
+</draw:SkiaLayout>

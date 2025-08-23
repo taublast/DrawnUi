@@ -12,6 +12,16 @@ namespace DrawnUi.Controls
             return false;
         }
 
+        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        {
+            var consumed = base.ProcessGestures(args, apply);
+            if (consumed == null && (args.Type != TouchActionResult.Up || args.Type != TouchActionResult.Tapped))
+            {
+                consumed = this;
+            }
+            return consumed;
+        }
+
         public string DebugWheel => ItemsWrapper?.DebugString;
 
         protected readonly Sk3dView Helper3dChildren = new();
@@ -46,8 +56,30 @@ namespace DrawnUi.Controls
         public DrawImageAlignment HorizontalChildAlignement => DrawImageAlignment.Center;
 
         public bool Use3d => true;
-        public bool FadeOpacity => true;
-        public bool HapticEnabled => false;
+
+        public static readonly BindableProperty HapticEnabledProperty = BindableProperty.Create(
+            nameof(HapticEnabled),
+            typeof(bool),
+            typeof(SkiaWheelScroll),
+            false, propertyChanged: NeedDraw);
+
+        public bool HapticEnabled
+        {
+            get { return (bool)GetValue(HapticEnabledProperty); }
+            set { SetValue(HapticEnabledProperty, value); }
+        }
+
+        public static readonly BindableProperty FadeProperty = BindableProperty.Create(
+            nameof(Fade),
+            typeof(bool),
+            typeof(SkiaWheelScroll),
+            true, propertyChanged: NeedInvalidateMeasure);
+
+        public bool Fade
+        {
+            get { return (bool)GetValue(FadeProperty); }
+            set { SetValue(FadeProperty, value); }
+        }
 
         public static readonly BindableProperty LoopProperty = BindableProperty.Create(
             nameof(Loop),
@@ -73,9 +105,8 @@ namespace DrawnUi.Controls
             set { SetValue(LinesColorProperty, value); }
         }
 
-
-        public static readonly BindableProperty OpacityFadeStrengthProperty = BindableProperty.Create(
-            nameof(OpacityFadeStrength),
+        public static readonly BindableProperty FadeStrengthProperty = BindableProperty.Create(
+            nameof(FadeStrength),
             typeof(float),
             typeof(SkiaWheelScroll),
             0.2f, propertyChanged: NeedDraw);
@@ -83,12 +114,26 @@ namespace DrawnUi.Controls
         /// <summary>
         /// How much the alpha fading is pronounced. 0-1. Default id 0.2f.
         /// </summary>
-        public float OpacityFadeStrength
+        public float FadeStrength
         {
-            get { return (float)GetValue(OpacityFadeStrengthProperty); }
-            set { SetValue(OpacityFadeStrengthProperty, value); }
+            get { return (float)GetValue(FadeStrengthProperty); }
+            set { SetValue(FadeStrengthProperty, value); }
         }
 
+        public static readonly BindableProperty FadeMinProperty = BindableProperty.Create(
+            nameof(FadeMin),
+            typeof(float),
+            typeof(SkiaWheelScroll),
+            0.05f, propertyChanged: NeedInvalidateMeasure);
+
+        /// <summary>
+        /// How much the alpha at edges if fading is enabled. Default id 0.05f.
+        /// </summary>
+        public float FadeMin
+        {
+            get { return (float)GetValue(FadeMinProperty); }
+            set { SetValue(FadeMinProperty, value); }
+        }
 
         private float wheelScrollingOffset;
         public float WheelScrollingOffset
@@ -468,9 +513,11 @@ namespace DrawnUi.Controls
                 }
             }
 
-            if (FadeOpacity && !info.IsSelected)
+            if (Fade && !info.IsSelected)
             {
-                info.Opacity = (WheelHalfHeight - Math.Abs(WheelVerticalCenter - itemCenterY)) / (WheelHalfHeight * OpacityFadeStrength);
+                float minOpacity = FadeMin;
+                float calculatedOpacity = (WheelHalfHeight - Math.Abs(WheelVerticalCenter - itemCenterY)) / (WheelHalfHeight * FadeStrength);
+                info.Opacity = Math.Max(minOpacity, calculatedOpacity);
             }
             else
             {
@@ -506,10 +553,15 @@ namespace DrawnUi.Controls
                 {
                     cell.UpdateContext(item);
                 }
-                else
-                if (FadeOpacity)
+
+                if (Fade)
                 {
                     item.View.Opacity = item.Opacity;
+                }
+
+                if (item.View is IInsideWheelStack aware)
+                {
+                    aware.OnPositionChanged(item.Index, item.IsSelected);
                 }
 
                 item.View.Render(context.WithDestination(item.Destination));
@@ -761,7 +813,8 @@ namespace DrawnUi.Controls
 
             ViewportOffsetY = -targetY / RenderingScale;
 
-            if (index == 0)
+            // Align clamping baseline only for non-loop mode
+            if (!Loop && index == 0)
             {
                 _zeroOffset = -targetY / RenderingScale;
             }
@@ -771,10 +824,15 @@ namespace DrawnUi.Controls
 
         public override Vector2 ClampOffset(float x, float y, SKRect contentOffsetBounds, bool strict = false)
         {
+            // In loop mode we do not translate clamping with _zeroOffset.
+            // That translation is only meaningful for non-loop wheels, where index 0
+            // is anchored to one physical end. Loop has no ends; avoid skewing bounds.
+            if (Loop)
+            {
+                return base.ClampOffset(x, y, contentOffsetBounds, strict);
+            }
+
             var ret = base.ClampOffset(x, y - _zeroOffset, contentOffsetBounds, strict);
-
-            //Debug.WriteLine($"Tuned {y - _zeroOffset} => {ret.Y + _zeroOffset}");
-
             return new(ret.X, ret.Y + _zeroOffset);
         }
 

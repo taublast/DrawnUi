@@ -329,6 +329,29 @@ public partial class SkiaCamera : SkiaControl
         return new List<CaptureFormat>();
 #endif
     }
+
+    /// <summary>
+    /// Gets the currently selected capture format.
+    /// This reflects the format that will be used for still image capture based on
+    /// the current CapturePhotoQuality and CaptureFormatIndex settings.
+    /// </summary>
+    public CaptureFormat CurrentStillCaptureFormat
+    {
+        get
+        {
+#if ONPLATFORM
+            try
+            {
+                return NativeControl?.GetCurrentCaptureFormat();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[SkiaCamera] Error getting current capture format: {ex.Message}");
+            }
+#endif
+            return null;
+        }
+    }
     
     /// <summary>
     /// Internal method to get available cameras with caching
@@ -1695,11 +1718,24 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    protected override void OnMeasured()
+    {
+        base.OnMeasured();
+
+        if (Display != null)
+        {
+            Display.Aspect = this.Aspect;
+        }
+    }
+
     protected override void OnLayoutChanged()
     {
         base.OnLayoutChanged();
 
-        Display.Aspect = this.Aspect;
+        if (Display != null)
+        {
+            Display.Aspect = this.Aspect; //todo check do we still need this now
+        }
     }
 
     //public static readonly BindableProperty DisplayModeProperty = BindableProperty.Create(

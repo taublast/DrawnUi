@@ -1,4 +1,9 @@
 {
+  "sitemap": {
+    "baseUrl": "https://drawnui.net/",
+    "changefreq": "weekly",
+    "priority": 0.5
+  },
   "source_base_path": "C:/Dev/Cases/GitHub/DrawnUi.Maui/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
@@ -298,6 +303,20 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Controls.ScrollPickerLabelContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.ScrollPickerLabelLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.ScrollPickerLabelLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.ScrollPickerLabelLayout",
       "Summary": null
     },
     {
@@ -5072,7 +5091,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Draw.ZoomContent",
-      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"1\">Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.TODO add animated movement</p>\n"
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"1\">Wrapper to zoom and pan content by changing the rendering scale so not affecting quality, this is not a transform.</p>\n<p sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"3\">DEBUG INSTRUCTIONS:</p>\n<ul sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"4\">\n<li sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"4\">Key debug outputs are enabled for pan movements and clamp operations</li>\n<li sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"5\">Call DumpDebugState() manually to get a full state dump</li>\n<li sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"6\">Uncomment debug sections in DrawViews, MeasureContent, ComputeContentScale for frame-by-frame debugging</li>\n<li sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"7\">Watch for [ClampOffsetImage] CLAMPED! messages to see when pan limits are hit</li>\n<li sourcefile=\"api/DrawnUi.Draw.ZoomContent.yml\" sourcestartlinenumber=\"8\">The DebugSummary provides comprehensive state when hitting pan limits</li>\n</ul>\n"
     },
     {
       "type": "ManagedReference",
@@ -6789,7 +6808,7 @@
       "version": ""
     },
     {
-      "type": "Redirection",
+      "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {

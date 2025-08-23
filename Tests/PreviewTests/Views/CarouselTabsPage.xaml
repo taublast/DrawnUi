@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.CarouselTabsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:gestures="clr-namespace:AppoMobi.Maui.Gestures;assembly=AppoMobi.Maui.Gestures"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    ios:Page.UseSafeArea="True"
+    x:DataType="demo:MainPageViewModel"
+    BackgroundColor="#333333">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style
+                x:Key="SkiaLabelStyleTabText"
+                Class="SkiaLabelStyleTabText"
+                TargetType="draw:SkiaLabel">
+                <Setter Property="TextColor" Value="#ababab" />
+                <Setter Property="FontFamily" Value="FontText" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <x:String x:Key="SvgHomeTabs">
+                <![CDATA[ 
+                                 
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+ viewBox="0 0 576 512" style="enable-background:new 0 0 576 512;" xml:space="preserve">
+<style type="text/css">
+.st0{fill:none;stroke:#000000;stroke-width:30;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M560.2,255.5c-3.5,37.3-37.2,29.4-60.5,30.2c0,0,0.5,116.5,0.6,144.6c0.1,49.9-0.2,70.5-71.9,66.4
+c-32.7-1.2-62.9,7.6-76.8-23c-15.4-90.4,28.1-133.9-65.1-127.5c-84.7-10.2-53,53.9-58.9,110.7c-2.8,50.1-45.1,38.4-85.9,39.8
+c-65.2,3-67-14.9-65.3-79.1c0-65.1,0.1-83.8,0.1-132c-76.2,7.8-63.9-40.5-51.1-52.8c0,0,23.2-20.2,55.4-48.1
+c80.3-68,187.2-166.1,197.3-168.4c31.4-10.6,62.5,39.2,131.1,93.5C501.2,193.2,568.7,240.1,560.2,255.5z"/>
+</svg>
+                            
+            ]]>
+
+            </x:String>
+
+            <x:String x:Key="SvgHomeTabsFull">
+                <![CDATA[ 
+                                             
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/>
+                </svg>        
+                        ]]>
+
+            </x:String>
+
+            <x:String x:Key="SvgSettingsTabsFull">
+                <![CDATA[ 
+                                             
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336c44.2 0 80-35.8 80-80s-35.8-80-80-80s-80 35.8-80 80s35.8 80 80 80z"/></svg>
+                                        
+                        ]]>
+
+            </x:String>
+
+            <x:String x:Key="SvgSettingsTabs">
+                <![CDATA[ 
+                                             
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path d="M176 255.1C176 211.8 211.8 175.1 256 175.1C300.2 175.1 336 211.8 336 255.1C336 300.2 300.2 336 256 336C211.8 336 176 300.2 176 255.1zM256 191.1C220.7 191.1 192 220.7 192 255.1C192 291.3 220.7 319.1 256 319.1C291.3 319.1 320 291.3 320 255.1C320 220.7 291.3 191.1 256 191.1zM425.2 87.32C439.5 82.75 455.1 88.78 462.6 101.8L492.8 154.2C500.3 167.2 497.8 183.7 486.7 193.8L446.3 230.6C447.4 238.9 448 247.4 448 255.1C448 264.6 447.4 273.1 446.3 281.4L486.7 318.2C497.8 328.3 500.3 344.8 492.8 357.8L462.6 410.2C455.1 423.2 439.5 429.2 425.2 424.7L373.2 408.1C359.8 418.4 344.1 427 329.2 433.6L317.5 486.8C314.3 501.5 301.3 512 286.2 512H225.8C210.7 512 197.7 501.5 194.5 486.8L182.8 433.6C167 427 152.2 418.4 138.8 408.1L86.84 424.7C72.51 429.2 56.94 423.2 49.42 410.2L19.18 357.8C11.66 344.8 14.22 328.3 25.34 318.2L65.67 281.4C64.57 273.1 64 264.6 64 255.1C64 247.4 64.57 238.9 65.67 230.6L25.34 193.8C14.22 183.7 11.66 167.2 19.18 154.2L49.42 101.8C56.94 88.78 72.51 82.75 86.84 87.32L138.8 103.9C152.2 93.56 167 84.96 182.8 78.43L194.5 25.16C197.7 10.47 210.7 0 225.8 0H286.2C301.3 0 314.3 10.47 317.5 25.16L329.2 78.43C344.1 84.96 359.8 93.56 373.2 103.9L425.2 87.32zM148.6 116.5L141.1 121.7L81.99 102.6C74.82 100.3 67.04 103.3 63.28 109.8L33.03 162.2C29.27 168.7 30.55 176.1 36.11 182L82.62 224.4L81.53 232.7C80.52 240.3 80 248.1 80 256C80 263.9 80.52 271.7 81.53 279.3L82.62 287.6L36.11 329.1C30.56 335 29.27 343.3 33.03 349.8L63.28 402.2C67.04 408.7 74.82 411.7 81.99 409.4L141.1 390.3L148.6 395.5C160.9 404.9 174.4 412.8 188.9 418.8L196.7 421.1L210.1 483.4C211.7 490.8 218.2 496 225.8 496H286.2C293.8 496 300.3 490.8 301.9 483.4L315.3 421.1L323.1 418.8C337.6 412.8 351.1 404.9 363.4 395.5L370 390.3L430 409.4C437.2 411.7 444.1 408.7 448.7 402.2L478.1 349.8C482.7 343.3 481.4 335 475.9 329.1L429.4 287.6L430.5 279.3C431.5 271.7 432 263.9 432 256C432 248.1 431.5 240.3 430.5 232.7L429.4 224.4L475.9 182C481.4 176.1 482.7 168.7 478.1 162.2L448.7 109.8C444.1 103.3 437.2 100.3 430 102.6L370 121.7L363.4 116.5C351.1 107.1 337.6 99.21 323.1 93.22L315.3 90.03L301.9 28.58C300.3 21.23 293.8 15.1 286.2 15.1H225.8C218.2 15.1 211.7 21.23 210.1 28.58L196.7 90.03L188.9 93.22C174.4 99.21 160.9 107.1 148.6 116.5L148.6 116.5z"/>
+                </svg>                            
+                        ]]>
+
+            </x:String>
+
+            <x:String x:Key="SvgChatTabs">
+                <![CDATA[ 
+                                             
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path d="M127.1 175.1c-17.67 0-32 14.33-32 31.1s14.33 31.1 32 31.1s32-14.33 32-31.1S145.7 175.1 127.1 175.1zM127.1 223.1c-8.824 0-16-7.177-16-15.1s7.176-15.1 16-15.1s16 7.177 16 15.1S136.8 223.1 127.1 223.1zM255.1 175.1c-17.67 0-32 14.33-32 31.1s14.33 31.1 32 31.1s32-14.33 32-31.1S273.7 175.1 255.1 175.1zM255.1 223.1c-8.824 0-16-7.177-16-15.1s7.176-15.1 16-15.1s16 7.177 16 15.1S264.8 223.1 255.1 223.1zM383.1 175.1c-17.67 0-32 14.33-32 31.1s14.33 31.1 32 31.1s32-14.33 32-31.1S401.7 175.1 383.1 175.1zM383.1 223.1c-8.824 0-16-7.177-16-15.1s7.176-15.1 16-15.1s16 7.177 16 15.1S392.8 223.1 383.1 223.1zM447.1 0h-384c-35.25 0-64 28.75-64 63.1v287.1c0 35.25 28.75 63.1 64 63.1h96v83.1C159.1 507 165.9 512 172.2 512c2.369 0 4.786-.7456 6.948-2.324l124.9-93.7h144c35.25 0 64-28.75 64-63.1V63.1C511.1 28.75 483.2 0 447.1 0zM495.1 351.1c0 26.46-21.53 47.1-48 47.1h-149.3l-122.7 92.08v-92.08H63.1c-26.47 0-48-21.53-48-47.1v-287.1c0-26.46 21.53-47.1 48-47.1h384c26.47 0 48 21.53 48 47.1V351.1z"/></svg>                                
+                        ]]>
+
+            </x:String>
+
+            <x:String x:Key="SvgChatTabsFull">
+                <![CDATA[ 
+                                             
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path d="M0 64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L185.6 508.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V416H64c-35.3 0-64-28.7-64-64V64zM128 240c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm128 0c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm160-32c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32z"/></svg>        
+                ]]>
+
+            </x:String>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--
+        windows hardware acceleretated canvas is opaque
+        so you need background color here when compiling for skiasharp v3
+    -->
+    <draw:Canvas
+        x:Name="MainCanvas"
+        BackgroundColor="#333333"
+        Gestures="Enabled"
+        RenderingMode = "Accelerated"
+        HorizontalOptions="Fill"
+        Tag="MainPage"
+        VerticalOptions="Fill">
+
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <draw:SkiaLayout
+                ColumnDefinitions="*"
+                HorizontalOptions="Fill"
+                RowDefinitions="0,80,*"
+                Spacing="0"
+                Type="Grid"
+                VerticalOptions="Fill">
+
+                <!--<draw:SkiaRichLabel
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    MaxLines="1"
+                    Text="___.Net Maui Demo App___"
+                    TextColor="#ABABAB"
+                    TranslationY="0"
+                    UseCache="Operations"
+                    VerticalOptions="Center" />-->
+
+                <!--  TABS HEADER  -->
+                <draw:SkiaShape
+                    Grid.Row="1"
+                    Margin="16,16,16,0"
+                    CornerRadius="24"
+                    HorizontalOptions="Fill"
+                    UseCache="GPU">
+
+                    <!--  Custom drawn control linked to the content SkiaCarousel  -->
+                    <!--  draws top-ZIndex child with a dinamically positionned clip  -->
+                    <controls:DrawnTabsHeader
+                        HeightRequest="46"
+                        ScrollAmount="{Binding Source={x:Reference Carousel}, Path=ScrollProgress}"
+                        SelectedIndex="{Binding Source={x:Reference Carousel}, Path=SelectedIndex, Mode=TwoWay}"
+                        TabsCount="{Binding Source={x:Reference Carousel}, Path=ChildrenCount}"
+                        TouchEffectColor="White">
+
+                        <!--  INACTIVE  -->
+                        <draw:SkiaLayout
+                            BackgroundColor="Black"
+                            ColumnDefinitions="*,*,*"
+                            ColumnSpacing="0"
+                            RowDefinitions="*"
+                            Type="Grid"
+                            UseCache="Image"
+                            VerticalOptions="Fill">
+
+                            <!--  this shape's clip will be used to draw active layer  -->
+                            <!--  have put this in grid to it adaps to columnc width  -->
+                            <draw:SkiaShape
+                                BackgroundColor="Transparent"
+                                CornerRadius="24"
+                                HorizontalOptions="Fill"
+                                Tag="Clip"
+                                VerticalOptions="Fill" />
+
+                            <!--  0  -->
+                            <draw:SkiaLayout
+                                HorizontalOptions="Center"
+                                Split="0"
+                                Tag="Select0"
+                                Type="Wrap"
+                                VerticalOptions="Fill">
+
+                                <draw:SkiaSvg
+                                    HeightRequest="18"
+                                    LockRatio="1"
+                                    SvgString="{StaticResource SvgHomeTabs}"
+                                    TintColor="#cccccc"
+                                    VerticalOptions="Center" />
+
+                                <draw:SkiaLabel
+                                    FontSize="15"
+                                    Style="{StaticResource SkiaLabelStyleTabText}"
+                                    Text="Home" />
+
+                            </draw:SkiaLayout>
+
+                            <!--  1  -->
+                            <draw:SkiaLayout
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                Split="0"
+                                Tag="Select1"
+                                Type="Wrap"
+                                VerticalOptions="Fill">
+
+                                <draw:SkiaSvg
+                                    HeightRequest="17"
+                                    LockRatio="1"
+                                    SvgString="{StaticResource SvgChatTabs}"
+                                    TintColor="#cccccc"
+                                    VerticalOptions="Center" />
+
+                                <draw:SkiaLabel
+                                    Style="{StaticResource SkiaLabelStyleTabText}"
+                                    Text="Chat" />
+
+                            </draw:SkiaLayout>
+
+                            <!--  2  -->
+                            <draw:SkiaLayout
+                                Grid.Column="2"
+                                HorizontalOptions="Center"
+                                Split="0"
+                                Type="Wrap"
+                                VerticalOptions="Fill">
+
+                                <draw:SkiaSvg
+                                    HeightRequest="18"
+                                    LockRatio="1"
+                                    SvgString="{StaticResource SvgSettingsTabs}"
+                                    TintColor="#cccccc"
+                                    VerticalOptions="Center" />
+
+                                <draw:SkiaLabel
+                                    Style="{StaticResource SkiaLabelStyleTabText}"
+                                    Text="Settings" />
+
+                            </draw:SkiaLayout>
+
+
+                        </draw:SkiaLayout>
+
+                        <!--  ACTIVE state layer, will be clipped  -->
+                        <draw:SkiaLayout
+                            BackgroundColor="#555555"
+                            ColumnDefinitions="*,*,*"
+                            ColumnSpacing="0"
+                            RowDefinitions="*"
+                            Tag="Active"
+                            Type="Grid"
+                            UseCache="Image"
+                            VerticalOptions="Fill">
+
+                            <!--  0  -->
+                            <draw:SkiaLayout
+                                HorizontalOptions="Center"
+                                Split="0"
+                                Tag="TrackMe"
+                                Type="Row"
+                                VerticalOptions="Fill">
+
+                                <draw:SkiaSvg
+                                    HeightRequest="18"
+                                    LockRatio="1"
+                                    SvgString="{StaticResource SvgHomeTabsFull}"
+                                    TintColor="#BF7BFF"
+                                    VerticalOptions="Center" />
+
+                                <draw:SkiaLabel
+                                    FontSize="15"
+                                    Style="{StaticResource SkiaLabelStyleTabText}"
+                                    Text="Home"
+                                    TextColor="White" />
+
+                            </draw:SkiaLayout>
+
+                            <!--  1  -->
+                            <draw:SkiaLayout
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                Split="0"
+                                Type="Wrap"
+                                VerticalOptions="Fill">
+
+                                <draw:SkiaSvg
+                                    HeightRequest="17"
+                                    LockRatio="1"
+                                    SvgString="{StaticResource SvgChatTabsFull}"
+                                    TintColor="#FF7BC7"
+                                    VerticalOptions="Center" />
+
+                                <draw:SkiaLabel
+                                    Style="{StaticResource SkiaLabelStyleTabText}"
+                                    Text="Chat"
+                                    TextColor="White" />
+
+                            </draw:SkiaLayout>
+
+                            <!--  2  -->
+                            <draw:SkiaLayout
+                                Grid.Column="2"
+                                HorizontalOptions="Center"
+                                Split="0"
+                                Type="Wrap"
+                                VerticalOptions="Fill">
+
+                                <draw:SkiaSvg
+                                    HeightRequest="18"
+                                    LockRatio="1"
+                                    SvgString="{StaticResource SvgSettingsTabsFull}"
+                                    TintColor="White"
+                                    VerticalOptions="Center" />
+
+                                <draw:SkiaLabel
+                                    Style="{StaticResource SkiaLabelStyleTabText}"
+                                    Text="Settings"
+                                    TextColor="White" />
+
+                            </draw:SkiaLayout>
+
+                        </draw:SkiaLayout>
+
+                    </controls:DrawnTabsHeader>
+
+                </draw:SkiaShape>
+
+                <!--  TABS CONTENT  -->
+                <draw:SkiaCarousel
+                    x:Name="Carousel"
+                    Grid.Row="2"
+                    AutoVelocityMultiplyPts="10"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill">
+
+                    <!--  TAB 0  -->
+                    <!--  notice IgnoreWrongDirection to pass horizonal panning to outer carousel  -->
+                    <draw:SkiaScroll IgnoreWrongDirection="True">
+
+                        <!--  totally recycled cells in this demo  -->
+                        <draw:SkiaLayout
+                            Margin="16,0"
+                            HorizontalOptions="Fill"
+                            RecyclingTemplate="Enabled"
+                            Spacing="16"
+                            Split="2"
+                            Tag="Tab0"
+                            Type="Wrap"
+                            UseCache="Image">
+
+                            <draw:SkiaLayout.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                </x:Array>
+                            </draw:SkiaLayout.ItemsSource>
+
+                            <draw:SkiaLayout.ItemTemplate>
+                                <DataTemplate>
+
+                                    <draw:SkiaShape
+                                        AnimationTapped="Ripple"
+                                        Tapped="SkiaControl_OnTapped"
+                                        BackgroundColor="#8D5BBC"
+                                        CornerRadius="16"
+                                        HeightRequest="140"
+                                        HorizontalOptions="Fill"
+                                        UseCache="ImageDoubleBuffered">
+
+                                        <draw:SkiaLayout
+                                            Padding="16"
+                                            HorizontalOptions="Fill"
+                                            Type="Column"
+                                            VerticalOptions="Fill">
+
+                                            <draw:SkiaShape
+                                                BackgroundColor="#11000000"
+                                                HeightRequest="40"
+                                                LockRatio="1"
+                                                Type="Circle" />
+
+                                            <draw:SkiaShape
+                                                BackgroundColor="#11000000"
+                                                CornerRadius="8"
+                                                HeightRequest="10"
+                                                WidthRequest="80" />
+
+                                            <draw:SkiaShape
+                                                BackgroundColor="#11000000"
+                                                CornerRadius="8"
+                                                HeightRequest="10"
+                                                WidthRequest="60" />
+
+
+                                        </draw:SkiaLayout>
+
+                                    </draw:SkiaShape>
+
+                                </DataTemplate>
+
+                            </draw:SkiaLayout.ItemTemplate>
+
+                        </draw:SkiaLayout>
+
+                        <!--  in this demo using footer as content padding  -->
+                        <draw:SkiaScroll.Footer>
+
+                            <draw:SkiaControl
+                                HeightRequest="16"
+                                WidthRequest="1" />
+
+                        </draw:SkiaScroll.Footer>
+
+                    </draw:SkiaScroll>
+
+                    <!--  TAB 1  -->
+                    <!--  notice IgnoreWrongDirection to pass horizontal panning to outer carousel  -->
+                    <draw:SkiaScroll IgnoreWrongDirection="True">
+
+                        <!--  totally recycled cells in this demo  -->
+                        <draw:SkiaLayout
+                            Margin="16,0"
+                            HorizontalOptions="Fill"
+                            RecyclingTemplate="Enabled"
+                            Spacing="16"
+                            Split="2"
+                            Type="Wrap"
+                            UseCache="Image">
+
+                            <draw:SkiaLayout.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                    <x:String>placeholder</x:String>
+                                </x:Array>
+                            </draw:SkiaLayout.ItemsSource>
+
+                            <draw:SkiaLayout.ItemTemplate>
+                                <DataTemplate>
+
+                                    <draw:SkiaShape
+                                        BackgroundColor="#BC5B93"
+                                        CornerRadius="16"
+                                        HeightRequest="140"
+                                        HorizontalOptions="Fill"
+                                        AnimationTapped="Ripple"
+                                        Tapped="SkiaControl_OnTapped"
+                                        UseCache="ImageDoubleBuffered">
+
+                                        <draw:SkiaLayout
+                                            Padding="16"
+                                            HorizontalOptions="Fill"
+                                            Split="1"
+                                            Type="Wrap"
+                                            VerticalOptions="Fill">
+
+                                            <draw:SkiaShape
+                                                BackgroundColor="#11000000"
+                                                HeightRequest="40"
+                                                LockRatio="1"
+                                                Type="Circle" />
+
+                                            <draw:SkiaShape
+                                                BackgroundColor="#11000000"
+                                                CornerRadius="8"
+                                                HeightRequest="10"
+                                                WidthRequest="100" />
+
+                                            <draw:SkiaShape
+                                                BackgroundColor="#11000000"
+                                                CornerRadius="8"
+                                                HeightRequest="10"
+                                                WidthRequest="80" />
+
+                                            <draw:SkiaShape
+                                                BackgroundColor="#11000000"
+                                                CornerRadius="8"
+                                                HeightRequest="10"
+                                                WidthRequest="60" />
+
+
+                                        </draw:SkiaLayout>
+
+                                    </draw:SkiaShape>
+
+                                </DataTemplate>
+
+                            </draw:SkiaLayout.ItemTemplate>
+
+                        </draw:SkiaLayout>
+
+                        <!--  in this demo using footer as content padding  -->
+                        <draw:SkiaScroll.Footer>
+
+                            <draw:SkiaControl
+                                HeightRequest="16"
+                                WidthRequest="1" />
+
+                        </draw:SkiaScroll.Footer>
+
+                    </draw:SkiaScroll>
+
+                    <!--  TAB 2  -->
+                    <draw:SkiaLayout>
+
+                        <draw:SkiaLayout
+                            Margin="24"
+                            HorizontalOptions="Fill"
+                            Spacing="24"
+                            Split="1"
+                            Type="Wrap"
+                            UseCache="Image"
+                            VerticalOptions="Center">
+
+                            <draw:SkiaRichLabel
+                                FontSize="24"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                LineSpacing="1.5"
+                                Text="Drawing scrolling tabs in ___.Net Maui___ using ___SkiaSharp___ 🎨🖌❤ ."
+                                TextColor="White" />
+
+                            <draw:SkiaRichLabel
+                                FontSize="18"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="Tabs selector is a totally drawn platform independent custom control build on top of a _SkiaCarousel_ 💖."
+                                TextColor="LightGray" />
+
+                            <draw:SkiaRichLabel
+                                FontSize="18"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="Scrollable content reside inside a _SkiaCarousel_ 💖, there are more drawn controls inside, including drawn recycled cells."
+                                TextColor="LightGray" />
+
+                            <!--<draw:SkiaRichLabel
+                                FontSize="14"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="_Imagine and draw anything wiith __DrawnUi__ for __.Net Maui__ !_"
+                                TextColor="LightGray" />-->
+
+                            <draw:SkiaRichLabel
+                                FontSize="14"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="_Using __DrawnUi__ for __.Net Maui__ Pre-Alpha_"
+                                TextColor="LightGray" />
+
+                        </draw:SkiaLayout>
+
+
+
+                    </draw:SkiaLayout>
+
+                </draw:SkiaCarousel>
+
+                <!--<draw:SkiaLabel
+                    UseCache="Operations"
+                    Margin="0,60,0,0"
+                    BackgroundColor="White"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="{Binding Source={x:Reference Carousel}, Path=ScrollAmount, StringFormat='Scrolled: {0.0}'}" />-->
+
+                <controls:ButtonToRoot />
+
+            </draw:SkiaLayout>
+
+            <controls:ButtonToRoot />
+
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+</views:BasePageCodeBehind>

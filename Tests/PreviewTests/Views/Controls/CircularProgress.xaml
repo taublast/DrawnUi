@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaLayout
+    x:Class="PreviewTests.Views.Controls.CircularProgress"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    HorizontalOptions="Fill"
+    LockRatio="1">
+
+    <!--  path full  -->
+    <draw:SkiaShape
+        Margin="2"
+        HorizontalOptions="Center"
+        StrokeColor="Gray"
+        StrokeWidth="4"
+        Tag="ShapePath"
+        Type="Circle"
+        VerticalOptions="Start"
+        WidthRequest="200"
+        ZIndex="-1" />
+
+    <!--  path progress  -->
+    <draw:SkiaShape
+        HorizontalOptions="Center"
+        IsVisible="True"
+        LockRatio="1"
+        StrokeCap="Round"
+        StrokeColor="Blue"
+        StrokeWidth="6"
+        Tag="ShapeProgress"
+        Type="Arc"
+        Value1="270"
+        VerticalOptions="Center"
+        WidthRequest="200" />
+
+    <draw:SkiaLabel
+        Margin="48"
+        FontFamily="FontText"
+        FontSize="46"
+        HorizontalOptions="Center"
+        MaxLines="1"
+        MonoForDigits="8"
+        Tag="LabelProgress"
+        Text="34%"
+        VerticalOptions="Center" />
+
+
+</draw:SkiaLayout>

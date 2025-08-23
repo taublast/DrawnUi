@@ -1098,7 +1098,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasuring
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelStack.cs
-    startLine: 11
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1143,7 +1143,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOnScreenVisibleArea
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelStack.cs
-    startLine: 20
+    startLine: 21
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

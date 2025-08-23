@@ -21,7 +21,12 @@
       }
     }
   ],
-  "build": { 
+  "build": {
+    "sitemap": {
+      "baseUrl": "https://drawnui.net",
+      "priority": 0.5,
+      "changefreq": "weekly"
+    },
     "content": [
       {
         "files": [
@@ -90,14 +95,14 @@
   "og:title": "DrawnUI for .NET MAUI",
   "og:description": "Create stunning cross-platform apps with DrawnUI - a powerful rendering engine for .NET MAUI built on SkiaSharp. Hardware-accelerated performance with pixel-perfect controls.",
   "og:type": "website",
-  "og:url": "https://taublast.github.io/drawnui",
-  "og:image": "https://taublast.github.io/drawnui/images/logo.png",
+  "og:url": "https://drawnui.net",
+  "og:image": "https://drawnui.net/images/logo.png",
   "twitter:card": "summary_large_image",
   "twitter:title": "DrawnUI for .NET MAUI",
   "twitter:description": "Hardware-accelerated rendering engine for .NET MAUI built on SkiaSharp",
     "_gitContribute": {
       "repo": "https://github.com/taublast/drawnui",
-      "branch": "master"
+      "branch": "main"
     },
     "_appLogoPath": "images/draw.svg",
     "_appFaviconPath":  "images/draw.svg",

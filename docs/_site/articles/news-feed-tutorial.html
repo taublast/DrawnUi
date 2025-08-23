@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/master/docs/articles/news-feed-tutorial.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/main/docs/articles/news-feed-tutorial.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -121,19 +121,19 @@ You can display debugging information over the scroll to see displayed/created/m
 <h3 id="stack-optimizations"><strong>Stack Optimizations</strong></h3>
 <p>Let's look at critical SkiaLayout properties for this scenario:</p>
 <p><code>MeasureItemsStrategy=&quot;MeasureVisible&quot;</code></p>
-<p>this <strong>experimental</strong> measurement strategy for <code>SkiaLayout</code> works well for large lists with uneven rows. It measures only visible items initially, then progressively measures off-screen items in the background. This can provide good scrolling performance with thousands of items of varying heights. At the</p>
+<p>this <strong>experimental</strong> measurement strategy for <code>SkiaLayout</code> works well for large lists with uneven rows. It measures only visible items initially, then progressively measures off-screen items in the background. This can provide good scrolling performance with thousands of items of varying heights.</p>
 <p><code>ReserveTemplates=&quot;10&quot;</code></p>
-<p>The layout views adapter creates new istances of cells only when needed. When a new one is instantiated this can create a UI lag spike. This property indicates that we want it to pre-create a specifc number of cells, to avoid a potential lag spike when the user just starts scrolling and new cells are created. This would not be needed for &quot;same size&quot; type of rows, but for &quot;uneven rows&quot; adapter tries to have some reasonable number of cells for different heights to return appropriate one from the pool when requested.</p>
+<p>The layout views adapter creates new instances of cells only when needed. When a new one is instantiated this can create a UI lag spike. This property indicates that we want it to pre-create a specific number of cells, to avoid a potential lag spike when the user just starts scrolling and new cells are created. This would not be needed for &quot;same size&quot; type of rows, but for &quot;uneven rows&quot; adapter tries to have some reasonable number of cells for different heights to return appropriate one from the pool when requested.</p>
 <p><code>VirtualisationInflated=&quot;200&quot;</code></p>
-<p>We are drawing only cells visible inside scrolling viewport, but with double-buffered cache we want cells to start rendering before they enter the viewport, to avoid seing unrendered content. This property defines how much of the hidden content out of visible bounds should be considered visible for rendering.</p>
+<p>We are drawing only cells visible inside scrolling viewport, but with double-buffered cache we want cells to start rendering before they enter the viewport, to avoid seeing unrendered content. This property defines how much of the hidden content out of visible bounds should be considered visible for rendering.</p>
 <h3 id="scroll-optimisations"><strong>Scroll Optimisations</strong></h3>
-<p>Let's take a look what spices we added to ou scroll:</p>
+<p>Let's take a look what spices we added to our scroll:</p>
 <p><code>LoadMoreOffset=&quot;500&quot;</code></p>
-<p>It would ask content's permission to execute LoadMoreCommand by calling <code>IInsideViewport.ShouldTriggerLoadMore</code> when the user scrolls within 500 points (not pixels) of the end of the content. This allows our stack to make a decision about when to load more data, more spicifically it would allow it only if the background measurement of the existing content ended.</p>
+<p>It would ask content's permission to execute LoadMoreCommand by calling <code>IInsideViewport.ShouldTriggerLoadMore</code> when the user scrolls within 500 points (not pixels) of the end of the content. This allows our stack to make a decision about when to load more data, more specifically it would allow it only if the background measurement of the existing content ended.</p>
 <p><code>FrictionScrolled</code> and <code>ChangeVelocityScrolled</code></p>
-<p>Notice we customized scrolling to stop faster with <code>FrictionScrolled</code> for news feed case were user would read content but help kick swipes with <code>ChangeVelocityScrolled</code>.</p>
+<p>Notice we customized scrolling to stop faster with <code>FrictionScrolled</code> for news feed case where user would read content but help kick swipes with <code>ChangeVelocityScrolled</code>.</p>
 <h3 id="layering"><strong>Layering</strong></h3>
-<p>When designed a drawn UI, it's important to think about layering and caching. We know that there would be a static layer with unchanged data, and one that would be redrawn when something changes, for example image gets loaded from internet. In such case we would want to fast-draw static layer from cache and rebuild the dynamic one.  Our background has a shadow effect, so we cache it into a separate layer with <code>SkiaShape</code> and draw content on top. If you would want to clip your content with the shape form your would just need to wrap it with a shape if same parameters than the background layer.</p>
+<p>When designing a drawn UI, it's important to think about layering and caching. We know that there would be a static layer with unchanged data, and one that would be redrawn when something changes, for example image gets loaded from internet. In such case we would want to fast-draw static layer from cache and rebuild the dynamic one. Our background has a shadow effect, so we cache it into a separate layer with <code>SkiaShape</code> and draw content on top. If you would want to clip your content with the shape form you would just need to wrap it with a shape of same parameters as the background layer.</p>
 <pre><code class="lang-xml">    &lt;!--cached background layer with shadow--&gt;
     &lt;draw:SkiaLayout
         UseCache=&quot;Image&quot;
@@ -537,7 +537,7 @@ public class NewsItem
 }
 </code></pre>
 <h4 id="smart-content-configuration"><strong>Smart Content Configuration</strong></h4>
-<p>Since we paint what we need instead of using MAUI <code>DataTemplateSelector</code>, we can simply hide/show elements based on content type. The hide/show concent is very efficient with virtual controls, hidden controls do not participate in layout and drawing and they since they do not create any native views they affect no pressure.</p>
+<p>Since we paint what we need instead of using MAUI <code>DataTemplateSelector</code>, we can simply hide/show elements based on content type. The hide/show concept is very efficient with virtual controls, hidden controls do not participate in layout and drawing and since they do not create any native views they affect no pressure.</p>
 <pre><code class="lang-csharp">private void ConfigureForContentType(NewsItem news)
 {
     // Reset all content visibility first
@@ -564,10 +564,10 @@ public class NewsItem
 <p>When using cache type <code>ImageDoubleBuffered</code> we can use <code>DrawPlaceholder</code> method to draw a custom placeholder while the first cache is being prepared in background. Here we simulate an empty cell background layer, we use its existing padding to calculate the exact area. Notice we reuse the SKPaint and it would be disposed when the cell is disposed, instead of creating a new one for each call, keeping the UI-freezing GC collector away as much as possible.</p>
 <pre><code class="lang-csharp">public override void DrawPlaceholder(DrawingContext context)
 {
-        var margins = BackgroundLayer.Padding;
-        var area =
-                new SKRect((float)(context.Destination.Left + margins.Left * context.Scale),
-            (float)(context.Destination.Top + margins.Top * context.Scale),
+    var margins = BackgroundLayer.Padding;
+    var area = new SKRect(
+        (float)(context.Destination.Left + margins.Left * context.Scale),
+        (float)(context.Destination.Top + margins.Top * context.Scale),
         (float)(context.Destination.Right - margins.Right * context.Scale),
         (float)(context.Destination.Bottom - margins.Bottom * context.Scale));
 
@@ -594,10 +594,8 @@ public class NewsItem
 <p><strong>Real Avatar Images</strong>: Uses RandomUser.me API for 100x100px professional avatars<br>
 <strong>Real Content Images</strong>: Uses Picsum Photos API for high-quality random images</p>
 </blockquote>
-<pre><code class="lang-csharp"> 
-public class NewsDataProvider
+<pre><code class="lang-csharp">public class NewsDataProvider
 {
- 
     private void ConfigureItemByType(NewsItem item)
     {
         switch (item.Type)
@@ -671,10 +669,8 @@ public class NewsDataProvider
 }
 </code></pre>
 <p>You would see something you'd normally expect in our viewmodel:</p>
-<pre><code class="lang-csharp">
-public class NewsViewModel : BaseViewModel
+<pre><code class="lang-csharp">public class NewsViewModel : BaseViewModel
 {
- 
     public ObservableRangeCollection&lt;NewsItem&gt; NewsItems { get; }
 
     public ICommand RefreshCommand { get; }
@@ -750,7 +746,6 @@ public class NewsViewModel : BaseViewModel
         }
     }
 }
- 
 </code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>DrawnUI gives you the freedom to <strong>just draw what you need</strong>. This tutorial demonstrates a challenging real-world scenario:</p>
@@ -779,7 +774,7 @@ public class NewsViewModel : BaseViewModel
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/taublast/drawnui/blob/master/docs/articles/news-feed-tutorial.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/taublast/drawnui/blob/main/docs/articles/news-feed-tutorial.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

@@ -35,7 +35,7 @@
 
     <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
-        ContentTemplate="{DataTemplate sandbox:MainPageSpinner}"
+        ContentTemplate="{DataTemplate sandbox:SpinnerPage}"
         Route="MainPage" />-->
 
     <ShellContent

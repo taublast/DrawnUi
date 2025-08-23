@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePageCodeBehind
+    x:Class="PreviewTests.Views.LabelsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls1="clr-namespace:PreviewTests.Views.Controls"
+    xmlns:demo="clr-namespace:PreviewTests"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:views="clr-namespace:PreviewTests.Views"
+    x:Name="ThisPage"
+    x:DataType="demo:MainPageViewModel"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="TextSubTitle" TargetType="draw:SkiaLabel">
+                <Setter Property="TextColor" Value="DarkBlue" />
+                <Setter Property="BackgroundColor" Value="#11000000" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="FontText" />
+                <Setter Property="Opacity" Value="0.75" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView
+        x:Name="MainScroll"
+        BackgroundColor="WhiteSmoke"
+        VerticalOptions="FillAndExpand"
+        VerticalScrollBarVisibility="Always">
+
+        <StackLayout
+            x:Name="MainStack"
+            Padding="24,16"
+            BackgroundColor="#110099FF"
+            Spacing="25">
+
+            <Image
+                HeightRequest="200"
+                HorizontalOptions="Center"
+                Source="dotnet_bot.png" />
+
+            <!--  because https://github.com/dotnet/maui/issues/11326  -->
+            <Label
+                HorizontalOptions="Center"
+                Text="Use mousewheel to scroll the page down"
+                TextColor="DarkGray">
+                <Label.IsVisible>
+                    <OnPlatform x:TypeArguments="system:Boolean">
+                        <On Platform="WinUI" Value="True" />
+                    </OnPlatform>
+                </Label.IsVisible>
+            </Label>
+
+            <!--  INCLUDE CANVAS  -->
+            <draw:Canvas
+                x:Name="MainCanvas"
+                Margin="0,0,0,32"
+                BackgroundColor="White"
+                Gestures="Enabled"
+                RenderingMode = "Accelerated"
+                HorizontalOptions="Fill">
+
+                <!--  VSTACK  -->
+                <draw:SkiaLayout
+                    x:Name="StackContainer"
+                    HorizontalOptions="Start"
+                    Spacing="16"
+                    Split="1"
+                    Type="Wrap"
+                    VerticalOptions="Start">
+
+                    <draw:SkiaLabel
+                        BackgroundColor="#22000000"
+                        FontFamily="FontText"
+                        FontSize="16"
+                        Opacity="0.85"
+                        Text=" SkiaLabel "
+                        TextColor="DarkBlue" />
+
+                    <!--  SIMPLE LABEL MULTILINE  -->
+                    <draw:SkiaLabel
+                        FontSize="12"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="FillWords"
+                        LineSpacing="1.3"
+                        Text="{x:Static demo:MauiProgram.Multiline}"
+                        TextColor="Black" />
+
+                    <!--  SOME SPANS DEFINED  -->
+                    <draw:SkiaLabel
+                        FallbackCharacter="?"
+                        FontFamily="FontText"
+                        FontSize="15"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="Start"
+                        LineSpacing="1.5"
+                        TextColor="Black">
+
+                        <draw:TextSpan
+                            FontSize="17"
+                            IsBold="True"
+                            IsItalic="True"
+                            Text="ANY "
+                            TextColor="Red" />
+
+                        <draw:TextSpan Text="span can be made " />
+
+                        <draw:TextSpan
+                            FontFamily="FontText"
+                            FontSize="15"
+                            IsItalic="True"
+                            Tag="The Tappable One"
+                            Tapped="OnSpanTapped"
+                            Text="tappable "
+                            TextColor="Purple" />
+
+                        <draw:TextSpan
+                            FontSize="12"
+                            IsItalic="True"
+                            Text="! "
+                            TextColor="Black" />
+
+                        <draw:TextSpan Text="Use colored emojis " />
+
+                        <draw:TextSpan AutoFindFont="True" Text="🌐🚒🙎🏽👻🤖" />
+
+                        <draw:TextSpan Text=" Format text as " />
+
+                        <draw:TextSpan
+                            BackgroundColor="Yellow"
+                            FontSize="20"
+                            Text=" BiG "
+                            TextColor="Black" />
+
+                        <draw:TextSpan
+                            FontSize="11"
+                            IsItalic="True"
+                            Text=" and small! "
+                            TextColor="Black" />
+
+                        <draw:TextSpan
+                            FontSize="14"
+                            Tapped="OnSpanTapped"
+                            Text="Add another tappable link!"
+                            TextColor="DarkOliveGreen"
+                            Underline="True" />
+
+                        <draw:TextSpan FontSize="14" Text=" " />
+
+                        <draw:TextSpan
+                            FontSize="14"
+                            Strikeout="True"
+                            Text="Still in development but.."
+                            TextColor="Black" />
+
+                        <draw:TextSpan FontSize="14" Text=" " />
+
+                        <draw:TextSpan
+                            BackgroundColor="#11ff0000"
+                            FontSize="14"
+                            Text="You can already use the nuget!"
+                            TextColor="Black" />
+
+                    </draw:SkiaLabel>
+
+
+                    <draw:SkiaLabel
+                        BackgroundColor="#22000000"
+                        FontFamily="FontText"
+                        FontSize="16"
+                        Opacity="0.85"
+                        Text=" SkiaRichLabel "
+                        TextColor="DarkBlue" />
+
+
+                    <!--  AUTO-SPANS  -->
+                    <draw:SkiaRichLabel
+                        x:Name="TestMarkdown"
+                        BackgroundColor="Transparent"
+                        FontFamily="FontText"
+                        FontSize="14"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="Start"
+                        LineSpacing="1.5"
+                        LinkColor="Purple"
+                        LinkTapped="HandleLinkTapped"
+                        Text="~~Just put~~ a simple markdown string and this control will ***auto-split*** it into spans. It will recognize links _[a link](https://firstlink.app)_ rendered with ___SkiaRichLabel___ Here it auto-created a span for 🚀🐴🤖👻 and switched back. _[More info..](https://moreinfo.app)_. Subclass this control or consume LinkTappedCommand property or LinkTapped event handler to react to taps."
+                        TextColor="Black" />
+
+
+                    <!--  WILL ALSO AUTODETECT RTL AND SHAPED  -->
+                    <draw:SkiaRichLabel
+                        BackgroundColor="#08000000"
+                        FontSize="12"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="End"
+                        LineSpacing="1.3"
+                        Text="{x:Static demo:MauiProgram.RTL}"
+                        TextColor="Black" />
+
+                    <controls1:ButtonToRoot />
+
+                </draw:SkiaLayout>
+
+            </draw:Canvas>
+
+        </StackLayout>
+    </ScrollView>
+
+</views:BasePageCodeBehind>

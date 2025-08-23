@@ -1760,6 +1760,12 @@ references:
   name: Super
   nameWithType: Super
   fullName: DrawnUi.Draw.Super
+- uid: DrawnUi.Draw.ControlTappedEventArgs
+  commentId: T:DrawnUi.Draw.ControlTappedEventArgs
+  href: DrawnUi.Draw.ControlTappedEventArgs.html
+  name: ControlTappedEventArgs
+  nameWithType: ControlTappedEventArgs
+  fullName: DrawnUi.Draw.ControlTappedEventArgs
 - uid: DrawnUi.Draw.ObservableAttachedItemsCollection`1
   commentId: T:DrawnUi.Draw.ObservableAttachedItemsCollection`1
   href: DrawnUi.Draw.ObservableAttachedItemsCollection-1.html
@@ -1792,12 +1798,6 @@ references:
   name: VisualLayer
   nameWithType: VisualLayer
   fullName: DrawnUi.Draw.VisualLayer
-- uid: DrawnUi.Draw.ControlTappedEventArgs
-  commentId: T:DrawnUi.Draw.ControlTappedEventArgs
-  href: DrawnUi.Draw.ControlTappedEventArgs.html
-  name: ControlTappedEventArgs
-  nameWithType: ControlTappedEventArgs
-  fullName: DrawnUi.Draw.ControlTappedEventArgs
 - uid: DrawnUi.Draw.Snapping
   commentId: T:DrawnUi.Draw.Snapping
   href: DrawnUi.Draw.Snapping.html

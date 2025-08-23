@@ -1,0 +1,24 @@
+﻿uniform float ratio; // width / height
+uniform float progress; // 0.0 - 1.0
+uniform shader iImage1; // Texture
+uniform shader iImage2; // Texture for backside
+uniform float2 iOffset; // Top-left corner of DrawingRect
+uniform float2 iResolution; // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+
+//In GLSL, the texture coordinate origin is at the bottom-left corner, 
+//whereas in SKSL the origin is at the top-left corner.
+
+vec4 getFromColor(vec2 uv) {
+ // Flip the Y-coordinate and adjust UV coordinates
+    vec2 adjustedUV = float2(uv.x, 1.0 - uv.y) * iImageResolution;
+    return iImage1.eval(adjustedUV);
+}
+
+vec4 getToColor(vec2 uv) {
+    // Flip the Y-coordinate and adjust UV coordinates
+    vec2 adjustedUV = float2(uv.x, 1.0 - uv.y) * iImageResolution;
+    return iImage2.eval(adjustedUV);
+}
+
+//script-goes-here

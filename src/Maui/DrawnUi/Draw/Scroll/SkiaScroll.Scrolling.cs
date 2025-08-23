@@ -115,6 +115,7 @@ public partial class SkiaScroll
             && !_vectorAnimatorBounceX.IsRunning)
         {
             IsAnimating = false;
+            Repaint(); //we need this for after scrolling events
         }
     }
 
