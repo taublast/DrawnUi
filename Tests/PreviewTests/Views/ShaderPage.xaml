@@ -121,8 +121,6 @@
 
             </draw:SkiaLayout>
 
-            <controls:ButtonToRoot />
-
             <draw:SkiaLabel
                 Margin="50,0"
                 Padding="2"

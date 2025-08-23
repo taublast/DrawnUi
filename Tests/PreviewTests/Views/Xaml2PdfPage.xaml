@@ -78,8 +78,6 @@
                     </draw:SkiaLayout>
                 </draw:SkiaScroll>
 
-                <controls:ButtonToRoot />
-
                 <!--  FPS  -->
                 <draw:SkiaLabelFps
                     Margin="0,0,4,84"

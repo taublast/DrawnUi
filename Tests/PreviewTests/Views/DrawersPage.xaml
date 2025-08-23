@@ -209,10 +209,6 @@
                 TextColor="White"
                 TranslationY="80" />
 
-
-
-            <controls:ButtonToRoot />
-
         </draw:SkiaLayout>
 
     </draw:Canvas>

@@ -202,8 +202,6 @@
                         Text="{x:Static demo:MauiProgram.RTL}"
                         TextColor="Black" />
 
-                    <controls1:ButtonToRoot />
-
                 </draw:SkiaLayout>
 
             </draw:Canvas>
