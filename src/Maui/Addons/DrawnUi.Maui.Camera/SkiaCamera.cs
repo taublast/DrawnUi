@@ -1260,14 +1260,37 @@ public partial class SkiaCamera : SkiaControl
 
     private static void OnCaptureFormatChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
-        if (bindable is SkiaCamera control && control.State == CameraState.On)
+        if (bindable is SkiaCamera control)
         {
             // When capture format changes, update preview to match aspect ratio
             Debug.WriteLine($"[SkiaCamera] Capture format changed: {oldvalue} -> {newvalue}");
 
+            if (newvalue is int)
+            {
+                if (control.CapturePhotoQuality != CaptureQuality.Manual)
+                {
+                    return;
+                }
+            }
+
+            if (control.IsOn)
+            {
 #if ONPLATFORM
-            control.UpdatePreviewFormatForAspectRatio();
+                control.UpdatePreviewFormatForAspectRatio();
 #endif
+
+            }
+            //else
+            //{
+            //    if (control.IsOn)
+            //    {
+            //        control.StartInternal();
+            //    }
+            //    else
+            //    {
+            //        control.Start();
+            //    }
+            //}
         }
     }
 
