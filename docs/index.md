@@ -8,8 +8,7 @@ description: Hardware-accelerated rendering engine for .NET MAUI built on SkiaSh
   <!-- Fallback/augment radial glows in MAUI/Microsoft palette (blue/purple/teal) -->
   <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; border-radius: 12px; background:
     radial-gradient(1200px 600px at 10% -10%, rgba(91,33,182,0.45), transparent 60%),
-    radial-gradient(900px 500px at 90% 10%, rgba(37,99,235,0.30), transparent 65%),
-    radial-gradient(800px 400px at 50% 120%, rgba(0,120,212,0.20), transparent 70%);"></div>
+    radial-gradient(900px 500px at 90% 10%, rgba(37,99,235,0.30), transparent 65%)"></div>
   <div style="position: relative; z-index: 1;">
     <img src="images/draw.svg" alt="DrawnUI Logo" style="height: 80px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));">
     <h1 style="font-size: 3.5em; margin: 0; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.45);">
