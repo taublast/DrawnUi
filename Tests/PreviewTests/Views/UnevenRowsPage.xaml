@@ -100,8 +100,6 @@
 
             <draw:SkiaButton VerticalOptions="Start" HorizontalOptions="End" Text="Refresh" Tapped="SkiaControl_OnTapped"/>
 
-            <controls:ButtonToRoot />
-
             <draw:SkiaLabel
                 Margin="8,0,8,50"
                 BackgroundColor="Black"
@@ -122,12 +120,6 @@
                 ZIndex="100" />
 
         </draw:SkiaLayout>
-
-
-
-
-
-
 
     </draw:Canvas>
 

@@ -251,8 +251,6 @@
 
             </draw:SkiaDrawer>
 
-            <controls:ButtonToRoot />
-
             <draw:SkiaLabelFps
                 Margin="0,0,4,24"
                 BackgroundColor="DarkRed"

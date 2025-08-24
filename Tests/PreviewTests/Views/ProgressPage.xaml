@@ -56,8 +56,6 @@
                 TextColor="White"
                 VerticalOptions="End" />
 
-            <controls:ButtonToRoot/>
-
             <!--  FPS  -->
             <draw:SkiaLabelFps
                 Margin="0,0,4,84"

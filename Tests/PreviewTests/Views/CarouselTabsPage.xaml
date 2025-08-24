@@ -583,11 +583,7 @@ c80.3-68,187.2-166.1,197.3-168.4c31.4-10.6,62.5,39.2,131.1,93.5C501.2,193.2,568.
                     HorizontalOptions="Center"
                     Text="{Binding Source={x:Reference Carousel}, Path=ScrollAmount, StringFormat='Scrolled: {0.0}'}" />-->
 
-                <controls:ButtonToRoot />
-
             </draw:SkiaLayout>
-
-            <controls:ButtonToRoot />
 
             <draw:SkiaLabelFps
                 Margin="0,0,4,24"
