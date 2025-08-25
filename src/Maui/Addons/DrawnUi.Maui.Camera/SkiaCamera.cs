@@ -646,6 +646,8 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    public bool PermissionsError { get; set; }
+
     /// <summary>
     /// Request permissions and start camera without setting IsOn true. Will set IsOn to false if permissions denied.
     /// </summary>
@@ -667,6 +669,7 @@ public partial class SkiaCamera : SkiaControl
                 {
                     Debug.WriteLine("[SkiaCamera] Starting..");
                     PermissionsWarning = false;
+                    PermissionsError = false;
                     StartInternal();
 
                     //if (Geotag)
@@ -681,6 +684,7 @@ public partial class SkiaCamera : SkiaControl
                     Super.Log("[SkiaCamera] Permissions denied");
                     IsOn = false;
                     PermissionsWarning = true;
+                    PermissionsError = true;
                 });
         }
         catch (Exception e)
