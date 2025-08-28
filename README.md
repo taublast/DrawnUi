@@ -35,14 +35,11 @@ Current development state is _ALPHA for prod_.
 * __Navigate__ on canvas with familiar MAUI Shell techniques 
 
 ## 🌱 What's new
-
-* `SkiaMapsUi` event `LoadingChanged` and prop `IsLoading` to tracks tiles loading/complete. New prop `IsAnimated` to make zooming instant if `false`.
-* `InvertPan` fixes, new prop `InvertPan` to control pan direction solving [186](https://github.com/taublast/DrawnUi/issues/186).
-* `SkiaImage` new prop `RescaleSource`, with default will not rescale source when viewport size changes (ex: zooming) making rendering faster.
-* `SkiaLayout` fix for ImageComposite cache expanding dirty regions.
-* `SkiaImageManager` Android added retry logic for Glide loader 
-* Other improvements
-
+* SKSL helper uses callback to pass compilation errors, SkiaShaderEffect new event handler OnCompilationError
+* Added SkiaCamera property IsMirrored to easily flip preview horizontally
+* Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
+* Some fluent extensions fixes
+ 
 ___Please star ⭐ if you like it!___
  
 ## 🎁 Shipped With
@@ -121,6 +118,12 @@ Click here ☝️☝️☝️
 ---
 
 ## 🌱 What Was New Previously
+
+* `SkiaMapsUi` event `LoadingChanged` and prop `IsLoading` to tracks tiles loading/complete. New prop `IsAnimated` to make zooming instant if `false`.
+* `InvertPan` fixes, new prop `InvertPan` to control pan direction solving [186](https://github.com/taublast/DrawnUi/issues/186).
+* `SkiaImage` new prop `RescaleSource`, with default will not rescale source when viewport size changes (ex: zooming) making rendering faster.
+* `SkiaLayout` fix for ImageComposite cache expanding dirty regions.
+* `SkiaImageManager` Android added retry logic for Glide loader 
 
 * FIX DrawPlaceholder call when cache was already rendered
 * FIX ImageDoubleBuffered cache not rebuilding when control wasn't updated while cache was destroyed
