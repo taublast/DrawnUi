@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<draw:SkiaLayout
+    x:Class="Sandbox.Views.Controls.ColorPicker"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Sandbox.Views.Controls"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    x:Name="ThisControl"
+    ColumnDefinitions="50,Auto"
+    ColumnSpacing="0"
+    HeightRequest="100"
+    RowDefinitions="*, Auto"
+    RowSpacing="0"
+    Type="Grid"
+    Tag="ColorPickerGrid"
+    HorizontalOptions="Fill"
+    UseCache="ImageDoubleBuffered">
+
+    <controls:SkiaColorPicker
+        x:Name="ColorsPanel"
+        Grid.Column="1"
+        BackgroundColor="Black"
+        ColorFlowDirection="Vertical"
+        ColorSpectrumStyle="HueToShadeStyle"
+        ColorsBlendMode="SrcOver"
+        HorizontalOptions="Fill"
+        PickedColorChanged="ColorsPanelSelectionChanged"
+        UseCache="{Binding Source={x:Reference ThisControl}, Path=UseCache}"
+        VerticalOptions="Fill">
+        <!--<controls:SkiaColorPicker.SelectionColors>
+            <Color>#FFFFFF</Color>
+            <Color>#FFFF0000</Color>
+        </controls:SkiaColorPicker.SelectionColors>-->
+    </controls:SkiaColorPicker>
+
+    <controls:SliderColor
+        x:Name="Slider"
+        Grid.Row="1"
+        Grid.ColumnSpan="2"
+        EndChanged="OnSliderValueChanged"
+        HorizontalOptions="Fill"
+        Max="1"
+        Min="0"
+        MinMaxStringFormat="P0"
+        Step="0.001"
+        UseCache="{Binding Source={x:Reference ThisControl}, Path=UseCache}" />
+
+    <draw:SkiaControl
+        BackgroundColor="{Binding Source={x:Reference ThisControl}, Path=SelectedColor}"
+        HorizontalOptions="Fill"
+        UseCache="Operations"
+        VerticalOptions="Fill" />
+
+
+</draw:SkiaLayout>

@@ -10,6 +10,8 @@ items:
   - DrawnUi.Draw.ZoomContent.ContentScaledRect
   - DrawnUi.Draw.ZoomContent.DrawViews(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.ZoomContent.InitializeAnimator
+  - DrawnUi.Draw.ZoomContent.InvertPan
+  - DrawnUi.Draw.ZoomContent.InvertPanProperty
   - DrawnUi.Draw.ZoomContent.LastValue
   - DrawnUi.Draw.ZoomContent.OffsetImage
   - DrawnUi.Draw.ZoomContent.OnBindingContextChanged
@@ -1555,6 +1557,67 @@ items:
       type: System.Double
     content.vb: Public Property PanSpeed As Double
   overload: DrawnUi.Draw.ZoomContent.PanSpeed*
+- uid: DrawnUi.Draw.ZoomContent.InvertPanProperty
+  commentId: F:DrawnUi.Draw.ZoomContent.InvertPanProperty
+  id: InvertPanProperty
+  parent: DrawnUi.Draw.ZoomContent
+  langs:
+  - csharp
+  - vb
+  name: InvertPanProperty
+  nameWithType: ZoomContent.InvertPanProperty
+  fullName: DrawnUi.Draw.ZoomContent.InvertPanProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvertPanProperty
+    path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
+    startLine: 112
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty InvertPanProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly InvertPanProperty As BindableProperty
+- uid: DrawnUi.Draw.ZoomContent.InvertPan
+  commentId: P:DrawnUi.Draw.ZoomContent.InvertPan
+  id: InvertPan
+  parent: DrawnUi.Draw.ZoomContent
+  langs:
+  - csharp
+  - vb
+  name: InvertPan
+  nameWithType: ZoomContent.InvertPan
+  fullName: DrawnUi.Draw.ZoomContent.InvertPan
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: InvertPan
+    path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
+    startLine: 122
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    When false (default), panning centers the zoom on the finger position (finger "sticks" to content).
+
+    When true, panning moves the content like a scroll view (content moves in same direction as finger).
+  example: []
+  syntax:
+    content: public bool InvertPan { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property InvertPan As Boolean
+  overload: DrawnUi.Draw.ZoomContent.InvertPan*
 - uid: DrawnUi.Draw.ZoomContent.ScalePixels(System.Single)
   commentId: M:DrawnUi.Draw.ZoomContent.ScalePixels(System.Single)
   id: ScalePixels(System.Single)
@@ -1573,7 +1636,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScalePixels
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 124
+    startLine: 149
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1607,7 +1670,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScalePoints
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 132
+    startLine: 157
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1641,7 +1704,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentScaledRect
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 139
+    startLine: 164
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1668,7 +1731,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ComputeContentScale
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 145
+    startLine: 170
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1711,7 +1774,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawViews
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 265
+    startLine: 290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1750,7 +1813,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetImage
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 294
+    startLine: 319
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1779,7 +1842,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _panStarted
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 296
+    startLine: 321
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1806,7 +1869,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 304
+    startLine: 329
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1841,7 +1904,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 470
+    startLine: 499
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1867,7 +1930,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetZoom
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 480
+    startLine: 509
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1901,7 +1964,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _animatorValue
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 541
+    startLine: 570
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1928,7 +1991,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastValue
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 546
+    startLine: 575
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1957,7 +2020,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 548
+    startLine: 577
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1984,7 +2047,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeAnimator
     path: ../src/Maui/DrawnUi/Controls/Zoom/ZoomContent.cs
-    startLine: 550
+    startLine: 579
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -32525,6 +32588,12 @@ references:
   name: PanSpeed
   nameWithType: ZoomContent.PanSpeed
   fullName: DrawnUi.Draw.ZoomContent.PanSpeed
+- uid: DrawnUi.Draw.ZoomContent.InvertPan*
+  commentId: Overload:DrawnUi.Draw.ZoomContent.InvertPan
+  href: DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_InvertPan
+  name: InvertPan
+  nameWithType: ZoomContent.InvertPan
+  fullName: DrawnUi.Draw.ZoomContent.InvertPan
 - uid: DrawnUi.Draw.ZoomContent.ScalePixels*
   commentId: Overload:DrawnUi.Draw.ZoomContent.ScalePixels
   href: DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_ScalePixels_System_Single_

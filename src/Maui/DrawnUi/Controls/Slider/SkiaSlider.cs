@@ -103,7 +103,7 @@ public class SkiaSlider : SkiaLayout
                                 StrokeWidth = 2,
                                 UseCache = SkiaCacheType.Operations,
                                 VerticalOptions = LayoutOptions.Center,
-                                ModifyXPosEnd = 20,
+                                ModifyXPosEnd = 10,
                                 SideOffset = 0,
                                 XPos = 0,
                             }.Assign(out SelectedTrail)

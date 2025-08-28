@@ -42,7 +42,7 @@ public partial class SkiaImageManager
                 {
                     if (UseGlide)
                     {
-                        var glide = await source.LoadOriginalViaGlide(Platform.CurrentActivity, cancel);
+                        var glide = await source.LoadOriginalViaGlideWithRetry(Platform.CurrentActivity, cancel);
                         if (glide != null)
                         {
                             SkiaImageManager.TraceLog($"[LoadImageOnPlatformAsync-GLIDE] loaded {source} ToSKBitmap");

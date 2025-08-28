@@ -100,8 +100,6 @@
 
             </draw:SkiaScroll>
 
-            <controls:ButtonToRoot/>
-            
             <draw:SkiaLabel
                 Margin="8"
                 BackgroundColor="Black"
@@ -122,12 +120,6 @@
                 ZIndex="100" />
 
         </draw:SkiaLayout>
-
-
-
-
-
-
 
     </draw:Canvas>
 

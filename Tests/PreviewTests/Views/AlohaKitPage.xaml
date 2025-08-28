@@ -66,8 +66,6 @@
                 Text="Consume Maui Graphics AlohaKit library by Javier Suárez"
                 TextColor="White"
                 VerticalOptions="End" />
-            
-            <controls:ButtonToRoot />
 
             <draw:SkiaLabelFps
                 Margin="0,0,4,24"

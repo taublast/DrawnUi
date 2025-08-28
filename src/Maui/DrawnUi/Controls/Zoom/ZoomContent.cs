@@ -110,7 +110,32 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
         set { SetValue(PanSpeedProperty, value); }
     }
 
+    public static readonly BindableProperty InvertPanProperty = BindableProperty.Create(
+        nameof(InvertPan),
+        typeof(bool),
+        typeof(ZoomContent),
+        false);
+
+    /// <summary>
+    /// When false (default), panning centers the zoom on the finger position (finger "sticks" to content).
+    /// When true, panning moves the content like a scroll view (content moves in same direction as finger).
+    /// </summary>
+    public bool InvertPan
+    {
+        get { return (bool)GetValue(InvertPanProperty); }
+        set { SetValue(InvertPanProperty, value); }
+    }
+
     #endregion
+
+    /// <summary>
+    /// Helper method to calculate pan direction based on InvertPan setting.
+    /// Returns the multiplier to apply to delta values.
+    /// </summary>
+    private float GetPanDirectionMultiplier()
+    {
+        return InvertPan ? 1.0f : -1.0f;
+    }
 
     private static void ApplyZoom(BindableObject bindable, object oldvalue, object newvalue)
     {
@@ -323,10 +348,11 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                     if (PanningMode == PanningModeType.TwoFingers || PanningMode == PanningModeType.Enabled)
                     {
                         var moved = args.Event.Wheel.Center - _pinchCenter;
+                        var panMultiplier = GetPanDirectionMultiplier();
                         // Direct 1:1 movement in screen space
                         OffsetImage = new(
-                            (float)(OffsetImage.X - moved.Width * PanSpeed),
-                            (float)(OffsetImage.Y - moved.Height * PanSpeed));
+                            (float)(OffsetImage.X + moved.Width * PanSpeed * panMultiplier),
+                            (float)(OffsetImage.Y + moved.Height * PanSpeed * panMultiplier));
 
                         // Immediate clamp using last viewport (if available)
                         TryClampWithLastViewport();
@@ -384,10 +410,11 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                 {
                     if (PanningMode == PanningModeType.Enabled || PanningMode == PanningModeType.TwoFingers)
                     {
+                        var panMultiplier = GetPanDirectionMultiplier();
                         // Direct 1:1 movement in screen space
                         OffsetImage = new(
-                            (float)(OffsetImage.X - deltaX * PanSpeed),
-                            (float)(OffsetImage.Y - deltaY * PanSpeed));
+                            (float)(OffsetImage.X + deltaX * PanSpeed * panMultiplier),
+                            (float)(OffsetImage.Y + deltaY * PanSpeed * panMultiplier));
 
                         // Immediate clamp using last viewport (if available)
                         TryClampWithLastViewport();
@@ -424,11 +451,13 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
 
                     _panStarted = args.Event.Location;
 
+                    var panMultiplier = GetPanDirectionMultiplier();
                     // Direct 1:1 movement in screen space for natural panning
-                    // Finger "sticks" to the content
+                    // When InvertPan=false: Finger "sticks" to the content (zoom-to-finger behavior)
+                    // When InvertPan=true: Content moves like scroll view (content follows finger direction)
                     OffsetImage = new(
-                        (float)(OffsetImage.X - deltaX * PanSpeed),
-                        (float)(OffsetImage.Y - deltaY * PanSpeed));
+                        (float)(OffsetImage.X + deltaX * PanSpeed * panMultiplier),
+                        (float)(OffsetImage.Y + deltaY * PanSpeed * panMultiplier));
                 }
 
                 Update();

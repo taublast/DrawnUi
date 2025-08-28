@@ -41,6 +41,53 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     // Max preview height that is guaranteed by Camera2 API
     public int MaxPreviewHeight = 800;
 
+    // Still capture formats - same pattern as Apple implementation
+    public List<CaptureFormat> StillFormats { get; protected set; } = new List<CaptureFormat>();
+
+    /// <summary>
+    /// Setup still capture formats - same pattern as Apple implementation
+    /// </summary>
+    private void SetupStillFormats(Android.Hardware.Camera2.Params.StreamConfigurationMap map, string cameraId)
+    {
+        var formats = new List<CaptureFormat>();
+
+        try
+        {
+            if (map != null)
+            {
+                // Get all available still sizes - same logic as before but centralized
+                var stillSizes = map.GetOutputSizes((int)ImageFormatType.Yuv420888)
+                    .Where(size => size.Width > 0 && size.Height > 0)
+                    .GroupBy(size => new { size.Width, size.Height }) // Remove any potential duplicates
+                    .Select(group => group.First())
+                    .OrderByDescending(size => size.Width * size.Height)
+                    .ToList();
+
+                Debug.WriteLine($"[NativeCameraAndroid] Found {stillSizes.Count} unique YUV420 still capture formats for camera {cameraId}:");
+
+                for (int i = 0; i < stillSizes.Count; i++)
+                {
+                    var size = stillSizes[i];
+                    Debug.WriteLine($"  [{i}] {size.Width}x{size.Height}");
+
+                    formats.Add(new CaptureFormat
+                    {
+                        Width = size.Width,
+                        Height = size.Height,
+                        FormatId = $"android_yuv_{cameraId}_{i}"
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraAndroid] Error setting up still formats: {ex.Message}");
+        }
+
+        StillFormats = formats;
+        Debug.WriteLine($"[NativeCameraAndroid] Setup {StillFormats.Count} still formats");
+    }
+
     public static void FillMetadata(Metadata meta, CaptureResult result)
     {
         // Get the camera's chosen exposure settings for "proper" exposure
@@ -238,7 +285,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             var newexif = new ExifInterface(filename);
 
             Metadata.FillExif(newexif, meta);
-             
+
             newexif.SaveAttributes();
         }
 
@@ -668,7 +715,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="aspectRatio">The desired aspect ratio</param>
     /// <param name="ratioTolerance">Tolerance for aspect ratio matching (default 0.1 = 10%)</param>
     /// <returns>The optimal Size, or first choice if none were suitable</returns>
-    private static Size ChooseOptimalSize(Size[] choices, int maxWidth, int maxHeight, Size aspectRatio, double ratioTolerance = 0.1)
+    private static Size ChooseOptimalSize(Size[] choices, int maxWidth, int maxHeight, Size aspectRatio,
+        double ratioTolerance = 0.1)
     {
         double targetRatio = (double)aspectRatio.Width / aspectRatio.Height;
         Size optimalSize = null;
@@ -720,7 +768,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
 
-
     public bool ManualZoomEnabled = true;
 
     private void OnScaleChanged(object sender, TouchEffect.WheelEventArgs e)
@@ -739,262 +786,293 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="height"></param>
     protected virtual void SetupHardware(int width, int height)
     {
-        int allowPreviewOverflow = 200; //by px
-
-        var activity = Platform.CurrentActivity;
-        var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
-        try
+        lock (lockSetup)
         {
-            //get avalable cameras info
-            var cameras = new List<CameraUnit>();
+            int allowPreviewOverflow = 200; //by px
 
-            var cams = manager.GetCameraIdList();
-            for (var i = 0; i < cams.Length; i++)
+            var activity = Platform.CurrentActivity;
+            var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+            try
             {
-                var cameraId = cams[i];
-                CameraCharacteristics characteristics = manager.GetCameraCharacteristics(cameraId);
+                //get avalable cameras info
+                var cameras = new List<CameraUnit>();
 
-                #region compatible camera
-
-                // Skip wrong facing cameras (only if not in manual mode)
-                var facing = (Integer)characteristics.Get(CameraCharacteristics.LensFacing);
-                if (FormsControl.Facing != CameraPosition.Manual && facing != null)
+                var cams = manager.GetCameraIdList();
+                for (var i = 0; i < cams.Length; i++)
                 {
-                    if (FormsControl.Facing == CameraPosition.Default &&
-                        facing == (Integer.ValueOf((int)LensFacing.Front)))
+                    var cameraId = cams[i];
+                    CameraCharacteristics characteristics = manager.GetCameraCharacteristics(cameraId);
+
+                    #region compatible camera
+
+                    // Skip wrong facing cameras (only if not in manual mode)
+                    var facing = (Integer)characteristics.Get(CameraCharacteristics.LensFacing);
+                    if (FormsControl.Facing != CameraPosition.Manual && facing != null)
+                    {
+                        if (FormsControl.Facing == CameraPosition.Default &&
+                            facing == (Integer.ValueOf((int)LensFacing.Front)))
+                            continue;
+                        else if (FormsControl.Facing == CameraPosition.Selfie &&
+                                 facing == (Integer.ValueOf((int)LensFacing.Back)))
+                            continue;
+                    }
+
+                    var map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics
+                        .ScalerStreamConfigurationMap);
+                    if (map == null)
+                    {
                         continue;
-                    else if (FormsControl.Facing == CameraPosition.Selfie &&
-                             facing == (Integer.ValueOf((int)LensFacing.Back)))
-                        continue;
+                    }
+
+                    #endregion
+
+                    var focalList = (float[])characteristics.Get(CameraCharacteristics.LensInfoAvailableFocalLengths);
+                    var sensorSize =
+                        (Android.Util.SizeF)characteristics.Get(CameraCharacteristics.SensorInfoPhysicalSize);
+
+                    var unit = new CameraUnit
+                    {
+                        Id = cameraId,
+                        Facing = FormsControl.Facing,
+                        MinFocalDistance =
+                            (float)characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance),
+                        //LensDistortion = (???)characteristics.Get(CameraCharacteristics.LensDistortion),
+                        SensorHeight = sensorSize.Height,
+                        SensorWidth = sensorSize.Width,
+                        FocalLengths = new List<float>(),
+                        Meta = FormsControl.CreateMetadata()
+                    };
+
+                    foreach (var focalLength in focalList)
+                    {
+                        unit.FocalLengths.Add(focalLength);
+                    }
+
+                    unit.FocalLength = unit.FocalLengths[0];
+
+                    cameras.Add(unit);
                 }
 
-                var map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics
-                    .ScalerStreamConfigurationMap);
-                if (map == null)
+                if (!cameras.Any())
+                    return;
+
+                // Select camera based on manual index or default to first
+                CameraUnit selectedCamera;
+                if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
                 {
-                    continue;
-                }
-
-                #endregion
-
-                var focalList = (float[])characteristics.Get(CameraCharacteristics.LensInfoAvailableFocalLengths);
-                var sensorSize = (Android.Util.SizeF)characteristics.Get(CameraCharacteristics.SensorInfoPhysicalSize);
-
-                var unit = new CameraUnit
-                {
-                    Id = cameraId,
-                    Facing = FormsControl.Facing,
-                    MinFocalDistance = (float)characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance),
-                    //LensDistortion = (???)characteristics.Get(CameraCharacteristics.LensDistortion),
-                    SensorHeight = sensorSize.Height,
-                    SensorWidth = sensorSize.Width,
-                    FocalLengths = new List<float>(),
-                    Meta = FormsControl.CreateMetadata()
-                };
-
-                foreach (var focalLength in focalList)
-                {
-                    unit.FocalLengths.Add(focalLength);
-                }
-
-                unit.FocalLength = unit.FocalLengths[0];
-
-                cameras.Add(unit);
-            }
-
-            if (!cameras.Any())
-                return;
-
-            // Select camera based on manual index or default to first
-            CameraUnit selectedCamera;
-            if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
-            {
-                if (FormsControl.CameraIndex < cameras.Count)
-                {
-                    selectedCamera = cameras[FormsControl.CameraIndex];
-                    Debug.WriteLine($"[NativeCameraAndroid] Selected camera by index {FormsControl.CameraIndex}: {selectedCamera.Id}");
+                    if (FormsControl.CameraIndex < cameras.Count)
+                    {
+                        selectedCamera = cameras[FormsControl.CameraIndex];
+                        Debug.WriteLine(
+                            $"[NativeCameraAndroid] Selected camera by index {FormsControl.CameraIndex}: {selectedCamera.Id}");
+                    }
+                    else
+                    {
+                        Debug.WriteLine(
+                            $"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex}, falling back to first camera");
+                        selectedCamera = cameras[0];
+                    }
                 }
                 else
                 {
-                    Debug.WriteLine($"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex}, falling back to first camera");
                     selectedCamera = cameras[0];
                 }
-            }
-            else
-            {
-                selectedCamera = cameras[0];
-            }
 
-            bool SetupCamera(CameraUnit cameraUnit)
-            {
-                CameraCharacteristics characteristics = manager.GetCameraCharacteristics(cameraUnit.Id);
 
-                var map = (StreamConfigurationMap)characteristics.Get(
-                    CameraCharacteristics.ScalerStreamConfigurationMap);
-                if (map == null)
+                bool SetupCamera(CameraUnit cameraUnit)
                 {
-                    return false;
-                }
+                    CameraCharacteristics characteristics = manager.GetCameraCharacteristics(cameraUnit.Id);
 
-                // Check if the flash is supported.
-                var available = (Boolean)characteristics.Get(CameraCharacteristics.FlashInfoAvailable);
-                if (available == null)
-                {
-                    mFlashSupported = false;
-                }
-                else
-                {
-                    mFlashSupported = (bool)available;
-                }
+                    var map = (StreamConfigurationMap)characteristics.Get(
+                        CameraCharacteristics.ScalerStreamConfigurationMap);
+                    if (map == null)
+                    {
+                        return false;
+                    }
 
-                SensorOrientation = (int)(Integer)characteristics.Get(CameraCharacteristics.SensorOrientation);
+                    // Check if the flash is supported.
+                    var available = (Boolean)characteristics.Get(CameraCharacteristics.FlashInfoAvailable);
+                    if (available == null)
+                    {
+                        mFlashSupported = false;
+                    }
+                    else
+                    {
+                        mFlashSupported = (bool)available;
+                    }
+
+                    SensorOrientation = (int)(Integer)characteristics.Get(CameraCharacteristics.SensorOrientation);
 
 
-                Point displaySize = new(width, height);
-                //activity.WindowManager.DefaultDisplay.GetSize(displaySize);
+                    Point displaySize = new(width, height);
+                    //activity.WindowManager.DefaultDisplay.GetSize(displaySize);
 
-                //camera width
+                    //camera width
 
 
-                var maxPreviewWidth = displaySize.X + allowPreviewOverflow;
-                var maxPreviewHeight = displaySize.Y + allowPreviewOverflow;
+                    var maxPreviewWidth = displaySize.X + allowPreviewOverflow;
+                    var maxPreviewHeight = displaySize.Y + allowPreviewOverflow;
 
-                bool rotated = false;
+                    bool rotated = false;
 
-                if (SensorOrientation != 0 && SensorOrientation != 180)
-                {
-                    rotated = true;
-                    maxPreviewWidth = displaySize.Y + allowPreviewOverflow;
-                    maxPreviewHeight = displaySize.X + allowPreviewOverflow;
-                }
+                    if (SensorOrientation != 0 && SensorOrientation != 180)
+                    {
+                        rotated = true;
+                        maxPreviewWidth = displaySize.Y + allowPreviewOverflow;
+                        maxPreviewHeight = displaySize.X + allowPreviewOverflow;
+                    }
 
-                if (maxPreviewWidth > MaxPreviewWidth)
-                {
-                    maxPreviewWidth = MaxPreviewWidth;
-                }
+                    if (maxPreviewWidth > MaxPreviewWidth)
+                    {
+                        maxPreviewWidth = MaxPreviewWidth;
+                    }
 
-                if (maxPreviewHeight > MaxPreviewHeight)
-                {
-                    maxPreviewHeight = MaxPreviewHeight;
-                }
+                    if (maxPreviewHeight > MaxPreviewHeight)
+                    {
+                        maxPreviewHeight = MaxPreviewHeight;
+                    }
 
-                #region STILL PHOTO
+                    #region STILL PHOTO
 
-                var stillSizes = map.GetOutputSizes((int)ImageFormatType.Yuv420888)
-                    .ToList();
+                    // Setup still formats once - same pattern as Apple implementation
+                    SetupStillFormats(map, CameraId);
 
-                List<Size> validSizes;
-                if (rotated)
-                {
-                    validSizes = stillSizes.Where(x => x.Width > x.Height).OrderByDescending(x => x.Width * x.Height)
-                        .ToList();
-                }
-                else
-                {
-                    validSizes = stillSizes.Where(x => x.Width < x.Height).OrderByDescending(x => x.Width * x.Height)
-                        .ToList();
-                }
+                    // For Manual quality, use the index directly from StillFormats
+                    // For other qualities, filter by orientation as before
+                    List<Size> validSizes;
+                    if (FormsControl.CapturePhotoQuality == CaptureQuality.Manual)
+                    {
+                        // Use StillFormats directly for Manual mode - same as Apple implementation
+                        validSizes = StillFormats.Select(f => new Size(f.Width, f.Height)).ToList();
+                        Debug.WriteLine($"[NativeCameraAndroid] Using StillFormats for Manual quality: {validSizes.Count} formats");
+                    }
+                    else
+                    {
+                        // For other qualities, filter by orientation as before
+                        var allStillSizes = StillFormats.Select(f => new Size(f.Width, f.Height)).ToList();
 
-                if (!validSizes.Any())
-                {
-                    validSizes = stillSizes.Where(x => x.Width == x.Height).OrderByDescending(x => x.Width * x.Height)
-                        .ToList();
-                }
-
-                Size selectedSize;
-
-                switch (FormsControl.CapturePhotoQuality)
-                {
-                    case CaptureQuality.Max:
-                        selectedSize = validSizes.First();
-                        break;
-
-                    case CaptureQuality.Medium:
-                        selectedSize = validSizes[validSizes.Count / 3];
-                        break;
-
-                    case CaptureQuality.Low:
-                        selectedSize = validSizes.Last();
-                        break;
-
-                    case CaptureQuality.Manual:
-                        // Use specific format index
-                        var formatIndex = FormsControl.CaptureFormatIndex;
-                        if (formatIndex >= 0 && formatIndex < validSizes.Count)
+                        if (rotated)
                         {
-                            selectedSize = validSizes[formatIndex];
+                            validSizes = allStillSizes.Where(x => x.Width > x.Height)
+                                .OrderByDescending(x => x.Width * x.Height)
+                                .ToList();
                         }
                         else
                         {
-                            Debug.WriteLine($"[NativeCameraAndroid] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
-                            selectedSize = validSizes.First();
+                            validSizes = allStillSizes.Where(x => x.Width < x.Height)
+                                .OrderByDescending(x => x.Width * x.Height)
+                                .ToList();
                         }
-                        break;
 
-                    default:
-                        selectedSize = new(1, 1);
-                        break;
+                        if (!validSizes.Any())
+                        {
+                            validSizes = allStillSizes.Where(x => x.Width == x.Height)
+                                .OrderByDescending(x => x.Width * x.Height)
+                                .ToList();
+                        }
+
+                        Debug.WriteLine($"[NativeCameraAndroid] Using orientation-filtered format list for {FormsControl.CapturePhotoQuality} quality: {validSizes.Count} formats (rotated: {rotated})");
+                    }
+
+                    Size selectedSize;
+
+                    switch (FormsControl.CapturePhotoQuality)
+                    {
+                        case CaptureQuality.Max:
+                            selectedSize = validSizes.First();
+                            break;
+
+                        case CaptureQuality.Medium:
+                            selectedSize = validSizes[validSizes.Count / 3];
+                            break;
+
+                        case CaptureQuality.Low:
+                            selectedSize = validSizes.Last();
+                            break;
+
+                        case CaptureQuality.Manual:
+                            // Use specific format index from the complete format list (validSizes = allStillSizes for Manual)
+                            var formatIndex = FormsControl.CaptureFormatIndex;
+                            if (formatIndex >= 0 && formatIndex < validSizes.Count)
+                            {
+                                selectedSize = validSizes[formatIndex];
+                                Debug.WriteLine($"[NativeCameraAndroid] Manual format selection: index {formatIndex} = {selectedSize.Width}x{selectedSize.Height}");
+                            }
+                            else
+                            {
+                                Debug.WriteLine(
+                                    $"[NativeCameraAndroid] Invalid CaptureFormatIndex {formatIndex} (max: {validSizes.Count - 1}), using Max quality");
+                                selectedSize = validSizes.First();
+                            }
+
+                            break;
+
+                        default:
+                            selectedSize = new(1, 1);
+                            break;
+                    }
+
+                    CaptureWidth = selectedSize.Width;
+                    CaptureHeight = selectedSize.Height;
+
+                    if (selectedSize.Width > 1 && selectedSize.Height > 1)
+                    {
+                        mImageReaderPhoto =
+                            ImageReader.NewInstance(CaptureWidth, CaptureHeight, ImageFormatType.Yuv420888, 2);
+                        mImageReaderPhoto.SetOnImageAvailableListener(mCaptureCallback, mBackgroundHandler);
+
+                        FormsControl.CapturePhotoSize = new(CaptureWidth, CaptureHeight);
+                    }
+                    else
+                    {
+                        mImageReaderPhoto = null;
+                    }
+
+                    #endregion
+
+
+                    var previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
+                        maxPreviewWidth, maxPreviewHeight, selectedSize);
+
+                    PreviewWidth = previewSize.Width;
+                    PreviewHeight = previewSize.Height;
+
+                    mImageReaderPreview =
+                        ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
+                    mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
+
+                    AllocateOutSurface();
+
+                    CameraId = cameraUnit.Id;
+
+                    FormsControl.CameraDevice = cameraUnit;
+
+                    FocalLength = (float)(cameraUnit.FocalLength * cameraUnit.SensorCropFactor);
+
+                    //                    ConsoleColor.Green.WriteLineForDebug(ViewFinderData.PrettyJson(PresetViewport));
+
+                    //System.Diagnostics.Debug.WriteLine($"[CameraFragment] Cameras:\n {ViewFinderData.PrettyJson(BackCameras)}");
+
+                    return true;
                 }
 
-                CaptureWidth = selectedSize.Width;
-                CaptureHeight = selectedSize.Height;
+                if (SetupCamera(selectedCamera))
+                    return;
 
-                if (selectedSize.Width > 1 && selectedSize.Height > 1)
-                {
-                    mImageReaderPhoto =
-                        ImageReader.NewInstance(CaptureWidth, CaptureHeight, ImageFormatType.Yuv420888, 2);
-                    mImageReaderPhoto.SetOnImageAvailableListener(mCaptureCallback, mBackgroundHandler);
-
-                    FormsControl.CapturePhotoSize = new(CaptureWidth, CaptureHeight);
-                }
-                else
-                {
-                    mImageReaderPhoto = null;
-                }
-
-                #endregion
-
-
-                var previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
-                    maxPreviewWidth, maxPreviewHeight, selectedSize);
-
-                PreviewWidth = previewSize.Width;
-                PreviewHeight = previewSize.Height;
-
-                mImageReaderPreview =
-                    ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
-                mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
-
-                AllocateOutSurface();
-
-                CameraId = cameraUnit.Id;
-
-                FormsControl.CameraDevice = cameraUnit;
-
-                FocalLength = (float)(cameraUnit.FocalLength * cameraUnit.SensorCropFactor);
-
-                //                    ConsoleColor.Green.WriteLineForDebug(ViewFinderData.PrettyJson(PresetViewport));
-
-                //System.Diagnostics.Debug.WriteLine($"[CameraFragment] Cameras:\n {ViewFinderData.PrettyJson(BackCameras)}");
-
-                return true;
+                System.Diagnostics.Debug.WriteLine($"[CameraFragment] No outputs!");
             }
-
-            if (SetupCamera(selectedCamera))
-                return;
-
-            System.Diagnostics.Debug.WriteLine($"[CameraFragment] No outputs!");
-        }
-        catch (CameraAccessException e)
-        {
-            e.PrintStackTrace();
-        }
-        catch (NullPointerException e)
-        {
-            //ErrorDialog.NewInstance(GetString(Resource.String.camera_error)).Show(ChildFragmentManager, FRAGMENT_DIALOG);
+            catch (CameraAccessException e)
+            {
+                e.PrintStackTrace();
+            }
+            catch (NullPointerException e)
+            {
+                //ErrorDialog.NewInstance(GetString(Resource.String.camera_error)).Show(ChildFragmentManager, FRAGMENT_DIALOG);
+            }
         }
     }
 
+    object lockSetup = new();
 
     //private CameraUnit _camera;
     //public CameraUnit Camera
@@ -1457,19 +1535,22 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 {
                     case FlashMode.Off:
                         mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Off);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode,
+                            (int)Android.Hardware.Camera2.FlashMode.Off);
                         _isTorchOn = false;
                         break;
                     case FlashMode.On:
                         mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode,
+                            (int)Android.Hardware.Camera2.FlashMode.Torch);
                         _isTorchOn = true;
                         break;
                     case FlashMode.Strobe:
                         // Future implementation for strobe mode
                         // For now, treat as On
                         mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode,
+                            (int)Android.Hardware.Camera2.FlashMode.Torch);
                         _isTorchOn = true;
                         break;
                 }
@@ -1951,11 +2032,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     public CameraEffect Effect
     {
         get { return _effect; }
-        set
-        {
-            _effect = value;
-    
-        }
+        set { _effect = value; }
     }
 
     #endregion

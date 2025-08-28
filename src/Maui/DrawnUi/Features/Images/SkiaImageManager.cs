@@ -241,8 +241,13 @@ public partial class SkiaImageManager : IDisposable
         });
     }
 
-
-    private SemaphoreSlim semaphoreLoad = new(16, 16);
+#if ANDROID
+    //since we dont use http factory on android..
+    //Android HTTP Connection Pool: Default limit is ~5 connections per host
+    private SemaphoreSlim semaphoreLoad = new(5, 5);
+#else
+    private SemaphoreSlim semaphoreLoad = new(10, 10);
+#endif
 
     private readonly object lockObject = new object();
 

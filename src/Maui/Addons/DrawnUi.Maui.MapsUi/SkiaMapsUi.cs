@@ -16,6 +16,7 @@ using Mapsui.Manipulations;
 using Mapsui.Projections;
 using Mapsui.Rendering;
 using Mapsui.Rendering.Skia;
+using Mapsui.Tiling.Layers;
 using Mapsui.UI;
 using Mapsui.Utilities;
 using Mapsui.Widgets;
@@ -534,51 +535,89 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         _invalidated = false;
     }
 
+    public event EventHandler<bool> LoadingChanged;
+
+    public ILayer LayerMap { get; protected set; }
+
+    public bool IsLoading { get; protected set; }
+
+    object lockTimer = new ();
+
     private void InvalidateTimerCallback(object? state)
     {
-        try
+        lock (lockTimer)
         {
-            // In MAUI if you use binding there is an event where the new value is null even though
-            // the current value en the value you are binding to are not null. Perhaps this should be
-            // considered a bug.
-            if (Map is null) return;
-
-            // Check, if we have to redraw the screen
-
-            if (Map?.UpdateAnimations() == true)
-                _refresh = true;
-
-            // seems that this could be null sometimes
-            if (Map?.Navigator?.UpdateAnimations() ?? false)
-                _refresh = true;
-
-            // Check if widgets need refresh
-            if (!_refresh && (Map?.Widgets?.Any(w => w.NeedsRedraw) ?? false))
-                _refresh = true;
-
-            if (!_refresh)
-                return;
-
-            if (_drawing)
+            try
             {
-                if (_performance != null)
-                    _performance.Dropped++;
+                // In MAUI if you use binding there is an event where the new value is null even though
+                // the current value en the value you are binding to are not null. Perhaps this should be
+                // considered a bug.
+                if (Map is null) return;
 
-                return;
+                // Access the tile layer
+                var tileLayer = LayerMap as TileLayer;
+                if (tileLayer != null)
+                {
+                    // Check if tiles are still loading
+                    if (tileLayer.Busy)
+                    {
+                        if (!IsLoading)
+                        {
+                            IsLoading = true;
+                            // Tiles are still loading
+                            LoadingChanged?.Invoke(this, true);
+                        }
+                    }
+                    else
+                    {
+                        if (IsLoading)
+                        {
+                            IsLoading = false;
+                            // All tiles in view are loaded - safe to capture PDF
+                            LoadingChanged?.Invoke(this, false);
+                        }
+                    }
+                }
+
+                // Check, if we have to redraw the screen
+
+                if (Map?.UpdateAnimations() == true)
+                    _refresh = true;
+
+                // seems that this could be null sometimes
+                if (Map?.Navigator?.UpdateAnimations() ?? false)
+                    _refresh = true;
+
+                // Check if widgets need refresh
+                if (!_refresh && (Map?.Widgets?.Any(w => w.NeedsRedraw) ?? false))
+                    _refresh = true;
+
+                if (!_refresh)
+                    return;
+
+                if (_drawing)
+                {
+                    if (_performance != null)
+                        _performance.Dropped++;
+
+                    return;
+                }
+
+                if (_invalidated)
+                {
+                    return;
+                }
+
+                _invalidated = true;
+                Update();
             }
-
-            if (_invalidated)
+            catch (Exception ex)
             {
-                return;
+                Logger.Log(LogLevel.Error, ex.Message, ex);
             }
+        }
 
-            _invalidated = true;
-            Update();
-        }
-        catch (Exception ex)
-        {
-            Logger.Log(LogLevel.Error, ex.Message, ex);
-        }
+
     }
 
     /// <summary>
@@ -592,6 +631,7 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         _refresh = refresh;
         _invalidateTimer?.Change(0, _updateInterval);
     }
+
 
     /// <summary>
     /// Stop updates for control
