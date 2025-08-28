@@ -443,11 +443,75 @@ namespace DrawnUi.Draw
         {
             return control.Initialize(me =>
             {
-                TSource target = targetSelector();
-                if (target != null)
+                // Track current subscription for cleanup
+                string mainKey = $"ObserveProperty_{propertyName}_{Guid.NewGuid()}";
+                TSource currentTarget = default(TSource);
+                PropertyChangedEventHandler currentTargetHandler = null;
+
+                // Helper to clean up current target subscription
+                void CleanupCurrentTarget()
                 {
-                    me.ObserveProperty(target, propertyName, callback);
+                    if (currentTarget != null && currentTargetHandler != null)
+                    {
+                        currentTarget.PropertyChanged -= currentTargetHandler;
+                        currentTarget = default(TSource);
+                        currentTargetHandler = null;
+                    }
                 }
+
+                // Helper to setup subscription to a new target
+                void SubscribeToTarget(TSource target)
+                {
+                    // Clean up previous subscription
+                    CleanupCurrentTarget();
+
+                    if (target == null) return;
+
+                    currentTarget = target;
+                    currentTargetHandler = (sender, args) =>
+                    {
+                        // Only trigger on the specific property or BindingContext
+                        if (args.PropertyName == propertyName || args.PropertyName == nameof(BindableObject.BindingContext))
+                        {
+                            try
+                            {
+                                callback(me);
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"ObserveProperty: Error in callback: {ex.Message}");
+                            }
+                        }
+                    };
+
+                    target.PropertyChanged += currentTargetHandler;
+
+                    // Initial call with BindingContext to trigger initial update
+                    currentTargetHandler(target, new PropertyChangedEventArgs("BindingContext"));
+                }
+
+                // Re-evaluate target selector and subscribe
+                void RefreshTarget()
+                {
+                    try
+                    {
+                        TSource newTarget = targetSelector();
+                        SubscribeToTarget(newTarget);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"ObserveProperty: Error getting target: {ex.Message}");
+                    }
+                }
+
+                // Initial setup
+                RefreshTarget();
+
+                // Setup cleanup when control is disposed
+                me.ExecuteUponDisposal[mainKey] = () =>
+                {
+                    CleanupCurrentTarget();
+                };
             });
         }
 
@@ -499,11 +563,76 @@ namespace DrawnUi.Draw
         {
             return control.Initialize(me =>
             {
-                TSource target = targetSelector();
-                if (target != null)
+                // Track current subscription for cleanup
+                string mainKey = $"ObserveProperties_{Guid.NewGuid()}";
+                TSource currentTarget = default(TSource);
+                PropertyChangedEventHandler currentTargetHandler = null;
+                var props = propertyNames.Concat(new[] { nameof(BindableObject.BindingContext) }).ToArray();
+
+                // Helper to clean up current target subscription
+                void CleanupCurrentTarget()
                 {
-                    me.ObserveProperties(target, propertyNames, callback);
+                    if (currentTarget != null && currentTargetHandler != null)
+                    {
+                        currentTarget.PropertyChanged -= currentTargetHandler;
+                        currentTarget = default(TSource);
+                        currentTargetHandler = null;
+                    }
                 }
+
+                // Helper to setup subscription to a new target
+                void SubscribeToTarget(TSource target)
+                {
+                    // Clean up previous subscription
+                    CleanupCurrentTarget();
+
+                    if (target == null) return;
+
+                    currentTarget = target;
+                    currentTargetHandler = (sender, args) =>
+                    {
+                        // Only trigger on the specific properties or BindingContext
+                        if (props.Contains(args.PropertyName))
+                        {
+                            try
+                            {
+                                callback(me);
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"ObserveProperties: Error in callback: {ex.Message}");
+                            }
+                        }
+                    };
+
+                    target.PropertyChanged += currentTargetHandler;
+
+                    // Initial call with BindingContext to trigger initial update
+                    currentTargetHandler(target, new PropertyChangedEventArgs("BindingContext"));
+                }
+
+                // Re-evaluate target selector and subscribe
+                void RefreshTarget()
+                {
+                    try
+                    {
+                        TSource newTarget = targetSelector();
+                        SubscribeToTarget(newTarget);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"ObserveProperties: Error getting target: {ex.Message}");
+                    }
+                }
+
+                // Initial setup
+                RefreshTarget();
+
+                // Setup cleanup when control is disposed
+                me.ExecuteUponDisposal[mainKey] = () =>
+                {
+                    CleanupCurrentTarget();
+                };
             });
         }
 
@@ -527,43 +656,75 @@ namespace DrawnUi.Draw
         {
             control.Initialize(me =>
             {
-                // Get the source control using the provided fetcher function
-                TSource source = sourceFetcher();
+                // Track current subscription for cleanup
+                string mainKey = $"Observe_{Guid.NewGuid()}";
+                TSource currentSource = null;
+                PropertyChangedEventHandler currentSourceHandler = null;
 
-                if (source == null)
+                // Helper to clean up current source subscription
+                void CleanupCurrentSource()
                 {
-                    Debug.WriteLine($"ObserveLater: Source control not available for {control.GetType().Name}");
-                    return;
+                    if (currentSource != null && currentSourceHandler != null)
+                    {
+                        currentSource.PropertyChanged -= currentSourceHandler;
+                        currentSource = null;
+                        currentSourceHandler = null;
+                    }
                 }
 
-                // Create a unique key for this subscription
-                string subscriptionKey = $"SubscribeLater_{source.GetHashCode()}_{Guid.NewGuid()}";
-
-                // Create the handler
-                PropertyChangedEventHandler handler = (sender, args) =>
+                // Helper to setup subscription to a new source
+                void SubscribeToSource(TSource source)
                 {
-                    // If a filter is specified, only proceed if the property is in the filter
-                    if (propertyFilter != null && !propertyFilter.Contains(args.PropertyName))
-                        return;
+                    // Clean up previous subscription
+                    CleanupCurrentSource();
 
+                    if (source == null) return;
+
+                    currentSource = source;
+                    currentSourceHandler = (sender, args) =>
+                    {
+                        // If a filter is specified, only proceed if the property is in the filter
+                        if (propertyFilter != null && !propertyFilter.Contains(args.PropertyName))
+                            return;
+
+                        try
+                        {
+                            callback(me, args.PropertyName);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Observe: Error in callback: {ex.Message}");
+                        }
+                    };
+
+                    source.PropertyChanged += currentSourceHandler;
+
+                    // Initial call with BindingContext to trigger initial update
+                    currentSourceHandler(source, new PropertyChangedEventArgs("BindingContext"));
+                }
+
+                // Re-evaluate source fetcher and subscribe
+                void RefreshSource()
+                {
                     try
                     {
-                        callback(control, args.PropertyName);
+                        TSource newSource = sourceFetcher();
+                        SubscribeToSource(newSource);
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine($"ObserveLater: Error in property changed callback: {ex.Message}");
+                        Debug.WriteLine($"Observe: Error getting source: {ex.Message}");
                     }
+                }
+
+                // Initial setup
+                RefreshSource();
+
+                // Setup cleanup when control is disposed
+                me.ExecuteUponDisposal[mainKey] = () =>
+                {
+                    CleanupCurrentSource();
                 };
-
-                // Subscribe to the event
-                source.PropertyChanged += handler;
-
-                // Call immediately with BindingContext to initialize
-                handler?.Invoke(source, new PropertyChangedEventArgs("BindingContext"));
-
-                // Will unsubscribe when control is disposed 
-                control.ExecuteUponDisposal[subscriptionKey] = () => { source.PropertyChanged -= handler; };
             });
 
             return control;
