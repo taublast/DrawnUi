@@ -28,6 +28,28 @@ public static class GlideExtensions
         Glide.With(Platform.AppContext).Clear(imageView);
     }
 
+    /// <summary>
+    /// Loads an image using Glide with retry logic for connection failures
+    /// </summary>
+    public static async Task<Bitmap> LoadOriginalViaGlideWithRetry(this ImageSource source, Context context, CancellationToken token, int maxRetries = 3)
+    {
+        for (int attempt = 0; attempt <= maxRetries; attempt++)
+        {
+            try
+            {
+                var result = await LoadOriginalViaGlide(source, context, token);
+                if (result != null)
+                    return result;
+            }
+            catch (Exception ex) when (attempt < maxRetries)
+            {
+                var delay = (int)Math.Pow(2, attempt) * 100; // Exponential backoff: 100ms, 200ms, 400ms
+                await Task.Delay(delay, token);
+            }
+        }
+        return null;
+    }
+
     public static async Task<Bitmap> LoadOriginalViaGlide(this ImageSource source, Context context, CancellationToken token)
     {
         try

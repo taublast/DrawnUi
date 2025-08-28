@@ -41397,6 +41397,25 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaImage.ReloadSource
   nameWithType: SkiaImage.ReloadSource
+- uid: DrawnUi.Draw.SkiaImage.RescaleSource
+  name: RescaleSource
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_RescaleSource
+  commentId: P:DrawnUi.Draw.SkiaImage.RescaleSource
+  fullName: DrawnUi.Draw.SkiaImage.RescaleSource
+  nameWithType: SkiaImage.RescaleSource
+- uid: DrawnUi.Draw.SkiaImage.RescaleSource*
+  name: RescaleSource
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_RescaleSource_
+  commentId: Overload:DrawnUi.Draw.SkiaImage.RescaleSource
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaImage.RescaleSource
+  nameWithType: SkiaImage.RescaleSource
+- uid: DrawnUi.Draw.SkiaImage.RescaleSourceProperty
+  name: RescaleSourceProperty
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_RescaleSourceProperty
+  commentId: F:DrawnUi.Draw.SkiaImage.RescaleSourceProperty
+  fullName: DrawnUi.Draw.SkiaImage.RescaleSourceProperty
+  nameWithType: SkiaImage.RescaleSourceProperty
 - uid: DrawnUi.Draw.SkiaImage.RescaledBitmap
   name: SkiaImage.RescaledBitmap
   href: api/DrawnUi.Draw.SkiaImage.RescaledBitmap.html
@@ -63987,6 +64006,25 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ZoomContent.InitializeAnimator
   nameWithType: ZoomContent.InitializeAnimator
+- uid: DrawnUi.Draw.ZoomContent.InvertPan
+  name: InvertPan
+  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_InvertPan
+  commentId: P:DrawnUi.Draw.ZoomContent.InvertPan
+  fullName: DrawnUi.Draw.ZoomContent.InvertPan
+  nameWithType: ZoomContent.InvertPan
+- uid: DrawnUi.Draw.ZoomContent.InvertPan*
+  name: InvertPan
+  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_InvertPan_
+  commentId: Overload:DrawnUi.Draw.ZoomContent.InvertPan
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ZoomContent.InvertPan
+  nameWithType: ZoomContent.InvertPan
+- uid: DrawnUi.Draw.ZoomContent.InvertPanProperty
+  name: InvertPanProperty
+  href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_InvertPanProperty
+  commentId: F:DrawnUi.Draw.ZoomContent.InvertPanProperty
+  fullName: DrawnUi.Draw.ZoomContent.InvertPanProperty
+  nameWithType: ZoomContent.InvertPanProperty
 - uid: DrawnUi.Draw.ZoomContent.LastValue
   name: LastValue
   href: api/DrawnUi.Draw.ZoomContent.html#DrawnUi_Draw_ZoomContent_LastValue

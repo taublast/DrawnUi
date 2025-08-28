@@ -136,8 +136,8 @@ namespace DrawnUi.Views
         /// <returns></returns>
         public virtual ScaledRect GetOnScreenVisibleArea(DrawingContext context, Vector2 inflateByPixels = default)
         {
-            var bounds = new SKRect(0 - inflateByPixels.X, 0 - inflateByPixels.Y,
-                (int)(Width * RenderingScale + inflateByPixels.X), (int)(Height * RenderingScale + inflateByPixels.Y));
+            var bounds = new SKRect(context.Destination.Left - inflateByPixels.X, context.Destination.Top - inflateByPixels.Y,
+                (int)(context.Destination.Right + inflateByPixels.X), (int)(context.Destination.Bottom + inflateByPixels.Y));
 
             return ScaledRect.FromPixels(bounds, (float)RenderingScale);
         }

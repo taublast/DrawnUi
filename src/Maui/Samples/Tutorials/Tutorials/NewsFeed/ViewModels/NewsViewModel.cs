@@ -81,10 +81,6 @@ public class NewsViewModel : BaseViewModel
             Debug.WriteLine("Loading more items !!!");
             var newItems = _dataProvider.GetNewsFeed(DataChunkSize/2);
             
-            // Preload new images
-            _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            _ = PreloadImages(newItems, _preloadCancellation.Token);
-            
             // Add new items to the end of the collection
             MainThread.BeginInvokeOnMainThread(() =>
             {

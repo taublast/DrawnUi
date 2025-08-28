@@ -52,6 +52,9 @@
                 BackgroundColor="LightGray">
 
                 <draw:SkiaImage
+                    LoadSourceOnFirstDraw="True"
+                    EraseChangedContent="True"
+                    RescalingQuality="None"
                     x:Name="AvatarImage"
                     Aspect="AspectFill"
                     HorizontalOptions="Fill"
@@ -101,6 +104,9 @@
                         HeightRequest="200">
 
             <draw:SkiaImage
+                RescalingQuality="None"
+                LoadSourceOnFirstDraw="True"
+                EraseChangedContent="True"
                 BackgroundColor="LightGray"
                 x:Name="ContentImg"
                 Aspect="AspectCover"
@@ -135,6 +141,9 @@
                 WidthRequest="80"
                 HeightRequest="80">
                 <draw:SkiaImage
+                    RescalingQuality="None"
+                    LoadSourceOnFirstDraw="True"
+                    EraseChangedContent="True"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
                     BackgroundColor="LightGray"
@@ -178,6 +187,9 @@
                 HorizontalOptions="End" />
 
             <draw:SkiaImage
+                LoadSourceOnFirstDraw="True"
+                EraseChangedContent="True"
+                RescalingQuality="None"
                 Margin="0,16,0,32"
                 UseCache="Image"
                 x:Name="AdImage"

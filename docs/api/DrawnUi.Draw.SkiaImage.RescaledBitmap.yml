@@ -25,7 +25,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RescaledBitmap
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1333
+    startLine: 1349
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -64,7 +64,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Bitmap
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1335
+    startLine: 1351
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -93,7 +93,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _image
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1337
+    startLine: 1353
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -120,7 +120,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1339
+    startLine: 1355
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -149,7 +149,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Quality
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1352
+    startLine: 1368
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -178,7 +178,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1353
+    startLine: 1369
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -207,7 +207,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1355
+    startLine: 1371
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

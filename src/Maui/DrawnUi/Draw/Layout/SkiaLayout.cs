@@ -1228,7 +1228,7 @@ namespace DrawnUi.Draw
                     {
                         var clip = dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion);
                         clip.Offset(offset);
-                        clip.Inflate(0.4f, 0.4f);
+                        //clip.Inflate(0.4f, 0.4f);
 
                         previousCache.Surface.Canvas.DrawRect(clip, PaintErase);
 

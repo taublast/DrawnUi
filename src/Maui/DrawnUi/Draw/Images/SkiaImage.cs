@@ -2,6 +2,7 @@
 
 namespace DrawnUi.Draw;
 
+[DebuggerDisplay("{DrawingRect.Width}x{DrawingRect.Height} {Source} {Tag}")]
 public class SkiaImage : SkiaControl
 {
     public SkiaImage()
@@ -299,7 +300,22 @@ public class SkiaImage : SkiaControl
         set { SetValue(RescalingQualityProperty, value); }
     }
 
+    public static readonly BindableProperty RescaleSourceProperty = BindableProperty.Create(
+        nameof(RescaleSource),
+        typeof(bool),
+        typeof(SkiaImage),
+        false,
+        propertyChanged: NeedInvalidateMeasure);
 
+    /// <summary>
+    /// Should rescale source if output viewport size changed and RescalingQuality>none. Default value is false.
+    /// </summary>
+    public bool RescaleSource
+    {
+        get { return (bool)GetValue(RescaleSourceProperty); }
+        set { SetValue(RescaleSourceProperty, value); }
+    }
+    
     private static void OnLoadSourceChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         if (bindable is SkiaImage control)
@@ -1443,8 +1459,8 @@ public class SkiaImage : SkiaControl
                 if (ScaledSource == null
                     || ScaledSource.Source != source.Id
                     || ScaledSource.Quality != this.RescalingQuality
-                    || ScaledSource.Bitmap.Width != targetWidth
-                    || ScaledSource.Bitmap.Height != targetHeight)
+                    || RescaleSource && (ScaledSource.Bitmap.Width != targetWidth || ScaledSource.Bitmap.Height != targetHeight)
+                    )
                 {
                     SKBitmap bitmapToResize = null;
                     bool needsDispose = false;
@@ -1468,6 +1484,7 @@ public class SkiaImage : SkiaControl
                             GetSamplingOptions(RescalingQuality, isUpscaling));
 
                         var kill = ScaledSource;
+
                         ScaledSource = new() { Source = source.Id, Bitmap = resizedBmp, Quality = RescalingQuality };
                         kill?.Dispose();
 

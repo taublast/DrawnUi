@@ -90,6 +90,8 @@ items:
   - DrawnUi.Draw.SkiaImage.LoadSourceOnFirstDraw
   - DrawnUi.Draw.SkiaImage.RescalingQualityProperty
   - DrawnUi.Draw.SkiaImage.RescalingQuality
+  - DrawnUi.Draw.SkiaImage.RescaleSourceProperty
+  - DrawnUi.Draw.SkiaImage.RescaleSource
   - DrawnUi.Draw.SkiaImage.PreviewBase64Property
   - DrawnUi.Draw.SkiaImage.PreviewBase64
   - DrawnUi.Draw.SkiaImage.OnWillDisposeWithChildren
@@ -1741,6 +1743,20 @@ references:
   name: RescalingQuality
   nameWithType: SkiaImage.RescalingQuality
   fullName: DrawnUi.Draw.SkiaImage.RescalingQuality
+- uid: DrawnUi.Draw.SkiaImage.RescaleSourceProperty
+  commentId: F:DrawnUi.Draw.SkiaImage.RescaleSourceProperty
+  parent: DrawnUi.Draw.SkiaImage
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_RescaleSourceProperty
+  name: RescaleSourceProperty
+  nameWithType: SkiaImage.RescaleSourceProperty
+  fullName: DrawnUi.Draw.SkiaImage.RescaleSourceProperty
+- uid: DrawnUi.Draw.SkiaImage.RescaleSource
+  commentId: P:DrawnUi.Draw.SkiaImage.RescaleSource
+  parent: DrawnUi.Draw.SkiaImage
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_RescaleSource
+  name: RescaleSource
+  nameWithType: SkiaImage.RescaleSource
+  fullName: DrawnUi.Draw.SkiaImage.RescaleSource
 - uid: DrawnUi.Draw.SkiaImage.PreviewBase64Property
   commentId: F:DrawnUi.Draw.SkiaImage.PreviewBase64Property
   parent: DrawnUi.Draw.SkiaImage

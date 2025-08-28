@@ -68,26 +68,19 @@ public partial class SkiaCamera
     {
         Intent intent = new Intent();
         intent.SetAction(Intent.ActionView);
-
         Android.Net.Uri photoUri;
 
-        // Check if it's already a content URI
         if (imageFilePath.StartsWith("content://"))
         {
-            // Already a content URI, use it directly
             photoUri = Android.Net.Uri.Parse(imageFilePath);
         }
         else
         {
-            // It's a file path, convert using FileProvider
             var file = new Java.IO.File(imageFilePath);
-
-            // Verify the file exists
             if (!file.Exists())
             {
                 throw new FileNotFoundException($"File not found: {imageFilePath}");
             }
-
             photoUri = FileProvider.GetUriForFile(
                 Platform.AppContext,
                 Platform.AppContext.PackageName + ".provider",
@@ -95,7 +88,7 @@ public partial class SkiaCamera
         }
 
         intent.SetDataAndType(photoUri, "image/*");
-        intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.GrantReadUriPermission);
+        intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop | ActivityFlags.GrantReadUriPermission);
         Platform.AppContext.StartActivity(intent);
     }
 

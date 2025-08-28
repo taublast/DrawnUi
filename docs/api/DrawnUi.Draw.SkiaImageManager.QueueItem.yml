@@ -24,7 +24,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: QueueItem
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 274
+    startLine: 279
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -64,7 +64,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 278
+    startLine: 283
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -102,7 +102,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 286
+    startLine: 291
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -131,7 +131,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Cancel
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 287
+    startLine: 292
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -160,7 +160,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Task
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 288
+    startLine: 293
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -189,7 +189,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 290
+    startLine: 295
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
