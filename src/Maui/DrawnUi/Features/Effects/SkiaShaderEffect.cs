@@ -1,5 +1,8 @@
 ﻿namespace DrawnUi.Draw;
 
+/// <summary>
+/// IPostRendererEffect
+/// </summary>
 public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 {
     protected SKPaint PaintWithShader;
@@ -19,7 +22,8 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         set { SetValue(UseContextProperty, value); }
     }
 
-    public static readonly BindableProperty AutoCreateInputTextureProperty = BindableProperty.Create(nameof(AutoCreateInputTexture),
+    public static readonly BindableProperty AutoCreateInputTextureProperty = BindableProperty.Create(
+        nameof(AutoCreateInputTexture),
         typeof(bool),
         typeof(SkiaShaderEffect),
         true,
@@ -145,7 +149,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
                 }
                 else
                 {
-                    CompileShader(_customCode, false);
+                    CompileShader(_customCode, false, SendError);
                 }
             }
             catch (Exception e)
@@ -153,6 +157,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
                 Super.Log($"[SkiaShaderEffect] Failed to compile shader {e}");
                 return null;
             }
+
             _hasNewShader = false;
         }
 
@@ -186,7 +191,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             // Dispose any snapshot we created
             if (sourceToDispose != null)
             {
-                Parent?.DisposeObject(sourceToDispose);// ?? sourceToDispose.Dispose();
+                Parent?.DisposeObject(sourceToDispose); // ?? sourceToDispose.Dispose();
             }
         }
     }
@@ -199,10 +204,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 
     public override bool NeedApply
     {
-        get
-        {
-            return base.NeedApply && CompiledShader != null;
-        }
+        get { return base.NeedApply && CompiledShader != null; }
     }
 
     /// <summary>
@@ -226,14 +228,12 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     /// <summary>
     /// Creates texture uniforms fresh each time
     /// </summary>
-    protected virtual SKRuntimeEffectChildren CreateTexturesUniforms(SkiaDrawingContext ctx, SKRect destination, SKShader primaryTexture)
+    protected virtual SKRuntimeEffectChildren CreateTexturesUniforms(SkiaDrawingContext ctx, SKRect destination,
+        SKShader primaryTexture)
     {
         if (primaryTexture != null)
         {
-            return new SKRuntimeEffectChildren(CompiledShader)
-            {
-                { "iImage1", primaryTexture }
-            };
+            return new SKRuntimeEffectChildren(CompiledShader) { { "iImage1", primaryTexture } };
         }
         else
         {
@@ -250,7 +250,14 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     protected virtual void CompileShader()
     {
         string shaderCode = SkSl.LoadFromResources(ShaderSource);
-        CompileShader(shaderCode);
+        CompileShader(shaderCode,true, SendError);
+    }
+
+    public event EventHandler<string> OnCompilationError;
+
+    protected void SendError(string error)
+    {
+        OnCompilationError?.Invoke(this, error);
     }
 
     public string NormalizeShaderCode(string shaderText)
@@ -258,7 +265,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         return shaderText.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
     }
 
-    protected virtual void CompileShader(string shaderCode, bool useCache=true)
+    protected virtual void CompileShader(string shaderCode, bool useCache = true, Action<string> onError = null)
     {
         shaderCode = NormalizeShaderCode(shaderCode);
         LoadedCode = shaderCode;
@@ -267,11 +274,13 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             if (string.IsNullOrEmpty(_template))
                 _template = SkSl.LoadFromResources(ShaderTemplate);
         }
+
         if (!string.IsNullOrEmpty(_template))
         {
             shaderCode = _template.Replace(_templatePlacehodler, shaderCode);
         }
-        CompiledShader = SkSl.Compile(shaderCode, ShaderSource, useCache);
+
+        CompiledShader = SkSl.Compile(shaderCode, ShaderSource, useCache, onError);
     }
 
     public string LoadedCode { get; set; }
@@ -286,6 +295,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         {
             _customCode = "";
         }
+
         _hasNewShader = true;
         _template = null;
         Update();

@@ -40,7 +40,7 @@ public static class SkSl
     /// <param name="shaderCode"></param>
     /// <param name="filename"></param>
     /// <returns></returns>
-    public static SKRuntimeEffect Compile(string shaderCode, string filename, bool useCache = true)
+    public static SKRuntimeEffect Compile(string shaderCode, string filename, bool useCache = true, Action<string> onError =null)
     {
         SKRuntimeEffect compiled = null;
 
@@ -63,7 +63,15 @@ public static class SkSl
         compiled = SKRuntimeEffect.CreateShader(shaderCode, out errors);
         if (!string.IsNullOrEmpty(errors))
         {
-            ThrowCompilationError(shaderCode, errors);
+            if (onError != null)
+            {
+                onError?.Invoke(errors);
+                return null;
+            }
+            else
+            {
+                ThrowCompilationError(shaderCode, errors);
+            }
         }
 
         Debug.WriteLine($"[SKSL] Compiled shader {filename}!");
