@@ -193,6 +193,8 @@ public class SkiaImageTiles : SkiaImage
 
         display.Offset((float)Math.Round(RenderingScale * HorizontalOffset), (float)Math.Round(RenderingScale * VerticalOffset));
 
+        DisplayRect = display;
+
         TextureScale = new(dest.Width / display.Width, dest.Height / display.Height);
 
         TileWidthPixels = (float)Math.Round(TileWidth * RenderingScale);

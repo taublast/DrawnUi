@@ -1401,6 +1401,16 @@ public class SkiaImage : SkiaControl
         };
     }
 
+    protected virtual void DrawSourceBitmap(DrawingContext ctx, SKBitmap bitmap, SKRect display, SKPaint paint)
+    {
+        ctx.Context.Canvas.DrawBitmap(bitmap, display, paint);
+    }
+
+    protected virtual void DrawSourceImage(DrawingContext ctx, SKImage image, SKRect display, SKPaint paint)
+    {
+        ctx.Context.Canvas.DrawImage(image, display, paint);
+    }
+
     /// <summary>
     /// Updated DrawSource with professional-quality resizing
     /// </summary>
@@ -1432,6 +1442,8 @@ public class SkiaImage : SkiaControl
             display.Inflate(new SKSize((float)InflateAmount, (float)InflateAmount));
             display.Offset((float)Math.Round(scale * HorizontalOffset), (float)Math.Round(scale * VerticalOffset));
 
+            DisplayRect = display;
+
             TextureScale = new(dest.Width / display.Width, dest.Height / display.Height);
 
             if (this.RescalingQuality != SKFilterQuality.None)
@@ -1446,11 +1458,11 @@ public class SkiaImage : SkiaControl
                     // Skip rescaling for minimal size changes
                     if (source.Bitmap != null)
                     {
-                        ctx.Context.Canvas.DrawBitmap(source.Bitmap, display, paint);
+                        DrawSourceBitmap(ctx, source.Bitmap, display, paint);
                     }
                     else if (source.Image != null)
                     {
-                        ctx.Context.Canvas.DrawImage(source.Image, display, paint);
+                        DrawSourceImage(ctx, source.Image, display, paint);
                     }
 
                     return;
@@ -1485,7 +1497,10 @@ public class SkiaImage : SkiaControl
 
                         var kill = ScaledSource;
 
-                        ScaledSource = new() { Source = source.Id, Bitmap = resizedBmp, Quality = RescalingQuality };
+                        ScaledSource = new()
+                        {
+                            Source = source.Id, Bitmap = resizedBmp, Quality = RescalingQuality
+                        };
                         kill?.Dispose();
 
                         if (needsDispose)
@@ -1497,18 +1512,18 @@ public class SkiaImage : SkiaControl
 
                 if (ScaledSource != null)
                 {
-                    ctx.Context.Canvas.DrawBitmap(ScaledSource.Bitmap, display, paint);
+                    DrawSourceBitmap(ctx, ScaledSource.Bitmap, display, paint);
                 }
             }
             else
             {
                 if (source.Bitmap != null)
                 {
-                    ctx.Context.Canvas.DrawBitmap(source.Bitmap, display, paint);
+                    DrawSourceBitmap(ctx, source.Bitmap, display, paint);
                 }
                 else if (source.Image != null)
                 {
-                    ctx.Context.Canvas.DrawImage(source.Image, display, paint);
+                    DrawSourceImage(ctx, source.Image, display, paint);
                 }
             }
         }
@@ -1517,6 +1532,11 @@ public class SkiaImage : SkiaControl
             Trace.WriteLine(e);
         }
     }
+
+    /// <summary>
+    /// The viewport scaled source will be rendered into, can be different from the control output area.
+    /// </summary>
+    public SKRect DisplayRect { get; protected set; }
 
     public SKPoint TextureScale { get; protected set; }
     public ScaledRect SourceImageSize { get; protected set; }
@@ -1690,7 +1710,7 @@ public class SkiaImage : SkiaControl
     /// </summary>
     public float SourceHeight { get; protected set; }
 
-    public static SKRect CalculateDisplayRect(SKRect dest,
+    protected virtual SKRect CalculateDisplayRect(SKRect dest,
         float destWidth, float destHeight,
         DrawImageAlignment horizontal, DrawImageAlignment vertical)
     {
