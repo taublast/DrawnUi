@@ -35,7 +35,7 @@ Current development state is _ALPHA for prod_.
 ## 🌱 What's new
 
 * `SkiaMapsUi` event `LoadingChanged` and prop `IsLoading` to tracks tiles loading/complete. New prop `IsAnimated` to make zooming instant if `false`.
-* `InvertPan` fixes, new prop `InvertPan` to control pan direction solving [186](https://github.com/taublast/DrawnUi/issues/186).
+* `ZoomContent` fixes, new prop `InvertPan` to control pan direction solving [186](https://github.com/taublast/DrawnUi/issues/186).
 * `SkiaImage` new prop `RescaleSource`, with default will not rescale source when viewport size changes (ex: zooming) making rendering faster.
 * `SkiaLayout` fix for ImageComposite cache expanding dirty regions.
 * `SkiaImageManager` Android added retry logic for Glide loader 
