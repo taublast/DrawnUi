@@ -469,9 +469,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         if (width < 640 || height < 480)
             return false;
 
-        // STRICT MAXIMUM for preview performance - NO 4K video preview!
+        // limit preview size for performance
         var videoPixels = width * height;
-        var maxVideoPixels = 1920 * 1080; // Absolute maximum: 1080p
+        var maxVideoPixels = 1024 * 768; 
 
         if (videoPixels > maxVideoPixels)
             return false;
@@ -519,11 +519,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             StillPixels = f.HighResolutionStillImageDimensions.Width * f.HighResolutionStillImageDimensions.Height
         }).ToList();
 
-        Console.WriteLine($"[NativeCameraiOS] Available formats for quality {quality}:");
-        foreach (var detail in formatDetails)
-        {
-            Console.WriteLine($"  Still: {detail.StillDims.Width}x{detail.StillDims.Height} ({detail.StillPixels:N0} pixels), Video: {detail.VideoDims.Width}x{detail.VideoDims.Height}");
-        }
+        //Console.WriteLine($"[NativeCameraiOS] Available formats for quality {quality}:");
+        //foreach (var detail in formatDetails)
+        //{
+        //    Console.WriteLine($"  Still: {detail.StillDims.Width}x{detail.StillDims.Height} ({detail.StillPixels:N0} pixels), Video: {detail.VideoDims.Width}x{detail.VideoDims.Height}");
+        //}
 
         var selectedDetail = quality switch
         {
