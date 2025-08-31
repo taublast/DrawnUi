@@ -1346,6 +1346,19 @@ namespace DrawnUi.Draw
             set { SetValue(TransformViewProperty, value); }
         }
 
+        public static readonly BindableProperty SkipRenderingOutOfBoundsProperty = BindableProperty.Create(
+            nameof(SkipRenderingOutOfBounds),
+            typeof(bool), typeof(SkiaControl), false);
+
+        /// <summary>
+        ///  If set to true will not not draw after VisualLayer is set and detected to be out of rendering bound. Useful for drawer contained elements and similar.
+        /// </summary>
+        public bool SkipRenderingOutOfBounds
+        {
+            get { return (bool)GetValue(SkipRenderingOutOfBoundsProperty); }
+            set { SetValue(SkipRenderingOutOfBoundsProperty, value); }
+        }
+
         /// <summary>
         /// If Tapped handler was defined, activates it and return true of false it was defined.
         /// </summary>
@@ -5632,13 +5645,25 @@ namespace DrawnUi.Draw
                 //but AFTER we have matrix and destination ready
                 CreateRenderedNode(transformsArea, ctx.Scale);
 
-                if (isClipping)
+                bool willRender = true;
+                if (SkipRenderingOutOfBounds && DrawingRect != SKRect.Empty)
                 {
-                    //ctx.Canvas.ClipPath(_preparedClipBounds, SKClipOperation.Intersect, false);
-                    ClipSmart(ctx.Context.Canvas, _preparedClipBounds);
+                    if (!VisualLayer.HitBoxWithTransforms.Pixels.IntersectsWith(ctx.Destination))
+                    {
+                        willRender = false;
+                    }
                 }
 
-                draw(ctx);
+                if (willRender)
+                {
+                    if (isClipping)
+                    {
+                        //ctx.Canvas.ClipPath(_preparedClipBounds, SKClipOperation.Intersect, false);
+                        ClipSmart(ctx.Context.Canvas, _preparedClipBounds);
+                    }
+
+                    draw(ctx);
+                }
 
                 ctx.Context.Canvas.RestoreToCount(restore);
             }
@@ -5648,6 +5673,14 @@ namespace DrawnUi.Draw
                 RenderTransformMatrix = SKMatrix.Identity;
 
                 CreateRenderedNode(transformsArea, ctx.Scale);
+
+                if (SkipRenderingOutOfBounds && DrawingRect != SKRect.Empty)
+                {
+                    if (!ctx.Destination.IntersectsWith(VisualLayer.HitBoxWithTransforms.Pixels))
+                    {
+                        return;
+                    }
+                }
 
                 draw(ctx);
             }
@@ -6007,12 +6040,13 @@ namespace DrawnUi.Draw
 
             List<SkiaControlWithRect> tree = new();
 
-            //actually base control has NO virtualization on purpose. implemented only for layouts.
+            //actually base control has NO virtualization on purpose. implemented only for non-absolute layouts.
             foreach (var child in skiaControls)
             {
                 if (child != null)
                 {
                     child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
+                    bool willDraw = true;
                     if (child.CanDraw) //still visible 
                     {
                         if (IsRenderingWithComposition)
@@ -6021,22 +6055,26 @@ namespace DrawnUi.Draw
                             {
                                 child.Render(context);
                             }
-                            //else
-                            //{
-                            //    child.Arrange(cellRect, child.SizeRequest.Width, child.SizeRequest.Height, scale);
-                            //}
+                            else
+                            {
+                                willDraw = false;
+                            }
                         }
                         else
                         {
                             child.Render(context);
                         }
 
-                        tree.Add(new SkiaControlWithRect(child,
-                            context.Destination,
-                            child.DrawingRect,
-                            count,
-                            -1, // Default freeze index
-                            child.BindingContext)); // Capture current binding context
+                        if (willDraw)
+                        {
+                            tree.Add(new SkiaControlWithRect(child,
+                                context.Destination,
+                                child.DrawingRect,
+                                count,
+                                -1, // Default freeze index
+                                child.BindingContext)); // Capture current binding context
+                        }
+
 
                         count++;
                     }
