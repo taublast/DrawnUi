@@ -87,7 +87,7 @@ public static class SkSl
     static void ThrowCompilationError(string shaderCode, string errors, string filename = null)
     {
         // Regular expression to find the line number in the error message
-        var regex = new Regex(@"error: (\d+):");
+        var regex = new Regex(@"error (\d+):");
         var match = regex.Match(errors);
 
         var error = string.Empty;
