@@ -2639,9 +2639,9 @@ namespace DrawnUi.Draw
                         var headerBottom = headerTop + Header.MeasuredSize.Pixels.Height;
 
                         var hitboxHeader = new SKRect(
-                            context.Destination.Left,
+                            0,
                             (float)headerTop,
-                            context.Destination.Right,
+                            context.Destination.Width,
                             (float)headerBottom);
 
                         if (!HeaderBehind && !HeaderSticky)
@@ -2657,7 +2657,9 @@ namespace DrawnUi.Draw
                         }
 
                         if (Content != null)
+                        {
                             Content.AddTranslationY = translateContent;
+                        }
 
                         offsetFooter += Header.MeasuredSize.Units.Height + (float)ContentOffset;
 
@@ -2703,8 +2705,8 @@ namespace DrawnUi.Draw
                         // Adjust the header hitbox for parallax in horizontal orientation
                         var headerLeft = ctx.Destination.Left;
                         var headerRight = headerLeft + Header.MeasuredSize.Pixels.Width;
-                        var hitboxHeader = new SKRect((float)headerLeft, ctx.Destination.Top, (float)headerRight,
-                            ctx.Destination.Bottom);
+                        var hitboxHeader = new SKRect((float)headerLeft, 0, (float)headerRight,
+                            ctx.Destination.Height);
 
                         if (!HeaderBehind && !HeaderSticky)
                         {
@@ -2718,12 +2720,12 @@ namespace DrawnUi.Draw
                             translateContent += ContentOffset;
                         }
 
-
                         if (Content != null)
-                            Content.AddTranslationY = translateContent;
+                        {
+                            Content.AddTranslationX = translateContent;
+                        }
 
                         offsetFooter += Header.MeasuredSize.Units.Width + (float)ContentOffset;
-                        ;
 
                         if (drawHeaderBefore)
                         {
