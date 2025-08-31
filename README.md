@@ -35,9 +35,12 @@ Current development state is _ALPHA for prod_.
 * __Navigate__ on canvas with familiar MAUI Shell techniques 
 
 ## 🌱 What's new
-* SKSL helper uses callback to pass compilation errors, SkiaShaderEffect new event handler OnCompilationError
+* SkiaCamera RenderCapturedPhotoAsync always runs on rendering thread and can use GPU
+* SKSL helper uses callback to pass compilation errors
+* SkiaShaderEffect new event handler OnCompilationError, passing iTime as all times, passing iMouse from new props: MouseInitial, MouseCurrent
 * Added SkiaCamera property IsMirrored to easily flip preview horizontally
 * Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
+* Fix header position for Horizontal orientation of SkiaScroll
 * Some fluent extensions fixes
  
 ___Please star ⭐ if you like it!___
