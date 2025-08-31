@@ -1,4 +1,6 @@
-﻿namespace DrawnUi.Draw;
+﻿using ExCSS;
+
+namespace DrawnUi.Draw;
 
 /// <summary>
 /// IPostRendererEffect
@@ -91,6 +93,8 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             PaintWithShader = new SKPaint();
         }
 
+        TimeSeconds = ctx.Context.FrameTimeNanos * NanosecondsToSeconds;
+
         var image = GetPrimaryTextureImage(ctx.Context, ctx.Destination);
         bool shouldDisposeImage = ShouldDisposePreviousTexture(image);
         SKShader shader = null;
@@ -178,7 +182,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 
             // Step 3: Create everything fresh (no caching)
             var samplingOptions = new SKSamplingOptions(FilterMode, MipmapMode);
-            using var primaryTexture = source.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp, samplingOptions);
+            using var primaryTexture = source.ToShader(TileMode, TileMode, samplingOptions);
 
             using var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTexture);
             using var uniforms = CreateUniforms(destination);
@@ -207,6 +211,27 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         get { return base.NeedApply && CompiledShader != null; }
     }
 
+
+    #region STANDART UNIFORMS
+
+
+    /// <summary>
+    /// Normally will be automatically set in Render method from context FrameTimeNanos
+    /// </summary>
+    public float TimeSeconds { get; set; }
+
+    const float NanosecondsToSeconds = 1e-9f; // 1 / 1,000,000,000
+
+    /// <summary>
+    /// Shadertoy conventions current mouse position (or drag position)
+    /// </summary>
+    public PointF MouseCurrent { get; set; }
+
+    /// <summary>
+    /// Shadertoy conventions where click/drag started. If zero could mean not dragging.
+    /// </summary>
+    public PointF MouseInitial { get; set; }
+
     /// <summary>
     /// Creates uniforms fresh each time
     /// </summary>
@@ -218,8 +243,13 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         SKSize iImageResolution = iResolution;
         var uniforms = new SKRuntimeEffectUniforms(CompiledShader);
 
+        uniforms["iMouse"] = new[] { MouseCurrent.X, MouseCurrent.Y, MouseInitial.X, MouseInitial.Y };
+        uniforms["iTime"] = TimeSeconds;
         uniforms["iOffset"] = new[] { viewport.Left, viewport.Top };
+
+        // Viewport size in pixels, can be different from size of images passed as sources
         uniforms["iResolution"] = new[] { iResolution.Width, iResolution.Height };
+
         uniforms["iImageResolution"] = new[] { iImageResolution.Width, iImageResolution.Height };
 
         return uniforms;
@@ -240,6 +270,8 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             return new SKRuntimeEffectChildren(CompiledShader);
         }
     }
+
+    #endregion
 
     protected string _template = null;
     protected string _templatePlacehodler = "//script-goes-here";
@@ -345,14 +377,14 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     public static readonly BindableProperty FilterModeProperty = BindableProperty.Create(
         nameof(FilterMode),
         typeof(SKFilterMode),
-        typeof(SkiaControl),
+        typeof(SkiaShaderEffect),
         SKFilterMode.Linear,
         propertyChanged: NeedChangeSource);
 
     public static readonly BindableProperty MipmapModeProperty = BindableProperty.Create(
         nameof(MipmapMode),
         typeof(SKMipmapMode),
-        typeof(SkiaControl),
+        typeof(SkiaShaderEffect),
         SKMipmapMode.None,
         propertyChanged: NeedChangeSource);
 
@@ -366,6 +398,20 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     {
         get => (SKMipmapMode)GetValue(MipmapModeProperty);
         set => SetValue(MipmapModeProperty, value);
+    }
+
+    public static readonly BindableProperty TileModeProperty = BindableProperty.Create(nameof(TileMode),
+        typeof(SKShaderTileMode), typeof(SkiaShaderEffect),
+        SKShaderTileMode.Clamp,
+        propertyChanged: NeedChangeSource);
+
+    /// <summary>
+    /// Tile mode for input textures
+    /// </summary>
+    public SKShaderTileMode TileMode
+    {
+        get { return (SKShaderTileMode)GetValue(TileModeProperty); }
+        set { SetValue(TileModeProperty, value); }
     }
 
     /// <summary>
