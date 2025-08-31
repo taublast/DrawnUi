@@ -1745,24 +1745,28 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    protected virtual void ApplyDisplayProperties()
+    {
+        if (Display != null)
+        {
+            Display.Aspect = this.Aspect;
+
+            Display.ScaleX = this.IsMirrored ?  -1 : 1;
+        }
+    }
+
     protected override void OnMeasured()
     {
         base.OnMeasured();
 
-        if (Display != null)
-        {
-            Display.Aspect = this.Aspect;
-        }
+        ApplyDisplayProperties();
     }
 
     protected override void OnLayoutChanged()
     {
         base.OnLayoutChanged();
 
-        if (Display != null)
-        {
-            Display.Aspect = this.Aspect; //todo check do we still need this now
-        }
+        ApplyDisplayProperties();
     }
 
     //public static readonly BindableProperty DisplayModeProperty = BindableProperty.Create(
@@ -1776,6 +1780,19 @@ public partial class SkiaCamera : SkiaControl
     //    get { return (StretchModes)GetValue(DisplayModeProperty); }
     //    set { SetValue(DisplayModeProperty, value); }
     //}
+
+    public static readonly BindableProperty IsMirroredProperty = BindableProperty.Create(
+        nameof(IsMirrored),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        propertyChanged: NeedInvalidateMeasure);
+
+    public bool IsMirrored
+    {
+        get { return (bool)GetValue(IsMirroredProperty); }
+        set { SetValue(IsMirroredProperty, value); }
+    }
 
     public static readonly BindableProperty AspectProperty = BindableProperty.Create(
         nameof(Aspect),

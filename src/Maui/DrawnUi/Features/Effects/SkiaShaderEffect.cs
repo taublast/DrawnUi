@@ -1,5 +1,10 @@
-﻿namespace DrawnUi.Draw;
+﻿using ExCSS;
 
+namespace DrawnUi.Draw;
+
+/// <summary>
+/// IPostRendererEffect
+/// </summary>
 public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 {
     protected SKPaint PaintWithShader;
@@ -19,7 +24,8 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         set { SetValue(UseContextProperty, value); }
     }
 
-    public static readonly BindableProperty AutoCreateInputTextureProperty = BindableProperty.Create(nameof(AutoCreateInputTexture),
+    public static readonly BindableProperty AutoCreateInputTextureProperty = BindableProperty.Create(
+        nameof(AutoCreateInputTexture),
         typeof(bool),
         typeof(SkiaShaderEffect),
         true,
@@ -87,6 +93,8 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             PaintWithShader = new SKPaint();
         }
 
+        TimeSeconds = ctx.Context.FrameTimeNanos * NanosecondsToSeconds;
+
         var image = GetPrimaryTextureImage(ctx.Context, ctx.Destination);
         bool shouldDisposeImage = ShouldDisposePreviousTexture(image);
         SKShader shader = null;
@@ -145,7 +153,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
                 }
                 else
                 {
-                    CompileShader(_customCode, false);
+                    CompileShader(_customCode, false, SendError);
                 }
             }
             catch (Exception e)
@@ -153,6 +161,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
                 Super.Log($"[SkiaShaderEffect] Failed to compile shader {e}");
                 return null;
             }
+
             _hasNewShader = false;
         }
 
@@ -173,7 +182,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 
             // Step 3: Create everything fresh (no caching)
             var samplingOptions = new SKSamplingOptions(FilterMode, MipmapMode);
-            using var primaryTexture = source.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp, samplingOptions);
+            using var primaryTexture = source.ToShader(TileMode, TileMode, samplingOptions);
 
             using var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTexture);
             using var uniforms = CreateUniforms(destination);
@@ -186,7 +195,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             // Dispose any snapshot we created
             if (sourceToDispose != null)
             {
-                Parent?.DisposeObject(sourceToDispose);// ?? sourceToDispose.Dispose();
+                Parent?.DisposeObject(sourceToDispose); // ?? sourceToDispose.Dispose();
             }
         }
     }
@@ -199,11 +208,29 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 
     public override bool NeedApply
     {
-        get
-        {
-            return base.NeedApply && CompiledShader != null;
-        }
+        get { return base.NeedApply && CompiledShader != null; }
     }
+
+
+    #region STANDART UNIFORMS
+
+
+    /// <summary>
+    /// Normally will be automatically set in Render method from context FrameTimeNanos
+    /// </summary>
+    public float TimeSeconds { get; set; }
+
+    const float NanosecondsToSeconds = 1e-9f; // 1 / 1,000,000,000
+
+    /// <summary>
+    /// Shadertoy conventions current mouse position (or drag position)
+    /// </summary>
+    public PointF MouseCurrent { get; set; }
+
+    /// <summary>
+    /// Shadertoy conventions where click/drag started. If zero could mean not dragging.
+    /// </summary>
+    public PointF MouseInitial { get; set; }
 
     /// <summary>
     /// Creates uniforms fresh each time
@@ -216,8 +243,13 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         SKSize iImageResolution = iResolution;
         var uniforms = new SKRuntimeEffectUniforms(CompiledShader);
 
+        uniforms["iMouse"] = new[] { MouseCurrent.X, MouseCurrent.Y, MouseInitial.X, MouseInitial.Y };
+        uniforms["iTime"] = TimeSeconds;
         uniforms["iOffset"] = new[] { viewport.Left, viewport.Top };
+
+        // Viewport size in pixels, can be different from size of images passed as sources
         uniforms["iResolution"] = new[] { iResolution.Width, iResolution.Height };
+
         uniforms["iImageResolution"] = new[] { iImageResolution.Width, iImageResolution.Height };
 
         return uniforms;
@@ -226,20 +258,20 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     /// <summary>
     /// Creates texture uniforms fresh each time
     /// </summary>
-    protected virtual SKRuntimeEffectChildren CreateTexturesUniforms(SkiaDrawingContext ctx, SKRect destination, SKShader primaryTexture)
+    protected virtual SKRuntimeEffectChildren CreateTexturesUniforms(SkiaDrawingContext ctx, SKRect destination,
+        SKShader primaryTexture)
     {
         if (primaryTexture != null)
         {
-            return new SKRuntimeEffectChildren(CompiledShader)
-            {
-                { "iImage1", primaryTexture }
-            };
+            return new SKRuntimeEffectChildren(CompiledShader) { { "iImage1", primaryTexture } };
         }
         else
         {
             return new SKRuntimeEffectChildren(CompiledShader);
         }
     }
+
+    #endregion
 
     protected string _template = null;
     protected string _templatePlacehodler = "//script-goes-here";
@@ -250,7 +282,14 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     protected virtual void CompileShader()
     {
         string shaderCode = SkSl.LoadFromResources(ShaderSource);
-        CompileShader(shaderCode);
+        CompileShader(shaderCode,true, SendError);
+    }
+
+    public event EventHandler<string> OnCompilationError;
+
+    protected void SendError(string error)
+    {
+        OnCompilationError?.Invoke(this, error);
     }
 
     public string NormalizeShaderCode(string shaderText)
@@ -258,7 +297,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         return shaderText.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
     }
 
-    protected virtual void CompileShader(string shaderCode, bool useCache=true)
+    protected virtual void CompileShader(string shaderCode, bool useCache = true, Action<string> onError = null)
     {
         shaderCode = NormalizeShaderCode(shaderCode);
         LoadedCode = shaderCode;
@@ -267,11 +306,13 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             if (string.IsNullOrEmpty(_template))
                 _template = SkSl.LoadFromResources(ShaderTemplate);
         }
+
         if (!string.IsNullOrEmpty(_template))
         {
             shaderCode = _template.Replace(_templatePlacehodler, shaderCode);
         }
-        CompiledShader = SkSl.Compile(shaderCode, ShaderSource, useCache);
+
+        CompiledShader = SkSl.Compile(shaderCode, ShaderSource, useCache, onError);
     }
 
     public string LoadedCode { get; set; }
@@ -286,6 +327,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         {
             _customCode = "";
         }
+
         _hasNewShader = true;
         _template = null;
         Update();
@@ -335,14 +377,14 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     public static readonly BindableProperty FilterModeProperty = BindableProperty.Create(
         nameof(FilterMode),
         typeof(SKFilterMode),
-        typeof(SkiaControl),
+        typeof(SkiaShaderEffect),
         SKFilterMode.Linear,
         propertyChanged: NeedChangeSource);
 
     public static readonly BindableProperty MipmapModeProperty = BindableProperty.Create(
         nameof(MipmapMode),
         typeof(SKMipmapMode),
-        typeof(SkiaControl),
+        typeof(SkiaShaderEffect),
         SKMipmapMode.None,
         propertyChanged: NeedChangeSource);
 
@@ -356,6 +398,20 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     {
         get => (SKMipmapMode)GetValue(MipmapModeProperty);
         set => SetValue(MipmapModeProperty, value);
+    }
+
+    public static readonly BindableProperty TileModeProperty = BindableProperty.Create(nameof(TileMode),
+        typeof(SKShaderTileMode), typeof(SkiaShaderEffect),
+        SKShaderTileMode.Clamp,
+        propertyChanged: NeedChangeSource);
+
+    /// <summary>
+    /// Tile mode for input textures
+    /// </summary>
+    public SKShaderTileMode TileMode
+    {
+        get { return (SKShaderTileMode)GetValue(TileModeProperty); }
+        set { SetValue(TileModeProperty, value); }
     }
 
     /// <summary>

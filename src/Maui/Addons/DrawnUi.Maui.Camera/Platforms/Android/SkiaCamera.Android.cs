@@ -88,7 +88,7 @@ public partial class SkiaCamera
         }
 
         intent.SetDataAndType(photoUri, "image/*");
-        intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop | ActivityFlags.GrantReadUriPermission);
+        intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.GrantReadUriPermission);
         Platform.AppContext.StartActivity(intent);
     }
 

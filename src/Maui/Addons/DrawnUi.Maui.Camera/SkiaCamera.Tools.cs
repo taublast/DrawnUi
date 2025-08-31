@@ -1,97 +1,130 @@
 ﻿global using DrawnUi.Draw;
 global using SkiaSharp;
+using SKCanvas = SkiaSharp.SKCanvas;
 
 namespace DrawnUi.Camera;
 
 public partial class SkiaCamera : SkiaControl
 {
+
     /// <summary>
+    /// This will run on rendering thread and return the task result making possible GPU usage.
     /// Overlays any SkiaLayout over the captured photo and returns a new bitmap.
     /// Remember to dispose the old bitmap if not needed anymore.
-    /// Can modify the created SkiaImage used for rendering by passing a callback `createdImage` to add effects etc.
-    /// </summary>
+    /// Can modify the created SkiaImage used for rendering by passing a callback `createdImage` to add effects etc.    /// </summary>
     /// <param name="captured"></param>
     /// <param name="overlay"></param>
     /// <param name="createdImage"></param>
+    /// <param name="useGpu"></param>
+    /// <param name="background"></param>
+    /// <param name="rotate"></param>
     /// <returns></returns>
-    public virtual SKImage RenderCapturedPhoto(CapturedImage captured, SkiaLayout overlay,
-        Action<SkiaImage> createdImage = null, SKColor? background=null, bool rotate=true)
+    public virtual Task<SKImage> RenderCapturedPhotoAsync(CapturedImage captured,
+        SkiaLayout overlay,
+        Action<SkiaImage> createdImage = null,
+        bool useGpu = false,
+        SKColor? background = null,
+        bool rotate = true)
     {
 
-        var scaleOverlay = GetRenderingScaleFor(captured.Image.Width, captured.Image.Height);
-        double zoomCapturedPhotoX = TextureScale;
-        double zoomCapturedPhotoY = TextureScale;
-
-        var rotation = rotate ? captured.Rotation : 0;
-
-        if (background == null)
+        var tcs = new TaskCompletionSource<SKImage>();
+        SafeAction(() =>
         {
-            background = SKColors.Black;
-        }
-
-        var width = captured.Image.Width;
-        var height = captured.Image.Height;
-
-
-        if (rotation == 90 || rotation == 270)
-        {
-            height = captured.Image.Width;
-            width = captured.Image.Height;
-        }
-
-        var info = new SKImageInfo(width, height);
-
-        using (var surface = SKSurface.Create(info))
-        {
-            if (surface == null)
+            try
             {
-                Super.Log($"Cannot create SKSurface {width}x{height}");
-                return null;
+                var scaleOverlay = GetRenderingScaleFor(captured.Image.Width, captured.Image.Height);
+                double zoomCapturedPhotoX = TextureScale;
+                double zoomCapturedPhotoY = TextureScale;
+
+                var rotation = rotate ? captured.Rotation : 0;
+
+                if (background == null)
+                {
+                    background = SKColors.Black;
+                }
+
+                var width = captured.Image.Width;
+                var height = captured.Image.Height;
+
+
+                if (rotation == 90 || rotation == 270)
+                {
+                    height = captured.Image.Width;
+                    width = captured.Image.Height;
+                }
+
+                var info = new SKImageInfo(width, height);
+                SKSurface surface = null;
+                try
+                {
+                    surface = CreateSurface(width, height, useGpu);
+
+                    if (surface == null)
+                    {
+                        Super.Log($"Cannot create SKSurface {width}x{height}");
+                        tcs.SetResult(default);
+                        return;
+                    }
+
+                    SKCanvas canvas = surface.Canvas;
+                    canvas.Clear(background.Value);
+
+                    //create offscreen rendering context
+                    var context = new SkiaDrawingContext()
+                    {
+                        Surface = surface,
+                        Canvas = surface.Canvas,
+                        Width = info.Width,
+                        Height = info.Height
+                    };
+                    var destination = new SKRect(0, 0, info.Width, info.Height);
+
+                    //render image
+                    var image = new SkiaImage
+                    {
+                        Tag = "Render",
+                        LoadSourceOnFirstDraw = true,
+                        VerticalOptions = LayoutOptions.Fill,
+                        HorizontalOptions = LayoutOptions.Fill,
+                        IsClippedToBounds = false, //do not clip sides after rotation if any
+                        AddEffect = this.Effect,
+                        Aspect = TransformAspect.None,
+                        ZoomX = zoomCapturedPhotoX,
+                        ZoomY = zoomCapturedPhotoY,
+                        ImageBitmap =
+                            new LoadedImageSource(captured
+                                .Image) //must not dispose bitmap after that, it's used by preview outside
+                    };
+
+                    if (rotation != 0)
+                    {
+                        var transformRotation = (float)captured.Rotation;
+                        image.Rotation = -transformRotation;
+                    }
+
+                    createdImage?.Invoke(image);
+
+                    var ctx = new DrawingContext(context, destination, 1, null);
+                    image.Render(ctx);
+
+                    overlay?.Render(ctx.WithScale(scaleOverlay));
+
+                    surface.Canvas.Flush();
+
+                    tcs.SetResult(surface.Snapshot());
+                }
+                finally
+                {
+                    ReturnSurface(surface);
+                }
             }
-
-            SKCanvas canvas = surface.Canvas;
-            canvas.Clear(background.Value);
-
-            //create offscreen rendering context
-            var context = new SkiaDrawingContext()
+            catch (Exception ex)
             {
-                Surface = surface, Canvas = surface.Canvas, Width = info.Width, Height = info.Height
-            };
-            var destination = new SKRect(0, 0, info.Width, info.Height);
-
-            //render image
-            var image = new SkiaImage
-            {
-                Tag = "Render",
-                LoadSourceOnFirstDraw = true,
-                VerticalOptions = LayoutOptions.Fill,
-                HorizontalOptions = LayoutOptions.Fill,
-                IsClippedToBounds = false, //do not clip sides after rotation if any
-                AddEffect = this.Effect,
-                Aspect = TransformAspect.None,
-                ZoomX = zoomCapturedPhotoX,
-                ZoomY = zoomCapturedPhotoY,
-                ImageBitmap =
-                    new LoadedImageSource(captured
-                        .Image) //must not dispose bitmap after that, it's used by preview outside
-            };
-
-            if (rotation != 0)
-            {
-                var transformRotation = (float)captured.Rotation;
-                image.Rotation = -transformRotation;
+                tcs.SetException(ex);
             }
+        });
 
-            createdImage?.Invoke(image);
-
-            var ctx = new DrawingContext(context, destination, 1, null);
-            image.Render(ctx);
-
-            overlay?.Render(ctx.WithScale(scaleOverlay));
-
-            surface.Canvas.Flush();
-            return surface.Snapshot();
-        }
+        return tcs.Task;
     }
 
 
