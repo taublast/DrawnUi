@@ -471,7 +471,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         // limit preview size for performance
         var videoPixels = width * height;
-        var maxVideoPixels = 1024 * 768; 
+
+        var maxVideoPixels = 1024 * 768;
+        if (DeviceInfo.Idiom != DeviceIdiom.Phone)
+        {
+            maxVideoPixels = 1920 * 1080;
+        }
 
         if (videoPixels > maxVideoPixels)
             return false;
