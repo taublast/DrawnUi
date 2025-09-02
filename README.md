@@ -3,21 +3,21 @@
 ![NuGet Version](https://img.shields.io/nuget/v/AppoMobi.Maui.DrawnUi.svg)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 
-📕 [Documentation](https://taublast.github.io/DrawnUi) 👈
+[Docs are here!](https://taublast.github.io/DrawnUi) 👈
 
 Replace native controls with a Skia Canvas! 🤩 On **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
-Rendering engine with a WPF-like like layout system, gestures and animations, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
+Rendering engine with a layout system, gestures and animations, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
-* To use inside a usual MAUI app, consume drawn controls by wrapping inside `Canvas` views.
-* To create a totally drawn app with just one `Canvas` as root view, use `SkiaShell` + `SkiaViewSwitcher` for navigation between screens with modals, popups, toasts etc.
+* To use inside a usual MAUI app, by wrapping drawn controls into `Canvas` views.
+* To create a totally drawn apps with just one `Canvas` as root view.
 * Drawn controls are totally virtual, no native views/handlers.
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, a nuget package is available.
 
-Current development state is _ALPHA for prod_.
+___Please star ⭐ if you like it, helps very much!___
 
-## 🦸 Features
+## Features
 
 * __Draw with helpers using SkiaSharp with hardware acceleration__
 * __Create your own animated pixel-perfect controls__
@@ -30,23 +30,9 @@ Current development state is _ALPHA for prod_.
 * __Optimized for performance__, rendering only visible elements, recycling templates etc
 * __Gestures__ support for anything, panning, scrolling, zooming etc
 * __Keyboard support__, track any key
-* __Navigate__ on canvas with familiar MAUI Shell techniques 
+* __Navigate__ on the canvas with MAUI Shell-like techniques 
 
-## 🌱 What's new
- 
-* SkiaCamera RenderCapturedPhotoAsync always runs on rendering thread and can use GPU
-* SKSL helper uses callback to pass compilation errors
-* SkiaShaderEffect new event handler OnCompilationError, passing iTime as all times, passing iMouse from new props: MouseInitial, MouseCurrent
-* Added SkiaCamera property IsMirrored to easily flip preview horizontally
-* Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
-* Fix header position for Horizontal orientation of SkiaScroll
-* Some fluent extensions fixes
- 
-___Please star ⭐ if you like it!___
-
-> "No sealed code" policy library for creating and rendering custom UI
-
-## 🎁 Shipped With
+## Shipped With
 
 * __Base drawn controls__
 	* __SkiaControl__ Your lego brick to create anything
@@ -121,7 +107,17 @@ Click here ☝️☝️☝️
 
 ---
 
-## 🌱 What Was New Previously
+## What's new
+ 
+* SkiaCamera RenderCapturedPhotoAsync always runs on rendering thread and can use GPU
+* SKSL helper uses callback to pass compilation errors
+* SkiaShaderEffect new event handler OnCompilationError, passing iTime as all times, passing iMouse from new props: MouseInitial, MouseCurrent
+* Added SkiaCamera property IsMirrored to easily flip preview horizontally
+* Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
+* Fix header position for Horizontal orientation of SkiaScroll
+* Some fluent extensions fixes
+
+## Previously
 
 * `SkiaMapsUi` event `LoadingChanged` and prop `IsLoading` to tracks tiles loading/complete. New prop `IsAnimated` to make zooming instant if `false`.
 * `InvertPan` fixes, new prop `InvertPan` to control pan direction solving [186](https://github.com/taublast/DrawnUi/issues/186).
