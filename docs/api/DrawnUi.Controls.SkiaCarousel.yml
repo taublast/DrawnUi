@@ -539,6 +539,8 @@ items:
   - DrawnUi.Draw.SkiaControl.AnimationTapped
   - DrawnUi.Draw.SkiaControl.TransformViewProperty
   - DrawnUi.Draw.SkiaControl.TransformView
+  - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
   - DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.ChildTapped
   - DrawnUi.Draw.SkiaControl.TransformPointToLocalSpace(SkiaSharp.SKPoint)
@@ -12554,6 +12556,20 @@ references:
   name: TransformView
   nameWithType: SkiaControl.TransformView
   fullName: DrawnUi.Draw.SkiaControl.TransformView
+- uid: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SkipRenderingOutOfBoundsProperty
+  name: SkipRenderingOutOfBoundsProperty
+  nameWithType: SkiaControl.SkipRenderingOutOfBoundsProperty
+  fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+- uid: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  commentId: P:DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SkipRenderingOutOfBounds
+  name: SkipRenderingOutOfBounds
+  nameWithType: SkiaControl.SkipRenderingOutOfBounds
+  fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
 - uid: DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   parent: DrawnUi.Draw.SkiaControl

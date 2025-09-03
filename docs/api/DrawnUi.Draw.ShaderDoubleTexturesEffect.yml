@@ -78,12 +78,17 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
   - DrawnUi.Draw.SkiaShaderEffect.CompiledShader
   - DrawnUi.Draw.SkiaShaderEffect.NeedApply
+  - DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  - DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  - DrawnUi.Draw.SkiaShaderEffect.MouseInitial
   - DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaShaderEffect._template
   - DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
   - DrawnUi.Draw.SkiaShaderEffect.CompileShader
+  - DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  - DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
   - DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
-  - DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
+  - DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
   - DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   - DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
   - DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
@@ -97,6 +102,8 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
   - DrawnUi.Draw.SkiaShaderEffect.FilterMode
   - DrawnUi.Draw.SkiaShaderEffect.MipmapMode
+  - DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  - DrawnUi.Draw.SkiaShaderEffect.TileMode
   - DrawnUi.Draw.SkiaShaderEffect.Update
   - DrawnUi.Draw.SkiaEffect.Parent
   - DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
@@ -1182,6 +1189,27 @@ references:
   name: NeedApply
   nameWithType: SkiaShaderEffect.NeedApply
   fullName: DrawnUi.Draw.SkiaShaderEffect.NeedApply
+- uid: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TimeSeconds
+  name: TimeSeconds
+  nameWithType: SkiaShaderEffect.TimeSeconds
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseCurrent
+  name: MouseCurrent
+  nameWithType: SkiaShaderEffect.MouseCurrent
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseInitial
+  name: MouseInitial
+  nameWithType: SkiaShaderEffect.MouseInitial
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
 - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -1243,6 +1271,44 @@ references:
     href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  commentId: E:DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnCompilationError
+  name: OnCompilationError
+  nameWithType: SkiaShaderEffect.OnCompilationError
+  fullName: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+- uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  name: SendError(string)
+  nameWithType: SkiaShaderEffect.SendError(string)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SendError(string)
+  nameWithType.vb: SkiaShaderEffect.SendError(String)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.SendError(String)
+  name.vb: SendError(String)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+    name: SendError
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+    name: SendError
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -1274,21 +1340,21 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
   parent: DrawnUi.Draw.SkiaShaderEffect
   isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_
-  name: CompileShader(string, bool)
-  nameWithType: SkiaShaderEffect.CompileShader(string, bool)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool)
-  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean)
-  name.vb: CompileShader(String, Boolean)
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  name: CompileShader(string, bool, Action<string>)
+  nameWithType: SkiaShaderEffect.CompileShader(string, bool, Action<string>)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool, System.Action<string>)
+  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean, System.Action(Of String))
+  name.vb: CompileShader(String, Boolean, Action(Of String))
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
     name: CompileShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
   - name: (
   - uid: System.String
     name: string
@@ -1300,11 +1366,23 @@ references:
     name: bool
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
     name: CompileShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
   - name: (
   - uid: System.String
     name: String
@@ -1316,6 +1394,20 @@ references:
     name: Boolean
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
   - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   commentId: P:DrawnUi.Draw.SkiaShaderEffect.LoadedCode
@@ -1468,6 +1560,20 @@ references:
   name: MipmapMode
   nameWithType: SkiaShaderEffect.MipmapMode
   fullName: DrawnUi.Draw.SkiaShaderEffect.MipmapMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileModeProperty
+  name: TileModeProperty
+  nameWithType: SkiaShaderEffect.TileModeProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TileMode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileMode
+  name: TileMode
+  nameWithType: SkiaShaderEffect.TileMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileMode
 - uid: DrawnUi.Draw.SkiaShaderEffect.Update
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.Update
   parent: DrawnUi.Draw.SkiaShaderEffect

@@ -125,7 +125,7 @@
 </ul>
 <p>These must be referenced separately if needed.</p>
 <h3 id="2-initialize-in-your-maui-app">2. Initialize in Your MAUI App</h3>
-<p>Update your <code>MauiProgram.cs</code> file to initialize draw:</p>
+<p>Update your <code>MauiProgram.cs</code> file to initialize DrawnUI. When working on desktop you'll normally want to set your app window to a phone-like size, to be consistent with mobile platforms:</p>
 <pre><code class="lang-csharp">using DrawnUi.Draw;
 
 public static class MauiProgram
@@ -135,7 +135,16 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp&lt;App&gt;()
-            .UseDrawnUi() // &lt;---- Add this line
+
+            .UseDrawnUi(new DrawnUiStartupSettings
+            {
+                DesktopWindow = new()
+                {
+                    Width = 375,
+                    Height = 800
+                }
+            })
+
             .ConfigureFonts(fonts =&gt;
             {
                 fonts.AddFont(&quot;OpenSans-Regular.ttf&quot;, &quot;FontText&quot;);

@@ -36827,6 +36827,25 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaControl.SkipRendering
   nameWithType: SkiaControl.SkipRendering
+- uid: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  name: SkipRenderingOutOfBounds
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SkipRenderingOutOfBounds
+  commentId: P:DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  nameWithType: SkiaControl.SkipRenderingOutOfBounds
+- uid: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds*
+  name: SkipRenderingOutOfBounds
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SkipRenderingOutOfBounds_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  nameWithType: SkiaControl.SkipRenderingOutOfBounds
+- uid: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  name: SkipRenderingOutOfBoundsProperty
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SkipRenderingOutOfBoundsProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  nameWithType: SkiaControl.SkipRenderingOutOfBoundsProperty
 - uid: DrawnUi.Draw.SkiaControl.SmartMax(System.Single,System.Single)
   name: SmartMax(float, float)
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SmartMax_System_Single_System_Single_
@@ -40776,6 +40795,19 @@ references:
   commentId: F:DrawnUi.Draw.SkiaImage.DarkenProperty
   fullName: DrawnUi.Draw.SkiaImage.DarkenProperty
   nameWithType: SkiaImage.DarkenProperty
+- uid: DrawnUi.Draw.SkiaImage.DisplayRect
+  name: DisplayRect
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DisplayRect
+  commentId: P:DrawnUi.Draw.SkiaImage.DisplayRect
+  fullName: DrawnUi.Draw.SkiaImage.DisplayRect
+  nameWithType: SkiaImage.DisplayRect
+- uid: DrawnUi.Draw.SkiaImage.DisplayRect*
+  name: DisplayRect
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DisplayRect_
+  commentId: Overload:DrawnUi.Draw.SkiaImage.DisplayRect
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaImage.DisplayRect
+  nameWithType: SkiaImage.DisplayRect
 - uid: DrawnUi.Draw.SkiaImage.Draw(DrawnUi.Draw.DrawingContext)
   name: Draw(DrawingContext)
   href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_Draw_DrawnUi_Draw_DrawingContext_
@@ -40802,6 +40834,32 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaImage.DrawSource
   nameWithType: SkiaImage.DrawSource
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  name: DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint)
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext, SkiaSharp.SKBitmap, SkiaSharp.SKRect, SkiaSharp.SKPaint)
+  nameWithType: SkiaImage.DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint)
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap*
+  name: DrawSourceBitmap
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_
+  commentId: Overload:DrawnUi.Draw.SkiaImage.DrawSourceBitmap
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceBitmap
+  nameWithType: SkiaImage.DrawSourceBitmap
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  name: DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint)
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext, SkiaSharp.SKImage, SkiaSharp.SKRect, SkiaSharp.SKPaint)
+  nameWithType: SkiaImage.DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint)
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceImage*
+  name: DrawSourceImage
+  href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_
+  commentId: Overload:DrawnUi.Draw.SkiaImage.DrawSourceImage
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceImage
+  nameWithType: SkiaImage.DrawSourceImage
 - uid: DrawnUi.Draw.SkiaImage.DrawWhenEmpty
   name: DrawWhenEmpty
   href: api/DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawWhenEmpty
@@ -54186,15 +54244,15 @@ references:
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader
   fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader()
   nameWithType: SkiaShaderEffect.CompileShader()
-- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
-  name: CompileShader(string, bool)
-  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
-  name.vb: CompileShader(String, Boolean)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool)
-  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean)
-  nameWithType: SkiaShaderEffect.CompileShader(string, bool)
-  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean)
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  name: CompileShader(string, bool, Action<string>)
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  name.vb: CompileShader(String, Boolean, Action(Of String))
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool, System.Action<string>)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean, System.Action(Of String))
+  nameWithType: SkiaShaderEffect.CompileShader(string, bool, Action<string>)
+  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean, Action(Of String))
 - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader*
   name: CompileShader
   href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_
@@ -54324,6 +54382,32 @@ references:
   commentId: F:DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
   fullName: DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
   nameWithType: SkiaShaderEffect.MipmapModeProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  name: MouseCurrent
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseCurrent
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  nameWithType: SkiaShaderEffect.MouseCurrent
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent*
+  name: MouseCurrent
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseCurrent_
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  nameWithType: SkiaShaderEffect.MouseCurrent
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  name: MouseInitial
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseInitial
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  nameWithType: SkiaShaderEffect.MouseInitial
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseInitial*
+  name: MouseInitial
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseInitial_
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  nameWithType: SkiaShaderEffect.MouseInitial
 - uid: DrawnUi.Draw.SkiaShaderEffect.NeedApply
   name: NeedApply
   href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedApply
@@ -54369,6 +54453,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode
   nameWithType: SkiaShaderEffect.NormalizeShaderCode
+- uid: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  name: OnCompilationError
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnCompilationError
+  commentId: E:DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  fullName: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  nameWithType: SkiaShaderEffect.OnCompilationError
 - uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
   name: OnDisposing()
   href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnDisposing
@@ -54401,6 +54491,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaShaderEffect.Render
   nameWithType: SkiaShaderEffect.Render
+- uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  name: SendError(string)
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  name.vb: SendError(String)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SendError(string)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.SendError(String)
+  nameWithType: SkiaShaderEffect.SendError(string)
+  nameWithType.vb: SkiaShaderEffect.SendError(String)
+- uid: DrawnUi.Draw.SkiaShaderEffect.SendError*
+  name: SendError
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.SendError
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SendError
+  nameWithType: SkiaShaderEffect.SendError
 - uid: DrawnUi.Draw.SkiaShaderEffect.ShaderCode
   name: ShaderCode
   href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderCode
@@ -54471,6 +54577,38 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture
   nameWithType: SkiaShaderEffect.ShouldDisposePreviousTexture
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileMode
+  name: TileMode
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TileMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileMode
+  nameWithType: SkiaShaderEffect.TileMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileMode*
+  name: TileMode
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileMode_
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.TileMode
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileMode
+  nameWithType: SkiaShaderEffect.TileMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  name: TileModeProperty
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileModeProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  nameWithType: SkiaShaderEffect.TileModeProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  name: TimeSeconds
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TimeSeconds
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  nameWithType: SkiaShaderEffect.TimeSeconds
+- uid: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds*
+  name: TimeSeconds
+  href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TimeSeconds_
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  nameWithType: SkiaShaderEffect.TimeSeconds
 - uid: DrawnUi.Draw.SkiaShaderEffect.Update
   name: Update()
   href: api/DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Update
@@ -66714,15 +66852,15 @@ references:
   fullName.vb: DrawnUi.Infrastructure.SkSl.Compile(String)
   nameWithType: SkSl.Compile(string)
   nameWithType.vb: SkSl.Compile(String)
-- uid: DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean)
-  name: Compile(string, string, bool)
-  href: api/DrawnUi.Infrastructure.SkSl.html#DrawnUi_Infrastructure_SkSl_Compile_System_String_System_String_System_Boolean_
-  commentId: M:DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean)
-  name.vb: Compile(String, String, Boolean)
-  fullName: DrawnUi.Infrastructure.SkSl.Compile(string, string, bool)
-  fullName.vb: DrawnUi.Infrastructure.SkSl.Compile(String, String, Boolean)
-  nameWithType: SkSl.Compile(string, string, bool)
-  nameWithType.vb: SkSl.Compile(String, String, Boolean)
+- uid: DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean,System.Action{System.String})
+  name: Compile(string, string, bool, Action<string>)
+  href: api/DrawnUi.Infrastructure.SkSl.html#DrawnUi_Infrastructure_SkSl_Compile_System_String_System_String_System_Boolean_System_Action_System_String__
+  commentId: M:DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean,System.Action{System.String})
+  name.vb: Compile(String, String, Boolean, Action(Of String))
+  fullName: DrawnUi.Infrastructure.SkSl.Compile(string, string, bool, System.Action<string>)
+  fullName.vb: DrawnUi.Infrastructure.SkSl.Compile(String, String, Boolean, System.Action(Of String))
+  nameWithType: SkSl.Compile(string, string, bool, Action<string>)
+  nameWithType.vb: SkSl.Compile(String, String, Boolean, Action(Of String))
 - uid: DrawnUi.Infrastructure.SkSl.Compile*
   name: Compile
   href: api/DrawnUi.Infrastructure.SkSl.html#DrawnUi_Infrastructure_SkSl_Compile_

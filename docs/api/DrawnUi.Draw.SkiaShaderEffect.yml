@@ -9,7 +9,7 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTexture
   - DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTextureProperty
   - DrawnUi.Draw.SkiaShaderEffect.CompileShader
-  - DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
+  - DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
   - DrawnUi.Draw.SkiaShaderEffect.CompiledShader
   - DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
   - DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
@@ -21,12 +21,16 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   - DrawnUi.Draw.SkiaShaderEffect.MipmapMode
   - DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
+  - DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  - DrawnUi.Draw.SkiaShaderEffect.MouseInitial
   - DrawnUi.Draw.SkiaShaderEffect.NeedApply
   - DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
+  - DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
   - DrawnUi.Draw.SkiaShaderEffect.OnDisposing
   - DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
   - DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
   - DrawnUi.Draw.SkiaShaderEffect.ShaderCode
   - DrawnUi.Draw.SkiaShaderEffect.ShaderCodeProperty
   - DrawnUi.Draw.SkiaShaderEffect.ShaderSource
@@ -34,6 +38,9 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
   - DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
   - DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  - DrawnUi.Draw.SkiaShaderEffect.TileMode
+  - DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  - DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
   - DrawnUi.Draw.SkiaShaderEffect.Update
   - DrawnUi.Draw.SkiaShaderEffect.UseContext
   - DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
@@ -53,10 +60,12 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaShaderEffect
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 2
+    startLine: 7
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
+  summary: IPostRendererEffect
+  example: []
   syntax:
     content: 'public class SkiaShaderEffect : SkiaEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated'
     content.vb: Public Class SkiaShaderEffect Inherits SkiaEffect Implements INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated
@@ -129,7 +138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintWithShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 4
+    startLine: 9
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -156,7 +165,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseContextProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 6
+    startLine: 11
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -183,7 +192,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseContext
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 15
+    startLine: 20
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -214,7 +223,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoCreateInputTextureProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 21
+    startLine: 26
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -241,7 +250,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoCreateInputTexture
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 31
+    startLine: 37
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -275,7 +284,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateSnapshot
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 40
+    startLine: 46
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -310,7 +319,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPrimaryTextureImage
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 69
+    startLine: 75
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -343,7 +352,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 82
+    startLine: 88
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -376,7 +385,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldDisposePreviousTexture
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 122
+    startLine: 130
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -409,7 +418,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 131
+    startLine: 139
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -444,7 +453,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompiledShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 194
+    startLine: 203
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -471,7 +480,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 199
+    startLine: 208
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -486,6 +495,99 @@ items:
   overload: DrawnUi.Draw.SkiaShaderEffect.NeedApply*
   implements:
   - DrawnUi.Draw.ISkiaEffect.NeedApply
+- uid: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  id: TimeSeconds
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: TimeSeconds
+  nameWithType: SkiaShaderEffect.TimeSeconds
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TimeSeconds
+    path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+    startLine: 220
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Normally will be automatically set in Render method from context FrameTimeNanos
+  example: []
+  syntax:
+    content: public float TimeSeconds { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeSeconds As Single
+  overload: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds*
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  id: MouseCurrent
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: MouseCurrent
+  nameWithType: SkiaShaderEffect.MouseCurrent
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MouseCurrent
+    path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+    startLine: 227
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Shadertoy conventions current mouse position (or drag position)
+  example: []
+  syntax:
+    content: public PointF MouseCurrent { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Graphics.PointF
+    content.vb: Public Property MouseCurrent As PointF
+  overload: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent*
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  id: MouseInitial
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: MouseInitial
+  nameWithType: SkiaShaderEffect.MouseInitial
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MouseInitial
+    path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+    startLine: 232
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Shadertoy conventions where click/drag started. If zero could mean not dragging.
+  example: []
+  syntax:
+    content: public PointF MouseInitial { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Graphics.PointF
+    content.vb: Public Property MouseInitial As PointF
+  overload: DrawnUi.Draw.SkiaShaderEffect.MouseInitial*
 - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
   id: CreateUniforms(SkiaSharp.SKRect)
@@ -504,7 +606,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateUniforms
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 210
+    startLine: 237
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -537,7 +639,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateTexturesUniforms
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 228
+    startLine: 260
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -574,7 +676,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _template
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 243
+    startLine: 275
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -601,7 +703,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _templatePlacehodler
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 244
+    startLine: 276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -628,7 +730,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompileShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 249
+    startLine: 281
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -638,6 +740,65 @@ items:
     content: protected virtual void CompileShader()
     content.vb: Protected Overridable Sub CompileShader()
   overload: DrawnUi.Draw.SkiaShaderEffect.CompileShader*
+- uid: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  commentId: E:DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  id: OnCompilationError
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: OnCompilationError
+  nameWithType: SkiaShaderEffect.OnCompilationError
+  fullName: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  type: Event
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnCompilationError
+    path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+    startLine: 287
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public event EventHandler<string> OnCompilationError
+    return:
+      type: System.EventHandler{System.String}
+    content.vb: Public Event OnCompilationError As EventHandler(Of String)
+- uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  id: SendError(System.String)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: SendError(string)
+  nameWithType: SkiaShaderEffect.SendError(string)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SendError(string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SendError
+    path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+    startLine: 289
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected void SendError(string error)
+    parameters:
+    - id: error
+      type: System.String
+    content.vb: Protected Sub SendError([error] As String)
+  overload: DrawnUi.Draw.SkiaShaderEffect.SendError*
+  nameWithType.vb: SkiaShaderEffect.SendError(String)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.SendError(String)
+  name.vb: SendError(String)
 - uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
   id: NormalizeShaderCode(System.String)
@@ -656,7 +817,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NormalizeShaderCode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 255
+    startLine: 294
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -672,16 +833,16 @@ items:
   nameWithType.vb: SkiaShaderEffect.NormalizeShaderCode(String)
   fullName.vb: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(String)
   name.vb: NormalizeShaderCode(String)
-- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean)
-  id: CompileShader(System.String,System.Boolean)
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  id: CompileShader(System.String,System.Boolean,System.Action{System.String})
   parent: DrawnUi.Draw.SkiaShaderEffect
   langs:
   - csharp
   - vb
-  name: CompileShader(string, bool)
-  nameWithType: SkiaShaderEffect.CompileShader(string, bool)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool)
+  name: CompileShader(string, bool, Action<string>)
+  nameWithType: SkiaShaderEffect.CompileShader(string, bool, Action<string>)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool, System.Action<string>)
   type: Method
   source:
     remote:
@@ -690,22 +851,24 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompileShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 260
+    startLine: 299
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: protected virtual void CompileShader(string shaderCode, bool useCache = true)
+    content: protected virtual void CompileShader(string shaderCode, bool useCache = true, Action<string> onError = null)
     parameters:
     - id: shaderCode
       type: System.String
     - id: useCache
       type: System.Boolean
-    content.vb: Protected Overridable Sub CompileShader(shaderCode As String, useCache As Boolean = True)
+    - id: onError
+      type: System.Action{System.String}
+    content.vb: Protected Overridable Sub CompileShader(shaderCode As String, useCache As Boolean = True, onError As Action(Of String) = Nothing)
   overload: DrawnUi.Draw.SkiaShaderEffect.CompileShader*
-  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean)
-  name.vb: CompileShader(String, Boolean)
+  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean, System.Action(Of String))
+  name.vb: CompileShader(String, Boolean, Action(Of String))
 - uid: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   commentId: P:DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   id: LoadedCode
@@ -724,7 +887,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedCode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 276
+    startLine: 317
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -753,7 +916,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyShaderSource
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 278
+    startLine: 319
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -779,7 +942,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedChangeSource
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 293
+    startLine: 335
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -815,7 +978,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderCodeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 301
+    startLine: 343
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -842,7 +1005,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderCode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 306
+    startLine: 348
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -871,7 +1034,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderSourceProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 312
+    startLine: 354
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -898,7 +1061,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderSource
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 317
+    startLine: 359
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -927,7 +1090,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderTemplateProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 323
+    startLine: 365
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -954,7 +1117,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderTemplate
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 328
+    startLine: 370
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -983,7 +1146,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FilterModeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 334
+    startLine: 376
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1010,7 +1173,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MipmapModeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 341
+    startLine: 383
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1037,7 +1200,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FilterMode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 348
+    startLine: 390
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1066,7 +1229,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MipmapMode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 354
+    startLine: 396
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1077,6 +1240,64 @@ items:
       type: SkiaSharp.SKMipmapMode
     content.vb: Public Property MipmapMode As SKMipmapMode
   overload: DrawnUi.Draw.SkiaShaderEffect.MipmapMode*
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  id: TileModeProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: TileModeProperty
+  nameWithType: SkiaShaderEffect.TileModeProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TileModeProperty
+    path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+    startLine: 402
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty TileModeProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly TileModeProperty As BindableProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TileMode
+  id: TileMode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: TileMode
+  nameWithType: SkiaShaderEffect.TileMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileMode
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TileMode
+    path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
+    startLine: 410
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Tile mode for input textures
+  example: []
+  syntax:
+    content: public SKShaderTileMode TileMode { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKShaderTileMode
+    content.vb: Public Property TileMode As SKShaderTileMode
+  overload: DrawnUi.Draw.SkiaShaderEffect.TileMode*
 - uid: DrawnUi.Draw.SkiaShaderEffect.Update
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.Update
   id: Update
@@ -1095,7 +1316,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 363
+    startLine: 419
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1126,7 +1347,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-    startLine: 372
+    startLine: 428
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2600,6 +2821,80 @@ references:
   name: NeedApply
   nameWithType: ISkiaEffect.NeedApply
   fullName: DrawnUi.Draw.ISkiaEffect.NeedApply
+- uid: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds*
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TimeSeconds
+  name: TimeSeconds
+  nameWithType: SkiaShaderEffect.TimeSeconds
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent*
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseCurrent
+  name: MouseCurrent
+  nameWithType: SkiaShaderEffect.MouseCurrent
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+- uid: Microsoft.Maui.Graphics.PointF
+  commentId: T:Microsoft.Maui.Graphics.PointF
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.pointf
+  name: PointF
+  nameWithType: PointF
+  fullName: Microsoft.Maui.Graphics.PointF
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseInitial*
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseInitial
+  name: MouseInitial
+  nameWithType: SkiaShaderEffect.MouseInitial
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
 - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms*
   commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.CreateUniforms
   href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
@@ -2645,12 +2940,144 @@ references:
   name: CompileShader
   nameWithType: SkiaShaderEffect.CompileShader
   fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader
+- uid: System.EventHandler{System.String}
+  commentId: T:System.EventHandler{System.String}
+  parent: System
+  definition: System.EventHandler`1
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<string>
+  nameWithType: EventHandler<string>
+  fullName: System.EventHandler<string>
+  nameWithType.vb: EventHandler(Of String)
+  fullName.vb: System.EventHandler(Of String)
+  name.vb: EventHandler(Of String)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.EventHandler`1
+  commentId: T:System.EventHandler`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+  nameWithType.vb: EventHandler(Of TEventArgs)
+  fullName.vb: System.EventHandler(Of TEventArgs)
+  name.vb: EventHandler(Of TEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - name: TEventArgs
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TEventArgs
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.SendError*
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.SendError
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  name: SendError
+  nameWithType: SkiaShaderEffect.SendError
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SendError
 - uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode*
   commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode
   href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_
   name: NormalizeShaderCode
   nameWithType: SkiaShaderEffect.NormalizeShaderCode
   fullName: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode
+- uid: System.Action{System.String}
+  commentId: T:System.Action{System.String}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<string>
+  nameWithType: Action<string>
+  fullName: System.Action<string>
+  nameWithType.vb: Action(Of String)
+  fullName.vb: System.Action(Of String)
+  name.vb: Action(Of String)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.LoadedCode*
   commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_LoadedCode
@@ -2715,6 +3142,20 @@ references:
   name: SKMipmapMode
   nameWithType: SKMipmapMode
   fullName: SkiaSharp.SKMipmapMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileMode*
+  commentId: Overload:DrawnUi.Draw.SkiaShaderEffect.TileMode
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileMode
+  name: TileMode
+  nameWithType: SkiaShaderEffect.TileMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileMode
+- uid: SkiaSharp.SKShaderTileMode
+  commentId: T:SkiaSharp.SKShaderTileMode
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skshadertilemode
+  name: SKShaderTileMode
+  nameWithType: SKShaderTileMode
+  fullName: SkiaSharp.SKShaderTileMode
 - uid: DrawnUi.Draw.SkiaEffect.Update
   commentId: M:DrawnUi.Draw.SkiaEffect.Update
   parent: DrawnUi.Draw.SkiaEffect

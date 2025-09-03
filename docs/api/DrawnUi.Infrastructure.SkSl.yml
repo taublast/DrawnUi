@@ -6,7 +6,7 @@ items:
   parent: DrawnUi.Infrastructure
   children:
   - DrawnUi.Infrastructure.SkSl.Compile(System.String)
-  - DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean)
+  - DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean,System.Action{System.String})
   - DrawnUi.Infrastructure.SkSl.CompiledCache
   - DrawnUi.Infrastructure.SkSl.CreateShader(SkiaSharp.SKRuntimeEffect,SkiaSharp.SKRuntimeEffectUniforms,System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKShader})
   - DrawnUi.Infrastructure.SkSl.LoadFromResources(System.String)
@@ -175,16 +175,16 @@ items:
   nameWithType.vb: SkSl.Compile(String)
   fullName.vb: DrawnUi.Infrastructure.SkSl.Compile(String)
   name.vb: Compile(String)
-- uid: DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean)
-  commentId: M:DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean)
-  id: Compile(System.String,System.String,System.Boolean)
+- uid: DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean,System.Action{System.String})
+  id: Compile(System.String,System.String,System.Boolean,System.Action{System.String})
   parent: DrawnUi.Infrastructure.SkSl
   langs:
   - csharp
   - vb
-  name: Compile(string, string, bool)
-  nameWithType: SkSl.Compile(string, string, bool)
-  fullName: DrawnUi.Infrastructure.SkSl.Compile(string, string, bool)
+  name: Compile(string, string, bool, Action<string>)
+  nameWithType: SkSl.Compile(string, string, bool, Action<string>)
+  fullName: DrawnUi.Infrastructure.SkSl.Compile(string, string, bool, System.Action<string>)
   type: Method
   source:
     remote:
@@ -203,7 +203,7 @@ items:
     The filename parameter is used for debugging and caching. Do not forget to disable caching if you edit/change shader code at runtime.
   example: []
   syntax:
-    content: public static SKRuntimeEffect Compile(string shaderCode, string filename, bool useCache = true)
+    content: public static SKRuntimeEffect Compile(string shaderCode, string filename, bool useCache = true, Action<string> onError = null)
     parameters:
     - id: shaderCode
       type: System.String
@@ -213,14 +213,16 @@ items:
       description: ''
     - id: useCache
       type: System.Boolean
+    - id: onError
+      type: System.Action{System.String}
     return:
       type: SkiaSharp.SKRuntimeEffect
       description: ''
-    content.vb: Public Shared Function Compile(shaderCode As String, filename As String, useCache As Boolean = True) As SKRuntimeEffect
+    content.vb: Public Shared Function Compile(shaderCode As String, filename As String, useCache As Boolean = True, onError As Action(Of String) = Nothing) As SKRuntimeEffect
   overload: DrawnUi.Infrastructure.SkSl.Compile*
-  nameWithType.vb: SkSl.Compile(String, String, Boolean)
-  fullName.vb: DrawnUi.Infrastructure.SkSl.Compile(String, String, Boolean)
-  name.vb: Compile(String, String, Boolean)
+  nameWithType.vb: SkSl.Compile(String, String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Infrastructure.SkSl.Compile(String, String, Boolean, System.Action(Of String))
+  name.vb: Compile(String, String, Boolean, Action(Of String))
 - uid: DrawnUi.Infrastructure.SkSl.CreateShader(SkiaSharp.SKRuntimeEffect,SkiaSharp.SKRuntimeEffectUniforms,System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKShader})
   commentId: M:DrawnUi.Infrastructure.SkSl.CreateShader(SkiaSharp.SKRuntimeEffect,SkiaSharp.SKRuntimeEffectUniforms,System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKShader})
   id: CreateShader(SkiaSharp.SKRuntimeEffect,SkiaSharp.SKRuntimeEffectUniforms,System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKShader})
@@ -239,7 +241,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateShader
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-    startLine: 113
+    startLine: 121
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure
@@ -792,6 +794,69 @@ references:
   nameWithType.vb: Boolean
   fullName.vb: Boolean
   name.vb: Boolean
+- uid: System.Action{System.String}
+  commentId: T:System.Action{System.String}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<string>
+  nameWithType: Action<string>
+  fullName: System.Action<string>
+  nameWithType.vb: Action(Of String)
+  fullName.vb: System.Action(Of String)
+  name.vb: Action(Of String)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: DrawnUi.Infrastructure.SkSl.CreateShader*
   commentId: Overload:DrawnUi.Infrastructure.SkSl.CreateShader
   href: DrawnUi.Infrastructure.SkSl.html#DrawnUi_Infrastructure_SkSl_CreateShader_SkiaSharp_SKRuntimeEffect_SkiaSharp_SKRuntimeEffectUniforms_System_Collections_Generic_Dictionary_System_String_SkiaSharp_SKShader__
