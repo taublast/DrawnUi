@@ -203,6 +203,9 @@ items:
   - DrawnUi.Draw.SkiaImage.AspectScale
   - DrawnUi.Draw.SkiaImage.ScaledSource
   - DrawnUi.Draw.SkiaImage.GetSamplingOptions(SkiaSharp.SKFilterQuality,System.Boolean)
+  - DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  - DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  - DrawnUi.Draw.SkiaImage.DisplayRect
   - DrawnUi.Draw.SkiaImage.TextureScale
   - DrawnUi.Draw.SkiaImage.SourceImageSize
   - DrawnUi.Draw.SkiaImage.SetAspectScale(System.Int32,System.Int32,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect,System.Single)
@@ -390,6 +393,8 @@ items:
   - DrawnUi.Draw.SkiaControl.AnimationTapped
   - DrawnUi.Draw.SkiaControl.TransformViewProperty
   - DrawnUi.Draw.SkiaControl.TransformView
+  - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
   - DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.ChildTapped
   - DrawnUi.Draw.SkiaControl.TransformPointToLocalSpace(SkiaSharp.SKPoint)
@@ -1674,7 +1679,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TileWidthPixels
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImageTiles.cs
-    startLine: 204
+    startLine: 206
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1703,7 +1708,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TileHeightPixels
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImageTiles.cs
-    startLine: 205
+    startLine: 207
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1732,7 +1737,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculatedForDest
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImageTiles.cs
-    startLine: 207
+    startLine: 209
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1759,7 +1764,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculatedForTile
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImageTiles.cs
-    startLine: 208
+    startLine: 210
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1786,7 +1791,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateMeasure
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImageTiles.cs
-    startLine: 210
+    startLine: 212
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1815,7 +1820,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImageTiles.cs
-    startLine: 217
+    startLine: 219
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1857,7 +1862,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImageTiles.cs
-    startLine: 295
+    startLine: 297
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3571,6 +3576,137 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  parent: DrawnUi.Draw.SkiaImage
+  isExternal: true
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  name: DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint)
+  nameWithType: SkiaImage.DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint)
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext, SkiaSharp.SKBitmap, SkiaSharp.SKRect, SkiaSharp.SKPaint)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+    name: DrawSourceBitmap
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKBitmap
+    name: SKBitmap
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPaint
+    name: SKPaint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+    name: DrawSourceBitmap
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKBitmap
+    name: SKBitmap
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPaint
+    name: SKPaint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: )
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  parent: DrawnUi.Draw.SkiaImage
+  isExternal: true
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  name: DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint)
+  nameWithType: SkiaImage.DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint)
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext, SkiaSharp.SKImage, SkiaSharp.SKRect, SkiaSharp.SKPaint)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+    name: DrawSourceImage
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPaint
+    name: SKPaint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+    name: DrawSourceImage
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPaint
+    name: SKPaint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: )
+- uid: DrawnUi.Draw.SkiaImage.DisplayRect
+  commentId: P:DrawnUi.Draw.SkiaImage.DisplayRect
+  parent: DrawnUi.Draw.SkiaImage
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DisplayRect
+  name: DisplayRect
+  nameWithType: SkiaImage.DisplayRect
+  fullName: DrawnUi.Draw.SkiaImage.DisplayRect
 - uid: DrawnUi.Draw.SkiaImage.TextureScale
   commentId: P:DrawnUi.Draw.SkiaImage.TextureScale
   parent: DrawnUi.Draw.SkiaImage
@@ -8502,6 +8638,20 @@ references:
   name: TransformView
   nameWithType: SkiaControl.TransformView
   fullName: DrawnUi.Draw.SkiaControl.TransformView
+- uid: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SkipRenderingOutOfBoundsProperty
+  name: SkipRenderingOutOfBoundsProperty
+  nameWithType: SkiaControl.SkipRenderingOutOfBoundsProperty
+  fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
+- uid: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  commentId: P:DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SkipRenderingOutOfBounds
+  name: SkipRenderingOutOfBounds
+  nameWithType: SkiaControl.SkipRenderingOutOfBounds
+  fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
 - uid: DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   parent: DrawnUi.Draw.SkiaControl

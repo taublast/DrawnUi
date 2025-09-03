@@ -4251,7 +4251,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Draw.SkiaShaderEffect",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaShaderEffect.yml\" sourcestartlinenumber=\"1\">IPostRendererEffect</p>\n"
     },
     {
       "type": "ManagedReference",
