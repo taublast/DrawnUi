@@ -13,10 +13,10 @@
         ContentTemplate="{DataTemplate sandbox:PlanesTest}"
         Route="MainPage" />-->
 
-    <ShellContent
+    <!-- <ShellContent
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:MainPageCode}"
-        Route="MainPage" />
+        Route="MainPage" /> -->
 
     <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
@@ -28,5 +28,18 @@
     ContentTemplate="{DataTemplate mauiApp8:ReproEditors}"
     Route="MainPage" />-->
 
+
+    <!--<ShellContent
+        Title="DrawnUI for .NET MAUI"
+        ContentTemplate="{DataTemplate sandbox:SpriteTestPage}"
+        Route="MainPage" />-->
+
+    <!-- Optional: switch to board page -->
+    
+    <ShellContent
+        Title="DrawnUI for .NET MAUI"
+        ContentTemplate="{DataTemplate sandbox:SpriteBoardPage}"
+        Route="MainPage" />
+    
 
 </Shell>
