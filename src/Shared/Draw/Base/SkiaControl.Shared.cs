@@ -1986,7 +1986,7 @@ namespace DrawnUi.Draw
                 }
 
                 //todo think about switching to visible/hidden/collapsed?
-                if (!WasMeasured || newvalue)
+                if (WasMeasured || newvalue)
                 {
                     InvalidateParent();
                 }
