@@ -26,12 +26,24 @@ public class SkiaSprite : AnimatedFramesRenderer
     {
         this.Display = new()
         {
+            //UseCache = SkiaCacheType.Image,
             LoadSourceOnFirstDraw = false,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
         };
 
         Display.SetParent(this);
+    }
+
+    protected override void Paint(DrawingContext ctx)
+    {
+
+        if (Columns != _lastColumns || Rows != _lastRows)
+        {
+            RecalculateFrames();
+        }
+
+        base.Paint(ctx);
     }
 
     /// <summary>
@@ -491,6 +503,9 @@ public class SkiaSprite : AnimatedFramesRenderer
         // Calculate duration based on FPS
         FrameDurationMs = 1000 / FramesPerSecond;
         DurationMs = TotalFrames * FrameDurationMs;
+
+        _lastColumns=Columns;
+        _lastRows = Rows;
     }
 
     private bool isSettingFrame;
@@ -573,6 +588,9 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// The full sprite sheet bitmap
     /// </summary>
     private SKBitmap _spriteSheet;
+
+    private int _lastColumns;
+    private int _lastRows;
 
     /// <summary>
     /// The full sprite sheet bitmap
@@ -710,7 +728,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         typeof(int),
         typeof(SkiaSprite),
         1,
-        propertyChanged: (b, o, n) => ((SkiaSprite)b).RecalculateFrames());
+        propertyChanged: NeedDraw);
 
     /// <summary>
     /// Number of columns in the spritesheet
@@ -729,7 +747,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         typeof(int),
         typeof(SkiaSprite),
         1,
-        propertyChanged: (b, o, n) => ((SkiaSprite)b).RecalculateFrames());
+        propertyChanged: NeedDraw);
 
     /// <summary>
     /// Number of rows in the spritesheet
