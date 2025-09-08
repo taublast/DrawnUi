@@ -18,6 +18,7 @@ namespace PreviewTests
         }
     }
 
+    [Preview<SkiaLayout>]
     public class MainPageCode : BasePageCodeBehind, IDisposable
     {
         Canvas Canvas;

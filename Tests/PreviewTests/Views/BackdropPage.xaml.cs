@@ -1,5 +1,6 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaBackdrop>]
     public partial class BackdropPage
     {
         private double _Position;

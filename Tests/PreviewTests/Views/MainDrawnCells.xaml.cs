@@ -1,5 +1,6 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaLayout>]
     public partial class MainDrawnCells
     {
         private double _Position;

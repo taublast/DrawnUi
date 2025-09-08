@@ -1,8 +1,8 @@
 namespace PreviewTests;
 
+[Preview<SkiaLayout>]
 public partial class TestPageGridIssue
 {
-
     public TestPageGridIssue()
     {
         try

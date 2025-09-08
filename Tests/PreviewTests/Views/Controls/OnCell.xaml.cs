@@ -1,5 +1,6 @@
 namespace PreviewTests.Views.Controls
 {
+    [Preview<SkiaDrawer>]
     public partial class OnCell
     {
 

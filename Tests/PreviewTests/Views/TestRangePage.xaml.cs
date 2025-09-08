@@ -2,6 +2,7 @@ using DrawnUi.Draw;
 
 namespace PreviewTests.Views;
 
+[Preview<SkiaSlider>]
 public partial class TestRangePage 
 {
     public TestRangePage()
