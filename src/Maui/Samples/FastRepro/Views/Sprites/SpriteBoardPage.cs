@@ -19,6 +19,9 @@ namespace Sandbox
 
         Canvas _canvas;
         SkiaLayer _root;
+        SkiaLayer _boardLayer;
+        SkiaLayer _groundLayer; // grass/ground layer (below everything)
+        SkiaLayer _bgLayer;     // trees/decor layer (above grid, below sprites)
         GridBackground _grid;
         WarriorSprite _player;
         EnemySprite _enemy;
@@ -120,7 +123,7 @@ namespace Sandbox
             {
                 UseCache = SkiaCacheType.Operations,
                 Tile = TileSize,
-                BackgroundColor = Color.FromArgb("#0D1117"),
+                BackgroundColor = Colors.Transparent, // let art show through
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
             };
@@ -131,13 +134,26 @@ namespace Sandbox
             _enemy = new EnemySprite { WidthRequest = TileSize, HeightRequest = TileSize, ZIndex = 9 };
             _enemy.EState = EnemySprite.EnemyAnimState.Idle;
 
-            var boardLayer = new SkiaLayer
+            _boardLayer = new SkiaLayer
             {
                 // Absolute layout by default; we position sprites via TranslationX/Y
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
                 Children = { _grid, _enemy, _player }
             };
+
+            // Ground (grass) below everything, and trees above grid lines
+            SetupGround();
+            SetupBackgroundDecor();
+            if (_groundLayer != null)
+            {
+                _boardLayer.Children.Insert(0, _groundLayer); // very back
+            }
+            if (_bgLayer != null)
+            {
+                // place AFTER grid (grid is index 1 now), but BEFORE sprites
+                _boardLayer.Children.Insert(2, _bgLayer);
+            }
 
             // Initial placement
             PlaceOnGrid(_player, _playerCol, _playerRow);
@@ -178,7 +194,7 @@ namespace Sandbox
                                 VerticalOptions = LayoutOptions.Fill,
                                 HorizontalOptions = LayoutOptions.Fill,
                                 Padding = new Thickness(12),
-                                Children = { boardLayer }
+                                Children = { _boardLayer }
                             }
                         }
                     },
@@ -234,6 +250,58 @@ namespace Sandbox
             _maxRow = Math.Max(0, rows - 1);
         }
 
+        void SetupBackgroundDecor()
+        {
+            if (_bgLayer != null) return;
+
+            _bgLayer = new SkiaLayer
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                UseCache = SkiaCacheType.Image
+            };
+
+            SkiaImage Tree(string src, int col, int row, double scale = 1.0)
+            {
+                var img = new SkiaImage
+                {
+                    Source = src,
+                    // slightly taller than wide; keep full image (no side crop)
+                    WidthRequest = TileSize * 2 * scale,
+                    HeightRequest = TileSize * 3 * scale,
+                    Aspect = TransformAspect.AspectFit,
+                    HorizontalOptions = LayoutOptions.Start,
+                    VerticalOptions = LayoutOptions.Start,
+                    UseCache = SkiaCacheType.Image,
+                    ZIndex = 1
+                };
+                PlaceOnGrid(img, col, row);
+                return img;
+            }
+
+            var sources = new[] { "Anims/Trees/Tree1.png", "Anims/Trees/Tree2.png", "Anims/Trees/Tree3.png", "Anims/Trees/Tree4.png" };
+            _bgLayer.Children.Add(Tree(sources[0], 1, 0, 1.0));
+            _bgLayer.Children.Add(Tree(sources[1], 4, 1, 1.0));
+            _bgLayer.Children.Add(Tree(sources[2], 7, 0, 1.1));
+            _bgLayer.Children.Add(Tree(sources[3], 10, 2, 0.9));
+            _bgLayer.Children.Add(Tree(sources[0], 13, 1, 1.0));
+            _bgLayer.Children.Add(Tree(sources[2], 16, 0, 1.1));
+        }
+
+        void SetupGround()
+        {
+            if (_groundLayer != null) return;
+            _groundLayer = new SkiaLayer
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                Background = Color.FromArgb("#1e3b20"), // deep grass green
+                UseCache = SkiaCacheType.Operations
+            };
+        }
+
+
+
         (int Col, int Row) ClampTarget(int col, int row)
         {
             var c = Math.Max(0, Math.Min(_maxCol, col));
@@ -257,15 +325,51 @@ namespace Sandbox
             {
                 if (!_enemyAngry) _enemyAngry = true; // first collision triggers anger
 
-                var faceRight = _player.TranslationX >= _enemy.TranslationX;
-                _enemy.EState =
-                    faceRight ? EnemySprite.EnemyAnimState.AttackRight : EnemySprite.EnemyAnimState.AttackLeft;
-                if (doLog)
+                // Get hit rectangles for Y-alignment even during combat
+                var a = GetRect(_player);
+                var b = GetRect(_enemy);
+                var aTop = a.Top; var bTop = b.Top;
+
+                // Larger tolerance during combat to avoid jitter
+                var yAlignTol = 10.0;
+
+                if (Math.Abs(aTop - bTop) > yAlignTol)
                 {
-                    var a0 = GetRect(_player);
-                    var b0 = GetRect(_enemy);
-                    //Debug.WriteLine($"[AI] collide=true angry={_enemyAngry} a=({a0.Left:F0},{a0.Top:F0},{a0.Width:F0}x{a0.Height:F0}) b=({b0.Left:F0},{b0.Top:F0},{b0.Width:F0}x{b0.Height:F0}) state={_enemy.EState}");
-                    _aiDbgAcc = 0;
+                    // Align Y while in combat
+                    var vy = Math.Sign(aTop - bTop);
+                    var newY = _enemy.TranslationY + vy * EnemySpeed * dt;
+
+                    // Clamp to board bounds
+                    var boardRect = _boardLayer?.RenderedAtDestination ?? SKRect.Empty;
+                    double boardH = boardRect.Height;
+                    double eh = _enemy.Height > 0 ? _enemy.Height : _enemy.WidthRequest;
+                    double minY = 0;
+                    double maxY = Math.Max(0, boardH - eh);
+                    newY = Math.Clamp(newY, minY, maxY);
+
+                    _enemy.TranslationY = newY;
+                    _enemyRow = Math.Max(0, Math.Min(_maxRow, (int)Math.Round(newY / TileSize)));
+
+                    // Use walk animation while aligning Y
+                    _enemy.EState = (vy > 0) ? EnemySprite.EnemyAnimState.WalkRight : EnemySprite.EnemyAnimState.WalkLeft;
+
+                    if (doLog)
+                    {
+                        //System.Diagnostics.Trace.WriteLine($"[AI] COMBAT Y-align: aTop={aTop:F1} bTop={bTop:F1} diff={Math.Abs(aTop - bTop):F1} vy={vy} newY={newY:F1}");
+                        _aiDbgAcc = 0;
+                    }
+                }
+                else
+                {
+                    // Y aligned, now attack and face player
+                    var faceRight = _player.TranslationX >= _enemy.TranslationX;
+                    _enemy.EState = faceRight ? EnemySprite.EnemyAnimState.AttackRight : EnemySprite.EnemyAnimState.AttackLeft;
+
+                    if (doLog)
+                    {
+                        //System.Diagnostics.Trace.WriteLine($"[AI] COMBAT attack: Y-aligned, attacking {(faceRight ? "right" : "left")}");
+                        _aiDbgAcc = 0;
+                    }
                 }
 
                 UpdateWarState();
@@ -288,42 +392,63 @@ namespace Sandbox
                 else if (a.Top > b.Bottom) dyGap = a.Top - b.Bottom;
                 var gapDist = Math.Sqrt(dxGap * dxGap + dyGap * dyGap);
 
-                // Threshold: 1 tile in rendered units (use player's hitrect width as 1 tile)
-                var tileRendered = a.Width > 0 ? a.Width : TileSize;
-                var threshold = tileRendered * 0.5;
-
+                // Follow radius uses sprite width only (no tiles). Fallback to enemy width, then 1px.
+                var tileRendered = (a.Width > 0 ? a.Width : (_enemy.Width > 0 ? _enemy.Width : _enemy.WidthRequest));
+                if (tileRendered <= 0) tileRendered = 1;
+                var threshold = tileRendered; // follow within ~one sprite width; stop beyond
                 if (gapDist <= threshold)
                 {
-                    // Move towards player center
-                    var (px, py) = GetCenter(_player);
-                    var (ex, ey) = GetCenter(_enemy);
-                    var dx = px - ex;
-                    var dy = py - ey;
-                    var dist = Math.Sqrt(dx * dx + dy * dy);
+                    // Align using top-left corners only (no tiles, no centers)
+                    var aTop = a.Top; var bTop = b.Top;
+                    var aLeft = a.Left; var bLeft = b.Left;
 
-                    var vx = dx / (dist == 0 ? 1 : dist);
-                    var vy = dy / (dist == 0 ? 1 : dist);
+                    // Small tolerance to avoid jitter while aligning Y (in pixels)
+                    var yAlignTol = 1.0;
+
+                    double vx = 0, vy = 0;
+                    if (Math.Abs(aTop - bTop) > yAlignTol)
+                    {
+                        // First align vertically (Y axis)
+                        vy = Math.Sign(aTop - bTop);
+                        vx = 0;
+                    }
+                    else
+                    {
+                        // Then approach horizontally (X axis)
+                        vy = 0;
+                        vx = Math.Sign(aLeft - bLeft);
+                    }
 
                     var newX = _enemy.TranslationX + vx * EnemySpeed * dt;
                     var newY = _enemy.TranslationY + vy * EnemySpeed * dt;
 
-                    var maxX = _maxCol * TileSize;
-                    var maxY = _maxRow * TileSize;
-                    newX = Math.Clamp(newX, 0, maxX);
-                    newY = Math.Clamp(newY, 0, maxY);
+                    // Clamp to the board layer bounds (no tiles involved)
+                    var boardRect = _boardLayer?.RenderedAtDestination ?? SKRect.Empty;
+                    double boardW = boardRect.Width;
+                    double boardH = boardRect.Height;
+
+                    double ew = _enemy.Width > 0 ? _enemy.Width : _enemy.WidthRequest;
+                    double eh = _enemy.Height > 0 ? _enemy.Height : _enemy.HeightRequest;
+
+                    double minX = 0, minY = 0;
+                    double maxX = Math.Max(0, boardW - ew);
+                    double maxY = Math.Max(0, boardH - eh);
+
+                    newX = Math.Clamp(newX, minX, maxX);
+                    newY = Math.Clamp(newY, minY, maxY);
 
                     _enemy.TranslationX = newX;
                     _enemy.TranslationY = newY;
 
+                    // HUD tile indices still update (for display only); not used for AI/clamp
                     _enemyCol = Math.Max(0, Math.Min(_maxCol, (int)Math.Round(newX / TileSize)));
                     _enemyRow = Math.Max(0, Math.Min(_maxRow, (int)Math.Round(newY / TileSize)));
 
-                    _enemy.EState =
-                        (vx >= 0) ? EnemySprite.EnemyAnimState.WalkRight : EnemySprite.EnemyAnimState.WalkLeft;
+                    _enemy.EState = (vx >= 0) ? EnemySprite.EnemyAnimState.WalkRight : EnemySprite.EnemyAnimState.WalkLeft;
 
                     if (doLog)
                     {
-                        //Debug.WriteLine($"[AI] follow WALK angry={_enemyAngry} gap={gapDist:F1}/{threshold:F1} dist={dist:F1} v=({vx:F2},{vy:F2}) enemy=({newX:F1},{newY:F1}) state={_enemy.EState}");
+                        System.Diagnostics.Trace.WriteLine($"[AI] Y-align: aTop={aTop:F1} bTop={bTop:F1} diff={Math.Abs(aTop - bTop):F1} tol={yAlignTol:F1} | aLeft={aLeft:F1} bLeft={bLeft:F1} | v=({vx},{vy}) | enemy=({newX:F1},{newY:F1})");
                         _aiDbgAcc = 0;
                     }
                 }
@@ -334,7 +459,7 @@ namespace Sandbox
                     _enemy.EState = EnemySprite.EnemyAnimState.Idle;
                     if (doLog)
                     {
-                        //Debug.WriteLine($"[AI] follow STOP (aggro off) angry={_enemyAngry} gap={gapDist:F1}/{threshold:F1} enemy=({_enemy.TranslationX:F1},{_enemy.TranslationY:F1}) state={_enemy.EState}");
+                        System.Diagnostics.Trace.WriteLine($"[AI] follow STOP (aggro off) angry={_enemyAngry} gap={gapDist:F1}/{threshold:F1} enemy=({_enemy.TranslationX:F1},{_enemy.TranslationY:F1}) state={_enemy.EState}");
                         _aiDbgAcc = 0;
                     }
                 }
@@ -345,7 +470,7 @@ namespace Sandbox
                 _enemy.EState = EnemySprite.EnemyAnimState.Idle;
                 if (doLog)
                 {
-                    //Debug.WriteLine($"[AI] idle calm collide=false");
+                    System.Diagnostics.Trace.WriteLine($"[AI] idle calm collide=false");
                     _aiDbgAcc = 0;
                 }
             }
@@ -415,14 +540,22 @@ namespace Sandbox
 
             UpdateBoundsFromGrid();
 
-            var maxX = _maxCol * TileSize;
-            var maxY = _maxRow * TileSize;
+            var boardRect = _boardLayer?.RenderedAtDestination ?? SKRect.Empty;
+            double boardW = boardRect.Width;
+            double boardH = boardRect.Height;
+
+            double pw = _player.Width > 0 ? _player.Width : _player.WidthRequest;
+            double ph = _player.Height > 0 ? _player.Height : _player.HeightRequest;
 
             var newX = _player.TranslationX + vx * _moveSpeed * dt;
             var newY = _player.TranslationY + vy * _moveSpeed * dt;
 
-            newX = Math.Clamp(newX, 0, maxX);
-            newY = Math.Clamp(newY, 0, maxY);
+            double minX = 0, minY = 0;
+            double maxX = Math.Max(0, boardW - pw);
+            double maxY = Math.Max(0, boardH - ph);
+
+            newX = Math.Clamp(newX, minX, maxX);
+            newY = Math.Clamp(newY, minY, maxY);
 
             _player.TranslationX = newX;
             _player.TranslationY = newY;
