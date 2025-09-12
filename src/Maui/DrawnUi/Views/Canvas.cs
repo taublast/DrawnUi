@@ -679,6 +679,18 @@ public class Canvas : DrawnView, IGestureListener
     bool _hadTap;
     bool _hadLong;
 
+    // Track which pointers are currently long pressed
+    private readonly HashSet<long> _longPressedPointers = new();
+
+
+    /*
+     added:
+    * _longPressedPointers tracks which fingers are in LongPressing.
+    * When a finger other than those goes Up → we inject a synthetic tap, even if another finger is still pressed.
+    * Palm pressing forever? → becomes a LongPressing, stays in the set.
+    * User taps with another finger? → works.
+     */
+
     /// <summary>
     /// IGestureListener implementation
     /// </summary>
@@ -709,20 +721,22 @@ public class Canvas : DrawnView, IGestureListener
         {
             _hadTap = true;
         }
-        else
-        if (touchAction == TouchActionResult.LongPressing)
+        else if (touchAction == TouchActionResult.LongPressing)
         {
             _hadLong = true;
+            _longPressedPointers.Add(args1.Id); // mark this pointer as long-pressed
         }
-        else
-        if (touchAction == TouchActionResult.Down)
+        else if (touchAction == TouchActionResult.Down)
         {
             _hadLong = false;
             _hadTap = false;
             _blockedPanning = false;
         }
-        else
-        if (touchAction == TouchActionResult.Panning)
+        else if (touchAction == TouchActionResult.Up)
+        {
+            _longPressedPointers.Remove(args1.Id); // clear long-press state
+        }
+        else if (touchAction == TouchActionResult.Panning)
         {
             //filter micro-gestures
             if ((Math.Abs(args1.Distance.Delta.X) < 1 && Math.Abs(args1.Distance.Delta.Y) < 1)
@@ -751,12 +765,9 @@ public class Canvas : DrawnView, IGestureListener
                     _panningOffset = args1.Distance.Total.ToSKPoint();
                 }
 
-                //args.PanningOffset = _panningOffset;
-
                 _isPanning = true;
             }
         }
-
 #endif
 
         if (touchAction == TouchActionResult.Tapped)
@@ -770,7 +781,6 @@ public class Canvas : DrawnView, IGestureListener
         }
 
         var args = SkiaGesturesParameters.Create(touchAction, args1);
-
 
         if (GesturesDebugColor.Alpha > 0)
         {
@@ -792,7 +802,6 @@ public class Canvas : DrawnView, IGestureListener
                 {
                     _debugIsPressed = false;
                     _PressedPosition = SKPoint.Empty;
-                    ;
                 }
             }
 
@@ -812,11 +821,17 @@ public class Canvas : DrawnView, IGestureListener
             }
             catch (Exception e)
             {
-                Trace.WriteLine(e);
+                Super.Log(e);
             }
         });
 
-        if (_blockedPanning && !_hadTap && !_isPanning && !_hadLong)
+        //filter micro-pan
+        bool fixMicroPan = _blockedPanning && !_hadTap && !_isPanning && !_hadLong;
+
+        // allow taps from other fingers if some pointer is in long-press state
+        bool hadPalm = touchAction == TouchActionResult.Up && _longPressedPointers.Any(id => id != args1.Id);
+
+        if (fixMicroPan || hadPalm)
         {
             PostponeExecutionBeforeDraw(() =>
             {
@@ -827,13 +842,14 @@ public class Canvas : DrawnView, IGestureListener
                 }
                 catch (Exception e)
                 {
-                    Trace.WriteLine(e);
+                    Super.Log(e);
                 }
             });
         }
 
         Repaint();
     }
+
 
     #endregion
 
