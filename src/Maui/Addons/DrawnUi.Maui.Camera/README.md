@@ -1077,6 +1077,9 @@ public int VideoFormatIndex { get; set; }         // Manual format index
 public double Zoom { get; set; }                  // Current zoom level
 public double ZoomLimitMin { get; set; }          // Minimum zoom
 public double ZoomLimitMax { get; set; }          // Maximum zoom
+
+// Audio Recording
+public bool RecordAudio { get; set; }             // Include audio in video recordings (default: false)
 ```
 
 ### Core Methods
@@ -1102,7 +1105,7 @@ public async Task StopVideoRecording()                       // Stop video recor
 public bool CanRecordVideo()                                 // Check recording support
 public async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()  // Get video formats
 public VideoFormat GetCurrentVideoFormat()                  // Current video format
-public async Task<string> SaveVideoToGallery(string filePath, string album = null) // Save to gallery
+public async Task<string> MoveVideoToGalleryAsync(CapturedVideo video, string album = null, bool deleteOriginal = true) // Move video to gallery (consistent API)
 
 // Camera Controls
 public void SetZoom(double value)
@@ -1369,15 +1372,15 @@ camera.VideoRecordingSuccess += OnVideoRecordingSuccess;
 camera.VideoRecordingFailed += OnVideoRecordingFailed;
 camera.VideoRecordingProgress += OnVideoRecordingProgress;
 
-private void OnVideoRecordingSuccess(object sender, CapturedVideo video)
+private async void OnVideoRecordingSuccess(object sender, CapturedVideo video)
 {
     // Video recording completed successfully
     var filePath = video.FilePath;
     var duration = video.Duration;
     var format = video.Format;
     
-    // Save to gallery
-    var galleryPath = await camera.SaveVideoToGallery(filePath, "MyApp");
+    // Save to gallery with consistent API (move instead of copy for performance)
+    var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyApp");
 }
 
 private void OnVideoRecordingFailed(object sender, Exception ex)
@@ -1440,11 +1443,43 @@ if (!string.IsNullOrEmpty(result) && result != "Cancel")
 }
 ```
 
+#### Video Recording with Audio Control
+
+SkiaCamera provides **granular audio control** for video recordings:
+
+```csharp
+// Control audio recording
+camera.RecordAudio = false;  // Record silent videos (default)
+camera.RecordAudio = true;   // Record videos with audio
+
+// Audio control is cross-platform and applies to all video recordings
+```
+
+**Audio Recording Property:**
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `RecordAudio` | `bool` | `false` | Whether to include audio in video recordings |
+
+**XAML Binding:**
+```xml
+<camera:SkiaCamera
+    x:Name="CameraControl"
+    RecordAudio="{Binding RecordWithAudio}"
+    VideoQuality="High" />
+```
+
+**Platform Implementation:**
+- **Android**: Conditional MediaRecorder audio source and encoder setup
+- **iOS/macOS**: Conditional AVCaptureDeviceInput for audio with proper cleanup
+- **Windows**: MediaEncodingProfile audio removal when disabled
+
 #### Video Recording UI Integration
 
 ```csharp
-// Complete video recording button implementation
+// Complete video recording button implementation with audio control
 private SkiaButton _videoRecordButton;
+private SkiaButton _audioToggleButton;
 
 var recordButton = new SkiaButton("🎥 Record")
 {
@@ -1460,6 +1495,30 @@ var recordButton = new SkiaButton("🎥 Record")
     me.Text = CameraControl.IsRecordingVideo ? "🛑 Stop" : "🎥 Record";
     me.BackgroundColor = CameraControl.IsRecordingVideo ? Colors.Red : Colors.Purple;
 });
+
+// Audio toggle button
+var audioButton = new SkiaButton("🔇 Silent")
+{
+    BackgroundColor = Colors.Gray,
+    TextColor = Colors.White,
+    CornerRadius = 8
+}
+.Assign(out _audioToggleButton)
+.OnTapped(me => { ToggleAudioRecording(); })
+.ObserveProperty(CameraControl, nameof(CameraControl.RecordAudio), me =>
+{
+    me.Text = CameraControl.RecordAudio ? "🎤 Audio" : "🔇 Silent";
+    me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.Gray;
+});
+
+private void ToggleAudioRecording()
+{
+    // Only allow changing audio setting when not recording
+    if (!CameraControl.IsRecordingVideo)
+    {
+        CameraControl.RecordAudio = !CameraControl.RecordAudio;
+    }
+}
 
 private async Task ToggleVideoRecording()
 {
@@ -1558,8 +1617,8 @@ camera.VideoRecordingSuccess += (sender, video) =>
         
         await DisplayAlert("Recording Complete", message, "OK");
         
-        // Optionally save to gallery
-        var galleryPath = await camera.SaveVideoToGallery(video.FilePath, "MyApp Videos");
+        // Save to gallery using consistent API
+        var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyApp Videos");
         if (!string.IsNullOrEmpty(galleryPath))
         {
             await DisplayAlert("Saved", $"Video saved to gallery:\n{galleryPath}", "OK");
@@ -1644,7 +1703,7 @@ public async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()  // Get ava
 public VideoFormat GetCurrentVideoFormat()         // Get currently selected format
 
 // Video file management
-public async Task<string> SaveVideoToGallery(string videoFilePath, string album = null)
+public async Task<string> MoveVideoToGalleryAsync(CapturedVideo video, string album = null, bool deleteOriginal = true)
 ```
 
 #### Complete Video Recording Example
@@ -1726,8 +1785,8 @@ public partial class VideoRecordingPage : ContentPage
 
         await DisplayAlert("Success", message, "Save to Gallery", "OK");
         
-        // Save to gallery
-        var galleryPath = await _camera.SaveVideoToGallery(video.FilePath, "My Videos");
+        // Save to gallery using consistent API
+        var galleryPath = await _camera.MoveVideoToGalleryAsync(video, "My Videos");
         if (!string.IsNullOrEmpty(galleryPath))
         {
             _statusLabel.Text = "Video saved to gallery";

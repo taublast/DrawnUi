@@ -2109,18 +2109,24 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _currentVideoFile = System.IO.Path.Combine(moviesDir.AbsolutePath, fileName);
 
         // Configure MediaRecorder
-       // _mediaRecorder.SetAudioSource(AudioSource.Mic);
+        if (FormsControl.RecordAudio)
+        {
+            _mediaRecorder.SetAudioSource(AudioSource.Mic);
+        }
         _mediaRecorder.SetVideoSource(VideoSource.Surface);
         
         // Set output format and encoding
         var profile = GetVideoProfile();
         _mediaRecorder.SetOutputFormat(profile.FileFormat);
-        //_mediaRecorder.SetAudioEncoder(profile.AudioCodec);
+        if (FormsControl.RecordAudio)
+        {
+            _mediaRecorder.SetAudioEncoder(profile.AudioCodec);
+            _mediaRecorder.SetAudioEncodingBitRate(profile.AudioBitRate);
+        }
         _mediaRecorder.SetVideoEncoder(profile.VideoCodec);
         _mediaRecorder.SetVideoSize(profile.VideoFrameWidth, profile.VideoFrameHeight);
         _mediaRecorder.SetVideoFrameRate(profile.VideoFrameRate);
         _mediaRecorder.SetVideoEncodingBitRate(profile.VideoBitRate);
-        _mediaRecorder.SetAudioEncodingBitRate(profile.AudioBitRate);
 
         _mediaRecorder.SetOutputFile(_currentVideoFile);
         
@@ -2424,6 +2430,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             return false;
         }
     }
+
 
     /// <summary>
     /// Save video to gallery

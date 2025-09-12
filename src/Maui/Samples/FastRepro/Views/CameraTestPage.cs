@@ -177,8 +177,16 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                         .OnTapped(async me => { await ToggleVideoRecording(); })
                         .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
                         {
-                            me.Text = CameraControl.IsRecordingVideo ? "🛑 Stop" : "🎥 Record";
-                            me.BackgroundColor = CameraControl.IsRecordingVideo ? Colors.Red : Colors.Purple;
+                            if (CameraControl.IsRecordingVideo)
+                            {
+                                me.Text = "🛑 Stop (00:00)";
+                                me.BackgroundColor = Colors.Red;
+                            }
+                            else
+                            {
+                                me.Text = "🎥 Record";
+                                me.BackgroundColor = Colors.Purple;
+                            }
                         }),
 
                         new SkiaButton("📹 Formats")
@@ -309,6 +317,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         CameraControl.CaptureFailed += OnCaptureFailed;
         CameraControl.OnError += OnCameraError;
         CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
+        CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
     }
 
     private void UpdateStatusText()
@@ -431,6 +440,18 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             {
                 await DisplayAlert("Error", $"Video save error: {ex.Message}", "OK");
                 Debug.WriteLine($"❌ Video save error: {ex}");
+            }
+        });
+    }
+
+    private void OnVideoRecordingProgress(object sender, TimeSpan duration)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            if (_videoRecordButton != null && CameraControl.IsRecordingVideo)
+            {
+                // Update button text with timer in MM:SS format
+                _videoRecordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
             }
         });
     }

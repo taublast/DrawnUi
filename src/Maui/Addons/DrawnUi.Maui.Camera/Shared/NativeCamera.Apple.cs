@@ -30,6 +30,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private AVCaptureVideoDataOutput _videoDataOutput;
     private AVCaptureStillImageOutput _stillImageOutput;
     private AVCaptureDeviceInput _deviceInput;
+    private AVCaptureDeviceInput _audioInput;
     private DispatchQueue _videoDataOutputQueue;
     private CameraProcessorState _state = CameraProcessorState.None;
     private bool _flashSupported;
@@ -39,6 +40,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private NSUrl _currentVideoUrl;
     private DateTime _recordingStartTime;
     private NSTimer _progressTimer;
+    private bool _recordAudio = false; // Default to silent video
     private double _zoomScale = 1.0;
     private readonly object _lockPreview = new();
     private CapturedImage _preview;
@@ -1853,17 +1855,77 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         // Configure video settings based on current video quality
         ConfigureVideoSettings();
 
+        _session.BeginConfiguration();
+
+        // Add audio input if audio recording is enabled
+        if (_recordAudio)
+        {
+            await SetupAudioInput();
+        }
+
+        // Add movie file output
         if (_session.CanAddOutput(_movieFileOutput))
         {
-            _session.BeginConfiguration();
             _session.AddOutput(_movieFileOutput);
-            _session.CommitConfiguration();
-            
             Debug.WriteLine("[NativeCamera.Apple] Movie file output added to session");
         }
         else
         {
+            _session.CommitConfiguration();
             throw new InvalidOperationException("Cannot add movie file output to capture session");
+        }
+        
+        _session.CommitConfiguration();
+    }
+
+    /// <summary>
+    /// Setup audio input for video recording
+    /// </summary>
+    private async Task SetupAudioInput()
+    {
+        try
+        {
+            // Check if audio input already exists
+            if (_audioInput != null)
+            {
+                Debug.WriteLine("[NativeCamera.Apple] Audio input already set up");
+                return;
+            }
+
+            // Get default audio capture device
+            var audioDevice = AVCaptureDevice.GetDefaultDevice(AVMediaTypes.Audio);
+            if (audioDevice == null)
+            {
+                Debug.WriteLine("[NativeCamera.Apple] No audio capture device available");
+                return;
+            }
+
+            // Create audio input
+            _audioInput = AVCaptureDeviceInput.FromDevice(audioDevice, out var error);
+            if (_audioInput == null || error != null)
+            {
+                Debug.WriteLine($"[NativeCamera.Apple] Failed to create audio input: {error?.LocalizedDescription}");
+                return;
+            }
+
+            // Add audio input to session
+            if (_session.CanAddInput(_audioInput))
+            {
+                _session.AddInput(_audioInput);
+                Debug.WriteLine("[NativeCamera.Apple] Audio input added to session");
+            }
+            else
+            {
+                Debug.WriteLine("[NativeCamera.Apple] Cannot add audio input to session");
+                _audioInput?.Dispose();
+                _audioInput = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Error setting up audio input: {ex.Message}");
+            _audioInput?.Dispose();
+            _audioInput = null;
         }
     }
 
@@ -1974,10 +2036,24 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         try
         {
-            if (_movieFileOutput != null && _session != null)
+            if (_session != null)
             {
                 _session.BeginConfiguration();
-                _session.RemoveOutput(_movieFileOutput);
+                
+                if (_movieFileOutput != null)
+                {
+                    _session.RemoveOutput(_movieFileOutput);
+                }
+                
+                // Clean up audio input if it exists
+                if (_audioInput != null)
+                {
+                    _session.RemoveInput(_audioInput);
+                    _audioInput?.Dispose();
+                    _audioInput = null;
+                    Debug.WriteLine("[NativeCamera.Apple] Audio input removed and disposed");
+                }
+                
                 _session.CommitConfiguration();
             }
             
@@ -2085,6 +2161,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             return false;
         }
+    }
+
+    /// <summary>
+    /// Set whether to record audio with video
+    /// </summary>
+    /// <param name="recordAudio">True to record audio, false for silent video</param>
+    public void SetRecordAudio(bool recordAudio)
+    {
+        _recordAudio = recordAudio;
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Apple] SetRecordAudio: {recordAudio}");
     }
 
     /// <summary>

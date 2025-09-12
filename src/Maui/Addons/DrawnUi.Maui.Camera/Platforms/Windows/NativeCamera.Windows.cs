@@ -1678,7 +1678,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     {
         var quality = FormsControl.VideoQuality;
         
-        return quality switch
+        MediaEncodingProfile profile = quality switch
         {
             VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
             VideoQuality.Standard => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p),
@@ -1687,6 +1687,19 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             VideoQuality.Manual => GetManualVideoEncodingProfile(),
             _ => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p)
         };
+
+        // Remove audio if not recording audio
+        if (!FormsControl.RecordAudio)
+        {
+            profile.Audio = null;
+            Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
+        }
+        else
+        {
+            Debug.WriteLine("[NativeCamera.Windows] Audio enabled for video recording");
+        }
+
+        return profile;
     }
 
     /// <summary>
@@ -1712,13 +1725,24 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 profile.Video.FrameRate.Denominator = 1;
                 profile.Video.Bitrate = (uint)selectedFormat.BitRate;
             }
+
+            // Handle audio setting for manual profile too
+            if (!FormsControl.RecordAudio)
+            {
+                profile.Audio = null;
+            }
             
             return profile;
         }
         catch
         {
             // Fallback to standard quality
-            return MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
+            var fallbackProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
+            if (!FormsControl.RecordAudio)
+            {
+                fallbackProfile.Audio = null;
+            }
+            return fallbackProfile;
         }
     }
 
@@ -1860,6 +1884,7 @@ public async Task StopVideoRecording()
             return false;
         }
     }
+
 
     /// <summary>
     /// Save video to gallery

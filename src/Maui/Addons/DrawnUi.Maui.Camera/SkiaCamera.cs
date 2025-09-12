@@ -1725,6 +1725,22 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     public TimeSpan CurrentRecordingDuration { get; private set; }
 
+    public static readonly BindableProperty RecordAudioProperty = BindableProperty.Create(
+        nameof(RecordAudio),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    /// <summary>
+    /// Whether to record audio with video. Default is false (silent video).
+    /// Must be set before starting video recording.
+    /// </summary>
+    public bool RecordAudio
+    {
+        get { return (bool)GetValue(RecordAudioProperty); }
+        set { SetValue(RecordAudioProperty, value); }
+    }
+
     #endregion
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(

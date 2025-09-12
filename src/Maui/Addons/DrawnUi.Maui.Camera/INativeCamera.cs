@@ -121,6 +121,7 @@ public interface INativeCamera : IDisposable
     /// <returns>True if video recording is supported</returns>
     bool CanRecordVideo();
 
+
     /// <summary>
     /// Save video to gallery
     /// </summary>
