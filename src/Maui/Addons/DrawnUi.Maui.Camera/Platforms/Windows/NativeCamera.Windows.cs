@@ -111,6 +111,10 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private CameraProcessorState _state = CameraProcessorState.None;
     private bool _flashSupported;
     private bool _isCapturingStill;
+    private bool _isRecordingVideo;
+    private StorageFile _currentVideoFile;
+    private DateTime _recordingStartTime;
+    private System.Threading.Timer _progressTimer;
     private double _zoomScale = 1.0;
     private readonly object _lockPreview = new();
     private volatile CapturedImage _preview;
@@ -195,6 +199,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] Device: {device.Name}, Id: {device.Id}, Panel: {device.EnclosureLocation?.Panel}");
         }
 
+        Debug.WriteLine($"[NativeCameraWindows] CURRENT SELECTION CONFIG: Facing={FormsControl.Facing}, CameraIndex={FormsControl.CameraIndex}");
+
         // Manual camera selection
         if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
         {
@@ -228,9 +234,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             throw new InvalidOperationException("No camera device found");
         }
 
-        Debug.WriteLine($"[NativeCameraWindows] Selected camera: {_cameraDevice.Name}");
+        Debug.WriteLine($"[NativeCameraWindows] *** FINAL SELECTED CAMERA: {_cameraDevice.Name} (ID: {_cameraDevice.Id}) ***");
 
-        //Debug.WriteLine("[NativeCameraWindows] Initializing MediaCapture...");
+        Debug.WriteLine("[NativeCameraWindows] Initializing MediaCapture...");
         _mediaCapture = new MediaCapture();
         var settings = new MediaCaptureInitializationSettings
         {
@@ -238,6 +244,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             StreamingCaptureMode = StreamingCaptureMode.Video,
             PhotoCaptureSource = PhotoCaptureSource.VideoPreview
         };
+
+        Debug.WriteLine($"[NativeCameraWindows] *** INITIALIZING MEDIACAPTURE WITH VideoDeviceId: {_cameraDevice.Id} ({_cameraDevice.Name}) ***");
 
 
 
@@ -1636,6 +1644,253 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
     #endregion
 
+    #region VIDEO RECORDING
+
+    /// <summary>
+    /// Gets the currently selected video format
+    /// </summary>
+    /// <returns>Current video format or null if not available</returns>
+    public VideoFormat GetCurrentVideoFormat()
+    {
+        // TODO: Implement video format detection for Windows
+        return new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" };
+    }
+
+    /// <summary>
+    /// Gets predefined video formats for Windows platform
+    /// </summary>
+    private List<VideoFormat> GetPredefinedVideoFormats()
+    {
+        return new List<VideoFormat>
+        {
+            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
+            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 60, Codec = "H.264", BitRate = 12000000, FormatId = "1080p60" },
+            new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
+            new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 7500000, FormatId = "720p60" },
+            new VideoFormat { Width = 3840, Height = 2160, FrameRate = 30, Codec = "H.264", BitRate = 25000000, FormatId = "2160p30" }
+        };
+    }
+
+    /// <summary>
+    /// Gets the appropriate video encoding profile based on current video quality setting
+    /// </summary>
+    private MediaEncodingProfile GetVideoEncodingProfile()
+    {
+        var quality = FormsControl.VideoQuality;
+        
+        return quality switch
+        {
+            VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
+            VideoQuality.Standard => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p),
+            VideoQuality.High => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p),
+            VideoQuality.Ultra => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Uhd2160p),
+            VideoQuality.Manual => GetManualVideoEncodingProfile(),
+            _ => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p)
+        };
+    }
+
+    /// <summary>
+    /// Gets manual video encoding profile based on VideoFormatIndex
+    /// </summary>
+    private MediaEncodingProfile GetManualVideoEncodingProfile()
+    {
+        try
+        {
+            // For manual mode, create custom profile
+            var profile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
+            
+            // Get selected format if available (for now use predefined formats)
+            var formats = GetPredefinedVideoFormats();
+            if (formats.Count > FormsControl.VideoFormatIndex)
+            {
+                var selectedFormat = formats[FormsControl.VideoFormatIndex];
+                
+                // Customize video encoding properties
+                profile.Video.Width = (uint)selectedFormat.Width;
+                profile.Video.Height = (uint)selectedFormat.Height;
+                profile.Video.FrameRate.Numerator = (uint)selectedFormat.FrameRate;
+                profile.Video.FrameRate.Denominator = 1;
+                profile.Video.Bitrate = (uint)selectedFormat.BitRate;
+            }
+            
+            return profile;
+        }
+        catch
+        {
+            // Fallback to standard quality
+            return MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
+        }
+    }
+
+    /// <summary>
+    /// Timer callback for video recording progress updates
+    /// </summary>
+    private void OnProgressTimer(object state)
+    {
+        if (!_isRecordingVideo)
+            return;
+            
+        var elapsed = DateTime.Now - _recordingStartTime;
+        VideoRecordingProgress?.Invoke(elapsed);
+    }
+ 
+
+    public async Task StartVideoRecording()
+    {
+        if (_isRecordingVideo || _mediaCapture == null)
+            return;
+
+        try
+        {
+            // Create video encoding profile based on current video quality
+            var profile = GetVideoEncodingProfile();
+
+            // Create temp file for video recording in cache directory
+            var fileName = $"video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+            var cacheDir = FileSystem.Current.CacheDirectory;
+            var filePath = Path.Combine(cacheDir, fileName);
+
+            // Create or replace the file in the cache directory
+            var cacheFolder = await StorageFolder.GetFolderFromPathAsync(cacheDir);
+            _currentVideoFile = await cacheFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            Debug.WriteLine($"[NativeCameraWindows] Starting video recording to: {_currentVideoFile.Path}");
+
+            // Start recording to storage file
+            await _mediaCapture.StartRecordToStorageFileAsync(profile, _currentVideoFile);
+
+            _isRecordingVideo = true;
+            _recordingStartTime = DateTime.Now;
+
+            // Start progress timer (fire every second)
+            _progressTimer = new System.Threading.Timer(OnProgressTimer, null,
+                TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+
+            Debug.WriteLine("[NativeCameraWindows] Video recording started successfully");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Failed to start video recording: {ex.Message}\nStackTrace: {ex.StackTrace}");
+            _isRecordingVideo = false;
+            _currentVideoFile = null;
+            VideoRecordingFailed?.Invoke(ex);
+        }
+    }
+
+/// <summary>
+/// Stops video recording
+/// </summary>
+public async Task StopVideoRecording()
+    {
+        if (!_isRecordingVideo || _mediaCapture == null || _currentVideoFile == null)
+            return;
+
+        try
+        {
+            Debug.WriteLine("[NativeCameraWindows] Stopping video recording...");
+
+            // Stop progress timer
+            _progressTimer?.Dispose();
+            _progressTimer = null;
+
+            // Stop recording
+            await _mediaCapture.StopRecordAsync();
+            
+            var recordingEndTime = DateTime.Now;
+            var duration = recordingEndTime - _recordingStartTime;
+            
+            // Get file size
+            var properties = await _currentVideoFile.GetBasicPropertiesAsync();
+            var fileSizeBytes = (long)properties.Size;
+
+            Debug.WriteLine($"[NativeCameraWindows] Video recording stopped. Duration: {duration:mm\\:ss}, Size: {fileSizeBytes / (1024 * 1024):F1} MB");
+
+            // Create captured video object
+            var capturedVideo = new CapturedVideo
+            {
+                FilePath = _currentVideoFile.Path,
+                Duration = duration,
+                Format = GetCurrentVideoFormat(),
+                Facing = FormsControl.Facing,
+                Time = _recordingStartTime,
+                FileSizeBytes = fileSizeBytes,
+                Metadata = new Dictionary<string, object>
+                {
+                    { "Platform", "Windows" },
+                    { "CameraDevice", _cameraDevice?.Name ?? "Unknown" },
+                    { "RecordingStartTime", _recordingStartTime },
+                    { "RecordingEndTime", recordingEndTime }
+                }
+            };
+
+            _isRecordingVideo = false;
+            
+            // Fire success event
+            VideoRecordingSuccess?.Invoke(capturedVideo);
+            
+            Debug.WriteLine("[NativeCameraWindows] Video recording completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Failed to stop video recording: {ex.Message}");
+            _isRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(ex);
+        }
+        finally
+        {
+            _currentVideoFile = null;
+        }
+    }
+
+    /// <summary>
+    /// Gets whether video recording is supported on this camera
+    /// </summary>
+    /// <returns>True if video recording is supported</returns>
+    public bool CanRecordVideo()
+    {
+        try
+        {
+            // Check if MediaCapture is available and has video recording capabilities
+            return _mediaCapture != null && 
+                   _mediaCapture.MediaCaptureSettings != null &&
+                   _mediaCapture.MediaCaptureSettings.StreamingCaptureMode != StreamingCaptureMode.Audio;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Save video to gallery
+    /// </summary>
+    /// <param name="videoFilePath">Path to video file</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    {
+        // TODO: Implement Windows video save to gallery
+        await Task.Delay(100); // Placeholder
+        return null;
+    }
+
+    /// <summary>
+    /// Event fired when video recording completes successfully
+    /// </summary>
+    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording fails
+    /// </summary>
+    public Action<Exception> VideoRecordingFailed { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording progress updates
+    /// </summary>
+    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    #endregion
+
     #region IDisposable
 
     public void Dispose()
@@ -1644,6 +1899,18 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             Stop();
 
+            // Stop video recording if active
+            if (_isRecordingVideo)
+            {
+                try
+                {
+                    _mediaCapture?.StopRecordAsync()?.AsTask()?.Wait(1000);
+                }
+                catch { }
+                _isRecordingVideo = false;
+            }
+
+            _progressTimer?.Dispose();
             _frameReader?.Dispose();
             _mediaCapture?.Dispose();
             _frameSemaphore?.Dispose();

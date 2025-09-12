@@ -331,6 +331,22 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
+    /// Get available video recording formats/resolutions for the current camera.
+    /// Use with VideoFormatIndex when VideoQuality is set to Manual.
+    /// Formats are cached when camera is initialized.
+    /// </summary>
+    /// <returns>List of available video formats</returns>
+    public virtual async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()
+    {
+#if ONPLATFORM
+        // If not cached, detect and cache them
+        return await GetAvailableVideoFormatsPlatform();
+#else
+        return new List<VideoFormat>();
+#endif
+    }
+
+    /// <summary>
     /// Gets the currently selected capture format.
     /// This reflects the format that will be used for still image capture based on
     /// the current CapturePhotoQuality and CaptureFormatIndex settings.
@@ -352,6 +368,216 @@ public partial class SkiaCamera : SkiaControl
             return null;
         }
     }
+
+    /// <summary>
+    /// Gets the currently selected video format.
+    /// This reflects the format that will be used for video recording based on
+    /// the current VideoQuality and VideoFormatIndex settings.
+    /// </summary>
+    public VideoFormat CurrentVideoFormat
+    {
+        get
+        {
+#if ONPLATFORM
+            try
+            {
+                return NativeControl?.GetCurrentVideoFormat();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[SkiaCamera] Error getting current video format: {ex.Message}");
+            }
+#endif
+            return null;
+        }
+    }
+
+    #region VIDEO RECORDING METHODS
+
+    /// <summary>
+    /// Start video recording. Run this in background thread!
+    /// </summary>
+    /// <returns></returns>
+    public async Task StartVideoRecording()
+    {
+        if (IsBusy || IsRecordingVideo)
+            return;
+
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}");
+
+        IsBusy = true;
+        IsRecordingVideo = true;
+
+        // Set up video recording callbacks to handle state synchronization
+        NativeControl.VideoRecordingFailed = ex =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsRecordingVideo = false;
+                VideoRecordingFailed?.Invoke(this, ex);
+            });
+        };
+
+        NativeControl.VideoRecordingSuccess = capturedVideo =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsRecordingVideo = false;
+                OnVideoRecordingSuccess(capturedVideo);
+            });
+        };
+
+        NativeControl.VideoRecordingProgress = duration =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                OnVideoRecordingProgress(duration);
+            });
+        };
+
+        try
+        {
+#if ONPLATFORM
+            await NativeControl.StartVideoRecording();
+#endif
+        }
+        catch (Exception ex)
+        {
+            IsRecordingVideo = false;
+            IsBusy = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+
+        IsBusy = false;
+    }
+
+    /// <summary>
+    /// Stop video recording
+    /// </summary>
+    /// <returns></returns>
+    public async Task StopVideoRecording()
+    {
+        if (!IsRecordingVideo)
+            return;
+
+        Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}");
+
+        try
+        {
+#if ONPLATFORM
+            await NativeControl.StopVideoRecording();
+#endif
+            // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
+        }
+        catch (Exception ex)
+        {
+            // On immediate exception, set the state and invoke the event
+            IsRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Save captured video to gallery (copies the video file)
+    /// </summary>
+    /// <param name="capturedVideo">The captured video to save</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> SaveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null)
+    {
+        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) || !File.Exists(capturedVideo.FilePath))
+            return null;
+
+        try
+        {
+#if ONPLATFORM
+            var path = await NativeControl.SaveVideoToGallery(capturedVideo.FilePath, album);
+            return path;
+#else
+            return null;
+#endif
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Failed to save video to gallery: {ex.Message}");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Move captured video from temporary location to public gallery (faster than SaveVideoToGalleryAsync)
+    /// </summary>
+    /// <param name="capturedVideo">The captured video to move</param>
+    /// <param name="album">Optional album name</param>
+    /// <param name="deleteOriginal">Whether to delete the original file after successful move (default true)</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> MoveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null, bool deleteOriginal = true)
+    {
+        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) || !File.Exists(capturedVideo.FilePath))
+            return null;
+
+        try
+        {
+            Debug.WriteLine($"[SkiaCamera] Moving video to gallery: {capturedVideo.FilePath}");
+            
+#if ANDROID
+            return await MoveVideoToGalleryAndroid(capturedVideo.FilePath, album, deleteOriginal);
+#elif IOS || MACCATALYST
+            return await MoveVideoToGalleryApple(capturedVideo.FilePath, album, deleteOriginal);
+#elif WINDOWS
+            return await MoveVideoToGalleryWindows(capturedVideo.FilePath, album, deleteOriginal);
+#else
+            Debug.WriteLine("[SkiaCamera] MoveVideoToGalleryAsync not implemented for this platform");
+            return null;
+#endif
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Failed to move video to gallery: {ex.Message}");
+            return null;
+        }
+    }
+
+    #endregion
+
+    #region VIDEO RECORDING EVENTS
+
+    /// <summary>
+    /// Fired when video recording completes successfully
+    /// </summary>
+    public event EventHandler<CapturedVideo> VideoRecordingSuccess;
+
+    /// <summary>
+    /// Fired when video recording fails
+    /// </summary>
+    public event EventHandler<Exception> VideoRecordingFailed;
+
+    /// <summary>
+    /// Fired when video recording progress updates
+    /// </summary>
+    public event EventHandler<TimeSpan> VideoRecordingProgress;
+
+    /// <summary>
+    /// Internal method to raise VideoRecordingSuccess event
+    /// </summary>
+    internal void OnVideoRecordingSuccess(CapturedVideo capturedVideo)
+    {
+        CurrentRecordingDuration = TimeSpan.Zero;
+        VideoRecordingSuccess?.Invoke(this, capturedVideo);
+    }
+
+    /// <summary>
+    /// Internal method to raise VideoRecordingProgress event
+    /// </summary>
+    internal void OnVideoRecordingProgress(TimeSpan duration)
+    {
+        CurrentRecordingDuration = duration;
+        VideoRecordingProgress?.Invoke(this, duration);
+    }
+
+    #endregion
     
     /// <summary>
     /// Internal method to get available cameras with caching
@@ -1249,6 +1475,14 @@ public partial class SkiaCamera : SkiaControl
             if (control.State == CameraState.On)
             {
                 control.StopInternal();
+                
+                // Force recreation of NativeControl when camera properties change
+                // This ensures the new camera selection settings are applied
+                if (control.NativeControl != null)
+                {
+                    control.NativeControl.Dispose();
+                    control.NativeControl = null;
+                }
             }
 
             if (control.IsOn)
@@ -1416,6 +1650,82 @@ public partial class SkiaCamera : SkiaControl
             camera.NativeControl.SetFlashMode((FlashMode)newValue);
         }
     }
+
+    #region VIDEO RECORDING PROPERTIES
+
+    public static readonly BindableProperty IsRecordingVideoProperty = BindableProperty.Create(
+        nameof(IsRecordingVideo),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        BindingMode.OneWayToSource);
+
+    /// <summary>
+    /// Whether video recording is currently active (read-only)
+    /// </summary>
+    public bool IsRecordingVideo
+    {
+        get { return (bool)GetValue(IsRecordingVideoProperty); }
+        private set { SetValue(IsRecordingVideoProperty, value); }
+    }
+
+    public static readonly BindableProperty VideoQualityProperty = BindableProperty.Create(
+        nameof(VideoQuality),
+        typeof(VideoQuality),
+        typeof(SkiaCamera),
+        VideoQuality.High,
+        propertyChanged: OnVideoFormatChanged);
+
+    /// <summary>
+    /// Video recording quality preset
+    /// </summary>
+    public VideoQuality VideoQuality
+    {
+        get { return (VideoQuality)GetValue(VideoQualityProperty); }
+        set { SetValue(VideoQualityProperty, value); }
+    }
+
+    public static readonly BindableProperty VideoFormatIndexProperty = BindableProperty.Create(
+        nameof(VideoFormatIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        0,
+        propertyChanged: OnVideoFormatChanged);
+
+    /// <summary>
+    /// Index of video format when VideoQuality is set to Manual.
+    /// Selects from the array of available video formats.
+    /// Use GetAvailableVideoFormatsAsync() to see available options.
+    /// </summary>
+    public int VideoFormatIndex
+    {
+        get { return (int)GetValue(VideoFormatIndexProperty); }
+        set { SetValue(VideoFormatIndexProperty, value); }
+    }
+
+    private static void OnVideoFormatChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaCamera camera && camera.NativeControl != null)
+        {
+            // Platform will handle format changes
+            // This callback allows for future format switching during recording if supported
+        }
+    }
+
+    /// <summary>
+    /// Gets whether video recording is supported on the current device/camera
+    /// </summary>
+    public bool CanRecordVideo
+    {
+        get { return NativeControl?.CanRecordVideo() ?? false; }
+    }
+
+    /// <summary>
+    /// Gets the current recording duration (if recording)
+    /// </summary>
+    public TimeSpan CurrentRecordingDuration { get; private set; }
+
+    #endregion
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(
         nameof(Type),

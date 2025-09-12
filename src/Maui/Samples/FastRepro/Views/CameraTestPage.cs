@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using DrawnUi.Camera;
 using DrawnUi.Views;
 using DrawnUi.Controls;
@@ -12,6 +13,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaButton _takePictureButton;
     private SkiaButton _flashButton;
     private SkiaLabel _statusLabel;
+    private SkiaButton _videoRecordButton;
+    private SkiaButton _cameraSelectButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
     Canvas Canvas;
@@ -64,7 +67,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                     .Assign(out CameraControl)
                     .ObserveSelf((me, prop) =>
                     {
-                        if (prop == nameof(BindingContext) || prop == nameof(me.State))
+                        if (prop == nameof(BindingContext) || prop == nameof(me.State) || 
+                            prop == nameof(me.Facing) || prop == nameof(me.CameraIndex))
                         {
                             UpdateStatusText();
                         }
@@ -83,7 +87,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 // Controls row
                 new SkiaRow
                 {
-                    Spacing = 16,
+                    Spacing = 8,
                     HorizontalOptions = LayoutOptions.Center,
                     Children =
                     {
@@ -114,14 +118,25 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             .Assign(out _flashButton)
                             .OnTapped(me => { ToggleFlash(); })
                             .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode),
-                                me => { me.Text = $"Flash: {CameraControl.FlashMode}"; })
+                                me => { me.Text = $"Flash: {CameraControl.FlashMode}"; }),
+
+                        // Camera selection button
+                        new SkiaButton("📷 Camera")
+                            {
+                                BackgroundColor = Colors.Teal,
+                                TextColor = Colors.White,
+                                CornerRadius = 8,
+                                UseCache = SkiaCacheType.Image
+                            }
+                            .Assign(out _cameraSelectButton)
+                            .OnTapped(async me => { await SelectCamera(); })
                     }
                 },
 
                 // Start/Stop camera row
                 new SkiaRow
                 {
-                    Spacing = 16,
+                    Spacing = 8,
                     HorizontalOptions = LayoutOptions.Center,
                     Children =
                     {
@@ -141,6 +156,39 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                 UseCache = SkiaCacheType.Image
                             }
                             .OnTapped(me => { CameraControl.IsOn = false; })
+                    }
+                },
+
+                // Video recording row
+                new SkiaRow
+                {
+                    Spacing = 16,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaButton("🎥 Record")
+                        {
+                            BackgroundColor = Colors.Purple,
+                            TextColor = Colors.White,
+                            CornerRadius = 8,
+                            UseCache = SkiaCacheType.Image
+                        }
+                        .Assign(out _videoRecordButton)
+                        .OnTapped(async me => { await ToggleVideoRecording(); })
+                        .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                        {
+                            me.Text = CameraControl.IsRecordingVideo ? "🛑 Stop" : "🎥 Record";
+                            me.BackgroundColor = CameraControl.IsRecordingVideo ? Colors.Red : Colors.Purple;
+                        }),
+
+                        new SkiaButton("📹 Formats")
+                        {
+                            BackgroundColor = Colors.DarkSlateBlue,
+                            TextColor = Colors.White,
+                            CornerRadius = 8,
+                            UseCache = SkiaCacheType.Image
+                        }
+                        .OnTapped(async me => { await ShowVideoFormatPicker(); })
                     }
                 }
             }
@@ -260,13 +308,24 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         CameraControl.CaptureSuccess += OnCaptureSuccess;
         CameraControl.CaptureFailed += OnCaptureFailed;
         CameraControl.OnError += OnCameraError;
+        CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
     }
 
     private void UpdateStatusText()
     {
         if (_statusLabel != null && CameraControl != null)
         {
-            _statusLabel.Text = $"Camera Status: {CameraControl.State}";
+            var statusText = $"Camera Status: {CameraControl.State}";
+            if (CameraControl.Facing == CameraPosition.Manual)
+            {
+                statusText += $" | Index: {CameraControl.CameraIndex} | Facing: {CameraControl.Facing}";
+            }
+            else
+            {
+                statusText += $" | Facing: {CameraControl.Facing}";
+            }
+            
+            _statusLabel.Text = statusText;
             _statusLabel.TextColor = CameraControl.State switch
             {
                 CameraState.On => Colors.Green,
@@ -347,6 +406,35 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         MainThread.BeginInvokeOnMainThread(async () => { await DisplayAlert("Camera Error", e, "OK"); });
     }
 
+    private void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
+                
+                // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
+                var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
+                
+                if (!string.IsNullOrEmpty(publicPath))
+                {
+                    await DisplayAlert("Success", "Video saved to gallery!", "OK");
+                    Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Failed to save video to gallery", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Video save error: {ex.Message}", "OK");
+                Debug.WriteLine($"❌ Video save error: {ex}");
+            }
+        });
+    }
+
     private void ShowPreviewOverlay(SkiaSharp.SKImage image)
     {
         if (_previewImage != null && _previewOverlay != null)
@@ -395,9 +483,126 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
 
+    private async Task ToggleVideoRecording()
+    {
+        if (CameraControl.State != CameraState.On)
+            return;
+
+        try
+        {
+            if (CameraControl.IsRecordingVideo)
+            {
+                await CameraControl.StopVideoRecording();
+            }
+            else
+            {
+                await CameraControl.StartVideoRecording();
+            }
+        }
+        catch (NotImplementedException ex)
+        {
+            await DisplayAlert("Not Implemented", 
+                $"Video recording is not yet implemented for this platform:\n{ex.Message}", "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Video Recording Error", $"Error: {ex.Message}", "OK");
+        }
+    }
+
+    private async Task ShowVideoFormatPicker()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+        {
+            var formats = await CameraControl.GetAvailableVideoFormatsAsync();
+            
+            if (formats?.Count > 0)
+            {
+                var options = formats.Select((format, index) =>
+                    $"[{index}] {format.Description}"
+                ).ToArray();
+
+                var result = await DisplayActionSheet("Select Video Format", "Cancel", null, options);
+
+                if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                {
+                    var selectedIndex = Array.FindIndex(options, opt => opt == result);
+                    if (selectedIndex >= 0)
+                    {
+                        CameraControl.VideoQuality = VideoQuality.Manual;
+                        CameraControl.VideoFormatIndex = selectedIndex;
+                        
+                        await DisplayAlert("Format Selected", 
+                            $"Selected: {formats[selectedIndex].Description}", "OK");
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("No Formats", "No video formats available", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error getting video formats: {ex.Message}", "OK");
+        }
+        });
+    }
+
+    private async Task SelectCamera()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                var cameras = await CameraControl.GetAvailableCamerasAsync();
+
+                if (cameras?.Count > 0)
+                {
+                    var options = cameras.Select((camera, index) =>
+                        $"[{index}] {camera.Name} ({camera.Position})"
+                    ).ToArray();
+
+                    var result = await DisplayActionSheet("Select Camera", "Cancel", null, options);
+
+                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                    {
+                        var selectedIndex = Array.FindIndex(options, opt => opt == result);
+                        if (selectedIndex >= 0)
+                        {
+                            var selectedCamera = cameras[selectedIndex];
+
+                            // Set camera selection - this will automatically trigger restart if camera is running
+                            CameraControl.Facing = CameraPosition.Manual;
+                            CameraControl.CameraIndex = selectedCamera.Index;
+
+                            // Update button text
+                            _cameraSelectButton.Text = $"📷 {selectedCamera.Position}";
+
+                            Debug.WriteLine($"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nIndex: {selectedCamera.Index}");
+                        }
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("No Cameras", "No cameras available", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Error getting cameras: {ex.Message}", "OK");
+            }
+        });
+
+    }
+
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
         CameraControl?.Stop();
     }
+
+    // Removed old manual video gallery implementation - now using SkiaCamera's built-in MoveVideoToGalleryAsync method
 }

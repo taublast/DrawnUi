@@ -23,7 +23,7 @@ using static AVFoundation.AVMetadataIdentifiers;
 namespace DrawnUi.Camera;
 
 
-public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate
+public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate, IAVCaptureFileOutputRecordingDelegate
 {
     protected readonly SkiaCamera FormsControl;
     private AVCaptureSession _session;
@@ -34,6 +34,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private CameraProcessorState _state = CameraProcessorState.None;
     private bool _flashSupported;
     private bool _isCapturingStill;
+    private bool _isRecordingVideo;
+    private AVCaptureMovieFileOutput _movieFileOutput;
+    private NSUrl _currentVideoUrl;
+    private DateTime _recordingStartTime;
+    private NSTimer _progressTimer;
     private double _zoomScale = 1.0;
     private readonly object _lockPreview = new();
     private CapturedImage _preview;
@@ -1750,6 +1755,21 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         if (disposing)
         {
+            // Stop video recording if active
+            if (_isRecordingVideo)
+            {
+                try
+                {
+                    _movieFileOutput?.StopRecording();
+                }
+                catch { }
+                _isRecordingVideo = false;
+            }
+
+            _progressTimer?.Invalidate();
+            _progressTimer = null;
+            CleanupMovieFileOutput();
+
             Stop();
             
             _session?.Dispose();
@@ -1779,6 +1799,455 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         base.Dispose(disposing);
     }
+
+    #region VIDEO RECORDING
+
+    /// <summary>
+    /// Gets the currently selected video format
+    /// </summary>
+    /// <returns>Current video format or null if not available</returns>
+    public VideoFormat GetCurrentVideoFormat()
+    {
+        try
+        {
+            var quality = FormsControl.VideoQuality;
+            var (preset, settings) = GetVideoPresetAndSettings(quality);
+            
+            // Extract dimensions from settings
+            if (settings != null)
+            {
+                var width = ((NSNumber)settings[AVVideo.WidthKey])?.Int32Value ?? 1920;
+                var height = ((NSNumber)settings[AVVideo.HeightKey])?.Int32Value ?? 1080;
+                var compressionProps = settings[AVVideo.CompressionPropertiesKey] as NSDictionary;
+                var bitRate = ((NSNumber)compressionProps?[AVVideo.AverageBitRateKey])?.Int32Value ?? 8000000;
+                
+                return new VideoFormat 
+                { 
+                    Width = width, 
+                    Height = height, 
+                    FrameRate = 30, // Default, could be extracted from settings
+                    Codec = "H.264", 
+                    BitRate = bitRate, 
+                    FormatId = $"ios_{width}x{height}_{quality}" 
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Error getting current video format: {ex.Message}");
+        }
+        
+        return new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" };
+    }
+
+    /// <summary>
+    /// Setup movie file output for video recording
+    /// </summary>
+    private async Task SetupMovieFileOutput()
+    {
+        if (_movieFileOutput != null)
+            return; // Already set up
+
+        _movieFileOutput = new AVCaptureMovieFileOutput();
+        
+        // Configure video settings based on current video quality
+        ConfigureVideoSettings();
+
+        if (_session.CanAddOutput(_movieFileOutput))
+        {
+            _session.BeginConfiguration();
+            _session.AddOutput(_movieFileOutput);
+            _session.CommitConfiguration();
+            
+            Debug.WriteLine("[NativeCamera.Apple] Movie file output added to session");
+        }
+        else
+        {
+            throw new InvalidOperationException("Cannot add movie file output to capture session");
+        }
+    }
+
+    /// <summary>
+    /// Configure video recording settings based on current video quality
+    /// </summary>
+    private void ConfigureVideoSettings()
+    {
+        if (_movieFileOutput == null)
+            return;
+
+        var quality = FormsControl.VideoQuality;
+        
+        // Get video formats and settings
+        var (preset, settings) = GetVideoPresetAndSettings(quality);
+
+        // Apply video settings if available - let AVCaptureMovieFileOutput use defaults
+        // The movie file output will automatically configure appropriate settings
+
+        Debug.WriteLine($"[NativeCamera.Apple] Configured video settings for quality: {quality}");
+    }
+
+    /// <summary>
+    /// Get video preset and settings based on video quality
+    /// </summary>
+    private (string preset, NSDictionary settings) GetVideoPresetAndSettings(VideoQuality quality)
+    {
+        return quality switch
+        {
+            VideoQuality.Low => (AVCaptureSession.Preset640x480, CreateVideoSettings(640, 480, 30)),
+            VideoQuality.Standard => (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 30)),
+            VideoQuality.High => (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 60)),
+            VideoQuality.Ultra => (AVCaptureSession.Preset3840x2160, CreateVideoSettings(3840, 2160, 30)),
+            VideoQuality.Manual => GetManualVideoSettings(),
+            _ => (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 30))
+        };
+    }
+
+    /// <summary>
+    /// Create video settings dictionary
+    /// </summary>
+    private NSDictionary CreateVideoSettings(int width, int height, int frameRate)
+    {
+        var compressionProperties = NSDictionary.FromObjectsAndKeys(
+            new NSObject[] { NSNumber.FromInt32(frameRate * 1000000) }, // Bitrate estimation
+            new NSObject[] { AVVideo.AverageBitRateKey }
+        );
+
+        return NSDictionary.FromObjectsAndKeys(
+            new NSObject[]
+            {
+                NSNumber.FromInt32(width),
+                NSNumber.FromInt32(height),
+                new NSString("avc1"),
+                compressionProperties
+            },
+            new NSObject[]
+            {
+                AVVideo.WidthKey,
+                AVVideo.HeightKey,
+                AVVideo.CodecKey,
+                AVVideo.CompressionPropertiesKey
+            }
+        );
+    }
+
+    /// <summary>
+    /// Get manual video settings based on VideoFormatIndex
+    /// </summary>
+    private (string preset, NSDictionary settings) GetManualVideoSettings()
+    {
+        var formats = GetPredefinedVideoFormats();
+        
+        if (formats.Count > FormsControl.VideoFormatIndex)
+        {
+            var selectedFormat = formats[FormsControl.VideoFormatIndex];
+            var settings = CreateVideoSettings(
+                selectedFormat.Width, 
+                selectedFormat.Height, 
+                (int)selectedFormat.FrameRate);
+            return (AVCaptureSession.PresetHigh, settings);
+        }
+        
+        // Fallback to standard quality
+        return (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 30));
+    }
+
+    /// <summary>
+    /// Get predefined video formats for iOS/Mac
+    /// </summary>
+    public List<VideoFormat> GetPredefinedVideoFormats()
+    {
+        return new List<VideoFormat>
+        {
+            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
+            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 60, Codec = "H.264", BitRate = 12000000, FormatId = "1080p60" },
+            new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
+            new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 7500000, FormatId = "720p60" },
+            new VideoFormat { Width = 3840, Height = 2160, FrameRate = 30, Codec = "H.264", BitRate = 25000000, FormatId = "2160p30" },
+            new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2000000, FormatId = "480p30" }
+        };
+    }
+
+    /// <summary>
+    /// Clean up movie file output resources
+    /// </summary>
+    private void CleanupMovieFileOutput()
+    {
+        try
+        {
+            if (_movieFileOutput != null && _session != null)
+            {
+                _session.BeginConfiguration();
+                _session.RemoveOutput(_movieFileOutput);
+                _session.CommitConfiguration();
+            }
+            
+            _movieFileOutput?.Dispose();
+            _movieFileOutput = null;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Error cleaning up movie file output: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Starts video recording
+    /// </summary>
+    public async Task StartVideoRecording()
+    {
+        if (_isRecordingVideo || _session == null)
+            return;
+
+        try
+        {
+            Debug.WriteLine("[NativeCamera.Apple] Starting video recording...");
+
+            // Setup movie file output if not already created
+            await SetupMovieFileOutput();
+
+            // Create temporary file URL for video recording
+            var fileName = $"video_{DateTime.Now:yyyyMMdd_HHmmss}.mov";
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var videoPath = Path.Combine(documentsPath, fileName);
+            _currentVideoUrl = NSUrl.FromFilename(videoPath);
+
+            // Start recording
+            _movieFileOutput.StartRecordingToOutputFile(_currentVideoUrl, this);
+
+            _isRecordingVideo = true;
+            _recordingStartTime = DateTime.Now;
+
+            // Start progress timer (fire every second)
+            _progressTimer = NSTimer.CreateRepeatingScheduledTimer(1.0, timer =>
+            {
+                if (_isRecordingVideo)
+                {
+                    var elapsed = DateTime.Now - _recordingStartTime;
+                    VideoRecordingProgress?.Invoke(elapsed);
+                }
+            });
+
+            Debug.WriteLine("[NativeCamera.Apple] Video recording started successfully");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Failed to start video recording: {ex.Message}");
+            _isRecordingVideo = false;
+            CleanupMovieFileOutput();
+            VideoRecordingFailed?.Invoke(ex);
+        }
+    }
+
+    /// <summary>
+    /// Stops video recording
+    /// </summary>
+    public async Task StopVideoRecording()
+    {
+        if (!_isRecordingVideo || _movieFileOutput == null)
+            return;
+
+        try
+        {
+            Debug.WriteLine("[NativeCamera.Apple] Stopping video recording...");
+
+            // Stop progress timer
+            _progressTimer?.Invalidate();
+            _progressTimer = null;
+
+            // Stop recording (this will trigger FinishedRecording delegate method)
+            _movieFileOutput.StopRecording();
+
+            Debug.WriteLine("[NativeCamera.Apple] Video recording stop initiated");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Failed to stop video recording: {ex.Message}");
+            _isRecordingVideo = false;
+            CleanupMovieFileOutput();
+            VideoRecordingFailed?.Invoke(ex);
+        }
+    }
+
+    /// <summary>
+    /// Gets whether video recording is supported on this camera
+    /// </summary>
+    /// <returns>True if video recording is supported</returns>
+    public bool CanRecordVideo()
+    {
+        try
+        {
+            // Check if we have a session and device that supports video recording
+            return _session != null && 
+                   _deviceInput?.Device != null &&
+                   _deviceInput.Device.HasMediaType(AVMediaTypes.Video);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Save video to gallery
+    /// </summary>
+    /// <param name="videoFilePath">Path to video file</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(videoFilePath) || !System.IO.File.Exists(videoFilePath))
+            {
+                Debug.WriteLine($"[NativeCamera.Apple] Video file not found: {videoFilePath}");
+                return null;
+            }
+
+            var videoUrl = NSUrl.FromFilename(videoFilePath);
+            var tcs = new TaskCompletionSource<string>();
+
+            // Request photo library access
+            var authorizationStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.AddOnly);
+            if (authorizationStatus != PHAuthorizationStatus.Authorized)
+            {
+                Debug.WriteLine("[NativeCamera.Apple] Photo library access denied");
+                return null;
+            }
+
+            PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                var request = PHAssetChangeRequest.FromVideo(videoUrl);
+                
+                // Set album if specified
+                if (!string.IsNullOrEmpty(album))
+                {
+                    // Find or create album and add asset to it
+                    var albumCollection = FindOrCreateAlbum(album);
+                    if (albumCollection != null)
+                    {
+                        var albumChangeRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                        albumChangeRequest?.AddAssets(new PHObject[] { request.PlaceholderForCreatedAsset });
+                    }
+                }
+            }, 
+            (success, error) =>
+            {
+                if (success)
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Video saved to gallery successfully");
+                    tcs.SetResult(videoFilePath); // iOS doesn't provide new path
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Failed to save video: {error?.LocalizedDescription}");
+                    tcs.SetResult(null);
+                }
+            });
+
+            return await tcs.Task;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Error saving video to gallery: {ex.Message}");
+            return null;
+        }
+    }
+
+
+    /// <summary>
+    /// Event fired when video recording completes successfully
+    /// </summary>
+    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording fails
+    /// </summary>
+    public Action<Exception> VideoRecordingFailed { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording progress updates
+    /// </summary>
+    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    #endregion
+
+    #region IAVCaptureFileOutputRecordingDelegate Implementation
+
+    /// <summary>
+    /// Called when video recording finishes successfully or with an error
+    /// </summary>
+    [Export("captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:")]
+    public void FinishedRecording(AVCaptureFileOutput captureOutput, NSUrl outputFileUrl, AVCaptureConnection[] connections, NSError error)
+    {
+        var recordingEndTime = DateTime.Now;
+        var duration = recordingEndTime - _recordingStartTime;
+        
+        _isRecordingVideo = false;
+
+        if (error != null)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Video recording failed: {error.LocalizedDescription}");
+            CleanupMovieFileOutput();
+            VideoRecordingFailed?.Invoke(new Exception(error.LocalizedDescription));
+            return;
+        }
+
+        try
+        {
+            // Get file info
+            var filePath = outputFileUrl.Path;
+            var fileAttributes = NSFileManager.DefaultManager.GetAttributes(filePath, out var fileError);
+            var fileSizeBytes = fileError == null ? (long)fileAttributes.Size : 0;
+
+            Debug.WriteLine($"[NativeCamera.Apple] Video recording completed. Duration: {duration:mm\\:ss}, Size: {fileSizeBytes / (1024 * 1024):F1} MB");
+
+            // Create captured video object
+            var capturedVideo = new CapturedVideo
+            {
+                FilePath = filePath,
+                Duration = duration,
+                Format = GetCurrentVideoFormat(),
+                Facing = FormsControl.Facing,
+                Time = _recordingStartTime,
+                FileSizeBytes = fileSizeBytes,
+                Metadata = new Dictionary<string, object>
+                {
+                    { "Platform", "iOS/Mac" },
+                    { "DeviceId", _deviceInput?.Device?.UniqueID ?? "Unknown" },
+                    { "RecordingStartTime", _recordingStartTime },
+                    { "RecordingEndTime", recordingEndTime }
+                }
+            };
+
+            // Fire success event on main thread
+            NSOperationQueue.MainQueue.AddOperation(() =>
+            {
+                VideoRecordingSuccess?.Invoke(capturedVideo);
+            });
+
+            Debug.WriteLine("[NativeCamera.Apple] Video recording completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Error processing recorded video: {ex.Message}");
+            VideoRecordingFailed?.Invoke(ex);
+        }
+        finally
+        {
+            CleanupMovieFileOutput();
+        }
+    }
+
+    /// <summary>
+    /// Called when video recording starts
+    /// </summary>
+    [Export("captureOutput:didStartRecordingToOutputFileAtURL:fromConnections:")]
+    public void StartedRecording(AVCaptureFileOutput captureOutput, NSUrl outputFileUrl, AVCaptureConnection[] connections)
+    {
+        Debug.WriteLine("[NativeCamera.Apple] Video recording started successfully");
+    }
+
+    #endregion
 
     #endregion
 }
