@@ -532,6 +532,21 @@ public partial class SkiaCamera : SkiaControl
         // Windows uses real-time preview-driven capture (no timer)
         _useWindowsPreviewDrivenCapture = true;
 
+            // Show exactly what is being recorded on screen
+            UseRecordingFramesForPreview = true;
+
+            // Invalidate preview when the encoder publishes a new composed frame
+            if (_captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
+            {
+                _encoderPreviewInvalidateHandler = (s, e) =>
+                {
+                    try { MainThread.BeginInvokeOnMainThread(() => UpdatePreview()); }
+                    catch { }
+                };
+                _winEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+            }
+
+
         // Set up progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
@@ -691,6 +706,16 @@ public partial class SkiaCamera : SkiaControl
             // Get local reference to encoder before clearing field to prevent disposal race
             encoder = _captureVideoEncoder;
             _captureVideoEncoder = null;
+
+#if WINDOWS
+            // Stop mirroring recording frames to preview and detach event
+            UseRecordingFramesForPreview = false;
+            if (encoder is WindowsCaptureVideoEncoder _winEncPrev)
+            {
+                try { _winEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler; } catch { }
+            }
+#endif
+
 
             // Stop encoder and get result
             var capturedVideo = await encoder?.StopAsync();
@@ -981,6 +1006,7 @@ public partial class SkiaCamera : SkiaControl
         using var bgPaint = new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
         using var textPaint = new SKPaint { Color = SKColors.White, IsAntialias = true, TextSize = Math.Max(14, info.Width / 60f) };
 
+
         var pad = 8f;
         var y1 = pad + textPaint.TextSize;
         var y2 = y1 + textPaint.TextSize + 4f;
@@ -1005,6 +1031,10 @@ public partial class SkiaCamera : SkiaControl
 #if WINDOWS
     private bool _useWindowsPreviewDrivenCapture;
 #endif
+#if WINDOWS
+        private EventHandler _encoderPreviewInvalidateHandler;
+#endif
+
 
 
     protected override void OnLayoutReady()
@@ -1143,6 +1173,18 @@ public partial class SkiaCamera : SkiaControl
 
     protected virtual SKImage AquireFrameFromNative()
     {
+#if WINDOWS
+        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
+        {
+            // Only show frames that were actually composed for recording.
+            // If none is available yet, return null so the previous displayed frame stays,
+            // avoiding a fallback blink from the raw preview without overlay.
+            if (winEnc.TryAcquirePreviewImage(out var img) && img != null)
+                return img; // renderer takes ownership and must dispose
+
+            return null; // do NOT fallback to raw preview during recording
+        }
+#endif
         return NativeControl.GetPreviewImage();
     }
 
@@ -2102,6 +2144,13 @@ public partial class SkiaCamera : SkiaControl
     public Action<SKCanvas, SKImageInfo, TimeSpan> FrameProcessor { get; set; }
 
     #endregion
+
+        /// <summary>
+        /// While recording, show exactly the frames being composed for the encoder as the on-screen preview.
+        /// This avoids stutter by not relying on a separate preview feed. Enabled automatically during capture.
+        /// </summary>
+        public bool UseRecordingFramesForPreview { get; set; } = false;
+
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(
         nameof(Type),

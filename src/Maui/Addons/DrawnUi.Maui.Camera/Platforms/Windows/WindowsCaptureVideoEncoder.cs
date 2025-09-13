@@ -4,6 +4,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using System.Runtime.InteropServices;
+using System.Collections.Concurrent;
 using global::Windows.Win32;
 using global::Windows.Win32.Foundation;
 using global::Windows.Win32.Media.MediaFoundation;
@@ -33,6 +34,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private SKImageInfo _gpuInfo;                 // Matches encoder dimensions
     private readonly object _frameLock = new();   // Protects Begin/Submit sequence
     private TimeSpan _pendingTimestamp;
+
+    // Preview-from-recording support
+    private readonly object _previewLock = new();
+    private SKImage _latestPreviewImage; // swapped out to UI on demand
+    public event EventHandler PreviewAvailable;
+
 
         // Media Foundation pipeline (production path)
         private global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter _sinkWriter;
@@ -175,6 +182,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
     }
 
+    public bool TryAcquirePreviewImage(out SKImage image)
+    {
+        lock (_previewLock)
+        {
+            image = _latestPreviewImage;
+            _latestPreviewImage = null; // transfer ownership to caller
+            return image != null;
+        }
+    }
+
     /// <summary>
     /// Submits current GPU frame to encoder. Temporary: performs CPU readback into existing AddFrame pipeline.
     /// </summary>
@@ -193,7 +210,21 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 if (snapshot == null)
                     return;
 
-                bitmap = SKBitmap.FromImage(snapshot);
+                // Make this snapshot available for on-screen preview
+                SKImage imgForEncode;
+                lock (_previewLock)
+                {
+                    _latestPreviewImage?.Dispose();
+                    _latestPreviewImage = snapshot;
+                    imgForEncode = _latestPreviewImage; // keep a local ref for encoding
+                    snapshot = null; // ownership transferred to preview holder
+                }
+
+                // Notify listeners that a new preview frame is ready
+                PreviewAvailable?.Invoke(this, EventArgs.Empty);
+
+                // CPU readback for encoding (temporary bridge)
+                bitmap = SKBitmap.FromImage(imgForEncode);
             }
 
             if (bitmap != null)
