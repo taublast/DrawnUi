@@ -141,6 +141,21 @@ Windows encoder path (GPU-prioritized):
 - Plan C (dev-only fallback): Uncompressed AVI writer
   - Debug-only; large files; no audio. Not for production.
 
+Interop: Microsoft.Windows.CsWin32 (Win32 source generators)
+- We generate strongly-typed P/Invoke for Media Foundation and DXGI using CsWin32.
+- Configuration:
+  - File: src/Maui/Addons/DrawnUi.Maui.Camera/NativeMethods.txt
+  - Contains the list of Win32 APIs/consts CsWin32 should project, e.g.:
+    - MFStartup, MFShutdown, MFCreateSinkWriterFromURL, MFCreateMediaType, MFCreateSample, MFCreateMemoryBuffer
+    - MFCreateDXGIDeviceManager, MFCreateDXGISurfaceBuffer
+    - MF_VERSION and MF_MT_* keys, MFMediaType_Video, MFVideoFormat_* (RGB32/H264)
+- Why:
+  - Avoids manual COM interop and GUID plumbing
+  - Keeps WinUI/MAUI-friendly interop without adding TerraFX or SharpDX
+- Notes:
+  - If new MF/DXGI APIs are needed, append their names to NativeMethods.txt and rebuild.
+  - Keep the list minimal to reduce compile time.
+
 Windows capture specifics:
 - Frame source: `NativeControl.GetPreviewImage()` (SKImage) → convert to a single reused `SKBitmap` buffer.
 - Composition: draw camera frame first, then `FrameProcessor(canvas, info, timestamp)` overlay.

@@ -38,6 +38,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     // Preview-from-recording support
     private readonly object _previewLock = new();
     private SKImage _latestPreviewImage; // swapped out to UI on demand
+    private SKBitmap _readbackBitmap;    // reused CPU buffer to avoid per-frame allocs
     public event EventHandler PreviewAvailable;
 
 
@@ -198,7 +199,6 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     public async Task SubmitFrameAsync()
     {
         SKImage snapshot = null;
-        SKBitmap bitmap = null;
         try
         {
             lock (_frameLock)
@@ -206,35 +206,40 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 if (!_isRecording || _gpuSurface == null)
                     return;
 
+                // Publish a GPU snapshot for preview
                 snapshot = _gpuSurface.Snapshot();
                 if (snapshot == null)
                     return;
 
-                // Make this snapshot available for on-screen preview
-                SKImage imgForEncode;
                 lock (_previewLock)
                 {
                     _latestPreviewImage?.Dispose();
                     _latestPreviewImage = snapshot;
-                    imgForEncode = _latestPreviewImage; // keep a local ref for encoding
                     snapshot = null; // ownership transferred to preview holder
                 }
 
                 // Notify listeners that a new preview frame is ready
                 PreviewAvailable?.Invoke(this, EventArgs.Empty);
 
-                // CPU readback for encoding (temporary bridge)
-                bitmap = SKBitmap.FromImage(imgForEncode);
+                // Reuse a single CPU bitmap buffer for readback to minimize jitter
+                if (_readbackBitmap == null || _readbackBitmap.Width != _width || _readbackBitmap.Height != _height)
+                {
+                    _readbackBitmap?.Dispose();
+                    _readbackBitmap = new SKBitmap(new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul));
+                }
+
+                // Read pixels from the GPU surface into the reused bitmap
+                var dstInfo = _readbackBitmap.Info;
+                var dstPtr = _readbackBitmap.GetPixels();
+                if (dstPtr == IntPtr.Zero || !_gpuSurface.ReadPixels(dstInfo, dstPtr, _readbackBitmap.RowBytes, 0, 0))
+                    return;
             }
 
-            if (bitmap != null)
-            {
-                await AddFrameAsync(bitmap, _pendingTimestamp);
-            }
+            // Encode from the reused readback bitmap (no per-frame SKBitmap allocations)
+            await AddFrameAsync(_readbackBitmap, _pendingTimestamp);
         }
         finally
         {
-            bitmap?.Dispose();
             snapshot?.Dispose();
         }
     }
