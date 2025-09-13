@@ -184,6 +184,47 @@ Windows capture specifics:
   - iOS/macOS: AVAssetWriter with hardware encoder; render via Metal-backed SKSurface to a CVPixelBuffer backed by IOSurface using CVMetalTextureCache (GPU path). Avoid CPU CVPixelBuffer copies.
 - CPU fallbacks are for debug only and must be disabled in production builds.
 
+## Windows learnings applied (preview + recording) — optimizations summary
+
+- One-frame-in-flight policy for preview and capture
+  - Prevents backlog and UI stutter by dropping frames when processing is busy
+- Event-driven preview on Windows
+  - Preview updates are driven by MediaFrameReader events; avoids timer jitter
+- Preview-from-Recording latch
+  - While recording, preview shows only composed frames (no fallback to raw feed), eliminating occasional overlay “blinks”
+- Allocation-free/reuse patterns
+  - Reuse a single GPU surface for composition during recording
+  - Reuse a single CPU readback bitmap (Windows) for the temporary bridge to MF encoder
+  - Reuse a single InMemoryRandomAccessStream and byte[] in preview’s rare managed BMP fallback
+- Accurate timestamps
+  - Use real elapsed time since Start to timestamp samples; fixes duration mismatch
+- Minimal memory footprint
+  - Keep at most 1 composed frame in memory; renderer takes ownership and disposes
+- Error/edge handling
+  - Defensive checks for missing preview image; no cross-thread UI calls
+
+These patterns are platform-agnostic and inform Android/iOS implementations.
+
+## Android implementation plan (GPU-first, Surface input)
+
+- Encoder: MediaCodec (H.264/HEVC) with Surface input + MediaMuxer for MP4
+- Rendering path: create an EGL context bound to the codec’s input Surface
+  - Make SkiaSharp draw directly into the EGLSurface by creating a GRContext (GL) and an SKSurface over the current FBO
+  - No CPU readbacks; overlays drawn via existing FrameProcessor on the SKCanvas
+- Timing:
+  - Drive frames from a timer targeting the selected FPS (event-driven preview differs per device)
+  - Use elapsed time as presentation timestamps via EGLExt.eglPresentationTimeANDROID
+- Draining:
+  - Drain MediaCodec output after each submitted frame and write to MediaMuxer once the output format is announced
+- Memory:
+  - No frame queues; at most one frame composed at a time
+- Preview:
+  - Initial step focuses on encoding; preview remains driven by the existing camera pipeline
+  - A “preview-from-recording” mirror for Android can be added after basic GPU path is verified
+
+Status: Implementing Android encoder with the same BeginFrame/SubmitFrame pattern as Windows (platform extension), while ICaptureVideoEncoder remains the common API.
+
+
 
 1. **Audio Integration**
    - Implement per-platform audio capture and A/V sync (timestamp alignment).
