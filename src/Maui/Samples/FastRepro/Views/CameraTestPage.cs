@@ -473,14 +473,11 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
     private void OnVideoRecordingProgress(object sender, TimeSpan duration)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
+        if (_videoRecordButton != null && CameraControl.IsRecordingVideo)
         {
-            if (_videoRecordButton != null && CameraControl.IsRecordingVideo)
-            {
-                // Update button text with timer in MM:SS format
-                _videoRecordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
-            }
-        });
+            // Update button text with timer in MM:SS format
+            _videoRecordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
+        }
     }
 
     private void ShowPreviewOverlay(SkiaSharp.SKImage image)

@@ -558,6 +558,18 @@ public partial class SkiaCamera : SkiaControl
         // (mirrors the Windows optimization to avoid double work on UI + encoder).
         UseRecordingFramesForPreview = true;
 
+
+            // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
+            if (_captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+            {
+                _encoderPreviewInvalidateHandler = (s, e) =>
+                {
+                    try { SafeAction(() => UpdatePreview()); }
+                    catch { }
+                };
+                _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+            }
+
         // Output path in app's Movies dir
         var ctx = Android.App.Application.Context;
         var moviesDir = ctx.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies)?.AbsolutePath ?? ctx.FilesDir?.AbsolutePath ?? ".";
@@ -854,6 +866,14 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
 #if WINDOWS
             _useWindowsPreviewDrivenCapture = false;
+#endif
+
+#if ANDROID
+                // Detach Android mirror event
+                if (encoder is AndroidCaptureVideoEncoder _droidEncPrev)
+                {
+                    try { _droidEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler; } catch { }
+                }
 #endif
 
             // Get local reference to encoder before clearing field to prevent disposal race
@@ -1211,7 +1231,7 @@ public partial class SkiaCamera : SkiaControl
 #if WINDOWS
     private bool _useWindowsPreviewDrivenCapture;
 #endif
-#if WINDOWS
+#if WINDOWS || ANDROID
         private EventHandler _encoderPreviewInvalidateHandler;
 #endif
 
@@ -1373,12 +1393,12 @@ public partial class SkiaCamera : SkiaControl
             return null; // do NOT fallback to raw preview during recording
         }
 #elif ANDROID
-        // While recording on Android, avoid pulling a separate raw preview frame to prevent double work
-        // (camera→bitmap→SKImage for UI, plus camera→encoder). Until we add a safe mirror from the encoder,
-        // we freeze the on-screen preview on the last frame by returning null here.
-        if (IsRecordingVideo && UseRecordingFramesForPreview)
+        // While recording on Android, mirror the composed encoder frames into the preview (no second camera feed)
+        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
-            return null;
+            if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
+                return img; // renderer takes ownership and must dispose
+            return null; // no fallback to raw preview during recording
         }
 #endif
         return NativeControl.GetPreviewImage();

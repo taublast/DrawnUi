@@ -42,6 +42,11 @@ namespace DrawnUi.Camera
         private System.Threading.Timer _progressTimer;
         private TimeSpan _pendingTimestamp;
 
+        // Preview-from-recording support (Android uses CPU raster mirror to avoid cross-context GPU sharing)
+        private readonly object _previewLock = new();
+        private SKImage _latestPreviewImage; // CPU-backed, ownership transferred to UI on TryAcquire
+        public event EventHandler PreviewAvailable;
+
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
 
@@ -144,6 +149,36 @@ namespace DrawnUi.Camera
             _skSurface?.Canvas?.Flush();
             _grContext?.Flush();
 
+            // Publish a small CPU-backed preview snapshot for UI (mirror of composed frame)
+            SKImage keepAlive = null;
+            try
+            {
+                using var gpuSnap = _skSurface?.Snapshot();
+                if (gpuSnap != null)
+                {
+                    const int maxPreviewWidth = 480; // keep light
+                    int pw = Math.Min(_width, maxPreviewWidth);
+                    int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                    var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                    using var rasterSurface = SKSurface.Create(pInfo); // CPU surface
+                    var pCanvas = rasterSurface.Canvas;
+                    pCanvas.Clear(SKColors.Transparent);
+                    pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+
+                    keepAlive = rasterSurface.Snapshot(); // CPU-backed image
+                    lock (_previewLock)
+                    {
+                        _latestPreviewImage?.Dispose();
+                        _latestPreviewImage = keepAlive;
+                        keepAlive = null; // ownership transferred
+                    }
+                    PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                }
+            }
+            catch { keepAlive?.Dispose(); keepAlive = null; }
+            finally { keepAlive?.Dispose(); }
+
             long ptsNanos = (long)(_pendingTimestamp.TotalMilliseconds * 1_000_000.0);
             EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
             EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
@@ -154,6 +189,16 @@ namespace DrawnUi.Camera
             try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
 
             await Task.CompletedTask;
+        }
+
+        public bool TryAcquirePreviewImage(out SKImage image)
+        {
+            lock (_previewLock)
+            {
+                image = _latestPreviewImage;
+                _latestPreviewImage = null; // transfer ownership
+                return image != null;
+            }
         }
 
         public async Task AddFrameAsync(SKBitmap bitmap, TimeSpan timestamp)
@@ -328,6 +373,13 @@ namespace DrawnUi.Camera
             _eglDisplay = EGL14.EglNoDisplay;
             _eglSurface = EGL14.EglNoSurface;
             _eglContext = EGL14.EglNoContext;
+
+            // Release any pending preview image
+            lock (_previewLock)
+            {
+                _latestPreviewImage?.Dispose();
+                _latestPreviewImage = null;
+            }
         }
 
         public void Dispose()
