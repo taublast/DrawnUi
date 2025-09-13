@@ -1652,8 +1652,45 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// <returns>Current video format or null if not available</returns>
     public VideoFormat GetCurrentVideoFormat()
     {
-        // TODO: Implement video format detection for Windows
-        return new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" };
+        try
+        {
+            var cf = _frameSource?.CurrentFormat;
+            if (cf != null)
+            {
+                var w = (int)cf.VideoFormat.Width;
+                var h = (int)cf.VideoFormat.Height;
+                var fps = (int)Math.Round(cf.FrameRate.Numerator / (double)cf.FrameRate.Denominator);
+
+                // Estimate bitrate ~ bits per pixel per frame * fps
+                // Conservative default factor: 0.07 bpp (tunable)
+                int EstimateBitrate(int width, int height, int fr)
+                {
+                    var pixelsPerSec = (long)width * height * fr;
+                    var bps = (long)(pixelsPerSec * 0.07);
+                    // Clamp between 3 Mbps and 35 Mbps
+                    if (bps < 3_000_000) bps = 3_000_000;
+                    if (bps > 35_000_000) bps = 35_000_000;
+                    return (int)bps;
+                }
+
+                return new VideoFormat
+                {
+                    Width = w,
+                    Height = h,
+                    FrameRate = Math.Max(1, fps),
+                    Codec = "H.264",
+                    BitRate = EstimateBitrate(w, h, Math.Max(1, fps)),
+                    FormatId = $"{w}x{h}@{fps}"
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat error: {ex.Message}");
+        }
+
+        // Fallback: use a safe default
+        return new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5_000_000, FormatId = "720p30" };
     }
 
     /// <summary>

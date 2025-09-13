@@ -118,7 +118,7 @@
         <!--https://github.com/BretJohnson/hot-preview-->
         <!--<PackageReference Include="HotPreview.App.Maui" Version="0.12.6" />-->
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
+        <!--<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />-->
         <!--<PackageReference Include="DrawnUi.Maui" Version="1.6.2.5" />-->
 	</ItemGroup>
 

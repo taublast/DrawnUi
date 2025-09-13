@@ -67,7 +67,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                     .Assign(out CameraControl)
                     .ObserveSelf((me, prop) =>
                     {
-                        if (prop == nameof(BindingContext) || prop == nameof(me.State) || 
+                        if (prop == nameof(BindingContext) || prop == nameof(me.State) ||
                             prop == nameof(me.Facing) || prop == nameof(me.CameraIndex))
                         {
                             UpdateStatusText();
@@ -167,36 +167,35 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                     Children =
                     {
                         new SkiaButton("🎥 Record")
-                        {
-                            BackgroundColor = Colors.Purple,
-                            TextColor = Colors.White,
-                            CornerRadius = 8,
-                            UseCache = SkiaCacheType.Image
-                        }
-                        .Assign(out _videoRecordButton)
-                        .OnTapped(async me => { await ToggleVideoRecording(); })
-                        .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
-                        {
-                            if (CameraControl.IsRecordingVideo)
                             {
-                                me.Text = "🛑 Stop (00:00)";
-                                me.BackgroundColor = Colors.Red;
+                                BackgroundColor = Colors.Purple,
+                                TextColor = Colors.White,
+                                CornerRadius = 8,
+                                UseCache = SkiaCacheType.Image
                             }
-                            else
+                            .Assign(out _videoRecordButton)
+                            .OnTapped(async me => { await ToggleVideoRecording(); })
+                            .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
                             {
-                                me.Text = "🎥 Record";
-                                me.BackgroundColor = Colors.Purple;
-                            }
-                        }),
-
+                                if (CameraControl.IsRecordingVideo)
+                                {
+                                    me.Text = "🛑 Stop (00:00)";
+                                    me.BackgroundColor = Colors.Red;
+                                }
+                                else
+                                {
+                                    me.Text = "🎥 Record";
+                                    me.BackgroundColor = Colors.Purple;
+                                }
+                            }),
                         new SkiaButton("📹 Formats")
-                        {
-                            BackgroundColor = Colors.DarkSlateBlue,
-                            TextColor = Colors.White,
-                            CornerRadius = 8,
-                            UseCache = SkiaCacheType.Image
-                        }
-                        .OnTapped(async me => { await ShowVideoFormatPicker(); })
+                            {
+                                BackgroundColor = Colors.DarkSlateBlue,
+                                TextColor = Colors.White,
+                                CornerRadius = 8,
+                                UseCache = SkiaCacheType.Image
+                            }
+                            .OnTapped(async me => { await ShowVideoFormatPicker(); })
                     }
                 }
             }
@@ -216,6 +215,34 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         Canvas.WillFirstTimeDraw += (sender, context) => { CameraControl.IsOn = true; };
 
         Content = Canvas;
+
+        // Configure camera for capture video flow testing
+        CameraControl.RecordAudio = true; // Test with audio recording
+        CameraControl.UseCaptureVideoFlow = true; // Enable capture video flow
+        CameraControl.FrameProcessor = (canvas, imageInfo, timestamp) =>
+        {
+            // Simple text overlay for testing
+            using var paint = new SKPaint
+            {
+                Color = SKColors.White,
+                TextSize = 48,
+                IsAntialias = true,
+                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold)
+            };
+
+            // Draw "LIVE" text at top left
+            canvas.DrawText("LIVE", 50, 100, paint);
+
+            // Draw timestamp at top left (below LIVE)
+            canvas.DrawText($"{timestamp:mm\\:ss}", 50, 160, paint);
+
+            // Draw a simple border around the frame
+            using var borderPaint = new SKPaint
+            {
+                Color = SKColors.Red, Style = SKPaintStyle.Stroke, StrokeWidth = 4, IsAntialias = true
+            };
+            canvas.DrawRect(10, 10, imageInfo.Width - 20, imageInfo.Height - 20, borderPaint);
+        };
 
         // Setup camera event handlers
         SetupCameraEvents();
@@ -333,7 +360,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             {
                 statusText += $" | Facing: {CameraControl.Facing}";
             }
-            
+
             _statusLabel.Text = statusText;
             _statusLabel.TextColor = CameraControl.State switch
             {
@@ -422,10 +449,10 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             try
             {
                 Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
-                
+
                 // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
                 var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
-                
+
                 if (!string.IsNullOrEmpty(publicPath))
                 {
                     await DisplayAlert("Success", "Video saved to gallery!", "OK");
@@ -506,29 +533,34 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
     private async Task ToggleVideoRecording()
     {
-        if (CameraControl.State != CameraState.On)
-            return;
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            if (CameraControl.State != CameraState.On)
+                return;
 
-        try
-        {
-            if (CameraControl.IsRecordingVideo)
+            try
             {
-                await CameraControl.StopVideoRecording();
+                if (CameraControl.IsRecordingVideo)
+                {
+                    await CameraControl.StopVideoRecording();
+                }
+                else
+                {
+                    await CameraControl.StartVideoRecording();
+                }
             }
-            else
+            catch (NotImplementedException ex)
             {
-                await CameraControl.StartVideoRecording();
+                Super.Log(ex);
+                await DisplayAlert("Not Implemented",
+                    $"Video recording is not yet implemented for this platform:\n{ex.Message}", "OK");
             }
-        }
-        catch (NotImplementedException ex)
-        {
-            await DisplayAlert("Not Implemented", 
-                $"Video recording is not yet implemented for this platform:\n{ex.Message}", "OK");
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Video Recording Error", $"Error: {ex.Message}", "OK");
-        }
+            catch (Exception ex)
+            {
+                Super.Log(ex);
+                await DisplayAlert("Video Recording Error", $"Error: {ex.Message}", "OK");
+            }
+        });
     }
 
     private async Task ShowVideoFormatPicker()
@@ -536,39 +568,39 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             try
-        {
-            var formats = await CameraControl.GetAvailableVideoFormatsAsync();
-            
-            if (formats?.Count > 0)
             {
-                var options = formats.Select((format, index) =>
-                    $"[{index}] {format.Description}"
-                ).ToArray();
+                var formats = await CameraControl.GetAvailableVideoFormatsAsync();
 
-                var result = await DisplayActionSheet("Select Video Format", "Cancel", null, options);
-
-                if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                if (formats?.Count > 0)
                 {
-                    var selectedIndex = Array.FindIndex(options, opt => opt == result);
-                    if (selectedIndex >= 0)
+                    var options = formats.Select((format, index) =>
+                        $"[{index}] {format.Description}"
+                    ).ToArray();
+
+                    var result = await DisplayActionSheet("Select Video Format", "Cancel", null, options);
+
+                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
                     {
-                        CameraControl.VideoQuality = VideoQuality.Manual;
-                        CameraControl.VideoFormatIndex = selectedIndex;
-                        
-                        await DisplayAlert("Format Selected", 
-                            $"Selected: {formats[selectedIndex].Description}", "OK");
+                        var selectedIndex = Array.FindIndex(options, opt => opt == result);
+                        if (selectedIndex >= 0)
+                        {
+                            CameraControl.VideoQuality = VideoQuality.Manual;
+                            CameraControl.VideoFormatIndex = selectedIndex;
+
+                            await DisplayAlert("Format Selected",
+                                $"Selected: {formats[selectedIndex].Description}", "OK");
+                        }
                     }
                 }
+                else
+                {
+                    await DisplayAlert("No Formats", "No video formats available", "OK");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await DisplayAlert("No Formats", "No video formats available", "OK");
+                await DisplayAlert("Error", $"Error getting video formats: {ex.Message}", "OK");
             }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error", $"Error getting video formats: {ex.Message}", "OK");
-        }
         });
     }
 
@@ -602,7 +634,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             // Update button text
                             _cameraSelectButton.Text = $"📷 {selectedCamera.Position}";
 
-                            Debug.WriteLine($"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nIndex: {selectedCamera.Index}");
+                            Debug.WriteLine(
+                                $"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nIndex: {selectedCamera.Index}");
                         }
                     }
                 }
@@ -616,7 +649,6 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 await DisplayAlert("Error", $"Error getting cameras: {ex.Message}", "OK");
             }
         });
-
     }
 
     protected override void OnDisappearing()
