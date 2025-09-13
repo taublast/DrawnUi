@@ -126,6 +126,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
 
+
+        // Reused buffers for managed fallback conversion (apply capture-path trick: single reusable buffers)
+        private InMemoryRandomAccessStream _scratchPreviewStream;
+        private byte[] _scratchPreviewBytes;
+
     public NativeCamera(SkiaCamera formsControl)
     {
         FormsControl = formsControl;
@@ -822,7 +827,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     }
 
     /// <summary>
-    /// Fallback conversion using BMP encoding
+    /// Fallback conversion using BMP encoding with reusable buffers (minimize per-frame allocations)
     /// </summary>
     private async Task<SKImage> ConvertToSKImageManagedCopy(SoftwareBitmap softwareBitmap)
     {
@@ -835,50 +840,29 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
             }
 
-            var width = softwareBitmap.PixelWidth;
-            var height = softwareBitmap.PixelHeight;
+            // Reuse a single in-memory stream across frames
+            _scratchPreviewStream ??= new InMemoryRandomAccessStream();
+            _scratchPreviewStream.Seek(0);
+            _scratchPreviewStream.Size = 0;
 
-            try
-            {
-                using var bitmapBuffer = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Read);
-                using var reference = bitmapBuffer.CreateReference();
-
-                if (reference is IMemoryBufferByteAccess memoryAccess)
-                {
-                    unsafe
-                    {
-                        memoryAccess.GetBuffer(out byte* dataInBytes, out uint capacity);
-                        var planeDescription = bitmapBuffer.GetPlaneDescription(0);
-                        var stride = planeDescription.Stride;
-
-                        var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                        var skImage = SKImage.FromPixels(info, new IntPtr(dataInBytes), stride);
-                        return skImage;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[NativeCameraWindows] Direct access failed, using stream approach: {ex.Message}");
-            }
-
-            using var stream = new InMemoryRandomAccessStream();
-            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream);
+            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, _scratchPreviewStream);
             encoder.SetSoftwareBitmap(softwareBitmap);
-
             encoder.BitmapTransform.ScaledWidth = (uint)softwareBitmap.PixelWidth;
             encoder.BitmapTransform.ScaledHeight = (uint)softwareBitmap.PixelHeight;
             encoder.BitmapTransform.InterpolationMode = BitmapInterpolationMode.NearestNeighbor;
-
             await encoder.FlushAsync();
 
-            var size = (int)stream.Size;
-            var bytes = new byte[size];
-            stream.Seek(0);
-            var streamBuffer = await stream.ReadAsync(bytes.AsBuffer(), (uint)size, InputStreamOptions.None);
+            var size = (int)_scratchPreviewStream.Size;
+            if (_scratchPreviewBytes == null || _scratchPreviewBytes.Length < size)
+            {
+                _scratchPreviewBytes = new byte[size];
+            }
 
-            var skImageFromStream = SKImage.FromEncodedData(bytes);
-            return skImageFromStream;
+            // Read into the reusable byte[] buffer
+            _scratchPreviewStream.Seek(0);
+            await _scratchPreviewStream.ReadAsync(_scratchPreviewBytes.AsBuffer(0, size), (uint)size, InputStreamOptions.None);
+
+            return SKImage.FromEncodedData(_scratchPreviewBytes);
         }
         catch (Exception e)
         {
@@ -1254,7 +1238,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             {
                 preview = _preview.Image;
                 this._preview.Image = null; //protected from GC
-                _preview = null; // Transfer ownership - renderer will dispose the SKImage 
+                _preview = null; // Transfer ownership - renderer will dispose the SKImage
             }
             return preview;
         }
@@ -1714,7 +1698,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private MediaEncodingProfile GetVideoEncodingProfile()
     {
         var quality = FormsControl.VideoQuality;
-        
+
         MediaEncodingProfile profile = quality switch
         {
             VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
@@ -1748,13 +1732,13 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             // For manual mode, create custom profile
             var profile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
-            
+
             // Get selected format if available (for now use predefined formats)
             var formats = GetPredefinedVideoFormats();
             if (formats.Count > FormsControl.VideoFormatIndex)
             {
                 var selectedFormat = formats[FormsControl.VideoFormatIndex];
-                
+
                 // Customize video encoding properties
                 profile.Video.Width = (uint)selectedFormat.Width;
                 profile.Video.Height = (uint)selectedFormat.Height;
@@ -1768,7 +1752,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             {
                 profile.Audio = null;
             }
-            
+
             return profile;
         }
         catch
@@ -1790,11 +1774,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     {
         if (!_isRecordingVideo)
             return;
-            
+
         var elapsed = DateTime.Now - _recordingStartTime;
         VideoRecordingProgress?.Invoke(elapsed);
     }
- 
+
 
     public async Task StartVideoRecording()
     {
@@ -1856,10 +1840,10 @@ public async Task StopVideoRecording()
 
             // Stop recording
             await _mediaCapture.StopRecordAsync();
-            
+
             var recordingEndTime = DateTime.Now;
             var duration = recordingEndTime - _recordingStartTime;
-            
+
             // Get file size
             var properties = await _currentVideoFile.GetBasicPropertiesAsync();
             var fileSizeBytes = (long)properties.Size;
@@ -1885,10 +1869,10 @@ public async Task StopVideoRecording()
             };
 
             _isRecordingVideo = false;
-            
+
             // Fire success event
             VideoRecordingSuccess?.Invoke(capturedVideo);
-            
+
             Debug.WriteLine("[NativeCameraWindows] Video recording completed successfully");
         }
         catch (Exception ex)
@@ -1912,7 +1896,7 @@ public async Task StopVideoRecording()
         try
         {
             // Check if MediaCapture is available and has video recording capabilities
-            return _mediaCapture != null && 
+            return _mediaCapture != null &&
                    _mediaCapture.MediaCaptureSettings != null &&
                    _mediaCapture.MediaCaptureSettings.StreamingCaptureMode != StreamingCaptureMode.Audio;
         }
