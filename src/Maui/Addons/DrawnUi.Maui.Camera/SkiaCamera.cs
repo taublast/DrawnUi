@@ -153,6 +153,7 @@ public partial class SkiaCamera : SkiaControl
         return new SkiaImage()
         {
             LoadSourceOnFirstDraw = true,
+
             RescalingQuality = SKFilterQuality.None,
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
@@ -346,7 +347,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Get available capture formats/resolutions for the current camera.
-    /// Use with CaptureFormatIndex when CapturePhotoQuality is set to Manual.
+    /// Use with PhotoFormatIndex when PhotoQuality is set to Manual.
     /// Formats are cached when camera is initialized.
     /// </summary>
     /// <returns>List of available capture formats</returns>
@@ -379,7 +380,7 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Gets the currently selected capture format.
     /// This reflects the format that will be used for still image capture based on
-    /// the current CapturePhotoQuality and CaptureFormatIndex settings.
+    /// the current PhotoQuality and PhotoFormatIndex settings.
     /// </summary>
     public CaptureFormat CurrentStillCaptureFormat
     {
@@ -514,12 +515,15 @@ public partial class SkiaCamera : SkiaControl
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
         // Initialize encoder with current settings (follow camera defaults)
+        _diagEncWidth = width; _diagEncHeight = height;
+        _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
 
         // Start encoder
         await _captureVideoEncoder.StartAsync();
 
         _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
 
         // Reset diagnostics
         _diagStartTime = DateTime.Now;
@@ -531,11 +535,11 @@ public partial class SkiaCamera : SkiaControl
         // Windows uses real-time preview-driven capture (no timer)
         _useWindowsPreviewDrivenCapture = true;
 
-        // Show exactly what is being recorded on screen
-        UseRecordingFramesForPreview = true;
+        // Mirroring of composed frames to preview is optional
+        UseRecordingFramesForPreview = MirrorRecordingToPreview;
 
-        // Invalidate preview when the encoder publishes a new composed frame
-        if (_captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
+        // Invalidate preview when the encoder publishes a new composed frame (Windows mirror)
+        if (MirrorRecordingToPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
@@ -554,21 +558,19 @@ public partial class SkiaCamera : SkiaControl
         // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
         _captureVideoEncoder = new AndroidCaptureVideoEncoder();
 
-        // While recording, prefer to show the composed frames rather than the raw camera preview
-        // (mirrors the Windows optimization to avoid double work on UI + encoder).
-        UseRecordingFramesForPreview = true;
+        // Mirroring of composed frames to preview is optional
+        UseRecordingFramesForPreview = MirrorRecordingToPreview;
 
-
-            // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
-            if (_captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+        // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
+        if (MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
             {
-                _encoderPreviewInvalidateHandler = (s, e) =>
-                {
-                    try { SafeAction(() => UpdatePreview()); }
-                    catch { }
-                };
-                _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
-            }
+                try { SafeAction(() => UpdatePreview()); }
+                catch { }
+            };
+            _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
 
         // Output path in app's Movies dir
         var ctx = Android.App.Application.Context;
@@ -581,6 +583,38 @@ public partial class SkiaCamera : SkiaControl
         var height = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
+        // IMPORTANT: Align encoder orientation with the live preview to avoid instant crop/"zoom" when recording starts.
+        // If preview is portrait (h > w) but the selected video format is landscape (w >= h),
+        // swap encoder dimensions so we record a vertical video instead of cropping it to fit a horizontal surface.
+        int prevW = 0, prevH = 0;
+        int encWBefore = width, encHBefore = height;
+        int sensor = -1;
+        bool previewRotated = false;
+        try
+        {
+            if (NativeControl is NativeCamera cam)
+            {
+                prevW = cam.PreviewWidth;
+                prevH = cam.PreviewHeight;
+                sensor = cam.SensorOrientation;
+                previewRotated = (sensor == 90 || sensor == 270);
+
+                // If preview is rotated (portrait logical orientation), make encoder portrait too
+                if (previewRotated && width >= height)
+                {
+                    var tmp = width; width = height; height = tmp;
+                }
+                // If preview is not rotated but encoder is portrait, make encoder landscape to match
+                else if (!previewRotated && height > width)
+                {
+                    var tmp = width; width = height; height = tmp;
+                }
+            }
+        }
+        catch { }
+        System.Diagnostics.Debug.WriteLine($"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={encWBefore}x{encHBefore} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
+        _diagEncWidth = width; _diagEncHeight = height;
+        _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
         await _captureVideoEncoder.StartAsync();
 
@@ -588,6 +622,7 @@ public partial class SkiaCamera : SkiaControl
         _androidWarmupDropRemaining = 1;
 
         _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
 
         // Diagnostics
         _diagStartTime = DateTime.Now;
@@ -597,6 +632,8 @@ public partial class SkiaCamera : SkiaControl
         _targetFps = fps;
 
         // Event-driven capture on Android: drive encoder from camera preview callback
+            int diagCounter = 0;
+
         if (NativeControl is NativeCamera androidCam)
         {
             _androidPreviewHandler = async (captured) =>
@@ -622,7 +659,12 @@ public partial class SkiaCamera : SkiaControl
                         return;
                     }
 
-                    var elapsedLocal = DateTime.Now - _captureVideoStartTime;
+                    // PTS from image Time using first frame as monotonic base
+                    if (_capturePtsBaseTime == null)
+                        _capturePtsBaseTime = captured.Time;
+                    var elapsedLocal = captured.Time - _capturePtsBaseTime.Value;
+                    if (elapsedLocal.Ticks < 0)
+                        elapsedLocal = TimeSpan.Zero;
 
                     try
                     {
@@ -633,6 +675,8 @@ public partial class SkiaCamera : SkiaControl
                                 return;
 
                             var rects = GetAspectFillRects(img.Width, img.Height, info.Width, info.Height);
+                            if ((diagCounter++ % 30) == 0)
+                                System.Diagnostics.Debug.WriteLine($"[CAPTURE-DRAW] src={img.Width}x{img.Height} dst={info.Width}x{info.Height} srcRect=({rects.src.Left},{rects.src.Top},{rects.src.Right},{rects.src.Bottom}) dstRect=({rects.dst.Left},{rects.dst.Top},{rects.dst.Right},{rects.dst.Bottom})");
                             canvas.DrawImage(img, rects.src, rects.dst);
                             FrameProcessor?.Invoke(canvas, info, elapsedLocal);
                             DrawDiagnostics(canvas, info);
@@ -1163,6 +1207,8 @@ public partial class SkiaCamera : SkiaControl
     private double _diagLastSubmitMs = 0;
     private DateTime _diagStartTime;
     private int _targetFps = 0;
+    private int _diagEncWidth = 0, _diagEncHeight = 0;
+    private long _diagBitrate = 0;
 
     private void DrawDiagnostics(SKCanvas canvas, SKImageInfo info)
     {
@@ -1175,21 +1221,26 @@ public partial class SkiaCamera : SkiaControl
         // Compose text
         string line1 = $"FPS: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}";
         string line2 = $"submit: {_diagLastSubmitMs:F1} ms";
+        double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
+        string line3 = _diagEncWidth > 0 && _diagEncHeight > 0
+            ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
+            : $"bitrate: {mbps:F1} Mbps";
 
         using var bgPaint = new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
         using var textPaint = new SKPaint { Color = SKColors.White, IsAntialias = true, TextSize = Math.Max(14, info.Width / 60f) };
 
-
         var pad = 8f;
         var y1 = pad + textPaint.TextSize;
         var y2 = y1 + textPaint.TextSize + 4f;
-        var maxTextWidth = Math.Max(textPaint.MeasureText(line1), textPaint.MeasureText(line2));
-        var rect = new SKRect(pad, pad, pad + maxTextWidth + pad, y2 + pad);
+        var y3 = y2 + textPaint.TextSize + 4f;
+        var maxTextWidth = Math.Max(textPaint.MeasureText(line1), Math.Max(textPaint.MeasureText(line2), textPaint.MeasureText(line3)));
+        var rect = new SKRect(pad, pad, pad + maxTextWidth + pad, y3 + pad);
 
         canvas.Save();
         canvas.DrawRoundRect(rect, 6, 6, bgPaint);
         canvas.DrawText(line1, pad * 1.5f, y1, textPaint);
         canvas.DrawText(line2, pad * 1.5f, y2, textPaint);
+        canvas.DrawText(line3, pad * 1.5f, y3, textPaint);
         canvas.Restore();
     }
 
@@ -1234,6 +1285,8 @@ public partial class SkiaCamera : SkiaControl
 #if WINDOWS || ANDROID
         private EventHandler _encoderPreviewInvalidateHandler;
 #endif
+    private DateTime? _capturePtsBaseTime; // base timestamp for PTS (from first captured frame)
+
 
 
 
@@ -1297,6 +1350,7 @@ public partial class SkiaCamera : SkiaControl
     public virtual void UpdatePreview()
     {
         FrameAquired = false;
+        NeedUpdate=false;
         Update();
 
 #if WINDOWS
@@ -1381,6 +1435,10 @@ public partial class SkiaCamera : SkiaControl
 
     protected virtual SKImage AquireFrameFromNative()
     {
+        // If we are recording and not mirroring encoder frames to preview, suppress raw preview updates
+        if (IsRecordingVideo && !UseRecordingFramesForPreview)
+            return null;
+
 #if WINDOWS
         if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
@@ -2099,7 +2157,7 @@ public partial class SkiaCamera : SkiaControl
 
             if (newvalue is int)
             {
-                if (control.CapturePhotoQuality != CaptureQuality.Manual)
+                if (control.PhotoQuality != CaptureQuality.Manual)
                 {
                     return;
                 }
@@ -2108,7 +2166,11 @@ public partial class SkiaCamera : SkiaControl
             if (control.IsOn)
             {
 #if ONPLATFORM
-                control.UpdatePreviewFormatForAspectRatio();
+                control.SafeAction(async () =>
+                {
+                    control.UpdatePreviewFormatForAspectRatio();
+                }, LongKeyGenerator.EncodeSemantic("cam_restart"));
+
 #endif
 
             }
@@ -2149,8 +2211,8 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(CameraIndexProperty, value); }
     }
 
-    public static readonly BindableProperty CapturePhotoQualityProperty = BindableProperty.Create(
-        nameof(CapturePhotoQuality),
+    public static readonly BindableProperty PhotoQualityProperty = BindableProperty.Create(
+        nameof(PhotoQuality),
         typeof(CaptureQuality),
         typeof(SkiaCamera),
         CaptureQuality.Max, propertyChanged: OnCaptureFormatChanged);
@@ -2158,27 +2220,27 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Photo capture quality
     /// </summary>
-    public CaptureQuality CapturePhotoQuality
+    public CaptureQuality PhotoQuality
     {
-        get { return (CaptureQuality)GetValue(CapturePhotoQualityProperty); }
-        set { SetValue(CapturePhotoQualityProperty, value); }
+        get { return (CaptureQuality)GetValue(PhotoQualityProperty); }
+        set { SetValue(PhotoQualityProperty, value); }
     }
 
-    public static readonly BindableProperty CaptureFormatIndexProperty = BindableProperty.Create(
-        nameof(CaptureFormatIndex),
+    public static readonly BindableProperty PhotoFormatIndexProperty = BindableProperty.Create(
+        nameof(PhotoFormatIndex),
         typeof(int),
         typeof(SkiaCamera),
         0, propertyChanged: OnCaptureFormatChanged);
 
     /// <summary>
-    /// Index of capture format when CapturePhotoQuality is set to Manual.
+    /// Index of capture format when PhotoQuality is set to Manual.
     /// Selects from the array of available capture formats/resolutions.
     /// Use GetAvailableCaptureFormats() to see available options.
     /// </summary>
-    public int CaptureFormatIndex
+    public int PhotoFormatIndex
     {
-        get { return (int)GetValue(CaptureFormatIndexProperty); }
-        set { SetValue(CaptureFormatIndexProperty, value); }
+        get { return (int)GetValue(PhotoFormatIndexProperty); }
+        set { SetValue(PhotoFormatIndexProperty, value); }
     }
 
     public static readonly BindableProperty CaptureFlashModeProperty = BindableProperty.Create(
@@ -2268,7 +2330,7 @@ public partial class SkiaCamera : SkiaControl
         typeof(VideoQuality),
         typeof(SkiaCamera),
         VideoQuality.High,
-        propertyChanged: OnVideoFormatChanged);
+        propertyChanged: OnCaptureFormatChanged);
 
     /// <summary>
     /// Video recording quality preset
@@ -2284,7 +2346,7 @@ public partial class SkiaCamera : SkiaControl
         typeof(int),
         typeof(SkiaCamera),
         0,
-        propertyChanged: OnVideoFormatChanged);
+        propertyChanged: OnCaptureFormatChanged);
 
     /// <summary>
     /// Index of video format when VideoQuality is set to Manual.
@@ -2297,14 +2359,29 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(VideoFormatIndexProperty, value); }
     }
 
-    private static void OnVideoFormatChanged(BindableObject bindable, object oldValue, object newValue)
+
+
+    /// <summary>
+    /// Controls which stream/aspect the live preview should match.
+    /// Still: preview matches still-capture aspect. Video: preview matches intended video recording aspect.
+    /// Changing this will restart the camera to apply the new preview configuration.
+    /// </summary>
+    public static readonly BindableProperty CaptureModeProperty = BindableProperty.Create(
+        nameof(CaptureMode),
+        typeof(CaptureModeType),
+        typeof(SkiaCamera),
+        CaptureModeType.Still,
+        propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Preview mode: Still or Video. Determines which aspect/format the preview sizing should follow.
+    /// </summary>
+    public CaptureModeType CaptureMode
     {
-        if (bindable is SkiaCamera camera && camera.NativeControl != null)
-        {
-            // Platform will handle format changes
-            // This callback allows for future format switching during recording if supported
-        }
+        get => (CaptureModeType)GetValue(CaptureModeProperty);
+        set => SetValue(CaptureModeProperty, value);
     }
+
 
     /// <summary>
     /// Gets whether video recording is supported on the current device/camera
@@ -2362,10 +2439,16 @@ public partial class SkiaCamera : SkiaControl
     #endregion
 
         /// <summary>
-        /// While recording, show exactly the frames being composed for the encoder as the on-screen preview.
-        /// This avoids stutter by not relying on a separate preview feed. Enabled automatically during capture.
+        /// Whether to mirror composed recording frames to the on-screen preview during capture video flow.
+        /// Set this to true to see overlays exactly as recorded; set to false to avoid any mirroring overhead.
         /// </summary>
-        public bool UseRecordingFramesForPreview { get; set; } = false;
+        public bool MirrorRecordingToPreview { get; set; } = true;
+
+        /// <summary>
+        /// While recording, show exactly the frames being composed for the encoder as the on-screen preview.
+        /// This avoids stutter by not relying on a separate preview feed. Controlled by MirrorRecordingToPreview.
+        /// </summary>
+        public bool UseRecordingFramesForPreview { get; set; } = true;
 
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(

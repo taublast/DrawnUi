@@ -62,7 +62,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                     {
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Fill,
-                        BackgroundColor = Colors.Black
+                        BackgroundColor = Colors.Black,
+                        CaptureMode = CaptureModeType.Video
                     }
                     .Assign(out CameraControl)
                     .ObserveSelf((me, prop) =>
@@ -217,8 +218,10 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         Content = Canvas;
 
         // Configure camera for capture video flow testing
-        CameraControl.RecordAudio = true; // Test with audio recording
+        CameraControl.RecordAudio = false; // Test with audio recording
         CameraControl.UseCaptureVideoFlow = true; // Enable capture video flow
+        CameraControl.VideoQuality = VideoQuality.High;
+
         CameraControl.FrameProcessor = (canvas, imageInfo, timestamp) =>
         {
             // Simple text overlay for testing

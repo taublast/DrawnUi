@@ -1,4 +1,5 @@
-﻿using System.Resources;
+﻿using System.Collections.Concurrent;
+using System.Resources;
 using HarfBuzzSharp;
 using SKBlendMode = SkiaSharp.SKBlendMode;
 using SKCanvas = SkiaSharp.SKCanvas;
@@ -5776,14 +5777,19 @@ namespace DrawnUi.Draw
 
         /// <summary>
         /// If attached to a SuperView and rendering is in progress will run before drawing it. Run now otherwise.
+        /// if key is not null will replace existing if any to void running different action with same key in same frame.
         /// </summary>
         /// <param name="action"></param>
-        protected void SafeAction(Action action)
+        public void SafeAction(Action action, long key=-1)
         {
+            if (key < 0)
+            {
+                key = LongKeyGenerator.Next();
+            }
             var super = this.Superview;
             if (super != null)
             {
-                Superview.PostponeExecutionBeforeDraw(() => { action(); });
+                Superview.PostponeExecutionBeforeDraw(() => { action(); }, key);
                 Repaint();
             }
             else
@@ -5791,6 +5797,8 @@ namespace DrawnUi.Draw
                 action();
             }
         }
+
+        private ConcurrentDictionary<string, Action> SafeActions = new();
 
         protected bool NeedRemeasuring;
 
@@ -7431,6 +7439,7 @@ namespace DrawnUi.Draw
                     break;
 
                 case TransformAspect.AspectCover:
+                    //fit
                     aspectX = Math.Max(s1, s2);
                     aspectY = aspectX;
                     break;
@@ -7455,8 +7464,8 @@ namespace DrawnUi.Draw
                         aspectX = Math.Min(s1, s2);
                         aspectY = aspectX;
                     }
-
                     break;
+
             }
 
             return (aspectX, aspectY);

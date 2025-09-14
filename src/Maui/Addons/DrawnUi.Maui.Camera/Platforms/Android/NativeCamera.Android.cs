@@ -539,7 +539,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             {
                 preview = _preview.Image;
                 this._preview.Image = null; //protected from GC
-                _preview = null; // Transfer ownership - renderer will dispose the SKImage 
+                _preview = null; // Transfer ownership - renderer will dispose the SKImage
             }
 
             return preview;
@@ -660,7 +660,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
 
     /// <summary>
-    /// The size of the camera preview in pixels 
+    /// The size of the camera preview in pixels
     /// </summary>
     public SKSize PreviewSize { get; set; }
 
@@ -692,7 +692,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     // Whether the current camera device supports Flash or not.
     private bool mFlashSupported;
-    
+
     // Video recording fields
     private bool _isRecordingVideo;
     private MediaRecorder _mediaRecorder;
@@ -953,7 +953,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     // For Manual quality, use the index directly from StillFormats
                     // For other qualities, filter by orientation as before
                     List<Size> validSizes;
-                    if (FormsControl.CapturePhotoQuality == CaptureQuality.Manual)
+                    if (FormsControl.PhotoQuality == CaptureQuality.Manual)
                     {
                         // Use StillFormats directly for Manual mode - same as Apple implementation
                         validSizes = StillFormats.Select(f => new Size(f.Width, f.Height)).ToList();
@@ -984,12 +984,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                                 .ToList();
                         }
 
-                        Debug.WriteLine($"[NativeCameraAndroid] Using orientation-filtered format list for {FormsControl.CapturePhotoQuality} quality: {validSizes.Count} formats (rotated: {rotated})");
+                        Debug.WriteLine($"[NativeCameraAndroid] Using orientation-filtered format list for {FormsControl.PhotoQuality} quality: {validSizes.Count} formats (rotated: {rotated})");
                     }
 
                     Size selectedSize;
 
-                    switch (FormsControl.CapturePhotoQuality)
+                    switch (FormsControl.PhotoQuality)
                     {
                         case CaptureQuality.Max:
                             selectedSize = validSizes.First();
@@ -1005,7 +1005,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                         case CaptureQuality.Manual:
                             // Use specific format index from the complete format list (validSizes = allStillSizes for Manual)
-                            var formatIndex = FormsControl.CaptureFormatIndex;
+                            var formatIndex = FormsControl.PhotoFormatIndex;
                             if (formatIndex >= 0 && formatIndex < validSizes.Count)
                             {
                                 selectedSize = validSizes[formatIndex];
@@ -1014,7 +1014,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                             else
                             {
                                 Debug.WriteLine(
-                                    $"[NativeCameraAndroid] Invalid CaptureFormatIndex {formatIndex} (max: {validSizes.Count - 1}), using Max quality");
+                                    $"[NativeCameraAndroid] Invalid PhotoFormatIndex {formatIndex} (max: {validSizes.Count - 1}), using Max quality");
                                 selectedSize = validSizes.First();
                             }
 
@@ -1044,11 +1044,28 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     #endregion
 
 
+                    // Decide aspect target based on CaptureMode: use video format aspect in Video mode
+                    Size aspectTarget = selectedSize;
+                    if (FormsControl.CaptureMode == CaptureModeType.Video)
+                    {
+                        try
+                        {
+                            var videoFrame = GetCurrentVideoFormat();
+                            aspectTarget = new Size(videoFrame.Width, videoFrame.Height);
+
+                            Debug.WriteLine($"[VIDEO] Using {aspectTarget}");
+                        }
+                        catch { }
+                    }
+
                     var previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
-                        maxPreviewWidth, maxPreviewHeight, selectedSize);
+                        maxPreviewWidth, maxPreviewHeight, aspectTarget);
 
                     PreviewWidth = previewSize.Width;
                     PreviewHeight = previewSize.Height;
+
+
+                        System.Diagnostics.Debug.WriteLine($"[PREVIEW] Selected {PreviewWidth}x{PreviewHeight} rotated={rotated} max={maxPreviewWidth}x{maxPreviewHeight} aspectTarget={aspectTarget.Width}x{aspectTarget.Height}");
 
                     mImageReaderPreview =
                         ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
@@ -1540,6 +1557,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         try
         {
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
+            // Ensure consistent FOV: disable video stabilization for preview
+            try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
 
             // Apply current flash mode to preview request builder
             if (mFlashSupported)
@@ -1569,8 +1588,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
+            var surfaces = new List<Surface> { mImageReaderPreview.Surface };
+            if (mImageReaderPhoto != null)
+                surfaces.Add(mImageReaderPhoto.Surface);
+
             mCameraDevice.CreateCaptureSession(
-                new List<Surface> { mImageReaderPreview.Surface, mImageReaderPhoto.Surface },
+                surfaces,
                 new CameraCaptureSessionCallback(this),
                 mBackgroundHandler);
         }
@@ -1781,7 +1804,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             _progressTimer?.Dispose();
             CleanupMediaRecorder();
-            
+
             Stop(true);
 
             //mTextureView.Dispose();
@@ -2048,6 +2071,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private CameraEffect _effect;
     private CapturedImage _preview;
 
+    private readonly List<CamcorderQuality> _videoQualities = new();
+
     private static List<Size> _stillSizes;
 
     protected ImageReader FramesReader { get; set; }
@@ -2071,17 +2096,25 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         try
         {
-            var cameraId = int.Parse(CameraId);
+            // If Manual, return the exact selected entry from our supported list
+            if (FormsControl.VideoQuality == VideoQuality.Manual)
+            {
+                var list = GetPredefinedVideoFormats();
+                var idx = FormsControl.VideoFormatIndex;
+                if (idx >= 0 && idx < list.Count)
+                    return list[idx];
+            }
+
+            // Otherwise, reflect the resolved CamcorderProfile
             var profile = GetVideoProfile();
-            
-            return new VideoFormat 
-            { 
-                Width = profile.VideoFrameWidth, 
-                Height = profile.VideoFrameHeight, 
-                FrameRate = profile.VideoFrameRate, 
-                Codec = "H.264", 
-                BitRate = profile.VideoBitRate, 
-                FormatId = $"android_{profile.VideoFrameWidth}x{profile.VideoFrameHeight}_{profile.VideoFrameRate}fps" 
+            return new VideoFormat
+            {
+                Width = profile.VideoFrameWidth,
+                Height = profile.VideoFrameHeight,
+                FrameRate = profile.VideoFrameRate,
+                Codec = "H.264",
+                BitRate = profile.VideoBitRate,
+                FormatId = $"android_{profile.VideoFrameWidth}x{profile.VideoFrameHeight}_{profile.VideoFrameRate}fps"
             };
         }
         catch (Exception ex)
@@ -2114,7 +2147,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             _mediaRecorder.SetAudioSource(AudioSource.Mic);
         }
         _mediaRecorder.SetVideoSource(VideoSource.Surface);
-        
+
         // Set output format and encoding
         var profile = GetVideoProfile();
         _mediaRecorder.SetOutputFormat(profile.FileFormat);
@@ -2129,7 +2162,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _mediaRecorder.SetVideoEncodingBitRate(profile.VideoBitRate);
 
         _mediaRecorder.SetOutputFile(_currentVideoFile);
-        
+
         // Set orientation
         _mediaRecorder.SetOrientationHint(SensorOrientation);
 
@@ -2147,70 +2180,123 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         var cameraId = int.Parse(CameraId);
         var quality = FormsControl.VideoQuality;
 
-        var camcorderQuality = quality switch
+        // Build an ordered list of preferred qualities for each enum value.
+        // This enforces: Standard ≈ 720p, High ≈ 1080p, Ultra ≈ 2160p (4K), with sane fallbacks.
+        var tryOrder = new List<CamcorderQuality>();
+        switch (quality)
         {
-            VideoQuality.Low => CamcorderQuality.Low,
-            VideoQuality.Standard => CamcorderQuality.High,
-            VideoQuality.High => CamcorderQuality.High,
-            VideoQuality.Ultra => CamcorderQuality.Q2160p,
-            VideoQuality.Manual => GetManualVideoProfile(),
-            _ => CamcorderQuality.High
-        };
+            case VideoQuality.Low:
+                tryOrder.AddRange(new[]
+                {
+                    CamcorderQuality.Low,
+                    CamcorderQuality.High,
+                    CamcorderQuality.Q720p,
+                    CamcorderQuality.Q1080p,
+                    CamcorderQuality.Q2160p
+                });
+                break;
 
-        // Check if profile is supported, fallback if needed
-        if (CamcorderProfile.HasProfile(cameraId, camcorderQuality))
-        {
-            return CamcorderProfile.Get(cameraId, camcorderQuality);
+            case VideoQuality.Standard: // 720p target
+                tryOrder.AddRange(new[]
+                {
+                    CamcorderQuality.Q720p,
+                    CamcorderQuality.Q1080p,
+                    CamcorderQuality.High,
+                    CamcorderQuality.Low
+                });
+                break;
+
+            case VideoQuality.High: // 1080p target
+                tryOrder.AddRange(new[]
+                {
+                    CamcorderQuality.Q1080p,
+                    CamcorderQuality.High,
+                    CamcorderQuality.Q720p,
+                    CamcorderQuality.Low
+                });
+                break;
+
+            case VideoQuality.Ultra: // 4K target
+                tryOrder.AddRange(new[]
+                {
+                    CamcorderQuality.Q2160p,
+                    CamcorderQuality.Q1080p,
+                    CamcorderQuality.High,
+                    CamcorderQuality.Q720p,
+                    CamcorderQuality.Low
+                });
+                break;
+
+            case VideoQuality.Manual:
+                var manualQ = GetManualVideoProfile();
+                tryOrder.AddRange(new[]
+                {
+                    manualQ,
+                    CamcorderQuality.High,
+                    CamcorderQuality.Q1080p,
+                    CamcorderQuality.Q720p,
+                    CamcorderQuality.Low
+                });
+                break;
+
+            default:
+                tryOrder.AddRange(new[]
+                {
+                    CamcorderQuality.High,
+                    CamcorderQuality.Q1080p,
+                    CamcorderQuality.Q720p,
+                    CamcorderQuality.Low
+                });
+                break;
         }
-        
-        // Fallback to High quality
-        if (CamcorderProfile.HasProfile(cameraId, CamcorderQuality.High))
+
+        foreach (var q in tryOrder)
         {
-            return CamcorderProfile.Get(cameraId, CamcorderQuality.High);
+            if (CamcorderProfile.HasProfile(cameraId, q))
+                return CamcorderProfile.Get(cameraId, q);
         }
-        
-        // Last resort: use any available profile
+
+        // Last resort
         return CamcorderProfile.Get(cameraId, CamcorderQuality.Low);
     }
 
     /// <summary>
-    /// Get manual video recording profile
+    /// Get manual video recording profile based on exact selected entry
     /// </summary>
     private CamcorderQuality GetManualVideoProfile()
     {
-        var cameraId = int.Parse(CameraId);
-        var formats = GetPredefinedVideoFormats();
-        
-        if (formats.Count > FormsControl.VideoFormatIndex)
-        {
-            var selectedFormat = formats[FormsControl.VideoFormatIndex];
-            
-            // Map resolution to camcorder quality
-            if (selectedFormat.Height >= 2160) return CamcorderQuality.Q2160p;
-            if (selectedFormat.Height >= 1080) return CamcorderQuality.Q1080p;
-            if (selectedFormat.Height >= 720) return CamcorderQuality.Q720p;
-            if (selectedFormat.Height >= 480) return CamcorderQuality.Q480p;
-        }
-        
-        return CamcorderQuality.High; // Default fallback
+        // Ensure mapping is available
+        if (_videoQualities.Count == 0)
+            GetPredefinedVideoFormats();
+
+        var idx = FormsControl.VideoFormatIndex;
+        if (idx >= 0 && idx < _videoQualities.Count)
+            return _videoQualities[idx];
+
+        return CamcorderQuality.High; // Fallback
     }
 
     /// <summary>
-    /// Get predefined video formats for Android
+    /// Get predefined video formats we can really record (CamcorderProfile-backed)
+    /// Ordered from highest to lowest, including low-res when supported.
+    /// Also populates _videoQualities to map indices to exact qualities.
     /// </summary>
     public List<VideoFormat> GetPredefinedVideoFormats()
     {
         var cameraId = int.Parse(CameraId);
         var formats = new List<VideoFormat>();
 
-        // Check what qualities are actually supported
-        var supportedQualities = new[]
+        _videoQualities.Clear();
+
+        var supportedQualities = new List<(CamcorderQuality quality, string name)>
         {
             (CamcorderQuality.Q2160p, "2160p"),
             (CamcorderQuality.Q1080p, "1080p"),
-            (CamcorderQuality.Q720p, "720p"),
-            (CamcorderQuality.Q480p, "480p"),
-            (CamcorderQuality.Low, "Low")
+            (CamcorderQuality.Q720p,  "720p"),
+            (CamcorderQuality.Q480p,  "480p"),
+            (CamcorderQuality.Cif,    "CIF"),    // 352x288
+            (CamcorderQuality.Qvga,   "QVGA"),   // 320x240
+            (CamcorderQuality.Qcif,   "QCIF"),   // 176x144
         };
 
         foreach (var (quality, name) in supportedQualities)
@@ -2223,11 +2309,28 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     Width = profile.VideoFrameWidth,
                     Height = profile.VideoFrameHeight,
                     FrameRate = profile.VideoFrameRate,
-                    Codec = "H.264", // Android typically uses H.264
+                    Codec = "H.264",
                     BitRate = profile.VideoBitRate,
                     FormatId = $"{name}_{profile.VideoFrameRate}fps"
                 });
+                _videoQualities.Add(quality);
             }
+        }
+
+        // As a last resort include 'Low' if nothing else matched
+        if (formats.Count == 0 && CamcorderProfile.HasProfile(cameraId, CamcorderQuality.Low))
+        {
+            var profile = CamcorderProfile.Get(cameraId, CamcorderQuality.Low);
+            formats.Add(new VideoFormat
+            {
+                Width = profile.VideoFrameWidth,
+                Height = profile.VideoFrameHeight,
+                FrameRate = profile.VideoFrameRate,
+                Codec = "H.264",
+                BitRate = profile.VideoBitRate,
+                FormatId = $"Low_{profile.VideoFrameRate}fps"
+            });
+            _videoQualities.Add(CamcorderQuality.Low);
         }
 
         return formats;
@@ -2278,7 +2381,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         if (!_isRecordingVideo)
             return;
-            
+
         var elapsed = DateTime.Now - _recordingStartTime;
         VideoRecordingProgress?.Invoke(elapsed);
     }
@@ -2303,16 +2406,27 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             // Get surfaces for preview and recording
             var surfaces = new List<Surface>();
-            
+
             // Preview surface
             surfaces.Add(mImageReaderPreview.Surface);
-            
+
             // MediaRecorder surface
             var recorderSurface = _mediaRecorder.Surface;
             surfaces.Add(recorderSurface);
 
             // Create capture request for video recording
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Record);
+            // Ensure consistent FOV during recording: explicitly disable video stabilization
+            try
+            {
+                mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode,
+                    (int)ControlVideoStabilizationMode.Off);
+            }
+            catch
+            {
+
+            }
+
             mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
             mPreviewRequestBuilder.AddTarget(recorderSurface);
 
@@ -2325,14 +2439,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // Start recording session
             CaptureSession.Close();
             var stateCallback = new VideoCameraCaptureStateCallback(this);
-            
+
             mCameraDevice.CreateCaptureSession(surfaces, stateCallback, mBackgroundHandler);
 
             _isRecordingVideo = true;
             _recordingStartTime = DateTime.Now;
 
             // Start progress timer
-            _progressTimer = new System.Threading.Timer(OnProgressTimer, null, 
+            _progressTimer = new System.Threading.Timer(OnProgressTimer, null,
                 TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
 
             Log.Debug(TAG, "Video recording started successfully");
@@ -2457,26 +2571,26 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             var contentResolver = activity.ContentResolver;
             var values = new ContentValues();
-            
+
             // Set basic video metadata
             var fileName = System.IO.Path.GetFileNameWithoutExtension(videoFilePath);
             var fileExtension = System.IO.Path.GetExtension(videoFilePath);
-            
+
             values.Put(MediaStore.Video.Media.InterfaceConsts.DisplayName, fileName);
             values.Put(MediaStore.Video.Media.InterfaceConsts.MimeType, "video/mp4");
             values.Put(MediaStore.Video.Media.InterfaceConsts.DateAdded, Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
             values.Put(MediaStore.Video.Media.InterfaceConsts.DateTaken, Java.Lang.JavaSystem.CurrentTimeMillis());
-            
+
             // Set album/folder if specified
             if (!string.IsNullOrEmpty(album))
             {
                 values.Put(MediaStore.Video.Media.InterfaceConsts.BucketDisplayName, album);
             }
-            
+
             // For Android 10+ (API 29+), use scoped storage
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
             {
-                values.Put(MediaStore.Video.Media.InterfaceConsts.RelativePath, 
+                values.Put(MediaStore.Video.Media.InterfaceConsts.RelativePath,
                     !string.IsNullOrEmpty(album) ? $"Movies/{album}" : "Movies/Camera");
                 values.Put(MediaStore.Video.Media.InterfaceConsts.IsPending, 1);
             }
@@ -2492,7 +2606,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // Copy file to gallery
             using var inputStream = new Java.IO.FileInputStream(videoFilePath);
             using var outputStream = contentResolver.OpenOutputStream(uri);
-            
+
             if (outputStream != null)
             {
                 var buffer = new byte[8192];
@@ -2515,7 +2629,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // Get the actual file path
             var projection = new[] { MediaStore.Video.Media.InterfaceConsts.Data };
             using var cursor = contentResolver.Query(uri, projection, null, null, null);
-            
+
             if (cursor?.MoveToFirst() == true)
             {
                 var columnIndex = cursor.GetColumnIndexOrThrow(MediaStore.Video.Media.InterfaceConsts.Data);
@@ -2568,14 +2682,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             try
             {
                 _owner.CaptureSession = session;
-                
+
                 // Start MediaRecorder
                 _owner._mediaRecorder?.Start();
-                
+
                 // Start repeating request for video recording
                 var captureRequest = _owner.mPreviewRequestBuilder.Build();
                 session.SetRepeatingRequest(captureRequest, null, _owner.mBackgroundHandler);
-                
+
                 Log.Debug(NativeCamera.TAG, "Video capture session configured and recording started");
             }
             catch (Exception ex)

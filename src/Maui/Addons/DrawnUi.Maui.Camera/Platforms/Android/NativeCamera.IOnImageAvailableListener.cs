@@ -8,6 +8,7 @@ namespace DrawnUi.Camera;
 
 public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvailableListener, INativeCamera
 {
+
     /// <summary>
     /// IOnImageAvailableListener
     /// </summary>
@@ -38,6 +39,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                         {
                             ProcessImage(image, allocated.Allocation);
                             allocated.Update();
+
+                            // During capture video flow recording, avoid any UI preview work.
+                            bool inCaptureRecording = FormsControl.UseCaptureVideoFlow && FormsControl.IsRecordingVideo;
+
+                            // Convert to SKImage once per frame (needed for encoder when using event-driven capture)
                             var sk = allocated.Bitmap.ToSKImage();
                             if (sk != null)
                             {
@@ -45,17 +51,30 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                                 var rotation = FormsControl.DeviceRotation;
                                 Metadata.ApplyRotation(meta, rotation);
 
+                                // Use Android sensor timestamp (ns since boot) to populate Time as a monotonic clock
+                                // Convert ns -> microseconds -> ticks (1 tick = 100 ns)
+                                var tsNs = image.Timestamp;
+                                var micros = tsNs / 1000L;
+                                var monotonicTime = new DateTime(micros * 10, DateTimeKind.Utc);
+
                                 var outImage = new CapturedImage()
                                 {
                                     Facing = FormsControl.Facing,
-                                    Time = DateTime.UtcNow, // or use image.Timestamp ?
+                                    Time = monotonicTime,
                                     Image = sk,
                                     Meta = meta,
                                     Rotation = rotation
                                 };
-                                Preview = outImage;
+
+                                // Always notify encoder path
                                 OnPreviewCaptureSuccess(outImage);
-                                FormsControl.UpdatePreview();
+
+                                // Only push to UI preview when NOT recording in capture flow
+                                if (!inCaptureRecording)
+                                {
+                                    Preview = outImage;
+                                    FormsControl.UpdatePreview();
+                                }
                             }
                         }
                     }

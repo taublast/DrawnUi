@@ -120,7 +120,7 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 <camera:SkiaCamera
     x:Name="CameraControl"
     BackgroundColor="Black"
-    CapturePhotoQuality="Medium"
+    PhotoQuality="Medium"
     Facing="Default"
     HorizontalOptions="Fill"
     VerticalOptions="Fill"
@@ -135,8 +135,8 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 | `Facing` | `CameraPosition` | `Default` | Camera selection: `Default` (back), `Selfie` (front), `Manual` |
 | `CameraIndex` | `int` | `-1` | Manual camera selection index (when `Facing = Manual`) |
 | `IsOn` | `bool` | `false` | Camera power state - use this to start/stop camera |
-| `CapturePhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview`, `Manual` |
-| `CaptureFormatIndex` | `int` | `0` | Format index for manual capture (when `CapturePhotoQuality = Manual`) |
+| `PhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview`, `Manual` |
+| `PhotoFormatIndex` | `int` | `0` | Format index for manual capture (when `PhotoQuality = Manual`) |
 | `FlashMode` | `FlashMode` | `Off` | Preview torch mode: `Off`, `On`, `Strobe` |
 | `CaptureFlashMode` | `CaptureFlashMode` | `Auto` | Flash mode for capture: `Off`, `Auto`, `On` |
 | `IsFlashSupported` | `bool` | - | Whether flash is available (read-only) |
@@ -281,10 +281,10 @@ SkiaCamera provides **precise control over capture resolution and aspect ratio**
 #### Quality Presets
 ```csharp
 // Quick quality selection
-camera.CapturePhotoQuality = CaptureQuality.Max;     // Highest resolution
-camera.CapturePhotoQuality = CaptureQuality.Medium;  // Balanced quality/size
-camera.CapturePhotoQuality = CaptureQuality.Low;     // Fastest capture
-camera.CapturePhotoQuality = CaptureQuality.Preview; // Smallest usable size
+camera.PhotoQuality = CaptureQuality.Max;     // Highest resolution
+camera.PhotoQuality = CaptureQuality.Medium;  // Balanced quality/size
+camera.PhotoQuality = CaptureQuality.Low;     // Fastest capture
+camera.PhotoQuality = CaptureQuality.Preview; // Smallest usable size
 ```
 
 #### Manual Format Selection
@@ -305,8 +305,8 @@ if (!string.IsNullOrEmpty(result))
     if (selectedIndex >= 0)
     {
         // Set manual capture mode with selected format
-        camera.CapturePhotoQuality = CaptureQuality.Manual;
-        camera.CaptureFormatIndex = selectedIndex;
+        camera.PhotoQuality = CaptureQuality.Manual;
+        camera.PhotoFormatIndex = selectedIndex;
 
         // Preview automatically adjusts to match aspect ratio!
         var selectedFormat = formats[selectedIndex];
@@ -327,9 +327,9 @@ if (currentFormat != null)
     Debug.WriteLine($"Total pixels: {currentFormat.TotalPixels:N0}");
 }
 
-// This works regardless of whether CapturePhotoQuality is set to:
+// This works regardless of whether PhotoQuality is set to:
 // - Max, Medium, Low, Preview (automatic selection)
-// - Manual (using CaptureFormatIndex)
+// - Manual (using PhotoFormatIndex)
 ```
 
 #### Format Information
@@ -351,8 +351,8 @@ foreach (var format in formats)
 
 ```csharp
 // Before: Preview might be 16:9, capture might be 4:3 (letterboxing!)
-camera.CapturePhotoQuality = CaptureQuality.Manual;
-camera.CaptureFormatIndex = 2; // Select 4000x3000 (4:3)
+camera.PhotoQuality = CaptureQuality.Manual;
+camera.PhotoFormatIndex = 2; // Select 4000x3000 (4:3)
 
 // After: Preview automatically switches to 4:3 aspect ratio
 // Result: True WYSIWYG - what you see is what you capture!
@@ -414,8 +414,8 @@ private async void OnFormatSelectionClicked()
 
         if (formatMap.TryGetValue(result, out var selection))
         {
-            CameraControl.CapturePhotoQuality = CaptureQuality.Manual;
-            CameraControl.CaptureFormatIndex = selection.index;
+            CameraControl.PhotoQuality = CaptureQuality.Manual;
+            CameraControl.PhotoFormatIndex = selection.index;
 
             StatusLabel.Text = $"📸 {selection.format.Description}";
         }
@@ -926,7 +926,7 @@ public partial class CameraPage : ContentPage
 var camera = new SkiaCamera
 {
     Facing = CameraPosition.Default,
-    CapturePhotoQuality = CaptureQuality.Medium,
+    PhotoQuality = CaptureQuality.Medium,
     IsOn = true
 };
 ```
@@ -1058,8 +1058,8 @@ public CameraState State { get; }                 // Current state (read-only)
 public bool IsBusy { get; }                       // Processing state (read-only)
 
 // Capture Settings
-public CaptureQuality CapturePhotoQuality { get; set; } // Photo quality
-public int CaptureFormatIndex { get; set; }             // Manual format index
+public CaptureQuality PhotoQuality { get; set; } // Photo quality
+public int PhotoFormatIndex { get; set; }             // Manual format index
 public CaptureFlashMode CaptureFlashMode { get; set; }   // Flash mode for capture
 
 // Flash Control
@@ -1265,7 +1265,7 @@ This section provides specific guidance for AI agents working with SkiaCamera.
 var camera = new SkiaCamera
 {
     Facing = CameraPosition.Default,
-    CapturePhotoQuality = CaptureQuality.Medium,
+    PhotoQuality = CaptureQuality.Medium,
     IsOn = true
 };
 

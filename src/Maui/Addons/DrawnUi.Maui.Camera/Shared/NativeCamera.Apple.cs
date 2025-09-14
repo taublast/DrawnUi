@@ -56,14 +56,14 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     // Raw frame data for lazy SKImage creation - fixed memory leak version
     private readonly object _lockRawFrame = new();
     private RawFrameData _latestRawFrame;
-    
+
     // Orientation tracking properties
     private UIInterfaceOrientation _uiOrientation;
     private UIDeviceOrientation _deviceOrientation;
     private AVCaptureVideoOrientation _videoOrientation;
     private UIImageOrientation _imageOrientation;
     private NSObject _orientationObserver;
-    
+
     public Rotation CurrentRotation { get; private set; } = Rotation.rotate0Degrees;
 
     public AVCaptureDevice CaptureDevice
@@ -89,7 +89,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     }
 
-   
+
 
 
 
@@ -149,12 +149,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         _uiOrientation = UIApplication.SharedApplication.StatusBarOrientation;
         _deviceOrientation = UIDevice.CurrentDevice.Orientation;
         _videoOrientation = AVCaptureVideoOrientation.Portrait;
-        
+
         System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Initial orientations - UI: {_uiOrientation}, Device: {_deviceOrientation}, Video: {_videoOrientation}");
-        
+
         // Set up orientation change observer
         _orientationObserver = NSNotificationCenter.DefaultCenter.AddObserver(
-            UIDevice.OrientationDidChangeNotification, 
+            UIDevice.OrientationDidChangeNotification,
             (notification) =>
             {
                 System.Diagnostics.Debug.WriteLine($"[CAMERA ORIENTATION] Device orientation changed notification received");
@@ -271,8 +271,15 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             SetupStillFormats(allFormats);
 
-            // Select format based on CapturePhotoQuality setting
-            format = SelectOptimalFormat(allFormats, FormsControl.CapturePhotoQuality);
+            // Select format based on CaptureMode
+            if (FormsControl.CaptureMode == CaptureModeType.Video)
+            {
+                format = SelectFormatForVideoAspect(allFormats);
+            }
+            else
+            {
+                format = SelectOptimalFormat(allFormats, FormsControl.PhotoQuality);
+            }
 
             NSError error;
             if (videoDevice.LockForConfiguration(out error))
@@ -543,7 +550,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             CaptureQuality.Medium => SelectFormatByQuality(formatDetails, 0.33),
             CaptureQuality.Low => SelectFormatByQuality(formatDetails, 0.67),
             CaptureQuality.Preview => SelectPreviewFormat(formatDetails),
-            CaptureQuality.Manual => GetManualFormatDetail(formatDetails, FormsControl.CaptureFormatIndex),
+            CaptureQuality.Manual => GetManualFormatDetail(formatDetails, FormsControl.PhotoFormatIndex),
             _ => formatDetails.First()
         };
 
@@ -593,6 +600,63 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     /// <summary>
+    /// Select format whose video dimensions aspect ratio best matches the intended video format
+    /// based on VideoQuality/VideoFormatIndex.
+    /// </summary>
+    private AVCaptureDeviceFormat SelectFormatForVideoAspect(List<AVCaptureDeviceFormat> allFormats)
+    {
+        var availableFormats = GetFilteredFormats(allFormats);
+        if (!availableFormats.Any())
+        {
+            Console.WriteLine("[NativeCameraiOS] No valid formats found for video aspect selection, using first available");
+            return allFormats.FirstOrDefault();
+        }
+
+        var formatDetails = availableFormats.Select(f => new FormatDetail
+        {
+            Format = f,
+            StillDims = f.HighResolutionStillImageDimensions,
+            VideoDims = (f.FormatDescription as CMVideoFormatDescription)?.Dimensions ?? new CMVideoDimensions(),
+            StillPixels = f.HighResolutionStillImageDimensions.Width * f.HighResolutionStillImageDimensions.Height
+        }).ToList();
+
+        // Determine target video dimensions from current VideoQuality settings
+        int targetW = 1920, targetH = 1080;
+        try
+        {
+            var (_, settings) = GetVideoPresetAndSettings(FormsControl.VideoQuality);
+            if (settings != null)
+            {
+                targetW = ((NSNumber)settings[AVVideo.WidthKey])?.Int32Value ?? targetW;
+                targetH = ((NSNumber)settings[AVVideo.HeightKey])?.Int32Value ?? targetH;
+            }
+            else if (FormsControl.VideoQuality == VideoQuality.Manual)
+            {
+                var predefined = GetPredefinedVideoFormats();
+                if (FormsControl.VideoFormatIndex >= 0 && FormsControl.VideoFormatIndex < predefined.Count)
+                {
+                    var sel = predefined[FormsControl.VideoFormatIndex];
+                    targetW = sel.Width;
+                    targetH = sel.Height;
+                }
+            }
+        }
+        catch { }
+
+        double targetAR = targetH > 0 ? (double)targetW / targetH : 16.0 / 9.0;
+
+        var best = formatDetails
+            .Select(d => new { d, ar = d.VideoDims.Height > 0 ? (double)d.VideoDims.Width / d.VideoDims.Height : 0.0 })
+            .OrderBy(x => Math.Abs(x.ar - targetAR))
+            .ThenByDescending(x => x.d.VideoDims.Width * x.d.VideoDims.Height)
+            .FirstOrDefault();
+
+        var chosen = best?.d.Format ?? availableFormats.First();
+        Console.WriteLine($"[NativeCameraiOS] Selected format for video aspect {targetW}x{targetH}: Video {best?.d.VideoDims.Width}x{best?.d.VideoDims.Height}");
+        return chosen;
+    }
+
+    /// <summary>
     /// Get manual format by index from StillFormats array
     /// </summary>
     /// <param name="formatDetails"></param>
@@ -602,7 +666,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         if (formatIndex < 0 || formatIndex >= StillFormats.Count)
         {
-            Console.WriteLine($"[NativeCameraiOS] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
+            Console.WriteLine($"[NativeCameraiOS] Invalid PhotoFormatIndex {formatIndex}, using Max quality");
             return formatDetails.First();
         }
 
@@ -1023,13 +1087,13 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     case 1:
                         break;
                     case 2:
-                        flipHorizontal = true; 
+                        flipHorizontal = true;
                         break;
                     case 3:
                         rotation = 180;
                         break;
                     case 4:
-                        flipVertical = true; 
+                        flipVertical = true;
                         break;
                     case 5:
                         rotation = 270;
@@ -1078,7 +1142,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         });
     }
 
- 
+
     public SKImage GetPreviewImage()
     {
         // First check if we have a ready preview
@@ -1571,7 +1635,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             {
                 _videoOrientation = videoConnection.VideoOrientation;
             }
-            
+
             CurrentRotation = GetRotation(
                 _uiOrientation,
                 _videoOrientation,
@@ -1773,7 +1837,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             CleanupMovieFileOutput();
 
             Stop();
-            
+
             _session?.Dispose();
             _videoDataOutput?.Dispose();
             _stillImageOutput?.Dispose();
@@ -1814,7 +1878,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             var quality = FormsControl.VideoQuality;
             var (preset, settings) = GetVideoPresetAndSettings(quality);
-            
+
             // Extract dimensions from settings
             if (settings != null)
             {
@@ -1822,15 +1886,15 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var height = ((NSNumber)settings[AVVideo.HeightKey])?.Int32Value ?? 1080;
                 var compressionProps = settings[AVVideo.CompressionPropertiesKey] as NSDictionary;
                 var bitRate = ((NSNumber)compressionProps?[AVVideo.AverageBitRateKey])?.Int32Value ?? 8000000;
-                
-                return new VideoFormat 
-                { 
-                    Width = width, 
-                    Height = height, 
+
+                return new VideoFormat
+                {
+                    Width = width,
+                    Height = height,
                     FrameRate = 30, // Default, could be extracted from settings
-                    Codec = "H.264", 
-                    BitRate = bitRate, 
-                    FormatId = $"ios_{width}x{height}_{quality}" 
+                    Codec = "H.264",
+                    BitRate = bitRate,
+                    FormatId = $"ios_{width}x{height}_{quality}"
                 };
             }
         }
@@ -1838,7 +1902,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             Debug.WriteLine($"[NativeCamera.Apple] Error getting current video format: {ex.Message}");
         }
-        
+
         return new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" };
     }
 
@@ -1851,7 +1915,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             return; // Already set up
 
         _movieFileOutput = new AVCaptureMovieFileOutput();
-        
+
         // Configure video settings based on current video quality
         ConfigureVideoSettings();
 
@@ -1874,7 +1938,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _session.CommitConfiguration();
             throw new InvalidOperationException("Cannot add movie file output to capture session");
         }
-        
+
         _session.CommitConfiguration();
     }
 
@@ -1938,7 +2002,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             return;
 
         var quality = FormsControl.VideoQuality;
-        
+
         // Get video formats and settings
         var (preset, settings) = GetVideoPresetAndSettings(quality);
 
@@ -1998,17 +2062,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private (string preset, NSDictionary settings) GetManualVideoSettings()
     {
         var formats = GetPredefinedVideoFormats();
-        
+
         if (formats.Count > FormsControl.VideoFormatIndex)
         {
             var selectedFormat = formats[FormsControl.VideoFormatIndex];
             var settings = CreateVideoSettings(
-                selectedFormat.Width, 
-                selectedFormat.Height, 
+                selectedFormat.Width,
+                selectedFormat.Height,
                 (int)selectedFormat.FrameRate);
             return (AVCaptureSession.PresetHigh, settings);
         }
-        
+
         // Fallback to standard quality
         return (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 30));
     }
@@ -2039,12 +2103,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             if (_session != null)
             {
                 _session.BeginConfiguration();
-                
+
                 if (_movieFileOutput != null)
                 {
                     _session.RemoveOutput(_movieFileOutput);
                 }
-                
+
                 // Clean up audio input if it exists
                 if (_audioInput != null)
                 {
@@ -2053,10 +2117,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     _audioInput = null;
                     Debug.WriteLine("[NativeCamera.Apple] Audio input removed and disposed");
                 }
-                
+
                 _session.CommitConfiguration();
             }
-            
+
             _movieFileOutput?.Dispose();
             _movieFileOutput = null;
         }
@@ -2153,7 +2217,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         try
         {
             // Check if we have a session and device that supports video recording
-            return _session != null && 
+            return _session != null &&
                    _deviceInput?.Device != null &&
                    _deviceInput.Device.HasMediaType(AVMediaTypes.Video);
         }
@@ -2203,7 +2267,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
                 var request = PHAssetChangeRequest.FromVideo(videoUrl);
-                
+
                 // Set album if specified
                 if (!string.IsNullOrEmpty(album))
                 {
@@ -2215,7 +2279,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         albumChangeRequest?.AddAssets(new PHObject[] { request.PlaceholderForCreatedAsset });
                     }
                 }
-            }, 
+            },
             (success, error) =>
             {
                 if (success)
@@ -2267,7 +2331,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         var recordingEndTime = DateTime.Now;
         var duration = recordingEndTime - _recordingStartTime;
-        
+
         _isRecordingVideo = false;
 
         if (error != null)

@@ -485,8 +485,20 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] Available format: {format.VideoFormat.Width}x{format.VideoFormat.Height} @ {fps:F1} FPS");
         }
 
-        // Get target aspect ratio from capture format
-        var (captureWidth, captureHeight) = GetBestCaptureResolution();
+        // Get target aspect ratio based on capture mode
+        int captureWidth, captureHeight;
+        if (FormsControl.CaptureMode == CaptureModeType.Video)
+        {
+            var vf = GetCurrentVideoFormat();
+            captureWidth = vf?.Width ?? 1280;
+            captureHeight = vf?.Height ?? 720;
+        }
+        else
+        {
+            var (w, h) = GetBestCaptureResolution();
+            captureWidth = (int)w;
+            captureHeight = (int)h;
+        }
         double targetAspectRatio = (double)captureWidth / captureHeight;
 
         Debug.WriteLine($"[NativeCameraWindows] Target capture resolution: {captureWidth}x{captureHeight} (AR: {targetAspectRatio:F2})");
@@ -1109,19 +1121,19 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 Debug.WriteLine($"  {res.Width}x{res.Height} ({res.TotalPixels:N0} pixels, AR: {res.AspectRatio:F2})");
             }
 
-            // Select resolution based on CapturePhotoQuality setting
-            var selectedResolution = FormsControl.CapturePhotoQuality switch
+            // Select resolution based on PhotoQuality setting
+            var selectedResolution = FormsControl.PhotoQuality switch
             {
                 CaptureQuality.Max => availableResolutions.First(), // Highest resolution
                 CaptureQuality.Medium => availableResolutions.Skip(availableResolutions.Count / 3).First(), // ~66% down the list
                 CaptureQuality.Low => availableResolutions.Skip(2 * availableResolutions.Count / 3).First(), // ~33% down the list
                 CaptureQuality.Preview => availableResolutions.LastOrDefault(r => r.Width >= 640 && r.Height >= 480)
                                          ?? availableResolutions.Last(), // Smallest usable resolution
-                CaptureQuality.Manual => GetManualResolution(availableResolutions, FormsControl.CaptureFormatIndex),
+                CaptureQuality.Manual => GetManualResolution(availableResolutions, FormsControl.PhotoFormatIndex),
                 _ => availableResolutions.First()
             };
 
-            Debug.WriteLine($"[NativeCameraWindows] Selected resolution for {FormsControl.CapturePhotoQuality}: {selectedResolution.Width}x{selectedResolution.Height}");
+            Debug.WriteLine($"[NativeCameraWindows] Selected resolution for {FormsControl.PhotoQuality}: {selectedResolution.Width}x{selectedResolution.Height}");
             return (selectedResolution.Width, selectedResolution.Height);
         }
         catch (Exception e)
@@ -1142,7 +1154,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
         else
         {
-            Debug.WriteLine($"[NativeCameraWindows] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
+            Debug.WriteLine($"[NativeCameraWindows] Invalid PhotoFormatIndex {formatIndex}, using Max quality");
             return resolutionsList.First();
         }
     }
@@ -1257,8 +1269,20 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 return;
             }
 
-            // Get target aspect ratio from current capture format
-            var (captureWidth, captureHeight) = GetBestCaptureResolution();
+            // Get target aspect ratio based on capture mode (photo vs. video)
+            int captureWidth, captureHeight;
+            if (FormsControl.CaptureMode == CaptureModeType.Video)
+            {
+                var vf = GetCurrentVideoFormat();
+                captureWidth = vf?.Width ?? 1280;
+                captureHeight = vf?.Height ?? 720;
+            }
+            else
+            {
+                var (w, h) = GetBestCaptureResolution();
+                captureWidth = (int)w;
+                captureHeight = (int)h;
+            }
             double targetAspectRatio = (double)captureWidth / captureHeight;
 
             Debug.WriteLine($"[NativeCameraWindows] Updating preview format to match capture AR: {targetAspectRatio:F2} ({captureWidth}x{captureHeight})");
@@ -1431,7 +1455,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         try
         {
             // For Windows, we need to get the current capture resolution that would be used
-            // This is determined by the CapturePhotoQuality and CaptureFormatIndex settings
+            // This is determined by the PhotoQuality and PhotoFormatIndex settings
             var (width, height) = GetBestCaptureResolution();
 
             if (width > 0 && height > 0)

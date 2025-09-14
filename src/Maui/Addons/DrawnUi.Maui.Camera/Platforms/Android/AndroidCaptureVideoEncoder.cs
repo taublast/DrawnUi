@@ -42,6 +42,9 @@ namespace DrawnUi.Camera
         private System.Threading.Timer _progressTimer;
         private TimeSpan _pendingTimestamp;
 
+        // Drop the very first encoded sample; some devices emit a garbled first frame right after start
+        private bool _skipFirstEncodedSample = true;
+
         // Preview-from-recording support (Android uses CPU raster mirror to avoid cross-context GPU sharing)
         private readonly object _previewLock = new();
         private SKImage _latestPreviewImage; // CPU-backed, ownership transferred to UI on TryAcquire
@@ -56,6 +59,8 @@ namespace DrawnUi.Camera
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
+            System.Diagnostics.Debug.WriteLine($"[ENC INIT] {_width}x{_height}@{_frameRate} output={_outputPath} recordAudio={recordAudio}");
+
             _recordAudio = recordAudio; // not handled in this first Android step
 
             // Prepare MediaCodec H.264 encoder with Surface input
@@ -105,6 +110,8 @@ namespace DrawnUi.Camera
         {
             _pendingTimestamp = timestamp;
             MakeCurrent();
+            System.Diagnostics.Debug.WriteLine($"[ENC BEGIN] viewport={_width}x{_height} ts={_pendingTimestamp.TotalMilliseconds:F0}ms");
+
             GLES20.GlViewport(0, 0, _width, _height);
 
             if (_grContext == null)
@@ -268,9 +275,18 @@ namespace DrawnUi.Camera
                     }
                     if (bufferInfo.Size != 0 && _muxerStarted)
                     {
-                        encodedData.Position(bufferInfo.Offset);
-                        encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
-                        _muxer.WriteSampleData(_videoTrackIndex, encodedData, bufferInfo);
+                        // On some devices the very first sample after start is visually corrupt.
+                        // Skip exactly one sample to avoid a glitch at t=0.
+                        if (_skipFirstEncodedSample)
+                        {
+                            _skipFirstEncodedSample = false;
+                        }
+                        else
+                        {
+                            encodedData.Position(bufferInfo.Offset);
+                            encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
+                            _muxer.WriteSampleData(_videoTrackIndex, encodedData, bufferInfo);
+                        }
                     }
                     _videoCodec.ReleaseOutputBuffer(outIndex, false);
 
