@@ -708,8 +708,58 @@ public partial class SkiaCamera : SkiaControl
         {
             MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
         };
+#elif IOS || MACCATALYST
+        // Create Apple encoder (AVAssetWriter + CVPixelBuffer pool). GPU composition via Skia; reuse buffers.
+        _captureVideoEncoder = new AppleCaptureVideoEncoder();
+
+        // Mirror composed frames to preview when enabled
+        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+        if (MirrorRecordingToPreview && _captureVideoEncoder is AppleCaptureVideoEncoder _appleEncPrev)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
+            {
+                try { SafeAction(() => UpdatePreview()); } catch { }
+            };
+            _appleEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
+
+        // Output path (Documents)
+        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        var outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+
+        // Use camera format if available; fallback to preview size or 1280x720
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+        var width = currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
+        var height = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+        _diagEncWidth = width; _diagEncHeight = height;
+        _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
+        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        await _captureVideoEncoder.StartAsync();
+
+        _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
+
+        // Diagnostics
+        _diagStartTime = DateTime.Now;
+        _diagDroppedFrames = 0;
+        _diagSubmittedFrames = 0;
+        _diagLastSubmitMs = 0;
+        _targetFps = fps;
+
+        // Progress reporting
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+        };
+
+        // Start frame capture timer for Apple (drive encoder frames)
+        _frameCaptureTimer?.Dispose();
+        var periodMs = Math.Max(1, (int)Math.Round(1000.0 / Math.Max(1, fps)));
+        _frameCaptureTimer = new System.Threading.Timer(CaptureFrame, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(periodMs));
 #else
-        throw new NotSupportedException("Capture video flow is currently only supported on Windows and Android");
+        throw new NotSupportedException("Capture video flow is currently only supported on Windows, Android and Apple");
 #endif
     }
 
@@ -802,6 +852,32 @@ public partial class SkiaCamera : SkiaControl
                 {
                     System.Threading.Volatile.Write(ref _androidFrameGate, 0);
                 }
+            }
+#elif IOS || MACCATALYST
+            // GPU path on Apple: draw via Skia into AVAssetWriter's pixel buffer
+            if (_captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
+            {
+                using var previewImage = NativeControl?.GetPreviewImage();
+                if (previewImage == null)
+                {
+                    Debug.WriteLine("[CaptureFrame] No preview image available from camera");
+                    return;
+                }
+
+                using (appleEnc.BeginFrame(elapsed, out var canvas, out var info))
+                {
+                    var __rectsA = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                    canvas.DrawImage(previewImage, __rectsA.src, __rectsA.dst);
+                    FrameProcessor?.Invoke(canvas, info, elapsed);
+                    DrawDiagnostics(canvas, info);
+                }
+
+                var __swA = System.Diagnostics.Stopwatch.StartNew();
+                await appleEnc.SubmitFrameAsync();
+                __swA.Stop();
+                _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
+                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                return;
             }
 #endif
 
@@ -1282,7 +1358,7 @@ public partial class SkiaCamera : SkiaControl
 #if WINDOWS
     private bool _useWindowsPreviewDrivenCapture;
 #endif
-#if WINDOWS || ANDROID
+#if WINDOWS || ANDROID || IOS || MACCATALYST
         private EventHandler _encoderPreviewInvalidateHandler;
 #endif
     private DateTime? _capturePtsBaseTime; // base timestamp for PTS (from first captured frame)
@@ -1413,6 +1489,7 @@ public partial class SkiaCamera : SkiaControl
 
     //    var kill = FrameSurface;
     //    FrameSurfaceInfo = new SKImageInfo(width, height);
+
     //    if (Superview.CanvasView is SkiaViewAccelerated accelerated)
     //    {
     //        FrameSurface = SKSurface.Create(accelerated.GRContext, true, FrameSurfaceInfo);
@@ -1455,6 +1532,14 @@ public partial class SkiaCamera : SkiaControl
         if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
             if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
+                return img; // renderer takes ownership and must dispose
+            return null; // no fallback to raw preview during recording
+        }
+#elif IOS || MACCATALYST
+        // While recording on Apple, mirror the composed encoder frames into the preview
+        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
+        {
+            if (appleEnc.TryAcquirePreviewImage(out var img) && img != null)
                 return img; // renderer takes ownership and must dispose
             return null; // no fallback to raw preview during recording
         }

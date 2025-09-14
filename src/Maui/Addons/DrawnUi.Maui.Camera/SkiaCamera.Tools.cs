@@ -925,32 +925,37 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
+            // Request Photos AddOnly authorization (iOS 14+); falls back to Authorized for earlier
+            var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.AddOnly);
+            if (authStatus != Photos.PHAuthorizationStatus.Authorized)
+            {
+                Debug.WriteLine("[SkiaCamera] iOS Photos save error: not authorized (AddOnly)");
+                return null;
+            }
+
             // Use Photos framework to add video to Photos library
             var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
-            
             var tempUrl = Foundation.NSUrl.FromFilename(privateVideoPath);
-            
             var tcs = new TaskCompletionSource<string>();
-            
+
             Photos.PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
-                // Create video asset in Photos library using existing iOS API pattern
+                // Create video asset in Photos library
                 var request = Photos.PHAssetChangeRequest.FromVideo(tempUrl);
-                
-                // Note: Album organization would require additional PHAssetCollection logic similar to existing implementation
-            }, 
+                // TODO: Add to specific album if required (create/find PHAssetCollection, then add)
+            },
             (success, error) =>
             {
                 if (success)
                 {
                     if (deleteOriginal)
                     {
-                        File.Delete(privateVideoPath);
-                        Debug.WriteLine($"[SkiaCamera] iOS: MOVED video to Photos library");
+                        try { File.Delete(privateVideoPath); } catch { }
+                        Debug.WriteLine("[SkiaCamera] iOS: MOVED video to Photos library");
                     }
                     else
                     {
-                        Debug.WriteLine($"[SkiaCamera] iOS: COPIED video to Photos library");
+                        Debug.WriteLine("[SkiaCamera] iOS: COPIED video to Photos library");
                     }
                     tcs.SetResult("Photos Library");
                 }
@@ -960,7 +965,7 @@ public partial class SkiaCamera : SkiaControl
                     tcs.SetResult(null);
                 }
             });
-            
+
             return await tcs.Task;
         }
         catch (Exception ex)

@@ -1486,13 +1486,20 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var pixelData = new byte[dataSize];
                 System.Runtime.InteropServices.Marshal.Copy(baseAddress, pixelData, 0, dataSize);
 
+                // Use sensor PTS (CMTime) for monotonic timestamp instead of wall clock
+                var pts = sampleBuffer.PresentationTimeStamp; // CMTime
+                long micros = 0;
+                if (pts.TimeScale != 0)
+                    micros = (long)(pts.Value * 1_000_000L / pts.TimeScale);
+                var monotonicTime = new DateTime(micros * 10, DateTimeKind.Utc);
+
                 // Store raw frame data for SKImage creation on main thread
                 var rawFrame = new RawFrameData
                 {
                     Width = width,
                     Height = height,
                     BytesPerRow = bytesPerRow,
-                    Time = DateTime.UtcNow,
+                    Time = monotonicTime,
                     CurrentRotation = CurrentRotation,
                     Facing = FormsControl.Facing,
                     Orientation = (int)CurrentRotation,
@@ -2015,17 +2022,33 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// <summary>
     /// Get video preset and settings based on video quality
     /// </summary>
-    private (string preset, NSDictionary settings) GetVideoPresetAndSettings(VideoQuality quality)
+    private (NSString preset, NSDictionary settings) GetVideoPresetAndSettings(VideoQuality quality)
     {
-        return quality switch
+        // Helper to pick the first supported preset
+        NSString ChoosePreset(params NSString[] presets)
         {
-            VideoQuality.Low => (AVCaptureSession.Preset640x480, CreateVideoSettings(640, 480, 30)),
-            VideoQuality.Standard => (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 30)),
-            VideoQuality.High => (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 60)),
-            VideoQuality.Ultra => (AVCaptureSession.Preset3840x2160, CreateVideoSettings(3840, 2160, 30)),
-            VideoQuality.Manual => GetManualVideoSettings(),
-            _ => (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 30))
-        };
+            foreach (var p in presets)
+            {
+                try { if (_session != null && _session.CanSetSessionPreset(p)) return p; } catch { }
+            }
+            return AVCaptureSession.PresetHigh;
+        }
+
+        switch (quality)
+        {
+            case VideoQuality.Low:
+                return (ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetLow, AVCaptureSession.Preset352x288), CreateVideoSettings(640, 480, 30));
+            case VideoQuality.Standard: // target 720p
+                return (ChoosePreset(AVCaptureSession.Preset1280x720, AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh, AVCaptureSession.Preset640x480), CreateVideoSettings(1280, 720, 30));
+            case VideoQuality.High: // target 1080p
+                return (ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh), CreateVideoSettings(1920, 1080, 30));
+            case VideoQuality.Ultra: // target 4K
+                return (ChoosePreset(AVCaptureSession.Preset3840x2160, AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh), CreateVideoSettings(3840, 2160, 30));
+            case VideoQuality.Manual:
+                return GetManualVideoSettings();
+            default:
+                return (ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh), CreateVideoSettings(1920, 1080, 30));
+        }
     }
 
     /// <summary>
@@ -2059,7 +2082,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// <summary>
     /// Get manual video settings based on VideoFormatIndex
     /// </summary>
-    private (string preset, NSDictionary settings) GetManualVideoSettings()
+    private (NSString preset, NSDictionary settings) GetManualVideoSettings()
     {
         var formats = GetPredefinedVideoFormats();
 
@@ -2144,6 +2167,20 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             // Setup movie file output if not already created
             await SetupMovieFileOutput();
+
+            // Apply target session preset based on VideoQuality (with fallbacks)
+            try
+            {
+                var (preset, _) = GetVideoPresetAndSettings(FormsControl.VideoQuality);
+                if (preset != null && _session.CanSetSessionPreset(preset))
+                {
+                    _session.BeginConfiguration();
+                    _session.SessionPreset = preset;
+                    _session.CommitConfiguration();
+                    Debug.WriteLine($"[NativeCamera.Apple] Using session preset: {preset}");
+                }
+            }
+            catch { }
 
             // Create temporary file URL for video recording
             var fileName = $"video_{DateTime.Now:yyyyMMdd_HHmmss}.mov";

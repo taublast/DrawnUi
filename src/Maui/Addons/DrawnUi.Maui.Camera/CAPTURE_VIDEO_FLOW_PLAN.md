@@ -222,7 +222,19 @@ These patterns are platform-agnostic and inform Android/iOS implementations.
   - Initial step focuses on encoding; preview remains driven by the existing camera pipeline
   - A “preview-from-recording” mirror for Android can be added after basic GPU path is verified
 
-Status: Implementing Android encoder with the same BeginFrame/SubmitFrame pattern as Windows (platform extension), while ICaptureVideoEncoder remains the common API.
+Status: Implemented. MediaCodec (Surface) + EGL + Skia GL; mirror-to-preview enabled; warmup drop for first camera frame; sensor-based PTS; single-frame policy enforced.
+
+
+#### iOS/macOS (Third) — Implementation plan (GPU-first, AVAssetWriter)
+
+- Encoder: AVAssetWriter (H.264/HEVC) + AVAssetWriterInputPixelBufferAdaptor
+- Rendering: Skia Metal-backed SKSurface; reuse a single surface and enforce one-frame-in-flight
+- Buffering: Reuse CVPixelBuffer from PixelBufferPool (BGRA premul); lock/unlock; no per-frame allocations
+- Timestamps: Use sensor-based PTS (CapturedImage.Time baseline) → CMTime with 1,000,000 timescale
+- Preview: Publish composed frames via PreviewAvailable + TryAcquirePreviewImage; mirror-to-preview during recording
+- Memory: Single-frame policy; renderer takes ownership of SKImage returned by TryAcquirePreviewImage
+- Audio: Defer for iteration 2; plan AVAssetWriterInput (Audio) with A/V sync by timestamp
+- Fallback: If Metal GRContext unavailable, fall back to CPU SKSurface with buffer reuse only for dev/testing
 
 
 
@@ -355,17 +367,19 @@ await camera.StopVideoRecording();   // Same method for both flows
 ## Status
 
 - [/] Phase 1: Core Infrastructure (SkiaCamera wiring + ICaptureVideoEncoder present)
-- [/] Phase 2: Windows Implementation (WindowsCaptureVideoEncoder scaffold in repo; Plan A/B decision pending)
-- [ ] Phase 2: Android Implementation
-- [ ] Phase 2: iOS/macOS Implementation
+- [/] Phase 2: Windows Implementation (Media Foundation path in progress)
+- [x] Phase 2: Android Implementation
+- [/] Phase 2: iOS/macOS Implementation
 - [ ] Phase 3: Integration & Polish
 - [ ] Testing & Documentation
 
 ---
 
-**Last Updated**: 2025-09-13
+**Last Updated**: 2025-09-14
 **Next Steps**:
 - Confirm Open Questions (Windows Plan A vs B, codec, audio scope, packaging).
+- Wire Apple encoder into SkiaCamera (begin/submit/mirror) and validate on iPhone/iPad test app.
+
 - Implement Windows Plan A (MediaStreamSource + MediaTranscoder) or Plan B (FFmpeg) accordingly; keep AVI as dev-only fallback.
 - Add buffer reuse + throttling in capture loop; validate timing and stability.
 - Add Windows audio track support and A/V sync (if in scope for first iteration).
