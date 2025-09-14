@@ -1062,58 +1062,68 @@ namespace DrawnUi.Draw
 
             LockUpdate(true);
 
-            // Apply all pending structure changes to StackStructure
-            ApplyStructureChanges();
-
-            SetupRenderingWithComposition(ctx);
-
-            base.Paint(ctx);
-
-            var rectForChildren = ContractPixelsRect(ctx.Destination, ctx.Scale, Padding);
-
-            var drawnChildrenCount = 0;
-
-            //placeholder for empty
-            if (_emptyView != null && _emptyView.IsVisible)
+            try
             {
-                drawnChildrenCount = DrawViews(ctx.WithDestination(rectForChildren));
-            }
-            else if (Type == LayoutType.Grid) //todo add optimization for OptimizeRenderingViewport
-            {
-                drawnChildrenCount = DrawChildrenGrid(ctx.WithDestination(rectForChildren));
-            }
-            else
-                //stacklayout
-            if (IsStack)
-            {
-                var structure = LatestStackStructure;
-                if (structure != null && structure.GetCount() > 0)
+
+                // Apply all pending structure changes to StackStructure
+                ApplyStructureChanges();
+
+                SetupRenderingWithComposition(ctx);
+
+                base.Paint(ctx);
+
+                var rectForChildren = ContractPixelsRect(ctx.Destination, ctx.Scale, Padding);
+
+                var drawnChildrenCount = 0;
+
+                //placeholder for empty
+                if (_emptyView != null && _emptyView.IsVisible)
                 {
-                    //if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-                    //{
-                    //    drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
-                    //}
-                    //else
+                    drawnChildrenCount = DrawViews(ctx.WithDestination(rectForChildren));
+                }
+                else if (Type == LayoutType.Grid) //todo add optimization for OptimizeRenderingViewport
+                {
+                    drawnChildrenCount = DrawChildrenGrid(ctx.WithDestination(rectForChildren));
+                }
+                else
+                    //stacklayout
+                if (IsStack)
+                {
+                    var structure = LatestStackStructure;
+                    if (structure != null && structure.GetCount() > 0)
                     {
-                        drawnChildrenCount = DrawStack(ctx.WithDestination(rectForChildren), structure);
+                        //if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                        //{
+                        //    drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
+                        //}
+                        //else
+                        {
+                            drawnChildrenCount = DrawStack(ctx.WithDestination(rectForChildren), structure);
+                        }
                     }
                 }
+                else
+                    //absolute layout
+                {
+                    drawnChildrenCount = DrawViews(ctx.WithDestination(rectForChildren));
+                }
+
+                ApplyIsEmpty(drawnChildrenCount == 0);
+
+                if (!_trackWasDrawn && LayoutReady)
+                {
+                    _trackWasDrawn = true;
+                    OnAppeared();
+                }
             }
-            else
-                //absolute layout
+            catch (Exception e)
             {
-                drawnChildrenCount = DrawViews(ctx.WithDestination(rectForChildren));
+                Super.Log(e);
             }
-
-            ApplyIsEmpty(drawnChildrenCount == 0);
-
-            if (!_trackWasDrawn && LayoutReady)
+            finally
             {
-                _trackWasDrawn = true;
-                OnAppeared();
+                LockUpdate(false);
             }
-
-            LockUpdate(false);
         }
 
         public override void OnDisposing()

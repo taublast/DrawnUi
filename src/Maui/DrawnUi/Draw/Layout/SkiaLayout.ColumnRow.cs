@@ -2072,6 +2072,11 @@ else
                 {
                     currentIndex++;
 
+                    if (cell == null)
+                    {
+                        continue;
+                    }
+
                     if (cell.WasMeasured && cell.Destination == SKRect.Empty || cell.Measured.Pixels.Width < 1 ||
                         cell.Measured.Pixels.Height < 1)
                     {
@@ -2185,7 +2190,6 @@ else
                         FirstVisibleIndex = firstVisibleIndex;
                         LastVisibleIndex = lastVisibleIndex;
                     }
- 
                 }
                 else
                 {
@@ -2326,13 +2330,14 @@ else
                                             {
                                                 Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = true,
                                             };
-                                            _pendingStructureChanges.Add(new StructureChange(StructureChangeType.SingleItemUpdate, MeasureStamp)
-                                            {
-                                                OffsetOthers = cell.OffsetOthers,
-                                                StartIndex = child.ContextIndex,
-                                                Count = 1,
-                                                MeasuredItems = new List<MeasuredItemInfo> { measuredItem }
-                                            });
+                                            _pendingStructureChanges.Add(
+                                                new StructureChange(StructureChangeType.SingleItemUpdate, MeasureStamp)
+                                                {
+                                                    OffsetOthers = cell.OffsetOthers,
+                                                    StartIndex = child.ContextIndex,
+                                                    Count = 1,
+                                                    MeasuredItems = new List<MeasuredItemInfo> { measuredItem }
+                                                });
 
                                             cell.OffsetOthers = Vector2.Zero;
                                         }

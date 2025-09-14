@@ -823,7 +823,7 @@ public class Canvas : DrawnView, IGestureListener
             {
                 Super.Log(e);
             }
-        });
+        }, LongKeyGenerator.Next());
 
         //filter micro-pan
         bool fixMicroPan = _blockedPanning && !_hadTap && !_isPanning && !_hadLong;
@@ -844,7 +844,7 @@ public class Canvas : DrawnView, IGestureListener
                 {
                     Super.Log(e);
                 }
-            });
+            }, LongKeyGenerator.Next());
         }
 
         Repaint();
