@@ -279,6 +279,7 @@ namespace DrawnUi.Draw
             typeof(bool),
             typeof(SkiaScroll),
             false,
+            BindingMode.TwoWay,
             propertyChanged: (bindable, old, changed) =>
             {
                 if (bindable is SkiaScroll scroll)
