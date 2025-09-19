@@ -1085,6 +1085,7 @@ else
                             {
                                 cell.Measured = ScaledSize.Default;
                                 cell.WasMeasured = true;
+                                LastMeasuredIndex = cell.ControlIndex;
                             }
 
                             continue;
@@ -1137,6 +1138,7 @@ else
                         }
 
                         cell.WasMeasured = true;
+                        LastMeasuredIndex = cell.ControlIndex;
                     }
 
                     // Inline UpdateStackSize with pre-calculated spacing
