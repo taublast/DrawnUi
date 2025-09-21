@@ -96,4 +96,54 @@ public interface INativeCamera : IDisposable
     /// Sets the camera to automatic exposure mode
     /// </summary>
     void SetAutoExposure();
+
+    #region VIDEO RECORDING
+
+    /// <summary>
+    /// Gets the currently selected video format
+    /// </summary>
+    /// <returns>Current video format or null if not available</returns>
+    VideoFormat GetCurrentVideoFormat();
+
+    /// <summary>
+    /// Starts video recording
+    /// </summary>
+    Task StartVideoRecording();
+
+    /// <summary>
+    /// Stops video recording
+    /// </summary>
+    Task StopVideoRecording();
+
+    /// <summary>
+    /// Gets whether video recording is supported on this camera
+    /// </summary>
+    /// <returns>True if video recording is supported</returns>
+    bool CanRecordVideo();
+
+
+    /// <summary>
+    /// Save video to gallery
+    /// </summary>
+    /// <param name="videoFilePath">Path to video file</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    Task<string> SaveVideoToGallery(string videoFilePath, string album);
+
+    /// <summary>
+    /// Event fired when video recording completes successfully
+    /// </summary>
+    Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording fails
+    /// </summary>
+    Action<Exception> VideoRecordingFailed { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording progress updates
+    /// </summary>
+    Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    #endregion
 }

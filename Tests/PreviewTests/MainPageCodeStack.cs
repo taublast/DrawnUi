@@ -1,10 +1,11 @@
- 
+
 using PreviewTests.Views;
- 
+
 using Canvas = DrawnUi.Views.Canvas;
 
 namespace PreviewTests
 {
+    [Preview<SkiaLayout>]
     public class MainPageCodeStack : BasePageCodeBehind, IDisposable
     {
         Canvas Canvas;
@@ -69,7 +70,7 @@ namespace PreviewTests
                                         WidthRequest = 2,
                                         VerticalOptions = LayoutOptions.Fill,
                                     },
-                                      
+
                                     new SkiaLabel()
                                     {
                                         LineBreakMode = LineBreakMode.TailTruncation,
@@ -91,7 +92,7 @@ namespace PreviewTests
                                 BackgroundColor = Colors.Blue,
                             }
 
-           
+
                         }
                     }
                 }

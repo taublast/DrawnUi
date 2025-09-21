@@ -288,11 +288,11 @@ public class SkiaImage : SkiaControl
         nameof(RescalingQuality),
         typeof(SKFilterQuality),
         typeof(SkiaImage),
-        SKFilterQuality.Medium,
+        SKFilterQuality.Low,
         propertyChanged: NeedDraw);
 
     /// <summary>
-    /// Default value is Medium.
+    /// Default value is Low.
     /// </summary>
     public SKFilterQuality RescalingQuality
     {
@@ -1389,7 +1389,7 @@ public class SkiaImage : SkiaControl
         {
             SKFilterQuality.None => new SKSamplingOptions(SKFilterMode.Nearest, SKMipmapMode.None),
 
-            SKFilterQuality.Low => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None),
+            SKFilterQuality.Low => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear),
 
             SKFilterQuality.Medium => new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Nearest),
 

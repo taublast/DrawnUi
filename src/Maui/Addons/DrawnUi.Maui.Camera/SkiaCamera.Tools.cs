@@ -1,6 +1,7 @@
 ﻿global using DrawnUi.Draw;
 global using SkiaSharp;
 using SKCanvas = SkiaSharp.SKCanvas;
+using System.Diagnostics;
 
 namespace DrawnUi.Camera;
 
@@ -790,6 +791,247 @@ public partial class SkiaCamera : SkiaControl
 
         return finalSceneBrightness;
     }
+
+    #endregion
+
+    #region MOVE VIDEO TO GALLERY IMPLEMENTATIONS
+
+#if ANDROID
+    /// <summary>
+    /// Android implementation to move video from temp to public gallery
+    /// </summary>
+    private async Task<string> MoveVideoToGalleryAndroid(string privateVideoPath, string album, bool deleteOriginal)
+    {
+        try
+        {
+            var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
+            
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
+            {
+                // Android 10+ - Use MediaStore
+                return await SaveToMediaStoreAndroid(privateVideoPath, album, deleteOriginal);
+            }
+            else
+            {
+                // Android 9 and below - Direct move to DCIM
+                return MoveToDCIMAndroid(privateVideoPath, album, deleteOriginal);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Android video move error: {ex.Message}");
+            return null;
+        }
+    }
+
+    private async Task<string> SaveToMediaStoreAndroid(string privateVideoPath, string album, bool deleteOriginal)
+    {
+        var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
+        var resolver = context.ContentResolver;
+        
+        var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+        var fileName = $"{albumName}_video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+        
+        var contentValues = new Android.Content.ContentValues();
+        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DisplayName, fileName);
+        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.MimeType, "video/mp4");
+        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.RelativePath, 
+            Android.OS.Environment.DirectoryDcim + $"/{albumName}");
+        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DateAdded, 
+            Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
+
+        var uri = resolver.Insert(Android.Provider.MediaStore.Video.Media.ExternalContentUri, contentValues);
+
+        if (uri != null)
+        {
+            using var outputStream = resolver.OpenOutputStream(uri);
+            using var inputStream = File.OpenRead(privateVideoPath);
+            await inputStream.CopyToAsync(outputStream);
+            
+            if (deleteOriginal)
+            {
+                File.Delete(privateVideoPath);
+                Debug.WriteLine($"[SkiaCamera] Android: MOVED video to MediaStore: {fileName}");
+            }
+            else
+            {
+                Debug.WriteLine($"[SkiaCamera] Android: COPIED video to MediaStore: {fileName}");
+            }
+            
+            return fileName; // Return the public filename
+        }
+
+        return null;
+    }
+
+    private string MoveToDCIMAndroid(string privateVideoPath, string album, bool deleteOriginal)
+    {
+        var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
+        var dcimDir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim);
+        var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+        var appDir = new Java.IO.File(dcimDir, albumName);
+        
+        if (!appDir.Exists())
+            appDir.Mkdirs();
+        
+        var fileName = $"{albumName}_video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+        var publicVideoFile = new Java.IO.File(appDir, fileName);
+        
+        try
+        {
+            if (deleteOriginal)
+            {
+                // MOVE from private to public directory (faster)
+                File.Move(privateVideoPath, publicVideoFile.AbsolutePath);
+                Debug.WriteLine($"[SkiaCamera] Android: MOVED video to DCIM: {publicVideoFile.AbsolutePath}");
+            }
+            else
+            {
+                // COPY from private to public directory  
+                File.Copy(privateVideoPath, publicVideoFile.AbsolutePath, true);
+                Debug.WriteLine($"[SkiaCamera] Android: COPIED video to DCIM: {publicVideoFile.AbsolutePath}");
+            }
+            
+            // Tell Android gallery about the new file
+            Android.Media.MediaScannerConnection.ScanFile(
+                context,
+                new string[] { publicVideoFile.AbsolutePath },
+                new string[] { "video/mp4" },
+                new MediaScanCompleteListener());
+            
+            return publicVideoFile.AbsolutePath;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Android DCIM move error: {ex.Message}");
+            return null;
+        }
+    }
+
+    private class MediaScanCompleteListener : Java.Lang.Object, Android.Media.MediaScannerConnection.IOnScanCompletedListener
+    {
+        public void OnScanCompleted(string path, Android.Net.Uri uri)
+        {
+            Debug.WriteLine($"[SkiaCamera] Android media scan completed: {path}");
+        }
+    }
+#endif
+
+#if IOS || MACCATALYST
+    /// <summary>
+    /// iOS/macOS implementation to move video from temp to Photos library
+    /// </summary>
+    private async Task<string> MoveVideoToGalleryApple(string privateVideoPath, string album, bool deleteOriginal)
+    {
+        try
+        {
+            // Request Photos AddOnly authorization (iOS 14+); falls back to Authorized for earlier
+            var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.AddOnly);
+            if (authStatus != Photos.PHAuthorizationStatus.Authorized)
+            {
+                Debug.WriteLine("[SkiaCamera] iOS Photos save error: not authorized (AddOnly)");
+                return null;
+            }
+
+            // Use Photos framework to add video to Photos library
+            var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+            var tempUrl = Foundation.NSUrl.FromFilename(privateVideoPath);
+            var tcs = new TaskCompletionSource<string>();
+
+            Photos.PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                // Create video asset in Photos library
+                var request = Photos.PHAssetChangeRequest.FromVideo(tempUrl);
+                // TODO: Add to specific album if required (create/find PHAssetCollection, then add)
+            },
+            (success, error) =>
+            {
+                if (success)
+                {
+                    if (deleteOriginal)
+                    {
+                        try { File.Delete(privateVideoPath); } catch { }
+                        Debug.WriteLine("[SkiaCamera] iOS: MOVED video to Photos library");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("[SkiaCamera] iOS: COPIED video to Photos library");
+                    }
+                    tcs.SetResult("Photos Library");
+                }
+                else
+                {
+                    Debug.WriteLine($"[SkiaCamera] iOS Photos save error: {error?.LocalizedDescription}");
+                    tcs.SetResult(null);
+                }
+            });
+
+            return await tcs.Task;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Apple video move error: {ex.Message}");
+            return null;
+        }
+    }
+#endif
+
+#if WINDOWS
+    /// <summary>
+    /// Windows implementation to move video from temp to Pictures/Videos folder
+    /// </summary>
+    private async Task<string> MoveVideoToGalleryWindows(string privateVideoPath, string album, bool deleteOriginal)
+    {
+        try
+        {
+            var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+            
+            // Try Pictures/Camera Roll first, then fallback to Videos
+            var paths = new[]
+            {
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), albumName)
+                //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Camera", albumName),
+            };
+            
+            foreach (var targetPath in paths)
+            {
+                try
+                {
+                    if (!Directory.Exists(targetPath))
+                        Directory.CreateDirectory(targetPath);
+                    
+                    var fileName = $"{albumName}_video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+                    var publicVideoPath = Path.Combine(targetPath, fileName);
+                    
+                    if (deleteOriginal)
+                    {
+                        File.Move(privateVideoPath, publicVideoPath);
+                        Debug.WriteLine($"[SkiaCamera] Windows: MOVED video to {publicVideoPath}");
+                    }
+                    else
+                    {
+                        File.Copy(privateVideoPath, publicVideoPath, true);
+                        Debug.WriteLine($"[SkiaCamera] Windows: COPIED video to {publicVideoPath}");
+                    }
+                    
+                    return publicVideoPath;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[SkiaCamera] Windows path {targetPath} failed: {ex.Message}");
+                    continue; // Try next path
+                }
+            }
+            
+            return null;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Windows video move error: {ex.Message}");
+            return null;
+        }
+    }
+#endif
 
     #endregion
 }

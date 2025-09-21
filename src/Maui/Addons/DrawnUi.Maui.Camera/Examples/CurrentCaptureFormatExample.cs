@@ -28,7 +28,7 @@ public class CurrentCaptureFormatExample
 
         foreach (var quality in qualities)
         {
-            _camera.CapturePhotoQuality = quality;
+            _camera.PhotoQuality = quality;
             
             // Read the current format (may be null if camera not initialized)
             var currentFormat = _camera.CurrentStillCaptureFormat;
@@ -62,11 +62,11 @@ public class CurrentCaptureFormatExample
             if (availableFormats.Count > 0)
             {
                 // Set to manual mode and select different formats
-                _camera.CapturePhotoQuality = CaptureQuality.Manual;
+                _camera.PhotoQuality = CaptureQuality.Manual;
 
                 for (int i = 0; i < Math.Min(3, availableFormats.Count); i++)
                 {
-                    _camera.CaptureFormatIndex = i;
+                    _camera.PhotoFormatIndex = i;
                     
                     var currentFormat = _camera.CurrentStillCaptureFormat;
                     var expectedFormat = availableFormats[i];
@@ -101,11 +101,11 @@ public class CurrentCaptureFormatExample
         Debug.WriteLine($"Initial format: {initialFormat?.Description ?? "None"}");
 
         // Change quality and check format
-        _camera.CapturePhotoQuality = CaptureQuality.Max;
+        _camera.PhotoQuality = CaptureQuality.Max;
         var maxFormat = _camera.CurrentStillCaptureFormat;
         Debug.WriteLine($"Max quality format: {maxFormat?.Description ?? "None"}");
 
-        _camera.CapturePhotoQuality = CaptureQuality.Low;
+        _camera.PhotoQuality = CaptureQuality.Low;
         var lowFormat = _camera.CurrentStillCaptureFormat;
         Debug.WriteLine($"Low quality format: {lowFormat?.Description ?? "None"}");
 

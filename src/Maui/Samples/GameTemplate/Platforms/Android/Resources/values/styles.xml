@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Base application theme -->
+    <style name="MainTheme" parent="Maui.SplashTheme">
+       <item name="colorPrimary">@color/colorPrimary</item>
+      <item name="colorPrimaryDark">@color/colorAccent</item>
+      <item name="colorAccent">@color/colorAccent</item>
+
+      <!-- Hide status bar and navigation bar for splash -->
+      <item name="android:windowFullscreen">true</item>
+      <item name="android:windowTranslucentNavigation">true</item>
+      <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+      <item name="android:windowTranslucentStatus">true</item>
+      
+    </style>
+    
+</resources>

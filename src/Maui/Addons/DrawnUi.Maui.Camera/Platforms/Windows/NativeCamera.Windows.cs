@@ -111,6 +111,10 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private CameraProcessorState _state = CameraProcessorState.None;
     private bool _flashSupported;
     private bool _isCapturingStill;
+    private bool _isRecordingVideo;
+    private StorageFile _currentVideoFile;
+    private DateTime _recordingStartTime;
+    private System.Threading.Timer _progressTimer;
     private double _zoomScale = 1.0;
     private readonly object _lockPreview = new();
     private volatile CapturedImage _preview;
@@ -121,6 +125,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
+
+
+        // Reused buffers for managed fallback conversion (apply capture-path trick: single reusable buffers)
+        private InMemoryRandomAccessStream _scratchPreviewStream;
+        private byte[] _scratchPreviewBytes;
 
     public NativeCamera(SkiaCamera formsControl)
     {
@@ -195,6 +204,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] Device: {device.Name}, Id: {device.Id}, Panel: {device.EnclosureLocation?.Panel}");
         }
 
+        Debug.WriteLine($"[NativeCameraWindows] CURRENT SELECTION CONFIG: Facing={FormsControl.Facing}, CameraIndex={FormsControl.CameraIndex}");
+
         // Manual camera selection
         if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
         {
@@ -228,9 +239,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             throw new InvalidOperationException("No camera device found");
         }
 
-        Debug.WriteLine($"[NativeCameraWindows] Selected camera: {_cameraDevice.Name}");
+        Debug.WriteLine($"[NativeCameraWindows] *** FINAL SELECTED CAMERA: {_cameraDevice.Name} (ID: {_cameraDevice.Id}) ***");
 
-        //Debug.WriteLine("[NativeCameraWindows] Initializing MediaCapture...");
+        Debug.WriteLine("[NativeCameraWindows] Initializing MediaCapture...");
         _mediaCapture = new MediaCapture();
         var settings = new MediaCaptureInitializationSettings
         {
@@ -238,6 +249,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             StreamingCaptureMode = StreamingCaptureMode.Video,
             PhotoCaptureSource = PhotoCaptureSource.VideoPreview
         };
+
+        Debug.WriteLine($"[NativeCameraWindows] *** INITIALIZING MEDIACAPTURE WITH VideoDeviceId: {_cameraDevice.Id} ({_cameraDevice.Name}) ***");
 
 
 
@@ -472,8 +485,20 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] Available format: {format.VideoFormat.Width}x{format.VideoFormat.Height} @ {fps:F1} FPS");
         }
 
-        // Get target aspect ratio from capture format
-        var (captureWidth, captureHeight) = GetBestCaptureResolution();
+        // Get target aspect ratio based on capture mode
+        int captureWidth, captureHeight;
+        if (FormsControl.CaptureMode == CaptureModeType.Video)
+        {
+            var vf = GetCurrentVideoFormat();
+            captureWidth = vf?.Width ?? 1280;
+            captureHeight = vf?.Height ?? 720;
+        }
+        else
+        {
+            var (w, h) = GetBestCaptureResolution();
+            captureWidth = (int)w;
+            captureHeight = (int)h;
+        }
         double targetAspectRatio = (double)captureWidth / captureHeight;
 
         Debug.WriteLine($"[NativeCameraWindows] Target capture resolution: {captureWidth}x{captureHeight} (AR: {targetAspectRatio:F2})");
@@ -814,7 +839,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     }
 
     /// <summary>
-    /// Fallback conversion using BMP encoding
+    /// Fallback conversion using BMP encoding with reusable buffers (minimize per-frame allocations)
     /// </summary>
     private async Task<SKImage> ConvertToSKImageManagedCopy(SoftwareBitmap softwareBitmap)
     {
@@ -827,50 +852,29 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
             }
 
-            var width = softwareBitmap.PixelWidth;
-            var height = softwareBitmap.PixelHeight;
+            // Reuse a single in-memory stream across frames
+            _scratchPreviewStream ??= new InMemoryRandomAccessStream();
+            _scratchPreviewStream.Seek(0);
+            _scratchPreviewStream.Size = 0;
 
-            try
-            {
-                using var bitmapBuffer = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Read);
-                using var reference = bitmapBuffer.CreateReference();
-
-                if (reference is IMemoryBufferByteAccess memoryAccess)
-                {
-                    unsafe
-                    {
-                        memoryAccess.GetBuffer(out byte* dataInBytes, out uint capacity);
-                        var planeDescription = bitmapBuffer.GetPlaneDescription(0);
-                        var stride = planeDescription.Stride;
-
-                        var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                        var skImage = SKImage.FromPixels(info, new IntPtr(dataInBytes), stride);
-                        return skImage;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[NativeCameraWindows] Direct access failed, using stream approach: {ex.Message}");
-            }
-
-            using var stream = new InMemoryRandomAccessStream();
-            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream);
+            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, _scratchPreviewStream);
             encoder.SetSoftwareBitmap(softwareBitmap);
-
             encoder.BitmapTransform.ScaledWidth = (uint)softwareBitmap.PixelWidth;
             encoder.BitmapTransform.ScaledHeight = (uint)softwareBitmap.PixelHeight;
             encoder.BitmapTransform.InterpolationMode = BitmapInterpolationMode.NearestNeighbor;
-
             await encoder.FlushAsync();
 
-            var size = (int)stream.Size;
-            var bytes = new byte[size];
-            stream.Seek(0);
-            var streamBuffer = await stream.ReadAsync(bytes.AsBuffer(), (uint)size, InputStreamOptions.None);
+            var size = (int)_scratchPreviewStream.Size;
+            if (_scratchPreviewBytes == null || _scratchPreviewBytes.Length < size)
+            {
+                _scratchPreviewBytes = new byte[size];
+            }
 
-            var skImageFromStream = SKImage.FromEncodedData(bytes);
-            return skImageFromStream;
+            // Read into the reusable byte[] buffer
+            _scratchPreviewStream.Seek(0);
+            await _scratchPreviewStream.ReadAsync(_scratchPreviewBytes.AsBuffer(0, size), (uint)size, InputStreamOptions.None);
+
+            return SKImage.FromEncodedData(_scratchPreviewBytes);
         }
         catch (Exception e)
         {
@@ -1117,19 +1121,19 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 Debug.WriteLine($"  {res.Width}x{res.Height} ({res.TotalPixels:N0} pixels, AR: {res.AspectRatio:F2})");
             }
 
-            // Select resolution based on CapturePhotoQuality setting
-            var selectedResolution = FormsControl.CapturePhotoQuality switch
+            // Select resolution based on PhotoQuality setting
+            var selectedResolution = FormsControl.PhotoQuality switch
             {
                 CaptureQuality.Max => availableResolutions.First(), // Highest resolution
                 CaptureQuality.Medium => availableResolutions.Skip(availableResolutions.Count / 3).First(), // ~66% down the list
                 CaptureQuality.Low => availableResolutions.Skip(2 * availableResolutions.Count / 3).First(), // ~33% down the list
                 CaptureQuality.Preview => availableResolutions.LastOrDefault(r => r.Width >= 640 && r.Height >= 480)
                                          ?? availableResolutions.Last(), // Smallest usable resolution
-                CaptureQuality.Manual => GetManualResolution(availableResolutions, FormsControl.CaptureFormatIndex),
+                CaptureQuality.Manual => GetManualResolution(availableResolutions, FormsControl.PhotoFormatIndex),
                 _ => availableResolutions.First()
             };
 
-            Debug.WriteLine($"[NativeCameraWindows] Selected resolution for {FormsControl.CapturePhotoQuality}: {selectedResolution.Width}x{selectedResolution.Height}");
+            Debug.WriteLine($"[NativeCameraWindows] Selected resolution for {FormsControl.PhotoQuality}: {selectedResolution.Width}x{selectedResolution.Height}");
             return (selectedResolution.Width, selectedResolution.Height);
         }
         catch (Exception e)
@@ -1150,7 +1154,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
         else
         {
-            Debug.WriteLine($"[NativeCameraWindows] Invalid CaptureFormatIndex {formatIndex}, using Max quality");
+            Debug.WriteLine($"[NativeCameraWindows] Invalid PhotoFormatIndex {formatIndex}, using Max quality");
             return resolutionsList.First();
         }
     }
@@ -1246,7 +1250,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             {
                 preview = _preview.Image;
                 this._preview.Image = null; //protected from GC
-                _preview = null; // Transfer ownership - renderer will dispose the SKImage 
+                _preview = null; // Transfer ownership - renderer will dispose the SKImage
             }
             return preview;
         }
@@ -1265,8 +1269,20 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 return;
             }
 
-            // Get target aspect ratio from current capture format
-            var (captureWidth, captureHeight) = GetBestCaptureResolution();
+            // Get target aspect ratio based on capture mode (photo vs. video)
+            int captureWidth, captureHeight;
+            if (FormsControl.CaptureMode == CaptureModeType.Video)
+            {
+                var vf = GetCurrentVideoFormat();
+                captureWidth = vf?.Width ?? 1280;
+                captureHeight = vf?.Height ?? 720;
+            }
+            else
+            {
+                var (w, h) = GetBestCaptureResolution();
+                captureWidth = (int)w;
+                captureHeight = (int)h;
+            }
             double targetAspectRatio = (double)captureWidth / captureHeight;
 
             Debug.WriteLine($"[NativeCameraWindows] Updating preview format to match capture AR: {targetAspectRatio:F2} ({captureWidth}x{captureHeight})");
@@ -1439,7 +1455,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         try
         {
             // For Windows, we need to get the current capture resolution that would be used
-            // This is determined by the CapturePhotoQuality and CaptureFormatIndex settings
+            // This is determined by the PhotoQuality and PhotoFormatIndex settings
             var (width, height) = GetBestCaptureResolution();
 
             if (width > 0 && height > 0)
@@ -1636,6 +1652,315 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
     #endregion
 
+    #region VIDEO RECORDING
+
+    /// <summary>
+    /// Gets the currently selected video format
+    /// </summary>
+    /// <returns>Current video format or null if not available</returns>
+    public VideoFormat GetCurrentVideoFormat()
+    {
+        try
+        {
+            var cf = _frameSource?.CurrentFormat;
+            if (cf != null)
+            {
+                var w = (int)cf.VideoFormat.Width;
+                var h = (int)cf.VideoFormat.Height;
+                var fps = (int)Math.Round(cf.FrameRate.Numerator / (double)cf.FrameRate.Denominator);
+
+                // Estimate bitrate ~ bits per pixel per frame * fps
+                // Conservative default factor: 0.07 bpp (tunable)
+                int EstimateBitrate(int width, int height, int fr)
+                {
+                    var pixelsPerSec = (long)width * height * fr;
+                    var bps = (long)(pixelsPerSec * 0.07);
+                    // Clamp between 3 Mbps and 35 Mbps
+                    if (bps < 3_000_000) bps = 3_000_000;
+                    if (bps > 35_000_000) bps = 35_000_000;
+                    return (int)bps;
+                }
+
+                return new VideoFormat
+                {
+                    Width = w,
+                    Height = h,
+                    FrameRate = Math.Max(1, fps),
+                    Codec = "H.264",
+                    BitRate = EstimateBitrate(w, h, Math.Max(1, fps)),
+                    FormatId = $"{w}x{h}@{fps}"
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat error: {ex.Message}");
+        }
+
+        // Fallback: use a safe default
+        return new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5_000_000, FormatId = "720p30" };
+    }
+
+    /// <summary>
+    /// Gets predefined video formats for Windows platform
+    /// </summary>
+    private List<VideoFormat> GetPredefinedVideoFormats()
+    {
+        return new List<VideoFormat>
+        {
+            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
+            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 60, Codec = "H.264", BitRate = 12000000, FormatId = "1080p60" },
+            new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
+            new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 7500000, FormatId = "720p60" },
+            new VideoFormat { Width = 3840, Height = 2160, FrameRate = 30, Codec = "H.264", BitRate = 25000000, FormatId = "2160p30" }
+        };
+    }
+
+    /// <summary>
+    /// Gets the appropriate video encoding profile based on current video quality setting
+    /// </summary>
+    private MediaEncodingProfile GetVideoEncodingProfile()
+    {
+        var quality = FormsControl.VideoQuality;
+
+        MediaEncodingProfile profile = quality switch
+        {
+            VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
+            VideoQuality.Standard => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p),
+            VideoQuality.High => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p),
+            VideoQuality.Ultra => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Uhd2160p),
+            VideoQuality.Manual => GetManualVideoEncodingProfile(),
+            _ => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p)
+        };
+
+        // Remove audio if not recording audio
+        if (!FormsControl.RecordAudio)
+        {
+            profile.Audio = null;
+            Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
+        }
+        else
+        {
+            Debug.WriteLine("[NativeCamera.Windows] Audio enabled for video recording");
+        }
+
+        return profile;
+    }
+
+    /// <summary>
+    /// Gets manual video encoding profile based on VideoFormatIndex
+    /// </summary>
+    private MediaEncodingProfile GetManualVideoEncodingProfile()
+    {
+        try
+        {
+            // For manual mode, create custom profile
+            var profile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
+
+            // Get selected format if available (for now use predefined formats)
+            var formats = GetPredefinedVideoFormats();
+            if (formats.Count > FormsControl.VideoFormatIndex)
+            {
+                var selectedFormat = formats[FormsControl.VideoFormatIndex];
+
+                // Customize video encoding properties
+                profile.Video.Width = (uint)selectedFormat.Width;
+                profile.Video.Height = (uint)selectedFormat.Height;
+                profile.Video.FrameRate.Numerator = (uint)selectedFormat.FrameRate;
+                profile.Video.FrameRate.Denominator = 1;
+                profile.Video.Bitrate = (uint)selectedFormat.BitRate;
+            }
+
+            // Handle audio setting for manual profile too
+            if (!FormsControl.RecordAudio)
+            {
+                profile.Audio = null;
+            }
+
+            return profile;
+        }
+        catch
+        {
+            // Fallback to standard quality
+            var fallbackProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
+            if (!FormsControl.RecordAudio)
+            {
+                fallbackProfile.Audio = null;
+            }
+            return fallbackProfile;
+        }
+    }
+
+    /// <summary>
+    /// Timer callback for video recording progress updates
+    /// </summary>
+    private void OnProgressTimer(object state)
+    {
+        if (!_isRecordingVideo)
+            return;
+
+        var elapsed = DateTime.Now - _recordingStartTime;
+        VideoRecordingProgress?.Invoke(elapsed);
+    }
+
+
+    public async Task StartVideoRecording()
+    {
+        if (_isRecordingVideo || _mediaCapture == null)
+            return;
+
+        try
+        {
+            // Create video encoding profile based on current video quality
+            var profile = GetVideoEncodingProfile();
+
+            // Create temp file for video recording in cache directory
+            var fileName = $"video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+            var cacheDir = FileSystem.Current.CacheDirectory;
+            var filePath = Path.Combine(cacheDir, fileName);
+
+            // Create or replace the file in the cache directory
+            var cacheFolder = await StorageFolder.GetFolderFromPathAsync(cacheDir);
+            _currentVideoFile = await cacheFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            Debug.WriteLine($"[NativeCameraWindows] Starting video recording to: {_currentVideoFile.Path}");
+
+            // Start recording to storage file
+            await _mediaCapture.StartRecordToStorageFileAsync(profile, _currentVideoFile);
+
+            _isRecordingVideo = true;
+            _recordingStartTime = DateTime.Now;
+
+            // Start progress timer (fire every second)
+            _progressTimer = new System.Threading.Timer(OnProgressTimer, null,
+                TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+
+            Debug.WriteLine("[NativeCameraWindows] Video recording started successfully");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Failed to start video recording: {ex.Message}\nStackTrace: {ex.StackTrace}");
+            _isRecordingVideo = false;
+            _currentVideoFile = null;
+            VideoRecordingFailed?.Invoke(ex);
+        }
+    }
+
+/// <summary>
+/// Stops video recording
+/// </summary>
+public async Task StopVideoRecording()
+    {
+        if (!_isRecordingVideo || _mediaCapture == null || _currentVideoFile == null)
+            return;
+
+        try
+        {
+            Debug.WriteLine("[NativeCameraWindows] Stopping video recording...");
+
+            // Stop progress timer
+            _progressTimer?.Dispose();
+            _progressTimer = null;
+
+            // Stop recording
+            await _mediaCapture.StopRecordAsync();
+
+            var recordingEndTime = DateTime.Now;
+            var duration = recordingEndTime - _recordingStartTime;
+
+            // Get file size
+            var properties = await _currentVideoFile.GetBasicPropertiesAsync();
+            var fileSizeBytes = (long)properties.Size;
+
+            Debug.WriteLine($"[NativeCameraWindows] Video recording stopped. Duration: {duration:mm\\:ss}, Size: {fileSizeBytes / (1024 * 1024):F1} MB");
+
+            // Create captured video object
+            var capturedVideo = new CapturedVideo
+            {
+                FilePath = _currentVideoFile.Path,
+                Duration = duration,
+                Format = GetCurrentVideoFormat(),
+                Facing = FormsControl.Facing,
+                Time = _recordingStartTime,
+                FileSizeBytes = fileSizeBytes,
+                Metadata = new Dictionary<string, object>
+                {
+                    { "Platform", "Windows" },
+                    { "CameraDevice", _cameraDevice?.Name ?? "Unknown" },
+                    { "RecordingStartTime", _recordingStartTime },
+                    { "RecordingEndTime", recordingEndTime }
+                }
+            };
+
+            _isRecordingVideo = false;
+
+            // Fire success event
+            VideoRecordingSuccess?.Invoke(capturedVideo);
+
+            Debug.WriteLine("[NativeCameraWindows] Video recording completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Failed to stop video recording: {ex.Message}");
+            _isRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(ex);
+        }
+        finally
+        {
+            _currentVideoFile = null;
+        }
+    }
+
+    /// <summary>
+    /// Gets whether video recording is supported on this camera
+    /// </summary>
+    /// <returns>True if video recording is supported</returns>
+    public bool CanRecordVideo()
+    {
+        try
+        {
+            // Check if MediaCapture is available and has video recording capabilities
+            return _mediaCapture != null &&
+                   _mediaCapture.MediaCaptureSettings != null &&
+                   _mediaCapture.MediaCaptureSettings.StreamingCaptureMode != StreamingCaptureMode.Audio;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+
+    /// <summary>
+    /// Save video to gallery
+    /// </summary>
+    /// <param name="videoFilePath">Path to video file</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    {
+        // TODO: Implement Windows video save to gallery
+        await Task.Delay(100); // Placeholder
+        return null;
+    }
+
+    /// <summary>
+    /// Event fired when video recording completes successfully
+    /// </summary>
+    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording fails
+    /// </summary>
+    public Action<Exception> VideoRecordingFailed { get; set; }
+
+    /// <summary>
+    /// Event fired when video recording progress updates
+    /// </summary>
+    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    #endregion
+
     #region IDisposable
 
     public void Dispose()
@@ -1644,6 +1969,18 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             Stop();
 
+            // Stop video recording if active
+            if (_isRecordingVideo)
+            {
+                try
+                {
+                    _mediaCapture?.StopRecordAsync()?.AsTask()?.Wait(1000);
+                }
+                catch { }
+                _isRecordingVideo = false;
+            }
+
+            _progressTimer?.Dispose();
             _frameReader?.Dispose();
             _mediaCapture?.Dispose();
             _frameSemaphore?.Dispose();

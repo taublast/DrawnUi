@@ -5,10 +5,9 @@
     </Target>
 
     <PropertyGroup>
-
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <WindowsEnableDebugging>true</WindowsEnableDebugging>
         <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <!--<DocumentationMarkdown>$(MSBuildProjectDirectory)\Generated.md</DocumentationMarkdown>-->
     </PropertyGroup>
 
@@ -30,8 +29,9 @@
         <Description>Cross-platform rendering engine for .NET MAUI to draw your UI with SkiaSharp</Description>
         <PackageTags>maui drawnui skia skiasharp draw ui</PackageTags>
         <PackageIcon>icon128.png</PackageIcon>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <CreatePackage>false</CreatePackage>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

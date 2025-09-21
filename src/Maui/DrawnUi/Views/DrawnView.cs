@@ -197,9 +197,9 @@ namespace DrawnUi.Views
         /// Postpone the action to be executed before the next frame being drawn. Exception-safe.
         /// </summary>
         /// <param name="action"></param>
-        public void PostponeExecutionBeforeDraw(Action action)
+        public void PostponeExecutionBeforeDraw(Action action, long key)
         {
-            ExecuteBeforeDraw.Enqueue(action);
+            ExecuteBeforeDraw.Enqueue(key, action);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace DrawnUi.Views
             ExecuteAfterDraw.Enqueue(action);
         }
 
-        public Queue<Action> ExecuteBeforeDraw { get; } = new(1024);
+        public KeyedActionQueue<long> ExecuteBeforeDraw { get; } = new(1024);
         public Queue<Action> ExecuteAfterDraw { get; } = new(1024);
         protected Action<SKImage> CallbackScreenshot;
         //protected Dictionary<SkiaControl, VisualTreeChain> RenderingTrees = new(128);
@@ -1865,17 +1865,7 @@ namespace DrawnUi.Views
 
                 CommitInvalidations();
 
-                while (ExecuteBeforeDraw.TryDequeue(out Action action))
-                {
-                    try
-                    {
-                        action?.Invoke();
-                    }
-                    catch (Exception e)
-                    {
-                        Super.Log(e);
-                    }
-                }
+                ExecuteBeforeDraw.ExecuteAll();
 
                 var executed = ExecuteAnimators(context.Context.FrameTimeNanos);
 

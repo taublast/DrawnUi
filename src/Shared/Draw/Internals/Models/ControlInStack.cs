@@ -6,6 +6,7 @@ namespace DrawnUi.Draw;
 public class ControlInStack
 {
     private bool isVisible;
+    private ScaledSize measured = ScaledSize.Default;
 
     public ControlInStack()
     {
@@ -22,7 +23,21 @@ public class ControlInStack
     /// <summary>
     /// Measure result
     /// </summary>
-    public ScaledSize Measured { get; set; }
+    public ScaledSize Measured
+    {
+        get => measured;
+        set
+        {
+            if (value == null)
+            {
+                measured = ScaledSize.Default;
+            }
+            else
+            {
+                measured = value;
+            }
+        }
+    }
 
     public SKRect Layout { get; set; }
 

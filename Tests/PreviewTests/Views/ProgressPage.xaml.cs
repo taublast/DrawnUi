@@ -1,5 +1,8 @@
+using PreviewTests.Views.Controls;
+
 namespace PreviewTests.Views
 {
+    [Preview<CircularProgress>]
     public partial class ProgressPage
     {
 

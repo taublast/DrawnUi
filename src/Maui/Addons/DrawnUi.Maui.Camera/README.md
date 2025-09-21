@@ -120,7 +120,7 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 <camera:SkiaCamera
     x:Name="CameraControl"
     BackgroundColor="Black"
-    CapturePhotoQuality="Medium"
+    PhotoQuality="Medium"
     Facing="Default"
     HorizontalOptions="Fill"
     VerticalOptions="Fill"
@@ -135,8 +135,8 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 | `Facing` | `CameraPosition` | `Default` | Camera selection: `Default` (back), `Selfie` (front), `Manual` |
 | `CameraIndex` | `int` | `-1` | Manual camera selection index (when `Facing = Manual`) |
 | `IsOn` | `bool` | `false` | Camera power state - use this to start/stop camera |
-| `CapturePhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview`, `Manual` |
-| `CaptureFormatIndex` | `int` | `0` | Format index for manual capture (when `CapturePhotoQuality = Manual`) |
+| `PhotoQuality` | `CaptureQuality` | `Max` | Photo quality: `Max`, `Medium`, `Low`, `Preview`, `Manual` |
+| `PhotoFormatIndex` | `int` | `0` | Format index for manual capture (when `PhotoQuality = Manual`) |
 | `FlashMode` | `FlashMode` | `Off` | Preview torch mode: `Off`, `On`, `Strobe` |
 | `CaptureFlashMode` | `CaptureFlashMode` | `Auto` | Flash mode for capture: `Off`, `Auto`, `On` |
 | `IsFlashSupported` | `bool` | - | Whether flash is available (read-only) |
@@ -281,10 +281,10 @@ SkiaCamera provides **precise control over capture resolution and aspect ratio**
 #### Quality Presets
 ```csharp
 // Quick quality selection
-camera.CapturePhotoQuality = CaptureQuality.Max;     // Highest resolution
-camera.CapturePhotoQuality = CaptureQuality.Medium;  // Balanced quality/size
-camera.CapturePhotoQuality = CaptureQuality.Low;     // Fastest capture
-camera.CapturePhotoQuality = CaptureQuality.Preview; // Smallest usable size
+camera.PhotoQuality = CaptureQuality.Max;     // Highest resolution
+camera.PhotoQuality = CaptureQuality.Medium;  // Balanced quality/size
+camera.PhotoQuality = CaptureQuality.Low;     // Fastest capture
+camera.PhotoQuality = CaptureQuality.Preview; // Smallest usable size
 ```
 
 #### Manual Format Selection
@@ -305,8 +305,8 @@ if (!string.IsNullOrEmpty(result))
     if (selectedIndex >= 0)
     {
         // Set manual capture mode with selected format
-        camera.CapturePhotoQuality = CaptureQuality.Manual;
-        camera.CaptureFormatIndex = selectedIndex;
+        camera.PhotoQuality = CaptureQuality.Manual;
+        camera.PhotoFormatIndex = selectedIndex;
 
         // Preview automatically adjusts to match aspect ratio!
         var selectedFormat = formats[selectedIndex];
@@ -327,9 +327,9 @@ if (currentFormat != null)
     Debug.WriteLine($"Total pixels: {currentFormat.TotalPixels:N0}");
 }
 
-// This works regardless of whether CapturePhotoQuality is set to:
+// This works regardless of whether PhotoQuality is set to:
 // - Max, Medium, Low, Preview (automatic selection)
-// - Manual (using CaptureFormatIndex)
+// - Manual (using PhotoFormatIndex)
 ```
 
 #### Format Information
@@ -351,8 +351,8 @@ foreach (var format in formats)
 
 ```csharp
 // Before: Preview might be 16:9, capture might be 4:3 (letterboxing!)
-camera.CapturePhotoQuality = CaptureQuality.Manual;
-camera.CaptureFormatIndex = 2; // Select 4000x3000 (4:3)
+camera.PhotoQuality = CaptureQuality.Manual;
+camera.PhotoFormatIndex = 2; // Select 4000x3000 (4:3)
 
 // After: Preview automatically switches to 4:3 aspect ratio
 // Result: True WYSIWYG - what you see is what you capture!
@@ -414,8 +414,8 @@ private async void OnFormatSelectionClicked()
 
         if (formatMap.TryGetValue(result, out var selection))
         {
-            CameraControl.CapturePhotoQuality = CaptureQuality.Manual;
-            CameraControl.CaptureFormatIndex = selection.index;
+            CameraControl.PhotoQuality = CaptureQuality.Manual;
+            CameraControl.PhotoFormatIndex = selection.index;
 
             StatusLabel.Text = $"📸 {selection.format.Description}";
         }
@@ -926,7 +926,7 @@ public partial class CameraPage : ContentPage
 var camera = new SkiaCamera
 {
     Facing = CameraPosition.Default,
-    CapturePhotoQuality = CaptureQuality.Medium,
+    PhotoQuality = CaptureQuality.Medium,
     IsOn = true
 };
 ```
@@ -1058,8 +1058,8 @@ public CameraState State { get; }                 // Current state (read-only)
 public bool IsBusy { get; }                       // Processing state (read-only)
 
 // Capture Settings
-public CaptureQuality CapturePhotoQuality { get; set; } // Photo quality
-public int CaptureFormatIndex { get; set; }             // Manual format index
+public CaptureQuality PhotoQuality { get; set; } // Photo quality
+public int PhotoFormatIndex { get; set; }             // Manual format index
 public CaptureFlashMode CaptureFlashMode { get; set; }   // Flash mode for capture
 
 // Flash Control
@@ -1068,10 +1068,18 @@ public bool IsFlashSupported { get; }                   // Flash availability
 public bool IsAutoFlashSupported { get; }               // Auto flash support
 public SkiaImageEffect Effect { get; set; }       // Real-time simple color filters
 
+// Video Recording
+public bool IsRecordingVideo { get; }             // Recording state (read-only)
+public VideoQuality VideoQuality { get; set; }   // Video quality preset
+public int VideoFormatIndex { get; set; }         // Manual format index
+
 // Zoom & Limits
 public double Zoom { get; set; }                  // Current zoom level
 public double ZoomLimitMin { get; set; }          // Minimum zoom
 public double ZoomLimitMax { get; set; }          // Maximum zoom
+
+// Audio Recording
+public bool RecordAudio { get; set; }             // Include audio in video recordings (default: false)
 ```
 
 ### Core Methods
@@ -1091,6 +1099,14 @@ public async Task TakePicture()
 public void FlashScreen(Color color, long duration = 250)
 public void OpenFileInGallery(string filePath)               // Open file in system gallery
 
+// Video Recording Operations
+public async Task StartVideoRecording()                      // Start video recording
+public async Task StopVideoRecording()                       // Stop video recording
+public bool CanRecordVideo()                                 // Check recording support
+public async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()  // Get video formats
+public VideoFormat GetCurrentVideoFormat()                  // Current video format
+public async Task<string> MoveVideoToGalleryAsync(CapturedVideo video, string album = null, bool deleteOriginal = true) // Move video to gallery (consistent API)
+
 // Camera Controls
 public void SetZoom(double value)
 
@@ -1105,8 +1121,16 @@ public bool IsAutoFlashSupported { get; }               // Auto flash support
 
 ### Events
 ```csharp
+// Photo Capture Events
 public event EventHandler<CapturedImage> CaptureSuccess;
 public event EventHandler<Exception> CaptureFailed;
+
+// Video Recording Events
+public event EventHandler<CapturedVideo> VideoRecordingSuccess;
+public event EventHandler<Exception> VideoRecordingFailed;
+public event EventHandler<TimeSpan> VideoRecordingProgress;
+
+// Preview & State Events
 public event EventHandler<LoadedImageSource> NewPreviewSet;
 public event EventHandler<CameraState> StateChanged;
 public event EventHandler<string> OnError;
@@ -1136,6 +1160,30 @@ public class CameraInfo
     public int Index { get; set; }                    // Camera index
     public bool HasFlash { get; set; }                // Flash availability
 }
+
+// Video format information
+public class VideoFormat
+{
+    public int Width { get; set; }                    // Video width in pixels
+    public int Height { get; set; }                   // Video height in pixels
+    public double FrameRate { get; set; }             // Frames per second
+    public string Codec { get; set; }                 // Video codec (H.264, H.265, etc.)
+    public long BitRate { get; set; }                 // Bit rate in bits per second
+    public double AspectRatio => (double)Width / Height; // Aspect ratio
+    public string Description { get; }               // Human-readable description
+}
+
+// Captured video information
+public class CapturedVideo
+{
+    public string FilePath { get; set; }              // Path to recorded video file
+    public TimeSpan Duration { get; set; }            // Video duration
+    public VideoFormat Format { get; set; }           // Video format used
+    public CameraPosition Facing { get; set; }        // Camera that recorded video
+    public DateTime Time { get; set; }                // Recording timestamp
+    public Dictionary<string, object> Metadata { get; set; } // Additional metadata
+    public long FileSizeBytes { get; set; }           // File size in bytes
+}
 ```
 
 ### Enums
@@ -1143,6 +1191,7 @@ public class CameraInfo
 public enum CameraPosition { Default, Selfie, Manual }
 public enum CameraState { Off, On, Error }
 public enum CaptureQuality { Max, Medium, Low, Preview, Manual }
+public enum VideoQuality { Low, Standard, High, Ultra, Manual }
 public enum FlashMode { Off, On, Strobe }
 public enum CaptureFlashMode { Off, Auto, On }
 public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
@@ -1216,7 +1265,7 @@ This section provides specific guidance for AI agents working with SkiaCamera.
 var camera = new SkiaCamera
 {
     Facing = CameraPosition.Default,
-    CapturePhotoQuality = CaptureQuality.Medium,
+    PhotoQuality = CaptureQuality.Medium,
     IsOn = true
 };
 
@@ -1295,15 +1344,479 @@ if (camera.State == CameraState.On && !camera.IsBusy)
 - [x] **Photo capture** with metadata and custom rendering applied
 - [x] **Zoom control** with configurable limits
 - [x] **Advanced flash control** (independent preview torch and capture flash modes)
+- [x] **Video recording API** with format selection, quality presets, and event-driven progress monitoring
 - [x] **Event-driven architecture** for MVVM patterns
 - [x] **Permission handling** with built-in checks
 - [x] **State management** with proper lifecycle
 - [x] **Performance optimization** with GPU caching and acceleration
 
+### Video Recording
+
+SkiaCamera provides comprehensive video recording capabilities with format selection, quality control, and cross-platform support. Video recording follows the same dual-channel architecture as photo capture - the live preview continues uninterrupted while recording video in the background.
+
+#### Basic Video Recording
+
+```csharp
+// Check if video recording is supported
+if (camera.CanRecordVideo())
+{
+    // Start recording
+    await camera.StartVideoRecording();
+    
+    // Stop recording
+    await camera.StopVideoRecording();
+}
+
+// Subscribe to video recording events
+camera.VideoRecordingSuccess += OnVideoRecordingSuccess;
+camera.VideoRecordingFailed += OnVideoRecordingFailed;
+camera.VideoRecordingProgress += OnVideoRecordingProgress;
+
+private async void OnVideoRecordingSuccess(object sender, CapturedVideo video)
+{
+    // Video recording completed successfully
+    var filePath = video.FilePath;
+    var duration = video.Duration;
+    var format = video.Format;
+    
+    // Save to gallery with consistent API (move instead of copy for performance)
+    var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyApp");
+}
+
+private void OnVideoRecordingFailed(object sender, Exception ex)
+{
+    await DisplayAlert("Recording Error", $"Failed to record video: {ex.Message}", "OK");
+}
+
+private void OnVideoRecordingProgress(object sender, TimeSpan duration)
+{
+    // Update UI with recording progress
+    RecordingTimeLabel.Text = $"Recording: {duration:mm\\:ss}";
+}
+```
+
+#### Video Recording Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `IsRecordingVideo` | `bool` | `false` | Whether video recording is active (read-only) |
+| `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset: `Low`, `Standard`, `High`, `Ultra`, `Manual` |
+| `VideoFormatIndex` | `int` | `0` | Format index for manual recording (when `VideoQuality = Manual`) |
+| `CanRecordVideo()` | `bool` | - | Whether video recording is supported on current camera |
+
+#### Video Quality Presets
+
+```csharp
+// Quick quality selection
+camera.VideoQuality = VideoQuality.Low;       // 720p, lower bitrate, smaller files
+camera.VideoQuality = VideoQuality.Standard;  // 1080p, balanced quality/size
+camera.VideoQuality = VideoQuality.High;      // 1080p, higher bitrate
+camera.VideoQuality = VideoQuality.Ultra;     // 4K if available, highest quality
+```
+
+#### Manual Video Format Selection
+
+```csharp
+// Get available video formats for current camera
+var formats = await camera.GetAvailableVideoFormatsAsync();
+
+// Display format picker
+var options = formats.Select((format, index) =>
+    $"[{index}] {format.Description}"
+).ToArray();
+
+var result = await DisplayActionSheet("Select Video Format", "Cancel", null, options);
+
+if (!string.IsNullOrEmpty(result) && result != "Cancel")
+{
+    var selectedIndex = Array.FindIndex(options, opt => opt == result);
+    if (selectedIndex >= 0)
+    {
+        // Set manual video recording mode with selected format
+        camera.VideoQuality = VideoQuality.Manual;
+        camera.VideoFormatIndex = selectedIndex;
+        
+        var selectedFormat = formats[selectedIndex];
+        await DisplayAlert("Format Selected", 
+            $"Selected: {selectedFormat.Description}", "OK");
+    }
+}
+```
+
+#### Video Recording with Audio Control
+
+SkiaCamera provides **granular audio control** for video recordings:
+
+```csharp
+// Control audio recording
+camera.RecordAudio = false;  // Record silent videos (default)
+camera.RecordAudio = true;   // Record videos with audio
+
+// Audio control is cross-platform and applies to all video recordings
+```
+
+**Audio Recording Property:**
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `RecordAudio` | `bool` | `false` | Whether to include audio in video recordings |
+
+**XAML Binding:**
+```xml
+<camera:SkiaCamera
+    x:Name="CameraControl"
+    RecordAudio="{Binding RecordWithAudio}"
+    VideoQuality="High" />
+```
+
+**Platform Implementation:**
+- **Android**: Conditional MediaRecorder audio source and encoder setup
+- **iOS/macOS**: Conditional AVCaptureDeviceInput for audio with proper cleanup
+- **Windows**: MediaEncodingProfile audio removal when disabled
+
+#### Video Recording UI Integration
+
+```csharp
+// Complete video recording button implementation with audio control
+private SkiaButton _videoRecordButton;
+private SkiaButton _audioToggleButton;
+
+var recordButton = new SkiaButton("🎥 Record")
+{
+    BackgroundColor = Colors.Purple,
+    TextColor = Colors.White,
+    CornerRadius = 8,
+    UseCache = SkiaCacheType.Image
+}
+.Assign(out _videoRecordButton)
+.OnTapped(async me => { await ToggleVideoRecording(); })
+.ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+{
+    me.Text = CameraControl.IsRecordingVideo ? "🛑 Stop" : "🎥 Record";
+    me.BackgroundColor = CameraControl.IsRecordingVideo ? Colors.Red : Colors.Purple;
+});
+
+// Audio toggle button
+var audioButton = new SkiaButton("🔇 Silent")
+{
+    BackgroundColor = Colors.Gray,
+    TextColor = Colors.White,
+    CornerRadius = 8
+}
+.Assign(out _audioToggleButton)
+.OnTapped(me => { ToggleAudioRecording(); })
+.ObserveProperty(CameraControl, nameof(CameraControl.RecordAudio), me =>
+{
+    me.Text = CameraControl.RecordAudio ? "🎤 Audio" : "🔇 Silent";
+    me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.Gray;
+});
+
+private void ToggleAudioRecording()
+{
+    // Only allow changing audio setting when not recording
+    if (!CameraControl.IsRecordingVideo)
+    {
+        CameraControl.RecordAudio = !CameraControl.RecordAudio;
+    }
+}
+
+private async Task ToggleVideoRecording()
+{
+    if (CameraControl.State != CameraState.On)
+        return;
+
+    try
+    {
+        if (CameraControl.IsRecordingVideo)
+        {
+            await CameraControl.StopVideoRecording();
+        }
+        else
+        {
+            await CameraControl.StartVideoRecording();
+        }
+    }
+    catch (NotImplementedException ex)
+    {
+        await DisplayAlert("Not Implemented", 
+            $"Video recording is not yet implemented for this platform:\n{ex.Message}", "OK");
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert("Video Recording Error", $"Error: {ex.Message}", "OK");
+    }
+}
+```
+
+#### Video Format Information
+
+```csharp
+// VideoFormat provides detailed information about video recording formats
+var currentFormat = camera.GetCurrentVideoFormat();
+if (currentFormat != null)
+{
+    Console.WriteLine($"Resolution: {currentFormat.Width}x{currentFormat.Height}");
+    Console.WriteLine($"Frame Rate: {currentFormat.FrameRate} fps");
+    Console.WriteLine($"Codec: {currentFormat.Codec}");
+    Console.WriteLine($"Bit Rate: {currentFormat.BitRate} bps");
+    Console.WriteLine($"Aspect Ratio: {currentFormat.AspectRatio:F2}");
+    Console.WriteLine($"Description: {currentFormat.Description}");
+}
+
+// Browse all available formats
+var formats = await camera.GetAvailableVideoFormatsAsync();
+foreach (var format in formats)
+{
+    Console.WriteLine($"{format.Width}x{format.Height} @ {format.FrameRate}fps");
+    Console.WriteLine($"Codec: {format.Codec}, BitRate: {format.BitRate}");
+    Console.WriteLine($"Description: {format.Description}");
+}
+```
+
+#### Video Recording Architecture
+
+SkiaCamera implements **non-blocking video recording** that preserves preview performance:
+
+**🎥 Video Recording Channel**
+- Records video using platform-native APIs
+- **Independent of preview stream** - no performance impact on live camera feed
+- Uses hardware-accelerated encoding when available
+- **Property**: `IsRecordingVideo` (read-only status)
+- **Events**: Success/Failed/Progress for comprehensive monitoring
+
+**Platform Implementation:**
+
+| Platform | Recording API | Hardware Acceleration | Background Recording |
+|----------|---------------|----------------------|---------------------|
+| **Android** | `MediaRecorder` | ✅ Hardware encoding | ✅ Continues in background |
+| **iOS/macOS** | `AVCaptureMovieFileOutput` | ✅ Hardware encoding | ✅ Continues in background |
+| **Windows** | `MediaCapture.StartRecordToStreamAsync` | ✅ Hardware encoding | ✅ Continues in background |
+
+#### Performance Considerations
+
+Video recording is designed to have **zero impact on preview performance**:
+
+- **Separate recording session**: Video recording uses a separate output stream from preview
+- **Hardware acceleration**: Platform-native encoders handle compression
+- **Asynchronous operations**: All recording operations are non-blocking
+- **Memory efficient**: Direct stream-to-file recording, no memory buffering
+
+#### Video Recording Events
+
+```csharp
+// Comprehensive event handling for video recording
+camera.VideoRecordingSuccess += (sender, video) =>
+{
+    MainThread.BeginInvokeOnMainThread(async () =>
+    {
+        // Video recording completed
+        var message = $"Video recorded successfully!\n" +
+                     $"Duration: {video.Duration:mm\\:ss}\n" +
+                     $"File: {Path.GetFileName(video.FilePath)}\n" +
+                     $"Size: {video.FileSizeBytes / (1024 * 1024):F1} MB";
+        
+        await DisplayAlert("Recording Complete", message, "OK");
+        
+        // Save to gallery using consistent API
+        var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyApp Videos");
+        if (!string.IsNullOrEmpty(galleryPath))
+        {
+            await DisplayAlert("Saved", $"Video saved to gallery:\n{galleryPath}", "OK");
+        }
+    });
+};
+
+camera.VideoRecordingFailed += (sender, exception) =>
+{
+    MainThread.BeginInvokeOnMainThread(async () =>
+    {
+        await DisplayAlert("Recording Failed", 
+            $"Video recording failed: {exception.Message}", "OK");
+    });
+};
+
+camera.VideoRecordingProgress += (sender, duration) =>
+{
+    MainThread.BeginInvokeOnMainThread(() =>
+    {
+        // Update recording duration display
+        RecordingLabel.Text = $"🔴 REC {duration:mm\\:ss}";
+        
+        // Optional: Update progress bar for timed recordings
+        if (MaxRecordingDuration > TimeSpan.Zero)
+        {
+            var progress = duration.TotalSeconds / MaxRecordingDuration.TotalSeconds;
+            RecordingProgressBar.Progress = Math.Min(progress, 1.0);
+        }
+    });
+};
+```
+
+#### Video Data Classes
+
+```csharp
+// Video format specification
+public class VideoFormat
+{
+    public int Width { get; set; }              // Video width in pixels
+    public int Height { get; set; }             // Video height in pixels
+    public double FrameRate { get; set; }       // Frames per second
+    public string Codec { get; set; }           // Video codec (H.264, H.265, etc.)
+    public long BitRate { get; set; }           // Bit rate in bits per second
+    public double AspectRatio => (double)Width / Height; // Aspect ratio
+    public string Description { get; }          // Human-readable description
+}
+
+// Captured video information
+public class CapturedVideo
+{
+    public string FilePath { get; set; }        // Path to recorded video file
+    public TimeSpan Duration { get; set; }      // Video duration
+    public VideoFormat Format { get; set; }     // Video format used
+    public CameraPosition Facing { get; set; }  // Camera that recorded video
+    public DateTime Time { get; set; }          // Recording timestamp
+    public Dictionary<string, object> Metadata { get; set; } // Additional metadata
+    public long FileSizeBytes { get; set; }     // File size in bytes
+}
+
+// Video quality presets
+public enum VideoQuality
+{
+    Low,        // 720p, optimized for size and battery
+    Standard,   // 1080p, balanced quality
+    High,       // 1080p, higher bitrate
+    Ultra,      // 4K if available, maximum quality
+    Manual      // Use VideoFormatIndex for custom format
+}
+```
+
+#### Video Recording Methods
+
+```csharp
+// Video recording control methods
+public async Task StartVideoRecording()             // Start recording video
+public async Task StopVideoRecording()              // Stop recording video
+public bool CanRecordVideo()                        // Check if recording is supported
+
+// Video format management
+public async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()  // Get available formats
+public VideoFormat GetCurrentVideoFormat()         // Get currently selected format
+
+// Video file management
+public async Task<string> MoveVideoToGalleryAsync(CapturedVideo video, string album = null, bool deleteOriginal = true)
+```
+
+#### Complete Video Recording Example
+
+```csharp
+public partial class VideoRecordingPage : ContentPage
+{
+    private SkiaCamera _camera;
+    private SkiaButton _recordButton;
+    private SkiaLabel _statusLabel;
+    private DateTime _recordingStartTime;
+
+    private void SetupVideoRecording()
+    {
+        // Setup camera with video recording
+        _camera = new SkiaCamera
+        {
+            Facing = CameraPosition.Default,
+            VideoQuality = VideoQuality.High,
+            IsOn = true
+        };
+
+        // Subscribe to video events
+        _camera.VideoRecordingSuccess += OnVideoSuccess;
+        _camera.VideoRecordingFailed += OnVideoFailed;
+        _camera.VideoRecordingProgress += OnVideoProgress;
+
+        // Create recording button
+        _recordButton = new SkiaButton("🎥 Record")
+        {
+            BackgroundColor = Colors.Red,
+            TextColor = Colors.White
+        };
+        _recordButton.Clicked += OnRecordButtonClicked;
+
+        // Create status label
+        _statusLabel = new SkiaLabel("Ready to record")
+        {
+            TextColor = Colors.White,
+            FontSize = 16
+        };
+    }
+
+    private async void OnRecordButtonClicked(object sender, EventArgs e)
+    {
+        if (!_camera.CanRecordVideo())
+        {
+            await DisplayAlert("Not Supported", "Video recording not available", "OK");
+            return;
+        }
+
+        try
+        {
+            if (_camera.IsRecordingVideo)
+            {
+                await _camera.StopVideoRecording();
+            }
+            else
+            {
+                _recordingStartTime = DateTime.Now;
+                await _camera.StartVideoRecording();
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Recording error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnVideoSuccess(object sender, CapturedVideo video)
+    {
+        var duration = video.Duration;
+        var fileSize = video.FileSizeBytes / (1024 * 1024); // MB
+        
+        var message = $"Video recorded!\n" +
+                     $"Duration: {duration:mm\\:ss}\n" +
+                     $"Size: {fileSize:F1} MB\n" +
+                     $"Format: {video.Format?.Description ?? "Unknown"}";
+
+        await DisplayAlert("Success", message, "Save to Gallery", "OK");
+        
+        // Save to gallery using consistent API
+        var galleryPath = await _camera.MoveVideoToGalleryAsync(video, "My Videos");
+        if (!string.IsNullOrEmpty(galleryPath))
+        {
+            _statusLabel.Text = "Video saved to gallery";
+        }
+    }
+
+    private async void OnVideoFailed(object sender, Exception ex)
+    {
+        await DisplayAlert("Recording Failed", ex.Message, "OK");
+        _recordButton.Text = "🎥 Record";
+        _recordButton.BackgroundColor = Colors.Red;
+        _statusLabel.Text = "Recording failed";
+    }
+
+    private void OnVideoProgress(object sender, TimeSpan duration)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            _recordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
+            _recordButton.BackgroundColor = Colors.DarkRed;
+            _statusLabel.Text = $"Recording... {duration:mm\\:ss}";
+        });
+    }
+}
+```
+
 ### 🚧 ToDo
-- [ ] **Manual camera controls** (focus, exposure, ISO, white balance) - partially implemented, need to expose more controls
+- [ ] **Manual camera controls** (focus, exposure, ISO, white balance) - partially implemented, need to expose more controls  
 - [ ] **Camera capability detection** (zoom ranges, supported formats) - need to combine available cameras list with camera units list and expose
-- [ ] **Video recording** support
+- [ ] **Video recording platform implementations** - API complete, platform-specific recording implementations needed
 - [ ] **Preview format customization** - currently auto-selected to match capture aspect ratio
 
 

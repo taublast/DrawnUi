@@ -2,6 +2,16 @@ global using DrawnUi.Draw;
 global using SkiaSharp;
 global using HotPreview;
 using Microsoft.Extensions.Logging;
+using PreviewTests.Views;
+using DrawnUi.MapsUi;
+using PreviewTests.Views.Controls;
+using PreviewTests;
+
+[assembly: UIComponentCategory("Layouts", typeof(SkiaDrawer), typeof(SkiaCarousel), typeof(SkiaLayout), typeof(MainDrawnCells))]
+[assembly: UIComponentCategory("Third Party", typeof(AlohaKitPage), typeof(SkiaMapsUi))]
+[assembly: UIComponentCategory("Custom Controls", typeof(CircularProgress))]
+[assembly: UIComponentCategory("Shader Effects", typeof(ShaderRipplesPage), typeof(ShaderPage))]
+[assembly: UIComponentCategory("Graphics", typeof(ShapesPage), typeof(MauiGraphicsPage), typeof(SkiaLottie), typeof(MainPageCodeForVideo), typeof(SkiaBackdrop))]
 
 namespace PreviewTests
 {

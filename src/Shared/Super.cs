@@ -2,6 +2,8 @@
 global using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
+
 
 namespace DrawnUi.Draw;
 
@@ -51,10 +53,25 @@ public partial class Super
     /// </summary>
     public static bool CanUseHardwareAcceleration = true;
 
+    /// <summary>
+    /// Logs an exception at Error level. If a startup logger is configured, delegates to it; otherwise falls back to Trace/Console.
+    /// </summary>
+    /// <param name="e">The exception to log.</param>
+    /// <param name="caller">The calling member name (optional).</param>
     public static void Log(Exception e, [CallerMemberName] string caller = null)
     {
-        //TODO use ILogger with levels etc
-
+        try
+        {
+            if (DrawnExtensions.StartupSettings != null)
+            {
+                // Prefer structured logging with exception when available
+                DrawnExtensions.StartupSettings.Logger?.LogError(e, e?.Message ?? "Exception");
+            }
+        }
+        catch
+        {
+            // ignore logger failures and fall back
+        }
 #if WINDOWS
         Trace.WriteLine(e);
 #else
@@ -396,7 +413,7 @@ public partial class Super
     public static string UserAgent { get; set; } = "Mozilla/5.0 AppleWebKit Chrome Mobile Safari";
 
     public static int SkiaGeneration = 3;
-    
+
     static readonly Queue<Func<Task>> _offscreenCacheRenderingQueue = new(1024);
     private static bool _processingOffscrenRendering;
 

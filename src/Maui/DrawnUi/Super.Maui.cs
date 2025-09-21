@@ -133,7 +133,10 @@ namespace DrawnUi.Draw
 
         }
 
-        public static void Log(string message, LogLevel logLevel = LogLevel.Error, [CallerMemberName] string caller = null)
+        /// <summary>
+        /// Logs a message. By convention, string-only calls are Warning level.
+        /// </summary>
+        public static void Log(string message, LogLevel logLevel = LogLevel.Warning, [CallerMemberName] string caller = null)
         {
             if (DrawnExtensions.StartupSettings != null)
             {
@@ -143,8 +146,17 @@ namespace DrawnUi.Draw
 #if WINDOWS
         Trace.WriteLine(message);
 #else
+
             Console.WriteLine(message);
 #endif
+        }
+
+        /// <summary>
+        /// Logs a message at the specified level.
+        /// </summary>
+        public static void Log(LogLevel level, string message, [CallerMemberName] string caller = null)
+        {
+            Log(message, level, caller);
         }
 
 

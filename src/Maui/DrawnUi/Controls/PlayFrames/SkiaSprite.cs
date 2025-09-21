@@ -26,12 +26,24 @@ public class SkiaSprite : AnimatedFramesRenderer
     {
         this.Display = new()
         {
+            //UseCache = SkiaCacheType.Image,
             LoadSourceOnFirstDraw = false,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
         };
 
         Display.SetParent(this);
+    }
+
+    protected override void Paint(DrawingContext ctx)
+    {
+
+        if (Columns != _lastColumns || Rows != _lastRows)
+        {
+            RecalculateFrames();
+        }
+
+        base.Paint(ctx);
     }
 
     /// <summary>
@@ -80,6 +92,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         {
             LayoutDisplay();
         }
+
         base.InvalidateMeasure();
     }
 
@@ -126,8 +139,12 @@ public class SkiaSprite : AnimatedFramesRenderer
         if (SpriteSheet != null)
         {
             var frame = GetFrameNumberFromTime(time);
-            SetCurrentFrame(frame);
+            if (frame != CurrentFrame)
+            {
+                SetCurrentFrame(frame);
+            }
         }
+
         base.OnAnimatorSeeking(time);
     }
 
@@ -211,7 +228,7 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// Lock object for thread-safe operations on source
     /// </summary>
     private readonly object _lockSource = new();
-    
+
     /// <summary>
     /// Semaphore for limiting concurrent file loading operations
     /// </summary>
@@ -424,7 +441,8 @@ public class SkiaSprite : AnimatedFramesRenderer
 
             if (TotalFrames > 0)
             {
-                Debug.WriteLine($"[SkiaSprite] Loaded spritesheet: Frames: {TotalFrames}, Duration: {DurationMs}ms, FPS: {FramesPerSecond}");
+                Debug.WriteLine(
+                    $"[SkiaSprite] Loaded spritesheet: Frames: {TotalFrames}, Duration: {DurationMs}ms, FPS: {FramesPerSecond}");
 
                 InitializeAnimator(); // Autoplay applied inside
                 SetCurrentFrame(DefaultFrame);
@@ -485,7 +503,12 @@ public class SkiaSprite : AnimatedFramesRenderer
         // Calculate duration based on FPS
         FrameDurationMs = 1000 / FramesPerSecond;
         DurationMs = TotalFrames * FrameDurationMs;
+
+        _lastColumns=Columns;
+        _lastRows = Rows;
     }
+
+    private bool isSettingFrame;
 
     /// <summary>
     /// Sets the current frame and updates the display
@@ -493,55 +516,70 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// <param name="frameNumber">Frame number to display</param>
     protected void SetCurrentFrame(int frameNumber)
     {
-        if (SpriteSheet == null || TotalFrames == 0) return;
+        if (SpriteSheet == null || TotalFrames == 0 || isSettingFrame) return;
 
-        frameNumber = Math.Max(0, Math.Min(frameNumber, TotalFrames - 1));
+        isSettingFrame = true;
 
-        // If using a frame sequence, convert to actual spritesheet frame
-        int actualFrame;
-        if (FrameSequence != null && FrameSequence.Length > 0)
+        try
         {
-            // Ensure we don't go beyond the bounds of our sequence array
-            int sequenceIndex = Math.Min(frameNumber, FrameSequence.Length - 1);
-            actualFrame = FrameSequence[sequenceIndex];
+            frameNumber = Math.Max(0, Math.Min(frameNumber, TotalFrames - 1));
+
+            // If using a frame sequence, convert to actual spritesheet frame
+            int actualFrame;
+            if (FrameSequence != null && FrameSequence.Length > 0)
+            {
+                // Ensure we don't go beyond the bounds of our sequence array
+                int sequenceIndex = Math.Min(frameNumber, FrameSequence.Length - 1);
+                actualFrame = FrameSequence[sequenceIndex];
+            }
+            else
+            {
+                actualFrame = frameNumber;
+            }
+
+            CurrentFrame = frameNumber;
+
+            // Calculate frame position in the spritesheet
+            int framesX = Math.Max(1, Columns);
+            int row = actualFrame / framesX;
+            int col = actualFrame % framesX;
+
+            // Extract frame from spritesheet
+            int x = col * FrameWidth;
+            int y = row * FrameHeight;
+
+            // Create a new bitmap for the frame if needed
+            if (_currentFrameBitmap == null ||
+                _currentFrameBitmap.Width != FrameWidth ||
+                _currentFrameBitmap.Height != FrameHeight)
+            {
+                _currentFrameBitmap?.Dispose();
+                _currentFrameBitmap = new SKBitmap(FrameWidth, FrameHeight);
+            }
+
+            // Extract the frame from the sprite sheet
+            using (var canvas = new SKCanvas(_currentFrameBitmap))
+            {
+                canvas.Clear();
+                var srcRect = new SKRect(x, y, x + FrameWidth, y + FrameHeight);
+                canvas.DrawBitmap(SpriteSheet, srcRect, new SKRect(0, 0, FrameWidth, FrameHeight));
+            }
+
+            Display.SetBitmapInternal(_currentFrameBitmap, true);
         }
-        else
+        finally
         {
-            actualFrame = frameNumber;
+            isSettingFrame = false;
         }
+    }
 
-        CurrentFrame = frameNumber;
-
-        // Calculate frame position in the spritesheet
-        int framesX = Math.Max(1, Columns);
-        int row = actualFrame / framesX;
-        int col = actualFrame % framesX;
-
-        // Extract frame from spritesheet
-        int x = col * FrameWidth;
-        int y = row * FrameHeight;
-
-        // Create a new bitmap for the frame if needed
-        if (_currentFrameBitmap == null ||
-            _currentFrameBitmap.Width != FrameWidth ||
-            _currentFrameBitmap.Height != FrameHeight)
-        {
-            _currentFrameBitmap?.Dispose();
-            _currentFrameBitmap = new SKBitmap(FrameWidth, FrameHeight);
-        }
-
-        // Extract the frame from the sprite sheet
-        using (var canvas = new SKCanvas(_currentFrameBitmap))
-        {
-            canvas.Clear();
-            var srcRect = new SKRect(x, y, x + FrameWidth, y + FrameHeight);
-            canvas.DrawBitmap(SpriteSheet, srcRect, new SKRect(0, 0, FrameWidth, FrameHeight));
-        }
-
-        Display.SetBitmapInternal(_currentFrameBitmap, true);
+    public override void Update()
+    {
+        base.Update();
     }
 
     /// <summary>
+    /// Current bitmap for the active frame
     /// Current bitmap for the active frame
     /// </summary>
     private SKBitmap _currentFrameBitmap;
@@ -550,6 +588,9 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// The full sprite sheet bitmap
     /// </summary>
     private SKBitmap _spriteSheet;
+
+    private int _lastColumns;
+    private int _lastRows;
 
     /// <summary>
     /// The full sprite sheet bitmap
@@ -576,6 +617,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         {
             bitmap.Dispose();
         }
+
         CachedSpriteSheets.Clear();
     }
 
@@ -605,6 +647,7 @@ public class SkiaSprite : AnimatedFramesRenderer
             {
                 SpriteSheet.Dispose();
             }
+
             SpriteSheet = null;
 
             if (_currentFrameBitmap != null)
@@ -685,7 +728,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         typeof(int),
         typeof(SkiaSprite),
         1,
-        propertyChanged: (b, o, n) => ((SkiaSprite)b).RecalculateFrames());
+        propertyChanged: NeedDraw);
 
     /// <summary>
     /// Number of columns in the spritesheet
@@ -704,7 +747,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         typeof(int),
         typeof(SkiaSprite),
         1,
-        propertyChanged: (b, o, n) => ((SkiaSprite)b).RecalculateFrames());
+        propertyChanged: NeedDraw);
 
     /// <summary>
     /// Number of rows in the spritesheet
@@ -739,17 +782,17 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// </summary>
     public static readonly BindableProperty FramesPerSecondProperty = BindableProperty.Create(
         nameof(FramesPerSecond),
-        typeof(int),
+        typeof(double),
         typeof(SkiaSprite),
-        24,
+        24.0,
         propertyChanged: (b, o, n) => ((SkiaSprite)b).RecalculateFrames());
 
     /// <summary>
     /// Frames per second for the animation
     /// </summary>
-    public int FramesPerSecond
+    public double FramesPerSecond
     {
-        get => (int)GetValue(FramesPerSecondProperty);
+        get => (double)GetValue(FramesPerSecondProperty);
         set => SetValue(FramesPerSecondProperty, value);
     }
 
@@ -761,7 +804,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         typeof(int),
         typeof(SkiaSprite),
         0,
-        propertyChanged: (b, o, n) => ((SkiaSprite)b).SetCurrentFrame((int)n));
+        propertyChanged: NeedDraw);
 
     /// <summary>
     /// Current frame being displayed
@@ -790,12 +833,12 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// <summary>
     /// Duration of the animation in milliseconds
     /// </summary>
-    public int DurationMs { get; protected set; }
+    public double DurationMs { get; protected set; }
 
     /// <summary>
     /// Duration of each frame in milliseconds
     /// </summary>
-    public int FrameDurationMs { get; protected set; }
+    public double FrameDurationMs { get; protected set; }
 
     #endregion
 }

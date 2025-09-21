@@ -1,5 +1,6 @@
 namespace PreviewTests.Views
 {
+    [Preview<SkiaRichLabel>]
     public partial class MarkdownPage : BasePageCodeBehind
     {
 

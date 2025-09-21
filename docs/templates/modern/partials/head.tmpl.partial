@@ -1,0 +1,31 @@
+<!-- Canonical URL injection without altering core template structure -->
+<script>
+(function() {
+  try {
+    var loc = window.location;
+    var path = loc.pathname || '/';
+
+    // Normalize index.html variants to trailing slash
+    if (path === '/index.html') {
+      path = '/';
+    } else if (path.endsWith('/index.html')) {
+      path = path.replace(/\/index\.html$/, '/');
+    }
+
+    // Collapse duplicate slashes (defensive)
+    path = path.replace(/\/+/g, '/');
+
+    var canonicalHref = loc.origin + path;
+
+    // If a canonical already exists, don't duplicate
+    var existing = document.querySelector('link[rel="canonical"]');
+    if (!existing) {
+      var link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      link.setAttribute('href', canonicalHref);
+      document.head.appendChild(link);
+    }
+  } catch (e) { /* no-op */ }
+})();
+</script>
+

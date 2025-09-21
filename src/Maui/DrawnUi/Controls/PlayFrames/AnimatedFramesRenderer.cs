@@ -94,10 +94,10 @@
 
             RenderFrame(ctx);
 
-            if (IsPlaying)
-            {
-                Update();
-            }
+            //if (IsPlaying)
+            //{
+            //    Update();
+            //}
         }
 
         protected virtual void RenderFrame(DrawingContext ctx)
@@ -214,7 +214,6 @@
         public void Seek(double frame)
         {
             OnAnimatorSeeking(frame);
-            Update();
         }
 
         public virtual void Start(int delayMs = 0)

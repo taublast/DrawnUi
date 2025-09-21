@@ -356,12 +356,14 @@ public partial class SkiaLayout
 
             WillMeasureFromFreshItemssSource = false;
 
+            // Fix: Use Split property instead of hardcoded columnsCount = 1
+            var columnsCount = (Split > 0) ? Split : 1;
             var rowsCount = itemsCount;
-            var columnsCount = 1;
             if (Type == LayoutType.Row)
             {
                 rowsCount = 1;
-                columnsCount = itemsCount;
+                if (Split <= 0)
+                    columnsCount = itemsCount;
             }
 
             var rows = new List<List<ControlInStack>>();
@@ -370,7 +372,10 @@ public partial class SkiaLayout
             int index = -1;
             var cellsToRelease = new List<SkiaControl>();
 
-            var effectiveRowsCount = rowsCount;
+            // Calculate effective row count based on columnsCount and itemsCount
+            var effectiveRowsCount = Type == LayoutType.Column
+                ? (int)Math.Ceiling((double)itemsCount / columnsCount)
+                : rowsCount;
 
 
             try
@@ -386,11 +391,20 @@ public partial class SkiaLayout
                     var rowMaxHeight = 0.0f;
                     var maxWidth = 0.0f;
 
+                    // Calculate actual columns for this row (handle DynamicColumns)
+                    var actualColumnsForRow = columnsCount;
+                    if (DynamicColumns && Type == LayoutType.Column)
+                    {
+                        var remainingItems = itemsCount - (row * columnsCount);
+                        if (remainingItems < columnsCount)
+                            actualColumnsForRow = Math.Max(1, remainingItems);
+                    }
+
                     float widthPerColumn;
                     if (Type == LayoutType.Column)
                     {
-                        widthPerColumn = (float)Math.Round(columnsCount > 1
-                            ? (rectForChildrenPixels.Width - (columnsCount - 1) * Spacing * scale) / columnsCount
+                        widthPerColumn = (float)Math.Round(actualColumnsForRow > 1
+                            ? (rectForChildrenPixels.Width - (actualColumnsForRow - 1) * Spacing * scale) / actualColumnsForRow
                             : rectForChildrenPixels.Width);
                     }
                     else
@@ -399,11 +413,11 @@ public partial class SkiaLayout
                     }
 
                     int column;
-                    for (column = 0; column < columnsCount; column++)
+                    for (column = 0; column < actualColumnsForRow; column++)
                     {
                         try
                         {
-                            if (index + 4 > itemsCount)
+                            if (index + 1 >= itemsCount)
                             {
                                 stopMeasuring = true;
                                 break;
@@ -688,8 +702,8 @@ public partial class SkiaLayout
                 if (_measuredItems.ContainsKey(itemIndex))
                     continue;
 
-                // Add spacing for this position
-                if (Type == LayoutType.Column && i > 0)
+                // Add spacing only when starting a new row (not for columns within the same row)
+                if (Type == LayoutType.Column && col == 0 && i > 0)
                 {
                     currentY += GetSpacingForIndex(row, scale);
                 }
@@ -1075,19 +1089,30 @@ public partial class SkiaLayout
         var columnsCount = (Split > 0) ? Split : 1;
         var currentRow = new List<ControlInStack>(columnsCount);
 
-        foreach (var item in measuredItems)
+        for (int i = 0; i < measuredItems.Count; i++)
         {
+            var item = measuredItems[i];
             currentRow.Add(item.Cell);
 
-            // Complete row when we reach columnsCount
-            if (currentRow.Count >= columnsCount)
+            // Check if this is the last item and we should apply DynamicColumns logic
+            bool isLastItem = (i == measuredItems.Count - 1);
+            bool shouldCompleteRow = currentRow.Count >= columnsCount;
+
+            // Apply DynamicColumns logic: if this is the last item and we have fewer items than columnsCount,
+            // complete the row even if it's not full (when DynamicColumns = true)
+            if (DynamicColumns && isLastItem && currentRow.Count < columnsCount)
+            {
+                shouldCompleteRow = true;
+            }
+
+            if (shouldCompleteRow)
             {
                 allRows.Add(currentRow);
                 currentRow = new List<ControlInStack>(columnsCount);
             }
         }
 
-        // Add incomplete row if it has items
+        // Add incomplete row if it has items (fallback for non-DynamicColumns case)
         if (currentRow.Count > 0)
         {
             allRows.Add(currentRow);
@@ -1107,19 +1132,30 @@ public partial class SkiaLayout
         var columnsCount = (Split > 0) ? Split : 1;
         var currentRow = new List<ControlInStack>(columnsCount);
 
-        foreach (var item in measuredItems)
+        for (int i = 0; i < measuredItems.Count; i++)
         {
+            var item = measuredItems[i];
             currentRow.Add(item.Cell);
 
-            // Complete row when we reach columnsCount
-            if (currentRow.Count >= columnsCount)
+            // Check if this is the last item and we should apply DynamicColumns logic
+            bool isLastItem = (i == measuredItems.Count - 1);
+            bool shouldCompleteRow = currentRow.Count >= columnsCount;
+
+            // Apply DynamicColumns logic: if this is the last item and we have fewer items than columnsCount,
+            // complete the row even if it's not full (when DynamicColumns = true)
+            if (DynamicColumns && isLastItem && currentRow.Count < columnsCount)
+            {
+                shouldCompleteRow = true;
+            }
+
+            if (shouldCompleteRow)
             {
                 allRows.Add(currentRow);
                 currentRow = new List<ControlInStack>(columnsCount);
             }
         }
 
-        // Add incomplete row if it has items
+        // Add incomplete row if it has items (fallback for non-DynamicColumns case)
         if (currentRow.Count > 0)
         {
             allRows.Add(currentRow);
@@ -1162,17 +1198,32 @@ public partial class SkiaLayout
         var rebuiltRows = new List<List<ControlInStack>>();
         var columnsCount = (Split > 0) ? Split : 1;
         var currentRow = new List<ControlInStack>(columnsCount);
+        var orderedCells = allCells.OrderBy(c => c.ControlIndex).ToList();
 
-        foreach (var cell in allCells.OrderBy(c => c.ControlIndex))
+        for (int i = 0; i < orderedCells.Count; i++)
         {
+            var cell = orderedCells[i];
             currentRow.Add(cell);
-            if (currentRow.Count >= columnsCount)
+
+            // Check if this is the last item and we should apply DynamicColumns logic
+            bool isLastItem = (i == orderedCells.Count - 1);
+            bool shouldCompleteRow = currentRow.Count >= columnsCount;
+
+            // Apply DynamicColumns logic: if this is the last item and we have fewer items than columnsCount,
+            // complete the row even if it's not full (when DynamicColumns = true)
+            if (DynamicColumns && isLastItem && currentRow.Count < columnsCount)
+            {
+                shouldCompleteRow = true;
+            }
+
+            if (shouldCompleteRow)
             {
                 rebuiltRows.Add(currentRow);
                 currentRow = new List<ControlInStack>(columnsCount);
             }
         }
 
+        // Add incomplete row if it has items (fallback for non-DynamicColumns case)
         if (currentRow.Count > 0)
         {
             rebuiltRows.Add(currentRow);
@@ -2424,9 +2475,28 @@ public partial class SkiaLayout
         float y = 0f;
         if (StackStructure != null && StackStructure.Length > 0 && row > 0)
         {
-            // Get the bottom of the previous row to calculate Y position
-            float previousRowBottom = ComputeBottomOfRow(StackStructure, row - 1);
-            y = previousRowBottom + spacing;
+            // Check if we're at the first column of a row
+            if (col == 0)
+            {
+                // First column: calculate Y based on previous row bottom + spacing
+                float previousRowBottom = ComputeBottomOfRow(StackStructure, row - 1);
+                y = previousRowBottom + spacing;
+            }
+            else
+            {
+                // Same row, different column - use the Y position of the first column in this row
+                var firstColumnInRow = StackStructure.Get(0, row);
+                if (firstColumnInRow != null)
+                {
+                    y = firstColumnInRow.Destination.Top;
+                }
+                else
+                {
+                    // Fallback: calculate without extra spacing since we're in the same row
+                    float previousRowBottom = ComputeBottomOfRow(StackStructure, row - 1);
+                    y = previousRowBottom + spacing;
+                }
+            }
         }
         else
         {
@@ -2441,14 +2511,29 @@ public partial class SkiaLayout
     {
         if (this.Type == LayoutType.Column)
         {
+            // Use content width (excluding margins/padding) like initial measurement does
+            var contentWidth = GetContentWidthForBackgroundMeasurement();
             return (float)Math.Round(columnsCount > 1
-                ? (MeasuredSize.Pixels.Width - (columnsCount - 1) * Spacing * RenderingScale) / columnsCount
-                : MeasuredSize.Pixels.Width);
+                ? (contentWidth - (columnsCount - 1) * Spacing * RenderingScale) / columnsCount
+                : contentWidth);
         }
         else
         {
-            return MeasuredSize.Pixels.Width;
+            return GetContentWidthForBackgroundMeasurement();
         }
+    }
+
+    /// <summary>
+    /// Gets the content width excluding margins and padding, equivalent to rectForChildrenPixels.Width
+    /// used in initial measurement. This ensures background measurement uses the same available width.
+    /// </summary>
+    private float GetContentWidthForBackgroundMeasurement()
+    {
+        var scale = RenderingScale;
+        var constraintLeft = (Padding.Left + Margins.Left) * scale;
+        var constraintRight = (Padding.Right + Margins.Right) * scale;
+
+        return (float)Math.Round(MeasuredSize.Pixels.Width - (constraintRight + constraintLeft));
     }
 
 

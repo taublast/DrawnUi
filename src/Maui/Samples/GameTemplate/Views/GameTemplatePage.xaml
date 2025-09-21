@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<game:MauiGame
+    x:Class="GameTemplate.Views.GameTemplatePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:game="clr-namespace:DrawnUi.Gaming;assembly=DrawnUi.Maui.Game"
+    x:DataType="views:GameTemplatePage"
+    xmlns:views="clr-namespace:GameTemplate.Views"
+    BackgroundColor="#101318"
+    HorizontalOptions="Fill"
+    VerticalOptions="Fill">
+
+    <!-- Player -->
+    <draw:SkiaShape
+        x:Name="Player"
+        WidthRequest="48"
+        HeightRequest="48"
+        HorizontalOptions="Center"
+        VerticalOptions="End"
+        TranslationY="-60"
+        BackgroundColor="#44C9F0"
+        CornerRadius="8"
+        ZIndex="10" />
+
+</game:MauiGame>
+

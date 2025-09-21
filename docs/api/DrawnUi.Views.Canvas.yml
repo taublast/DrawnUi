@@ -153,7 +153,7 @@ items:
   - DrawnUi.Views.DrawnView.OnHandlerChanging(Microsoft.Maui.Controls.HandlerChangingEventArgs)
   - DrawnUi.Views.DrawnView.HandlerWasSet
   - DrawnUi.Views.DrawnView.TakeScreenShotInternal(SkiaSharp.SKSurface)
-  - DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
+  - DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action,System.Int64)
   - DrawnUi.Views.DrawnView.PostponeExecutionAfterDraw(System.Action)
   - DrawnUi.Views.DrawnView.ExecuteBeforeDraw
   - DrawnUi.Views.DrawnView.ExecuteAfterDraw
@@ -1664,7 +1664,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnGestureEvent
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 687
+    startLine: 699
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1704,7 +1704,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BreakLine
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 841
+    startLine: 857
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1730,7 +1730,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LineBreaks
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 846
+    startLine: 862
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1757,7 +1757,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 848
+    startLine: 864
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1786,7 +1786,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 852
+    startLine: 868
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1812,7 +1812,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayRippleAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 857
+    startLine: 873
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1850,7 +1850,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayShimmerAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 863
+    startLine: 879
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1890,7 +1890,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TimeLastGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 873
+    startLine: 889
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1919,7 +1919,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DelayNanosBetweenGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 874
+    startLine: 890
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1948,7 +1948,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CollectGarbage
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 876
+    startLine: 892
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1980,7 +1980,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 893
+    startLine: 909
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2016,7 +2016,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColorProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 906
+    startLine: 922
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2043,7 +2043,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColor
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 912
+    startLine: 928
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2072,7 +2072,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAroundProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 918
+    startLine: 934
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2099,7 +2099,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAround
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 924
+    startLine: 940
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2128,7 +2128,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 938
+    startLine: 954
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2155,7 +2155,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Gestures
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 944
+    startLine: 960
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2184,7 +2184,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 952
+    startLine: 968
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2211,7 +2211,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 968
+    startLine: 984
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2240,7 +2240,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnParentChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 978
+    startLine: 994
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2270,7 +2270,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 988
+    startLine: 1004
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2298,7 +2298,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 998
+    startLine: 1014
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2326,7 +2326,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1003
+    startLine: 1019
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3005,33 +3005,48 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
   - name: )
-- uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
-  commentId: M:DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
+- uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action,System.Int64)
+  commentId: M:DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action,System.Int64)
   parent: DrawnUi.Views.DrawnView
   isExternal: true
-  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_
-  name: PostponeExecutionBeforeDraw(Action)
-  nameWithType: DrawnView.PostponeExecutionBeforeDraw(Action)
-  fullName: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_System_Int64_
+  name: PostponeExecutionBeforeDraw(Action, long)
+  nameWithType: DrawnView.PostponeExecutionBeforeDraw(Action, long)
+  fullName: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action, long)
+  nameWithType.vb: DrawnView.PostponeExecutionBeforeDraw(Action, Long)
+  fullName.vb: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action, Long)
+  name.vb: PostponeExecutionBeforeDraw(Action, Long)
   spec.csharp:
-  - uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
+  - uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action,System.Int64)
     name: PostponeExecutionBeforeDraw
-    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
   spec.vb:
-  - uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
+  - uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action,System.Int64)
     name: PostponeExecutionBeforeDraw
-    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
 - uid: DrawnUi.Views.DrawnView.PostponeExecutionAfterDraw(System.Action)
   commentId: M:DrawnUi.Views.DrawnView.PostponeExecutionAfterDraw(System.Action)

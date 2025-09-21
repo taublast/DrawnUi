@@ -115,6 +115,7 @@ items:
   - DrawnUi.Draw.IWithContent
   - DrawnUi.Draw.InfiniteLayout
   - DrawnUi.Draw.KeyboardManager
+  - DrawnUi.Draw.KeyedActionQueue`1
   - DrawnUi.Draw.LayoutStructure
   - DrawnUi.Draw.LayoutType
   - DrawnUi.Draw.LineGlyph
@@ -124,6 +125,7 @@ items:
   - DrawnUi.Draw.LoadPriority
   - DrawnUi.Draw.LoadedImageSource
   - DrawnUi.Draw.LockTouch
+  - DrawnUi.Draw.LongKeyGenerator
   - DrawnUi.Draw.Looper
   - DrawnUi.Draw.LottieRefreshIndicator
   - DrawnUi.Draw.MauiKey
@@ -2769,6 +2771,37 @@ references:
   name: SkPatch3D
   nameWithType: SkPatch3D
   fullName: DrawnUi.Draw.SkPatch3D
+- uid: DrawnUi.Draw.LongKeyGenerator
+  commentId: T:DrawnUi.Draw.LongKeyGenerator
+  href: DrawnUi.Draw.LongKeyGenerator.html
+  name: LongKeyGenerator
+  nameWithType: LongKeyGenerator
+  fullName: DrawnUi.Draw.LongKeyGenerator
+- uid: DrawnUi.Draw.KeyedActionQueue`1
+  commentId: T:DrawnUi.Draw.KeyedActionQueue`1
+  href: DrawnUi.Draw.KeyedActionQueue-1.html
+  name: KeyedActionQueue<TKey>
+  nameWithType: KeyedActionQueue<TKey>
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>
+  nameWithType.vb: KeyedActionQueue(Of TKey)
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey)
+  name.vb: KeyedActionQueue(Of TKey)
+  spec.csharp:
+  - uid: DrawnUi.Draw.KeyedActionQueue`1
+    name: KeyedActionQueue
+    href: DrawnUi.Draw.KeyedActionQueue-1.html
+  - name: <
+  - name: TKey
+  - name: '>'
+  spec.vb:
+  - uid: DrawnUi.Draw.KeyedActionQueue`1
+    name: KeyedActionQueue
+    href: DrawnUi.Draw.KeyedActionQueue-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: )
 - uid: DrawnUi.Draw.TrackedObject`1
   commentId: T:DrawnUi.Draw.TrackedObject`1
   href: DrawnUi.Draw.TrackedObject-1.html

@@ -17,6 +17,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "PatreonAbout.md",
+      "output": {
+        ".html": {
+          "relative_path": "PatreonAbout.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "README.md",
       "output": {
         ".html": {
@@ -696,6 +706,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Controls.SkiaSprite",
       "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaSprite.yml\" sourcestartlinenumber=\"1\">Renders animated sprite sheets by subclassing AnimatedFramesRenderer</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaSpriteSet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaSpriteSet.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaSpriteSet",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaSpriteSet.yml\" sourcestartlinenumber=\"1\">Stateful sprite switcher that PRE-CREATES one SkiaSprite per integer state via Define().\nBase OnChangeState swaps the active child to the precreated sprite atomically.\nSubclasses can override OnChangeState, call base, then adjust CurrentSprite (e.g., ScaleX).</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -2407,6 +2431,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.KeyedActionQueue-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.KeyedActionQueue-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.KeyedActionQueue<TKey>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.LayoutStructure.yml",
       "output": {
         ".html": {
@@ -2530,6 +2568,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.LockTouch",
       "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.LongKeyGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.LongKeyGenerator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.LongKeyGenerator",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.LongKeyGenerator.yml\" sourcestartlinenumber=\"1\">Ultra-fast key generator for queues using long keys</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -6630,6 +6682,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/sample-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/startup-settings.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/startup-settings.html"
         }
       },
       "version": ""

@@ -326,7 +326,8 @@ Perfect for apps requiring **custom UI designs**, **complex animations**, **game
   <p style="margin-bottom: 20px; ">Complete guides and API reference</p>
   <a href="articles/getting-started.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Getting Started →</a><br>
   <a href="articles/controls/index.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Controls Reference →</a><br>
-  <a href="articles/advanced/index.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Advanced Topics →</a>
+  <a href="articles/advanced/index.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Advanced Topics →</a><br>
+  <a href="/api/" style="color: #4299e1; text-decoration: none; font-weight: 600;">API Reference →</a>
 </div>
 
 <div style="padding: 25px; border: 2px solid #4a5568; border-radius: 12px; transition: all 0.3s;">

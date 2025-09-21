@@ -5,6 +5,8 @@
   items:
     - name: Installation and Setup
       href: getting-started.md
+    - name: Startup Settings
+      href: startup-settings.md
     - name: Porting Native to Drawn
       href: porting-maui.md
 

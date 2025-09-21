@@ -100,7 +100,7 @@
         &lt;SupportedOSPlatformVersion Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'&quot;&gt;10.0.19041.0&lt;/SupportedOSPlatformVersion&gt;
         &lt;TargetPlatformMinVersion Condition=&quot;$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'&quot;&gt;10.0.19041.0&lt;/TargetPlatformMinVersion&gt;
 	&lt;/PropertyGroup&gt;
-    
+
     &lt;ItemGroup&gt;
         &lt;PackageReference Include=&quot;Microsoft.Maui.Controls&quot; Version=&quot;9.0.70&quot; /&gt;
         &lt;PackageReference Include=&quot;Microsoft.Maui.Controls.Compatibility&quot; Version=&quot;9.0.70&quot; /&gt;
@@ -155,6 +155,7 @@ public static class MauiProgram
     }
 }
 </code></pre>
+<p>See the full list of options in <a href="startup-settings.html">Startup Settings</a>.</p>
 <h3 id="add-namespace-to-xaml">Add Namespace to XAML</h3>
 <p>Add the DrawnUi namespace to your XAML files:</p>
 <pre><code class="lang-xml">&lt;ContentPage xmlns=&quot;http://schemas.microsoft.com/dotnet/2021/maui&quot;
@@ -201,7 +202,7 @@ public static class MauiProgram
                       xmlns:draw=&quot;http://schemas.appomobi.com/drawnUi/2023/draw&quot;
                       x:Class=&quot;YourNamespace.YourPage&quot;&gt;
 
-    &lt;draw:Canvas 
+    &lt;draw:Canvas
         RenderingMode=&quot;Accelerated&quot;
         Gestures=&quot;Lock&quot;
         HorizontalOptions=&quot;Fill&quot; VerticalOptions=&quot;Fill&quot;&gt;
@@ -265,7 +266,7 @@ Add this to <code>Resources/Styles.xaml</code> to set default fonts for all Skia
     ControlStyle=&quot;Material&quot;
     WidthRequest=&quot;150&quot;
     HeightRequest=&quot;40&quot; /&gt;
-    
+
 &lt;draw:SkiaSwitch
     ControlStyle=&quot;Cupertino&quot;
     IsToggled=&quot;true&quot;
@@ -353,7 +354,7 @@ Add this to <code>Resources/Styles.xaml</code> to set default fonts for all Skia
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a>
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
         </div>
       </div>
     </footer>

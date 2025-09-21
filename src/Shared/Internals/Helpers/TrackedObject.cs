@@ -16,7 +16,8 @@
 
         public void Dispose()
         {
-            Debug.WriteLine($"[TrackedObject] Disposed explicitly on thread {Thread.CurrentThread.ManagedThreadId}\n{Environment.StackTrace}");
+            Debug.WriteLine(
+                $"[TrackedObject] Disposed explicitly on thread {Thread.CurrentThread.ManagedThreadId}\n{Environment.StackTrace}");
             Disposable.Dispose();
             GC.SuppressFinalize(this);
         }

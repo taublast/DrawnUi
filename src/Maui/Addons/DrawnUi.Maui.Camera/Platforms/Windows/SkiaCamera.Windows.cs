@@ -119,10 +119,23 @@ public partial class SkiaCamera : SkiaControl
             var devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(Windows.Devices.Enumeration.DeviceClass.VideoCapture);
 
             // Find current camera device or use default
-            var currentDevice = devices.FirstOrDefault(d =>
-                (Facing == CameraPosition.Selfie && d.EnclosureLocation?.Panel == Windows.Devices.Enumeration.Panel.Front) ||
-                (Facing == CameraPosition.Default && d.EnclosureLocation?.Panel == Windows.Devices.Enumeration.Panel.Back))
-                ?? devices.FirstOrDefault();
+            Windows.Devices.Enumeration.DeviceInformation currentDevice = null;
+            
+            // Manual camera selection
+            if (Facing == CameraPosition.Manual && CameraIndex >= 0 && CameraIndex < devices.Count)
+            {
+                currentDevice = devices[CameraIndex];
+                Debug.WriteLine($"[SkiaCameraWindows] Manual camera selection: Index {CameraIndex}, Device: {currentDevice.Name}");
+            }
+            else
+            {
+                // Automatic selection based on facing
+                currentDevice = devices.FirstOrDefault(d =>
+                    (Facing == CameraPosition.Selfie && d.EnclosureLocation?.Panel == Windows.Devices.Enumeration.Panel.Front) ||
+                    (Facing == CameraPosition.Default && d.EnclosureLocation?.Panel == Windows.Devices.Enumeration.Panel.Back))
+                    ?? devices.FirstOrDefault();
+                Debug.WriteLine($"[SkiaCameraWindows] Automatic camera selection: Facing {Facing}, Device: {currentDevice?.Name ?? "None"}");
+            }
 
             if (currentDevice != null)
             {
@@ -177,6 +190,30 @@ public partial class SkiaCamera : SkiaControl
         catch (Exception ex)
         {
             Debug.WriteLine($"[SkiaCameraWindows] Error getting capture formats: {ex.Message}");
+        }
+
+        return formats;
+    }
+
+    protected async Task<List<VideoFormat>> GetAvailableVideoFormatsPlatform()
+    {
+        var formats = new List<VideoFormat>();
+
+        try
+        {
+            // TODO: Implement video formats detection for Windows
+            // For now, provide common video formats as placeholders
+            formats.AddRange(new[]
+            {
+                new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
+                new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
+                new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 8000000, FormatId = "720p60" },
+                new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2000000, FormatId = "480p30" }
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCameraWindows] Error getting video formats: {ex.Message}");
         }
 
         return formats;

@@ -1,8 +1,6 @@
 namespace PreviewTests.Views
 {
-
-
-
+    [Preview<SkiaLayout>]
     public partial class UnevenRowsPage
     {
         private double _Position;

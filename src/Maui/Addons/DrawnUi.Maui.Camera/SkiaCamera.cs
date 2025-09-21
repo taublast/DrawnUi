@@ -8,6 +8,9 @@ using DrawnUi.Views;
 using Microsoft.Maui.Controls;
 using static Microsoft.Maui.ApplicationModel.Permissions;
 using Color = Microsoft.Maui.Graphics.Color;
+#if WINDOWS
+using DrawnUi.Camera.Platforms.Windows;
+#endif
 
 namespace DrawnUi.Camera;
 
@@ -56,6 +59,33 @@ public partial class SkiaCamera : SkiaControl
             StopInternal(true);
 
             NativeControl?.Dispose();
+        }
+
+        // Clean up capture video resources (stop recording first if active)
+        if (IsRecordingVideo && _captureVideoEncoder != null)
+        {
+            // Force stop capture video flow to prevent disposal race
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+
+            // Don't await - just force cleanup in disposal
+            try
+            {
+                var encoder = _captureVideoEncoder;
+                _captureVideoEncoder = null;
+                encoder?.Dispose();
+            }
+            catch
+            {
+                // Ignore errors during disposal cleanup
+            }
+        }
+        else
+        {
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+            _captureVideoEncoder?.Dispose();
+            _captureVideoEncoder = null;
         }
 
         NativeControl = null;
@@ -123,6 +153,7 @@ public partial class SkiaCamera : SkiaControl
         return new SkiaImage()
         {
             LoadSourceOnFirstDraw = true,
+
             RescalingQuality = SKFilterQuality.None,
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
@@ -316,7 +347,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Get available capture formats/resolutions for the current camera.
-    /// Use with CaptureFormatIndex when CapturePhotoQuality is set to Manual.
+    /// Use with PhotoFormatIndex when PhotoQuality is set to Manual.
     /// Formats are cached when camera is initialized.
     /// </summary>
     /// <returns>List of available capture formats</returns>
@@ -331,9 +362,25 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
+    /// Get available video recording formats/resolutions for the current camera.
+    /// Use with VideoFormatIndex when VideoQuality is set to Manual.
+    /// Formats are cached when camera is initialized.
+    /// </summary>
+    /// <returns>List of available video formats</returns>
+    public virtual async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()
+    {
+#if ONPLATFORM
+        // If not cached, detect and cache them
+        return await GetAvailableVideoFormatsPlatform();
+#else
+        return new List<VideoFormat>();
+#endif
+    }
+
+    /// <summary>
     /// Gets the currently selected capture format.
     /// This reflects the format that will be used for still image capture based on
-    /// the current CapturePhotoQuality and CaptureFormatIndex settings.
+    /// the current PhotoQuality and PhotoFormatIndex settings.
     /// </summary>
     public CaptureFormat CurrentStillCaptureFormat
     {
@@ -352,7 +399,758 @@ public partial class SkiaCamera : SkiaControl
             return null;
         }
     }
-    
+
+    /// <summary>
+    /// Gets the currently selected video format.
+    /// This reflects the format that will be used for video recording based on
+    /// the current VideoQuality and VideoFormatIndex settings.
+    /// </summary>
+    public VideoFormat CurrentVideoFormat
+    {
+        get
+        {
+#if ONPLATFORM
+            try
+            {
+                return NativeControl?.GetCurrentVideoFormat();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"[SkiaCamera] Error getting current video format: {ex.Message}");
+            }
+#endif
+            return null;
+        }
+    }
+
+    #region VIDEO RECORDING METHODS
+
+    /// <summary>
+    /// Start video recording. Run this in background thread!
+    /// </summary>
+    /// <returns></returns>
+    public async Task StartVideoRecording()
+    {
+        if (IsBusy || IsRecordingVideo)
+            return;
+
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}");
+
+        IsBusy = true;
+        IsRecordingVideo = true;
+
+        try
+        {
+            // Check if using capture video flow
+            if (UseCaptureVideoFlow && FrameProcessor != null)
+            {
+                await StartCaptureVideoFlow();
+            }
+            else
+            {
+                // Use existing native video recording
+                await StartNativeVideoRecording();
+            }
+        }
+        catch (Exception ex)
+        {
+            IsRecordingVideo = false;
+            IsBusy = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+
+        IsBusy = false;
+    }
+
+    private async Task StartNativeVideoRecording()
+    {
+        // Set up video recording callbacks to handle state synchronization
+        NativeControl.VideoRecordingFailed = ex =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsRecordingVideo = false;
+                VideoRecordingFailed?.Invoke(this, ex);
+            });
+        };
+
+        NativeControl.VideoRecordingSuccess = capturedVideo =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsRecordingVideo = false;
+                OnVideoRecordingSuccess(capturedVideo);
+            });
+        };
+
+        NativeControl.VideoRecordingProgress = duration =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                OnVideoRecordingProgress(duration);
+            });
+        };
+
+#if ONPLATFORM
+        await NativeControl.StartVideoRecording();
+#endif
+    }
+
+    private async Task StartCaptureVideoFlow()
+    {
+#if WINDOWS
+        // Create platform-specific encoder with existing GRContext (GPU path)
+        var grContext = (Superview?.CanvasView as SkiaViewAccelerated)?.GRContext;
+        _captureVideoEncoder = new WindowsCaptureVideoEncoder(grContext);
+
+        // Generate output path
+        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        var outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+
+        // Get current video format dimensions from native camera
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+        var width = currentFormat?.Width ?? 1280;
+        var height = currentFormat?.Height ?? 720;
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+        // Initialize encoder with current settings (follow camera defaults)
+        _diagEncWidth = width; _diagEncHeight = height;
+        _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
+        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+
+        // Start encoder
+        await _captureVideoEncoder.StartAsync();
+
+        _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
+
+        // Reset diagnostics
+        _diagStartTime = DateTime.Now;
+        _diagDroppedFrames = 0;
+        _diagSubmittedFrames = 0;
+        _diagLastSubmitMs = 0;
+        _targetFps = fps;
+
+        // Windows uses real-time preview-driven capture (no timer)
+        _useWindowsPreviewDrivenCapture = true;
+
+        // Mirroring of composed frames to preview is optional
+        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+
+        // Invalidate preview when the encoder publishes a new composed frame (Windows mirror)
+        if (MirrorRecordingToPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
+            {
+                try { MainThread.BeginInvokeOnMainThread(() => UpdatePreview()); }
+                catch { }
+            };
+            _winEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
+
+        // Set up progress reporting
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+        };
+#elif ANDROID
+        // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
+        _captureVideoEncoder = new AndroidCaptureVideoEncoder();
+
+        // Mirroring of composed frames to preview is optional
+        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+
+        // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
+        if (MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
+            {
+                try { SafeAction(() => UpdatePreview()); }
+                catch { }
+            };
+            _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
+
+        // Output path in app's Movies dir
+        var ctx = Android.App.Application.Context;
+        var moviesDir = ctx.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies)?.AbsolutePath ?? ctx.FilesDir?.AbsolutePath ?? ".";
+        var outputPath = Path.Combine(moviesDir, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+
+        // Use camera-reported format if available; else fall back to preview size or 1280x720
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+        var width = currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
+        var height = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+        // IMPORTANT: Align encoder orientation with the live preview to avoid instant crop/"zoom" when recording starts.
+        // If preview is portrait (h > w) but the selected video format is landscape (w >= h),
+        // swap encoder dimensions so we record a vertical video instead of cropping it to fit a horizontal surface.
+        int prevW = 0, prevH = 0;
+        int encWBefore = width, encHBefore = height;
+        int sensor = -1;
+        bool previewRotated = false;
+        try
+        {
+            if (NativeControl is NativeCamera cam)
+            {
+                prevW = cam.PreviewWidth;
+                prevH = cam.PreviewHeight;
+                sensor = cam.SensorOrientation;
+                previewRotated = (sensor == 90 || sensor == 270);
+
+                // If preview is rotated (portrait logical orientation), make encoder portrait too
+                if (previewRotated && width >= height)
+                {
+                    var tmp = width; width = height; height = tmp;
+                }
+                // If preview is not rotated but encoder is portrait, make encoder landscape to match
+                else if (!previewRotated && height > width)
+                {
+                    var tmp = width; width = height; height = tmp;
+                }
+            }
+        }
+        catch { }
+        System.Diagnostics.Debug.WriteLine($"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={encWBefore}x{encHBefore} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
+        _diagEncWidth = width; _diagEncHeight = height;
+        _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
+        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        await _captureVideoEncoder.StartAsync();
+
+        // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
+        _androidWarmupDropRemaining = 1;
+
+        _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
+
+        // Diagnostics
+        _diagStartTime = DateTime.Now;
+        _diagDroppedFrames = 0;
+        _diagSubmittedFrames = 0;
+        _diagLastSubmitMs = 0;
+        _targetFps = fps;
+
+        // Event-driven capture on Android: drive encoder from camera preview callback
+            int diagCounter = 0;
+
+        if (NativeControl is NativeCamera androidCam)
+        {
+            _androidPreviewHandler = async (captured) =>
+            {
+                try
+                {
+                    if (!IsRecordingVideo || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                        return;
+
+
+                    // Warmup: drop the first frame to avoid occasional corrupted first frame artifacts
+                    if (System.Threading.Volatile.Read(ref _androidWarmupDropRemaining) > 0)
+                    {
+                        System.Threading.Interlocked.Decrement(ref _androidWarmupDropRemaining);
+                        System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                        return;
+                    }
+
+                    // Ensure single-frame processing
+                    if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
+                    {
+                        System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                        return;
+                    }
+
+                    // PTS from image Time using first frame as monotonic base
+                    if (_capturePtsBaseTime == null)
+                        _capturePtsBaseTime = captured.Time;
+                    var elapsedLocal = captured.Time - _capturePtsBaseTime.Value;
+                    if (elapsedLocal.Ticks < 0)
+                        elapsedLocal = TimeSpan.Zero;
+
+                    try
+                    {
+                        using (droidEnc.BeginFrame(elapsedLocal, out var canvas, out var info))
+                        {
+                            var img = captured?.Image;
+                            if (img == null)
+                                return;
+
+                            var rects = GetAspectFillRects(img.Width, img.Height, info.Width, info.Height);
+                            if ((diagCounter++ % 30) == 0)
+                                System.Diagnostics.Debug.WriteLine($"[CAPTURE-DRAW] src={img.Width}x{img.Height} dst={info.Width}x{info.Height} srcRect=({rects.src.Left},{rects.src.Top},{rects.src.Right},{rects.src.Bottom}) dstRect=({rects.dst.Left},{rects.dst.Top},{rects.dst.Right},{rects.dst.Bottom})");
+                            canvas.DrawImage(img, rects.src, rects.dst);
+                            FrameProcessor?.Invoke(canvas, info, elapsedLocal);
+                            DrawDiagnostics(canvas, info);
+                        }
+
+                        var __sw = System.Diagnostics.Stopwatch.StartNew();
+                        await droidEnc.SubmitFrameAsync();
+                        __sw.Stop();
+                        _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
+                        System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[CaptureFrame/Event] Error: {ex.Message}");
+                    }
+                    finally
+                    {
+                        System.Threading.Volatile.Write(ref _androidFrameGate, 0);
+                    }
+                }
+                catch { }
+            };
+
+            androidCam.PreviewCaptureSuccess = _androidPreviewHandler;
+        }
+
+        // Progress reporting
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+        };
+#elif IOS || MACCATALYST
+        // Create Apple encoder (AVAssetWriter + CVPixelBuffer pool). GPU composition via Skia; reuse buffers.
+        _captureVideoEncoder = new AppleCaptureVideoEncoder();
+
+        // Mirror composed frames to preview when enabled
+        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+        if (MirrorRecordingToPreview && _captureVideoEncoder is AppleCaptureVideoEncoder _appleEncPrev)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
+            {
+                try { SafeAction(() => UpdatePreview()); } catch { }
+            };
+            _appleEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
+
+        // Output path (Documents)
+        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        var outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+
+        // Use camera format if available; fallback to preview size or 1280x720
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+        var width = currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
+        var height = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+        // Align encoder orientation with on-screen preview to avoid crop/zoom when switching modes
+        // Treat DeviceRotation 0/180 as portrait, 90/270 as landscape
+        var rot = DeviceRotation % 360;
+        bool portrait = (rot == 0 || rot == 180);
+        if (portrait && width >= height)
+        {
+            var tmp = width; width = height; height = tmp;
+        }
+        else if (!portrait && height > width)
+        {
+            var tmp = width; width = height; height = tmp;
+        }
+
+        _diagEncWidth = width; _diagEncHeight = height;
+        _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
+        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        await _captureVideoEncoder.StartAsync();
+
+        _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
+
+        // Diagnostics
+        _diagStartTime = DateTime.Now;
+        _diagDroppedFrames = 0;
+        _diagSubmittedFrames = 0;
+        _diagLastSubmitMs = 0;
+        _targetFps = fps;
+
+        // Progress reporting
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+        };
+
+        // Start frame capture timer for Apple (drive encoder frames)
+        _frameCaptureTimer?.Dispose();
+        var periodMs = Math.Max(1, (int)Math.Round(1000.0 / Math.Max(1, fps)));
+        _frameCaptureTimer = new System.Threading.Timer(CaptureFrame, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(periodMs));
+#else
+        throw new NotSupportedException("Capture video flow is currently only supported on Windows, Android and Apple");
+#endif
+    }
+
+    private async void CaptureFrame(object state)
+    {
+        if (!IsRecordingVideo || _captureVideoEncoder == null)
+            return;
+
+        // Make sure we never queue more than one frame — drop if previous is still processing
+        if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) != 0)
+        {
+            System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+            return;
+        }
+
+        try
+        {
+            var elapsed = DateTime.Now - _captureVideoStartTime;
+
+#if WINDOWS
+            // GPU-first path on Windows: draw directly into encoder-owned GPU surface
+            if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
+            {
+                using var previewImage = NativeControl?.GetPreviewImage();
+                if (previewImage == null)
+                {
+                    Debug.WriteLine("[CaptureFrame] No preview image available from camera");
+                    return;
+                }
+
+                using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
+                {
+                    // Draw camera frame to encoder surface (aspect-fill)
+                    var __rects1 = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                    canvas.DrawImage(previewImage, __rects1.src, __rects1.dst);
+
+                    // Apply overlay
+                    FrameProcessor?.Invoke(canvas, info, elapsed);
+
+                    // Diagnostics overlay
+                    DrawDiagnostics(canvas, info);
+                }
+
+                var __sw = System.Diagnostics.Stopwatch.StartNew();
+                await winEnc.SubmitFrameAsync();
+                __sw.Stop();
+                _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
+                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                return;
+            }
+#elif ANDROID
+            // GPU path on Android: draw via Skia GL into MediaCodec's input surface
+            if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
+            {
+                // Ensure single-threaded EGL usage; drop if previous frame still in progress
+                if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
+                {
+                    System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                    return;
+                }
+                try
+                {
+                    using var previewImage = NativeControl?.GetPreviewImage();
+                    if (previewImage == null)
+                    {
+                        Debug.WriteLine("[CaptureFrame] No preview image available from camera");
+                        return;
+                    }
+
+                    using (droidEnc.BeginFrame(elapsed, out var canvas, out var info))
+                    {
+                        var __rects2 = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                        canvas.DrawImage(previewImage, __rects2.src, __rects2.dst);
+                        FrameProcessor?.Invoke(canvas, info, elapsed);
+                        DrawDiagnostics(canvas, info);
+                    }
+
+                    var __sw = System.Diagnostics.Stopwatch.StartNew();
+                    await droidEnc.SubmitFrameAsync();
+                    __sw.Stop();
+                    _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
+                    System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[CaptureFrame] Error: {ex.Message}");
+                }
+                finally
+                {
+                    System.Threading.Volatile.Write(ref _androidFrameGate, 0);
+                }
+            }
+#elif IOS || MACCATALYST
+            // GPU path on Apple: draw via Skia into AVAssetWriter's pixel buffer
+            if (_captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
+            {
+                using var previewImage = NativeControl?.GetPreviewImage();
+                if (previewImage == null)
+                {
+                    Debug.WriteLine("[CaptureFrame] No preview image available from camera");
+                    return;
+                }
+
+                using (appleEnc.BeginFrame(elapsed, out var canvas, out var info))
+                {
+                    var __rectsA = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                    canvas.DrawImage(previewImage, __rectsA.src, __rectsA.dst);
+                    FrameProcessor?.Invoke(canvas, info, elapsed);
+                    DrawDiagnostics(canvas, info);
+                }
+
+                var __swA = System.Diagnostics.Stopwatch.StartNew();
+                await appleEnc.SubmitFrameAsync();
+                __swA.Stop();
+                _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
+                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                return;
+            }
+#endif
+
+            // Fallback (non-Windows/Android or encoder without GPU path): CPU composition
+            using var previewImage2 = NativeControl?.GetPreviewImage();
+            if (previewImage2 == null)
+            {
+                Debug.WriteLine("[CaptureFrame] No preview image available from camera");
+                return;
+            }
+
+            using var previewBitmap = SKBitmap.FromImage(previewImage2);
+            if (previewBitmap == null)
+                return;
+
+            using var finalBitmap = new SKBitmap(previewBitmap.Width, previewBitmap.Height);
+            using var cpuCanvas = new SKCanvas(finalBitmap);
+
+            cpuCanvas.DrawBitmap(previewBitmap, 0, 0);
+
+            if (FrameProcessor != null)
+            {
+                var imageInfo = new SKImageInfo(previewBitmap.Width, previewBitmap.Height);
+                FrameProcessor(cpuCanvas, imageInfo, elapsed);
+                DrawDiagnostics(cpuCanvas, imageInfo);
+            }
+            else
+            {
+                var imageInfo = new SKImageInfo(previewBitmap.Width, previewBitmap.Height);
+                DrawDiagnostics(cpuCanvas, imageInfo);
+            }
+
+            var __sw2 = System.Diagnostics.Stopwatch.StartNew();
+            await _captureVideoEncoder.AddFrameAsync(finalBitmap, elapsed);
+            __sw2.Stop();
+            _diagLastSubmitMs = __sw2.Elapsed.TotalMilliseconds;
+            System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[CaptureFrame] Error: {ex.Message}");
+        }
+        finally
+        {
+            System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+        }
+    }
+
+    /// <summary>
+    /// Stop video recording
+    /// </summary>
+    /// <returns></returns>
+    public async Task StopVideoRecording()
+    {
+        if (!IsRecordingVideo)
+            return;
+
+        Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}");
+
+        IsRecordingVideo = false;
+
+#if ANDROID
+            // Stop Android event-driven capture and restore normal preview behavior
+            try
+            {
+                if (NativeControl is NativeCamera androidCam)
+                {
+                    androidCam.PreviewCaptureSuccess = null;
+                }
+            }
+            catch { }
+            UseRecordingFramesForPreview = false;
+#endif
+            try
+            {
+            // Check if using capture video flow
+            if (_captureVideoEncoder != null)
+            {
+                await StopCaptureVideoFlow();
+            }
+            else
+            {
+#if ONPLATFORM
+                await NativeControl.StopVideoRecording();
+#endif
+                // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
+            }
+        }
+        catch (Exception ex)
+        {
+            // On immediate exception, set the state and invoke the event
+            IsRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+    }
+
+    private async Task StopCaptureVideoFlow()
+    {
+        ICaptureVideoEncoder encoder = null;
+
+        try
+        {
+            // Stop frame capture timer (if any)
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+#if WINDOWS
+            _useWindowsPreviewDrivenCapture = false;
+#endif
+
+#if ANDROID
+                // Detach Android mirror event
+                if (encoder is AndroidCaptureVideoEncoder _droidEncPrev)
+                {
+                    try { _droidEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler; } catch { }
+                }
+#endif
+
+            // Get local reference to encoder before clearing field to prevent disposal race
+            encoder = _captureVideoEncoder;
+            _captureVideoEncoder = null;
+
+#if WINDOWS
+            // Stop mirroring recording frames to preview and detach event
+            UseRecordingFramesForPreview = false;
+            if (encoder is WindowsCaptureVideoEncoder _winEncPrev)
+            {
+                try { _winEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler; } catch { }
+            }
+#endif
+
+
+            // Stop encoder and get result
+            var capturedVideo = await encoder?.StopAsync();
+
+            // Update state and notify success
+            IsRecordingVideo = false;
+            if (capturedVideo != null)
+            {
+                OnVideoRecordingSuccess(capturedVideo);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Clean up on error
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+            _captureVideoEncoder = null;
+
+            IsRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+        finally
+        {
+            // Clean up encoder after StopAsync completes
+            encoder?.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// Save captured video to gallery (copies the video file)
+    /// </summary>
+    /// <param name="capturedVideo">The captured video to save</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> SaveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null)
+    {
+        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) || !File.Exists(capturedVideo.FilePath))
+            return null;
+
+        try
+        {
+#if ONPLATFORM
+            var path = await NativeControl.SaveVideoToGallery(capturedVideo.FilePath, album);
+            return path;
+#else
+            return null;
+#endif
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Failed to save video to gallery: {ex.Message}");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Move captured video from temporary location to public gallery (faster than SaveVideoToGalleryAsync)
+    /// </summary>
+    /// <param name="capturedVideo">The captured video to move</param>
+    /// <param name="album">Optional album name</param>
+    /// <param name="deleteOriginal">Whether to delete the original file after successful move (default true)</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> MoveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null, bool deleteOriginal = true)
+    {
+        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) || !File.Exists(capturedVideo.FilePath))
+            return null;
+
+        try
+        {
+            Debug.WriteLine($"[SkiaCamera] Moving video to gallery: {capturedVideo.FilePath}");
+
+#if ANDROID
+            return await MoveVideoToGalleryAndroid(capturedVideo.FilePath, album, deleteOriginal);
+#elif IOS || MACCATALYST
+            return await MoveVideoToGalleryApple(capturedVideo.FilePath, album, deleteOriginal);
+#elif WINDOWS
+            return await MoveVideoToGalleryWindows(capturedVideo.FilePath, album, deleteOriginal);
+#else
+            Debug.WriteLine("[SkiaCamera] MoveVideoToGalleryAsync not implemented for this platform");
+            return null;
+#endif
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Failed to move video to gallery: {ex.Message}");
+            return null;
+        }
+    }
+
+    #endregion
+
+    #region VIDEO RECORDING EVENTS
+
+    /// <summary>
+    /// Fired when video recording completes successfully
+    /// </summary>
+    public event EventHandler<CapturedVideo> VideoRecordingSuccess;
+
+    /// <summary>
+    /// Fired when video recording fails
+    /// </summary>
+    public event EventHandler<Exception> VideoRecordingFailed;
+
+    /// <summary>
+    /// Fired when video recording progress updates
+    /// </summary>
+    public event EventHandler<TimeSpan> VideoRecordingProgress;
+
+    /// <summary>
+    /// Internal method to raise VideoRecordingSuccess event
+    /// </summary>
+    internal void OnVideoRecordingSuccess(CapturedVideo capturedVideo)
+    {
+        CurrentRecordingDuration = TimeSpan.Zero;
+        VideoRecordingSuccess?.Invoke(this, capturedVideo);
+    }
+
+    /// <summary>
+    /// Internal method to raise VideoRecordingProgress event
+    /// </summary>
+    internal void OnVideoRecordingProgress(TimeSpan duration)
+    {
+        CurrentRecordingDuration = duration;
+        VideoRecordingProgress?.Invoke(this, duration);
+    }
+
+    #endregion
+
     /// <summary>
     /// Internal method to get available cameras with caching
     /// </summary>
@@ -486,9 +1284,106 @@ public partial class SkiaCamera : SkiaControl
     {
         CaptureFailed?.Invoke(this, ex);
     }
+    private int _frameInFlight = 0;
+    /// <summary>
+    /// Enable on-screen diagnostics overlay (effective FPS, dropped frames, last submit ms)
+    /// during capture video flow to validate performance.
+    /// </summary>
+    public bool EnableCaptureDiagnostics { get; set; } = true;
+
+    private long _diagDroppedFrames = 0;
+    private long _diagSubmittedFrames = 0;
+    private double _diagLastSubmitMs = 0;
+    private DateTime _diagStartTime;
+    private int _targetFps = 0;
+    private int _diagEncWidth = 0, _diagEncHeight = 0;
+    private long _diagBitrate = 0;
+
+    private void DrawDiagnostics(SKCanvas canvas, SKImageInfo info)
+    {
+        if (!EnableCaptureDiagnostics || canvas == null)
+            return;
+
+        var elapsed = (DateTime.Now - _diagStartTime).TotalSeconds;
+        var effFps = elapsed > 0 ? _diagSubmittedFrames / elapsed : 0;
+
+        // Compose text
+        string line1 = $"FPS: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}";
+        string line2 = $"submit: {_diagLastSubmitMs:F1} ms";
+        double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
+        string line3 = _diagEncWidth > 0 && _diagEncHeight > 0
+            ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
+            : $"bitrate: {mbps:F1} Mbps";
+
+        using var bgPaint = new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
+        using var textPaint = new SKPaint { Color = SKColors.White, IsAntialias = true, TextSize = Math.Max(14, info.Width / 60f) };
+
+        var pad = 8f;
+        var y1 = pad + textPaint.TextSize;
+        var y2 = y1 + textPaint.TextSize + 4f;
+        var y3 = y2 + textPaint.TextSize + 4f;
+        var maxTextWidth = Math.Max(textPaint.MeasureText(line1), Math.Max(textPaint.MeasureText(line2), textPaint.MeasureText(line3)));
+        var rect = new SKRect(pad, pad, pad + maxTextWidth + pad, y3 + pad);
+
+        canvas.Save();
+        canvas.DrawRoundRect(rect, 6, 6, bgPaint);
+        canvas.DrawText(line1, pad * 1.5f, y1, textPaint);
+        canvas.DrawText(line2, pad * 1.5f, y2, textPaint);
+        canvas.DrawText(line3, pad * 1.5f, y3, textPaint);
+        canvas.Restore();
+    }
+
+        private static (SKRect src, SKRect dst) GetAspectFillRects(int srcW, int srcH, int dstW, int dstH)
+        {
+            var dst = new SKRect(0, 0, dstW, dstH);
+            if (srcW <= 0 || srcH <= 0 || dstW <= 0 || dstH <= 0)
+                return (new SKRect(0, 0, srcW, srcH), dst);
+
+            float srcAR = (float)srcW / srcH;
+            float dstAR = (float)dstW / dstH;
+            SKRect src;
+            if (srcAR > dstAR)
+            {
+                // Crop width
+                float newW = srcH * dstAR;
+                float left = (srcW - newW) * 0.5f;
+                src = new SKRect(left, 0, left + newW, srcH);
+            }
+            else
+            {
+                // Crop height
+                float newH = srcW / dstAR;
+                float top = (srcH - newH) * 0.5f;
+                src = new SKRect(0, top, srcW, top + newH);
+            }
+            return (src, dst);
+        }
+
+
+
 
 
     public INativeCamera NativeControl;
+
+    private ICaptureVideoEncoder _captureVideoEncoder;
+    private System.Threading.Timer _frameCaptureTimer;
+    private DateTime _captureVideoStartTime;
+#if WINDOWS
+    private bool _useWindowsPreviewDrivenCapture;
+#endif
+#if WINDOWS || ANDROID || IOS || MACCATALYST
+        private EventHandler _encoderPreviewInvalidateHandler;
+#endif
+    private DateTime? _capturePtsBaseTime; // base timestamp for PTS (from first captured frame)
+
+
+
+
+#if ANDROID
+    private int _androidFrameGate; // 0 = free, 1 = in-flight
+    private int _androidWarmupDropRemaining; // drop first N frames to avoid initial garbage frame
+    private System.Action<CapturedImage> _androidPreviewHandler;
+#endif
 
 
     protected override void OnLayoutReady()
@@ -544,7 +1439,55 @@ public partial class SkiaCamera : SkiaControl
     public virtual void UpdatePreview()
     {
         FrameAquired = false;
+        NeedUpdate=false;
         Update();
+
+#if WINDOWS
+        // If using capture video flow and preview-driven capture, submit frames in real-time with the preview
+        if (_useWindowsPreviewDrivenCapture && IsRecordingVideo && _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
+        {
+            // One frame in flight policy: drop if busy
+            //if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) == 0)
+            {
+                SafeAction(async () =>
+                {
+                    try
+                    {
+                        var elapsed = DateTime.Now - _captureVideoStartTime;
+                        using var previewImage = NativeControl?.GetPreviewImage();
+                        if (previewImage == null)
+                            return;
+
+                        using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
+                        {
+                            var __rects3 = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                            canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
+                            FrameProcessor?.Invoke(canvas, info, elapsed);
+                            DrawDiagnostics(canvas, info);
+                        }
+
+                        var sw = System.Diagnostics.Stopwatch.StartNew();
+                        await winEnc.SubmitFrameAsync();
+                        sw.Stop();
+                        _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
+                        System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[UpdatePreview Capture] {ex.Message}");
+                    }
+                    finally
+                    {
+                        System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    }
+                });
+            }
+            //else
+            //{
+            //    System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+            //}
+        }
+#endif
     }
 
     public SKSurface FrameSurface { get; protected set; }
@@ -559,6 +1502,7 @@ public partial class SkiaCamera : SkiaControl
 
     //    var kill = FrameSurface;
     //    FrameSurfaceInfo = new SKImageInfo(width, height);
+
     //    if (Superview.CanvasView is SkiaViewAccelerated accelerated)
     //    {
     //        FrameSurface = SKSurface.Create(accelerated.GRContext, true, FrameSurfaceInfo);
@@ -581,6 +1525,38 @@ public partial class SkiaCamera : SkiaControl
 
     protected virtual SKImage AquireFrameFromNative()
     {
+        // If we are recording and not mirroring encoder frames to preview, suppress raw preview updates
+        if (IsRecordingVideo && !UseRecordingFramesForPreview)
+            return null;
+
+#if WINDOWS
+        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
+        {
+            // Only show frames that were actually composed for recording.
+            // If none is available yet, return null so the previous displayed frame stays,
+            // avoiding a fallback blink from the raw preview without overlay.
+            if (winEnc.TryAcquirePreviewImage(out var img) && img != null)
+                return img; // renderer takes ownership and must dispose
+
+            return null; // do NOT fallback to raw preview during recording
+        }
+#elif ANDROID
+        // While recording on Android, mirror the composed encoder frames into the preview (no second camera feed)
+        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
+        {
+            if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
+                return img; // renderer takes ownership and must dispose
+            return null; // no fallback to raw preview during recording
+        }
+#elif IOS || MACCATALYST
+        // While recording on Apple, mirror the composed encoder frames into the preview
+        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
+        {
+            if (appleEnc.TryAcquirePreviewImage(out var img) && img != null)
+                return img; // renderer takes ownership and must dispose
+            return null; // no fallback to raw preview during recording
+        }
+#endif
         return NativeControl.GetPreviewImage();
     }
 
@@ -782,7 +1758,7 @@ public partial class SkiaCamera : SkiaControl
     {
     }
 
- 
+
 
 
     private bool _IsTakingPhoto;
@@ -1194,7 +2170,7 @@ public partial class SkiaCamera : SkiaControl
 
 
     /// <summary>
-    /// This is filled by renderer  
+    /// This is filled by renderer
     /// </summary>
     public string SavedFilename
     {
@@ -1249,6 +2225,14 @@ public partial class SkiaCamera : SkiaControl
             if (control.State == CameraState.On)
             {
                 control.StopInternal();
+
+                // Force recreation of NativeControl when camera properties change
+                // This ensures the new camera selection settings are applied
+                if (control.NativeControl != null)
+                {
+                    control.NativeControl.Dispose();
+                    control.NativeControl = null;
+                }
             }
 
             if (control.IsOn)
@@ -1271,7 +2255,7 @@ public partial class SkiaCamera : SkiaControl
 
             if (newvalue is int)
             {
-                if (control.CapturePhotoQuality != CaptureQuality.Manual)
+                if (control.PhotoQuality != CaptureQuality.Manual)
                 {
                     return;
                 }
@@ -1280,7 +2264,11 @@ public partial class SkiaCamera : SkiaControl
             if (control.IsOn)
             {
 #if ONPLATFORM
-                control.UpdatePreviewFormatForAspectRatio();
+                control.SafeAction(async () =>
+                {
+                    control.UpdatePreviewFormatForAspectRatio();
+                }, LongKeyGenerator.EncodeSemantic("cam_restart"));
+
 #endif
 
             }
@@ -1321,8 +2309,8 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(CameraIndexProperty, value); }
     }
 
-    public static readonly BindableProperty CapturePhotoQualityProperty = BindableProperty.Create(
-        nameof(CapturePhotoQuality),
+    public static readonly BindableProperty PhotoQualityProperty = BindableProperty.Create(
+        nameof(PhotoQuality),
         typeof(CaptureQuality),
         typeof(SkiaCamera),
         CaptureQuality.Max, propertyChanged: OnCaptureFormatChanged);
@@ -1330,27 +2318,27 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Photo capture quality
     /// </summary>
-    public CaptureQuality CapturePhotoQuality
+    public CaptureQuality PhotoQuality
     {
-        get { return (CaptureQuality)GetValue(CapturePhotoQualityProperty); }
-        set { SetValue(CapturePhotoQualityProperty, value); }
+        get { return (CaptureQuality)GetValue(PhotoQualityProperty); }
+        set { SetValue(PhotoQualityProperty, value); }
     }
 
-    public static readonly BindableProperty CaptureFormatIndexProperty = BindableProperty.Create(
-        nameof(CaptureFormatIndex),
+    public static readonly BindableProperty PhotoFormatIndexProperty = BindableProperty.Create(
+        nameof(PhotoFormatIndex),
         typeof(int),
         typeof(SkiaCamera),
         0, propertyChanged: OnCaptureFormatChanged);
 
     /// <summary>
-    /// Index of capture format when CapturePhotoQuality is set to Manual.
+    /// Index of capture format when PhotoQuality is set to Manual.
     /// Selects from the array of available capture formats/resolutions.
     /// Use GetAvailableCaptureFormats() to see available options.
     /// </summary>
-    public int CaptureFormatIndex
+    public int PhotoFormatIndex
     {
-        get { return (int)GetValue(CaptureFormatIndexProperty); }
-        set { SetValue(CaptureFormatIndexProperty, value); }
+        get { return (int)GetValue(PhotoFormatIndexProperty); }
+        set { SetValue(PhotoFormatIndexProperty, value); }
     }
 
     public static readonly BindableProperty CaptureFlashModeProperty = BindableProperty.Create(
@@ -1416,6 +2404,150 @@ public partial class SkiaCamera : SkiaControl
             camera.NativeControl.SetFlashMode((FlashMode)newValue);
         }
     }
+
+    #region VIDEO RECORDING PROPERTIES
+
+    public static readonly BindableProperty IsRecordingVideoProperty = BindableProperty.Create(
+        nameof(IsRecordingVideo),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        BindingMode.OneWayToSource);
+
+    /// <summary>
+    /// Whether video recording is currently active (read-only)
+    /// </summary>
+    public bool IsRecordingVideo
+    {
+        get { return (bool)GetValue(IsRecordingVideoProperty); }
+        private set { SetValue(IsRecordingVideoProperty, value); }
+    }
+
+    public static readonly BindableProperty VideoQualityProperty = BindableProperty.Create(
+        nameof(VideoQuality),
+        typeof(VideoQuality),
+        typeof(SkiaCamera),
+        VideoQuality.High,
+        propertyChanged: OnCaptureFormatChanged);
+
+    /// <summary>
+    /// Video recording quality preset
+    /// </summary>
+    public VideoQuality VideoQuality
+    {
+        get { return (VideoQuality)GetValue(VideoQualityProperty); }
+        set { SetValue(VideoQualityProperty, value); }
+    }
+
+    public static readonly BindableProperty VideoFormatIndexProperty = BindableProperty.Create(
+        nameof(VideoFormatIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        0,
+        propertyChanged: OnCaptureFormatChanged);
+
+    /// <summary>
+    /// Index of video format when VideoQuality is set to Manual.
+    /// Selects from the array of available video formats.
+    /// Use GetAvailableVideoFormatsAsync() to see available options.
+    /// </summary>
+    public int VideoFormatIndex
+    {
+        get { return (int)GetValue(VideoFormatIndexProperty); }
+        set { SetValue(VideoFormatIndexProperty, value); }
+    }
+
+
+
+    /// <summary>
+    /// Controls which stream/aspect the live preview should match.
+    /// Still: preview matches still-capture aspect. Video: preview matches intended video recording aspect.
+    /// Changing this will restart the camera to apply the new preview configuration.
+    /// </summary>
+    public static readonly BindableProperty CaptureModeProperty = BindableProperty.Create(
+        nameof(CaptureMode),
+        typeof(CaptureModeType),
+        typeof(SkiaCamera),
+        CaptureModeType.Still,
+        propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Preview mode: Still or Video. Determines which aspect/format the preview sizing should follow.
+    /// </summary>
+    public CaptureModeType CaptureMode
+    {
+        get => (CaptureModeType)GetValue(CaptureModeProperty);
+        set => SetValue(CaptureModeProperty, value);
+    }
+
+
+    /// <summary>
+    /// Gets whether video recording is supported on the current device/camera
+    /// </summary>
+    public bool CanRecordVideo
+    {
+        get { return NativeControl?.CanRecordVideo() ?? false; }
+    }
+
+    /// <summary>
+    /// Gets the current recording duration (if recording)
+    /// </summary>
+    public TimeSpan CurrentRecordingDuration { get; private set; }
+
+    public static readonly BindableProperty RecordAudioProperty = BindableProperty.Create(
+        nameof(RecordAudio),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    /// <summary>
+    /// Whether to record audio with video. Default is false (silent video).
+    /// Must be set before starting video recording.
+    /// </summary>
+    public bool RecordAudio
+    {
+        get { return (bool)GetValue(RecordAudioProperty); }
+        set { SetValue(RecordAudioProperty, value); }
+    }
+
+    public static readonly BindableProperty UseCaptureVideoFlowProperty = BindableProperty.Create(
+        nameof(UseCaptureVideoFlow),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    /// <summary>
+    /// Whether to use capture video flow (frame-by-frame processing) instead of native video recording.
+    /// When true, individual camera frames are captured and processed through FrameProcessor callback before encoding.
+    /// Default is false (use native video recording).
+    /// </summary>
+    public bool UseCaptureVideoFlow
+    {
+        get { return (bool)GetValue(UseCaptureVideoFlowProperty); }
+        set { SetValue(UseCaptureVideoFlowProperty, value); }
+    }
+
+    /// <summary>
+    /// Callback for processing individual frames during capture video flow.
+    /// Only used when UseCaptureVideoFlow is true.
+    /// Parameters: SKCanvas (for drawing), SKImageInfo (frame info), TimeSpan (recording timestamp)
+    /// </summary>
+    public Action<SKCanvas, SKImageInfo, TimeSpan> FrameProcessor { get; set; }
+
+    #endregion
+
+        /// <summary>
+        /// Whether to mirror composed recording frames to the on-screen preview during capture video flow.
+        /// Set this to true to see overlays exactly as recorded; set to false to avoid any mirroring overhead.
+        /// </summary>
+        public bool MirrorRecordingToPreview { get; set; } = true;
+
+        /// <summary>
+        /// While recording, show exactly the frames being composed for the encoder as the on-screen preview.
+        /// This avoids stutter by not relying on a separate preview feed. Controlled by MirrorRecordingToPreview.
+        /// </summary>
+        public bool UseRecordingFramesForPreview { get; set; } = true;
+
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(
         nameof(Type),
@@ -1802,7 +2934,7 @@ public partial class SkiaCamera : SkiaControl
         propertyChanged: NeedInvalidateMeasure);
 
     /// <summary>
-    /// Apspect to render image with, default is AspectCover. 
+    /// Apspect to render image with, default is AspectCover.
     /// </summary>
     public TransformAspect Aspect
     {
@@ -1898,7 +3030,7 @@ public partial class SkiaCamera : SkiaControl
     #endregion
 
     /// <summary>
-    /// The size of the camera preview in pixels 
+    /// The size of the camera preview in pixels
     /// </summary>
 
     public SKSize PreviewSize

@@ -1,3 +1,16 @@
+ 
+
+
+   
+## 🌱 What Was New Previously
+
+* SkiaCamera RenderCapturedPhotoAsync always runs on rendering thread and can use GPU
+* SKSL helper uses callback to pass compilation errors
+* SkiaShaderEffect new event handler OnCompilationError, passing iTime as all times, passing iMouse from new props: MouseInitial, MouseCurrent
+* Added SkiaCamera property IsMirrored to easily flip preview horizontally
+* Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
+* Fix header position for Horizontal orientation of SkiaScroll
+* Some fluent extensions fixes
 # DrawnUI for .NET MAUI
 ![License](https://img.shields.io/github/license/taublast/DrawnUi.svg)
 ![NuGet Version](https://img.shields.io/nuget/v/AppoMobi.Maui.DrawnUi.svg)
@@ -15,7 +28,7 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, a nuget package is available.
 
-___Please star ⭐ if you like it, helps very much!___
+___Please star ⭐ if you like it!___
 
 ## Features
 
@@ -95,20 +108,21 @@ ___Please star ⭐ if you like it, helps very much!___
 
 * Full keyboard support
 
- ## ‼️ Development Notes
-
-* .NET 9 only, Maui.Controls 9.0.70 minimum.
-* All files to be consumed (images etc) must be placed inside the MAUI app Resources/Raw folder, subfolders allowed. If you need to load from the native app folder use prefix "file://". Note that MAUI supports only lowercase filenames of resources and while uppercase might works for you on some plaforms they will not be read on iOS.  
-* Accessibility support is compatible and is on the roadmap.
-
-## 📕 [Documentation](https://taublast.github.io/DrawnUi/)
-
-Click here ☝️☝️☝️
-
 ---
 
-## What's new
+## 🌱 What's new
+
+* Gestures now filter possible palm longpressing at borders to avoid blocking taps
+* Add custom `ILogger` support can add with options to record all Super.Log messages
+* `SkiaImage` RescalingQuality default is now Low
+* `MeasureVisible` strategy of `SkiaLayout` now supports columns via `Split`
+* Fix LoadMore mechanics for `MeasureAll` strategy of `SkiaLayout`
+* `SkiaScroll` IsRefreshing binding mode is now TwoWay by default
+* `SkiaCamera` fix Android flash always on mode
+* `SkiaCamera` implemented video recording beta mode
  
+## Previously
+
 * SkiaCamera RenderCapturedPhotoAsync always runs on rendering thread and can use GPU
 * SKSL helper uses callback to pass compilation errors
 * SkiaShaderEffect new event handler OnCompilationError, passing iTime as all times, passing iMouse from new props: MouseInitial, MouseCurrent
@@ -116,8 +130,6 @@ Click here ☝️☝️☝️
 * Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
 * Fix header position for Horizontal orientation of SkiaScroll
 * Some fluent extensions fixes
-
-## Previously
 
 * `SkiaMapsUi` event `LoadingChanged` and prop `IsLoading` to tracks tiles loading/complete. New prop `IsAnimated` to make zooming instant if `false`.
 * `InvertPan` fixes, new prop `InvertPan` to control pan direction solving [186](https://github.com/taublast/DrawnUi/issues/186).

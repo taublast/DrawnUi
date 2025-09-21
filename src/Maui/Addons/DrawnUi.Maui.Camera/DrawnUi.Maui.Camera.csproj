@@ -30,11 +30,17 @@
         <Compile Include="Shared/**/*.*pple.cs">
             <Link>Platforms/MacCatalyst/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
+        <Compile Include="Platforms/Apple/AppleCaptureVideoEncoder.cs">
+            <Link>Platforms/MacCatalyst/AppleCaptureVideoEncoder.cs</Link>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup Condition="$(TargetFramework.Contains('ios'))">
         <Compile Include="Shared/**/*.*pple.cs">
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </Compile>
+        <Compile Include="Platforms/Apple/AppleCaptureVideoEncoder.cs">
+            <Link>Platforms/iOS/AppleCaptureVideoEncoder.cs</Link>
         </Compile>
     </ItemGroup>
 
@@ -44,6 +50,14 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.205">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.26100.2" />
     </ItemGroup>
 
 

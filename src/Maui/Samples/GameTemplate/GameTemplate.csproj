@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+
+    <ApplicationId>com.drawnui.template</ApplicationId>
+    <ApplicationIdGuid>c4f1b1f4-6a0b-4f7b-9a1e-9d5a0a5a1d11</ApplicationIdGuid>
+    <ApplicationTitle>DrawnUI Game Template</ApplicationTitle>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GameTemplate</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <WindowsPackageType>None</WindowsPackageType>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.2</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Raw Assets (also remove the "Resources\\Raw" prefix). Optional folder -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-hdpi\ic_launcher.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-hdpi\ic_launcher_foreground.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-hdpi\ic_launcher_round.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-mdpi\ic_launcher.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-mdpi\ic_launcher_foreground.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-mdpi\ic_launcher_round.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xhdpi\ic_launcher.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xhdpi\ic_launcher_foreground.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xhdpi\ic_launcher_round.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xxhdpi\ic_launcher.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xxhdpi\ic_launcher_foreground.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xxhdpi\ic_launcher_round.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xxxhdpi\ic_launcher.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xxxhdpi\ic_launcher_foreground.webp" />
+    <AndroidResource Include="Platforms\Android\Resources\mipmap-xxxhdpi\ic_launcher_round.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Game\DrawnUi.Maui.Game.csproj" />
+    <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiXaml Update="Platforms\Windows\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
+</Project>
+
