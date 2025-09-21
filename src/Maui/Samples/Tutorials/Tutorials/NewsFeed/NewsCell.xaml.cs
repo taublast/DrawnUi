@@ -10,6 +10,8 @@ public partial class NewsCell : SkiaDynamicDrawnCell
     public NewsCell()
     {
         InitializeComponent();
+
+        Opacity = 0; //will fade in after content is set for the first time
     }
 
     protected override void SetContent(object ctx)
@@ -20,7 +22,15 @@ public partial class NewsCell : SkiaDynamicDrawnCell
         {
             ConfigureForContentType(news);
         }
+
+        if (!_appeared)  
+        {
+            _appeared = true;
+            FadeToAsync(1, 750, Easing.Linear);
+        }
     }
+
+    private bool _appeared;
 
     public override void OnWillDisposeWithChildren()
     {
