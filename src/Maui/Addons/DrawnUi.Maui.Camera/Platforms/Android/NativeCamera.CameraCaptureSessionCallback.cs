@@ -32,13 +32,10 @@ namespace DrawnUi.Camera
                 owner.CaptureSession = session;
                 try
                 {
-                    // Auto focus should be continuous for camera preview.
-                    owner.mPreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
-
                     owner.mPreviewRequestBuilder.AddTarget(owner.mImageReaderPreview.Surface);
 
-                    // Flash is automatically enabled when necessary.
-                    owner.SetCapturingStillOptions(owner.mPreviewRequestBuilder);
+                    // Apply preview-specific settings (focus mode only, flash already set in CreateCameraPreviewSession)
+                    owner.SetPreviewOptions(owner.mPreviewRequestBuilder);
 
                     // Finally, we start displaying the camera preview.
                     owner.mPreviewRequest = owner.mPreviewRequestBuilder.Build();

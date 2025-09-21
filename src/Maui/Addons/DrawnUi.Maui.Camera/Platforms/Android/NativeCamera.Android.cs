@@ -602,6 +602,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         FormsControl = parent;
 
+        // Initialize flash modes from SkiaCamera properties to ensure consistency
+        // This prevents flash settings from being reset when camera is recreated
+        _flashMode = parent.FlashMode;
+        _captureFlashMode = parent.CaptureFlashMode;
+
         rs = RenderScript.Create(Platform.AppContext);
         Splines.Initialize(rs);
     }
@@ -1507,6 +1512,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    /// <summary>
+    /// Sets preview-specific options without interfering with flash settings already applied for preview
+    /// </summary>
+    public void SetPreviewOptions(CaptureRequest.Builder requestBuilder)
+    {
+        requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
+        // Note: Flash settings are NOT applied here as they're already set in CreateCameraPreviewSession()
+        // This prevents conflicts between preview flash (torch) and capture flash (single) modes
+    }
+
     public void StartCapturingStill()
     {
         if (CapturingStill)
@@ -1735,7 +1750,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         try
         {
             mPreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
-            SetCapturingStillOptions(mPreviewRequestBuilder);
+            SetPreviewOptions(mPreviewRequestBuilder);
             CaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback,
                 mBackgroundHandler);
             mState = STATE_PREVIEW;
