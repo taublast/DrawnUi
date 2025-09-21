@@ -3,9 +3,11 @@
 ![NuGet Version](https://img.shields.io/nuget/v/AppoMobi.Maui.DrawnUi.svg)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 
-[Docs are here!](https://taublast.github.io/DrawnUi) 👈
+[Docs and Samples](https://drawnui.net) 👈
 
-Replace native controls with a Skia Canvas! 🤩 On **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
+When you want to draw your app or game a Skia Canvas instead of using native controls this library solves it. 
+
+Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
 Rendering engine with a layout system, gestures and animations, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
@@ -32,6 +34,10 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 
 ---
 
+When you want to draw something instead of using native controls this library solves it. 
+
+---
+
 ## 🌱 What's new
 
 * Gestures now filter possible palm longpressing at borders to avoid blocking taps
@@ -45,6 +51,6 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
  
 ---
 
-[Documentation](https://drawnui.net) 👈
+[Docs and Samples](https://drawnui.net) 👈
 
 ___Please star ⭐ if you like it!___
