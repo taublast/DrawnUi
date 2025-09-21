@@ -223,10 +223,15 @@ public partial class SkiaImageManager : IDisposable
         }
     }
 
+    public static bool UseCache { get; set; } = true;
+
     public SkiaImageManager()
     {
-        var factory = Super.Services.GetService<IEasyCachingProviderFactory>();
-        _cachingProvider = factory.GetCachingProvider("skiaimages");
+        if (UseCache)
+        {
+            var factory = Super.Services.GetService<IEasyCachingProviderFactory>();
+            _cachingProvider = factory.GetCachingProvider("skiaimages");
+        }
 
         var connected = Connectivity.Current.NetworkAccess;
         if (connected != NetworkAccess.Internet
@@ -367,7 +372,7 @@ public partial class SkiaImageManager : IDisposable
             // 1 Try to get from cache
             var cacheKey = uri;
 
-            if (!string.IsNullOrEmpty(cacheKey))
+            if (_cachingProvider!=null &&!string.IsNullOrEmpty(cacheKey))
             {
                 var cachedBitmap = _cachingProvider.Get<SKBitmap>(cacheKey);
                 if (cachedBitmap.HasValue)
@@ -481,7 +486,10 @@ public partial class SkiaImageManager : IDisposable
                     {
                         string uri = sourceUri.Uri.ToString();
                         // Add the loaded bitmap to the cache
-                        _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
+                        if (_cachingProvider != null)
+                        {
+                            _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
+                        }
                         TraceLog($"ImageLoadManager: Loaded bitmap for UriImageSource {uri}");
                         // Remove the Task from the loadingBitmaps dictionary now that we're done loading this image
                         _trackLoadingBitmapsUris.TryRemove(uri, out _);
@@ -492,7 +500,11 @@ public partial class SkiaImageManager : IDisposable
                         string uri = sourceFile.File;
 
                         // Add the loaded bitmap to the cache
-                        _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
+                        if (_cachingProvider != null)
+                        {
+                            _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
+                        }
+
                         TraceLog($"ImageLoadManager: Loaded bitmap for FileImageSource {uri}");
                         // Remove the Task from the loadingBitmaps dictionary now that we're done loading this image
                         _trackLoadingBitmapsUris.TryRemove(uri, out _);
@@ -675,7 +687,10 @@ public partial class SkiaImageManager : IDisposable
 
     public void UpdateInCache(string uri, SKBitmap bitmap, int cacheLongevityMinutes)
     {
-        _cachingProvider.Set(uri, bitmap, TimeSpan.FromMinutes(cacheLongevityMinutes));
+        if (_cachingProvider != null)
+        {
+            _cachingProvider.Set(uri, bitmap, TimeSpan.FromMinutes(cacheLongevityMinutes));
+        }
     }
 
     /// <summary>
@@ -687,7 +702,7 @@ public partial class SkiaImageManager : IDisposable
     /// <returns></returns>
     public bool AddToCache(string uri, SKBitmap bitmap, int cacheLongevitySecs)
     {
-        if (_cachingProvider.Exists(uri))
+        if (_cachingProvider==null || _cachingProvider.Exists(uri))
             return false;
 
         _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(cacheLongevitySecs));
@@ -714,6 +729,11 @@ public partial class SkiaImageManager : IDisposable
     /// <returns></returns>
     public SKBitmap GetFromCacheInternal(string url)
     {
+        if (_cachingProvider == null)
+        {
+            return null;
+        }
+
         return _cachingProvider.Get<SKBitmap>(url)?.Value;
     }
 
@@ -735,7 +755,7 @@ public partial class SkiaImageManager : IDisposable
         var cacheKey = uri;
 
         // Check if the image is already cached or being loaded
-        if (_cachingProvider.Get<SKBitmap>(cacheKey).HasValue || _trackLoadingBitmapsUris.ContainsKey(uri))
+        if (_cachingProvider!=null && _cachingProvider.Get<SKBitmap>(cacheKey).HasValue || _trackLoadingBitmapsUris.ContainsKey(uri))
         {
             TraceLog($"Preload: Image already cached or being loaded for Uri {uri}");
             return;
