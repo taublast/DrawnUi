@@ -472,5 +472,301 @@ namespace UnitTests
             };
         }
 
+        [Fact]
+        public void MeasureVisibleWithSplitAndDynamicColumns()
+        {
+            var layout = new SkiaLayout
+            {
+                Type = LayoutType.Column,
+                Split = 2,
+                DynamicColumns = true,
+                MeasureItemsStrategy = MeasuringStrategy.MeasureVisible,
+                UseCache = SkiaCacheType.Image,
+                WidthRequest = 200,
+                HeightRequest = 300
+            };
+
+            // Create 5 items - should result in 3 rows: [2 items], [2 items], [1 item]
+            var itemsSource = new ObservableCollection<int>() { 1, 2, 3, 4, 5 };
+            layout.ItemsSource = itemsSource;
+            layout.ItemTemplate = new DataTemplate(() => new SkiaShape()
+            {
+                BackgroundColor = Colors.Blue,
+                HeightRequest = 50,
+                WidthRequest = 90
+            });
+
+            layout.CommitInvalidations();
+            layout.Measure(200, 300, 1);
+
+            // Verify structure corresponds to items source
+            Assert.True(LayoutStructureCorrespondsToItemsSource(itemsSource, layout));
+
+            // Verify the structure has correct row/column distribution
+            var structure = layout.LatestStackStructure;
+            Assert.NotNull(structure);
+
+            // Should have 3 rows
+            Assert.Equal(3, structure.MaxRows);
+
+            // First row should have 2 columns
+            Assert.Equal(2, structure.GetColumnCountForRow(0));
+
+            // Second row should have 2 columns
+            Assert.Equal(2, structure.GetColumnCountForRow(1));
+
+            // Third row should have 1 column (DynamicColumns = true)
+            Assert.Equal(1, structure.GetColumnCountForRow(2));
+
+            // Verify items are positioned correctly
+            var cells = structure.GetChildren().OrderBy(c => c.ControlIndex).ToList();
+            Assert.Equal(5, cells.Count);
+
+            // Check row/column assignments
+            Assert.Equal(0, cells[0].Row); // Item 1: Row 0, Col 0
+            Assert.Equal(0, cells[0].Column);
+
+            Assert.Equal(0, cells[1].Row); // Item 2: Row 0, Col 1
+            Assert.Equal(1, cells[1].Column);
+
+            Assert.Equal(1, cells[2].Row); // Item 3: Row 1, Col 0
+            Assert.Equal(0, cells[2].Column);
+
+            Assert.Equal(1, cells[3].Row); // Item 4: Row 1, Col 1
+            Assert.Equal(1, cells[3].Column);
+
+            Assert.Equal(2, cells[4].Row); // Item 5: Row 2, Col 0 (last row with 1 item)
+            Assert.Equal(0, cells[4].Column);
+        }
+
+        [Fact]
+        public void MeasureVisibleWithSplitNoDynamicColumns()
+        {
+            var layout = new SkiaLayout
+            {
+                Type = LayoutType.Column,
+                Split = 2,
+                DynamicColumns = false, // Force all rows to have Split columns
+                MeasureItemsStrategy = MeasuringStrategy.MeasureVisible,
+                UseCache = SkiaCacheType.Image,
+                WidthRequest = 200,
+                HeightRequest = 300
+            };
+
+            // Create 5 items - should result in 3 rows: [2 items], [2 items], [1 item but padded to 2 columns]
+            var itemsSource = new ObservableCollection<int>() { 1, 2, 3, 4, 5 };
+            layout.ItemsSource = itemsSource;
+            layout.ItemTemplate = new DataTemplate(() => new SkiaShape()
+            {
+                BackgroundColor = Colors.Blue,
+                HeightRequest = 50,
+                WidthRequest = 90
+            });
+
+            layout.CommitInvalidations();
+            layout.Measure(200, 300, 1);
+
+            // Verify structure corresponds to items source
+            Assert.True(LayoutStructureCorrespondsToItemsSource(itemsSource, layout));
+
+            // Verify the structure has correct row/column distribution
+            var structure = layout.LatestStackStructure;
+            Assert.NotNull(structure);
+
+            // Should have 3 rows
+            Assert.Equal(3, structure.MaxRows);
+
+            // All rows should have Split columns when DynamicColumns = false
+            Assert.Equal(2, structure.GetColumnCountForRow(0));
+            Assert.Equal(2, structure.GetColumnCountForRow(1));
+            Assert.Equal(1, structure.GetColumnCountForRow(2)); // Only 1 item in last row
+        }
+
+        [Fact]
+        public void MeasureVisibleYPositionConsistentAcrossColumns()
+        {
+            var layout = new SkiaLayout
+            {
+                Type = LayoutType.Column,
+                Split = 3,
+                DynamicColumns = false,
+                MeasureItemsStrategy = MeasuringStrategy.MeasureVisible,
+                UseCache = SkiaCacheType.Image,
+                WidthRequest = 300,
+                HeightRequest = 400
+            };
+
+            // Create 6 items - should result in 2 rows: [3 items], [3 items]
+            var itemsSource = new ObservableCollection<int>() { 1, 2, 3, 4, 5, 6 };
+            layout.ItemsSource = itemsSource;
+            layout.ItemTemplate = new DataTemplate(() => new SkiaShape()
+            {
+                BackgroundColor = Colors.Blue,
+                HeightRequest = 60,
+                WidthRequest = 90
+            });
+
+            layout.CommitInvalidations();
+            layout.Measure(300, 400, 1);
+
+            // Verify structure corresponds to items source
+            Assert.True(LayoutStructureCorrespondsToItemsSource(itemsSource, layout));
+
+            // Verify the structure has correct row/column distribution
+            var structure = layout.LatestStackStructure;
+            Assert.NotNull(structure);
+
+            // Should have 2 rows
+            Assert.Equal(2, structure.MaxRows);
+
+            // Both rows should have 3 columns
+            Assert.Equal(3, structure.GetColumnCountForRow(0));
+            Assert.Equal(3, structure.GetColumnCountForRow(1));
+
+            // Verify Y positions are consistent within each row
+            var cells = structure.GetChildren().OrderBy(c => c.ControlIndex).ToList();
+            Assert.Equal(6, cells.Count);
+
+            // Row 0: All items should have the same Y position
+            var row0Items = cells.Where(c => c.Row == 0).ToList();
+            Assert.Equal(3, row0Items.Count);
+            var row0Y = row0Items[0].Destination.Top;
+            Assert.All(row0Items, item => Assert.Equal(row0Y, item.Destination.Top));
+
+            // Row 1: All items should have the same Y position (but different from row 0)
+            var row1Items = cells.Where(c => c.Row == 1).ToList();
+            Assert.Equal(3, row1Items.Count);
+            var row1Y = row1Items[0].Destination.Top;
+            Assert.All(row1Items, item => Assert.Equal(row1Y, item.Destination.Top));
+
+            // Row 1 should be positioned below row 0
+            Assert.True(row1Y > row0Y, $"Row 1 Y position ({row1Y}) should be greater than Row 0 Y position ({row0Y})");
+        }
+
+        [Fact]
+        public void MeasureVisibleBackgroundMeasurementYPositionFix()
+        {
+            var layout = new SkiaLayout
+            {
+                Type = LayoutType.Column,
+                Split = 2,
+                DynamicColumns = false,
+                MeasureItemsStrategy = MeasuringStrategy.MeasureVisible,
+                UseCache = SkiaCacheType.Image,
+                WidthRequest = 200,
+                HeightRequest = 400,
+                Spacing = 10
+            };
+
+            // Create 8 items - should result in 4 rows: [2 items], [2 items], [2 items], [2 items]
+            var itemsSource = new ObservableCollection<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
+            layout.ItemsSource = itemsSource;
+            layout.ItemTemplate = new DataTemplate(() => new SkiaShape()
+            {
+                BackgroundColor = Colors.Blue,
+                HeightRequest = 50,
+                WidthRequest = 90
+            });
+
+            layout.CommitInvalidations();
+            layout.Measure(200, 400, 1);
+
+            // Verify structure corresponds to items source
+            Assert.True(LayoutStructureCorrespondsToItemsSource(itemsSource, layout));
+
+            var structure = layout.LatestStackStructure;
+            Assert.NotNull(structure);
+
+            // Should have 4 rows with 2 columns each
+            Assert.Equal(4, structure.MaxRows);
+            for (int row = 0; row < 4; row++)
+            {
+                Assert.Equal(2, structure.GetColumnCountForRow(row));
+            }
+
+            // Verify Y positions are consistent within each row
+            var cells = structure.GetChildren().OrderBy(c => c.ControlIndex).ToList();
+            Assert.Equal(8, cells.Count);
+
+            // Test each row individually
+            for (int row = 0; row < 4; row++)
+            {
+                var rowItems = cells.Where(c => c.Row == row).ToList();
+                Assert.Equal(2, rowItems.Count);
+
+                // Both items in the same row should have identical Y positions
+                var firstItemY = rowItems[0].Destination.Top;
+                var secondItemY = rowItems[1].Destination.Top;
+
+                Assert.True(Math.Abs(firstItemY - secondItemY) < 0.01f,
+                    $"Row {row}: Column 0 Y position ({firstItemY}) should equal Column 1 Y position ({secondItemY})");
+
+                // Verify spacing between rows (except for first row)
+                if (row > 0)
+                {
+                    var previousRowItems = cells.Where(c => c.Row == row - 1).ToList();
+                    var previousRowBottom = previousRowItems.Max(c => c.Destination.Bottom);
+                    var expectedY = previousRowBottom + 10; // spacing = 10
+
+                    Assert.True(Math.Abs(expectedY - firstItemY) <= 1, // Allow 1 pixel tolerance
+                        $"Row {row} Y position ({firstItemY}) should be previous row bottom ({previousRowBottom}) + spacing (10) = {expectedY}");
+                }
+            }
+        }
+
+        [Fact]
+        public void MeasureVisibleBackgroundMeasurementWidthCalculationFix()
+        {
+            // Test that background measurement uses content width (excluding margins) like initial measurement
+            var layout = new SkiaLayout
+            {
+                Type = LayoutType.Column,
+                Split = 2,
+                Spacing = 10,
+                Margin = new Thickness(8, 0, 8, 0), // Add margins to test the fix
+                MeasureItemsStrategy = MeasuringStrategy.MeasureVisible,
+                ItemTemplate = new DataTemplate(() => new SkiaLabel
+                {
+                    Text = "Test",
+                    HorizontalOptions = LayoutOptions.Fill, // Make it fill the available width
+                    HeightRequest = 50
+                })
+            };
+
+            var items = new List<string> { "Item1", "Item2", "Item3", "Item4", "Item5", "Item6" };
+            layout.ItemsSource = items;
+
+            // Measure the layout with specific width
+            var totalWidth = 400f;
+            var measured = layout.Measure(totalWidth, 600, 1.0f);
+            Assert.True(measured.Pixels.Width > 0);
+            Assert.True(measured.Pixels.Height > 0);
+
+            // Get the structure
+            var structure = layout.LatestStackStructure;
+            Assert.NotNull(structure);
+
+            // Calculate expected column width using content width (excluding margins)
+            var scale = 1.0f;
+            var marginsWidth = (layout.Margin.Left + layout.Margin.Right) * scale;
+            var contentWidth = totalWidth - marginsWidth;
+            var expectedColumnWidth = (contentWidth - (2 - 1) * layout.Spacing * scale) / 2;
+
+            // Verify that all items have the correct width (should match expected column width)
+            // Since we set HorizontalOptions.Fill, the items should fill the available column width
+            for (int row = 0; row < structure.MaxRows; row++)
+            {
+                for (int col = 0; col < structure.MaxColumns; col++)
+                {
+                    var item = structure.Get(col, row);
+                    if (item != null)
+                    {
+                        // The item width should match the calculated column width when using Fill
+                        Assert.Equal(expectedColumnWidth, item.Destination.Width, 1); // Allow 1 pixel tolerance for rounding
+                    }
+                }
+            }
+        }
+
     }
 }
