@@ -34,6 +34,7 @@ items:
   - DrawnUi.Draw.SkiaImageManager.ReuseBitmaps
   - DrawnUi.Draw.SkiaImageManager.TraceLog(System.String)
   - DrawnUi.Draw.SkiaImageManager.UpdateInCache(System.String,SkiaSharp.SKBitmap,System.Int32)
+  - DrawnUi.Draw.SkiaImageManager.UseCache
   langs:
   - csharp
   - vb
@@ -446,6 +447,35 @@ items:
       type: DrawnUi.Draw.SkiaImageManager
     content.vb: Public Shared ReadOnly Property Instance As SkiaImageManager
   overload: DrawnUi.Draw.SkiaImageManager.Instance*
+- uid: DrawnUi.Draw.SkiaImageManager.UseCache
+  commentId: P:DrawnUi.Draw.SkiaImageManager.UseCache
+  id: UseCache
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: UseCache
+  nameWithType: SkiaImageManager.UseCache
+  fullName: DrawnUi.Draw.SkiaImageManager.UseCache
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UseCache
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 225
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool UseCache { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Property UseCache As Boolean
+  overload: DrawnUi.Draw.SkiaImageManager.UseCache*
 - uid: DrawnUi.Draw.SkiaImageManager.#ctor
   commentId: M:DrawnUi.Draw.SkiaImageManager.#ctor
   id: '#ctor'
@@ -464,7 +494,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 225
+    startLine: 227
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -493,7 +523,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLoadingLocked
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 254
+    startLine: 259
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -522,7 +552,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CancelAll
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 267
+    startLine: 272
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -548,7 +578,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 331
+    startLine: 336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -586,7 +616,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageManagedAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 342
+    startLine: 347
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -626,7 +656,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageOnPlatformAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 451
+    startLine: 456
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -659,7 +689,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 598
+    startLine: 610
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -688,7 +718,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateInCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 675
+    startLine: 687
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -724,7 +754,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddToCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 687
+    startLine: 702
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -767,7 +797,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFromCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 701
+    startLine: 716
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -805,7 +835,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFromCacheInternal
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 714
+    startLine: 729
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -843,7 +873,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Preload
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 719
+    startLine: 739
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -876,7 +906,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetUriFromImageSource
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 759
+    startLine: 779
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -907,7 +937,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 780
+    startLine: 800
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -937,7 +967,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOffline
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 789
+    startLine: 809
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -966,7 +996,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadFromFile
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 803
+    startLine: 823
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1002,7 +1032,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageFromInternetAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 868
+    startLine: 888
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1707,6 +1737,12 @@ references:
   name: SkiaImageManager
   nameWithType: SkiaImageManager
   fullName: DrawnUi.Draw.SkiaImageManager
+- uid: DrawnUi.Draw.SkiaImageManager.UseCache*
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.UseCache
+  href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_UseCache
+  name: UseCache
+  nameWithType: SkiaImageManager.UseCache
+  fullName: DrawnUi.Draw.SkiaImageManager.UseCache
 - uid: DrawnUi.Draw.SkiaImageManager.#ctor*
   commentId: Overload:DrawnUi.Draw.SkiaImageManager.#ctor
   href: DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager__ctor

@@ -704,7 +704,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsSimpleRectangle(SkiaSharp.SKPath)
   - DrawnUi.Draw.SkiaControl.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
-  - DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
@@ -15112,33 +15112,48 @@ references:
   name: ShouldClipAntialiased
   nameWithType: SkiaControl.ShouldClipAntialiased
   fullName: DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
-- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
-  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
-  name: SafeAction(Action)
-  nameWithType: SkiaControl.SafeAction(Action)
-  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
+  name: SafeAction(Action, long)
+  nameWithType: SkiaControl.SafeAction(Action, long)
+  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, long)
+  nameWithType.vb: SkiaControl.SafeAction(Action, Long)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, Long)
+  name.vb: SafeAction(Action, Long)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
     name: SafeAction
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
     name: SafeAction
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.NeedRemeasuring
   commentId: F:DrawnUi.Draw.SkiaControl.NeedRemeasuring

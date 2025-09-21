@@ -33,15 +33,15 @@ Current development state is _ALPHA for prod_.
 * __Navigate__ on canvas with familiar MAUI Shell techniques 
 
 ## 🌱 What's new
- 
-* SkiaCamera RenderCapturedPhotoAsync always runs on rendering thread and can use GPU
-* SKSL helper uses callback to pass compilation errors
-* SkiaShaderEffect new event handler OnCompilationError, passing iTime as all times, passing iMouse from new props: MouseInitial, MouseCurrent
-* Added SkiaCamera property IsMirrored to easily flip preview horizontally
-* Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
-* Fix header position for Horizontal orientation of SkiaScroll
-* Some fluent extensions fixes
- 
+* Gestures now filter possible palm longpressing at borders to avoid blocking taps
+* Add custom `ILogger` support can add with options to record all Super.Log messages
+* `SkiaImage` RescalingQuality default is now Low
+* `MeasureVisible` strategy of `SkiaLayout` now supports columns via `Split`
+* Fix LoadMore mechanics for `MeasureAll` strategy of `SkiaLayout`
+* `SkiaScroll` IsRefreshing binding mode is now TwoWay by default
+* `SkiaCamera` fix Android flash always on mode
+* `SkiaCamera` implemented video recording beta mode
+  
 ___Please star ⭐ if you like it!___
 
 > "No sealed code" policy library for creating and rendering custom UI
@@ -122,6 +122,14 @@ Click here ☝️☝️☝️
 ---
 
 ## 🌱 What Was New Previously
+
+* SkiaCamera RenderCapturedPhotoAsync always runs on rendering thread and can use GPU
+* SKSL helper uses callback to pass compilation errors
+* SkiaShaderEffect new event handler OnCompilationError, passing iTime as all times, passing iMouse from new props: MouseInitial, MouseCurrent
+* Added SkiaCamera property IsMirrored to easily flip preview horizontally
+* Added SkiaImage property DisplayRect to read scaled source area inside DrawingRect
+* Fix header position for Horizontal orientation of SkiaScroll
+* Some fluent extensions fixes
 
 * `SkiaMapsUi` event `LoadingChanged` and prop `IsLoading` to tracks tiles loading/complete. New prop `IsAnimated` to make zooming instant if `false`.
 * `InvertPan` fixes, new prop `InvertPan` to control pan direction solving [186](https://github.com/taublast/DrawnUi/issues/186).

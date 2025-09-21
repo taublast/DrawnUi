@@ -156,6 +156,9 @@ items:
   - uid: DrawnUi.Controls.SkiaSprite
     name: SkiaSprite
     type: Class
+  - uid: DrawnUi.Controls.SkiaSpriteSet
+    name: SkiaSpriteSet
+    type: Class
   - uid: DrawnUi.Controls.SkiaTabsSelector
     name: SkiaTabsSelector
     type: Class
@@ -523,6 +526,9 @@ items:
   - uid: DrawnUi.Draw.KeyboardManager
     name: KeyboardManager
     type: Class
+  - uid: DrawnUi.Draw.KeyedActionQueue`1
+    name: KeyedActionQueue<TKey>
+    type: Class
   - uid: DrawnUi.Draw.LayoutStructure
     name: LayoutStructure
     type: Class
@@ -550,6 +556,9 @@ items:
   - uid: DrawnUi.Draw.LockTouch
     name: LockTouch
     type: Enum
+  - uid: DrawnUi.Draw.LongKeyGenerator
+    name: LongKeyGenerator
+    type: Class
   - uid: DrawnUi.Draw.Looper
     name: Looper
     type: Class

@@ -574,7 +574,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
   - DrawnUi.Draw.SkiaControl.NeedMeasure
-  - DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
@@ -1566,7 +1566,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 219
+    startLine: 218
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1598,7 +1598,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 246
+    startLine: 245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1624,7 +1624,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrameAt
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 258
+    startLine: 257
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1661,7 +1661,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFinished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 263
+    startLine: 262
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1687,7 +1687,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStarted
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 268
+    startLine: 267
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1713,7 +1713,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 273
+    startLine: 272
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1742,7 +1742,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 285
+    startLine: 284
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1768,7 +1768,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 289
+    startLine: 288
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1794,7 +1794,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWillDisposeWithChildren
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 300
+    startLine: 299
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1826,7 +1826,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Finished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 313
+    startLine: 312
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1855,7 +1855,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Started
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 315
+    startLine: 314
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1882,7 +1882,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 321
+    startLine: 320
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1909,7 +1909,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 335
+    startLine: 334
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1940,7 +1940,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatioProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 341
+    startLine: 340
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1967,7 +1967,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatio
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 352
+    startLine: 351
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1996,7 +1996,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RepeatProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 358
+    startLine: 357
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2023,7 +2023,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Repeat
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 378
+    startLine: 377
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2054,7 +2054,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlayProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 384
+    startLine: 383
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2081,7 +2081,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 389
+    startLine: 388
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -12653,33 +12653,48 @@ references:
   name: NeedMeasure
   nameWithType: SkiaControl.NeedMeasure
   fullName: DrawnUi.Draw.SkiaControl.NeedMeasure
-- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
-  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
-  name: SafeAction(Action)
-  nameWithType: SkiaControl.SafeAction(Action)
-  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
+  name: SafeAction(Action, long)
+  nameWithType: SkiaControl.SafeAction(Action, long)
+  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, long)
+  nameWithType.vb: SkiaControl.SafeAction(Action, Long)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, Long)
+  name.vb: SafeAction(Action, Long)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
     name: SafeAction
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
     name: SafeAction
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.NeedRemeasuring
   commentId: F:DrawnUi.Draw.SkiaControl.NeedRemeasuring

@@ -1,8 +1,8 @@
-﻿using Breakout.Game.Dialogs;
-using DrawnUi.Controls;
+﻿using DrawnUi.Controls;
 using DrawnUi.Views;
 using System.Globalization;
 using Breakout;
+
 #if PREVIEWS
 using HotPreview;
 #endif
@@ -14,16 +14,9 @@ namespace Breakout.Game
         public MainPage()
         {
             BackgroundColor = Colors.Black; //iOS statusbar and bottom insets
-
-            Instance = this; // To change of this instance, to be accessed from AppLanguage helper
-
-            AppLanguage.ApplySelected();
         }
 
-        //for AppLanguage etc access
-        public static MainPage Instance;
-
-        //for previews
+        //for navigatiion 
         public static SkiaViewSwitcher? ViewsContainer;
 
         Canvas Canvas;
@@ -63,7 +56,7 @@ namespace Breakout.Game
                             SelectedIndex = 0,
                             Children =
                             {
-                                new Game.BreakoutGame(),
+                                //new Game.BreakoutGame(),
                             }
                         }.Assign(out ViewsContainer),
 #if NEED_DEBUG
@@ -90,29 +83,6 @@ namespace Breakout.Game
 #else
             this.Content = Canvas;
 #endif
-        }
-
-#if PREVIEWS
-        [AutoGeneratePreview(false)]
-#endif
-        public class RescalingCanvas : Canvas
-        {
-            public float GameScale { get; set; } = 1;
-
-            protected override void Draw(DrawingContext context)
-            {
-                var wantedHeight = Breakout.Game.BreakoutGame.HEIGHT * context.Scale;
-                var wantedWidth = Breakout.Game.BreakoutGame.WIDTH * context.Scale;
-
-                var scaleWidth = this.DrawingRect.Width / wantedWidth;
-                var scaleHeight = this.DrawingRect.Height / wantedHeight;
-
-                GameScale = Math.Min(scaleWidth, scaleHeight);
-
-                context.Scale *= GameScale;
-
-                base.Draw(context);
-            }
         }
     }
 }

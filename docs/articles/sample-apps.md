@@ -26,11 +26,19 @@ Explore real-world applications and demo projects built with DrawnUI to see the 
 
 Real-world applications built with DrawnUI:
 
+### Filters Camera
+_Camera with real-time filters totally drawn on canvas_
+- **Browse Code**: [Github repository](https://github.com/taublast/ShadersCamera)
+- **Install**: [AppStore](https://apps.apple.com/us/app/filters-camera/id6749823005?platform=iphone), [Google Play](https://play.google.com/store/apps/details?id=com.appomobi.drawnui.shaderscam)
+- **Architecture**: Single Canvas root, MAUI popups for settings.
+- **Features**: SKSL shaders and `SkiaCamera` control
+
 ### Bricks Breaker
+_Arkanois/Breakout-style arcade game_
 - **Browse Code**: [Github repository](https://github.com/taublast/DrawnUi.Breakout)
 - **Install**: [AppStore](https://apps.apple.com/us/app/bricks-breaker/id6749823869?platform=iphone), [Google Play](https://play.google.com/store/apps/details?id=com.appomobi.drawnui.breakout)
 - **Architecture**: Single Canvas root with drawn dialogs
-- **Features**: Breakout/Arkanoid style arcade game 
+- **Features**: DrawnUI game helpers and mecanics
 
 
 ### Bug ID: Insect Identifier AI

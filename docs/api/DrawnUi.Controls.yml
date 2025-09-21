@@ -47,6 +47,7 @@ items:
   - DrawnUi.Controls.SkiaShellNavigatingArgs
   - DrawnUi.Controls.SkiaSpinner
   - DrawnUi.Controls.SkiaSprite
+  - DrawnUi.Controls.SkiaSpriteSet
   - DrawnUi.Controls.SkiaTabsSelector
   - DrawnUi.Controls.SkiaTabsSelector.TabEntry
   - DrawnUi.Controls.SkiaViewSwitcher
@@ -538,10 +539,18 @@ references:
   fullName: DrawnUi.Controls.SkiaMediaImage
 - uid: DrawnUi.Controls.SkiaSprite
   commentId: T:DrawnUi.Controls.SkiaSprite
+  parent: DrawnUi.Controls
   href: DrawnUi.Controls.SkiaSprite.html
   name: SkiaSprite
   nameWithType: SkiaSprite
   fullName: DrawnUi.Controls.SkiaSprite
+- uid: DrawnUi.Controls.SkiaSpriteSet
+  commentId: T:DrawnUi.Controls.SkiaSpriteSet
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.SkiaSpriteSet.html
+  name: SkiaSpriteSet
+  nameWithType: SkiaSpriteSet
+  fullName: DrawnUi.Controls.SkiaSpriteSet
 - uid: DrawnUi.Controls.ISkiaRadioButton
   commentId: T:DrawnUi.Controls.ISkiaRadioButton
   parent: DrawnUi.Controls

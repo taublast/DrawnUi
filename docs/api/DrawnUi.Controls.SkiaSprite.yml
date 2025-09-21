@@ -39,6 +39,7 @@ items:
   - DrawnUi.Controls.SkiaSprite.OnAnimatorSeeking(System.Double)
   - DrawnUi.Controls.SkiaSprite.OnAnimatorUpdated(System.Double)
   - DrawnUi.Controls.SkiaSprite.OnDisposing
+  - DrawnUi.Controls.SkiaSprite.Paint(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Controls.SkiaSprite.RecalculateFrames
   - DrawnUi.Controls.SkiaSprite.RegisteredAnimations
   - DrawnUi.Controls.SkiaSprite.ReloadSource
@@ -53,6 +54,7 @@ items:
   - DrawnUi.Controls.SkiaSprite.SpriteSheet
   - DrawnUi.Controls.SkiaSprite.Start(System.Int32)
   - DrawnUi.Controls.SkiaSprite.TotalFrames
+  - DrawnUi.Controls.SkiaSprite.Update
   langs:
   - csharp
   - vb
@@ -119,7 +121,6 @@ items:
   - DrawnUi.Controls.AnimatedFramesRenderer.IsStandalone
   - DrawnUi.Controls.AnimatedFramesRenderer.OnVisibilityChanged(System.Boolean)
   - DrawnUi.Controls.AnimatedFramesRenderer.GetSourceType(System.String)
-  - DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Controls.AnimatedFramesRenderer.OnLayoutChanged
   - DrawnUi.Controls.AnimatedFramesRenderer.PlayIfNeeded
   - DrawnUi.Controls.AnimatedFramesRenderer.InitializeAnimator
@@ -610,7 +611,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
   - DrawnUi.Draw.SkiaControl.NeedMeasure
-  - DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
@@ -635,7 +636,6 @@ items:
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
   - DrawnUi.Draw.SkiaControl.UpdateInternal
-  - DrawnUi.Draw.SkiaControl.Update
   - DrawnUi.Draw.SkiaControl.Updated
   - DrawnUi.Draw.SkiaControl.StreamFromString(System.String)
   - DrawnUi.Draw.SkiaControl.DeviceUnitsToPixels(System.Double)
@@ -1051,6 +1051,44 @@ items:
   nameWithType.vb: SkiaSprite.New()
   fullName.vb: DrawnUi.Controls.SkiaSprite.New()
   name.vb: New()
+- uid: DrawnUi.Controls.SkiaSprite.Paint(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Controls.SkiaSprite.Paint(DrawnUi.Draw.DrawingContext)
+  id: Paint(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Controls.SkiaSprite
+  langs:
+  - csharp
+  - vb
+  name: Paint(DrawingContext)
+  nameWithType: SkiaSprite.Paint(DrawingContext)
+  fullName: DrawnUi.Controls.SkiaSprite.Paint(DrawnUi.Draw.DrawingContext)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Paint
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
+    startLine: 37
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: >-
+    This is the main drawing routine you should override to draw something.
+
+    Base one paints background color inside DrawingRect that was defined by Arrange inside base.Draw.
+
+    Pass arguments if you want to use some time-frozen data for painting at any time from any thread..
+  example: []
+  syntax:
+    content: protected override void Paint(DrawingContext ctx)
+    parameters:
+    - id: ctx
+      type: DrawnUi.Draw.DrawingContext
+      description: ''
+    content.vb: Protected Overrides Sub Paint(ctx As DrawingContext)
+  overridden: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
+  overload: DrawnUi.Controls.SkiaSprite.Paint*
 - uid: DrawnUi.Controls.SkiaSprite.CreateAnimationSequence(System.String,System.Int32[])
   commentId: M:DrawnUi.Controls.SkiaSprite.CreateAnimationSequence(System.String,System.Int32[])
   id: CreateAnimationSequence(System.String,System.Int32[])
@@ -1069,7 +1107,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateAnimationSequence
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 42
+    startLine: 54
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1110,7 +1148,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisteredAnimations
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 52
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1139,7 +1177,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 58
+    startLine: 70
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1174,7 +1212,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutDisplay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 67
+    startLine: 79
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1202,7 +1240,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateMeasure
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 76
+    startLine: 88
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1231,7 +1269,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimatorParent
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 89
+    startLine: 102
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1263,7 +1301,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 103
+    startLine: 116
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1296,7 +1334,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorUpdated
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 112
+    startLine: 125
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1332,7 +1370,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorSeeking
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 123
+    startLine: 136
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1368,7 +1406,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrameNumberFromTime
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 138
+    startLine: 155
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1406,7 +1444,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorInitializing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 161
+    startLine: 178
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1435,7 +1473,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 177
+    startLine: 194
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1464,7 +1502,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckCanStartAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 194
+    startLine: 211
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1496,7 +1534,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 203
+    startLine: 220
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1532,7 +1570,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 254
+    startLine: 271
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1560,7 +1598,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSourceAsync
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 296
+    startLine: 313
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1598,7 +1636,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadLocalImageAsync
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 357
+    startLine: 374
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1636,7 +1674,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetSpriteSheet
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 403
+    startLine: 420
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1674,7 +1712,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecalculateFrames
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 460
+    startLine: 478
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1702,7 +1740,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCurrentFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 493
+    startLine: 516
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1719,6 +1757,35 @@ items:
   nameWithType.vb: SkiaSprite.SetCurrentFrame(Integer)
   fullName.vb: DrawnUi.Controls.SkiaSprite.SetCurrentFrame(Integer)
   name.vb: SetCurrentFrame(Integer)
+- uid: DrawnUi.Controls.SkiaSprite.Update
+  commentId: M:DrawnUi.Controls.SkiaSprite.Update
+  id: Update
+  parent: DrawnUi.Controls.SkiaSprite
+  langs:
+  - csharp
+  - vb
+  name: Update()
+  nameWithType: SkiaSprite.Update()
+  fullName: DrawnUi.Controls.SkiaSprite.Update()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Update
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
+    startLine: 575
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Main method to invalidate cache and invoke rendering
+  example: []
+  syntax:
+    content: public override void Update()
+    content.vb: Public Overrides Sub Update()
+  overridden: DrawnUi.Draw.SkiaControl.Update
+  overload: DrawnUi.Controls.SkiaSprite.Update*
 - uid: DrawnUi.Controls.SkiaSprite.SpriteSheet
   commentId: P:DrawnUi.Controls.SkiaSprite.SpriteSheet
   id: SpriteSheet
@@ -1737,7 +1804,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpriteSheet
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 556
+    startLine: 597
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1768,7 +1835,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearCache
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 572
+    startLine: 613
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1796,7 +1863,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveFromCache
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 585
+    startLine: 627
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1831,7 +1898,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 596
+    startLine: 638
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1860,7 +1927,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameSequenceProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 624
+    startLine: 667
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1889,7 +1956,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimationNameProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 634
+    startLine: 677
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1918,7 +1985,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameSequence
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 645
+    startLine: 688
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1952,7 +2019,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimationName
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 654
+    startLine: 697
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1983,7 +2050,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 663
+    startLine: 706
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2012,7 +2079,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 673
+    startLine: 716
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2043,7 +2110,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnsProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 682
+    startLine: 725
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2072,7 +2139,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Columns
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 692
+    startLine: 735
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2103,7 +2170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RowsProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 701
+    startLine: 744
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2132,7 +2199,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Rows
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 711
+    startLine: 754
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2163,7 +2230,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxFramesProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 720
+    startLine: 763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2192,7 +2259,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxFrames
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 730
+    startLine: 773
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2223,7 +2290,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FramesPerSecondProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 739
+    startLine: 782
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2252,18 +2319,18 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FramesPerSecond
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 749
+    startLine: 792
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   summary: Frames per second for the animation
   example: []
   syntax:
-    content: public int FramesPerSecond { get; set; }
+    content: public double FramesPerSecond { get; set; }
     parameters: []
     return:
-      type: System.Int32
-    content.vb: Public Property FramesPerSecond As Integer
+      type: System.Double
+    content.vb: Public Property FramesPerSecond As Double
   overload: DrawnUi.Controls.SkiaSprite.FramesPerSecond*
 - uid: DrawnUi.Controls.SkiaSprite.CurrentFrameProperty
   commentId: F:DrawnUi.Controls.SkiaSprite.CurrentFrameProperty
@@ -2283,7 +2350,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CurrentFrameProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 758
+    startLine: 801
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2312,7 +2379,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CurrentFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 768
+    startLine: 811
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2343,7 +2410,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameWidth
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 777
+    startLine: 820
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2374,7 +2441,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameHeight
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 782
+    startLine: 825
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2405,7 +2472,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TotalFrames
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 787
+    startLine: 830
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2436,18 +2503,18 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DurationMs
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 792
+    startLine: 835
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   summary: Duration of the animation in milliseconds
   example: []
   syntax:
-    content: public int DurationMs { get; protected set; }
+    content: public double DurationMs { get; protected set; }
     parameters: []
     return:
-      type: System.Int32
-    content.vb: Public Property DurationMs As Integer
+      type: System.Double
+    content.vb: Public Property DurationMs As Double
   overload: DrawnUi.Controls.SkiaSprite.DurationMs*
 - uid: DrawnUi.Controls.SkiaSprite.FrameDurationMs
   commentId: P:DrawnUi.Controls.SkiaSprite.FrameDurationMs
@@ -2467,18 +2534,18 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameDurationMs
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaSprite.cs
-    startLine: 797
+    startLine: 840
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   summary: Duration of each frame in milliseconds
   example: []
   syntax:
-    content: public int FrameDurationMs { get; protected set; }
+    content: public double FrameDurationMs { get; protected set; }
     parameters: []
     return:
-      type: System.Int32
-    content.vb: Public Property FrameDurationMs As Integer
+      type: System.Double
+    content.vb: Public Property FrameDurationMs As Double
   overload: DrawnUi.Controls.SkiaSprite.FrameDurationMs*
 references:
 - uid: DrawnUi.Controls
@@ -2937,31 +3004,6 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-- uid: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
-  commentId: M:DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
-  parent: DrawnUi.Controls.AnimatedFramesRenderer
-  href: DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_Paint_DrawnUi_Draw_DrawingContext_
-  name: Paint(DrawingContext)
-  nameWithType: AnimatedFramesRenderer.Paint(DrawingContext)
-  fullName: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
-  spec.csharp:
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
-    name: Paint
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_Paint_DrawnUi_Draw_DrawingContext_
-  - name: (
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
-    name: Paint
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_Paint_DrawnUi_Draw_DrawingContext_
-  - name: (
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
   - name: )
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.OnLayoutChanged
   commentId: M:DrawnUi.Controls.AnimatedFramesRenderer.OnLayoutChanged
@@ -13487,33 +13529,48 @@ references:
   name: NeedMeasure
   nameWithType: SkiaControl.NeedMeasure
   fullName: DrawnUi.Draw.SkiaControl.NeedMeasure
-- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
-  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
-  name: SafeAction(Action)
-  nameWithType: SkiaControl.SafeAction(Action)
-  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
+  name: SafeAction(Action, long)
+  nameWithType: SkiaControl.SafeAction(Action, long)
+  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, long)
+  nameWithType.vb: SkiaControl.SafeAction(Action, Long)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, Long)
+  name.vb: SafeAction(Action, Long)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
     name: SafeAction
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
+  - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
     name: SafeAction
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
   - name: (
   - uid: System.Action
     name: Action
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.NeedRemeasuring
   commentId: F:DrawnUi.Draw.SkiaControl.NeedRemeasuring
@@ -13943,25 +14000,6 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.UpdateInternal
     name: UpdateInternal
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateInternal
-  - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaControl.Update
-  commentId: M:DrawnUi.Draw.SkiaControl.Update
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Update
-  name: Update()
-  nameWithType: SkiaControl.Update()
-  fullName: DrawnUi.Draw.SkiaControl.Update()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.Update
-    name: Update
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Update
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.Update
-    name: Update
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Update
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.Updated
@@ -29160,6 +29198,44 @@ references:
   nameWithType.vb: SkiaSprite.New
   fullName.vb: DrawnUi.Controls.SkiaSprite.New
   name.vb: New
+- uid: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Controls.AnimatedFramesRenderer
+  href: DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_Paint_DrawnUi_Draw_DrawingContext_
+  name: Paint(DrawingContext)
+  nameWithType: AnimatedFramesRenderer.Paint(DrawingContext)
+  fullName: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
+    name: Paint
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_Paint_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)
+    name: Paint
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_Paint_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+- uid: DrawnUi.Controls.SkiaSprite.Paint*
+  commentId: Overload:DrawnUi.Controls.SkiaSprite.Paint
+  href: DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_Paint_DrawnUi_Draw_DrawingContext_
+  name: Paint
+  nameWithType: SkiaSprite.Paint
+  fullName: DrawnUi.Controls.SkiaSprite.Paint
+- uid: DrawnUi.Draw.DrawingContext
+  commentId: T:DrawnUi.Draw.DrawingContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawingContext.html
+  name: DrawingContext
+  nameWithType: DrawingContext
+  fullName: DrawnUi.Draw.DrawingContext
 - uid: DrawnUi.Controls.SkiaSprite.CreateAnimationSequence*
   commentId: Overload:DrawnUi.Controls.SkiaSprite.CreateAnimationSequence
   href: DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_CreateAnimationSequence_System_String_System_Int32___
@@ -29338,13 +29414,6 @@ references:
   name: RenderFrame
   nameWithType: SkiaSprite.RenderFrame
   fullName: DrawnUi.Controls.SkiaSprite.RenderFrame
-- uid: DrawnUi.Draw.DrawingContext
-  commentId: T:DrawnUi.Draw.DrawingContext
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.DrawingContext.html
-  name: DrawingContext
-  nameWithType: DrawingContext
-  fullName: DrawnUi.Draw.DrawingContext
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.OnAnimatorUpdated(System.Double)
   commentId: M:DrawnUi.Controls.AnimatedFramesRenderer.OnAnimatorUpdated(System.Double)
   parent: DrawnUi.Controls.AnimatedFramesRenderer
@@ -29721,6 +29790,31 @@ references:
   name: SetCurrentFrame
   nameWithType: SkiaSprite.SetCurrentFrame
   fullName: DrawnUi.Controls.SkiaSprite.SetCurrentFrame
+- uid: DrawnUi.Draw.SkiaControl.Update
+  commentId: M:DrawnUi.Draw.SkiaControl.Update
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Update
+  name: Update()
+  nameWithType: SkiaControl.Update()
+  fullName: DrawnUi.Draw.SkiaControl.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.Update
+    name: Update
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.Update
+    name: Update
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Update
+  - name: (
+  - name: )
+- uid: DrawnUi.Controls.SkiaSprite.Update*
+  commentId: Overload:DrawnUi.Controls.SkiaSprite.Update
+  href: DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_Update
+  name: Update
+  nameWithType: SkiaSprite.Update
+  fullName: DrawnUi.Controls.SkiaSprite.Update
 - uid: DrawnUi.Controls.SkiaSprite.SpriteSheet*
   commentId: Overload:DrawnUi.Controls.SkiaSprite.SpriteSheet
   href: DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_SpriteSheet

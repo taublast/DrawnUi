@@ -9899,6 +9899,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaSprite.OnDisposing
   nameWithType: SkiaSprite.OnDisposing
+- uid: DrawnUi.Controls.SkiaSprite.Paint(DrawnUi.Draw.DrawingContext)
+  name: Paint(DrawingContext)
+  href: api/DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_Paint_DrawnUi_Draw_DrawingContext_
+  commentId: M:DrawnUi.Controls.SkiaSprite.Paint(DrawnUi.Draw.DrawingContext)
+  fullName: DrawnUi.Controls.SkiaSprite.Paint(DrawnUi.Draw.DrawingContext)
+  nameWithType: SkiaSprite.Paint(DrawingContext)
+- uid: DrawnUi.Controls.SkiaSprite.Paint*
+  name: Paint
+  href: api/DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_Paint_
+  commentId: Overload:DrawnUi.Controls.SkiaSprite.Paint
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaSprite.Paint
+  nameWithType: SkiaSprite.Paint
 - uid: DrawnUi.Controls.SkiaSprite.RecalculateFrames
   name: RecalculateFrames()
   href: api/DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_RecalculateFrames
@@ -10072,6 +10085,89 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaSprite.TotalFrames
   nameWithType: SkiaSprite.TotalFrames
+- uid: DrawnUi.Controls.SkiaSprite.Update
+  name: Update()
+  href: api/DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_Update
+  commentId: M:DrawnUi.Controls.SkiaSprite.Update
+  fullName: DrawnUi.Controls.SkiaSprite.Update()
+  nameWithType: SkiaSprite.Update()
+- uid: DrawnUi.Controls.SkiaSprite.Update*
+  name: Update
+  href: api/DrawnUi.Controls.SkiaSprite.html#DrawnUi_Controls_SkiaSprite_Update_
+  commentId: Overload:DrawnUi.Controls.SkiaSprite.Update
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaSprite.Update
+  nameWithType: SkiaSprite.Update
+- uid: DrawnUi.Controls.SkiaSpriteSet
+  name: SkiaSpriteSet
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html
+  commentId: T:DrawnUi.Controls.SkiaSpriteSet
+  fullName: DrawnUi.Controls.SkiaSpriteSet
+  nameWithType: SkiaSpriteSet
+- uid: DrawnUi.Controls.SkiaSpriteSet.CurrentSprite
+  name: CurrentSprite
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_CurrentSprite
+  commentId: P:DrawnUi.Controls.SkiaSpriteSet.CurrentSprite
+  fullName: DrawnUi.Controls.SkiaSpriteSet.CurrentSprite
+  nameWithType: SkiaSpriteSet.CurrentSprite
+- uid: DrawnUi.Controls.SkiaSpriteSet.CurrentSprite*
+  name: CurrentSprite
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_CurrentSprite_
+  commentId: Overload:DrawnUi.Controls.SkiaSpriteSet.CurrentSprite
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaSpriteSet.CurrentSprite
+  nameWithType: SkiaSpriteSet.CurrentSprite
+- uid: DrawnUi.Controls.SkiaSpriteSet.Define(System.Int32,System.String,System.Int32,System.Int32,System.Double,System.Int32,System.Boolean)
+  name: Define(int, string, int, int, double, int, bool)
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_Define_System_Int32_System_String_System_Int32_System_Int32_System_Double_System_Int32_System_Boolean_
+  commentId: M:DrawnUi.Controls.SkiaSpriteSet.Define(System.Int32,System.String,System.Int32,System.Int32,System.Double,System.Int32,System.Boolean)
+  name.vb: Define(Integer, String, Integer, Integer, Double, Integer, Boolean)
+  fullName: DrawnUi.Controls.SkiaSpriteSet.Define(int, string, int, int, double, int, bool)
+  fullName.vb: DrawnUi.Controls.SkiaSpriteSet.Define(Integer, String, Integer, Integer, Double, Integer, Boolean)
+  nameWithType: SkiaSpriteSet.Define(int, string, int, int, double, int, bool)
+  nameWithType.vb: SkiaSpriteSet.Define(Integer, String, Integer, Integer, Double, Integer, Boolean)
+- uid: DrawnUi.Controls.SkiaSpriteSet.Define*
+  name: Define
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_Define_
+  commentId: Overload:DrawnUi.Controls.SkiaSpriteSet.Define
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaSpriteSet.Define
+  nameWithType: SkiaSpriteSet.Define
+- uid: DrawnUi.Controls.SkiaSpriteSet.OnChangeState(System.Int32,System.Int32)
+  name: OnChangeState(int, int)
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_OnChangeState_System_Int32_System_Int32_
+  commentId: M:DrawnUi.Controls.SkiaSpriteSet.OnChangeState(System.Int32,System.Int32)
+  name.vb: OnChangeState(Integer, Integer)
+  fullName: DrawnUi.Controls.SkiaSpriteSet.OnChangeState(int, int)
+  fullName.vb: DrawnUi.Controls.SkiaSpriteSet.OnChangeState(Integer, Integer)
+  nameWithType: SkiaSpriteSet.OnChangeState(int, int)
+  nameWithType.vb: SkiaSpriteSet.OnChangeState(Integer, Integer)
+- uid: DrawnUi.Controls.SkiaSpriteSet.OnChangeState*
+  name: OnChangeState
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_OnChangeState_
+  commentId: Overload:DrawnUi.Controls.SkiaSpriteSet.OnChangeState
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaSpriteSet.OnChangeState
+  nameWithType: SkiaSpriteSet.OnChangeState
+- uid: DrawnUi.Controls.SkiaSpriteSet.State
+  name: State
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_State
+  commentId: P:DrawnUi.Controls.SkiaSpriteSet.State
+  fullName: DrawnUi.Controls.SkiaSpriteSet.State
+  nameWithType: SkiaSpriteSet.State
+- uid: DrawnUi.Controls.SkiaSpriteSet.State*
+  name: State
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_State_
+  commentId: Overload:DrawnUi.Controls.SkiaSpriteSet.State
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaSpriteSet.State
+  nameWithType: SkiaSpriteSet.State
+- uid: DrawnUi.Controls.SkiaSpriteSet.StateProperty
+  name: StateProperty
+  href: api/DrawnUi.Controls.SkiaSpriteSet.html#DrawnUi_Controls_SkiaSpriteSet_StateProperty
+  commentId: F:DrawnUi.Controls.SkiaSpriteSet.StateProperty
+  fullName: DrawnUi.Controls.SkiaSpriteSet.StateProperty
+  nameWithType: SkiaSpriteSet.StateProperty
 - uid: DrawnUi.Controls.SkiaTabsSelector
   name: SkiaTabsSelector
   href: api/DrawnUi.Controls.SkiaTabsSelector.html
@@ -23043,6 +23139,153 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.KeyboardManager.KeyboardReleased
   nameWithType: KeyboardManager.KeyboardReleased
+- uid: DrawnUi.Draw.KeyedActionQueue`1
+  name: KeyedActionQueue<TKey>
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html
+  commentId: T:DrawnUi.Draw.KeyedActionQueue`1
+  name.vb: KeyedActionQueue(Of TKey)
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey)
+  nameWithType: KeyedActionQueue<TKey>
+  nameWithType.vb: KeyedActionQueue(Of TKey)
+- uid: DrawnUi.Draw.KeyedActionQueue`1.#ctor(System.Int32)
+  name: KeyedActionQueue(int)
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1__ctor_System_Int32_
+  commentId: M:DrawnUi.Draw.KeyedActionQueue`1.#ctor(System.Int32)
+  name.vb: New(Integer)
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.KeyedActionQueue(int)
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).New(Integer)
+  nameWithType: KeyedActionQueue<TKey>.KeyedActionQueue(int)
+  nameWithType.vb: KeyedActionQueue(Of TKey).New(Integer)
+- uid: DrawnUi.Draw.KeyedActionQueue`1.#ctor*
+  name: KeyedActionQueue
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1__ctor_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.KeyedActionQueue
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).New
+  nameWithType: KeyedActionQueue<TKey>.KeyedActionQueue
+  nameWithType.vb: KeyedActionQueue(Of TKey).New
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Clear
+  name: Clear()
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Clear
+  commentId: M:DrawnUi.Draw.KeyedActionQueue`1.Clear
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Clear()
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Clear()
+  nameWithType: KeyedActionQueue<TKey>.Clear()
+  nameWithType.vb: KeyedActionQueue(Of TKey).Clear()
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Clear*
+  name: Clear
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Clear_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.Clear
+  isSpec: "True"
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Clear
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Clear
+  nameWithType: KeyedActionQueue<TKey>.Clear
+  nameWithType.vb: KeyedActionQueue(Of TKey).Clear
+- uid: DrawnUi.Draw.KeyedActionQueue`1.ContainsKey(`0)
+  name: ContainsKey(TKey)
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_ContainsKey__0_
+  commentId: M:DrawnUi.Draw.KeyedActionQueue`1.ContainsKey(`0)
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.ContainsKey(TKey)
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).ContainsKey(TKey)
+  nameWithType: KeyedActionQueue<TKey>.ContainsKey(TKey)
+  nameWithType.vb: KeyedActionQueue(Of TKey).ContainsKey(TKey)
+- uid: DrawnUi.Draw.KeyedActionQueue`1.ContainsKey*
+  name: ContainsKey
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_ContainsKey_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.ContainsKey
+  isSpec: "True"
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.ContainsKey
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).ContainsKey
+  nameWithType: KeyedActionQueue<TKey>.ContainsKey
+  nameWithType.vb: KeyedActionQueue(Of TKey).ContainsKey
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Count
+  name: Count
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Count
+  commentId: P:DrawnUi.Draw.KeyedActionQueue`1.Count
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Count
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Count
+  nameWithType: KeyedActionQueue<TKey>.Count
+  nameWithType.vb: KeyedActionQueue(Of TKey).Count
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Count*
+  name: Count
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Count_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.Count
+  isSpec: "True"
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Count
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Count
+  nameWithType: KeyedActionQueue<TKey>.Count
+  nameWithType.vb: KeyedActionQueue(Of TKey).Count
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Dequeue
+  name: Dequeue()
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Dequeue
+  commentId: M:DrawnUi.Draw.KeyedActionQueue`1.Dequeue
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Dequeue()
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Dequeue()
+  nameWithType: KeyedActionQueue<TKey>.Dequeue()
+  nameWithType.vb: KeyedActionQueue(Of TKey).Dequeue()
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Dequeue*
+  name: Dequeue
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Dequeue_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.Dequeue
+  isSpec: "True"
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Dequeue
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Dequeue
+  nameWithType: KeyedActionQueue<TKey>.Dequeue
+  nameWithType.vb: KeyedActionQueue(Of TKey).Dequeue
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Enqueue(`0,System.Action)
+  name: Enqueue(TKey, Action)
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Enqueue__0_System_Action_
+  commentId: M:DrawnUi.Draw.KeyedActionQueue`1.Enqueue(`0,System.Action)
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Enqueue(TKey, System.Action)
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Enqueue(TKey, System.Action)
+  nameWithType: KeyedActionQueue<TKey>.Enqueue(TKey, Action)
+  nameWithType.vb: KeyedActionQueue(Of TKey).Enqueue(TKey, Action)
+- uid: DrawnUi.Draw.KeyedActionQueue`1.Enqueue*
+  name: Enqueue
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_Enqueue_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.Enqueue
+  isSpec: "True"
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.Enqueue
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).Enqueue
+  nameWithType: KeyedActionQueue<TKey>.Enqueue
+  nameWithType.vb: KeyedActionQueue(Of TKey).Enqueue
+- uid: DrawnUi.Draw.KeyedActionQueue`1.ExecuteAll
+  name: ExecuteAll()
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_ExecuteAll
+  commentId: M:DrawnUi.Draw.KeyedActionQueue`1.ExecuteAll
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.ExecuteAll()
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).ExecuteAll()
+  nameWithType: KeyedActionQueue<TKey>.ExecuteAll()
+  nameWithType.vb: KeyedActionQueue(Of TKey).ExecuteAll()
+- uid: DrawnUi.Draw.KeyedActionQueue`1.ExecuteAll*
+  name: ExecuteAll
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_ExecuteAll_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.ExecuteAll
+  isSpec: "True"
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.ExecuteAll
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).ExecuteAll
+  nameWithType: KeyedActionQueue<TKey>.ExecuteAll
+  nameWithType.vb: KeyedActionQueue(Of TKey).ExecuteAll
+- uid: DrawnUi.Draw.KeyedActionQueue`1.TryRemove(`0)
+  name: TryRemove(TKey)
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_TryRemove__0_
+  commentId: M:DrawnUi.Draw.KeyedActionQueue`1.TryRemove(`0)
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.TryRemove(TKey)
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).TryRemove(TKey)
+  nameWithType: KeyedActionQueue<TKey>.TryRemove(TKey)
+  nameWithType.vb: KeyedActionQueue(Of TKey).TryRemove(TKey)
+- uid: DrawnUi.Draw.KeyedActionQueue`1.TryRemove*
+  name: TryRemove
+  href: api/DrawnUi.Draw.KeyedActionQueue-1.html#DrawnUi_Draw_KeyedActionQueue_1_TryRemove_
+  commentId: Overload:DrawnUi.Draw.KeyedActionQueue`1.TryRemove
+  isSpec: "True"
+  fullName: DrawnUi.Draw.KeyedActionQueue<TKey>.TryRemove
+  fullName.vb: DrawnUi.Draw.KeyedActionQueue(Of TKey).TryRemove
+  nameWithType: KeyedActionQueue<TKey>.TryRemove
+  nameWithType.vb: KeyedActionQueue(Of TKey).TryRemove
 - uid: DrawnUi.Draw.LayoutStructure
   name: LayoutStructure
   href: api/DrawnUi.Draw.LayoutStructure.html
@@ -23762,6 +24005,54 @@ references:
   commentId: F:DrawnUi.Draw.LockTouch.PassTapAndLongPress
   fullName: DrawnUi.Draw.LockTouch.PassTapAndLongPress
   nameWithType: LockTouch.PassTapAndLongPress
+- uid: DrawnUi.Draw.LongKeyGenerator
+  name: LongKeyGenerator
+  href: api/DrawnUi.Draw.LongKeyGenerator.html
+  commentId: T:DrawnUi.Draw.LongKeyGenerator
+  fullName: DrawnUi.Draw.LongKeyGenerator
+  nameWithType: LongKeyGenerator
+- uid: DrawnUi.Draw.LongKeyGenerator.EncodeSemantic(System.String)
+  name: EncodeSemantic(string)
+  href: api/DrawnUi.Draw.LongKeyGenerator.html#DrawnUi_Draw_LongKeyGenerator_EncodeSemantic_System_String_
+  commentId: M:DrawnUi.Draw.LongKeyGenerator.EncodeSemantic(System.String)
+  name.vb: EncodeSemantic(String)
+  fullName: DrawnUi.Draw.LongKeyGenerator.EncodeSemantic(string)
+  fullName.vb: DrawnUi.Draw.LongKeyGenerator.EncodeSemantic(String)
+  nameWithType: LongKeyGenerator.EncodeSemantic(string)
+  nameWithType.vb: LongKeyGenerator.EncodeSemantic(String)
+- uid: DrawnUi.Draw.LongKeyGenerator.EncodeSemantic*
+  name: EncodeSemantic
+  href: api/DrawnUi.Draw.LongKeyGenerator.html#DrawnUi_Draw_LongKeyGenerator_EncodeSemantic_
+  commentId: Overload:DrawnUi.Draw.LongKeyGenerator.EncodeSemantic
+  isSpec: "True"
+  fullName: DrawnUi.Draw.LongKeyGenerator.EncodeSemantic
+  nameWithType: LongKeyGenerator.EncodeSemantic
+- uid: DrawnUi.Draw.LongKeyGenerator.Next
+  name: Next()
+  href: api/DrawnUi.Draw.LongKeyGenerator.html#DrawnUi_Draw_LongKeyGenerator_Next
+  commentId: M:DrawnUi.Draw.LongKeyGenerator.Next
+  fullName: DrawnUi.Draw.LongKeyGenerator.Next()
+  nameWithType: LongKeyGenerator.Next()
+- uid: DrawnUi.Draw.LongKeyGenerator.Next*
+  name: Next
+  href: api/DrawnUi.Draw.LongKeyGenerator.html#DrawnUi_Draw_LongKeyGenerator_Next_
+  commentId: Overload:DrawnUi.Draw.LongKeyGenerator.Next
+  isSpec: "True"
+  fullName: DrawnUi.Draw.LongKeyGenerator.Next
+  nameWithType: LongKeyGenerator.Next
+- uid: DrawnUi.Draw.LongKeyGenerator.NextThreadDistributed
+  name: NextThreadDistributed()
+  href: api/DrawnUi.Draw.LongKeyGenerator.html#DrawnUi_Draw_LongKeyGenerator_NextThreadDistributed
+  commentId: M:DrawnUi.Draw.LongKeyGenerator.NextThreadDistributed
+  fullName: DrawnUi.Draw.LongKeyGenerator.NextThreadDistributed()
+  nameWithType: LongKeyGenerator.NextThreadDistributed()
+- uid: DrawnUi.Draw.LongKeyGenerator.NextThreadDistributed*
+  name: NextThreadDistributed
+  href: api/DrawnUi.Draw.LongKeyGenerator.html#DrawnUi_Draw_LongKeyGenerator_NextThreadDistributed_
+  commentId: Overload:DrawnUi.Draw.LongKeyGenerator.NextThreadDistributed
+  isSpec: "True"
+  fullName: DrawnUi.Draw.LongKeyGenerator.NextThreadDistributed
+  nameWithType: LongKeyGenerator.NextThreadDistributed
 - uid: DrawnUi.Draw.Looper
   name: Looper
   href: api/DrawnUi.Draw.Looper.html
@@ -36425,12 +36716,15 @@ references:
   commentId: F:DrawnUi.Draw.SkiaControl.RoundCenterAlignment
   fullName: DrawnUi.Draw.SkiaControl.RoundCenterAlignment
   nameWithType: SkiaControl.RoundCenterAlignment
-- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
-  name: SafeAction(Action)
-  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_
-  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
-  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action)
-  nameWithType: SkiaControl.SafeAction(Action)
+- uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  name: SafeAction(Action, long)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_System_Action_System_Int64_
+  commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  name.vb: SafeAction(Action, Long)
+  fullName: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, long)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SafeAction(System.Action, Long)
+  nameWithType: SkiaControl.SafeAction(Action, long)
+  nameWithType.vb: SkiaControl.SafeAction(Action, Long)
 - uid: DrawnUi.Draw.SkiaControl.SafeAction*
   name: SafeAction
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SafeAction_
@@ -42822,6 +43116,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaImageManager.UpdateInCache
   nameWithType: SkiaImageManager.UpdateInCache
+- uid: DrawnUi.Draw.SkiaImageManager.UseCache
+  name: UseCache
+  href: api/DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_UseCache
+  commentId: P:DrawnUi.Draw.SkiaImageManager.UseCache
+  fullName: DrawnUi.Draw.SkiaImageManager.UseCache
+  nameWithType: SkiaImageManager.UseCache
+- uid: DrawnUi.Draw.SkiaImageManager.UseCache*
+  name: UseCache
+  href: api/DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_UseCache_
+  commentId: Overload:DrawnUi.Draw.SkiaImageManager.UseCache
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaImageManager.UseCache
+  nameWithType: SkiaImageManager.UseCache
 - uid: DrawnUi.Draw.SkiaImageTiles
   name: SkiaImageTiles
   href: api/DrawnUi.Draw.SkiaImageTiles.html
@@ -60290,6 +60597,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.Super.IsRtl
   nameWithType: Super.IsRtl
+- uid: DrawnUi.Draw.Super.Log(Microsoft.Extensions.Logging.LogLevel,System.String,System.String)
+  name: Log(LogLevel, string, string)
+  href: api/DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_Log_Microsoft_Extensions_Logging_LogLevel_System_String_System_String_
+  commentId: M:DrawnUi.Draw.Super.Log(Microsoft.Extensions.Logging.LogLevel,System.String,System.String)
+  name.vb: Log(LogLevel, String, String)
+  fullName: DrawnUi.Draw.Super.Log(Microsoft.Extensions.Logging.LogLevel, string, string)
+  fullName.vb: DrawnUi.Draw.Super.Log(Microsoft.Extensions.Logging.LogLevel, String, String)
+  nameWithType: Super.Log(LogLevel, string, string)
+  nameWithType.vb: Super.Log(LogLevel, String, String)
 - uid: DrawnUi.Draw.Super.Log(System.Exception,System.String)
   name: Log(Exception, string)
   href: api/DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_Log_System_Exception_System_String_
@@ -71595,12 +71911,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Views.DrawnView.PostponeExecutionAfterDraw
   nameWithType: DrawnView.PostponeExecutionAfterDraw
-- uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
-  name: PostponeExecutionBeforeDraw(Action)
-  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_
-  commentId: M:DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
-  fullName: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action)
-  nameWithType: DrawnView.PostponeExecutionBeforeDraw(Action)
+- uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action,System.Int64)
+  name: PostponeExecutionBeforeDraw(Action, long)
+  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_System_Action_System_Int64_
+  commentId: M:DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action,System.Int64)
+  name.vb: PostponeExecutionBeforeDraw(Action, Long)
+  fullName: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action, long)
+  fullName.vb: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw(System.Action, Long)
+  nameWithType: DrawnView.PostponeExecutionBeforeDraw(Action, long)
+  nameWithType.vb: DrawnView.PostponeExecutionBeforeDraw(Action, Long)
 - uid: DrawnUi.Views.DrawnView.PostponeExecutionBeforeDraw*
   name: PostponeExecutionBeforeDraw
   href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_PostponeExecutionBeforeDraw_

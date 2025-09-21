@@ -1,6 +1,6 @@
 # Getting Started with DrawnUI
 
-This guide will help you get started with DrawnUI in your .NET MAUI application.  
+This guide will help you get started with DrawnUI in your .NET MAUI application.
 
 📚 You might also look at our [Tutorials](tutorials.md)
 
@@ -20,7 +20,7 @@ To make everything compile from first attempt You might also need at least the f
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
 	</PropertyGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.70" />
@@ -85,6 +85,8 @@ public static class MauiProgram
 }
 ```
 
+See the full list of options in [Startup Settings](startup-settings.md).
+
 ### Add Namespace to XAML
 
 Add the DrawnUi namespace to your XAML files:
@@ -142,7 +144,7 @@ Now you can add DrawnUi controls to your page. You have two main options:
                       xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
                       x:Class="YourNamespace.YourPage">
 
-    <draw:Canvas 
+    <draw:Canvas
         RenderingMode="Accelerated"
         Gestures="Lock"
         HorizontalOptions="Fill" VerticalOptions="Fill">
@@ -219,7 +221,7 @@ Some of DrawnUi controls support platform-specific styling:
     ControlStyle="Material"
     WidthRequest="150"
     HeightRequest="40" />
-    
+
 <draw:SkiaSwitch
     ControlStyle="Cupertino"
     IsToggled="true"

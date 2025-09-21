@@ -1,7 +1,4 @@
-﻿
-
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using DrawnUi.Controls;
 using DrawnUi.Views;
 using Sandbox.Resources;
@@ -46,7 +43,8 @@ namespace Sandbox
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged(
+            [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -102,8 +100,6 @@ namespace Sandbox
                                     Spacing = 0,
                                     Children =
                                     {
-
-
                                         //new SkiaSlider()
                                         //{
                                         //    ControlStyle = PrebuiltControlStyle.Cupertino,
@@ -119,49 +115,77 @@ namespace Sandbox
                                         new SkiaLayout()
                                         {
                                             Type = LayoutType.Column,
-                                            Tag="Stack",
+                                            Tag = "Stack",
+                                            Margin = new Thickness(0, 160, 0, 0),
+                                            Padding = new Thickness(10),
                                             HorizontalOptions = LayoutOptions.Fill,
                                             BackgroundColor = Colors.YellowGreen,
                                             Spacing = 10,
                                             Children =
                                             {
-                                                // Info label
-                                                new SkiaLabel()
+                                                // Price frame container 
+                                                new SkiaShape
                                                 {
-                                                    Text = "ColorPicker Test - Initial: TintContentColor",
-                                                    FontSize = 14,
-                                                    TextColor = Colors.Black,
-                                                    HorizontalOptions = LayoutOptions.Center
-                                                },
+                                                    Margin = new Thickness(0, 2, 0, 0),
+                                                    Padding = new Thickness(7, 2, 7, 2),
+                                                    BackgroundColor = Colors.Purple,
+                                                    CornerRadius = 8,
+                                                    HorizontalOptions = LayoutOptions.Start,
+                                                    VerticalOptions = LayoutOptions.Start,
+                                                    UseCache = SkiaCacheType.Operations,
+                                                    Children =
+                                                    {
+                                                        // Price label (uses ColorPaper like native)
+                                                        new SkiaLabel
+                                                        {
+                                                            FontSize = 12,
+                                                            MaxLines = 1,
+                                                            Text = "500-8000 X",
+                                                            LineHeight = 1,
+                                                            TextColor = Colors.White,
+                                                            UseCache = SkiaCacheType.Operations,
+                                                            HorizontalOptions = LayoutOptions.Start,
+                                                            VerticalOptions = LayoutOptions.Start
+                                                        }
+                                                    }
+                                                }
+                                                /*
+
+                                                    // Info label
+                                                   new SkiaLabel()
+                                                   {
+                                                       Text = "ColorPicker Test - Initial: TintContentColor",
+                                                       FontSize = 14,
+                                                       TextColor = Colors.Black,
+                                                       HorizontalOptions = LayoutOptions.Center
+                                                   },
 
                                                 // ColorPicker
                                                 new SkiaLayer()
                                                 {
-                                                    HeightRequest=100,
+                                                    HeightRequest = 100,
                                                     WidthRequest = 280,
                                                     BlockGesturesBelow = true,
                                                     Children =
                                                     {
-                                                        new ColorPicker()
-                                                        {
-                                                            UseCache = SkiaCacheType.Image,
-                                                        }
-                                                        // 2-way binding: page property ↔ ColorPicker.SelectedColor
-                                                        .Observe(this, (me, prop) =>
-                                                        {
-                                                            bool attached = prop == nameof(BindingContext);
-                                                            if (attached || prop == nameof(TestColorPickerSelected))
+                                                        new ColorPicker() { UseCache = SkiaCacheType.Image, }
+                                                            // 2-way binding: page property ↔ ColorPicker.SelectedColor
+                                                            .Observe(this, (me, prop) =>
                                                             {
-                                                                me.SelectedColor = TestColorPickerSelected;
-                                                            }
-                                                        })
-                                                        .ObserveSelf((me, prop) =>
-                                                        {
-                                                            if (prop.IsEither(nameof(BindingContext), nameof(ColorPicker.SelectedColor)))
+                                                                bool attached = prop == nameof(BindingContext);
+                                                                if (attached || prop == nameof(TestColorPickerSelected))
+                                                                {
+                                                                    me.SelectedColor = TestColorPickerSelected;
+                                                                }
+                                                            })
+                                                            .ObserveSelf((me, prop) =>
                                                             {
-                                                                TestColorPickerSelected = me.SelectedColor;
-                                                            }
-                                                        })
+                                                                if (prop.IsEither(nameof(BindingContext),
+                                                                        nameof(ColorPicker.SelectedColor)))
+                                                                {
+                                                                    TestColorPickerSelected = me.SelectedColor;
+                                                                }
+                                                            })
                                                     }
                                                 },
 
@@ -180,39 +204,35 @@ namespace Sandbox
                                                             TextColor = Colors.Black,
                                                             VerticalOptions = LayoutOptions.Center
                                                         },
-                                                        new SkiaControl()
-                                                        {
-                                                            WidthRequest = 30,
-                                                            HeightRequest = 20,
-                                                        }
-                                                        .Observe(this, (me, prop) =>
-                                                        {
-                                                            bool attached = prop == nameof(BindingContext);
-                                                            if (attached || prop == nameof(TestColorPickerSelected))
+                                                        new SkiaControl() { WidthRequest = 30, HeightRequest = 20, }
+                                                            .Observe(this, (me, prop) =>
                                                             {
-                                                                me.BackgroundColor = TestColorPickerSelected;
-                                                            }
-                                                        }),
+                                                                bool attached = prop == nameof(BindingContext);
+                                                                if (attached || prop == nameof(TestColorPickerSelected))
+                                                                {
+                                                                    me.BackgroundColor = TestColorPickerSelected;
+                                                                }
+                                                            }),
                                                         new SkiaLabel()
-                                                        {
-                                                            FontSize = 10,
-                                                            TextColor = Colors.DarkGray,
-                                                            VerticalOptions = LayoutOptions.Center
-                                                        }
-                                                        .Observe(this, (me, prop) =>
-                                                        {
-                                                            bool attached = prop == nameof(BindingContext);
-                                                            if (attached || prop == nameof(TestColorPickerSelected))
                                                             {
-                                                                me.Text = TestColorPickerSelectedHex;
+                                                                FontSize = 10,
+                                                                TextColor = Colors.DarkGray,
+                                                                VerticalOptions = LayoutOptions.Center
                                                             }
-                                                        })
+                                                            .Observe(this, (me, prop) =>
+                                                            {
+                                                                bool attached = prop == nameof(BindingContext);
+                                                                if (attached || prop == nameof(TestColorPickerSelected))
+                                                                {
+                                                                    me.Text = TestColorPickerSelectedHex;
+                                                                }
+                                                            })
                                                     }
                                                 }
+
+                                                */
                                             }
                                         }
-
- 
                                     }
                                 },
                             }
@@ -226,12 +246,10 @@ namespace Sandbox
         #region TUNE TONE
 
         private Color _ToneColor = Styles.TintContentColor;
+
         public Color ToneColor
         {
-            get
-            {
-                return _ToneColor;
-            }
+            get { return _ToneColor; }
             set
             {
                 if (_ToneColor != value)
@@ -244,12 +262,10 @@ namespace Sandbox
         }
 
         private double _ToneContrast = Styles.TintContentContrast;
+
         public double ToneContrast
         {
-            get
-            {
-                return _ToneContrast;
-            }
+            get { return _ToneContrast; }
             set
             {
                 if (_ToneContrast != value)
@@ -262,12 +278,10 @@ namespace Sandbox
         }
 
         private double _ToneBrightness = Styles.TintContentLightness;
+
         public double ToneBrightness
         {
-            get
-            {
-                return _ToneBrightness;
-            }
+            get { return _ToneBrightness; }
             set
             {
                 if (_ToneBrightness != value)
@@ -281,12 +295,10 @@ namespace Sandbox
 
 
         private double _ToneAlpha = Styles.TintContentColorAlpha;
+
         public double ToneAlpha
         {
-            get
-            {
-                return _ToneAlpha;
-            }
+            get { return _ToneAlpha; }
             set
             {
                 if (_ToneAlpha != value)
@@ -298,12 +310,10 @@ namespace Sandbox
         }
 
         private double _ToneSaturation = Styles.TintContentSaturation;
+
         public double ToneSaturation
         {
-            get
-            {
-                return _ToneSaturation;
-            }
+            get { return _ToneSaturation; }
             set
             {
                 if (_ToneSaturation != value)
@@ -315,6 +325,5 @@ namespace Sandbox
         }
 
         #endregion
-
     }
 }
