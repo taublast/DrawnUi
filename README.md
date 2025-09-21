@@ -34,10 +34,6 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 
 ---
 
-When you want to draw something instead of using native controls this library solves it. 
-
----
-
 ## 🌱 What's new
 
 * Gestures now filter possible palm longpressing at borders to avoid blocking taps
