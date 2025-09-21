@@ -15,8 +15,6 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, a nuget package is available.
 
-___Please star ⭐ if you like it!___
-
 ## Features
 
 * __Draw with helpers using SkiaSharp with hardware acceleration__
@@ -48,3 +46,5 @@ ___Please star ⭐ if you like it!___
 ---
 
 [Documentation](https://drawnui.net) 👈
+
+___Please star ⭐ if you like it!___
