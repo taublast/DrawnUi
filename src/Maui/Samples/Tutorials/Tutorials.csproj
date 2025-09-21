@@ -13,7 +13,7 @@
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
 
-        <UseSource>true</UseSource>
+        <UseSource>false</UseSource>
 
     </PropertyGroup>
 
