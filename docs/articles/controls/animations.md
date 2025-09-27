@@ -339,7 +339,7 @@ public partial class AnimationPage : ContentPage
     // Control animation programmatically
     private void PlayCrashAnimation()
     {
-        crashAnimation.Play();
+        crashAnimation.Start();
     }
 
     private void StopAndResetAnimation()

@@ -6545,7 +6545,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyResetChange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 1375
+    startLine: 1373
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
