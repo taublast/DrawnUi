@@ -17,16 +17,43 @@ description: Hardware-accelerated rendering engine for .NET MAUI built on SkiaSh
     <p style="font-size: 1.4em; margin: 20px auto; opacity: 0.95; max-width: 680px;">
       Build <strong>stunning cross-platform apps</strong> with hardware-accelerated SkiaSharp rendering
     </p>
-    <div style="margin-top: 30px;">
-      <a href="articles/getting-started.md" style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 0 10px; box-shadow: 0 4px 15px rgba(37,99,235,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease;">
+    <div class="hero-buttons" style="margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+      <a href="articles/getting-started.md" class="hero-btn hero-btn-primary" style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 15px rgba(37,99,235,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease; display: inline-block; min-width: 160px; text-align: center;">
         🔨 Setup Guide
       </a>
-      <a href="https://github.com/taublast/DrawnUi" style="background: rgba(255,255,255,0.12); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 0 10px; border: 2px solid rgba(255,255,255,0.22); backdrop-filter: blur(2px);">
+      <a href="https://github.com/taublast/DrawnUi" class="hero-btn hero-btn-secondary" style="background: rgba(255,255,255,0.12); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; border: 2px solid rgba(255,255,255,0.22); backdrop-filter: blur(2px); display: inline-block; min-width: 160px; text-align: center;">
         ⭐ Star on GitHub
       </a>
     </div>
   </div>
 </div>
+
+<style>
+/* Responsive hero buttons */
+@media (max-width: 480px) {
+  .hero-buttons {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .hero-btn {
+    width: 100% !important;
+    max-width: 280px !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-buttons {
+    gap: 12px !important;
+  }
+
+  .hero-btn {
+    padding: 12px 24px !important;
+    font-size: 0.95em !important;
+  }
+}
+</style>
 
 <script id="vertShader" type="x-shader/x-vertex">
 precision mediump float;
