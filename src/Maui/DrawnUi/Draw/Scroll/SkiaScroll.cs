@@ -10,7 +10,6 @@ namespace DrawnUi.Draw
     [ContentProperty("Content")]
     public partial class SkiaScroll : SkiaControl, ISkiaGestureListener, IDefinesViewport, IWithContent
     {
-
         /// <summary>
         /// Min velocity in points/sec to flee/swipe when finger is up
         /// </summary>
@@ -1408,13 +1407,34 @@ namespace DrawnUi.Draw
 
         protected virtual SKPoint ClampedOrderedScrollOffset(SKPoint scrollTo)
         {
-            var scrollSpaceY = ptsContentHeight - Viewport.Units.Height;
-
-            var offsetViewport = Math.Abs(scrollTo.Y) - Viewport.Units.Height;
-
-            if (scrollSpaceY < 0 || offsetViewport < 0)
+            if (Orientation == ScrollOrientation.Vertical)
             {
-                return NotValidPoint();
+                var scrollSpaceY = ptsContentHeight - Viewport.Units.Height;
+                var offsetViewportY = Math.Abs(scrollTo.Y) - Viewport.Units.Height;
+                if (scrollSpaceY < 0 || offsetViewportY < 0)
+                {
+                    return NotValidPoint();
+                }
+            }
+            else if (Orientation == ScrollOrientation.Horizontal)
+            {
+                var scrollSpaceX = ptsContentWidth - Viewport.Units.Width;
+                var offsetViewportX = Math.Abs(scrollTo.X) - Viewport.Units.Width;
+                if (scrollSpaceX < 0 || offsetViewportX < 0)
+                {
+                    return NotValidPoint();
+                }
+            }
+            else if (Orientation == ScrollOrientation.Both)
+            {
+                var scrollSpaceY = ptsContentHeight - Viewport.Units.Height;
+                var offsetViewportY = Math.Abs(scrollTo.Y) - Viewport.Units.Height;
+                var scrollSpaceX = ptsContentWidth - Viewport.Units.Width;
+                var offsetViewportX = Math.Abs(scrollTo.X) - Viewport.Units.Width;
+                if (scrollSpaceY < 0 || offsetViewportY < 0 || scrollSpaceX < 0 || offsetViewportX < 0)
+                {
+                    return NotValidPoint();
+                }
             }
 
             return scrollTo;
@@ -1611,7 +1631,8 @@ namespace DrawnUi.Draw
                             _animatorFlingX.Stop();
                             _animatorFlingY.Stop();
 
-                            ScrollTo(ViewportOffsetX, needOffsetY / layout.RenderingScale, AutoScrollingSpeedMs, true);
+                            ScrollTo(ViewportOffsetX, ViewportOffsetY + needOffsetY / layout.RenderingScale,
+                                AutoScrollingSpeedMs, true);
 
                             return;
                         }
@@ -1650,7 +1671,8 @@ namespace DrawnUi.Draw
                             _animatorFlingX.Stop();
                             _animatorFlingY.Stop();
 
-                            ScrollTo(needOffsetX / layout.RenderingScale, ViewportOffsetY, AutoScrollingSpeedMs, true);
+                            ScrollTo(ViewportOffsetX + needOffsetX / layout.RenderingScale, ViewportOffsetY,
+                                AutoScrollingSpeedMs, true);
 
                             return;
                         }
@@ -2176,14 +2198,13 @@ namespace DrawnUi.Draw
 
                 if (HasContentToScroll && _loadMoreTriggeredAt == 0)
                 {
-
                     bool shouldTriggerLoadMore = false;
-                        var threshold = LoadMoreOffset * scale;
-                        shouldTriggerLoadMore = (Orientation == ScrollOrientation.Vertical &&
-                                               InternalViewportOffset.Units.Y <= _scrollMinY + threshold)
-                                              || (Orientation == ScrollOrientation.Horizontal &&
-                                                  InternalViewportOffset.Units.X <= _scrollMinX + threshold);
-             
+                    var threshold = LoadMoreOffset * scale;
+                    shouldTriggerLoadMore = (Orientation == ScrollOrientation.Vertical &&
+                                             InternalViewportOffset.Units.Y <= _scrollMinY + threshold)
+                                            || (Orientation == ScrollOrientation.Horizontal &&
+                                                InternalViewportOffset.Units.X <= _scrollMinX + threshold);
+
 
                     if (shouldTriggerLoadMore)
                     {
