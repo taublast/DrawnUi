@@ -1352,7 +1352,8 @@ namespace DrawnUi.Draw
             typeof(bool), typeof(SkiaControl), false);
 
         /// <summary>
-        ///  If set to true will not not draw after VisualLayer is set and detected to be out of rendering bound. Useful for drawer contained elements and similar.
+        ///  If set to true will not draw after VisualLayer is set and detected to be out of rendering bound.
+        /// Useful for drawer contained elements and similar.
         /// </summary>
         public bool SkipRenderingOutOfBounds
         {
@@ -5649,7 +5650,7 @@ namespace DrawnUi.Draw
                 bool willRender = true;
                 if (SkipRenderingOutOfBounds && DrawingRect != SKRect.Empty)
                 {
-                    if (!VisualLayer.HitBoxWithTransforms.Pixels.IntersectsWith(ctx.Destination))
+                    if (VisualLayer != null && !VisualLayer.HitBoxWithTransforms.Pixels.IntersectsWith(ctx.Destination))
                     {
                         willRender = false;
                     }
