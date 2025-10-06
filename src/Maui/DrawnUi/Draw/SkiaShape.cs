@@ -1282,7 +1282,7 @@ namespace DrawnUi.Draw
             Update();
         }
 
-        public static readonly BindableProperty ShadowsProperty = BindableProperty.Create(
+        public new static readonly BindableProperty ShadowsProperty = BindableProperty.Create(
             nameof(Shadows),
             typeof(IList<SkiaShadow>),
             typeof(SkiaShape),
@@ -1298,7 +1298,7 @@ namespace DrawnUi.Draw
 
         private static int instanceCount = 0;
 
-        public IList<SkiaShadow> Shadows
+        public new IList<SkiaShadow> Shadows
         {
             get => (IList<SkiaShadow>)GetValue(ShadowsProperty);
             set => SetValue(ShadowsProperty, value);
