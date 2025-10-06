@@ -547,8 +547,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         var selectedDetail = quality switch
         {
             CaptureQuality.Max => formatDetails.First(),
-            CaptureQuality.Medium => SelectFormatByQuality(formatDetails, 0.33),
-            CaptureQuality.Low => SelectFormatByQuality(formatDetails, 0.67),
+            CaptureQuality.Medium => SelectFormatByQuality(formatDetails, 0.5),
+            CaptureQuality.Low => SelectFormatByQuality(formatDetails, 0.8),
             CaptureQuality.Preview => SelectPreviewFormat(formatDetails),
             CaptureQuality.Manual => GetManualFormatDetail(formatDetails, FormsControl.PhotoFormatIndex),
             _ => formatDetails.First()
@@ -1486,12 +1486,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var pixelData = new byte[dataSize];
                 System.Runtime.InteropServices.Marshal.Copy(baseAddress, pixelData, 0, dataSize);
 
-                // Use sensor PTS (CMTime) for monotonic timestamp instead of wall clock
-                var pts = sampleBuffer.PresentationTimeStamp; // CMTime
-                long micros = 0;
-                if (pts.TimeScale != 0)
-                    micros = (long)(pts.Value * 1_000_000L / pts.TimeScale);
-                var monotonicTime = new DateTime(micros * 10, DateTimeKind.Utc);
+                var time  = DateTime.UtcNow;
 
                 // Store raw frame data for SKImage creation on main thread
                 var rawFrame = new RawFrameData
@@ -1499,7 +1494,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     Width = width,
                     Height = height,
                     BytesPerRow = bytesPerRow,
-                    Time = monotonicTime,
+                    Time = time,
                     CurrentRotation = CurrentRotation,
                     Facing = FormsControl.Facing,
                     Orientation = (int)CurrentRotation,

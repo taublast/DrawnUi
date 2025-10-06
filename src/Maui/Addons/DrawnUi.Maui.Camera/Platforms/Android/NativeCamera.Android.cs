@@ -796,6 +796,18 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    /// <summary>
+    /// Select format by quality percentile
+    /// </summary>
+    /// <param name="formatDetails"></param>
+    /// <param name="percentile"></param>
+    /// <returns></returns>
+    private Size SelectFormatByQuality(List<Size> formatDetails, double percentile)
+    {
+        var index = (int)(formatDetails.Count * percentile);
+        var result = formatDetails.Skip(index).FirstOrDefault();
+        return result != null ? result : formatDetails.First();
+    }
 
     /// <summary>
     /// Pass preview size as params
@@ -1001,11 +1013,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                             break;
 
                         case CaptureQuality.Medium:
-                            selectedSize = validSizes[validSizes.Count / 3];
+                            selectedSize = SelectFormatByQuality(validSizes, 0.5);
                             break;
 
                         case CaptureQuality.Low:
-                            selectedSize = validSizes.Last();
+                            selectedSize = SelectFormatByQuality(validSizes, 0.8);
                             break;
 
                         case CaptureQuality.Manual:
@@ -1069,8 +1081,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     PreviewWidth = previewSize.Width;
                     PreviewHeight = previewSize.Height;
 
-
-                        System.Diagnostics.Debug.WriteLine($"[PREVIEW] Selected {PreviewWidth}x{PreviewHeight} rotated={rotated} max={maxPreviewWidth}x{maxPreviewHeight} aspectTarget={aspectTarget.Width}x{aspectTarget.Height}");
+                    System.Diagnostics.Debug.WriteLine($"[PREVIEW] Selected {PreviewWidth}x{PreviewHeight} rotated={rotated} max={maxPreviewWidth}x{maxPreviewHeight} aspectTarget={aspectTarget.Width}x{aspectTarget.Height}");
 
                     mImageReaderPreview =
                         ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
