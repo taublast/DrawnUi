@@ -477,15 +477,19 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
         }
     }
 
+    /// <summary>
+    /// Enhanced GLThread with timeout protection and better state recovery
+    /// </summary>
     private class GLThread
     {
+        private const int WAIT_TIMEOUT_MS = 5000;
+        private const int RESIZE_WAIT_TIMEOUT_MS = 1000;
+
         private Thread thread;
         private volatile GLThreadManager threadManager;
         private EglHelper eglHelper;
         private WeakReference<SkiaGLTextureView> textureViewWeakRef;
 
-        // Once the thread is started, all accesses to the following member
-        // variables are protected by the sGLThreadManager monitor
         private volatile bool shouldExit;
         public volatile bool exited;
         private volatile bool requestPaused;
@@ -504,18 +508,19 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
         private volatile bool surfaceSizeChanged = true;
         private volatile bool requestRender;
         private volatile bool renderComplete;
-        // End of member variables protected by the sGLThreadManager monitor.
+        private volatile int consecutiveSurfaceFailures;
 
         public GLThread(WeakReference<SkiaGLTextureView> glTextureViewWeakRef, int defaultWidth, int defaultHeight)
         {
             threadManager = new GLThreadManager();
-            
+
             width = defaultWidth;
             height = defaultHeight;
             requestRender = true;
             renderMode = Rendermode.Continuously;
             textureViewWeakRef = glTextureViewWeakRef;
             thread = new Thread(new ThreadStart(Run));
+            consecutiveSurfaceFailures = 0;
         }
 
         public int Id => thread.ManagedThreadId;
@@ -583,17 +588,17 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
                 while (true)
                 {
-                    // when everything is already set up (context and surface are valid)
                     if (requestRender && haveEglContext && haveEglSurface && IsReadyToDraw())
                     {
-                        // fast path for render requests
                         requestRender = false;
                         if (textureViewWeakRef.TryGetTarget(out SkiaGLTextureView view))
                         {
                             view.renderer.OnDrawFrame();
                         }
                         eglHelper.Swap();
-                        continue;  
+
+                        consecutiveSurfaceFailures = 0;
+                        continue;
                     }
 
                     lock (threadManager)
@@ -611,7 +616,6 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                                 break;
                             }
 
-                            // Update the pause state.
                             var pausing = false;
                             if (paused != requestPaused)
                             {
@@ -622,7 +626,6 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                                 LogDebug($"[GLThread {Id}] paused is now {paused}");
                             }
 
-                            // Do we need to give up the EGL context?
                             if (shouldReleaseEglContext)
                             {
                                 LogDebug($"[GLThread {Id}] Releasing EGL context because asked to");
@@ -633,7 +636,6 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                                 askedToReleaseEglContext = true;
                             }
 
-                            // Have we lost the EGL context?
                             if (lostEglContext)
                             {
                                 StopEglSurfaceLocked();
@@ -641,15 +643,12 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                                 lostEglContext = false;
                             }
 
-                            // When pausing, release the EGL surface:
                             if (pausing && haveEglSurface)
                             {
                                 LogDebug($"[GLThread {Id}] Releasing EGL surface because paused");
-
                                 StopEglSurfaceLocked();
                             }
 
-                            // When pausing, optionally release the EGL Context:
                             if (pausing && haveEglContext)
                             {
                                 textureViewWeakRef.TryGetTarget(out SkiaGLTextureView view);
@@ -657,23 +656,19 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                                 if (!preserveEglContextOnPause || threadManager.ShouldReleaseEGLContextWhenPausing())
                                 {
                                     StopEglContextLocked();
-
                                     LogDebug($"[GLThread {Id}] Releasing EGL context because paused");
                                 }
                             }
 
-                            // When pausing, optionally terminate EGL:
                             if (pausing)
                             {
                                 if (threadManager.ShouldTerminateEGLWhenPausing())
                                 {
                                     eglHelper.Finish();
-
                                     LogDebug($"[GLThread {Id}] Terminating EGL because paused");
                                 }
                             }
 
-                            // Have we lost the TextureView surface?
                             if ((!hasSurface) && (!waitingForSurface))
                             {
                                 LogDebug($"[GLThread {Id}] Noticed TextureView surface lost");
@@ -685,15 +680,16 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
                                 waitingForSurface = true;
                                 surfaceIsBad = false;
+                                consecutiveSurfaceFailures = 0;
                                 Monitor.PulseAll(threadManager);
                             }
 
-                            // Have we acquired the surface view surface?
                             if (hasSurface && waitingForSurface)
                             {
                                 LogDebug($"[GLThread {Id}] Noticed TextureView surface acquired");
 
                                 waitingForSurface = false;
+                                surfaceIsBad = false;
                                 Monitor.PulseAll(threadManager);
                             }
 
@@ -707,12 +703,27 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                                 Monitor.PulseAll(threadManager);
                             }
 
-                            // Ready to draw?
-                            if (IsReadyToDraw())
-                                // https://stackoverflow.com/questions/67513816/xamarin-android-jni-error-accessed-deleted-global-0x000000
-                                // crashing somewhere down here
+                            if (consecutiveSurfaceFailures > 10)
                             {
-                                // If we don't have an EGL context, try to acquire one.
+                                LogError($"[GLThread {Id}] Too many consecutive surface failures, forcing recovery");
+
+                                surfaceIsBad = false;
+                                consecutiveSurfaceFailures = 0;
+
+                                if (haveEglSurface)
+                                {
+                                    StopEglSurfaceLocked();
+                                }
+                                if (haveEglContext)
+                                {
+                                    StopEglContextLocked();
+                                }
+
+                                Monitor.PulseAll(threadManager);
+                            }
+
+                            if (IsReadyToDraw())
+                            {
                                 if (!haveEglContext)
                                 {
                                     if (askedToReleaseEglContext)
@@ -725,10 +736,14 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                                         {
                                             eglHelper.Start();
                                         }
-                                        catch (Exception)
+                                        catch (Exception ex)
                                         {
+                                            LogError($"[GLThread {Id}] Failed to start EGL helper: {ex.Message}");
                                             threadManager.ReleaseEglContextLocked(this);
-                                            throw;
+
+                                            surfaceIsBad = true;
+                                            consecutiveSurfaceFailures++;
+                                            continue;
                                         }
 
                                         haveEglContext = true;
@@ -757,7 +772,6 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
                                         LogDebug($"[GLThread {Id}] Noticing that we want render notification");
 
-                                        // Destroy and recreate the EGL surface.
                                         createEglSurface = true;
                                         surfaceSizeChanged = false;
                                     }
@@ -771,10 +785,26 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                             LogDebug(
                                 $"[GLThread {Id}] Waiting mHaveEglContext={haveEglContext} mHaveEglSurface={haveEglSurface} mFinishedCreatingEglSurface={finishedCreatingEglSurface} paused={paused} hasSurface={hasSurface} surfaceIsBad={surfaceIsBad} mWaitingForSurface={waitingForSurface} mWidth={width} mHeight={height} mRequestRender={requestRender} mRenderMode={renderMode}");
 
-                            // By design, this is the only place in a GLThread thread where we Wait().
-                            Monitor.Wait(threadManager);
+                            try
+                            {
+                                if (!Monitor.Wait(threadManager, WAIT_TIMEOUT_MS))
+                                {
+                                    LogDebug($"[GLThread {Id}] Wait timeout, checking for stuck state");
+
+                                    if (surfaceIsBad && hasSurface && width > 0 && height > 0)
+                                    {
+                                        LogDebug($"[GLThread {Id}] Attempting to recover from bad surface state");
+                                        surfaceIsBad = false;
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                LogError($"[GLThread {Id}] Exception during wait: {ex.Message}");
+                                Thread.CurrentThread.Interrupt();
+                            }
                         }
-                    } // end of lock(sGLThreadManager)
+                    }
 
                     if (ev != null)
                     {
@@ -792,6 +822,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                             lock (threadManager)
                             {
                                 finishedCreatingEglSurface = true;
+                                consecutiveSurfaceFailures = 0;
                                 Monitor.PulseAll(threadManager);
                             }
                         }
@@ -801,6 +832,10 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                             {
                                 finishedCreatingEglSurface = true;
                                 surfaceIsBad = true;
+                                consecutiveSurfaceFailures++;
+
+                                LogDebug($"[GLThread {Id}] Surface creation failed (count: {consecutiveSurfaceFailures})");
+
                                 Monitor.PulseAll(threadManager);
                             }
 
@@ -853,22 +888,22 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                     switch (swapError)
                     {
                         case EGL14.EglSuccess:
+                            consecutiveSurfaceFailures = 0;
                             break;
 
                         case IEGL11.EglContextLost:
                             LogDebug($"[GLThread {Id}] EGL context lost");
                             lostEglContext = true;
+                            consecutiveSurfaceFailures++;
                             break;
 
                         default:
-                            // Other errors typically mean that the current surface is bad,
-                            // probably because the TextureView surface has been destroyed,
-                            // but we haven't been notified yet.
                             LogError($"[GLThread {Id}] eglSwapBuffers failed: {swapError}");
 
                             lock (threadManager)
                             {
                                 surfaceIsBad = true;
+                                consecutiveSurfaceFailures++;
                                 Monitor.PulseAll(threadManager);
                             }
 
@@ -938,16 +973,29 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
                 hasSurface = true;
                 finishedCreatingEglSurface = false;
+                surfaceIsBad = false;
                 Monitor.PulseAll(threadManager);
+
+                var startTime = DateTime.UtcNow;
                 while (waitingForSurface && !finishedCreatingEglSurface && !exited)
                 {
                     try
                     {
-                        Monitor.Wait(threadManager);
+                        if (!Monitor.Wait(threadManager, WAIT_TIMEOUT_MS))
+                        {
+                            LogDebug($"[GLThread {Id}] OnSurfaceCreated wait timeout");
+                            break;
+                        }
                     }
                     catch (Exception)
                     {
                         Thread.CurrentThread.Interrupt();
+                    }
+
+                    if ((DateTime.UtcNow - startTime).TotalMilliseconds > WAIT_TIMEOUT_MS * 2)
+                    {
+                        LogDebug($"[GLThread {Id}] OnSurfaceCreated giving up waiting");
+                        break;
                     }
                 }
             }
@@ -960,16 +1008,29 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                 LogDebug($"[GLThread {Id}] OnSurfaceDestroyed");
 
                 hasSurface = false;
+                surfaceIsBad = false;
                 Monitor.PulseAll(threadManager);
+
+                var startTime = DateTime.UtcNow;
                 while ((!waitingForSurface) && (!exited))
                 {
                     try
                     {
-                        Monitor.Wait(threadManager);
+                        if (!Monitor.Wait(threadManager, WAIT_TIMEOUT_MS))
+                        {
+                            LogDebug($"[GLThread {Id}] OnSurfaceDestroyed wait timeout");
+                            break;
+                        }
                     }
                     catch (Exception)
                     {
                         Thread.CurrentThread.Interrupt();
+                    }
+
+                    if ((DateTime.UtcNow - startTime).TotalMilliseconds > WAIT_TIMEOUT_MS * 2)
+                    {
+                        LogDebug($"[GLThread {Id}] OnSurfaceDestroyed giving up waiting");
+                        break;
                     }
                 }
             }
@@ -984,17 +1045,28 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                 requestPaused = true;
                 Monitor.PulseAll(threadManager);
 
+                var startTime = DateTime.UtcNow;
                 while ((!exited) && (!paused))
                 {
                     LogDebug($"[GLThread {Id}] OnPause: Waiting for paused==True");
 
                     try
                     {
-                        Monitor.Wait(threadManager);
+                        if (!Monitor.Wait(threadManager, WAIT_TIMEOUT_MS))
+                        {
+                            LogDebug($"[GLThread {Id}] OnPause wait timeout");
+                            break;
+                        }
                     }
                     catch (Exception)
                     {
                         Thread.CurrentThread.Interrupt();
+                    }
+
+                    if ((DateTime.UtcNow - startTime).TotalMilliseconds > WAIT_TIMEOUT_MS * 2)
+                    {
+                        LogDebug($"[GLThread {Id}] OnPause giving up waiting");
+                        break;
                     }
                 }
             }
@@ -1009,18 +1081,31 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                 requestPaused = false;
                 requestRender = true;
                 renderComplete = false;
+                surfaceIsBad = false;
                 Monitor.PulseAll(threadManager);
+
+                var startTime = DateTime.UtcNow;
                 while ((!exited) && paused && (!renderComplete))
                 {
                     LogDebug($"[GLThread {Id}] OnResume: Waiting for paused==False");
 
                     try
                     {
-                        Monitor.Wait(threadManager);
+                        if (!Monitor.Wait(threadManager, WAIT_TIMEOUT_MS))
+                        {
+                            LogDebug($"[GLThread {Id}] OnResume wait timeout");
+                            break;
+                        }
                     }
                     catch (Exception)
                     {
                         Thread.CurrentThread.Interrupt();
+                    }
+
+                    if ((DateTime.UtcNow - startTime).TotalMilliseconds > WAIT_TIMEOUT_MS * 2)
+                    {
+                        LogDebug($"[GLThread {Id}] OnResume giving up waiting");
+                        break;
                     }
                 }
             }
@@ -1037,18 +1122,35 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                 renderComplete = false;
                 Monitor.PulseAll(threadManager);
 
-                // Wait for thread to react to resize and render a frame
+                if (w <= 0 || h <= 0)
+                {
+                    LogDebug($"[GLThread {Id}] OnWindowResize: Invalid size {w}x{h}, skipping wait");
+                    return;
+                }
+
+                var startTime = DateTime.UtcNow;
                 while (!exited && !paused && !renderComplete && IsAbleToDraw())
                 {
                     LogDebug($"[GLThread {Id}] OnWindowResize: Waiting for render complete");
 
                     try
                     {
-                        Monitor.Wait(threadManager);
+                        if (!Monitor.Wait(threadManager, RESIZE_WAIT_TIMEOUT_MS))
+                        {
+                            LogDebug($"[GLThread {Id}] OnWindowResize wait timeout, continuing anyway");
+                            break;
+                        }
                     }
                     catch (Exception)
                     {
                         Thread.CurrentThread.Interrupt();
+                        break;
+                    }
+
+                    if ((DateTime.UtcNow - startTime).TotalMilliseconds > RESIZE_WAIT_TIMEOUT_MS * 3)
+                    {
+                        LogDebug($"[GLThread {Id}] OnWindowResize giving up waiting after multiple timeouts");
+                        break;
                     }
                 }
             }
@@ -1056,20 +1158,31 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
         public void RequestExitAndWait()
         {
-            // don't call this from GLThread thread or it is a guaranteed deadlock!
             lock (threadManager)
             {
                 shouldExit = true;
                 Monitor.PulseAll(threadManager);
+
+                var startTime = DateTime.UtcNow;
                 while (!exited)
                 {
                     try
                     {
-                        Monitor.Wait(threadManager);
+                        if (!Monitor.Wait(threadManager, WAIT_TIMEOUT_MS))
+                        {
+                            LogDebug($"[GLThread {Id}] RequestExitAndWait timeout");
+
+                            if ((DateTime.UtcNow - startTime).TotalMilliseconds > WAIT_TIMEOUT_MS * 3)
+                            {
+                                LogError($"[GLThread {Id}] RequestExitAndWait giving up, thread may be stuck");
+                                break;
+                            }
+                        }
                     }
                     catch (Exception)
                     {
                         Thread.CurrentThread.Interrupt();
+                        break;
                     }
                 }
             }
@@ -1092,46 +1205,6 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
             {
                 eventQueue.Enqueue(r);
                 Monitor.PulseAll(threadManager);
-            }
-        }
-    }
-
-    private class LogWriter : Java.IO.Writer
-    {
-        private Java.Lang.StringBuilder builder = new Java.Lang.StringBuilder();
-
-        public override void Close()
-        {
-            FlushBuilder();
-        }
-
-        public override void Flush()
-        {
-            FlushBuilder();
-        }
-
-        public override void Write(char[] buf, int offset, int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                var c = buf[offset + i];
-                if (c == '\n')
-                {
-                    FlushBuilder();
-                }
-                else
-                {
-                    builder.Append(c);
-                }
-            }
-        }
-
-        private void FlushBuilder()
-        {
-            if (builder.Length() > 0)
-            {
-                LogDebug($"[LogWriter] {builder.ToString()}");
-                builder.Delete(0, builder.Length());
             }
         }
     }
