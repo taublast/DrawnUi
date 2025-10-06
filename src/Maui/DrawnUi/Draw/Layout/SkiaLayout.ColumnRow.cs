@@ -2022,6 +2022,13 @@ else
         {
         }
 
+        /// <summary>
+        /// Can be called by some layouts after they draw visible children  
+        /// </summary>
+        protected virtual void OnAfterDrawingVisibleChildren(DrawingContext ctx, LayoutStructure structure,
+            List<ControlInStack> visibleElements)
+        {
+        }
 
         private long _countVisible;
 
@@ -2433,6 +2440,8 @@ else
                             }
                         }
                     }
+
+                    OnAfterDrawingVisibleChildren(ctx, structure, visibleElements);
                 }
                 finally
                 {
