@@ -1,11 +1,13 @@
 ﻿using System.Buffers;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Net;
+using System.Windows.Input;
 using AppoMobi.Maui.Gestures;
 using DrawnUi.Draw;
-using HarfBuzzSharp;
+using DrawnUi.Extensions;
 using Mapsui;
 using Mapsui.Disposing;
 using Mapsui.Extensions;
@@ -21,8 +23,8 @@ using Mapsui.UI;
 using Mapsui.Utilities;
 using Mapsui.Widgets;
 using SkiaSharp;
-using InvalidOperationException = System.InvalidOperationException;
 using Map = Mapsui.Map;
+using Timer = System.Threading.Timer;
 
 namespace DrawnUi.MapsUi;
 
@@ -37,14 +39,66 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
     /// </summary>
     public event EventHandler<Point> ClickedPoint;
 
+    public event EventHandler<MapPin> ClickedPin;
+
+    protected MapPin SelectedPin
+    {
+        get => selectedPin;
+        set
+        {
+            if (value == selectedPin)
+                return;
+            selectedPin = value;
+            OnSelectedPinChanged();
+            OnPropertyChanged();
+        } 
+    }
+    private MapPin selectedPin;
+
+    protected virtual void OnSelectedPinChanged()
+    {
+
+    }
+
+    protected virtual void SendClickedPin(MapPin pin)
+    {
+        SelectedPin = pin;
+        ClickedPin?.Invoke(this, pin);
+        CommandTappedPin?.Execute(pin);
+    }
+
     protected virtual void SendClicked(Point point)
     {
         LastClicked = point;
 
         ClickedPoint?.Invoke(this, point);
+
+        CommandTapped?.Execute(point);
     }
 
     public Point LastClicked;
+
+    public static readonly BindableProperty CommandTappedProperty = BindableProperty.Create(nameof(CommandTapped),
+        typeof(ICommand),
+        typeof(SkiaMapsUi),
+        null);
+
+    public ICommand CommandTapped
+    {
+        get { return (ICommand)GetValue(CommandTappedProperty); }
+        set { SetValue(CommandTappedProperty, value); }
+    }
+
+    public static readonly BindableProperty CommandTappedPinProperty = BindableProperty.Create(nameof(CommandTappedPin),
+        typeof(ICommand),
+        typeof(SkiaMapsUi),
+        null);
+
+    public ICommand CommandTappedPin
+    {
+        get { return (ICommand)GetValue(CommandTappedPinProperty); }
+        set { SetValue(CommandTappedPinProperty, value); }
+    }
 
     #region PINS
 
@@ -76,37 +130,70 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
 
     protected SKPaint PaintPins;
 
-    protected void RenderPin(DrawingContext ctx, MapPin pin)
+    public virtual SkiaControl GetPinIcon(MapPin pin)
+    {
+        return pin?.Icon;
+    }
+
+    /// <summary>
+    /// Renders pin on map. Will return null if was not rendered, otherwise returns icon.
+    /// Will not render if Icon is not set or is out of viewport bounds.
+    /// </summary>
+    /// <param name="ctx"></param>
+    /// <param name="pin"></param>
+    /// <returns></returns>
+    protected virtual SkiaControl RenderPin(DrawingContext ctx, MapPin pin)
     {
         if (pin.Icon == null || !pin.IsVisible)
-            return;
+            return null;
 
-        // X Y
-        var screenPos = GetScreenPosition(pin.Longitude, pin.Latitude);
-        //var screenPos = GetScreenPosition(LastClicked.X, LastClicked.Y);
+        var icon = GetPinIcon(pin);
+
+        var pinSize = icon.MeasuredSize.Pixels;
+        if (icon.NeedMeasure || !icon.IsRenderObjectValid(pinSize))
+        {
+            RasterizePin(ctx, pin, icon);
+            pinSize = icon.MeasuredSize.Pixels;
+        }
+
+        //will return null if out of bounds, so we can skip rendering
+        var screenPos = GetScreenPosition(pin.Longitude, pin.Latitude, pinSize.Width, pinSize.Height);
 
         if (!screenPos.HasValue)
-            return;
+            return null;
 
-        //center control
         var x = screenPos.Value.X;
         var y = screenPos.Value.Y;
-
-        var pinSize = pin.Icon.MeasuredSize.Pixels;
-
-        if (pin.Icon.NeedMeasure || !pin.Icon.IsRenderObjectValid(pinSize))
-        {
-            RasterizeIcon(ctx, pin.Icon);
-            pinSize = pin.Icon.MeasuredSize.Pixels;
-        }
 
         var positionX = (float)(x - pinSize.Width / 2.0);
         var positionY = (float)(y - pinSize.Height);
 
-        pin.Icon.DrawRenderObject(ctx, positionX, positionY);
+        icon.DrawRenderObject(ctx, positionX, positionY);
+
+        return icon;
     }
 
-    protected void RasterizeIcon(DrawingContext ctx, SkiaControl icon)
+    private HitTestChild[] _hitTestCache;
+    private int _hitTestCount;
+
+    public readonly struct HitTestChild
+    {
+        public readonly MapPin Child;
+        public readonly SKRect Rect;
+
+        public HitTestChild(MapPin control, SKRect rect)
+        {
+            Child = control;
+            Rect = rect;
+        }
+    }
+
+    protected virtual void RasterizePin(DrawingContext ctx, MapPin pin, SkiaControl icon)
+    {
+        RasterizeIcon(ctx, icon);
+    }
+
+    protected virtual void RasterizeIcon(DrawingContext ctx, SkiaControl icon)
     {
         if (icon == null)
         {
@@ -125,10 +212,107 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         icon.RenderObject = icon.CreateRenderedObject(ctx, icon.DrawingRect, false);
     }
 
+    #endregion
+
+    #region PINS PROP
+
+    private static void PinsPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (bindable is SkiaMapsUi control)
+        {
+            var enumerablePins = (IEnumerable<MapPin>)newvalue;
+
+            if (oldvalue != null)
+            {
+                if (oldvalue is INotifyCollectionChanged oldCollection)
+                {
+                    oldCollection.CollectionChanged -= control.OnPinCollectionChanged;
+                }
+
+                if (oldvalue is IEnumerable<MapPin> oldList)
+                {
+                    foreach (var position in oldList)
+                    {
+                        //position.Dettach();
+                    }
+                }
+            }
+
+            foreach (var position in enumerablePins)
+            {
+                //position.Attach(control);
+            }
+
+            if (newvalue is INotifyCollectionChanged newCollection)
+            {
+                newCollection.CollectionChanged -= control.OnPinCollectionChanged;
+                newCollection.CollectionChanged += control.OnPinCollectionChanged;
+            }
+
+            control.Update();
+        }
+    }
+
+    private void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                foreach (MapPin newSkiaPropertyPin in e.NewItems)
+                {
+                    //newSkiaPropertyPin.Attach(this);
+                }
+
+                break;
+
+            case NotifyCollectionChangedAction.Reset:
+            case NotifyCollectionChangedAction.Remove:
+                foreach (MapPin oldSkiaPropertyPin in e.OldItems ?? new MapPin[0])
+                {
+                    //oldSkiaPropertyPin.Dettach();
+                }
+
+                break;
+        }
+
+        Update();
+    }
+
+    public new static readonly BindableProperty PinsProperty = BindableProperty.Create(
+        nameof(Pins),
+        typeof(IList<MapPin>),
+        typeof(SkiaMapsUi),
+        defaultValueCreator: (instance) =>
+        {
+            var created = new AppoMobi.Specials.ObservableRangeCollection<MapPin>();
+            created.CollectionChanged += ((SkiaMapsUi)instance).OnPinCollectionChanged;
+            return created;
+        },
+        validateValue: (bo, v) => v is IList<MapPin>,
+        propertyChanged: PinsPropertyChanged,
+        coerceValue: CoercePins);
+
+    private static int instanceCount = 0;
+
     /// <summary>
     /// Please use UI thread to change this observable collection
     /// </summary>
-    public ObservableRangeCollection<MapPin> Pins { get; } = new();
+    public new IList<MapPin> Pins
+    {
+        get => (IList<MapPin>)GetValue(PinsProperty);
+        set => SetValue(PinsProperty, value);
+    }
+
+    private static object CoercePins(BindableObject bindable, object value)
+    {
+        if (!(value is ReadOnlyCollection<MapPin> readonlyCollection))
+        {
+            return value;
+        }
+
+        return new ReadOnlyCollection<MapPin>(
+            readonlyCollection.ToList());
+    }
 
     #endregion
 
@@ -233,6 +417,51 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         return false;
     }
 
+    protected override int DrawViews(DrawingContext ctx)
+    {
+        int countRendered = 1; //map counts
+
+        if (Pins != null)
+        {
+            if (_hitTestCache != null)
+                ArrayPool<HitTestChild>.Shared.Return(_hitTestCache, clearArray: true);
+
+            _hitTestCache = ArrayPool<HitTestChild>.Shared.Rent(Pins.Count);
+            _hitTestCount = 0;
+
+            foreach (var pin in Pins)
+            {
+                var icon = RenderPin(ctx, pin);
+                if (icon != null)
+                {
+                    countRendered++;
+                    var rect = icon.LastDrawnAt;
+                    if (icon.RenderObject != null)
+                    {
+                        rect = icon.RenderObject.LastDrawnAt;
+                    }
+                    _hitTestCache[_hitTestCount++] = new HitTestChild(pin, rect);
+                }
+            }
+        }
+
+        return countRendered;
+    }
+
+ 
+    public virtual MapPin HitTestPins(SKPoint point)
+    {
+        for (int i = _hitTestCount - 1; i >= 0; i--) // Reverse for top-to-bottom
+        {
+            if (_hitTestCache[i].Rect.ContainsInclusive(point))
+            {
+                return _hitTestCache[i].Child;
+            }
+        }
+
+        return null;
+    }
+
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
         var consumedDefault = BlockGesturesBelow ? this : null;
@@ -244,7 +473,36 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         var position = new ScreenPosition((point.X - DrawingRect.Left) / RenderingScale,
             (point.Y - DrawingRect.Top) / RenderingScale);
 
-        if (args.Type == TouchActionResult.Down)
+        //TAP
+        if (args.Type == TouchActionResult.Tapped)
+        {
+            var thisOffset = TranslateInputCoords(apply.ChildOffset);
+            var x = args.Event.Location.X + thisOffset.X;
+            var y = args.Event.Location.Y + thisOffset.Y;
+            var relativeX = x - LastDrawnAt.Left; //inside this control
+            var relativeY = y - LastDrawnAt.Top; //inside this control
+
+            var clickedPin = HitTestPins(new (x, y));
+            if (clickedPin!=null)
+            {
+                SendClickedPin(clickedPin);
+                return this;
+            }
+
+            var coords = GetGeographicCoordinate(relativeX, relativeY);
+
+            if (coords.HasValue)
+            {
+                var consumedThis = ProcessClick(coords.Value.Latitude, coords.Value.Longitude);
+                if (consumedThis != null)
+                {
+                    return consumedThis;
+                }
+
+                return consumedDefault;
+            }
+        }
+        else if (args.Type == TouchActionResult.Down)
         {
             _positions[args.Event.Id] = position;
             if (_positions.Count == 1) // Not sure if this check is necessary.
@@ -363,6 +621,25 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         return consumed;
     }
 
+
+    private Point _coordsSelected;
+    public bool CanClick { get; set; } = true;
+
+    protected virtual ISkiaGestureListener ProcessClick(double lat, double lon)
+    {
+        if (!CanClick)
+        {
+            return null;
+        }
+
+        _coordsSelected = new(lon, lat);
+
+        SendClicked(new(_coordsSelected.X, _coordsSelected.Y));
+
+        Update();
+
+        return this;
+    }
 
     double _lastPinch = 0;
     bool _wasPinching = false;
@@ -541,7 +818,7 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
 
     public bool IsLoading { get; protected set; }
 
-    object lockTimer = new ();
+    object lockTimer = new();
 
     private void InvalidateTimerCallback(object? state)
     {
@@ -616,8 +893,6 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
                 Logger.Log(LogLevel.Error, ex.Message, ex);
             }
         }
-
-
     }
 
     /// <summary>
@@ -1059,7 +1334,7 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
     /// Returns null if the point is outside the visible area.
     /// The result is in PIXELS
     /// </summary>
-    protected SKPoint? GetScreenPosition(double longitude, double latitude)
+    protected SKPoint? GetScreenPosition(double longitude, double latitude, float inflateBoundsWidthPixels = 0, float inflateBoundsHeightPixels = 0)
     {
         try
         {
@@ -1069,9 +1344,9 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
             var screen = Map.Navigator.Viewport.WorldToScreen(worldPos.x, worldPos.y);
 
             // Check if point is within visible bounds
-            if (screen.X < 0 || screen.Y < 0 ||
-                screen.X > DrawingRect.Width / RenderingScale ||
-                screen.Y > DrawingRect.Height / RenderingScale)
+            if (screen.X < -inflateBoundsWidthPixels || screen.Y < -inflateBoundsHeightPixels ||
+                screen.X > (DrawingRect.Width + inflateBoundsWidthPixels) / RenderingScale ||
+                screen.Y > (DrawingRect.Height + inflateBoundsHeightPixels) / RenderingScale)
             {
                 return null;
             }
