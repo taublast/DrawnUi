@@ -196,7 +196,7 @@ namespace DrawnUi.Controls
                 if (b is SkiaDrawer control)
                 {
                     control.IsOpenChanged?.Invoke(control, (bool)n);
-                    control.ApplyOptions();
+                    control.ApplyOptions(false);
                     //Trace.WriteLine($"Drawer {(bool)n}");
                 }
             });
@@ -275,7 +275,7 @@ namespace DrawnUi.Controls
                 };
             }
 
-            ApplyOptions();
+            ApplyOptions(true);
         }
 
         protected override void OnLayoutChanged()
@@ -411,7 +411,7 @@ namespace DrawnUi.Controls
             base.ApplyPosition(position);
         }
 
-        public override void ApplyOptions()
+        public override void ApplyOptions(bool initialize)
         {
             if (Parent == null)
                 return;

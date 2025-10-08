@@ -162,7 +162,7 @@ public class SkiaCarousel : SnappingLayout
     /// </summary>
     public override void OnTemplatesAvailable()
     {
-        ApplyOptions();
+        ApplyOptions(true);
 
         base.OnTemplatesAvailable();
     }
@@ -461,6 +461,7 @@ public class SkiaCarousel : SnappingLayout
     private bool _itemsSourceChangedNeedResetIndex;
     private bool _loaded;
 
+    
 
     public override void OnItemSourceChanged()
     {
@@ -474,7 +475,7 @@ public class SkiaCarousel : SnappingLayout
 
         if (ChildrenFactory.TemplatesAvailable)
         {
-            ApplyOptions();
+            ApplyOptions(true);
         }
     }
 
@@ -627,7 +628,7 @@ public class SkiaCarousel : SnappingLayout
         return threshold < Math.Abs(displacement.X);
     }
 
-    public override void ApplyOptions()
+    public override void ApplyOptions(bool initialize)
     {
         if (Parent == null)
             return;
@@ -636,9 +637,12 @@ public class SkiaCarousel : SnappingLayout
 
         //Viewport = Parent.DrawingRect;
 
-        //InitializeChildren();
+        if (initialize)
+        {
+            InitializeChildren();
+        }
 
-        base.ApplyOptions();
+        base.ApplyOptions(initialize);
     }
 
 
@@ -665,7 +669,7 @@ public class SkiaCarousel : SnappingLayout
                 };
             }
 
-            ApplyOptions();
+            ApplyOptions(true);
         }
     }
 
@@ -748,11 +752,18 @@ public class SkiaCarousel : SnappingLayout
 
     bool viewportSet;
 
+    protected override void OnLayoutReady()
+    {
+        base.OnLayoutReady();
+
+        SetupViewport();
+    }
+
     protected override void OnLayoutChanged()
     {
         base.OnLayoutChanged();
 
-        SetupViewport();
+        //SetupViewport();
     }
 
     protected void SetupViewport()
@@ -815,6 +826,7 @@ public class SkiaCarousel : SnappingLayout
     {
         if (Viewport == SKRect.Empty || !ChildrenReady)
         {
+            Debug.WriteLine($"[SkiaCarousel] {Tag} InitializeChildren SKIPPED! Viewpoert empty = {Viewport == SKRect.Empty}, ChildrenReady={ChildrenReady}");
             return;
         }
 
@@ -825,6 +837,8 @@ public class SkiaCarousel : SnappingLayout
         MaxIndex = childrenCount - 1;
 
         ChildrenTotal = childrenCount;
+
+        Debug.WriteLine($"[SkiaCarousel] {Tag} InitializeChildren called: ChildrenCount={childrenCount}, MaxIndex={MaxIndex}, IsLooped={IsLooped}");
 
         InitializeItemsVisibility(childrenCount, true);
 

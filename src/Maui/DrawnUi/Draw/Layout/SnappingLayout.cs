@@ -341,7 +341,7 @@ public class SnappingLayout : SkiaLayout
 
     #region PROPERTIES
 
-    public virtual void ApplyOptions()
+    public virtual void ApplyOptions(bool initialize)
     {
 
     }
@@ -363,7 +363,7 @@ public class SnappingLayout : SkiaLayout
     {
         if (bindable is SnappingLayout control)
         {
-            control.ApplyOptions();
+            control.ApplyOptions(false);
         }
     }
 
