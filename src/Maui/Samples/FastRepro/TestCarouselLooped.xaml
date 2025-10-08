@@ -158,9 +158,11 @@
                             Type="Row">
 
                             <draw:SkiaShape
+                                UseCache="Operations"
                                 BackgroundColor="#e94560"
                                 HeightRequest="8"
                                 Type="Circle"
+                                AlignContentHorizontal="Center"
                                 WidthRequest="8">
                                 <draw:SkiaControl.Triggers>
                                     <DataTrigger
@@ -173,6 +175,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#0f3460"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -188,6 +192,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#533483"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -203,6 +209,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#a8df8e"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -218,6 +226,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#ffc93c"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -325,6 +335,8 @@
                             Type="Row">
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#e94560"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -340,6 +352,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#0f3460"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -355,6 +369,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#533483"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -370,6 +386,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#a8df8e"
                                 HeightRequest="8"
                                 Type="Circle"
@@ -385,6 +403,8 @@
                             </draw:SkiaShape>
 
                             <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
                                 BackgroundColor="#ffc93c"
                                 HeightRequest="8"
                                 Type="Circle"
