@@ -91,6 +91,29 @@ public class SkiaCarousel : SnappingLayout
         base.ScrollToNearestAnchor(location, velocity);
     }
 
+    public override Vector2 SelectNextAnchor(Vector2 origin, Vector2 velocity)
+    {
+        if (IsLooped && velocity!= Vector2.Zero && Animated && CanAnimate && SnapPoints.Count > 1)
+        {
+            Vector2 normDirection = Vector2.Normalize(velocity);
+
+            var from = GetVirtualAnchor(origin, velocity);
+
+            var orderedSnapPoints = GetVirtualSnapPoints().OrderBy(item => Vector2.Distance(item.Location, from.Location));
+
+            foreach (var snap in orderedSnapPoints)
+            {
+                Vector2 currentDirection = Vector2.Normalize(snap.Location - from.Location);
+                if (Vector2.Dot(normDirection, currentDirection) > 0)
+                {
+                    return snap.Location;
+                }
+            }
+        }
+
+        return base.SelectNextAnchor(origin, velocity);
+    }
+
     public override void OnDisposing()
     {
         base.OnDisposing();
@@ -160,6 +183,23 @@ public class SkiaCarousel : SnappingLayout
         Update();
     }
 
+    public virtual void FixIndex()
+    {
+        if (IsLooped)
+        {
+            if (SelectedIndex >= 0 && SelectedIndex < SnapPoints.Count)
+            {
+                var snap = GetVirtualAnchor(CurrentPosition, Vector2.Zero);
+                var offset = CurrentPosition - snap.Location;
+
+                var snapPoint = SnapPoints[SelectedIndex];
+
+                CurrentSnap = snapPoint;
+                CurrentPosition = snapPoint + offset;
+            }
+        }
+
+    }
 
     public virtual void ApplyIndex(bool instant = false)
     {
@@ -637,17 +677,28 @@ public class SkiaCarousel : SnappingLayout
         return (new Vector2(newX, newY), isVisible, nextToScreen);
     }
 
-    public override void OnTransitionChanged()
+    /// <summary>
+    /// Set true position if inside virtual for IsLooped
+    /// </summary>
+    protected virtual void FixPosition()
     {
-        if (!InTransition)
+        if (IsLooped)
         {
-            //todo set real snap if inside virtual
+            //todo set real snap if inside virtualf
             var virtualSnap = GetVirtualAnchor(CurrentSnap, Vector2.Zero);
             Debug.WriteLine($"[STOPPED] At {virtualSnap.Id}");
             if (virtualSnap.Id == -1 || virtualSnap.Id == -2)
             {
-                ApplyIndex(true);
+                FixIndex();
             }
+        }
+    }
+
+    public override void OnTransitionChanged()
+    {
+        if (!InTransition)
+        {
+            FixPosition();
 
             Stopped?.Invoke(this, CurrentPosition);
 
@@ -1231,7 +1282,8 @@ public class SkiaCarousel : SnappingLayout
         public Vector2 Location { get; set; }
     }
 
-    protected virtual SnapPoint GetVirtualAnchor(Vector2 current, Vector2 velocity)
+
+    protected virtual List<SnapPoint> GetVirtualSnapPoints()
     {
         if (SnapPointsVirtual == null)
         {
@@ -1251,8 +1303,12 @@ public class SkiaCarousel : SnappingLayout
 
             SnapPointsVirtual = virtualList.ToList();
         }
+        return SnapPointsVirtual;
+    }
 
-        var orderedSnapPoints = SnapPointsVirtual.OrderBy(item => Vector2.Distance(item.Location, current)).ToList();
+    protected virtual SnapPoint GetVirtualAnchor(Vector2 current, Vector2 velocity)
+    {
+        var orderedSnapPoints = GetVirtualSnapPoints().OrderBy(item => Vector2.Distance(item.Location, current)).ToList();
         return orderedSnapPoints.First();
     }
 
@@ -1648,9 +1704,10 @@ public class SkiaCarousel : SnappingLayout
             IsUserPanning = false;
 
             AnimatorRange.Stop();
-
             VectorAnimatorSpring?.Stop();
             VelocityAccumulator.Clear();
+
+            FixPosition();
 
             _panningOffset = CurrentPosition;
             _panningStartOffset = CurrentPosition;
