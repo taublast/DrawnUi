@@ -752,18 +752,11 @@ public class SkiaCarousel : SnappingLayout
 
     bool viewportSet;
 
-    protected override void OnLayoutReady()
-    {
-        base.OnLayoutReady();
-
-        SetupViewport();
-    }
-
     protected override void OnLayoutChanged()
     {
         base.OnLayoutChanged();
 
-        //SetupViewport();
+        SetupViewport();
     }
 
     protected void SetupViewport()
