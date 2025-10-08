@@ -16,11 +16,11 @@ namespace Sandbox
                 // Initialize ItemsSource for templated carousels
                 CarouselItems = new ObservableCollection<CarouselItemData>
                 {
-                    new CarouselItemData { Number = "1", Color = "#e94560" },
-                    new CarouselItemData { Number = "2", Color = "#0f3460" },
-                    new CarouselItemData { Number = "3", Color = "#533483" },
-                    new CarouselItemData { Number = "4", Color = "#a8df8e" },
-                    new CarouselItemData { Number = "5", Color = "#ffc93c" }
+                    new CarouselItemData { Number = "0", Color = "#e94560" },
+                    new CarouselItemData { Number = "1", Color = "#0f3460" },
+                    new CarouselItemData { Number = "2", Color = "#533483" },
+                    new CarouselItemData { Number = "3", Color = "#a8df8e" },
+                    new CarouselItemData { Number = "4", Color = "#ffc93c" }
                 };
 
                 BindingContext = this;
@@ -31,7 +31,7 @@ namespace Sandbox
             }
         }
 
-        private bool _isLooped = false;
+        private bool _isLooped = true;
         private ObservableCollection<CarouselItemData> carouselItems;
 
         public bool IsLooped

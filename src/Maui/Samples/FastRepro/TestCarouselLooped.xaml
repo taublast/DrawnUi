@@ -104,7 +104,7 @@
                                     FontSize="60"
                                     FontAttributes="Bold"
                                     HorizontalOptions="Center"
-                                    Text="1"
+                                    Text="0"
                                     TextColor="White"
                                     VerticalOptions="Center" />
                             </draw:SkiaLayout>
@@ -114,7 +114,7 @@
                                     FontSize="60"
                                     FontAttributes="Bold"
                                     HorizontalOptions="Center"
-                                    Text="2"
+                                    Text="1"
                                     TextColor="White"
                                     VerticalOptions="Center" />
                             </draw:SkiaLayout>
@@ -124,7 +124,7 @@
                                     FontSize="60"
                                     FontAttributes="Bold"
                                     HorizontalOptions="Center"
-                                    Text="3"
+                                    Text="2"
                                     TextColor="White"
                                     VerticalOptions="Center" />
                             </draw:SkiaLayout>
@@ -134,7 +134,7 @@
                                     FontSize="60"
                                     FontAttributes="Bold"
                                     HorizontalOptions="Center"
-                                    Text="4"
+                                    Text="3"
                                     TextColor="#1a1a2e"
                                     VerticalOptions="Center" />
                             </draw:SkiaLayout>
@@ -144,7 +144,7 @@
                                     FontSize="60"
                                     FontAttributes="Bold"
                                     HorizontalOptions="Center"
-                                    Text="5"
+                                    Text="4"
                                     TextColor="#1a1a2e"
                                     VerticalOptions="Center" />
                             </draw:SkiaLayout>
