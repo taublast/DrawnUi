@@ -312,9 +312,16 @@ public class SnappingLayout : SkiaLayout
 
         UpdateReportedPosition();
 
-        InTransition = !CheckTransitionEnded();
+
 
         SendScrolled();
+    }
+
+    public override void Render(DrawingContext context)
+    {
+        base.Render(context);
+
+        InTransition = !CheckTransitionEnded();
     }
 
     public virtual void SendScrolled()
@@ -339,7 +346,7 @@ public class SnappingLayout : SkiaLayout
             if (value.Equals(_currentPosition)) return;
             _currentPosition = value;
             OnPropertyChanged();
-            //Debug.WriteLine($"[CurrentPosition] {value}");
+            //Debug.WriteLine($"_____[CurrentPosition] {value}");
         }
     }
 
