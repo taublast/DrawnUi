@@ -175,8 +175,19 @@ public class SnappingLayout : SkiaLayout
 
     protected RangeVectorAnimator AnimatorRange;
     private Vector2 _currentPosition;
+    private Vector2 currentSnap = new(-1, -1);
 
-    protected Vector2 CurrentSnap { get; set; } = new(-1, -1);
+    protected Vector2 CurrentSnap   
+    {
+        get => currentSnap;
+        set
+        {
+        if (value == currentSnap)
+            return;
+            Debug.WriteLine($"[CurrentSnap] {value}");
+            currentSnap = value;
+        }
+    }
 
     /// <summary>
     /// todo calc upon measured size + prop for speed
@@ -328,7 +339,7 @@ public class SnappingLayout : SkiaLayout
             if (value.Equals(_currentPosition)) return;
             _currentPosition = value;
             OnPropertyChanged();
-            //Debug.WriteLine($"[X] {value.X:0.0}");
+            //Debug.WriteLine($"[CurrentPosition] {value}");
         }
     }
 
