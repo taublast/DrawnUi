@@ -50,12 +50,20 @@ namespace Sandbox
             builder.UseDrawnUi(new()
             {
                 UseDesktopKeyboard = true, //will not work with maui shell on apple!!
+
+                //portrait
                 DesktopWindow = new()
                 {
-                    Height = 500,
-                    Width = 750,
-                    //IsFixedSize = true
+                    Height = 1200,
+                    Width = 500,
                 }
+
+                //landscape
+                //DesktopWindow = new()
+                //{
+                //    Height = 500,
+                //    Width = 750,
+                //}
             });
 
 #if DEBUG
