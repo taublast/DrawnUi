@@ -211,6 +211,20 @@ public class SkiaCarousel : SnappingLayout
             {
                 CurrentPosition = snapPoint;
             }
+            else if (IsLooped && CanAnimate && Animated)
+            {
+                if (SelectedIndex == 0 && LastIndex == MaxIndex)
+                {
+                    var snap = GetVirtualSnapPoints().First(x => x.Id == -2);
+                    snapPoint = snap.Location;
+                }
+                else
+                if (SelectedIndex == MaxIndex && LastIndex == 0)
+                {
+                    var snap = GetVirtualSnapPoints().First(x => x.Id == -1);
+                    snapPoint = snap.Location;
+                }
+            }
 
             ScrollToOffset(snapPoint, Vector2.Zero, !instant && CanAnimate && Animated);
         }

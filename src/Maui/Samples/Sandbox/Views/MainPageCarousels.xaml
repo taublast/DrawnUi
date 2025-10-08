@@ -109,7 +109,7 @@
                 <draw:SkiaLayout.ItemTemplate>
                     <DataTemplate>
 
-                        <draw:ElementAdapter>
+     
                             <draw:SkiaLayout
                                 Tag="Tpl"
                                 BackgroundColor="{Binding .}">
@@ -124,7 +124,7 @@
 
                             </draw:SkiaLayout>
 
-                        </draw:ElementAdapter>
+         
                     </DataTemplate>
 
                 </draw:SkiaLayout.ItemTemplate>
