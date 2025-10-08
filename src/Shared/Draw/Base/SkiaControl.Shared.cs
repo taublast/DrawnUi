@@ -1,6 +1,5 @@
 ﻿using System.Collections.Concurrent;
 using System.Resources;
-using HarfBuzzSharp;
 using SKBlendMode = SkiaSharp.SKBlendMode;
 using SKCanvas = SkiaSharp.SKCanvas;
 using SKClipOperation = SkiaSharp.SKClipOperation;
@@ -790,10 +789,11 @@ namespace DrawnUi.Draw
         /// <param name="cancel"></param>
         /// <param name="applyEndValueOnStop"></param>
         /// <returns></returns>
-        public Task AnimateRangeAsync(Action<double> callback, double start, double end, double length = 250,
+        public Task AnimateRangeAsync(Action<double> callback,
+            double start, double end, double length = 250,
             Easing easing = null,
             CancellationToken cancel = default,
-            bool applyEndValueOnStop = false)
+            bool applyEndValueOnStop = false, int delayMs=0)
         {
             RangeAnimator animator = null;
 
@@ -825,7 +825,7 @@ namespace DrawnUi.Draw
                         animator.Stop();
                     }
                 },
-                start, end, (uint)length, easing);
+                start, end, (uint)length, easing, delayMs);
 
             return tcs.Task;
         }
