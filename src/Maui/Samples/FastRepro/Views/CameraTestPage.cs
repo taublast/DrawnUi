@@ -206,7 +206,27 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         _previewOverlay = CreatePreviewOverlay();
 
         // Main layer that contains both the main stack and preview overlay
-        var rootLayer = new SkiaLayer { Children = { mainStack, _previewOverlay } };
+        var rootLayer = new SkiaLayer
+        {
+            VerticalOptions = LayoutOptions.Fill,
+            Children =
+            {
+                mainStack,
+                _previewOverlay,
+#if DEBUG
+                new SkiaLabelFps()
+                {
+                    Margin = new(0, 0, 4, 24),
+                    VerticalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.End,
+                    Rotation = -45,
+                    BackgroundColor = Colors.DarkRed,
+                    TextColor = Colors.White,
+                    ZIndex = 110,
+                }
+#endif
+            }
+        };
 
         Canvas = new Canvas
         {
