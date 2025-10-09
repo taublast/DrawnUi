@@ -78,27 +78,56 @@ public class SkiaCarousel : SnappingLayout
 
     public override Vector2 SelectNextAnchor(Vector2 origin, Vector2 velocity)
     {
-        if (IsLooped && velocity!= Vector2.Zero && Animated && CanAnimate && SnapPoints.Count > 1)
+        // Non-looped: use base behavior exactly as-is
+        if (!IsLooped || SnapPoints.Count <= 1)
+            return base.SelectNextAnchor(origin, velocity);
+
+        // First, ask base to choose. It works well in all non-border cases.
+        var baseTarget = base.SelectNextAnchor(origin, velocity);
+
+        // Map origin to a real snap index (handles virtuals via our FindNearestAnchorInternal override)
+        var originSnap = FindNearestAnchorInternal(origin, velocity);
+        int originIndex = SnapPoints.IndexOf(originSnap);
+        if (originIndex < 0)
         {
-            //todo this is creating a BUG on iOS running without debug:
-
-            Vector2 normDirection = Vector2.Normalize(velocity);
-
-            var from = GetVirtualAnchor(origin, velocity);
-
-            var orderedSnapPoints = GetVirtualSnapPoints().OrderBy(item => Vector2.Distance(item.Location, from.Location));
-
-            foreach (var snap in orderedSnapPoints)
-            {
-                Vector2 currentDirection = Vector2.Normalize(snap.Location - from.Location);
-                if (Vector2.Dot(normDirection, currentDirection) > 0)
-                {
-                    return snap.Location;
-                }
-            }
+            originSnap = FindNearestAnchor(origin);
+            originIndex = SnapPoints.IndexOf(originSnap);
         }
 
-        return base.SelectNextAnchor(origin, velocity);
+        // If base already picked a different anchor, keep it
+        if (originSnap != baseTarget)
+            return baseTarget;
+
+        // Decide outward direction only; minimal logic to handle edges robustly.
+        int dirSign = 0;
+        if (!IsVertical)
+            dirSign = Math.Sign(velocity.X);
+        else
+            dirSign = Math.Sign(velocity.Y);
+
+        if (dirSign == 0)
+        {
+            // Fallback when velocity is tiny at finger-up: infer from pan displacement
+            var delta = CurrentPosition - _panningStartOffset;
+            dirSign = !IsVertical ? Math.Sign(delta.X) : Math.Sign(delta.Y);
+        }
+
+        if (dirSign == 0)
+            return baseTarget; // no direction -> keep base decision
+
+        // Border wrap-only: last -> pseudoEnd when swiping forward, first -> pseudoStart when swiping backward
+        if (dirSign < 0 && originIndex == MaxIndex)
+        {
+            var pseudoEnd = GetVirtualSnapPoints().First(sp => sp.Id == -2).Location;
+            return pseudoEnd;
+        }
+        if (dirSign > 0 && originIndex == 0)
+        {
+            var pseudoStart = GetVirtualSnapPoints().First(sp => sp.Id == -1).Location;
+            return pseudoStart;
+        }
+
+        return baseTarget;
     }
 
     public override void OnDisposing()
@@ -1315,12 +1344,6 @@ public class SkiaCarousel : SnappingLayout
 
     protected override Vector2 FindNearestAnchorInternal(Vector2 current, Vector2 velocity)
     {
-        var from = current;
-        if (velocity != Vector2.Zero) //hack to slide only 1 item at a time
-        {
-            from = _panningStartOffset;
-        }
-
         if (IsLooped && SnapPoints.Count > 1)
         {
             var closest = GetVirtualAnchor(current, velocity);
@@ -1337,7 +1360,8 @@ public class SkiaCarousel : SnappingLayout
         }
         else
         {
-            return base.FindNearestAnchorInternal(from, velocity);
+            // Non-looped: delegate fully to base with the original inputs
+            return base.FindNearestAnchorInternal(current, velocity);
         }
     }
 
