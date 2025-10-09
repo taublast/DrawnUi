@@ -59,21 +59,6 @@ public class SkiaCarousel : SnappingLayout
         if (IsLooped && Animated && CanAnimate && SnapPoints.Count > 1)
         {
             var origin = GetVirtualAnchor(location, velocity);
-            //if (closest.Id == -1)
-            //{
-            //    return SnapPoints.Last();
-            //}
-            //else
-            //if (closest.Id == -2)
-            //{
-            //    return SnapPoints.First();
-            //}
-            //return closest.Location;
-
-            //// determine intended direction based on velocity and current nearest index
-            //var origin = FindNearestAnchorInternal(location, velocity);
-            //int nearest = SnapPoints.IndexOf(origin);
-            //bool forward = !IsVertical ? velocity.X < 0 : velocity.Y < 0; // forward == next
 
             Vector2 projectionAnchor = SelectNextAnchor(origin.Location, velocity);
             if (Vector2.Distance(location, projectionAnchor) >= 0.5) //todo move threshold to options
@@ -95,6 +80,8 @@ public class SkiaCarousel : SnappingLayout
     {
         if (IsLooped && velocity!= Vector2.Zero && Animated && CanAnimate && SnapPoints.Count > 1)
         {
+            //todo this is creating a BUG on iOS running without debug:
+
             Vector2 normDirection = Vector2.Normalize(velocity);
 
             var from = GetVirtualAnchor(origin, velocity);
@@ -700,7 +687,7 @@ public class SkiaCarousel : SnappingLayout
         {
             //todo set real snap if inside virtualf
             var virtualSnap = GetVirtualAnchor(CurrentSnap, Vector2.Zero);
-            Debug.WriteLine($"[STOPPED] At {virtualSnap.Id}");
+            //Debug.WriteLine($"[STOPPED] At {virtualSnap.Id}");
             if (virtualSnap.Id == -1 || virtualSnap.Id == -2)
             {
                 FixIndex();
@@ -716,7 +703,7 @@ public class SkiaCarousel : SnappingLayout
 
             Stopped?.Invoke(this, CurrentPosition);
 
-            Debug.WriteLine($"[STOPPED] CurrentPosition {CurrentPosition}");
+            //Debug.WriteLine($"[STOPPED] CurrentPosition {CurrentPosition}");
         }
 
         base.OnTransitionChanged();
@@ -1516,13 +1503,14 @@ public class SkiaCarousel : SnappingLayout
     {
         _itemsSourceChangedNeedResetIndex = false;
 
-        SelectedIndexChanged?.Invoke(this, index);
 
-        Debug.WriteLine($"[CAROUSEL] Index set to {index}");
+        //Debug.WriteLine($"[CAROUSEL] Index set to {index}");
 
         //forced to use ui-tread for maui not to randomly crash
         MainThread.BeginInvokeOnMainThread(() =>
         {
+            SelectedIndexChanged?.Invoke(this, index);
+
             OnPropertyChanged(nameof(SafeIndex));
             OnPropertyChanged(nameof(IsAtStart));
             OnPropertyChanged(nameof(IsAtEnd));
@@ -1809,6 +1797,8 @@ public class SkiaCarousel : SnappingLayout
 
                         //animate
                         CurrentSnap = CurrentPosition;
+
+                        Debug.WriteLine($"[SkiaCarousel] UP velocity {final:0}");
 
                         ScrollToNearestAnchor(CurrentSnap, final);
                     }

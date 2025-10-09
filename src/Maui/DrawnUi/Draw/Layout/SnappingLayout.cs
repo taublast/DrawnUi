@@ -184,7 +184,7 @@ public class SnappingLayout : SkiaLayout
         {
         if (value == currentSnap)
             return;
-            Debug.WriteLine($"[CurrentSnap] {value}");
+            //Debug.WriteLine($"[CurrentSnap] {value}");
             currentSnap = value;
         }
     }
