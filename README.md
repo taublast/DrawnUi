@@ -36,15 +36,11 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 
 ## 🌱 What's new
 
-* Gestures now filter possible palm longpressing at borders to avoid blocking taps
-* Add custom `ILogger` support can add with options to record all Super.Log messages
-* `SkiaImage` RescalingQuality default is now Low
-* `MeasureVisible` strategy of `SkiaLayout` now supports columns via `Split`
-* Fix LoadMore mechanics for `MeasureAll` strategy of `SkiaLayout`
-* `SkiaScroll` IsRefreshing binding mode is now TwoWay by default
-* `SkiaCamera` fix Android flash always on mode
-* `SkiaCamera` implemented video recording beta mode
- 
+* `Gestures` property new value `SoftLock` for smart working together inside native ScrollView. Note that using `Lock` value instead will totlly prevent parent ScrollView to receive panning gestures.
+* `IsLooped` property implemented for `SkiaCarousel`, for never-ending scrolls.
+* Fix animators `Start` method whe passing starting delay.
+* Improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
+  
 ---
 
 [Docs and Samples](https://drawnui.net) 👈
