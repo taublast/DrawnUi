@@ -150,6 +150,9 @@
       <Compile Update="ReproEditors.xaml.cs">
         <DependentUpon>ReproEditors.xaml</DependentUpon>
       </Compile>
+      <Compile Update="TestSoftLock.xaml.cs">
+        <DependentUpon>TestSoftLock.xaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -160,6 +163,9 @@
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="ReproEditors.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="TestSoftLock.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
     </ItemGroup>

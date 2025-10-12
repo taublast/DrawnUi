@@ -51,7 +51,7 @@
     <!-- Carousel IsLooped Test Page -->
     <ShellContent
         Title="Carousel IsLooped Test"
-        ContentTemplate="{DataTemplate sandbox:TestCarouselLooped}"
+        ContentTemplate="{DataTemplate sandbox:TestSoftLock}"
         Route="MainPage" />
     
 

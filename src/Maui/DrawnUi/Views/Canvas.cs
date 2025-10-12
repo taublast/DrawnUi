@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
 using Size = Microsoft.Maui.Graphics.Size;
 
@@ -413,6 +414,8 @@ public class Canvas : DrawnView, IGestureListener
     protected virtual void DetachGestures()
     {
         TouchEffect.SetForceAttach(this, false);
+
+        AttachedTouchEffect = null;
     }
 
     protected override void OnDestroyingVew()
@@ -440,10 +443,16 @@ public class Canvas : DrawnView, IGestureListener
 
             if (this.Gestures == GesturesMode.Enabled)
                 TouchEffect.SetShareTouch(this, TouchHandlingStyle.Default);
+            else if (this.Gestures == GesturesMode.SoftLock)
+                TouchEffect.SetShareTouch(this, TouchHandlingStyle.Manual);
             else if (this.Gestures == GesturesMode.Lock)
                 TouchEffect.SetShareTouch(this, TouchHandlingStyle.Lock);
+
+            AttachedTouchEffect = this.Effects.FirstOrDefault(e => e is TouchEffect) as TouchEffect;
         }
     }
+
+    protected TouchEffect AttachedTouchEffect { get; set; }
 
     protected virtual SkiaSvg CreateDebugPointer()
     {
@@ -603,16 +612,29 @@ public class Canvas : DrawnView, IGestureListener
             }
 
 
-            if (TouchEffect.LogEnabled)
+            //if (TouchEffect.LogEnabled)
             {
                 if (consumed == null)
                 {
-                    Super.Log($"[Touch] {args.Type} ({args.Event.NumberOfTouches}) not consumed");
+                    if (args.Event.Pointer != null)
+                    {
+                        Super.Log($"[Touch] {args.Type} ({args.Event.Pointer}) at {args.Event.Location} not consumed");
+                    }
+                    else
+                    {
+                        Super.Log($"[Touch] {args.Type} ({args.Event.NumberOfTouches}) at {args.Event.Location} not consumed");
+                    }
                 }
                 else
                 {
-                    Super.Log(
-                        $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} {consumed.Tag}");
+                    if (args.Event.Pointer != null)
+                    {
+                        Super.Log($"[Touch] {args.Type} ({args.Event.Pointer}) consumed by {consumed} at {args.Event.Location} ");
+                    }
+                    else
+                    {
+                        Super.Log($"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} at {args.Event.Location} ");
+                    }
                 }
             }
 
@@ -645,6 +667,19 @@ public class Canvas : DrawnView, IGestureListener
             if (ReceivedInput.Count > 0)
             {
                 ReceivedInput.Clear();
+            }
+
+            if (AttachedTouchEffect != null)
+            {
+                if (consumed == null && args.Type == TouchActionResult.Panning)
+                {
+                    AttachedTouchEffect.WIllLock = ShareLockState.Unlocked;
+                }
+                else
+                if (consumed != null && (args.Type == TouchActionResult.Panning || args.Type == TouchActionResult.Wheel))
+                {
+                    AttachedTouchEffect.WIllLock = ShareLockState.Locked;
+                }
             }
         }
     }
@@ -778,6 +813,10 @@ public class Canvas : DrawnView, IGestureListener
         if (touchAction == TouchActionResult.Down)
         {
             _isPanning = false;
+            if (AttachedTouchEffect != null)
+            {
+                AttachedTouchEffect.WIllLock = ShareLockState.Initial;
+            }
         }
 
         var args = SkiaGesturesParameters.Create(touchAction, args1);
