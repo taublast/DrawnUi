@@ -8,6 +8,7 @@ using DrawnUi.Views;
 using Microsoft.Maui.Controls;
 using static Microsoft.Maui.ApplicationModel.Permissions;
 using Color = Microsoft.Maui.Graphics.Color;
+
 #if WINDOWS
 using DrawnUi.Camera.Platforms.Windows;
 #endif

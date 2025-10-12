@@ -30,17 +30,11 @@
         <Compile Include="Shared/**/*.*pple.cs">
             <Link>Platforms/MacCatalyst/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
-        <Compile Include="Platforms/Apple/AppleCaptureVideoEncoder.cs">
-            <Link>Platforms/MacCatalyst/AppleCaptureVideoEncoder.cs</Link>
-        </Compile>
     </ItemGroup>
 
     <ItemGroup Condition="$(TargetFramework.Contains('ios'))">
         <Compile Include="Shared/**/*.*pple.cs">
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
-        </Compile>
-        <Compile Include="Platforms/Apple/AppleCaptureVideoEncoder.cs">
-            <Link>Platforms/iOS/AppleCaptureVideoEncoder.cs</Link>
         </Compile>
     </ItemGroup>
 
