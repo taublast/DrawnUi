@@ -612,7 +612,7 @@ public class Canvas : DrawnView, IGestureListener
             }
 
 
-            //if (TouchEffect.LogEnabled)
+            if (TouchEffect.LogEnabled)
             {
                 if (consumed == null)
                 {
@@ -702,6 +702,7 @@ public class Canvas : DrawnView, IGestureListener
 
     private SKPoint _panningOffset;
     private SKPoint _PressedPosition;
+
     public event EventHandler Tapped;
 
     /// <summary>

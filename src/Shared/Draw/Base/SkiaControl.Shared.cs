@@ -3003,7 +3003,7 @@ namespace DrawnUi.Draw
         /// Dispose with needed delay. 
         /// </summary>
         /// <param name="disposable"></param>
-        public virtual void DisposeObject(IDisposable disposable)
+        public virtual void DisposeObject(IDisposable disposable, [CallerMemberName] string caller = null)
         {
             if (disposable != null)
             {
@@ -3037,7 +3037,7 @@ namespace DrawnUi.Draw
                         }
                         catch (Exception e)
                         {
-                            Super.Log(e);
+                            Super.Log($"DisposeObject EXCEPTION from {caller} {e}");
                         }
                     });
                 }

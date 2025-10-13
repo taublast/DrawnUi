@@ -140,5 +140,5 @@ public interface IDrawnBase : IDisposable, ICanBeUpdatedWithContext
 
     void InvalidateViewsList();
 
-    void DisposeObject(IDisposable value);
+    void DisposeObject(IDisposable value, [CallerMemberName] string caller = null);
 }
