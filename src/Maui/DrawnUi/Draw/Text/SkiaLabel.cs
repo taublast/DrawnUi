@@ -359,7 +359,14 @@ namespace DrawnUi.Draw
                 if (blob != null)
                 {
                     //canvas.DrawText(blob, x, y, paint);
-                    canvas.DrawText(blob, (int)Math.Round(x), (int)Math.Round(y), paint);
+                    if (Super.FontSubPixelRendering)
+                    {
+                        canvas.DrawText(blob, (x), (y), paint);
+                    }
+                    else
+                    {
+                        canvas.DrawText(blob, (float)Math.Round(x), (float)Math.Round(y), paint);
+                    }
                 }
             }
 
