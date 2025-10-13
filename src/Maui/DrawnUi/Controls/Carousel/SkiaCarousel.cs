@@ -43,6 +43,14 @@ public class SkiaCarousel : SnappingLayout
         view.TranslationY = position.Y;
     }
 
+    bool ApplyLoopedLogic
+    {
+        get
+        {
+            return (IsLooped && Animated && CanAnimate && SnapPoints.Count > 1);
+        }
+    }
+
     public override void ScrollToNearestAnchor(Vector2 location, Vector2 velocity)
     {
         var theshold = 100f;
@@ -56,11 +64,12 @@ public class SkiaCarousel : SnappingLayout
             velocity.Y = 0;
         }
 
-        if (IsLooped && Animated && CanAnimate && SnapPoints.Count > 1)
+        if (ApplyLoopedLogic)
         {
-            var origin = GetVirtualAnchor(location, velocity);
+            // Use the nearest real snap as origin to avoid multi-step jumps
+            var originSnap = FindNearestAnchorInternal(location, velocity);
 
-            Vector2 projectionAnchor = SelectNextAnchor(origin.Location, velocity);
+            Vector2 projectionAnchor = SelectNextAnchor(originSnap, velocity);
             if (Vector2.Distance(location, projectionAnchor) >= 0.5) //todo move threshold to options
             {
                 ScrollToOffset(projectionAnchor, velocity, CanAnimate);
@@ -79,7 +88,7 @@ public class SkiaCarousel : SnappingLayout
     public override Vector2 SelectNextAnchor(Vector2 origin, Vector2 velocity)
     {
         // Non-looped: use base behavior exactly as-is
-        if (!IsLooped || SnapPoints.Count <= 1)
+        if (!ApplyLoopedLogic)
             return base.SelectNextAnchor(origin, velocity);
 
         // First, ask base to choose. It works well in all non-border cases.
@@ -109,11 +118,46 @@ public class SkiaCarousel : SnappingLayout
         {
             // Fallback when velocity is tiny at finger-up: infer from pan displacement
             var delta = CurrentPosition - _panningStartOffset;
-            dirSign = !IsVertical ? Math.Sign(delta.X) : Math.Sign(delta.Y);
+            float axisDelta = !IsVertical ? delta.X : delta.Y;
+
+            // Require a minimal displacement before considering wrap, otherwise keep base
+            float axisStep = 0f;
+            if (SnapPoints.Count > 1)
+            {
+                var step = SnapPoints[1] - SnapPoints[0];
+                axisStep = Math.Abs(!IsVertical ? step.X : step.Y);
+            }
+            double minDisplacement = axisStep > 0 ? axisStep * SnapDistanceRatio : 0.0;
+
+            if (axisStep <= 0 || Math.Abs(axisDelta) < minDisplacement)
+            {
+                dirSign = 0; // too small to decide, stick with base
+            }
+            else
+            {
+                dirSign = Math.Sign(axisDelta);
+            }
         }
 
         if (dirSign == 0)
-            return baseTarget; // no direction -> keep base decision
+            return baseTarget; // no direction (or below threshold) -> keep base decision
+
+        // If velocity is zero, require stronger intent (>= 50% of step) before wrapping
+        if (velocity == Vector2.Zero)
+        {
+            float stepAxis = 0f;
+            if (SnapPoints.Count > 1)
+            {
+                var step = SnapPoints[1] - SnapPoints[0];
+                stepAxis = Math.Abs(!IsVertical ? step.X : step.Y);
+            }
+            if (stepAxis > 0)
+            {
+                var disp = !IsVertical ? (CurrentPosition.X - _panningStartOffset.X) : (CurrentPosition.Y - _panningStartOffset.Y);
+                if (Math.Abs(disp) < stepAxis * 0.5)
+                    return baseTarget; // under half-step → don't wrap
+            }
+        }
 
         // Border wrap-only: last -> pseudoEnd when swiping forward, first -> pseudoStart when swiping backward
         if (dirSign < 0 && originIndex == MaxIndex)
@@ -201,7 +245,7 @@ public class SkiaCarousel : SnappingLayout
 
     public virtual void FixIndex()
     {
-        if (IsLooped)
+        if (IsLooped && SnapPoints.Count > 1)
         {
             if (SelectedIndex >= 0 && SelectedIndex < SnapPoints.Count)
             {
@@ -227,7 +271,7 @@ public class SkiaCarousel : SnappingLayout
             {
                 CurrentPosition = snapPoint;
             }
-            else if (IsLooped && CanAnimate && Animated)
+            else if (ApplyLoopedLogic)
             {
                 if (SelectedIndex == 0 && LastIndex == MaxIndex)
                 {
@@ -251,7 +295,7 @@ public class SkiaCarousel : SnappingLayout
         if (SnapPoints == null || SnapPoints.Count == 0)
             return;
 
-        if (IsLooped)
+        if (IsLooped && SnapPoints.Count > 1)
         {
             var current = GetVirtualAnchor(CurrentSnap, Vector2.Zero);
             if (current.Id == -1)
@@ -590,6 +634,8 @@ public class SkiaCarousel : SnappingLayout
 
     public override void OnItemSourceChanged()
     {
+        ChildrenInitialized = false;
+
         _itemsSourceChangedNeedResetIndex = _loaded;
 
         _loaded = true;
@@ -712,7 +758,7 @@ public class SkiaCarousel : SnappingLayout
     /// </summary>
     protected virtual void FixPosition()
     {
-        if (IsLooped)
+        if (IsLooped && SnapPoints.Count>1)
         {
             //todo set real snap if inside virtualf
             var virtualSnap = GetVirtualAnchor(CurrentSnap, Vector2.Zero);
@@ -1005,7 +1051,7 @@ public class SkiaCarousel : SnappingLayout
         {
             var last = SnapPoints.Count - 1;
 
-            if (!IsLooped)
+            if (!IsLooped || SnapPoints.Count < 2)
             {
                 //DEFAULT
                 if (IsVertical)
@@ -1687,6 +1733,7 @@ public class SkiaCarousel : SnappingLayout
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
+        bool wrongDirection = false;
         bool passedToChildren = false;
         var consumedDefault = BlockGesturesBelow ? this : null;
 
@@ -1721,11 +1768,13 @@ public class SkiaCarousel : SnappingLayout
             }
         }
 
-        if (!RespondsToGestures)
+        if (!RespondsToGestures || ChildrenTotal < 2)
             return consumedDefault;
 
         void ResetPan()
         {
+            wrongDirection = false;
+
             IsUserFocused = true;
             IsUserPanning = false;
 
@@ -1753,15 +1802,18 @@ public class SkiaCarousel : SnappingLayout
 
                 break;
 
-            case TouchActionResult.Panning when args.Event.NumberOfTouches == 1:
+            case TouchActionResult.Panning when args.Event.NumberOfTouches == 1 && !wrongDirection:
 
                 if (!IsUserPanning)
                 {
                     //first pan
-                    if (args.Event.Distance.Total.X == 0 ||
-                        Math.Abs(args.Event.Distance.Total.Y) > Math.Abs(args.Event.Distance.Total.X) ||
-                        Math.Abs(args.Event.Distance.Total.X) < 2)
+                    var movex = Math.Abs(args.Event.Distance.Delta.X);
+                    var movey = Math.Abs(args.Event.Distance.Delta.Y);
+                    if (movex < RenderingScale * 2 || movey > movex)
                     {
+                        //IgnoreWrongDirection
+                        wrongDirection = true;
+                        Repaint();
                         return consumedDefault;
                     }
                 }
@@ -1770,9 +1822,6 @@ public class SkiaCarousel : SnappingLayout
                 {
                     ResetPan();
                 }
-
-                //todo add direction
-                //this.IgnoreWrongDirection
 
                 IsUserPanning = true;
 
@@ -1811,21 +1860,18 @@ public class SkiaCarousel : SnappingLayout
             case TouchActionResult.Up:
                 //Debug.WriteLine($"[Carousel] {args.Type} {IsUserFocused} {IsUserPanning} {InTransition}");
 
-                if (IsUserFocused)
+                if (IsUserPanning)
                 {
-                    if (IsUserPanning || InTransition)
-                    {
-                        consumed = this;
+                    consumed = this;
 
-                        var final = VelocityAccumulator.CalculateFinalVelocity(500);
+                    var final = VelocityAccumulator.CalculateFinalVelocity(500);
 
-                        //animate
-                        CurrentSnap = CurrentPosition;
+                    //animate
+                    CurrentSnap = CurrentPosition;
 
-                        Debug.WriteLine($"[SkiaCarousel] UP velocity {final:0}");
+                    Debug.WriteLine($"[SkiaCarousel] UP velocity {final:0}");
 
-                        ScrollToNearestAnchor(CurrentSnap, final);
-                    }
+                    ScrollToNearestAnchor(CurrentSnap, final);
 
                     IsUserPanning = false;
                     IsUserFocused = false;
