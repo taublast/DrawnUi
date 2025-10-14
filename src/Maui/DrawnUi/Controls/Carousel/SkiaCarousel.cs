@@ -635,8 +635,9 @@ public class SkiaCarousel : SnappingLayout
     public override void OnItemSourceChanged()
     {
         ChildrenInitialized = false;
+        LastIndex = -1;
 
-        _itemsSourceChangedNeedResetIndex = _loaded;
+        _itemsSourceChangedNeedResetIndex = true;
 
         _loaded = true;
 
@@ -806,6 +807,10 @@ public class SkiaCarousel : SnappingLayout
             if (velocity == Vector2.Zero)
                 velocity = GetAutoVelocity(displacement);
 
+            var speedK = (float)SwipeSpeed / 2f;
+
+            velocity *= speedK;
+
             if (displacement != Vector2.Zero)
             {
                 //if (atSnapPoint && !ThresholdOk(displacement))
@@ -823,7 +828,7 @@ public class SkiaCarousel : SnappingLayout
                 }
                 else
                 {
-                    var maxSpeed = 0.25; //secs
+                    var maxSpeed = 0.25 / speedK; //secs
 
                     var direction = GetDirectionType(start, end, 0.8f);
                     var seconds = displacement / velocity;
@@ -852,7 +857,7 @@ public class SkiaCarousel : SnappingLayout
                     //Debug.WriteLine($"Will snap:{start} -> {end}");
 
                     _isSnapping = end;
-                    AnimatorRange.Initialize(start, end, (float)speed, Easing.Linear);
+                    AnimatorRange.Initialize(start, end, (float)speed, Easing.SinOut);
                     AnimatorRange.Start();
                 }
             }
@@ -1417,6 +1422,21 @@ public class SkiaCarousel : SnappingLayout
 
     #region PROPERTIES
 
+    public static readonly BindableProperty SwipeSpeedProperty = BindableProperty.Create(
+        nameof(SwipeSpeed),
+        typeof(double),
+        typeof(SkiaCarousel),
+        1.0);
+
+    /// <summary>
+    /// Basically size margins of every slide, offset from the side of the carousel. Another similar but different property to use would be Spacing between slides.
+    /// </summary>
+    public double SwipeSpeed
+    {
+        get { return (double)GetValue(SwipeSpeedProperty); }
+        set { SetValue(SwipeSpeedProperty, value); }
+    }
+
     public static readonly BindableProperty PreloadNeighboorsProperty = BindableProperty.Create(
         nameof(PreloadNeighboors),
         typeof(bool),
@@ -1571,9 +1591,6 @@ public class SkiaCarousel : SnappingLayout
 
     protected virtual void OnSelectedIndexChanged(int index)
     {
-        _itemsSourceChangedNeedResetIndex = false;
-
-
         //Debug.WriteLine($"[CAROUSEL] Index set to {index}");
 
         //forced to use ui-tread for maui not to randomly crash
