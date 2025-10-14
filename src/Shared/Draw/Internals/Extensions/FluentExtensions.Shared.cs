@@ -21,7 +21,7 @@ namespace DrawnUi.Draw
         /// <param name="control">The control to assign</param>
         /// <param name="variable">The out variable to store the reference</param>
         /// <returns>The control for chaining</returns>
-        public static T Assign<T>(this T control, out T variable) where T : SkiaControl
+        public static T Assign<T>(this T control, out T variable) where T : BindableObject
         {
             variable = control;
             return control;
