@@ -36,7 +36,7 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 
 ## 🌱 What's new
 
-* `Gestures` property new value `SoftLock` for smart working together inside native ScrollView. Note that using `Lock` value instead will totlly prevent parent ScrollView to receive panning gestures.
+* `Gestures` property for `Canvas` new value `SoftLock` for smart working together inside native ScrollView. Note that using `Lock` value instead will totlly prevent parent ScrollView to receive panning gestures.
 * `IsLooped` property implemented for `SkiaCarousel`, for never-ending scrolls.
 * Fix animators `Start` method whe passing starting delay.
 * Improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
