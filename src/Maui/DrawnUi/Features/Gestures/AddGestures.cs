@@ -133,11 +133,10 @@ public static partial class AddGestures
             return base.ProcessGestures(args, apply);
         }
 
-        public virtual bool OnFocusChanged(bool focus)
+        public virtual new bool OnFocusChanged(bool focus)
         {
             return false;
         }
-
 
         public void PlayTouchAnimation(SkiaTouchAnimation anim, SkiaGesturesParameters args,
             GestureEventProcessingInfo apply)
@@ -356,6 +355,8 @@ public static partial class AddGestures
         view.SetValue(TransformViewProperty, value);
     }
 
+    #region AnimationTapped
+
     public static readonly BindableProperty AnimationTappedProperty =
         BindableProperty.CreateAttached(
             "AnimationTapped",
@@ -379,6 +380,8 @@ public static partial class AddGestures
     {
         view.SetValue(AnimationTappedProperty, value);
     }
+
+    #endregion
 
     public static readonly BindableProperty CommandPressedProperty =
         BindableProperty.CreateAttached(
