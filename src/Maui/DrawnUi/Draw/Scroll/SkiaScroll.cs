@@ -333,7 +333,7 @@ namespace DrawnUi.Draw
             50f);
 
         /// <summary>
-        /// Applyed to RefreshView
+        /// Applyed to RefreshView, distance in points where the refresh view will stop moving and stay here animating
         /// </summary>
         public float RefreshShowDistance
         {
@@ -2089,6 +2089,8 @@ namespace DrawnUi.Draw
             }
         }
 
+        private float lastPos;
+
         /// <summary>
         /// Input offset parameters in PIXELS.
         /// This is called inside Draw, only if need reposition viewport.
@@ -2105,6 +2107,8 @@ namespace DrawnUi.Draw
         {
             if (!IsContentActive || Content == null)
                 return false;
+
+            lastPos = offsetPixels.Y;
 
             if (!IsSnapping)
                 Snapped = false;
@@ -2297,7 +2301,7 @@ namespace DrawnUi.Draw
 
         protected virtual void HideRefreshIndicator()
         {
-            RefreshIndicator?.SetDragRatio(0, 0, RefreshShowDistance);
+            RefreshIndicator?.SetDragRatio(0, 0, RefreshShowDistance, RefreshDistanceLimit);
             ScrollLocked = false;
             wasRefreshing = false;
         }
@@ -2346,15 +2350,21 @@ namespace DrawnUi.Draw
                 var overscroll = RefreshShowDistance * RenderingScale;
                 if (Orientation == ScrollOrientation.Vertical)
                 {
-                    SetScrollOffset(DrawingRect, _updatedViewportForPixX, overscroll, _zoomedScale, RenderingScale,
-                        true);
-                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.Y, RefreshShowDistance);
+                    if (OverscrollDistance.Y < RefreshShowDistance)
+                    {
+                        SetScrollOffset(DrawingRect, _updatedViewportForPixX, overscroll, _zoomedScale, RenderingScale,
+                            true);
+                    }
+                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.Y, RefreshShowDistance, RefreshDistanceLimit);
                 }
                 else if (Orientation == ScrollOrientation.Horizontal)
                 {
-                    SetScrollOffset(DrawingRect, overscroll, _updatedViewportForPixY, _zoomedScale, RenderingScale,
-                        true);
-                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.X, RefreshShowDistance);
+                    if (OverscrollDistance.Y < RefreshShowDistance)
+                    {
+                        SetScrollOffset(DrawingRect, overscroll, _updatedViewportForPixY, _zoomedScale, RenderingScale,
+                            true);
+                    }
+                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.X, RefreshShowDistance, RefreshDistanceLimit);
                 }
 
                 Update();
@@ -2372,7 +2382,7 @@ namespace DrawnUi.Draw
             {
                 ratio = OverscrollDistance.Y / RefreshShowDistance;
                 if (ratio >= 0)
-                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.Y, RefreshShowDistance);
+                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.Y, RefreshShowDistance, RefreshDistanceLimit);
                 canRefresh = InternalViewportOffset.Units.Y > refreshAt;
             }
 
@@ -2380,7 +2390,7 @@ namespace DrawnUi.Draw
             {
                 ratio = OverscrollDistance.X / RefreshShowDistance;
                 if (ratio >= 0)
-                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.X, RefreshShowDistance);
+                    RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.X, RefreshShowDistance, RefreshDistanceLimit);
                 canRefresh = InternalViewportOffset.Units.X > refreshAt;
             }
 
@@ -2436,7 +2446,7 @@ namespace DrawnUi.Draw
                 wasRefreshing = true;
                 IsRefreshing = true;
                 ScrollLocked = true;
-                ShowRefreshIndicatorForced();
+                ShowRefreshIndicatorForced(); //insure for code-behind triggered refresh
                 RefreshCommand?.Execute(this);
             }
             else
