@@ -1056,7 +1056,11 @@ namespace DrawnUi.Draw
                         break;
 
                     case ShapeType.Line:
-                        paint.StrokeWidth = pixelsStrokeWidth / 2.0f;
+                        if (pixelsStrokeWidth < 1)
+                        {
+                            pixelsStrokeWidth = 1;
+                        }
+                        paint.StrokeWidth = pixelsStrokeWidth;
                         if (Points != null && Points.Count > 1)
                         {
                             DrawPathShape.Reset();
