@@ -229,6 +229,17 @@ public class SkiaImage : SkiaControl
     {
         if (oldvalue != newvalue)
         {
+            if (oldvalue is UriImageSource uri && newvalue is UriImageSource newUri)
+            {
+                if (uri.Uri.IsSameAs(newUri.Uri))
+                    return;
+            }
+            if (oldvalue is FileImageSource file && newvalue is FileImageSource newFile)
+            {
+                if (file.File.IsSameAs(newFile.File))
+                    return;
+            }
+
             var me = bindable as SkiaImage;
             me?.SetSource(newvalue as ImageSource);
         }
