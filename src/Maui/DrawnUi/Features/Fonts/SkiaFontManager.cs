@@ -82,23 +82,62 @@ public partial class SkiaFontManager
         }
     }
 
+    /// <summary>
+    /// Concurrent cache for character-to-typeface mappings.
+    /// Uses ConcurrentDictionary for thread-safe access without locks.
+    /// Key: Unicode code point (int), Value: SKTypeface or null if no match found.
+    /// </summary>
+    private static readonly ConcurrentDictionary<int, SKTypeface> _characterTypefaceCache = new();
+
+    /// <summary>
+    /// Matches a Unicode character to an appropriate typeface with caching.
+    /// This method is thread-safe and optimized for high-frequency calls.
+    /// </summary>
+    /// <param name="character">Unicode code point to match</param>
+    /// <returns>SKTypeface that can render the character, or null if no match found</returns>
     public static SKTypeface MatchCharacter(int character)
     {
-        if (Manager == null)
+        // Fast path: check cache first (lock-free read)
+        if (_characterTypefaceCache.TryGetValue(character, out var cachedTypeface))
         {
-            return null;
+            return cachedTypeface;
         }
 
-        var match = Manager.MatchCharacter(character);
+        // Slow path: perform actual matching
+        SKTypeface match = null;
+
+        if (Manager != null)
+        {
+            match = Manager.MatchCharacter(character);
 
 #if ANDROID
-        if (match == null)
-        {
-            return MatchCharacterWithPlatformFallback(character);
-        }
+            if (match == null)
+            {
+                match = MatchCharacterWithPlatformFallback(character);
+            }
 #endif
+        }
 
-        return match;
+        // Cache the result (even if null) to avoid repeated lookups
+        // GetOrAdd ensures thread-safety and prevents duplicate work
+        return _characterTypefaceCache.GetOrAdd(character, match);
+    }
+
+    /// <summary>
+    /// Clears the character-to-typeface cache.
+    /// Call this if fonts are dynamically loaded/unloaded at runtime.
+    /// </summary>
+    public static void ClearCharacterCache()
+    {
+        _characterTypefaceCache.Clear();
+    }
+
+    /// <summary>
+    /// Gets the current size of the character cache for diagnostics.
+    /// </summary>
+    public static int GetCharacterCacheSize()
+    {
+        return _characterTypefaceCache.Count;
     }
 
 
