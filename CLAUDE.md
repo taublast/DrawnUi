@@ -102,8 +102,103 @@ builder.UseDrawnUi(new()
 - Grid default spacing is 1, not 8
 - Column/Row layouts require explicit Fill options for parent containers
 
-**Code-behind UI creation
-- Read Fluent.md file for info
+**Code-behind UI Creation, Porting to DRAWN and usage inside XAML - CRITICAL PATTERNS**
+
+* Avoid using Grid (SkiaLayout Type Grid) where possible to replace with SkiaLayer (SkiaLayout Type Absolute) by controlling children position with their Margin property.
+
+*  INLINE Children Creation: Create children inline in the Children collection of parent containers instead of creating a child and then adding it to container. Correct expample:
+
+   ```csharp
+   Children = new List<SkiaControl>()
+   {
+       new SkiaLayout()
+       {
+           HeightRequest = 40,
+           Children =
+           {
+               new SkiaSvg() { ... }.ObserveProperty(...),
+               new SkiaLabel() { ... }.Assign(out _label)
+           }
+       }
+       .WithGestures(...)
+       .Assign(out _headerGrid)
+   };
+   ```
+
+* SkiaControl Base for Content:
+   - Content property MUST be `SkiaControl`, NOT `View`.
+   
+* Do not use MainThread when not explicitely asked too, DrawnUI doesn't need it.
+   
+* NO MAUI Bindings - Use DrawnUI Fluent Extensions ONLY:
+   - ❌ NEVER: `SetBinding(Property, new Binding(...))`
+   - ✅ INSTEAD: `.ObserveProperty(source, nameof(Prop), me => { me.Value = Prop; })`
+   - ✅ INSTEAD: `.ObserveProperties(source, [nameof(P1), nameof(P2)], me => { ... })`
+   - And other approrpiate available in Fluent extensions.
+
+* Fluent Chaining: Chain all methods directly on control creation:
+
+   ```csharp
+   new SkiaLabel() { ... }
+       .ObserveProperty(...)
+       .Assign(out _field)
+       .WithGestures(...)
+   ```
+
+* Assign Pattern**: Use `.Assign(out _field)` to capture references for later use
+
+* Layout Types remainder: Use `SkiaLayout` with:
+   - `Type = LayoutType.Column` - Vertical stack
+   - `Type = LayoutType.Row` - Horizontal stack
+   - `Type = LayoutType.Grid` - Grid layout
+   - `Type = LayoutType.Wrap` - Flex/wrap layout
+   - `Type = LayoutType.Absolute` - Absolute positioning
+
+7. **XAML Usage**: DrawnUI controls MUST be wrapped in `<draw:Canvas>`, and have `Gestures` property set to `Enabled` for simple scenarions and for `SoftLock` for controls that use panning. Canvas property `RenderingMode` must be `Default` for simple controls or `Accelarated` for highly animated ones. Simple animations can be rendered still with `Default`.
+Try set explicit size OR Fill sides if possible instead of relying on auto-sizing, we don't want the canvas to recalculate when controls inside change something.
+
+   ```xml
+   <draw:Canvas HorizontalOptions="Fill" VerticalOptions="Start">
+       <draw:SkiaLayout Type="Column">
+           <draw:SkiaLabel Text="Hello" />
+       </draw:SkiaLayout>
+   </draw:Canvas>
+   ```
+
+* Rich Text with Spans** (use `&#10;` for newlines):
+   ```xml
+   <draw:SkiaLabel FontSize="15" TextColor="Black">
+       <draw:TextSpan Text="Normal " />
+       <draw:TextSpan Text="Bold" IsBold="True" TextColor="Red" />
+       <draw:TextSpan Text="&#10;" />
+       <draw:TextSpan Text="Link" Tapped="OnTapped" Underline="True" />
+   </draw:SkiaLabel>
+   ```
+
+* Grid Layout in XAML (use string definitions, not collections):
+   ```xml
+   <draw:SkiaLayout
+       Type="Grid"
+       ColumnDefinitions="35,*,100"
+       RowDefinitions="Auto,*,50"
+       ColumnSpacing="10"
+       RowSpacing="5">
+       <draw:SkiaSvg Grid.Column="0" Grid.Row="0" Source="icon.svg" />
+       <draw:SkiaLabel Grid.Column="1" Grid.Row="0" Text="Content" />
+   </draw:SkiaLayout>
+   ```
+   **Note**: Use `Grid.Column` and `Grid.Row` attached properties, NOT `Column` or `Row`
+
+* Control Mappings:
+   - `StackLayout` → `SkiaLayout Type="Column"`
+   - `Grid` → `SkiaLayout Type="Grid"` with `ColumnDefinitions="..."` and `RowDefinitions="..."`
+   - `FlexLayout` / `SmartFlex` → `SkiaLayout Type="Wrap"`
+   - `Label` → `SkiaLabel`
+   - `Span` → `TextSpan`
+   - `FormattedString` → Direct `TextSpan` children in `SkiaLabel`
+   - `{x:Static system:Environment.NewLine}` → `&#10;` (newline character)
+
+For more details read `docs\articles\fluent-extensions.md` file and `docs\articles\porting-maui.md` !!!
 
 **Resource Loading:**
 - Web URLs: loaded from web
