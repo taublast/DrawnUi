@@ -422,33 +422,6 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Apply all postponed invalidation other logic that was postponed until
-        /// the first draw for optimization.
-        /// Use this for special code-behind cases, like tests etc,
-        /// if you cannot wait until the first Draw().
-        /// In this version this affects ItemsSource only.
-        /// </summary>
-        public void CommitInvalidations()
-        {
-            foreach (var invalidation in PostponedInvalidations)
-            {
-                invalidation.Value.Invoke();
-            }
-
-            PostponedInvalidations.Clear();
-        }
-
-        public virtual void SuperViewChanged()
-        {
-            if (Superview != null)
-            {
-                CommitInvalidations();
-                if (Super.Multithreaded && CanUseCacheDoubleBuffering)
-                    Update();
-            }
-        }
-
-        /// <summary>
         /// Used for optimization process, for example, to avoid changing ItemSource several times before the first draw.
         /// </summary>
         /// <param name="key"></param>
@@ -1855,7 +1828,7 @@ namespace DrawnUi.Draw
             nameof(AlignContentVertical),
             typeof(LayoutOptions),
             typeof(SkiaControl),
-            LayoutOptions.Start,
+            LayoutOptions.Center,
             propertyChanged: NeedInvalidateMeasure);
 
         public LayoutOptions AlignContentVertical
@@ -1868,7 +1841,7 @@ namespace DrawnUi.Draw
             nameof(AlignContentHorizontal),
             typeof(LayoutOptions),
             typeof(SkiaControl),
-            LayoutOptions.Start,
+            LayoutOptions.Center,
             propertyChanged: NeedInvalidateMeasure);
 
         public LayoutOptions AlignContentHorizontal
@@ -6668,6 +6641,8 @@ namespace DrawnUi.Draw
             }
             else
             {
+                CalculateMargins();
+                CalculateSizeRequest();
                 NeedMeasure = true;
             }
         }
@@ -6737,6 +6712,49 @@ namespace DrawnUi.Draw
 
         static object lockViews = new();
 
+        /// <summary>
+        /// Apply all postponed invalidation other logic that was postponed until
+        /// the first draw for optimization.
+        /// Use this for special code-behind cases, like tests etc,
+        /// if you cannot wait until the first Draw().
+        /// In this version this affects ItemsSource only.
+        /// </summary>
+        public void CommitInvalidations()
+        {
+            foreach (var invalidation in PostponedInvalidations)
+            {
+                invalidation.Value.Invoke();
+            }
+
+            PostponedInvalidations.Clear();
+        }
+
+        public virtual void SuperViewChanged()
+        {
+            if (Superview != null)
+            {
+                CommitInvalidations();
+
+                bool needKick = false;
+                _lastAnimatorManager = Superview;
+                while (PendingUnattachedAnimators.TryTake(out var animator))
+                {
+                    Superview.AddAnimator(animator);
+                    animator.Start();
+                    needKick = true;
+                }
+
+                if (Super.Multithreaded && CanUseCacheDoubleBuffering)
+                    Update();
+                else if (needKick)
+                {
+                    Repaint();
+                }
+            }
+        }
+
+        protected ConcurrentBag<ISkiaAnimator> PendingUnattachedAnimators = new();
+
         #region Animation
 
         //public async Task PlayRippleAnimationAsync(Color color, double x, double y, bool removePrevious = true)
@@ -6754,18 +6772,6 @@ namespace DrawnUi.Draw
         public IAnimatorsManager GetAnimatorsManager()
         {
             return GetTopParentView() as IAnimatorsManager;
-
-            //var parent = this.Parent;
-
-            //if (parent is IAnimatorsManager manager)
-            //{
-            //    return manager;
-            //}
-
-            //if (parent is SkiaControl control)
-            //    return control.GetAnimatorsManager();
-
-            //return null;
         }
 
         public bool RegisterAnimator(ISkiaAnimator animator)
@@ -6773,13 +6779,19 @@ namespace DrawnUi.Draw
             var top = GetAnimatorsManager();
             if (top != null)
             {
-                _lastAnimatorManager = top;
-                top.AddAnimator(animator);
-                Repaint();
+                RegisterAnimator(animator, top);
                 return true;
             }
 
+            PendingUnattachedAnimators.Add(animator);
             return false;
+        }
+
+        public void RegisterAnimator(ISkiaAnimator animator, IAnimatorsManager top)
+        {
+            _lastAnimatorManager = top;
+            top.AddAnimator(animator);
+            Repaint();
         }
 
         public void UnregisterAnimator(Guid uid)
