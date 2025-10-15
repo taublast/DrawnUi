@@ -118,7 +118,7 @@ public partial class SkiaRichLabel : SkiaLabel
             //switch to fallback font
             if (!isStandardSymbol && !glyph.IsAvailable)
             {
-                SKTypeface newTypeFace = SkiaFontManager.Manager.MatchCharacter(codePoint);
+                SKTypeface newTypeFace = SkiaFontManager.MatchCharacter(codePoint);
                 if (newTypeFace != null && newTypeFace != currentTypeFace)
                 {
                     BreakSpanAndSwitchTypeface(newTypeFace);

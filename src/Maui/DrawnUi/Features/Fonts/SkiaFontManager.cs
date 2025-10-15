@@ -13,10 +13,7 @@ public partial class SkiaFontManager
 
     public static SKTypeface DefaultTypeface
     {
-        get
-        {
-            return SKTypeface.CreateDefault();
-        }
+        get { return SKTypeface.CreateDefault(); }
     }
 
     private void ThrowIfFontNotFound(string filename)
@@ -85,8 +82,29 @@ public partial class SkiaFontManager
         }
     }
 
-    static Dictionary<SKTypeface, HashSet<int>>  typefaceCoverage = new();
+    public static SKTypeface MatchCharacter(int character)
+    {
+        if (Manager == null)
+        {
+            return null;
+        }
+
+        var match = Manager.MatchCharacter(character);
+
+#if ANDROID
+        if (match == null)
+        {
+            return MatchCharacterWithPlatformFallback(character);
+        }
+#endif
+
+        return match;
+    }
+
+
+    static Dictionary<SKTypeface, HashSet<int>> typefaceCoverage = new();
     private static object lockCharMatch = new();
+
 
     public static (SKTypeface, int) FindBestTypefaceForString(string text)
     {
@@ -105,9 +123,11 @@ public partial class SkiaFontManager
                     {
                         typefaceCoverage[typeface] = new HashSet<int>();
                     }
+
                     typefaceCoverage[typeface].Add(codePoint);
                 }
             }
+
             var bestTypeface = typefaceCoverage.OrderByDescending(kvp => kvp.Value.Count).FirstOrDefault().Key;
             return (bestTypeface, symbol);
         }
@@ -137,7 +157,6 @@ public partial class SkiaFontManager
     }
 
 #if (!ONPLATFORM)
-
     public SKTypeface GetFont(string alias)
     {
         throw new NotImplementedException();

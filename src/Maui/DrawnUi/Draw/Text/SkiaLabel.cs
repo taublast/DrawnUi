@@ -1056,7 +1056,7 @@ namespace DrawnUi.Draw
                         if (AutoFont && Glyphs != null && Glyphs.Count > 0)
                         {
                             var first = Glyphs[0].Symbol;
-                            var matchedFace = SkiaFontManager.Manager.MatchCharacter(first);
+                            var matchedFace = SkiaFontManager.MatchCharacter(first);
                             if (matchedFace != null)
                             {
                                 needsShaping = SkiaLabel.UnicodeNeedsShaping(first);
