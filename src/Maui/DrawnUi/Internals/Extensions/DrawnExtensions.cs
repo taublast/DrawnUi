@@ -637,6 +637,6 @@ public static partial class DrawnExtensions
 
     public static bool IsSameAs(this Uri strA, Uri strB)
     {
-        return string.Compare(strA.AbsoluteUri, strA.AbsoluteUri, StringComparison.Ordinal) == 0;
+        return string.Compare(strA.AbsoluteUri, strB.AbsoluteUri, StringComparison.Ordinal) == 0;
     }
 }
