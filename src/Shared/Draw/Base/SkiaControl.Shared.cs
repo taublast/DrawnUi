@@ -6223,23 +6223,30 @@ namespace DrawnUi.Draw
 
         protected virtual void UpdateInternal()
         {
-            if (IsDisposing || IsDisposed)
-                return;
-
-            if (UpdateLocks > 0)
+            try
             {
-                _neededUpdate = true;
-                return;
+                if (IsDisposing || IsDisposed)
+                    return;
+
+                if (UpdateLocks > 0)
+                {
+                    _neededUpdate = true;
+                    return;
+                }
+
+                _neededUpdate = false;
+
+                NeedUpdateFrontCache = true;
+                NeedUpdate = true;
+
+                if (!WillNotUpdateParent)
+                {
+                    Parent?.UpdateByChild(this);
+                }
             }
-
-            _neededUpdate = false;
-
-            NeedUpdateFrontCache = true;
-            NeedUpdate = true;
-
-            if (!WillNotUpdateParent)
+            catch (Exception e)
             {
-                Parent?.UpdateByChild(this);
+                Super.Log(e);
             }
         }
 
