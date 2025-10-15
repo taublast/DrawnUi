@@ -36,10 +36,12 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 
 ## 🌱 What's new
 
-* `Gestures` property for `Canvas` new value `SoftLock` for smart working together inside native ScrollView. Note that using `Lock` value instead will totlly prevent parent ScrollView to receive panning gestures.
-* `IsLooped` property implemented for `SkiaCarousel`, for never-ending scrolls.
-* Fix animators `Start` method whe passing starting delay.
-* Improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
+* `IsLooped` property implemented for `SkiaCarousel`, for never-ending scrolls, also added `SwipeSpeed` property.
+* `Gestures` property for `Canvas` new value `SoftLock` for smart working together inside native ScrollView. Note that using `Lock` value instead will totally prevent parent ScrollView to receive panning gestures.
+* `SkiaLabel` subpixel rendering quality improved, note it can be can turned off with `Super.FontSubPixelRendering` static property.
+* `SkiaImage` fix to avoid changing source when was created from same string with converter.
+* Fix animators sometimes not starting when created to early, including `SkiaLottie` one.
+* Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
   
 ---
 

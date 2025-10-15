@@ -48,11 +48,14 @@
         ContentTemplate="{DataTemplate views:CameraTestPage}"
         Route="MainPage" />-->
 
-    <!-- Carousel IsLooped Test Page -->
-    <ShellContent
+    <!--<ShellContent
         Title="Carousel IsLooped Test"
         ContentTemplate="{DataTemplate sandbox:TestSoftLock}"
+        Route="MainPage" />-->
+
+    <ShellContent
+        Title="Carousel IsLooped Test"
+        ContentTemplate="{DataTemplate sandbox:TestCarouselLooped}"
         Route="MainPage" />
-    
 
 </Shell>

@@ -93,6 +93,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameTemplate", "..\src\Maui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures.csproj", "{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Navigation", "..\..\AppoMobi.Maui.Navigation\src\AppoMobi.Maui.Navigation.csproj", "{C01814D5-7D9C-D175-FB39-4E85A8DE3047}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -186,6 +188,10 @@ Global
 		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C01814D5-7D9C-D175-FB39-4E85A8DE3047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C01814D5-7D9C-D175-FB39-4E85A8DE3047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C01814D5-7D9C-D175-FB39-4E85A8DE3047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C01814D5-7D9C-D175-FB39-4E85A8DE3047}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
