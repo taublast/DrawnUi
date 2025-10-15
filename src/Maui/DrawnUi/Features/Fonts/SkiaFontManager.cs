@@ -3,6 +3,43 @@ using System.Reflection;
 
 namespace DrawnUi.Draw;
 
+/// <summary>
+/// Unicode block categories for optimized font matching.
+/// Used to prioritize appropriate fonts based on character type.
+/// </summary>
+public enum UnicodeBlock
+{
+    /// <summary>Basic Latin, extended Latin, common punctuation (U+0000-U+024F)</summary>
+    Latin,
+
+    /// <summary>Cyrillic script (U+0400-U+04FF)</summary>
+    Cyrillic,
+
+    /// <summary>Arabic script (U+0600-U+06FF)</summary>
+    Arabic,
+
+    /// <summary>CJK Unified Ideographs - Chinese, Japanese, Korean (U+4E00-U+9FFF)</summary>
+    CJK,
+
+    /// <summary>Hangul - Korean alphabet (U+AC00-U+D7AF)</summary>
+    Hangul,
+
+    /// <summary>Hiragana and Katakana - Japanese (U+3040-U+30FF)</summary>
+    Japanese,
+
+    /// <summary>Currency symbols (U+20A0-U+20CF, U+00A2-U+00A5)</summary>
+    Currency,
+
+    /// <summary>Emoji and emoticons (U+1F300-U+1F9FF, U+2600-U+26FF)</summary>
+    Emoji,
+
+    /// <summary>Mathematical symbols (U+2200-U+22FF)</summary>
+    Math,
+
+    /// <summary>Unknown or unclassified Unicode block</summary>
+    Unknown
+}
+
 public partial class SkiaFontManager
 {
     static SkiaFontManager()
@@ -90,6 +127,59 @@ public partial class SkiaFontManager
     private static readonly ConcurrentDictionary<int, SKTypeface> _characterTypefaceCache = new();
 
     /// <summary>
+    /// Detects the Unicode block category for a given code point.
+    /// This is cross-platform logic used to optimize font matching.
+    /// </summary>
+    /// <param name="codePoint">Unicode code point</param>
+    /// <returns>Unicode block category</returns>
+    public static UnicodeBlock DetectUnicodeBlock(int codePoint)
+    {
+        // Currency symbols (check first as they're common in e-commerce)
+        if ((codePoint >= 0x20A0 && codePoint <= 0x20CF) ||  // Currency Symbols block
+            (codePoint >= 0x00A2 && codePoint <= 0x00A5))    // Common currency in Latin-1
+            return UnicodeBlock.Currency;
+
+        // Basic Latin and Extended Latin
+        if (codePoint <= 0x024F)
+            return UnicodeBlock.Latin;
+
+        // Cyrillic (Russian, Ukrainian, Kazakh, etc.)
+        if (codePoint >= 0x0400 && codePoint <= 0x04FF)
+            return UnicodeBlock.Cyrillic;
+
+        // Arabic
+        if (codePoint >= 0x0600 && codePoint <= 0x06FF)
+            return UnicodeBlock.Arabic;
+
+        // Japanese Hiragana and Katakana
+        if (codePoint >= 0x3040 && codePoint <= 0x30FF)
+            return UnicodeBlock.Japanese;
+
+        // CJK Unified Ideographs (Chinese, Japanese Kanji, Korean Hanja)
+        if (codePoint >= 0x4E00 && codePoint <= 0x9FFF)
+            return UnicodeBlock.CJK;
+
+        // Korean Hangul
+        if (codePoint >= 0xAC00 && codePoint <= 0xD7AF)
+            return UnicodeBlock.Hangul;
+
+        // Mathematical symbols
+        if (codePoint >= 0x2200 && codePoint <= 0x22FF)
+            return UnicodeBlock.Math;
+
+        // Emoji - Miscellaneous Symbols and Pictographs
+        if (codePoint >= 0x2600 && codePoint <= 0x26FF)
+            return UnicodeBlock.Emoji;
+
+        // Emoji - Emoticons and extended emoji
+        if (codePoint >= 0x1F300 && codePoint <= 0x1F9FF)
+            return UnicodeBlock.Emoji;
+
+        // Unknown/Other
+        return UnicodeBlock.Unknown;
+    }
+
+    /// <summary>
     /// Matches a Unicode character to an appropriate typeface with caching.
     /// This method is thread-safe and optimized for high-frequency calls.
     /// </summary>
@@ -106,16 +196,26 @@ public partial class SkiaFontManager
         // Slow path: perform actual matching
         SKTypeface match = null;
 
+#if ANDROID || IOS || MACCATALYST
+        // Platform fallback is checked FIRST because:
+        // 1. iOS bug: Manager.MatchCharacter returns a default typeface (not null) even when glyph doesn't exist
+        // 2. Performance: Platform fonts are faster and more reliable for native symbols
+        // 3. Accuracy: Platform fonts have better Unicode coverage (e.g., Kazakh Tenge ₸)
+
+        // Detect Unicode block for optimized font matching
+        var unicodeBlock = DetectUnicodeBlock(character);
+
+        match = MatchCharacterWithPlatformFallback(character, unicodeBlock);
+        if (match != null)
+        {
+            return _characterTypefaceCache.GetOrAdd(character, match);
+        }
+#endif
+
+        // Fallback to SkiaSharp's manager if platform fallback didn't find the glyph
         if (Manager != null)
         {
             match = Manager.MatchCharacter(character);
-
-#if ANDROID
-            if (match == null)
-            {
-                match = MatchCharacterWithPlatformFallback(character);
-            }
-#endif
         }
 
         // Cache the result (even if null) to avoid repeated lookups

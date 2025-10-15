@@ -3,21 +3,79 @@
     public partial class SkiaFontManager
     {
         /// <summary>
-        /// Android system fonts optimized for Unicode coverage and symbol fallback.
-        /// Ordered by priority: Roboto covers most common symbols, then NotoSans for extended Unicode,
-        /// then NotoSansSymbols for specific symbol ranges.
-        /// These fonts are loaded lazily only when character matching fails with user fonts.
+        /// Maps Unicode blocks to prioritized Android font lists.
+        /// Fonts are tried in order for each block type.
         /// Based on Android AOSP font fallback chain configuration.
         /// </summary>
-        private static readonly string[] AndroidSystemFontFallbacks = new[]
+        private static readonly Dictionary<UnicodeBlock, string[]> AndroidFontsByBlock = new()
         {
-            "/system/fonts/Roboto-Regular.ttf",              // Main system font, covers most currency symbols including ₽
-            "/system/fonts/NotoSans-Regular.ttf",            // Primary fallback for extended Unicode
-            "/system/fonts/NotoSerif-Regular.ttf",           // Serif fallback
-            "/system/fonts/NotoSansSymbols-Regular-Subsetted2.ttf", // Symbol-specific font (und-Zsym)
-            "/system/fonts/NotoSansSymbols-Regular-Subsetted.ttf",  // Older Android versions
-            "/system/fonts/NotoColorEmoji.ttf",              // Emoji support
-            "/system/fonts/NotoSansCJK-Regular.ttc",         // CJK support
+            [UnicodeBlock.Latin] = new[]
+            {
+                "/system/fonts/Roboto-Regular.ttf",
+                "/system/fonts/NotoSans-Regular.ttf"
+            },
+
+            [UnicodeBlock.Cyrillic] = new[]
+            {
+                "/system/fonts/Roboto-Regular.ttf",
+                "/system/fonts/NotoSans-Regular.ttf"
+            },
+
+            [UnicodeBlock.Currency] = new[]
+            {
+                "/system/fonts/Roboto-Regular.ttf",              // Covers most currency symbols
+                "/system/fonts/NotoSans-Regular.ttf",
+                "/system/fonts/NotoSansSymbols-Regular-Subsetted2.ttf",
+                "/system/fonts/NotoSansSymbols-Regular-Subsetted.ttf"
+            },
+
+            [UnicodeBlock.CJK] = new[]
+            {
+                "/system/fonts/NotoSansCJK-Regular.ttc",         // CJK primary
+                "/system/fonts/NotoSans-Regular.ttf"
+            },
+
+            [UnicodeBlock.Japanese] = new[]
+            {
+                "/system/fonts/NotoSansCJK-Regular.ttc",
+                "/system/fonts/NotoSans-Regular.ttf"
+            },
+
+            [UnicodeBlock.Hangul] = new[]
+            {
+                "/system/fonts/NotoSansCJK-Regular.ttc",
+                "/system/fonts/NotoSans-Regular.ttf"
+            },
+
+            [UnicodeBlock.Arabic] = new[]
+            {
+                "/system/fonts/NotoNaskhArabic-Regular.ttf",
+                "/system/fonts/NotoSansArabic-Regular.ttf",
+                "/system/fonts/NotoSans-Regular.ttf"
+            },
+
+            [UnicodeBlock.Emoji] = new[]
+            {
+                "/system/fonts/NotoColorEmoji.ttf",
+                "/system/fonts/Roboto-Regular.ttf"
+            },
+
+            [UnicodeBlock.Math] = new[]
+            {
+                "/system/fonts/NotoSansSymbols-Regular-Subsetted2.ttf",
+                "/system/fonts/NotoSans-Regular.ttf"
+            },
+
+            [UnicodeBlock.Unknown] = new[]
+            {
+                "/system/fonts/Roboto-Regular.ttf",
+                "/system/fonts/NotoSans-Regular.ttf",
+                "/system/fonts/NotoSerif-Regular.ttf",
+                "/system/fonts/NotoSansSymbols-Regular-Subsetted2.ttf",
+                "/system/fonts/NotoSansSymbols-Regular-Subsetted.ttf",
+                "/system/fonts/NotoColorEmoji.ttf",
+                "/system/fonts/NotoSansCJK-Regular.ttc"
+            }
         };
 
         /// <summary>
@@ -32,24 +90,21 @@
         /// This addresses the issue where native Android TextView can display glyphs
         /// that SkiaSharp's font manager cannot find by directly accessing Android system fonts.
         /// </summary>
-        public static SKTypeface MatchCharacterWithPlatformFallback(int codePoint)
+        public static SKTypeface MatchCharacterWithPlatformFallback(int codePoint, UnicodeBlock unicodeBlock)
         {
-            // First try SkiaSharp's built-in matching
-            var typeface = Manager.MatchCharacter(codePoint);
-            if (typeface != null)
+            var charString = char.ConvertFromUtf32(codePoint);
+
+            // Get prioritized font list for this Unicode block
+            if (!AndroidFontsByBlock.TryGetValue(unicodeBlock, out var prioritizedFonts))
             {
-                // Verify the matched font actually contains the glyph
-                var glyphs = typeface.GetGlyphs(char.ConvertFromUtf32(codePoint));
-                if (glyphs.Length > 0 && glyphs[0] != 0)
-                {
-                    return typeface;
-                }
+                // Fallback to Unknown block fonts if block not mapped
+                prioritizedFonts = AndroidFontsByBlock[UnicodeBlock.Unknown];
             }
 
-            // If built-in matching failed, try Android system fonts
+            // Try prioritized fonts for this Unicode block
             lock (_androidFontCacheLock)
             {
-                foreach (var fontPath in AndroidSystemFontFallbacks)
+                foreach (var fontPath in prioritizedFonts)
                 {
                     try
                     {
@@ -70,7 +125,7 @@
                         }
 
                         // Verify this font contains the glyph
-                        var glyphs = systemFont.GetGlyphs(char.ConvertFromUtf32(codePoint));
+                        var glyphs = systemFont.GetGlyphs(charString);
                         if (glyphs.Length > 0 && glyphs[0] != 0)
                         {
                             return systemFont;
@@ -78,13 +133,12 @@
                     }
                     catch (Exception ex)
                     {
-                        // Log but continue trying other fonts
-                        Trace.WriteLine($"[SKIA] Failed to load Android system font {fontPath}: {ex.Message}");
+                        // Log only errors
+                        Trace.WriteLine($"[SKIA] ERROR loading Android font {fontPath}: {ex.Message}");
                     }
                 }
             }
 
-            // If no system font worked, return null (caller will handle fallback)
             return null;
         }
 

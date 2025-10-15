@@ -39,8 +39,8 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 * `IsLooped` property implemented for `SkiaCarousel`, for never-ending scrolls, also added `SwipeSpeed` property.
 * `Gestures` property for `Canvas` new value `SoftLock` for smart working together inside native ScrollView. Note that using `Lock` value instead will totally prevent parent ScrollView to receive panning gestures.
 * `SkiaLabel` subpixel rendering quality improved, note it can be can turned off with `Super.FontSubPixelRendering` static property.
-* Improved font auto-selection for unicode symbols on **Android** for `SkiaRichLabel` and related, all currency, Chinese etc symbols now properly displayed. Implemented platform agnostic caching for auto-find font.
-* `SkiaImage` fix to avoid changing source when was created from same string with converter.
+* Improved font auto-selection for unicode symbols on **Android** + **Apple** for `SkiaRichLabel` and related, all currency, Chinese etc symbols now properly displayed. Implemented platform agnostic caching for auto-find font.
+* `SkiaImage` fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
 * Fix animators sometimes not starting when created to early, including `SkiaLottie` one.
 * Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
   
