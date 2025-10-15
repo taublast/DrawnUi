@@ -43,6 +43,25 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 * Fix animators sometimes not starting when created to early, including `SkiaLottie` one.
 * Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
   
+## 💡 Hint of the Day
+
+**❓ Q: How to make images fade in when loaded?**
+
+**💡 A:** Subclass `SkiaImage` to define your animation:
+
+```csharp
+public class BannerImage : SkiaImage
+{
+    public override void OnSuccess(string source)
+    {
+        base.OnSuccess(source);
+
+        this.Opacity = 0.01;
+        _ = this.FadeToAsync(1, 300, Easing.SinIn);
+    }
+}
+```
+
 ---
 
 [Docs and Samples](https://drawnui.net) 👈

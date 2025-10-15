@@ -106,7 +106,7 @@ builder.UseDrawnUi(new()
 
 * Avoid using Grid (SkiaLayout Type Grid) where possible to replace with SkiaLayer (SkiaLayout Type Absolute) by controlling children position with their Margin property.
 
-*  INLINE Children Creation: Create children inline in the Children collection of parent containers instead of creating a child and then adding it to container. Correct expample:
+*  INLINE Children Creation: Create children inline in the Children collection of parent containers instead of creating a child and then adding it to container. Correct example:
 
    ```csharp
    Children = new List<SkiaControl>()
@@ -124,6 +124,75 @@ builder.UseDrawnUi(new()
        .Assign(out _headerGrid)
    };
    ```
+
+* Adding Children Dynamically: **ALWAYS** use `AddSubView()` method instead of `Children.Add()` for SkiaLayout and other drawn containers:
+   - ❌ NEVER: `layout.Children.Add(control)`
+   - ✅ INSTEAD: `layout.AddSubView(control)`
+
+   This ensures proper parent-child relationships and rendering pipeline setup.
+
+* **Recycled/Reusable Cells Pattern (CRITICAL)**: For recycled cells (like in SkiaCarousel, SkiaScroll with templates), follow these strict rules:
+
+   **❌ NEVER add/remove children dynamically at runtime** - This breaks recycling!
+
+   **✅ ALWAYS pre-create ALL UI elements during cell construction:**
+
+   ```csharp
+   public class MyRecycledCell : SkiaDynamicDrawnCell
+   {
+       private SkiaLayout _pricesContainer;
+       private List<SkiaLayout> _priceSlots; // Pre-created slots
+       private const int MaxPriceSlots = 5;
+
+       public MyRecycledCell()
+       {
+           CreateContent();
+       }
+
+       private void CreateContent()
+       {
+           _priceSlots = new List<SkiaLayout>();
+           _pricesContainer = new SkiaLayout { Type = LayoutType.Row };
+
+           // Pre-create maximum number of slots needed
+           for (int i = 0; i < MaxPriceSlots; i++)
+           {
+               var slot = CreatePriceSlot();
+               _priceSlots.Add(slot);
+               _pricesContainer.AddSubView(slot); // Add during construction only!
+           }
+       }
+
+       protected override void SetContent(object ctx)
+       {
+           if (ctx is MyData data)
+           {
+               // Only UPDATE properties, never add/remove children
+               for (int i = 0; i < MaxPriceSlots; i++)
+               {
+                   var slot = _priceSlots[i];
+                   if (i < data.Prices.Count)
+                   {
+                       slot.IsVisible = true;
+                       // Update labels, colors, etc.
+                       (slot.Children[0] as SkiaLabel).Text = data.Prices[i].Title;
+                   }
+                   else
+                   {
+                       slot.IsVisible = false; // Hide unused slots
+                   }
+               }
+           }
+       }
+   }
+   ```
+
+   **Key principles for recycled cells:**
+   - Create complete UI structure with maximum capacity in constructor
+   - At runtime: only change properties (IsVisible, Text, Color, etc.)
+   - Never call `AddSubView()`, `Children.Add()`, `ClearChildren()`, or `RemoveSubView()` after construction
+   - Hide unused elements with `IsVisible = false` instead of removing them
+   - Store references to pre-created elements for efficient updates
 
 * SkiaControl Base for Content:
    - Content property MUST be `SkiaControl`, NOT `View`.
