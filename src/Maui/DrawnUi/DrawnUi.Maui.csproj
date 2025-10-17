@@ -69,7 +69,7 @@
         <!--parsing markdown text-->
         <!--cannot use due to .net runtime bug still being worked out to be fixed-->
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
-        <PackageReference Include="AppoMobi.Maui.Gestures" Version="1.10.1" />
+        <!--<PackageReference Include="AppoMobi.Maui.Gestures" Version="1.10.1" />-->
         <!--todo move used code here-->
         <PackageReference Include="AppoMobi.Maui.Navigation" Version="1.9.3-pre" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
@@ -184,6 +184,10 @@
         <Compile Include="Shared/**/*.*pple.cs">
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures.csproj" />
     </ItemGroup>
 
     <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
