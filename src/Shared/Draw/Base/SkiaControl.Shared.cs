@@ -28,9 +28,51 @@ namespace DrawnUi.Draw
             Init();
         }
 
+        /// <summary>
+        /// For internat custom logic, use IsHovered for usual use.
+        /// </summary>
+        /// <param name="state"></param>
+        protected virtual void SetHover(bool state)
+        {
+            if (Superview is Canvas canvas)
+            {
+                if (state)
+                    canvas.HasHover = this;
+                else if (canvas.HasHover == this)
+                    canvas.HasHover = null;
+            }
+            else
+            {
+                OnHover(state);
+            }
+        }
+
+        public virtual bool OnHover(bool state)
+        {
+            return state;
+        }
+
         public virtual bool OnFocusChanged(bool focus)
         {
             return false;
+        }
+
+        public static readonly BindableProperty IsHoveredProperty = BindableProperty.Create(nameof(IsHovered),
+            typeof(bool),
+            typeof(SkiaControl),
+            false,
+            propertyChanged: (bindable, value, newValue) =>
+            {
+                if (bindable is SkiaControl control)
+                {
+                    control.SetHover((bool)newValue);
+                }
+            });
+
+        public bool IsHovered
+        {
+            get { return (bool)GetValue(IsHoveredProperty); }
+            set { SetValue(IsHoveredProperty, value); }
         }
 
         public VisualLayer? VisualLayer { get; set; }
@@ -350,14 +392,14 @@ namespace DrawnUi.Draw
 
         protected virtual void SetDefaultMinimumContentSize(double width, double height)
         {
-            if (width > 0 && WidthRequest<0)
+            if (width > 0 && WidthRequest < 0)
             {
                 if (this.MinimumWidthRequest < 0 && HorizontalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumWidthRequest < 0))
                     this.MinimumWidthRequest = width;
             }
 
-            if (height > 0 && HeightRequest<0)
+            if (height > 0 && HeightRequest < 0)
             {
                 if (this.MinimumHeightRequest < 0 && VerticalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumHeightRequest < 0))
@@ -766,7 +808,7 @@ namespace DrawnUi.Draw
             double start, double end, double length = 250,
             Easing easing = null,
             CancellationToken cancel = default,
-            bool applyEndValueOnStop = false, int delayMs=0)
+            bool applyEndValueOnStop = false, int delayMs = 0)
         {
             RangeAnimator animator = null;
 
@@ -1057,12 +1099,12 @@ namespace DrawnUi.Draw
         {
             if (NeedAutoWidth && ContentSize.Units.Width > 0)
             {
-                widthRequestPts = ContentSize.Units.Width + Padding.Left + Padding.Right;
+                widthRequestPts = ContentSize.Units.Width + UsePadding.Left + UsePadding.Right;
             }
 
             if (NeedAutoHeight && ContentSize.Units.Height > 0)
             {
-                heightRequestPts = ContentSize.Units.Height + Padding.Top + Padding.Bottom;
+                heightRequestPts = ContentSize.Units.Height + UsePadding.Top + UsePadding.Bottom;
             }
 
             return new Size(widthRequestPts, heightRequestPts);
@@ -2565,14 +2607,15 @@ namespace DrawnUi.Draw
 
         public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding),
             typeof(Thickness),
-            typeof(SkiaControl), Thickness.Zero,
-            propertyChanged: NeedInvalidateMeasure);
+            typeof(SkiaControl), Thickness.Zero);
 
         public Thickness Padding
         {
             get { return (Thickness)GetValue(PaddingProperty); }
             set { SetValue(PaddingProperty, value); }
         }
+
+        public Thickness UsePadding { get; protected set; }
 
         public static readonly BindableProperty MarginProperty = BindableProperty.Create(nameof(Margin),
             typeof(Thickness),
@@ -3140,8 +3183,8 @@ namespace DrawnUi.Draw
 
         /// <summary>
         ///  destination in PIXELS, requests in UNITS. resulting Destination prop will be filed in PIXELS.
-        /// Not using Margins nor Padding
-        /// Children are responsible to apply Padding to their content and to apply Margin to destination when measuring and drawing
+        /// Not using Margins nor UsePadding
+        /// Children are responsible to apply UsePadding to their content and to apply Margin to destination when measuring and drawing
         /// </summary>
         /// <param name="destination">PIXELS</param>
         /// <param name="widthRequest">UNITS</param>
@@ -4583,10 +4626,10 @@ namespace DrawnUi.Draw
 
         public virtual SKRect GetMeasuringRectForChildren(float widthConstraint, float heightConstraint, double scale)
         {
-            var constraintLeft = (Padding.Left + Margins.Left) * scale;
-            var constraintRight = (Padding.Right + Margins.Right) * scale;
-            var constraintTop = (Padding.Top + Margins.Top) * scale;
-            var constraintBottom = (Padding.Bottom + Margins.Bottom) * scale;
+            var constraintLeft = (UsePadding.Left + Margins.Left) * scale;
+            var constraintRight = (UsePadding.Right + Margins.Right) * scale;
+            var constraintTop = (UsePadding.Top + Margins.Top) * scale;
+            var constraintBottom = (UsePadding.Bottom + Margins.Bottom) * scale;
 
             //SKRect rectForChild = new SKRect(0 + (float)constraintLeft,
             //    0 + (float)constraintTop,
@@ -4675,10 +4718,10 @@ namespace DrawnUi.Draw
 
         public SKRect GetDrawingRectForChildren(SKRect destination, double scale)
         {
-            var constraintLeft = (Padding.Left + Margins.Left) * scale;
-            var constraintRight = (Padding.Right + Margins.Right) * scale;
-            var constraintTop = (Padding.Top + Margins.Top) * scale;
-            var constraintBottom = (Padding.Bottom + Margins.Bottom) * scale;
+            var constraintLeft = (UsePadding.Left + Margins.Left) * scale;
+            var constraintRight = (UsePadding.Right + Margins.Right) * scale;
+            var constraintTop = (UsePadding.Top + Margins.Top) * scale;
+            var constraintBottom = (UsePadding.Bottom + Margins.Bottom) * scale;
 
 
             SKRect rectForChild = new SKRect(
@@ -5754,12 +5797,13 @@ namespace DrawnUi.Draw
         /// if key is not null will replace existing if any to void running different action with same key in same frame.
         /// </summary>
         /// <param name="action"></param>
-        public void SafeAction(Action action, long key=-1)
+        public void SafeAction(Action action, long key = -1)
         {
             if (key < 0)
             {
                 key = LongKeyGenerator.Next();
             }
+
             var super = this.Superview;
             if (super != null)
             {
@@ -6064,7 +6108,7 @@ namespace DrawnUi.Draw
             }
 
             // Clear dirty tracking since we've processed all changes
-            DirtyChildrenTracker.Clear();
+            ClearDirtyChildren();
 
             SetRenderingTree(tree);
 
@@ -6473,10 +6517,10 @@ namespace DrawnUi.Draw
 
         public virtual Thickness GetAllMarginsInPixels(float scale)
         {
-            var constraintLeft = Math.Round((Margins.Left + Padding.Left) * scale);
-            var constraintRight = Math.Round((Margins.Right + Padding.Right) * scale);
-            var constraintTop = Math.Round((Margins.Top + Padding.Top) * scale);
-            var constraintBottom = Math.Round((Margins.Bottom + Padding.Bottom) * scale);
+            var constraintLeft = Math.Round((Margins.Left + UsePadding.Left) * scale);
+            var constraintRight = Math.Round((Margins.Right + UsePadding.Right) * scale);
+            var constraintTop = Math.Round((Margins.Top + UsePadding.Top) * scale);
+            var constraintBottom = Math.Round((Margins.Bottom + UsePadding.Bottom) * scale);
             return new(constraintLeft, constraintTop, constraintRight, constraintBottom);
         }
 
@@ -7075,11 +7119,21 @@ namespace DrawnUi.Draw
             //base.OnChildAdded(child);
         }
 
+        public virtual void ClearDirtyChildren()
+        {
+            DirtyChildrenTracker.Clear();
+        }
+
+        public virtual void TrackChildAsDirty(SkiaControl child)
+        {
+            DirtyChildrenTracker.Add(child);
+        }
+
         public virtual void OnChildAdded(SkiaControl child)
         {
             if (UsingCacheType == SkiaCacheType.ImageComposite)
             {
-                DirtyChildrenTracker.Add(child);
+                TrackChildAsDirty(child);
             }
 
             OnChildrenChanged();
@@ -7089,7 +7143,7 @@ namespace DrawnUi.Draw
         {
             if (UsingCacheType == SkiaCacheType.ImageComposite)
             {
-                DirtyChildrenTracker.Add(child);
+                TrackChildAsDirty(child);
             }
 
             OnChildrenChanged();
@@ -7484,8 +7538,8 @@ namespace DrawnUi.Draw
                         aspectX = Math.Min(s1, s2);
                         aspectY = aspectX;
                     }
-                    break;
 
+                    break;
             }
 
             return (aspectX, aspectY);

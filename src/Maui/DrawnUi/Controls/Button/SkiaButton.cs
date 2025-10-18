@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Thickness = Microsoft.Maui.Thickness;
+﻿using Thickness = Microsoft.Maui.Thickness;
 
 namespace DrawnUi.Draw;
 
@@ -19,6 +18,20 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         Text = caption;
     }
 
+    protected override void Paint(DrawingContext ctx)
+    {
+        base.Paint(ctx);
+
+        Debug.Write($"draw button `{Text}`");
+    }
+
+    protected Thickness ButtonPadding { get; set; } = Thickness.Zero;
+
+    public override Thickness OnPaddingSet(Thickness padding)
+    {
+        ButtonPadding = padding;
+        return Thickness.Zero;
+    }
 
     #region DEFAULT CONTENT
 
@@ -35,11 +48,13 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         }
     }
 
+    private Color UseBackGroundColor = BlackColor;
+
     protected override void CreateDefaultContent()
     {
         if (this.Views.Count == 0)
         {
-            InitialBackgroundColor = this.BackgroundColor;
+            InitialBackgroundColor = this.UseBackGroundColor;
             InitialBackground = this.Background;
 
             switch (UsingControlStyle)
@@ -87,18 +102,37 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
     {
         SetDefaultMinimumContentSize(100, 41);
 
-        this.AddSubView(new SkiaShape
+        var frame = new SkiaShape
         {
             Tag = "BtnShape",
-            BackgroundColor = this.InitialBackgroundColor,
+            BackgroundColor = this.UseBackGroundColor,
             Background = this.InitialBackground,
             CornerRadius = 8,
             HorizontalOptions = LayoutOptions.Fill,
-            IsClippedToBounds = true,
             VerticalOptions = LayoutOptions.Fill,
-        });
+        }.AssignParent(this);
 
-        this.AddSubView(new ButtonLabel() { Text = "Button", TextColor = this.TextColor, });
+        //auto-sizing layout
+        var wrapper = new SkiaLayout()
+        {
+            Tag = "BtnWrapper",
+            Padding = ButtonPadding,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Children =
+            {
+                new ButtonLabel()
+                {
+                    Text = this.Text,
+                    TextColor = this.TextColor,
+                }
+            }
+        }.AssignParent(this);
+
+        InitialBackgroundColor = frame.BackgroundColor;
+
+        MainWrapper = wrapper;
+        MainFrame = frame;
     }
 
     protected virtual void CreateCupertinoStyleContent()
@@ -106,12 +140,14 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         // iOS buttons have specific dimensions and styling
         SetDefaultMinimumContentSize(100, 36);
 
-        this.BackgroundColor = Color.FromRgba(0, 122, 255, 255); // iOS blue
+        if (!backgroundColorChanged)
+            UseBackGroundColor = Color.FromRgba(0, 122, 255, 255); // iOS blue
 
         // iOS buttons use subtle shadows and rounded corners
         var frame = new SkiaShape
         {
             Tag = "BtnShape",
+            BackgroundColor = UseBackGroundColor,
             CornerRadius = 8, // iOS uses moderate corner radius
             HorizontalOptions = LayoutOptions.Fill,
             IsClippedToBounds = true,
@@ -128,22 +164,33 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
                     Color = Colors.Black
                 }
             }
-        };
-        this.AddSubView(frame);
+        }.AssignParent(this);
 
-        // iOS button text is typically semibold
-        var label = new ButtonLabel()
+        //auto-sizing layout
+        var wrapper = new SkiaLayout()
         {
-            Text = "Test",
-            TextColor = Colors.White,
-            FontSize = 17, // iOS typical size
-            FontWeight = FontWeights.SemiBold,
-        };
-        this.AddSubView(label);
+            Tag = "BtnWrapper",
+            Padding = ButtonPadding,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Children =
+            {
+                new ButtonLabel()
+                {
+                    Text = "Test",
+                    TextColor = Colors.White,
+                    FontSize = 17, // iOS typical size
+                    FontWeight = FontWeights.SemiBold,
+                }
+            }
+        }.AssignParent(this);
 
         // Store the initial values
         InitialBackgroundColor = frame.BackgroundColor;
         TextColor = Colors.White;
+
+        MainWrapper = wrapper;
+        MainFrame = frame;
     }
 
     protected virtual void CreateMaterialStyleContent()
@@ -151,12 +198,14 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         // Material buttons follow specific design guidelines
         SetDefaultMinimumContentSize(100, 40);
 
-        this.BackgroundColor = Color.FromRgba(33, 150, 243, 255); // Material blue
+        if (!backgroundColorChanged)
+            this.UseBackGroundColor = Color.FromRgba(33, 150, 243, 255); // Material blue
 
         // Material uses more pronounced shadows and smaller corner radius
         var frame = new SkiaShape
         {
             Tag = "BtnShape",
+            BackgroundColor = UseBackGroundColor,
             CornerRadius = 4, // Material uses smaller corners
             HorizontalOptions = LayoutOptions.Fill,
             IsClippedToBounds = true,
@@ -173,22 +222,32 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
                     Color = Colors.Black
                 }
             }
-        };
-        this.AddSubView(frame);
+        }.AssignParent(this);
 
-        // Material Design prefers uppercase text
-        var label = new ButtonLabel()
+        //auto-sizing layout
+        var wrapper = new SkiaLayout()
         {
-            Text = "Test",
-            TextColor = Colors.White,
-            FontSize = 14, // Material typical size
-            TextTransform = TextTransform.Uppercase, // Material uses uppercase
-        };
-        this.AddSubView(label);
+            Tag = "BtnWrapper",
+            Padding = ButtonPadding,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Children =
+            {
+                new ButtonLabel()
+                {
+                    TextColor = Colors.White,
+                    FontSize = 14, // Material typical size
+                    TextTransform = TextTransform.Uppercase, // Material uses uppercase
+                }
+            }
+        }.AssignParent(this);
 
         // Store the initial values
         InitialBackgroundColor = frame.BackgroundColor;
         TextColor = Colors.White;
+
+        MainWrapper = wrapper;
+        MainFrame = frame;
     }
 
     protected virtual void CreateWindowsStyleContent()
@@ -196,7 +255,8 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         // Windows buttons are typically more rectangular
         SetDefaultMinimumContentSize(100, 32);
 
-        BackgroundColor = Color.FromRgba(0, 120, 215, 255); // Windows blue
+        if (!backgroundColorChanged)
+            UseBackGroundColor = Color.FromRgba(0, 120, 215, 255); // Windows blue
 
         var frame = new SkiaShape
         {
@@ -212,23 +272,37 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
                     X = 0,
                     Y = 1,
                     Blur = 1,
-                    Opacity = 0.2,
-                    Color = Colors.Black
+                    Opacity = 1.2,
+                    Color = Colors.Red
                 }
             }
-        };
-        this.AddSubView(frame);
+        }.AssignParent(this);
 
-        // Windows text is typically regular weight
-        var label = new ButtonLabel()
+        //auto-sizing layout
+        var wrapper = new SkiaLayout()
         {
-            Text = "Test", TextColor = Colors.White, FontSize = 15, FontWeight = FontWeights.Medium,
-        };
-        this.AddSubView(label);
+            Tag = "BtnWrapper",
+            Padding = ButtonPadding,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Children =
+            {
+                new ButtonLabel()
+                {
+                    Text = "Test",
+                    TextColor = Colors.White,
+                    FontSize = 15,
+                    FontWeight = FontWeights.Medium,
+                }
+            }
+        }.AssignParent(this);
 
         // Store the initial values
-        InitialBackgroundColor = frame.BackgroundColor;
+        InitialBackgroundColor = UseBackGroundColor;
         TextColor = Colors.White;
+
+        MainWrapper = wrapper;
+        MainFrame = frame;
     }
 
     protected virtual bool IsInsideTapRegion(SkiaGesturesParameters parameters)
@@ -236,6 +310,18 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         // Simple logic to determine if movement was minimal enough to count as a tap
         return Math.Abs(parameters.Event.Distance.Delta.X) < 10 &&
                Math.Abs(parameters.Event.Distance.Delta.Y) < 10;
+    }
+
+    public class ButtonElevationShadowEffect : DropShadowEffect
+    {
+    }
+
+    protected virtual ButtonElevationShadowEffect CreateElevation()
+    {
+        return new ButtonElevationShadowEffect()
+        {
+            Blur = 2
+        };
     }
 
     protected virtual void OnButtonPropertyChanged(SkiaButton control, string propertyName)
@@ -248,12 +334,12 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             {
                 // Handle elevation effect
                 var effects = MainFrame.VisualEffects?.ToList() ?? new List<SkiaEffect>();
-                var shadowEffect = effects.FirstOrDefault(e => e is DropShadowEffect) as DropShadowEffect;
+                var shadowEffect = effects.FirstOrDefault(e => e is ButtonElevationShadowEffect) as ButtonElevationShadowEffect;
 
                 if (shadowEffect == null)
                 {
                     // Create shadow if it doesn't exist
-                    shadowEffect = new DropShadowEffect();
+                    shadowEffect = CreateElevation();
                     effects.Add(shadowEffect);
                 }
 
@@ -371,6 +457,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         return base.CreateClip(arguments, usePosition);
     }
 
+    public SkiaLayout MainWrapper;
     public SkiaLabel MainLabel;
     public SkiaShape MainFrame;
 
@@ -383,6 +470,11 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
 
     public virtual void FindViews()
     {
+        if (MainWrapper == null)
+        {
+            MainWrapper = FindView<SkiaLayout>("BtnWrapper");
+        }
+
         if (MainLabel == null)
         {
             MainLabel = FindView<SkiaLabel>("BtnText");
@@ -426,14 +518,14 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             switch (ButtonStyle)
             {
                 case ButtonStyleType.Contained:
-                    MainFrame.BackgroundColor = this.BackgroundColor;
+                    MainFrame.BackgroundColor = this.UseBackGroundColor;
                     MainFrame.StrokeColor = Colors.Transparent;
                     MainFrame.StrokeWidth = 0;
                     break;
 
                 case ButtonStyleType.Outlined:
                     MainFrame.BackgroundColor = Colors.Transparent;
-                    MainFrame.StrokeColor = this.BackgroundColor;
+                    MainFrame.StrokeColor = this.UseBackGroundColor;
                     MainFrame.StrokeWidth = 1;
                     break;
 
@@ -489,7 +581,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
                 if (MainFrame.VisualEffects != null)
                 {
                     var effects = MainFrame.VisualEffects.ToList();
-                    var shadowEffect = effects.FirstOrDefault(e => e is DropShadowEffect);
+                    var shadowEffect = effects.FirstOrDefault(e => e is ButtonElevationShadowEffect);
 
                     if (shadowEffect != null)
                     {
@@ -503,7 +595,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             }
             else
             {
-                // Default - Handle via the property changed callback for DropShadowEffect
+                // Default - Handle via the property changed callback for ButtonElevationShadowEffect
                 OnButtonPropertyChanged(this, nameof(IsPressed));
 
                 // Apply platform-specific shadow adjustments if using native shadows
@@ -549,7 +641,15 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             InitialBackground = this.Background;
         }
 
-        // Note: IconPosition handling will be implemented when we add icon support
+        if (MainWrapper != null)
+        {
+            MainWrapper.Padding = ButtonPadding;
+            UsePadding = Thickness.Zero;
+        }
+        else
+        {
+            UsePadding = ButtonPadding;
+        }
     }
 
     public virtual bool OnDown(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
@@ -623,6 +723,11 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
         //Debug.WriteLine($"SkiaButton {Text}. {args.Type} {args.Event.Distance.Delta}");
+
+        if (args.Type == TouchActionResult.Pointer) 
+        {
+            SetHover(true);
+        }
 
         var point = TranslateInputOffsetToPixels(args.Event.Location, apply.ChildOffset);
 
@@ -1112,11 +1217,20 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         }
     }
 
+    private bool backgroundColorChanged;
+
     protected override void OnPropertyChanged(string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
 
-        if (propertyName.IsEither(nameof(Background), nameof(BackgroundColor), nameof(CornerRadius)))
+        if (propertyName == nameof(BackgroundColor))
+        {
+            UseBackGroundColor = this.BackgroundColor;
+            backgroundColorChanged = true;
+            ApplyProperties();
+        }
+        else
+        if (propertyName.IsEither(nameof(Background), nameof(CornerRadius)))
         {
             ApplyProperties();
         }

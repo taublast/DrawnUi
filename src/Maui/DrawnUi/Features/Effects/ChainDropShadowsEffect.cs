@@ -107,9 +107,12 @@ public class ChainDropShadowsEffect : BaseChainedEffect
     {
         base.OnBindingContextChanged();
 
-        foreach (var skiaShadow in Shadows)
+        if (Shadows != null)
         {
-            skiaShadow.BindingContext = this.BindingContext;
+            foreach (var skiaShadow in Shadows)
+            {
+                skiaShadow.BindingContext = this.BindingContext;
+            }
         }
     }
 
@@ -125,22 +128,26 @@ public class ChainDropShadowsEffect : BaseChainedEffect
             var restore = 0;
 
             //draw every shadow without the controls itsselfs
-            foreach (var shadow in Shadows)
+            if (Shadows != null)
             {
-                //SkiaControl.AddShadowFilter(paint, shadow, Parent.RenderingScale);
+                foreach (var shadow in Shadows)
+                {
+                    //SkiaControl.AddShadowFilter(paint, shadow, Parent.RenderingScale);
 
-                Paint.ImageFilter = SKImageFilter.CreateDropShadowOnly(
-                (float)Math.Round(shadow.X * Parent.RenderingScale),
-                (float)Math.Round(shadow.Y * Parent.RenderingScale),
-                (float)shadow.Blur, (float)shadow.Blur,
-                shadow.Color.ToSKColor());
+                    Paint.ImageFilter = SKImageFilter.CreateDropShadowOnly(
+                        (float)Math.Round(shadow.X * Parent.RenderingScale),
+                        (float)Math.Round(shadow.Y * Parent.RenderingScale),
+                        (float)shadow.Blur, (float)shadow.Blur,
+                        shadow.Color.ToSKColor());
 
-                var saved = ctx.Context.Canvas.SaveLayer(Paint);
+                    var saved = ctx.Context.Canvas.SaveLayer(Paint);
 
-                drawControl(ctx);
+                    drawControl(ctx);
 
-                ctx.Context.Canvas.RestoreToCount(saved);
+                    ctx.Context.Canvas.RestoreToCount(saved);
+                }
             }
+
 
             return ChainEffectResult.Create(false);
         }
@@ -150,9 +157,6 @@ public class ChainDropShadowsEffect : BaseChainedEffect
 
     public override bool NeedApply
     {
-        get
-        {
-            return base.NeedApply && Shadows.Count > 0;
-        }
+        get { return base.NeedApply && Shadows.Count > 0; }
     }
 }

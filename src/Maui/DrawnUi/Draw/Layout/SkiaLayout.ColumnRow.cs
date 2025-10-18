@@ -967,10 +967,7 @@ else
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
         }
 
-        public void TrackChildAsDirty(SkiaControl child)
-        {
-            DirtyChildrenTracker.Add(child);
-        }
+
 
         /// <summary>
         /// Measuring column/row for templated for fastest way possible
@@ -1804,7 +1801,7 @@ else
                     result = ScaledSize.FromPixels(newContentWidth, newContentHeight, scale);
 
                     // Clear dirty tracking since we've processed all changes
-                    DirtyChildrenTracker.Clear();
+                    ClearDirtyChildren();
 
                     return true; // Smart measuring succeeded!
                 }
@@ -2230,6 +2227,7 @@ else
                     }
                 }
 
+                ClearDirtyChildren();
 
                 //PASS 2 DRAW VISIBLE
                 bool hadAdjustments = false;
@@ -2397,9 +2395,14 @@ else
                                         }
                                         else
                                         {
+
+                                            //todo need arrange in deep for gestures to work....
+
                                             child.Arrange(destinationRect, child.SizeRequest.Width,
                                                 child.SizeRequest.Height,
                                                 ctx.Scale);
+
+                                            willDraw = true; //simulate to be entered in rendering tree, for gestures etc
                                         }
                                     }
                                     else

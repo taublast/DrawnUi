@@ -271,8 +271,12 @@ namespace DrawnUi.Draw
             {
                 Update();
             }
+            else if (propertyName == nameof(Padding))
+            {
+                UsePadding = OnPaddingSet(this.Padding);
+                InvalidateMeasure();
+            }
             else if (propertyName.IsEither(
-                         nameof(Padding),
                          nameof(HorizontalOptions), nameof(VerticalOptions),
                          nameof(HeightRequest), nameof(WidthRequest),
                          nameof(MaximumWidthRequest), nameof(MinimumWidthRequest),
@@ -290,6 +294,27 @@ namespace DrawnUi.Draw
 
             #endregion
         }
+
+        /// <summary>
+        /// Can override this for custom controls to apply padding differently from the default way
+        /// </summary>
+        /// <param name="padding"></param>
+        /// <returns></returns>
+        public virtual Thickness OnPaddingSet(Thickness padding)
+        {
+            return padding;
+        }
+
+        //public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding),
+        //    typeof(Thickness),
+        //    typeof(SkiaControl), Thickness.Zero,
+        //    propertyChanged: NeedInvalidateMeasure);
+
+        //public Thickness Padding
+        //{
+        //    get { return (Thickness)GetValue(PaddingProperty); }
+        //    set { SetValue(PaddingProperty, value); }
+        //}
 
         public virtual void AddSubView(SkiaControl control)
         {

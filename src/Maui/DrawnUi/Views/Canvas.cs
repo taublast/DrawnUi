@@ -508,11 +508,16 @@ public class Canvas : DrawnView, IGestureListener
 
     private bool _debugIsPressed;
     private bool _debugIsDown;
+    private bool _hadHover;
+    private bool _checkHover;
 
     protected virtual void ProcessGestures(SkiaGesturesParameters args)
     {
         lock (LockIterateListeners)
         {
+            _checkHover = args.Type == TouchActionResult.Pointer;
+            _hadHover = false;
+
             ISkiaGestureListener consumed = null;
             ISkiaGestureListener wasConsumed = null;
 
@@ -554,7 +559,6 @@ public class Canvas : DrawnView, IGestureListener
                     }
                 }
             }
-
 
             //USUAL PROCESSING
             if (secondPass)
@@ -611,7 +615,6 @@ public class Canvas : DrawnView, IGestureListener
                 }
             }
 
-
             if (TouchEffect.LogEnabled)
             {
                 if (consumed == null)
@@ -622,18 +625,21 @@ public class Canvas : DrawnView, IGestureListener
                     }
                     else
                     {
-                        Super.Log($"[Touch] {args.Type} ({args.Event.NumberOfTouches}) at {args.Event.Location} not consumed");
+                        Super.Log(
+                            $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) at {args.Event.Location} not consumed");
                     }
                 }
                 else
                 {
                     if (args.Event.Pointer != null)
                     {
-                        Super.Log($"[Touch] {args.Type} ({args.Event.Pointer}) consumed by {consumed} at {args.Event.Location} ");
+                        Super.Log(
+                            $"[Touch] {args.Type} ({args.Event.Pointer}) consumed by {consumed} at {args.Event.Location} ");
                     }
                     else
                     {
-                        Super.Log($"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} at {args.Event.Location} ");
+                        Super.Log(
+                            $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} at {args.Event.Location} ");
                     }
                 }
             }
@@ -675,17 +681,55 @@ public class Canvas : DrawnView, IGestureListener
                 {
                     AttachedTouchEffect.WIllLock = ShareLockState.Unlocked;
                 }
-                else
-                if (consumed != null && (args.Type == TouchActionResult.Panning || args.Type == TouchActionResult.Wheel))
+                else if (consumed != null &&
+                         (args.Type == TouchActionResult.Panning || args.Type == TouchActionResult.Wheel))
                 {
                     AttachedTouchEffect.WIllLock = ShareLockState.Locked;
+                }
+            }
+
+            if (_checkHover)
+            {
+                if (!_hadHover)
+                {
+                    this.HasHover = null;
                 }
             }
         }
     }
 
     /// <summary>
-    /// Gets signal from a listener that in has processed gestures. Return false if should not rpocess gestures.
+    /// Exchange point to set itsself or read who has hover
+    /// </summary>
+    public SkiaControl HasHover
+    {
+        get => hasHover;
+        set
+        {
+            _hadHover = true;
+
+            if (Equals(value, hasHover))
+            {
+                return;
+            }
+
+            if (hasHover is SkiaControl o)
+            {
+                o.IsHovered = false;
+            }
+
+            hasHover = value;
+            if (hasHover is SkiaControl n)
+            {
+                n.IsHovered = true;
+            }
+
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets signal from a listener that in has processed gestures. Return false if should not process gestures.
     /// </summary>
     public bool SignalInput(ISkiaGestureListener listener, TouchActionResult gestureType)
     {
@@ -890,7 +934,6 @@ public class Canvas : DrawnView, IGestureListener
         Repaint();
     }
 
-
     #endregion
 
     #region HELPER METHODS
@@ -901,6 +944,7 @@ public class Canvas : DrawnView, IGestureListener
     }
 
     protected List<int> LineBreaks = new List<int>();
+    private SkiaControl hasHover;
 
     public Canvas() : base()
     {

@@ -387,5 +387,64 @@ namespace Sandbox
             }
         }
 
+        private bool _IsLooped = true;
+        public bool IsLooped
+        {
+            get
+            {
+                return _IsLooped;
+            }
+            set
+            {
+                if (_IsLooped != value)
+                {
+                    _IsLooped = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _Bounces = true;
+        public bool Bounces
+        {
+            get
+            {
+                return _Bounces;
+            }
+            set
+            {
+                if (_Bounces != value)
+                {
+                    _Bounces = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private double _SwipeSpeed = 1.0;
+        public double SwipeSpeed
+        {
+            get
+            {
+                return _SwipeSpeed;
+            }
+            set
+            {
+                if (_SwipeSpeed != value)
+                {
+                    _SwipeSpeed = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ICommand CommandToggleLoop { get; set; }
+        public ICommand CommandToggleBounces { get; set; }
+        public ICommand CommandGoPrev { get; set; }
+        public ICommand CommandGoNext { get; set; }
+        public ICommand CommandSetSpeed05 { get; set; }
+        public ICommand CommandSetSpeed10 { get; set; }
+        public ICommand CommandSetSpeed20 { get; set; }
+
     }
 }

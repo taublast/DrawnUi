@@ -1072,7 +1072,7 @@ namespace DrawnUi.Draw
 
                 base.Paint(ctx);
 
-                var rectForChildren = ContractPixelsRect(ctx.Destination, ctx.Scale, Padding);
+                var rectForChildren = ContractPixelsRect(ctx.Destination, ctx.Scale, UsePadding);
 
                 var drawnChildrenCount = 0;
 
@@ -1137,7 +1137,7 @@ namespace DrawnUi.Draw
 
             ClearChildren();
 
-            DirtyChildrenTracker.Clear();
+            ClearDirtyChildren();
 
             DirtyChildrenInternal.Clear();
 
@@ -1196,7 +1196,7 @@ namespace DrawnUi.Draw
                         }
 
                         // Log the current cell's DirtyRegion
-                        /*
+                      /*
                         var cellRect = cell.Control.DirtyRegion;
                         Trace.WriteLine($"Checking cell.Control: {cell.Control}, DirtyRegion: X={cellRect.Left}, Y={cellRect.Top}, Width={cellRect.Width}, Height={cellRect.Height}");
 
@@ -1230,7 +1230,7 @@ namespace DrawnUi.Draw
                         {
                             Trace.WriteLine($"Skipping cell.Control: {cell.Control} (already in DirtyChildrenInternal)");
                         }
-                        */
+                       */
                     }
 
                     var count = 0;

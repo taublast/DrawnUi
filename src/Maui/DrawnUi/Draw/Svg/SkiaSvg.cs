@@ -1018,7 +1018,7 @@ namespace DrawnUi.Draw
             if (Svg != null)
             {
                 var scale = ctx.Scale;
-                var area = ContractPixelsRect(ctx.Destination, ctx.Scale, Padding);
+                var area = ContractPixelsRect(ctx.Destination, ctx.Scale, UsePadding);
 
                 //actually Skia.Svg cant render well with subpixel so...
                 area = new SKRect((float)Math.Round(area.Left), (float)Math.Round(area.Top),

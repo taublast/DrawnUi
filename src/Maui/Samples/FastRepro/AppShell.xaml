@@ -14,10 +14,10 @@
         ContentTemplate="{DataTemplate sandbox:PlanesTest}"
         Route="MainPage" />-->
 
-     <!--<ShellContent
+     <ShellContent
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:MainPageCode}"
-        Route="MainPage" />--> 
+        Route="MainPage" /> 
 
     <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
@@ -53,9 +53,9 @@
         ContentTemplate="{DataTemplate sandbox:TestSoftLock}"
         Route="MainPage" />-->
 
-    <ShellContent
+    <!--<ShellContent
         Title="Carousel IsLooped Test"
         ContentTemplate="{DataTemplate sandbox:TestCarouselLooped}"
-        Route="MainPage" />
+        Route="MainPage" />-->
 
 </Shell>

@@ -307,7 +307,7 @@ namespace DrawnUi.Draw
                 base.Paint(ctx);
 
                 var scale = ctx.Scale;
-                var rectForChildren = ContractPixelsRect(ctx.Destination, scale, Padding);
+                var rectForChildren = ContractPixelsRect(ctx.Destination, scale, UsePadding);
 
                 if (GliphsInvalidated)
                 {

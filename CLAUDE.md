@@ -74,8 +74,8 @@ builder.UseDrawnUi(new()
     UseDesktopKeyboard = true,
     DesktopWindow = new()
     {
-        Width = 500,
-        Height = 700
+        Width = 375,
+        Height = 800
     }
 });
 ```
@@ -129,7 +129,7 @@ builder.UseDrawnUi(new()
    - ❌ NEVER: `layout.Children.Add(control)`
    - ✅ INSTEAD: `layout.AddSubView(control)`
 
-   This ensures proper parent-child relationships and rendering pipeline setup.
+   This ensures proper parent-child relationships and rendering pipeline setup. For clearing use `layout.ClearChildren()`.
 
 * **Recycled/Reusable Cells Pattern (CRITICAL)**: For recycled cells (like in SkiaCarousel, SkiaScroll with templates), follow these strict rules:
 
@@ -268,6 +268,8 @@ Try set explicit size OR Fill sides if possible instead of relying on auto-sizin
    - `{x:Static system:Environment.NewLine}` → `&#10;` (newline character)
 
 For more details read `docs\articles\fluent-extensions.md` file and `docs\articles\porting-maui.md` !!!
+
+* Construct large non-recycled scroll: wrap main layout with ImageComposite cache and sub layouts with Operations cache. Avoid having layouts that change size in direction of the scroll, try set their size value to non-auto-size or make them change size non-often as this will make the whole scroll content to recalculate and redraw.
 
 **Resource Loading:**
 - Web URLs: loaded from web

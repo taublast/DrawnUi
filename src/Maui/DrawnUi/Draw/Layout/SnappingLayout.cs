@@ -473,7 +473,7 @@ public class SnappingLayout : SkiaLayout
         nameof(RubberDamping),
         typeof(double),
         typeof(SnappingLayout),
-        0.8);
+        0.7);
 
     /// <summary>
     /// If Bounce is enabled this basically controls how less the scroll will bounce when displaced from limit by finger or inertia. Default is 0.8.

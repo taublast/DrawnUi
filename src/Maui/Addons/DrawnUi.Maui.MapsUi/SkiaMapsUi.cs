@@ -358,9 +358,9 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         ctx.Context.Canvas.Restore();
 
         //children overlay
-        DirtyChildrenTracker.Clear();
+        ClearDirtyChildren();
 
-        var rectForChildren = ContractPixelsRect(ctx.Destination, ctx.Scale, Padding);
+        var rectForChildren = ContractPixelsRect(ctx.Destination, ctx.Scale, UsePadding);
 
         //absolute layout
         DrawViews(ctx.WithDestination(rectForChildren));

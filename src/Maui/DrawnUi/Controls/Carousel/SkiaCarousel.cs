@@ -813,16 +813,10 @@ public class SkiaCarousel : SnappingLayout
 
             if (displacement != Vector2.Zero)
             {
-                //if (atSnapPoint && !ThresholdOk(displacement))
-                //{
-                //    //Debug.WriteLine("[CAROUSEL] threshold low");
-                //    return false;
-                //}
-
                 if (Bounces)
                 {
-                    var spring = new Spring((float)(1 * (1 + RubberDamping)), 200, (float)(0.5f * (1 + RubberDamping)));
-                    VectorAnimatorSpring.Initialize(end, displacement, velocity, spring, 0.5f);
+                    var spring = new Spring((float)(1 * (1 + RubberDamping)), (float)(200*SwipeSpeed), (float)(0.5f * (1 + RubberDamping)));
+                    VectorAnimatorSpring.Initialize(end, displacement, velocity * (float)SwipeSpeed, spring, 0.5f);
                     VectorAnimatorSpring.Start();
                     _isSnapping = end;
                 }
@@ -1429,7 +1423,7 @@ public class SkiaCarousel : SnappingLayout
         1.0);
 
     /// <summary>
-    /// Basically size margins of every slide, offset from the side of the carousel. Another similar but different property to use would be Spacing between slides.
+    /// Used inside ScrollToOffset to control the speed
     /// </summary>
     public double SwipeSpeed
     {
