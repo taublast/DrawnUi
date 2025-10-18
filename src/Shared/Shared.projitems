@@ -76,6 +76,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Interfaces\IRefreshIndicator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Interfaces\ISkiaCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Interfaces\ISkiaControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Interfaces\ISkiaDisposable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Interfaces\ISkiaDrawable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Interfaces\ISkiaGestureListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Interfaces\ISkiaGestureProcessor.cs" />
