@@ -16,13 +16,13 @@ public class NewsViewModel : BaseViewModel
         _dataProvider = new NewsDataProvider();
         NewsItems = new ObservableRangeCollection<NewsItem>();
         
-        RefreshCommand = new Command(async () => await RefreshFeed());
+        RefreshCommand = new Command(async () => await RefreshFeed(1500));
         LoadMoreCommand = new Command(async () => await LoadMore());
         
         // Load initial data
         Tasks.StartDelayed(TimeSpan.FromMilliseconds(50), async () =>
         {
-            await RefreshFeed();
+            await RefreshFeed(10);
         });
     }
     
@@ -32,13 +32,29 @@ public class NewsViewModel : BaseViewModel
     public ICommand LoadMoreCommand { get; }
 
     private int DataChunkSize = 50;
-    
-    private async Task RefreshFeed()
+
+    private bool _IsRefreshing;
+    public bool IsRefreshing
+    {
+        get { return _IsRefreshing; }
+        set
+        {
+            if (_IsRefreshing != value)
+            {
+                _IsRefreshing = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private async Task RefreshFeed(int msDelay)
     {
         if (IsBusy) return;
         
         IsBusy = true;
-        
+
+        await Task.Delay(msDelay); 
+
         try
         {
             // Cancel previous preloading
@@ -50,8 +66,8 @@ public class NewsViewModel : BaseViewModel
             var newItems = _dataProvider.GetNewsFeed(DataChunkSize);
             
             // Preload images in background (DrawnUI's SkiaImageManager)
-            _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            _ = PreloadImages(newItems, _preloadCancellation.Token);
+            //_preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            //_ = PreloadImages(newItems, _preloadCancellation.Token);
             
             // Update UI - Replace all items for refresh
             MainThread.BeginInvokeOnMainThread(() =>
@@ -67,8 +83,11 @@ public class NewsViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsRefreshing = false;
         }
     }
+
+
     
     private async Task LoadMore()
     {

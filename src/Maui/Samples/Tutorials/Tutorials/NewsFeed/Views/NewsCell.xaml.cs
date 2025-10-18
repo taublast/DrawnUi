@@ -5,13 +5,15 @@ using SkiaSharp.Views.Maui;
 
 namespace DrawnUI.Tutorials.NewsFeed;
 
-public partial class NewsCell : SkiaDynamicDrawnCell
+public partial class NewsCell : DrawnListCell
 {
     public NewsCell()
     {
         InitializeComponent();
 
-        Opacity = 0; //will fade in after content is set for the first time
+        DelayIncrementMs = 15;
+        TimeAnimateMs = 150;
+        TimeWindowMs = 50;
     }
 
     protected override void SetContent(object ctx)
@@ -22,15 +24,9 @@ public partial class NewsCell : SkiaDynamicDrawnCell
         {
             ConfigureForContentType(news);
         }
-
-        if (!_appeared)  
-        {
-            _appeared = true;
-            FadeToAsync(1, 750, Easing.Linear);
-        }
     }
 
-    private bool _appeared;
+    /*
 
     public override void OnWillDisposeWithChildren()
     {
@@ -58,6 +54,8 @@ public partial class NewsCell : SkiaDynamicDrawnCell
 
         context.Context.Canvas.DrawRect(area, PaintPlaceholder);
     }
+
+    */
 
     private void ConfigureForContentType(NewsItem news)
     {

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<draw:SkiaDynamicDrawnCell
+<newsFeed:DrawnListCell
     x:Class="DrawnUI.Tutorials.NewsFeed.NewsCell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
     xmlns:models="clr-namespace:DrawnUI.Tutorials.NewsFeed.Models"
+    xmlns:newsFeed="clr-namespace:DrawnUI.Tutorials.NewsFeed"
     HorizontalOptions="Fill"
     x:DataType="models:NewsItem"
     UseCache="ImageDoubleBuffered">
@@ -51,7 +52,7 @@
                 HeightRequest="40"
                 BackgroundColor="LightGray">
 
-                <draw:SkiaImage
+                <newsFeed:BannerImage
                     LoadSourceOnFirstDraw="True"
                     EraseChangedContent="True"
                     RescalingQuality="None"
@@ -103,7 +104,7 @@
                         HorizontalOptions="Fill"
                         HeightRequest="200">
 
-            <draw:SkiaImage
+            <newsFeed:BannerImage
                 RescalingQuality="None"
                 LoadSourceOnFirstDraw="True"
                 EraseChangedContent="True"
@@ -140,7 +141,7 @@
                 CornerRadius="8,0,0,8"
                 WidthRequest="80"
                 HeightRequest="80">
-                <draw:SkiaImage
+                <newsFeed:BannerImage
                     RescalingQuality="None"
                     LoadSourceOnFirstDraw="True"
                     EraseChangedContent="True"
@@ -186,7 +187,7 @@
                 Margin="4,0"
                 HorizontalOptions="End" />
 
-            <draw:SkiaImage
+            <newsFeed:BannerImage
                 LoadSourceOnFirstDraw="True"
                 EraseChangedContent="True"
                 RescalingQuality="None"
@@ -254,4 +255,4 @@
         TextColor="Red"
         HorizontalOptions="End" UseCache="Operations" />-->
 
-</draw:SkiaDynamicDrawnCell>
+</newsFeed:DrawnListCell>
