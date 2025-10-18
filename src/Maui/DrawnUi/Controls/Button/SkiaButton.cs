@@ -18,13 +18,6 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         Text = caption;
     }
 
-    protected override void Paint(DrawingContext ctx)
-    {
-        base.Paint(ctx);
-
-        Debug.Write($"draw button `{Text}`");
-    }
-
     protected Thickness ButtonPadding { get; set; } = Thickness.Zero;
 
     public override Thickness OnPaddingSet(Thickness padding)
