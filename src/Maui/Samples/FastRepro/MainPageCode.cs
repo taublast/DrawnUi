@@ -51,6 +51,7 @@ namespace Sandbox
                         {
                             new SkiaScroll()
                             {
+                                BackgroundColor = Colors.White,
                                 HorizontalOptions = LayoutOptions.Fill,
                                 Content = new SkiaStack()
                                 {
@@ -61,13 +62,12 @@ namespace Sandbox
                                     {
                                         new SkiaStack()
                                         {
+                                            Padding = 10,
                                             Children =
                                             {
                                                 new SkiaButton("Hello World")
                                                 {
                                                     BackgroundColor = Colors.Red,
-                                                    HeightRequest = 40,
-                                                    Margin = 10,
                                                     ControlStyle =
                                                         PrebuiltControlStyle.Windows,
                                                 }
