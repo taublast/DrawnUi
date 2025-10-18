@@ -182,10 +182,8 @@
                                         TextColor="#2c3e50" />
 
                                     <draw:SkiaButton
-                                        UseCache="None"
                                         ControlStyle="Windows"
                                         Text="Windows Button"
-                                        Margin="20,20,0,0"
                                         Tapped="OnButtonClicked" />
 
                                     <draw:SkiaLabel
