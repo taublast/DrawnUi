@@ -1025,25 +1025,10 @@ public partial class SkiaControl
 
         RenderObjectNeedsUpdate = false;
 
-        var usingCacheType = UsingCacheType;
-
         CachedObject oldObject = null; //reusing this
         if (UsesCacheDoubleBuffering)
         {
             oldObject = RenderObject;
-        }
-        else if (usingCacheType == SkiaCacheType.ImageComposite)
-        {
-            //possible size mismatch will be checked by CreateRenderingObject
-            oldObject = RenderObjectPrevious;
-        }
-        else if (usingCacheType == SkiaCacheType.Image)
-        {
-            oldObject = RenderObjectPrevious;
-        }
-        else if (usingCacheType == SkiaCacheType.OperationsFull)
-        {
-            var debug = 1;
         }
 
         var created = CreateRenderingObject(context, recordingArea, oldObject, UsingCacheType, action);
@@ -1052,27 +1037,6 @@ public partial class SkiaControl
         {
             return;
         }
-
-        //if (oldObject != null)
-        //{
-
-
-        //    if (!UsesCacheDoubleBuffering && usingCacheType != SkiaCacheType.ImageComposite)
-        //    {
-        //        if (created.SurfaceIsRecycled)
-        //        {
-        //            oldObject.Surface = null;
-        //        }
-        //        else
-        //        if (oldObject.Surface != null)
-        //        {
-        //            ReturnSurface(oldObject.Surface);
-        //            oldObject.Surface = null;
-        //        }
-
-        //        DisposeObject(oldObject);
-        //    }
-        //}
 
         var notValid = RenderObjectNeedsUpdate;
         RenderObject = created;
