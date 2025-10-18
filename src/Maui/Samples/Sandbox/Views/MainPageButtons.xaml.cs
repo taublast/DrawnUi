@@ -27,5 +27,14 @@ namespace Sandbox.Views
                 TapCountLabel.Text = $"Total taps: {tapCount} | Last: \"{button.Text}\"";
             }
         }
+
+        private void UpdateMyCache(object sender, SkiaGesturesParameters e)
+        {
+            //to draw ripple over new cache without GLOW
+            if (sender is SkiaControl control)
+            {
+                control.Update();
+            }
+        }
     }
 }

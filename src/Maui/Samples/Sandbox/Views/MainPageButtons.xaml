@@ -203,9 +203,9 @@
                         </draw:SkiaLayout>
 
                         <!--  SECTION: Button Style Variants  -->
-                      <draw:SkiaLayout
-                          UseCache="Operations"
-                          Tag="Button Variants"
+                        <draw:SkiaLayout
+                            UseCache="Operations"
+                            Tag="Button Variants"
                             MinimumWidthRequest="200"
                             Type="Column"
                             Spacing="12">
@@ -368,10 +368,10 @@
                         </draw:SkiaLayout>
 
                         <!--  SECTION: CUSTOM BUTTON  -->
-                      <draw:SkiaLayout
-                          UseCache="Operations"
-                          Tag="Custom Button"
-                          MinimumWidthRequest="200"
+                        <draw:SkiaLayout
+                            UseCache="Operations"
+                            Tag="Custom Button"
+                            MinimumWidthRequest="200"
                             Type="Column"
                             Spacing="12">
 
@@ -398,6 +398,7 @@
 
                                     <!--  Custom Gradient Button  -->
                                     <draw:SkiaButton
+                                        UseCache="OperationsFull"
                                         x:Name="CustomButton"
                                         Text="Custom Gradient"
                                         ApplyEffect="Ripple"
@@ -546,9 +547,9 @@
                         </draw:SkiaLayout>
 
                         <!--  SECTION: PADDING  -->
-                      <draw:SkiaLayout
-                          UseCache="Operations"
-                          Tag="Padding"
+                        <draw:SkiaLayout
+                            UseCache="Operations"
+                            Tag="Padding"
                             MinimumWidthRequest="200"
                             Type="Column"
                             Spacing="12">
@@ -694,7 +695,7 @@
                                     </draw:SkiaButton>
 
                                     <draw:SkiaButton
-                                        UseCache="Image"
+                                        UseCache="OperationsFull"
                                         Text="Hover to Glow"
                                         BackgroundColor="#f39c12"
                                         WidthRequest="200"

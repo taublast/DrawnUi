@@ -33,7 +33,6 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-
 ## 🆕 What's new
 
 * `IsLooped` property implemented for `SkiaCarousel` (Sandbox project carousel example updated), for never-ending scrolls, also added `SwipeSpeed` property.
@@ -41,7 +40,8 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 * `SkiaLabel` subpixel rendering quality improved, note it can be can turned off with `Super.FontSubPixelRendering` static property.
 * Improved font auto-selection for unicode symbols on **Android** + **Apple** for `SkiaRichLabel` and related, all currency, Chinese etc symbols now properly displayed. Implemented platform agnostic caching for auto-find font.
 * `SkiaImage` performance fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
-* Fix `MinimumWidthRequest` and `MinimumHeightRequest` not applying margins.
+* Fixed cache type `OperationsFull`, god mode that records a larger area than your control, to pick up glow, shadows etc, everything that is out of the controls bounds. Limited by top canvas or by bounds of some cached parent if any.
+* Fixed `MinimumWidthRequest` and `MinimumHeightRequest` not applying margins.
 * `SkiaButton` uses `Padding` property for frame content, see Sandbox project Buttons example.
 * Fix animators sometimes not starting when created to early, including `SkiaLottie` one.
 * Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
