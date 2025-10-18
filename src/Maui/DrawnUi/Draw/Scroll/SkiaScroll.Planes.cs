@@ -72,7 +72,7 @@ namespace DrawnUi.Draw
                 {
                     NeedMeasure = true;
                     _childrenNeedRedraw = true;
-                    Content.DirtyChildrenTracker.Clear();
+                    Content.ClearDirtyChildren();
                     //Update();
                 }
                 //Update(); // Trigger redraw
@@ -527,7 +527,7 @@ namespace DrawnUi.Draw
             // Check if children need redraw and invalidate specific planes
             if (_childrenNeedRedraw)
             {
-                Content.DirtyChildrenTracker.Clear();
+                Content.ClearDirtyChildren();
                 _childrenNeedRedraw = false;
 
                 InvalidatePlanes();

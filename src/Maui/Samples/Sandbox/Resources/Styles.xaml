@@ -10,10 +10,10 @@
         <Setter Property="FontSize" Value="14" />
     </Style>
 
-    <Style ApplyToDerivedTypes="True" TargetType="draw:SkiaButton">
-        <Setter Property="TextColor" Value="Aqua" />
+    <!--<Style ApplyToDerivedTypes="True" TargetType="draw:SkiaButton">
+        <Setter Property="TextColor" Value="White" />
         <Setter Property="BackgroundColor" Value="Red" />
-    </Style>
+    </Style>-->
 
     <Style x:Key="SkiaLabelDefaultStyle" TargetType="draw:SkiaLabel">
         <Setter Property="TextColor" Value="#FFFFFF" />

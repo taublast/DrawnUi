@@ -47,6 +47,15 @@
         Title="SkiaCamera Test"
         ContentTemplate="{DataTemplate views:CameraTestPage}"
         Route="MainPage" />-->
-    
+
+    <!--<ShellContent
+        Title="Carousel IsLooped Test"
+        ContentTemplate="{DataTemplate sandbox:TestSoftLock}"
+        Route="MainPage" />-->
+
+    <!--<ShellContent
+        Title="Carousel IsLooped Test"
+        ContentTemplate="{DataTemplate sandbox:TestCarouselLooped}"
+        Route="MainPage" />-->
 
 </Shell>

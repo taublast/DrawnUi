@@ -99,6 +99,7 @@ items:
   - DrawnUi.Draw.ISkiaAnimator
   - DrawnUi.Draw.ISkiaCell
   - DrawnUi.Draw.ISkiaControl
+  - DrawnUi.Draw.ISkiaDisposable
   - DrawnUi.Draw.ISkiaDrawable
   - DrawnUi.Draw.ISkiaEffect
   - DrawnUi.Draw.ISkiaGestureListener
@@ -186,6 +187,7 @@ items:
   - DrawnUi.Draw.SkiaBackdrop
   - DrawnUi.Draw.SkiaBevel
   - DrawnUi.Draw.SkiaButton
+  - DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
   - DrawnUi.Draw.SkiaButton.ButtonLabel
   - DrawnUi.Draw.SkiaButton.ButtonStyleType
   - DrawnUi.Draw.SkiaButton.IconPositionType
@@ -296,6 +298,7 @@ items:
   - DrawnUi.Draw.TransformAspect
   - DrawnUi.Draw.UnderdampedSpringTimingParameters
   - DrawnUi.Draw.UnderdampedSpringTimingVectorParameters
+  - DrawnUi.Draw.UnicodeBlock
   - DrawnUi.Draw.UsedGlyph
   - DrawnUi.Draw.VelocityAccumulator
   - DrawnUi.Draw.ViewportScrollType
@@ -348,6 +351,29 @@ references:
   - uid: DrawnUi.Draw.SkiaButton.ButtonLabel
     name: ButtonLabel
     href: DrawnUi.Draw.SkiaButton.ButtonLabel.html
+- uid: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+  commentId: T:DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaButton.html
+  name: SkiaButton.ButtonElevationShadowEffect
+  nameWithType: SkiaButton.ButtonElevationShadowEffect
+  fullName: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaButton
+    name: SkiaButton
+    href: DrawnUi.Draw.SkiaButton.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+    name: ButtonElevationShadowEffect
+    href: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaButton
+    name: SkiaButton
+    href: DrawnUi.Draw.SkiaButton.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+    name: ButtonElevationShadowEffect
+    href: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect.html
 - uid: DrawnUi.Draw.SkiaButton.ButtonStyleType
   commentId: T:DrawnUi.Draw.SkiaButton.ButtonStyleType
   parent: DrawnUi.Draw
@@ -1425,6 +1451,7 @@ references:
   fullName: DrawnUi.Draw.ContrastEffect
 - uid: DrawnUi.Draw.DropShadowEffect
   commentId: T:DrawnUi.Draw.DropShadowEffect
+  parent: DrawnUi.Draw
   href: DrawnUi.Draw.DropShadowEffect.html
   name: DropShadowEffect
   nameWithType: DropShadowEffect
@@ -1521,6 +1548,13 @@ references:
   name: TintWithAlphaEffect
   nameWithType: TintWithAlphaEffect
   fullName: DrawnUi.Draw.TintWithAlphaEffect
+- uid: DrawnUi.Draw.UnicodeBlock
+  commentId: T:DrawnUi.Draw.UnicodeBlock
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.UnicodeBlock.html
+  name: UnicodeBlock
+  nameWithType: UnicodeBlock
+  fullName: DrawnUi.Draw.UnicodeBlock
 - uid: DrawnUi.Draw.SkiaFontManager
   commentId: T:DrawnUi.Draw.SkiaFontManager
   parent: DrawnUi.Draw
@@ -2152,6 +2186,13 @@ references:
   name: ISkiaControl
   nameWithType: ISkiaControl
   fullName: DrawnUi.Draw.ISkiaControl
+- uid: DrawnUi.Draw.ISkiaDisposable
+  commentId: T:DrawnUi.Draw.ISkiaDisposable
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaDisposable.html
+  name: ISkiaDisposable
+  nameWithType: ISkiaDisposable
+  fullName: DrawnUi.Draw.ISkiaDisposable
 - uid: DrawnUi.Draw.ISkiaDrawable
   commentId: T:DrawnUi.Draw.ISkiaDrawable
   parent: DrawnUi.Draw

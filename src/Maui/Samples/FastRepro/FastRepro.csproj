@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+
         <TargetFrameworks>net9.0-windows10.0.19041.0</TargetFrameworks>
 
         <!--<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
@@ -150,6 +151,9 @@
       <Compile Update="ReproEditors.xaml.cs">
         <DependentUpon>ReproEditors.xaml</DependentUpon>
       </Compile>
+      <Compile Update="TestSoftLock.xaml.cs">
+        <DependentUpon>TestSoftLock.xaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -160,6 +164,9 @@
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="ReproEditors.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="TestSoftLock.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
     </ItemGroup>

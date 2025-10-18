@@ -89,7 +89,7 @@
 
 
   <h1 id="DrawnUi_Draw_RefreshIndicator" data-uid="DrawnUi.Draw.RefreshIndicator" class="text-break">
-Class RefreshIndicator  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L91"><i class="bi bi-code-slash"></i></a>
+Class RefreshIndicator  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -101,7 +101,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RefreshIndicator : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IRefreshIndicator, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated</code></pre>
+    <pre><code class="lang-csharp hljs">public class RefreshIndicator : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IRefreshIndicator, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated</code></pre>
   </div>
 
 
@@ -143,6 +143,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGridLayout.html">ISkiaGridLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaLayout.html">ISkiaLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
@@ -198,13 +199,13 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackNonTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackNonTemplated(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaLayout.TrackChildAsDirty(SkiaControl)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackTemplated(SKRect, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnBeforeDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_DrawStack_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_">SkiaLayout.DrawStack(DrawingContext, LayoutStructure)</a>
@@ -783,6 +784,9 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
     </div>
     <div>
@@ -978,7 +982,19 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -1071,12 +1087,6 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -1110,7 +1120,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -1497,6 +1507,9 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1647,7 +1660,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -2214,10 +2227,22 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -2266,6 +2291,12 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -3144,7 +3175,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_RefreshIndicator__ctor" data-uid="DrawnUi.Draw.RefreshIndicator.#ctor">
   RefreshIndicator()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L98"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3173,7 +3204,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_RefreshIndicator_OrientationProperty" data-uid="DrawnUi.Draw.RefreshIndicator.OrientationProperty">
   OrientationProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L105"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3208,7 +3239,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_RefreshIndicator_IsRunning" data-uid="DrawnUi.Draw.RefreshIndicator.IsRunning">
   IsRunning
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L225"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>ReadOnly</p>
@@ -3240,7 +3271,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_RefreshIndicator_Orientation" data-uid="DrawnUi.Draw.RefreshIndicator.Orientation">
   Orientation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L124"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><summary>Gets or sets the scrolling direction of the ScrollView. This is a bindable property.</summary>
@@ -3272,7 +3303,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_RefreshIndicator_VisibleRatio" data-uid="DrawnUi.Draw.RefreshIndicator.VisibleRatio">
   VisibleRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L214"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3307,7 +3338,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_RefreshIndicator_OnIsRunningChanged_System_Boolean_" data-uid="DrawnUi.Draw.RefreshIndicator.OnIsRunningChanged(System.Boolean)">
   OnIsRunningChanged(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L185"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L216"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3334,11 +3365,42 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
 
 
+  <a id="DrawnUi_Draw_RefreshIndicator_SetAnimationState_" data-uid="DrawnUi.Draw.RefreshIndicator.SetAnimationState*"></a>
+
+  <h3 id="DrawnUi_Draw_RefreshIndicator_SetAnimationState_System_Boolean_" data-uid="DrawnUi.Draw.RefreshIndicator.SetAnimationState(System.Boolean)">
+  SetAnimationState(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L209"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetAnimationState(bool running)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>running</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_RefreshIndicator_SetDragRatio_" data-uid="DrawnUi.Draw.RefreshIndicator.SetDragRatio*"></a>
 
-  <h3 id="DrawnUi_Draw_RefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_" data-uid="DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)">
-  SetDragRatio(float, float, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L144"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Draw_RefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_System_Double_" data-uid="DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)">
+  SetDragRatio(float, float, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L150"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>0 - 1... not clamped can be over 1</p>
@@ -3346,7 +3408,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit, double ptsTrigger)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -3356,6 +3418,8 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
     <dt><code>ptsScrollOffset</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
     <dd></dd>
     <dt><code>ptsLimit</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>ptsTrigger</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
     <dd></dd>
   </dl>
 
@@ -3374,7 +3438,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_RefreshIndicator_UpdateOrientation" data-uid="DrawnUi.Draw.RefreshIndicator.UpdateOrientation">
   UpdateOrientation()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3400,7 +3464,7 @@ Class RefreshIndicator  <a class="header-action link-secondary" title="View sour
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L91" class="edit-link">Edit this page</a>
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/RefreshIndicator.cs/#L96" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -10,7 +10,7 @@ items:
   - DrawnUi.Draw.IDrawnBase.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.IDrawnBase.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
   - DrawnUi.Draw.IDrawnBase.Destination
-  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
   - DrawnUi.Draw.IDrawnBase.DrawingRect
   - DrawnUi.Draw.IDrawnBase.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Draw.IDrawnBase.Height
@@ -1316,16 +1316,16 @@ items:
     content: void InvalidateViewsList()
     content.vb: Sub InvalidateViewsList()
   overload: DrawnUi.Draw.IDrawnBase.InvalidateViewsList*
-- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
-  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
-  id: DisposeObject(System.IDisposable)
+- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
+  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
+  id: DisposeObject(System.IDisposable,System.String)
   parent: DrawnUi.Draw.IDrawnBase
   langs:
   - csharp
   - vb
-  name: DisposeObject(IDisposable)
-  nameWithType: IDrawnBase.DisposeObject(IDisposable)
-  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  name: DisposeObject(IDisposable, string)
+  nameWithType: IDrawnBase.DisposeObject(IDisposable, string)
+  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, string)
   type: Method
   source:
     remote:
@@ -1339,12 +1339,17 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: void DisposeObject(IDisposable value)
+    content: void DisposeObject(IDisposable value, string caller = null)
     parameters:
     - id: value
       type: System.IDisposable
-    content.vb: Sub DisposeObject(value As IDisposable)
+    - id: caller
+      type: System.String
+    content.vb: Sub DisposeObject(value As IDisposable, caller As String = Nothing)
   overload: DrawnUi.Draw.IDrawnBase.DisposeObject*
+  nameWithType.vb: IDrawnBase.DisposeObject(IDisposable, String)
+  fullName.vb: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, String)
+  name.vb: DisposeObject(IDisposable, String)
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -2250,7 +2255,7 @@ references:
   fullName: DrawnUi.Draw.IDrawnBase.InvalidateViewsList
 - uid: DrawnUi.Draw.IDrawnBase.DisposeObject*
   commentId: Overload:DrawnUi.Draw.IDrawnBase.DisposeObject
-  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
   name: DisposeObject
   nameWithType: IDrawnBase.DisposeObject
   fullName: DrawnUi.Draw.IDrawnBase.DisposeObject

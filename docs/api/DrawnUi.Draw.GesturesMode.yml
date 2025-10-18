@@ -8,6 +8,7 @@ items:
   - DrawnUi.Draw.GesturesMode.Disabled
   - DrawnUi.Draw.GesturesMode.Enabled
   - DrawnUi.Draw.GesturesMode.Lock
+  - DrawnUi.Draw.GesturesMode.SoftLock
   langs:
   - csharp
   - vb
@@ -89,6 +90,34 @@ items:
     content: Enabled = 1
     return:
       type: DrawnUi.Draw.GesturesMode
+- uid: DrawnUi.Draw.GesturesMode.SoftLock
+  commentId: F:DrawnUi.Draw.GesturesMode.SoftLock
+  id: SoftLock
+  parent: DrawnUi.Draw.GesturesMode
+  langs:
+  - csharp
+  - vb
+  name: SoftLock
+  nameWithType: GesturesMode.SoftLock
+  fullName: DrawnUi.Draw.GesturesMode.SoftLock
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SoftLock
+    path: ../src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Smart lock for working inside native controls like scroll view to share gestures with it if panning not consumed by your controls.
+  example: []
+  syntax:
+    content: SoftLock = 2
+    return:
+      type: DrawnUi.Draw.GesturesMode
 - uid: DrawnUi.Draw.GesturesMode.Lock
   commentId: F:DrawnUi.Draw.GesturesMode.Lock
   id: Lock
@@ -107,14 +136,14 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Lock
     path: ../src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
-    startLine: 20
+    startLine: 25
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Lock input for self, useful inside scroll view, panning controls like slider etc
+  summary: Full lock input for self, useful inside scroll view, panning controls like slider etc
   example: []
   syntax:
-    content: Lock = 2
+    content: Lock = 3
     return:
       type: DrawnUi.Draw.GesturesMode
 references:

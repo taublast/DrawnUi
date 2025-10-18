@@ -629,4 +629,14 @@ public static partial class DrawnExtensions
 
         return (velocityRatoX, velocityRatoY);
     }
+
+    public static bool IsSameAs(this string strA, string strB)
+    {
+        return string.Compare(strA, strB, StringComparison.Ordinal) == 0;
+    }
+
+    public static bool IsSameAs(this Uri strA, Uri strB)
+    {
+        return string.Compare(strA.AbsoluteUri, strB.AbsoluteUri, StringComparison.Ordinal) == 0;
+    }
 }

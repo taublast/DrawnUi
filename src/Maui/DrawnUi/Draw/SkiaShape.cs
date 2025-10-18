@@ -26,9 +26,12 @@ namespace DrawnUi.Draw
     {
         public override void ApplyBindingContext()
         {
-            foreach (var shade in Shadows)
+            if (Shadows != null)
             {
-                shade.BindingContext = BindingContext;
+                foreach (var shade in Shadows)
+                {
+                    shade.BindingContext = BindingContext;
+                }
             }
 
             if (Bevel != null)
@@ -430,7 +433,7 @@ namespace DrawnUi.Draw
             }
 
             var strokeAwareChildrenSize
-                = ContractPixelsRect(destination, scale, Padding);
+                = ContractPixelsRect(destination, scale, UsePadding);
 
             return strokeAwareChildrenSize;
         }
@@ -442,7 +445,7 @@ namespace DrawnUi.Draw
                 var strokeAwareSize = CalculateShapeSizeForStroke(destination, scale);
 
                 var contract = GetSmallUnderStroke(scale);
-                
+
                 var strokeAwareChildrenSize
                     = ContractPixelsRect(strokeAwareSize, contract);
 
@@ -725,8 +728,8 @@ namespace DrawnUi.Draw
                         var rrect = new SKRoundRect(strokeAwareChildrenSize);
 
                         // Step 3: Calculate the inner rounded rectangle corner radii
-                        double maxValue = Math.Max(Math.Max(Padding.Left, Padding.Top),
-                            Math.Max(Padding.Right, Padding.Bottom));
+                        double maxValue = Math.Max(Math.Max(UsePadding.Left, UsePadding.Top),
+                            Math.Max(UsePadding.Right, UsePadding.Bottom));
                         var strokeWidth = StrokeWidth > 0
                             ? (float)(StrokeWidth * RenderingScale)
                             : (float)(-StrokeWidth);
@@ -1056,7 +1059,12 @@ namespace DrawnUi.Draw
                         break;
 
                     case ShapeType.Line:
-                        paint.StrokeWidth = pixelsStrokeWidth / 2.0f;
+                        if (pixelsStrokeWidth < 1)
+                        {
+                            pixelsStrokeWidth = 1;
+                        }
+
+                        paint.StrokeWidth = pixelsStrokeWidth;
                         if (Points != null && Points.Count > 1)
                         {
                             DrawPathShape.Reset();
@@ -1224,8 +1232,6 @@ namespace DrawnUi.Draw
         {
             if (bindable is SkiaShape control)
             {
-                var enumerableShadows = (IEnumerable<SkiaShadow>)newvalue;
-
                 if (oldvalue != null)
                 {
                     if (oldvalue is INotifyCollectionChanged oldCollection)
@@ -1242,9 +1248,12 @@ namespace DrawnUi.Draw
                     }
                 }
 
-                foreach (var shade in enumerableShadows)
+                if (newvalue is IEnumerable<SkiaShadow> enumerableShadows)
                 {
-                    shade.Attach(control);
+                    foreach (var shade in enumerableShadows)
+                    {
+                        shade.Attach(control);
+                    }
                 }
 
                 if (newvalue is INotifyCollectionChanged newCollection)
@@ -1282,7 +1291,7 @@ namespace DrawnUi.Draw
             Update();
         }
 
-        public static readonly BindableProperty ShadowsProperty = BindableProperty.Create(
+        public new static readonly BindableProperty ShadowsProperty = BindableProperty.Create(
             nameof(Shadows),
             typeof(IList<SkiaShadow>),
             typeof(SkiaShape),
@@ -1292,13 +1301,13 @@ namespace DrawnUi.Draw
                 created.CollectionChanged += ((SkiaShape)instance).OnShadowCollectionChanged;
                 return created;
             },
-            validateValue: (bo, v) => v is IList<SkiaShadow>,
+            //validateValue: (bo, v) => v is IList<SkiaShadow>,
             propertyChanged: ShadowsPropertyChanged,
             coerceValue: CoerceShadows);
 
         private static int instanceCount = 0;
 
-        public IList<SkiaShadow> Shadows
+        public new IList<SkiaShadow> Shadows
         {
             get => (IList<SkiaShadow>)GetValue(ShadowsProperty);
             set => SetValue(ShadowsProperty, value);
@@ -1710,6 +1719,5 @@ namespace DrawnUi.Draw
 
             return originalStrokeWidth;
         }
-
     }
 }

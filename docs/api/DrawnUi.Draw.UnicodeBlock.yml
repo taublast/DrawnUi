@@ -1,0 +1,445 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.UnicodeBlock
+  commentId: T:DrawnUi.Draw.UnicodeBlock
+  id: UnicodeBlock
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.UnicodeBlock.Arabic
+  - DrawnUi.Draw.UnicodeBlock.CJK
+  - DrawnUi.Draw.UnicodeBlock.Currency
+  - DrawnUi.Draw.UnicodeBlock.Cyrillic
+  - DrawnUi.Draw.UnicodeBlock.Emoji
+  - DrawnUi.Draw.UnicodeBlock.Hangul
+  - DrawnUi.Draw.UnicodeBlock.Japanese
+  - DrawnUi.Draw.UnicodeBlock.Latin
+  - DrawnUi.Draw.UnicodeBlock.Math
+  - DrawnUi.Draw.UnicodeBlock.Unknown
+  langs:
+  - csharp
+  - vb
+  name: UnicodeBlock
+  nameWithType: UnicodeBlock
+  fullName: DrawnUi.Draw.UnicodeBlock
+  type: Enum
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UnicodeBlock
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Unicode block categories for optimized font matching.
+
+    Used to prioritize appropriate fonts based on character type.
+  example: []
+  syntax:
+    content: public enum UnicodeBlock
+    content.vb: Public Enum UnicodeBlock
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.UnicodeBlock.Latin
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Latin
+  id: Latin
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Latin
+  nameWithType: UnicodeBlock.Latin
+  fullName: DrawnUi.Draw.UnicodeBlock.Latin
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Latin
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Basic Latin, extended Latin, common punctuation (U+0000-U+024F)
+  example: []
+  syntax:
+    content: Latin = 0
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Cyrillic
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Cyrillic
+  id: Cyrillic
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Cyrillic
+  nameWithType: UnicodeBlock.Cyrillic
+  fullName: DrawnUi.Draw.UnicodeBlock.Cyrillic
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Cyrillic
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Cyrillic script (U+0400-U+04FF)
+  example: []
+  syntax:
+    content: Cyrillic = 1
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Arabic
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Arabic
+  id: Arabic
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Arabic
+  nameWithType: UnicodeBlock.Arabic
+  fullName: DrawnUi.Draw.UnicodeBlock.Arabic
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Arabic
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Arabic script (U+0600-U+06FF)
+  example: []
+  syntax:
+    content: Arabic = 2
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.CJK
+  commentId: F:DrawnUi.Draw.UnicodeBlock.CJK
+  id: CJK
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: CJK
+  nameWithType: UnicodeBlock.CJK
+  fullName: DrawnUi.Draw.UnicodeBlock.CJK
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CJK
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 21
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: CJK Unified Ideographs - Chinese, Japanese, Korean (U+4E00-U+9FFF)
+  example: []
+  syntax:
+    content: CJK = 3
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Hangul
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Hangul
+  id: Hangul
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Hangul
+  nameWithType: UnicodeBlock.Hangul
+  fullName: DrawnUi.Draw.UnicodeBlock.Hangul
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Hangul
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 24
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Hangul - Korean alphabet (U+AC00-U+D7AF)
+  example: []
+  syntax:
+    content: Hangul = 4
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Japanese
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Japanese
+  id: Japanese
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Japanese
+  nameWithType: UnicodeBlock.Japanese
+  fullName: DrawnUi.Draw.UnicodeBlock.Japanese
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Japanese
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Hiragana and Katakana - Japanese (U+3040-U+30FF)
+  example: []
+  syntax:
+    content: Japanese = 5
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Currency
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Currency
+  id: Currency
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Currency
+  nameWithType: UnicodeBlock.Currency
+  fullName: DrawnUi.Draw.UnicodeBlock.Currency
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Currency
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 30
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Currency symbols (U+20A0-U+20CF, U+00A2-U+00A5)
+  example: []
+  syntax:
+    content: Currency = 6
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Emoji
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Emoji
+  id: Emoji
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Emoji
+  nameWithType: UnicodeBlock.Emoji
+  fullName: DrawnUi.Draw.UnicodeBlock.Emoji
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Emoji
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 33
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Emoji and emoticons (U+1F300-U+1F9FF, U+2600-U+26FF)
+  example: []
+  syntax:
+    content: Emoji = 7
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Math
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Math
+  id: Math
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Math
+  nameWithType: UnicodeBlock.Math
+  fullName: DrawnUi.Draw.UnicodeBlock.Math
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Math
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 36
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Mathematical symbols (U+2200-U+22FF)
+  example: []
+  syntax:
+    content: Math = 8
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Unknown
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Unknown
+  id: Unknown
+  parent: DrawnUi.Draw.UnicodeBlock
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: UnicodeBlock.Unknown
+  fullName: DrawnUi.Draw.UnicodeBlock.Unknown
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Unknown
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 39
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Unknown or unclassified Unicode block
+  example: []
+  syntax:
+    content: Unknown = 9
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.UnicodeBlock
+  commentId: T:DrawnUi.Draw.UnicodeBlock
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.UnicodeBlock.html
+  name: UnicodeBlock
+  nameWithType: UnicodeBlock
+  fullName: DrawnUi.Draw.UnicodeBlock

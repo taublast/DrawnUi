@@ -1,14 +1,5 @@
 namespace DrawnUI.Tutorials.NewsFeed.Models;
 
-public enum NewsType
-{
-    Text,
-    Image, 
-    Video,
-    Article,
-    Ad
-}
-
 public class NewsItem
 {
     public long Id { get; set; }

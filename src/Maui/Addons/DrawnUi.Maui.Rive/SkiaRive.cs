@@ -143,7 +143,7 @@ public partial class SkiaRive : SkiaControl
         Animation = animation;
 
 #if WINDOWS
-        UpdateScene(SceneUpdates.File, Animation); //we will not advance until Play() is called
+        UpdateScene(SceneUpdates.File, Animation); //we will not advance until Start() is called
 #endif
         _lastPaintTime = null;
 

@@ -1,6 +1,6 @@
 ﻿namespace DrawnUi.Draw;
 
-public class CachedObject : IDisposable
+public class CachedObject : ISkiaDisposable
 {
     public SKPoint TranslateInputCoords(SKRect drawingRect)
     {
@@ -48,6 +48,8 @@ public class CachedObject : IDisposable
                 var y = (float)(destination.Top - Bounds.Top + moveY);
 
                 canvas.DrawPicture(Picture, x, y, paint);
+
+                LastDrawnAt = new(x, y, Bounds.Width + x, Bounds.Height + y);
             }
             else
             if (Image != null)
@@ -59,6 +61,7 @@ public class CachedObject : IDisposable
                 var y = (float)(destination.Top + moveY);
 
                 canvas.DrawImage(Image, x, y, paint);
+                LastDrawnAt = new(x, y, Bounds.Width + x, Bounds.Height + y);
             }
         }
         catch (Exception e)
@@ -66,6 +69,8 @@ public class CachedObject : IDisposable
             Super.Log(e);
         }
     }
+
+    public SKRect LastDrawnAt;
 
     /// <summary>
     /// Will draw at exact x,y coordinated without any adjustments
@@ -81,11 +86,13 @@ public class CachedObject : IDisposable
             if (Picture != null)
             {
                 canvas.DrawPicture(Picture, x, y, paint);
+                LastDrawnAt = new(x, y, Bounds.Width + x, Bounds.Height + y);
             }
             else
             if (Image != null)
             {
                 canvas.DrawImage(Image, x, y, paint);
+                LastDrawnAt = new(x, y, Bounds.Width + x, Bounds.Height + y);
             }
 
         }
@@ -136,6 +143,8 @@ public class CachedObject : IDisposable
         {
             IsDisposed = true;
 
+            IsAlive = ObjectAliveType.Disposed;
+
             if (!PreserveSourceFromDispose)
             {
                 Surface?.Dispose();
@@ -162,4 +171,6 @@ public class CachedObject : IDisposable
     public SKSurface Surface { get; set; }
    
     public List<VisualLayer> Children { get; set; }
+
+    public ObjectAliveType IsAlive { get; set; }
 }

@@ -345,6 +345,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaCarousel.SnapPoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaCarousel.SnapPoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaCarousel.SnapPoint",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Controls.SkiaCarousel.yml",
       "output": {
         ".html": {
@@ -2207,6 +2221,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ISkiaDisposable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ISkiaDisposable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ISkiaDisposable",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.ISkiaDrawable.yml",
       "output": {
         ".html": {
@@ -3408,6 +3436,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.SkiaBevel",
       "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaBevel.yml\" sourcestartlinenumber=\"1\">Defines properties for creating bevel or emboss effects on shapes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -4976,6 +5018,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.UnderdampedSpringTimingVectorParameters",
       "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.UnicodeBlock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.UnicodeBlock.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.UnicodeBlock",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.UnicodeBlock.yml\" sourcestartlinenumber=\"1\">Unicode block categories for optimized font matching.\nUsed to prioritize appropriate fonts based on character type.</p>\n"
     },
     {
       "type": "ManagedReference",

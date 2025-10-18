@@ -1,5 +1,6 @@
 ﻿using DrawnUi.Controls;
 
+
 namespace DrawnUi.Draw;
 
 public class LottieRefreshIndicator : RefreshIndicator
@@ -30,10 +31,15 @@ public class LottieRefreshIndicator : RefreshIndicator
     //    }
     //}
 
-
-    public override void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit)
+    public override void SetAnimationState(bool running)
     {
-        base.SetDragRatio(ratio, ptsScrollOffset, ptsLimit);
+        //base.SetAnimationState(running);
+    }
+
+
+    public override void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit, double ptsTrigger)
+    {
+        base.SetDragRatio(ratio, ptsScrollOffset, ptsLimit, ptsTrigger);
 
         if (FindLoader() && !IsRunning)
         {
@@ -82,11 +88,10 @@ public class LottieRefreshIndicator : RefreshIndicator
         {
             Loader = this.FindView<SkiaLottie>("Loader");
         }
+
         return Loader != null;
     }
-
 }
-
 
 public class RefreshIndicator : SkiaLayout, IRefreshIndicator
 {
@@ -108,9 +113,11 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
                 {
                     throw new NotImplementedException();
                 }
+
                 refresh.UpdateOrientation();
             }
         });
+
     /// <summary>
     /// <summary>Gets or sets the scrolling direction of the ScrollView. This is a bindable property.</summary>
     /// </summary>
@@ -127,8 +134,7 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
             HorizontalOptions = LayoutOptions.Fill;
             VerticalOptions = LayoutOptions.Start;
         }
-        else
-        if (Orientation == ScrollOrientation.Horizontal)
+        else if (Orientation == ScrollOrientation.Horizontal)
         {
             HorizontalOptions = LayoutOptions.Start;
             VerticalOptions = LayoutOptions.Fill;
@@ -141,17 +147,54 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
     /// 0 - 1... not clamped can be over 1
     /// </summary>
     /// <param name="ratio"></param>
-    public virtual void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit)
+    public virtual void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit, double ptsTrigger)
     {
+        //ratio = (float)Math.Pow(Math.Clamp(ratio, 0, 1), 4.0);
 
-        ratio = Math.Clamp(ratio, 0, 1);
+        ratio = (float)Math.Clamp(ratio, 0, 1);
 
-        double VisibleRatio = Math.Min(1.0, ratio / 0.98);
+        double opacity = ratio;
 
-        double opacity = Math.Clamp(ratio, 0f, 1f);
+        if (Orientation == ScrollOrientation.Vertical)
+        {
+            if (Height > 0)
+            {
+                var diff = Height - ptsLimit;
+
+                float getPosition(float k)
+                {
+                    return (float)(-Height / k - ptsScrollOffset / k +
+                                  (ptsLimit + diff + (ptsLimit - Height) / 2) * k);
+                }
+
+                var pos = getPosition(ratio);
+                var max = getPosition(1.0f);
+
+                TranslationY = pos;
+                opacity = Math.Clamp((max / pos) * ratio, 0, 1);
+            }
+        }
+        else if (Orientation == ScrollOrientation.Horizontal)
+        {
+            if (Width > 0)
+            {
+                var diff = Width - ptsLimit;
+
+                float getPosition(float k)
+                {
+                    return (float)(-Width / k - ptsScrollOffset / k +
+                                   (ptsLimit + diff + (ptsLimit - Width) / 2) * k);
+                }
+
+                var pos = getPosition(ratio);
+                var max = getPosition(1.0f);
+
+                TranslationY = pos;
+                opacity = Math.Clamp((max / pos) * ratio, 0, 1);
+            }
+        }
 
         IsRunning = opacity >= 1;
-
         if (IsRunning)
         {
             opacity = 1;
@@ -160,43 +203,28 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
         Opacity = opacity;
         var visibility = Opacity != 0;
 
-        IsVisible = visibility;
+        SetAnimationState(visibility);
+    }
 
-        if (Orientation == ScrollOrientation.Vertical)
-        {
-            if (Height > 0)
-            {
-                var pos = (float)( -ptsScrollOffset  -ptsLimit * (1- ratio) );
-
-                TranslationY = pos;
-            }
-        }
-        else if (Orientation == ScrollOrientation.Horizontal)
-        {
-            if (Width > 0)
-            {
-                TranslationX = (float)(-Width + Width * VisibleRatio);
-            }
-        }
+    public virtual void SetAnimationState(bool running)
+    {
+        IsVisible = running;
     }
 
     public float VisibleRatio { get; set; }
 
     protected virtual void OnIsRunningChanged(bool value)
     {
-
     }
 
     private bool _IsRunning;
+
     /// <summary>
     /// ReadOnly
     /// </summary>
     public bool IsRunning
     {
-        get
-        {
-            return _IsRunning;
-        }
+        get { return _IsRunning; }
         set
         {
             if (_IsRunning != value)
@@ -207,5 +235,4 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
             }
         }
     }
-
 }

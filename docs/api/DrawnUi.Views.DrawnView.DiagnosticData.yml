@@ -20,7 +20,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DiagnosticData
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 55
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -57,7 +57,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LayersSaved
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 57
+    startLine: 55
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

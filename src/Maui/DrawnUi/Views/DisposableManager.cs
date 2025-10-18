@@ -5,7 +5,7 @@ namespace DrawnUi.Views
 
     public interface IDisposeManager
     {
-        void DisposeObject(IDisposable disposable);
+        void DisposeObject(IDisposable disposable, [CallerMemberName] string caller = null);
     }
 
     /// <summary>

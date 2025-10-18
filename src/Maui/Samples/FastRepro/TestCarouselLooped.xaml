@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    x:Class="Sandbox.TestCarouselLooped"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:sandbox="clr-namespace:Sandbox"
+    x:Name="ThisPage"
+    Title="Carousel IsLooped Test">
+
+    <draw:Canvas
+        Gestures="Enabled"
+        HorizontalOptions="Fill"
+        RenderingMode="Accelerated"
+        BackgroundColor="#1a1a2e">
+
+        <draw:SkiaLayout
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <draw:SkiaScroll
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+
+                <draw:SkiaLayout
+                    Spacing="20"
+                    Type="Column"
+                    HorizontalOptions="Fill"
+                    Padding="20">
+
+                    <!--  TITLE  -->
+                    <draw:SkiaLabel
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        Text="SkiaCarousel IsLooped Test"
+                        TextColor="White"
+                        HorizontalOptions="Center" />
+
+                    <!--  TOGGLE BUTTON  -->
+                    <draw:SkiaButton
+                        BackgroundColor="#e94560"
+                        Padding="30,15"
+                        HorizontalOptions="Center"
+                        FontSize="16"
+                        TextColor="White"
+                        CommandTapped="{Binding Source={x:Reference ThisPage}, Path=CommandToggleLoop}">
+                        <draw:SkiaButton.Text>
+                            <Binding Path="IsLooped" Source="{x:Reference ThisPage}">
+                                <Binding.Converter>
+                                    <sandbox:BoolToLoopTextConverter />
+                                </Binding.Converter>
+                            </Binding>
+                        </draw:SkiaButton.Text>
+                    </draw:SkiaButton>
+
+                    <!--  STATUS  -->
+                    <draw:SkiaLabel
+                        FontSize="14"
+                        TextColor="#aaa"
+                        HorizontalOptions="Center">
+                        <draw:SkiaLabel.Text>
+                            <Binding Path="IsLooped" Source="{x:Reference ThisPage}">
+                                <Binding.Converter>
+                                    <sandbox:BoolToLoopStatusConverter />
+                                </Binding.Converter>
+                            </Binding>
+                        </draw:SkiaLabel.Text>
+                    </draw:SkiaLabel>
+
+                    <!--  SECTION 1: Manual Children  -->
+                    <draw:SkiaLayout
+                        Spacing="10"
+                        Type="Column"
+                        HorizontalOptions="Fill"
+                        Margin="0,20,0,0">
+
+                        <draw:SkiaLabel
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Text="1. Manual Children (XAML)"
+                            TextColor="#e94560" />
+
+                        <draw:SkiaLabel
+                            FontSize="12"
+                            Text="Children created manually in XAML"
+                            TextColor="#aaa" />
+
+                        <!--  Carousel Manual  -->
+                        <draw:SkiaCarousel
+                            x:Name="CarouselManual"
+                            BackgroundColor="#16213e"
+                            Bounces="True"
+                            HeightRequest="200"
+                            HorizontalOptions="Fill"
+                            IsLooped="{Binding Source={x:Reference ThisPage}, Path=IsLooped}"
+                            SelectedIndex="0"
+                            SidesOffset="0"
+                            Spacing="0"
+                            Tag="Manual">
+
+                            <draw:SkiaLayout BackgroundColor="#e94560">
+                                <draw:SkiaLabel
+                                    FontSize="60"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Text="0"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </draw:SkiaLayout>
+
+                            <draw:SkiaLayout BackgroundColor="#0f3460">
+                                <draw:SkiaLabel
+                                    FontSize="60"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Text="1"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </draw:SkiaLayout>
+
+                            <draw:SkiaLayout BackgroundColor="#533483">
+                                <draw:SkiaLabel
+                                    FontSize="60"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Text="2"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </draw:SkiaLayout>
+
+                            <draw:SkiaLayout BackgroundColor="#a8df8e">
+                                <draw:SkiaLabel
+                                    FontSize="60"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Text="3"
+                                    TextColor="#1a1a2e"
+                                    VerticalOptions="Center" />
+                            </draw:SkiaLayout>
+
+                            <draw:SkiaLayout BackgroundColor="#ffc93c">
+                                <draw:SkiaLabel
+                                    FontSize="60"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Text="4"
+                                    TextColor="#1a1a2e"
+                                    VerticalOptions="Center" />
+                            </draw:SkiaLayout>
+
+                        </draw:SkiaCarousel>
+
+                        <!--  Indicators for Manual  -->
+                        <draw:SkiaLayout
+                            HorizontalOptions="Center"
+                            Spacing="8"
+                            Type="Row">
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                BackgroundColor="#e94560"
+                                HeightRequest="8"
+                                Type="Circle"
+                                AlignContentHorizontal="Center"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselManual}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="0">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#0f3460"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselManual}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="1">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#533483"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselManual}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="2">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#a8df8e"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselManual}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="3">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#ffc93c"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselManual}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="4">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                        </draw:SkiaLayout>
+
+                        <draw:SkiaLabel
+                            FontSize="14"
+                            Text="{Binding Source={x:Reference CarouselManual}, Path=SelectedIndex, StringFormat='Selected Index: {0}'}"
+                            TextColor="White"
+                            HorizontalOptions="Center" />
+
+                        <!--  Manual Controls  -->
+                        <draw:SkiaLayout
+                            Spacing="10"
+                            Type="Row"
+                            HorizontalOptions="Center"
+                            Margin="0,10,0,0">
+
+                            <draw:SkiaButton
+                                BackgroundColor="#e94560"
+                                CommandTapped="{Binding Source={x:Reference ThisPage}, Path=CommandGoPrevManual}"
+                                Padding="20,12"
+                                Text="← Prev"
+                                TextColor="White" />
+
+                            <draw:SkiaButton
+                                BackgroundColor="#e94560"
+                                CommandTapped="{Binding Source={x:Reference ThisPage}, Path=CommandGoNextManual}"
+                                Padding="20,12"
+                                Text="Next →"
+                                TextColor="White" />
+
+                        </draw:SkiaLayout>
+
+                    </draw:SkiaLayout>
+
+                    <!--  SECTION 2: ItemsSource + ItemTemplate  -->
+                    <draw:SkiaLayout
+                        HorizontalOptions="Fill"
+                        Spacing="10"
+                        Type="Column"
+                        Margin="0,40,0,0">
+
+                        <draw:SkiaLabel
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Text="2. ItemsSource + ItemTemplate"
+                            TextColor="#0f3460" />
+
+                        <draw:SkiaLabel
+                            FontSize="12"
+                            Text="Children created from ItemsSource with DataTemplate"
+                            TextColor="#aaa" />
+
+                        <!--  Carousel Templated  -->
+                        <draw:SkiaCarousel
+                            x:Name="CarouselTemplated"
+                            BackgroundColor="#16213e"
+                            Bounces="True"
+                            HeightRequest="200"
+                            HorizontalOptions="Fill"
+                            RecyclingTemplate="Disabled"
+                            IsLooped="{Binding Source={x:Reference ThisPage}, Path=IsLooped}"
+                            ItemsSource="{Binding Source={x:Reference ThisPage}, Path=CarouselItems}"
+                            SelectedIndex="0"
+                            SidesOffset="0"
+                            Spacing="0"
+                            Tag="Templated">
+
+                            <draw:SkiaCarousel.ItemTemplate>
+                                <DataTemplate x:DataType="sandbox:CarouselItemData">
+
+                                    <draw:SkiaLayout BackgroundColor="{Binding Color}">
+
+                                        <draw:SkiaLabel
+                                            FontSize="60"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding Number}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+
+                                    </draw:SkiaLayout>
+
+                                </DataTemplate>
+                            </draw:SkiaCarousel.ItemTemplate>
+
+                        </draw:SkiaCarousel>
+
+                        <!--  Indicators for Templated  -->
+                        <draw:SkiaLayout
+                            HorizontalOptions="Center"
+                            Spacing="8"
+                            Type="Row">
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#e94560"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselTemplated}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="0">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#0f3460"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselTemplated}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="1">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#533483"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselTemplated}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="2">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#a8df8e"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselTemplated}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="3">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                            <draw:SkiaShape
+                                UseCache="Operations"
+                                AlignContentHorizontal="Center"
+                                BackgroundColor="#ffc93c"
+                                HeightRequest="8"
+                                Type="Circle"
+                                WidthRequest="8">
+                                <draw:SkiaControl.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Source={x:Reference CarouselTemplated}, Path=SelectedIndex}"
+                                        TargetType="draw:SkiaShape"
+                                        Value="4">
+                                        <Setter Property="WidthRequest" Value="24" />
+                                    </DataTrigger>
+                                </draw:SkiaControl.Triggers>
+                            </draw:SkiaShape>
+
+                        </draw:SkiaLayout>
+
+                        <draw:SkiaLabel
+                            FontSize="14"
+                            Text="{Binding Source={x:Reference CarouselTemplated}, Path=SelectedIndex, StringFormat='Selected Index: {0}'}"
+                            TextColor="White"
+                            HorizontalOptions="Center" />
+
+                        <!--  Templated Controls  -->
+                        <draw:SkiaLayout
+                            Spacing="10"
+                            Type="Row"
+                            HorizontalOptions="Center"
+                            Margin="0,10,0,0">
+
+                            <draw:SkiaButton
+                                BackgroundColor="#0f3460"
+                                CommandTapped="{Binding Source={x:Reference ThisPage}, Path=CommandGoPrevTemplated}"
+                                Padding="20,12"
+                                Text="← Prev"
+                                TextColor="White" />
+
+                            <draw:SkiaButton
+                                BackgroundColor="#0f3460"
+                                CommandTapped="{Binding Source={x:Reference ThisPage}, Path=CommandGoNextTemplated}"
+                                Padding="20,12"
+                                Text="Next →"
+                                TextColor="White" />
+
+                        </draw:SkiaLayout>
+
+                    </draw:SkiaLayout>
+
+                    <!--  INFO  -->
+                    <draw:SkiaShape
+                        HorizontalOptions="Center"
+                        BackgroundColor="#0f3460"
+                        CornerRadius="8"
+                        Padding="16"
+                        Type="Rectangle"
+                        Margin="0,40,0,20">
+
+                        <draw:SkiaLayout
+                            Spacing="8"
+                            Type="Column">
+
+                            <draw:SkiaLabel
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                Text="Expected Behavior:"
+                                TextColor="White" />
+
+                            <draw:SkiaLabel
+                                FontSize="12"
+                                Text="• IsLooped=False: GoNext/GoPrev stop at edges"
+                                TextColor="#aaa" />
+
+                            <draw:SkiaLabel
+                                FontSize="12"
+                                Text="• IsLooped=True: GoNext from item 5 → item 1"
+                                TextColor="#aaa" />
+
+                            <draw:SkiaLabel
+                                FontSize="12"
+                                Text="• IsLooped=True: GoPrev from item 1 → item 5"
+                                TextColor="#aaa" />
+
+                            <draw:SkiaLabel
+                                FontSize="12"
+                                Text="• Both manual and templated should behave identically"
+                                TextColor="#aaa" />
+
+                        </draw:SkiaLayout>
+
+                    </draw:SkiaShape>
+
+                </draw:SkiaLayout>
+
+            </draw:SkiaScroll>
+
+            <!--  FPS Counter  -->
+            <draw:SkiaLabelFps
+                Margin="0,0,4,24"
+                BackgroundColor="DarkRed"
+                ForceRefresh="False"
+                HorizontalOptions="End"
+                Rotation="-45"
+                TextColor="White"
+                VerticalOptions="End"
+                ZIndex="100" />
+
+        </draw:SkiaLayout>
+
+    </draw:Canvas>
+
+</ContentPage>

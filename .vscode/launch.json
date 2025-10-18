@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": ".NET Meteor Debugger",
+            "type": "dotnet-meteor.debugger",
+            "request": "launch",
+            "preLaunchTask": "dotnet-meteor: Build"
+        },
+        {
             "name": ".NET MAUI",
             "type": "maui",
             "request": "launch",

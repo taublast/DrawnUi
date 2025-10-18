@@ -32,18 +32,28 @@
 
         protected bool IsStandalone { get; set; }
 
+        protected virtual void PlayWhenAvailableIfNeeded()
+        {
+            if (PlayWhenAvailable) //WasPlayingBeforeVisibilityChanged || 
+            {
+                Start(); //resume
+            }
+        }
+
+        //public override void SuperViewChanged()
+        //{
+        //    base.SuperViewChanged();
+
+        //    TryPlayWhenAvailable();
+        //}
+
         public override void OnVisibilityChanged(bool newvalue)
         {
             base.OnVisibilityChanged(newvalue);
 
-            Debug.WriteLine($"FRAMES vis now {newvalue}");
             if (newvalue)
             {
-                if (PlayWhenAvailable) //WasPlayingBeforeVisibilityChanged || 
-                {
-                    Debug.WriteLine($"FRAMES - START!");
-                    Start(); //resume
-                }
+                PlayWhenAvailableIfNeeded();
             }
             //else
             //{
@@ -54,7 +64,6 @@
             //        PauseAllAnimators(); //be quiet
             //    }
             //}
-
         }
 
         public SourceType GetSourceType(string fileName)

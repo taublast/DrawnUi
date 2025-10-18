@@ -74,8 +74,8 @@ builder.UseDrawnUi(new()
     UseDesktopKeyboard = true,
     DesktopWindow = new()
     {
-        Width = 500,
-        Height = 700
+        Width = 375,
+        Height = 800
     }
 });
 ```
@@ -102,8 +102,174 @@ builder.UseDrawnUi(new()
 - Grid default spacing is 1, not 8
 - Column/Row layouts require explicit Fill options for parent containers
 
-**Code-behind UI creation
-- Read Fluent.md file for info
+**Code-behind UI Creation, Porting to DRAWN and usage inside XAML - CRITICAL PATTERNS**
+
+* Avoid using Grid (SkiaLayout Type Grid) where possible to replace with SkiaLayer (SkiaLayout Type Absolute) by controlling children position with their Margin property.
+
+*  INLINE Children Creation: Create children inline in the Children collection of parent containers instead of creating a child and then adding it to container. Correct example:
+
+   ```csharp
+   Children = new List<SkiaControl>()
+   {
+       new SkiaLayout()
+       {
+           HeightRequest = 40,
+           Children =
+           {
+               new SkiaSvg() { ... }.ObserveProperty(...),
+               new SkiaLabel() { ... }.Assign(out _label)
+           }
+       }
+       .WithGestures(...)
+       .Assign(out _headerGrid)
+   };
+   ```
+
+* Adding Children Dynamically: **ALWAYS** use `AddSubView()` method instead of `Children.Add()` for SkiaLayout and other drawn containers:
+   - ❌ NEVER: `layout.Children.Add(control)`
+   - ✅ INSTEAD: `layout.AddSubView(control)`
+
+   This ensures proper parent-child relationships and rendering pipeline setup. For clearing use `layout.ClearChildren()`.
+
+* **Recycled/Reusable Cells Pattern (CRITICAL)**: For recycled cells (like in SkiaCarousel, SkiaScroll with templates), follow these strict rules:
+
+   **❌ NEVER add/remove children dynamically at runtime** - This breaks recycling!
+
+   **✅ ALWAYS pre-create ALL UI elements during cell construction:**
+
+   ```csharp
+   public class MyRecycledCell : SkiaDynamicDrawnCell
+   {
+       private SkiaLayout _pricesContainer;
+       private List<SkiaLayout> _priceSlots; // Pre-created slots
+       private const int MaxPriceSlots = 5;
+
+       public MyRecycledCell()
+       {
+           CreateContent();
+       }
+
+       private void CreateContent()
+       {
+           _priceSlots = new List<SkiaLayout>();
+           _pricesContainer = new SkiaLayout { Type = LayoutType.Row };
+
+           // Pre-create maximum number of slots needed
+           for (int i = 0; i < MaxPriceSlots; i++)
+           {
+               var slot = CreatePriceSlot();
+               _priceSlots.Add(slot);
+               _pricesContainer.AddSubView(slot); // Add during construction only!
+           }
+       }
+
+       protected override void SetContent(object ctx)
+       {
+           if (ctx is MyData data)
+           {
+               // Only UPDATE properties, never add/remove children
+               for (int i = 0; i < MaxPriceSlots; i++)
+               {
+                   var slot = _priceSlots[i];
+                   if (i < data.Prices.Count)
+                   {
+                       slot.IsVisible = true;
+                       // Update labels, colors, etc.
+                       (slot.Children[0] as SkiaLabel).Text = data.Prices[i].Title;
+                   }
+                   else
+                   {
+                       slot.IsVisible = false; // Hide unused slots
+                   }
+               }
+           }
+       }
+   }
+   ```
+
+   **Key principles for recycled cells:**
+   - Create complete UI structure with maximum capacity in constructor
+   - At runtime: only change properties (IsVisible, Text, Color, etc.)
+   - Never call `AddSubView()`, `Children.Add()`, `ClearChildren()`, or `RemoveSubView()` after construction
+   - Hide unused elements with `IsVisible = false` instead of removing them
+   - Store references to pre-created elements for efficient updates
+
+* SkiaControl Base for Content:
+   - Content property MUST be `SkiaControl`, NOT `View`.
+   
+* Do not use MainThread when not explicitely asked too, DrawnUI doesn't need it.
+   
+* NO MAUI Bindings - Use DrawnUI Fluent Extensions ONLY:
+   - ❌ NEVER: `SetBinding(Property, new Binding(...))`
+   - ✅ INSTEAD: `.ObserveProperty(source, nameof(Prop), me => { me.Value = Prop; })`
+   - ✅ INSTEAD: `.ObserveProperties(source, [nameof(P1), nameof(P2)], me => { ... })`
+   - And other approrpiate available in Fluent extensions.
+
+* Fluent Chaining: Chain all methods directly on control creation:
+
+   ```csharp
+   new SkiaLabel() { ... }
+       .ObserveProperty(...)
+       .Assign(out _field)
+       .WithGestures(...)
+   ```
+
+* Assign Pattern**: Use `.Assign(out _field)` to capture references for later use
+
+* Layout Types remainder: Use `SkiaLayout` with:
+   - `Type = LayoutType.Column` - Vertical stack
+   - `Type = LayoutType.Row` - Horizontal stack
+   - `Type = LayoutType.Grid` - Grid layout
+   - `Type = LayoutType.Wrap` - Flex/wrap layout
+   - `Type = LayoutType.Absolute` - Absolute positioning
+
+7. **XAML Usage**: DrawnUI controls MUST be wrapped in `<draw:Canvas>`, and have `Gestures` property set to `Enabled` for simple scenarions and for `SoftLock` for controls that use panning. Canvas property `RenderingMode` must be `Default` for simple controls or `Accelarated` for highly animated ones. Simple animations can be rendered still with `Default`.
+Try set explicit size OR Fill sides if possible instead of relying on auto-sizing, we don't want the canvas to recalculate when controls inside change something.
+
+   ```xml
+   <draw:Canvas HorizontalOptions="Fill" VerticalOptions="Start">
+       <draw:SkiaLayout Type="Column">
+           <draw:SkiaLabel Text="Hello" />
+       </draw:SkiaLayout>
+   </draw:Canvas>
+   ```
+
+* Rich Text with Spans** (use `&#10;` for newlines):
+   ```xml
+   <draw:SkiaLabel FontSize="15" TextColor="Black">
+       <draw:TextSpan Text="Normal " />
+       <draw:TextSpan Text="Bold" IsBold="True" TextColor="Red" />
+       <draw:TextSpan Text="&#10;" />
+       <draw:TextSpan Text="Link" Tapped="OnTapped" Underline="True" />
+   </draw:SkiaLabel>
+   ```
+
+* Grid Layout in XAML (use string definitions, not collections):
+   ```xml
+   <draw:SkiaLayout
+       Type="Grid"
+       ColumnDefinitions="35,*,100"
+       RowDefinitions="Auto,*,50"
+       ColumnSpacing="10"
+       RowSpacing="5">
+       <draw:SkiaSvg Grid.Column="0" Grid.Row="0" Source="icon.svg" />
+       <draw:SkiaLabel Grid.Column="1" Grid.Row="0" Text="Content" />
+   </draw:SkiaLayout>
+   ```
+   **Note**: Use `Grid.Column` and `Grid.Row` attached properties, NOT `Column` or `Row`
+
+* Control Mappings:
+   - `StackLayout` → `SkiaLayout Type="Column"`
+   - `Grid` → `SkiaLayout Type="Grid"` with `ColumnDefinitions="..."` and `RowDefinitions="..."`
+   - `FlexLayout` / `SmartFlex` → `SkiaLayout Type="Wrap"`
+   - `Label` → `SkiaLabel`
+   - `Span` → `TextSpan`
+   - `FormattedString` → Direct `TextSpan` children in `SkiaLabel`
+   - `{x:Static system:Environment.NewLine}` → `&#10;` (newline character)
+
+For more details read `docs\articles\fluent-extensions.md` file and `docs\articles\porting-maui.md` !!!
+
+* Construct large non-recycled scroll: wrap main layout with ImageComposite cache and sub layouts with Operations cache. Avoid having layouts that change size in direction of the scroll, try set their size value to non-auto-size or make them change size non-often as this will make the whole scroll content to recalculate and redraw.
 
 **Resource Loading:**
 - Web URLs: loaded from web

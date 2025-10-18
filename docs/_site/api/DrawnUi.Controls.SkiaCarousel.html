@@ -104,7 +104,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaCarousel : SnappingLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaCarousel : SnappingLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
   </div>
 
 
@@ -147,6 +147,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGridLayout.html">ISkiaGridLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaLayout.html">ISkiaLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
@@ -192,9 +193,6 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_FindNearestAnchor_System_Numerics_Vector2_">SnappingLayout.FindNearestAnchor(Vector2)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_">SnappingLayout.SelectNextAnchor(Vector2, Vector2)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SnapDistanceRatio">SnappingLayout.SnapDistanceRatio</a>
     </div>
     <div>
@@ -216,13 +214,13 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_GetAutoVelocity_System_Numerics_Vector2_">SnappingLayout.GetAutoVelocity(Vector2)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Render_DrawnUi_Draw_DrawingContext_">SnappingLayout.Render(DrawingContext)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SendScrolled">SnappingLayout.SendScrolled()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Scrolled">SnappingLayout.Scrolled</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CheckTransitionEnded">SnappingLayout.CheckTransitionEnded()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CurrentPosition">SnappingLayout.CurrentPosition</a>
@@ -265,9 +263,6 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_InTransition">SnappingLayout.InTransition</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_OnTransitionChanged">SnappingLayout.OnTransitionChanged()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_RubberDampingProperty">SnappingLayout.RubberDampingProperty</a>
@@ -318,13 +313,13 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackNonTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackNonTemplated(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaLayout.TrackChildAsDirty(SkiaControl)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackTemplated(SKRect, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnBeforeDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_DrawStack_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_">SkiaLayout.DrawStack(DrawingContext, LayoutStructure)</a>
@@ -885,6 +880,9 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
     </div>
     <div>
@@ -1080,7 +1078,19 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -1173,12 +1183,6 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -1212,7 +1216,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -1596,6 +1600,9 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1746,7 +1753,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -2082,9 +2089,6 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateRenderedNode_SkiaSharp_SKRect_System_Single_">SkiaControl.CreateRenderedNode(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Render_DrawnUi_Draw_DrawingContext_">SkiaControl.Render(DrawingContext)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Rendered">SkiaControl.Rendered</a>
     </div>
     <div>
@@ -2307,10 +2311,22 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -2356,6 +2372,12 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildRemoved_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildRemoved(SkiaControl)</a>
@@ -3260,7 +3282,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ChildrenInitialized" data-uid="DrawnUi.Controls.SkiaCarousel.ChildrenInitialized">
   ChildrenInitialized
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L788"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1163"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3290,7 +3312,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ChildrenTotalProperty" data-uid="DrawnUi.Controls.SkiaCarousel.ChildrenTotalProperty">
   ChildrenTotalProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1233"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1689"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3320,7 +3342,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_DynamicSizeProperty" data-uid="DrawnUi.Controls.SkiaCarousel.DynamicSizeProperty">
   DynamicSizeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1006"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1452"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3350,7 +3372,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsLoopedProperty" data-uid="DrawnUi.Controls.SkiaCarousel.IsLoopedProperty">
   IsLoopedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1024"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1470"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3380,7 +3402,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsRightToLeftProperty" data-uid="DrawnUi.Controls.SkiaCarousel.IsRightToLeftProperty">
   IsRightToLeftProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1240"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1696"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3410,7 +3432,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsVerticalProperty" data-uid="DrawnUi.Controls.SkiaCarousel.IsVerticalProperty">
   IsVerticalProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1040"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1486"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3440,7 +3462,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_LinearSpeedMsProperty" data-uid="DrawnUi.Controls.SkiaCarousel.LinearSpeedMsProperty">
   LinearSpeedMsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1167"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1623"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3470,7 +3492,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_PreloadNeighboorsProperty" data-uid="DrawnUi.Controls.SkiaCarousel.PreloadNeighboorsProperty">
   PreloadNeighboorsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L991"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1437"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3500,7 +3522,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_SelectedIndexProperty" data-uid="DrawnUi.Controls.SkiaCarousel.SelectedIndexProperty">
   SelectedIndexProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1200"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1656"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3530,7 +3552,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_SidesOffsetProperty" data-uid="DrawnUi.Controls.SkiaCarousel.SidesOffsetProperty">
   SidesOffsetProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1255"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1711"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3558,9 +3580,39 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
 
 
+  <h3 id="DrawnUi_Controls_SkiaCarousel_SwipeSpeedProperty" data-uid="DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty">
+  SwipeSpeedProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1422"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly BindableProperty SwipeSpeedProperty</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <h3 id="DrawnUi_Controls_SkiaCarousel__panningOffset" data-uid="DrawnUi.Controls.SkiaCarousel._panningOffset">
   _panningOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1286"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1742"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3590,7 +3642,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel__panningStartOffset" data-uid="DrawnUi.Controls.SkiaCarousel._panningStartOffset">
   _panningStartOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1743"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3625,7 +3677,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_CanRender" data-uid="DrawnUi.Controls.SkiaCarousel.CanRender">
   CanRender
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L170"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L340"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3656,7 +3708,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_CellSize" data-uid="DrawnUi.Controls.SkiaCarousel.CellSize">
   CellSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L896"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1277"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3687,7 +3739,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ChildrenCount" data-uid="DrawnUi.Controls.SkiaCarousel.ChildrenCount">
   ChildrenCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L926"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1307"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3718,7 +3770,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ChildrenReady" data-uid="DrawnUi.Controls.SkiaCarousel.ChildrenReady">
   ChildrenReady
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L351"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3749,7 +3801,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ChildrenTotal" data-uid="DrawnUi.Controls.SkiaCarousel.ChildrenTotal">
   ChildrenTotal
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1227"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1683"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Can be used for indicators</p>
@@ -3781,7 +3833,7 @@ Ideal for image galleries, tab interfaces, and any swipeable content display.</p
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_DynamicSize" data-uid="DrawnUi.Controls.SkiaCarousel.DynamicSize">
   DynamicSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1017"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1463"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>When specific dimension is adapting to children size, will use max child dimension if False,
@@ -3815,7 +3867,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsAtEnd" data-uid="DrawnUi.Controls.SkiaCarousel.IsAtEnd">
   IsAtEnd
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1126"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1584"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3846,7 +3898,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsAtStart" data-uid="DrawnUi.Controls.SkiaCarousel.IsAtStart">
   IsAtStart
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1579"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3877,7 +3929,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsLooped" data-uid="DrawnUi.Controls.SkiaCarousel.IsLooped">
   IsLooped
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1033"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1479"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>UNIMPLEMENTED YET</p>
@@ -3909,7 +3961,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsRightToLeft" data-uid="DrawnUi.Controls.SkiaCarousel.IsRightToLeft">
   IsRightToLeft
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1249"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1705"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>TODO</p>
@@ -3941,7 +3993,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsUserFocused" data-uid="DrawnUi.Controls.SkiaCarousel.IsUserFocused">
   IsUserFocused
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1283"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1739"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3972,7 +4024,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsUserPanning" data-uid="DrawnUi.Controls.SkiaCarousel.IsUserPanning">
   IsUserPanning
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1284"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1740"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4003,7 +4055,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_IsVertical" data-uid="DrawnUi.Controls.SkiaCarousel.IsVertical">
   IsVertical
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1049"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1495"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Orientation of the carousel</p>
@@ -4035,7 +4087,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ItemsVisibility" data-uid="DrawnUi.Controls.SkiaCarousel.ItemsVisibility">
   ItemsVisibility
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L198"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4066,7 +4118,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_LastIndex" data-uid="DrawnUi.Controls.SkiaCarousel.LastIndex">
   LastIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1186"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1642"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4097,7 +4149,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_LastScrollProgress" data-uid="DrawnUi.Controls.SkiaCarousel.LastScrollProgress">
   LastScrollProgress
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L364"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L534"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4128,7 +4180,7 @@ If true, requires MeasureAllItems to be set to all items.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_LinearSpeedMs" data-uid="DrawnUi.Controls.SkiaCarousel.LinearSpeedMs">
   LinearSpeedMs
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1178"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1634"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How long would a whole auto-sliding take, if <code>Bounces</code> is <code>False</code>.
@@ -4162,7 +4214,7 @@ For bouncing carousel</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_MaxIndex" data-uid="DrawnUi.Controls.SkiaCarousel.MaxIndex">
   MaxIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L792"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1167"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4193,7 +4245,7 @@ For bouncing carousel</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_PreloadNeighboors" data-uid="DrawnUi.Controls.SkiaCarousel.PreloadNeighboors">
   PreloadNeighboors
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1000"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1446"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether should preload neighboors sides cells even when they are hidden, to preload images etc.. Default is true. Beware set this to False if you have complex layouts otherwise rendering might be slow.</p>
@@ -4225,7 +4277,7 @@ For bouncing carousel</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_SafeIndex" data-uid="DrawnUi.Controls.SkiaCarousel.SafeIndex">
   SafeIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1096"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1542"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will be updated on MainThread to safely work with bindings,
@@ -4258,7 +4310,7 @@ this a read-only property returning SelectingIndex in a thread-safe way;</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ScrollAmount" data-uid="DrawnUi.Controls.SkiaCarousel.ScrollAmount">
   ScrollAmount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L328"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L498"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Scroll amount from 0 to 1 of the current (SelectedIndex) slide. Another similar but different property would be ScrollProgress. This is not linear as SelectedIndex changes earlier than 0 or 1 are attained.</p>
@@ -4290,7 +4342,7 @@ this a read-only property returning SelectingIndex in a thread-safe way;</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ScrollProgress" data-uid="DrawnUi.Controls.SkiaCarousel.ScrollProgress">
   ScrollProgress
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L349"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L519"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Scroll progress from 0 to (numberOfSlides-1).
@@ -4324,7 +4376,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_SelectedIndex" data-uid="DrawnUi.Controls.SkiaCarousel.SelectedIndex">
   SelectedIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1217"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1673"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Zero-based index of the currently selected slide</p>
@@ -4356,7 +4408,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_SidesOffset" data-uid="DrawnUi.Controls.SkiaCarousel.SidesOffset">
   SidesOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1264"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1720"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Basically size margins of every slide, offset from the side of the carousel. Another similar but different property to use would be Spacing between slides.</p>
@@ -4384,11 +4436,74 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
 
 
+  <a id="DrawnUi_Controls_SkiaCarousel_SnapPointsVirtual_" data-uid="DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_SnapPointsVirtual" data-uid="DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual">
+  SnapPointsVirtual
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1416"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected List&lt;SkiaCarousel.SnapPoint&gt; SnapPointsVirtual { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="DrawnUi.Controls.SkiaCarousel.html">SkiaCarousel</a>.<a class="xref" href="DrawnUi.Controls.SkiaCarousel.SnapPoint.html">SnapPoint</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Controls_SkiaCarousel_SwipeSpeed_" data-uid="DrawnUi.Controls.SkiaCarousel.SwipeSpeed*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_SwipeSpeed" data-uid="DrawnUi.Controls.SkiaCarousel.SwipeSpeed">
+  SwipeSpeed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1431"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Used inside ScrollToOffset to control the speed</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double SwipeSpeed { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaCarousel_TransitionProgress_" data-uid="DrawnUi.Controls.SkiaCarousel.TransitionProgress*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_TransitionProgress" data-uid="DrawnUi.Controls.SkiaCarousel.TransitionProgress">
   TransitionProgress
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L366"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L536"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4419,7 +4534,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_VelocityAccumulator" data-uid="DrawnUi.Controls.SkiaCarousel.VelocityAccumulator">
   VelocityAccumulator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1290"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1746"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4486,7 +4601,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_AdaptChildren" data-uid="DrawnUi.Controls.SkiaCarousel.AdaptChildren">
   AdaptChildren()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L901"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1282"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Set children layout options according to our settings. Not used for template case.</p>
@@ -4513,7 +4628,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_AdaptTemplate_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Controls.SkiaCarousel.AdaptTemplate(DrawnUi.Draw.SkiaControl)">
   AdaptTemplate(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L389"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L559"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4577,7 +4692,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ApplyDynamicSize_System_Int32_" data-uid="DrawnUi.Controls.SkiaCarousel.ApplyDynamicSize(System.Int32)">
   ApplyDynamicSize(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1056"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1502"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4608,7 +4723,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ApplyIndex_System_Boolean_" data-uid="DrawnUi.Controls.SkiaCarousel.ApplyIndex(System.Boolean)">
   ApplyIndex(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L264"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4637,18 +4752,23 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <a id="DrawnUi_Controls_SkiaCarousel_ApplyOptions_" data-uid="DrawnUi.Controls.SkiaCarousel.ApplyOptions*"></a>
 
-  <h3 id="DrawnUi_Controls_SkiaCarousel_ApplyOptions" data-uid="DrawnUi.Controls.SkiaCarousel.ApplyOptions">
-  ApplyOptions()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L630"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Controls_SkiaCarousel_ApplyOptions_System_Boolean_" data-uid="DrawnUi.Controls.SkiaCarousel.ApplyOptions(System.Boolean)">
+  ApplyOptions(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L978"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void ApplyOptions()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void ApplyOptions(bool initialize)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>initialize</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -4665,7 +4785,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ApplyPosition_System_Numerics_Vector2_" data-uid="DrawnUi.Controls.SkiaCarousel.ApplyPosition(System.Numerics.Vector2)">
   ApplyPosition(Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L239"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will translate child and raise appearing/disappearing events</p>
@@ -4697,7 +4817,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_CalculateChildPosition_System_Numerics_Vector2_System_Int32_System_Int32_" data-uid="DrawnUi.Controls.SkiaCarousel.CalculateChildPosition(System.Numerics.Vector2,System.Int32,System.Int32)">
   CalculateChildPosition(Vector2, int, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L485"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L658"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4737,7 +4857,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_CheckConstraints" data-uid="DrawnUi.Controls.SkiaCarousel.CheckConstraints">
   CheckConstraints()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L731"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1106"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4759,11 +4879,42 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
 
 
+  <a id="DrawnUi_Controls_SkiaCarousel_CheckTransitionEnded_" data-uid="DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_CheckTransitionEnded" data-uid="DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded">
+  CheckTransitionEnded()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L995"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool CheckTransitionEnded()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaCarousel_CreateContentFromTemplate_" data-uid="DrawnUi.Controls.SkiaCarousel.CreateContentFromTemplate*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_CreateContentFromTemplate" data-uid="DrawnUi.Controls.SkiaCarousel.CreateContentFromTemplate">
   CreateContentFromTemplate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L421"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L591"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4794,7 +4945,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_FindNearestAnchorInternal_System_Numerics_Vector2_System_Numerics_Vector2_" data-uid="DrawnUi.Controls.SkiaCarousel.FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)">
   FindNearestAnchorInternal(Vector2, Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L976"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1393"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4828,11 +4979,64 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
 
 
+  <a id="DrawnUi_Controls_SkiaCarousel_FixIndex_" data-uid="DrawnUi.Controls.SkiaCarousel.FixIndex*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_FixIndex" data-uid="DrawnUi.Controls.SkiaCarousel.FixIndex">
+  FixIndex()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L246"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void FixIndex()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Controls_SkiaCarousel_FixPosition_" data-uid="DrawnUi.Controls.SkiaCarousel.FixPosition*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_FixPosition" data-uid="DrawnUi.Controls.SkiaCarousel.FixPosition">
+  FixPosition()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L760"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Set true position if inside virtual for IsLooped</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void FixPosition()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaCarousel_GetContentOffsetBounds_" data-uid="DrawnUi.Controls.SkiaCarousel.GetContentOffsetBounds*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_GetContentOffsetBounds" data-uid="DrawnUi.Controls.SkiaCarousel.GetContentOffsetBounds">
   GetContentOffsetBounds()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L675"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1050"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>There are the bounds the scroll offset can go to.. This are NOT the bounds of the whole content.</p>
@@ -4864,7 +5068,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_GetTemplatesPoolLimit" data-uid="DrawnUi.Controls.SkiaCarousel.GetTemplatesPoolLimit">
   GetTemplatesPoolLimit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L940"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1321"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4895,7 +5099,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_GetTemplatesPoolPrefill" data-uid="DrawnUi.Controls.SkiaCarousel.GetTemplatesPoolPrefill">
   GetTemplatesPoolPrefill()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L949"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1330"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4922,11 +5126,80 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
 
 
+  <a id="DrawnUi_Controls_SkiaCarousel_GetVirtualAnchor_" data-uid="DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_GetVirtualAnchor_System_Numerics_Vector2_System_Numerics_Vector2_" data-uid="DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2,System.Numerics.Vector2)">
+  GetVirtualAnchor(Vector2, Vector2)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1387"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual SkiaCarousel.SnapPoint GetVirtualAnchor(Vector2 current, Vector2 velocity)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>current</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.vector2">Vector2</a></dt>
+    <dd></dd>
+    <dt><code>velocity</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.vector2">Vector2</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Controls.SkiaCarousel.html">SkiaCarousel</a>.<a class="xref" href="DrawnUi.Controls.SkiaCarousel.SnapPoint.html">SnapPoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Controls_SkiaCarousel_GetVirtualSnapPoints_" data-uid="DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_GetVirtualSnapPoints" data-uid="DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints">
+  GetVirtualSnapPoints()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1364"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual List&lt;SkiaCarousel.SnapPoint&gt; GetVirtualSnapPoints()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="DrawnUi.Controls.SkiaCarousel.html">SkiaCarousel</a>.<a class="xref" href="DrawnUi.Controls.SkiaCarousel.SnapPoint.html">SnapPoint</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaCarousel_GoNext_" data-uid="DrawnUi.Controls.SkiaCarousel.GoNext*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_GoNext" data-uid="DrawnUi.Controls.SkiaCarousel.GoNext">
   GoNext()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1101"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1547"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4952,7 +5225,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_GoPrev" data-uid="DrawnUi.Controls.SkiaCarousel.GoPrev">
   GoPrev()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1563"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4978,7 +5251,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_InitializeChildren" data-uid="DrawnUi.Controls.SkiaCarousel.InitializeChildren">
   InitializeChildren()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L814"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1189"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>We expect this to be called after this alyout is invalidated</p>
@@ -5005,7 +5278,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnChildAdded_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Controls.SkiaCarousel.OnChildAdded(DrawnUi.Draw.SkiaControl)">
   OnChildAdded(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L741"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1116"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5036,7 +5309,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnChildrenInitialized" data-uid="DrawnUi.Controls.SkiaCarousel.OnChildrenInitialized">
   OnChildrenInitialized()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L890"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1271"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5062,7 +5335,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnDisposing" data-uid="DrawnUi.Controls.SkiaCarousel.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L177"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -5089,7 +5362,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnItemSourceChanged" data-uid="DrawnUi.Controls.SkiaCarousel.OnItemSourceChanged">
   OnItemSourceChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L465"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L635"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5115,7 +5388,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnLayoutChanged" data-uid="DrawnUi.Controls.SkiaCarousel.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L751"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1126"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5141,7 +5414,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnScrollProgressChanged" data-uid="DrawnUi.Controls.SkiaCarousel.OnScrollProgressChanged">
   OnScrollProgressChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L362"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5167,7 +5440,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnSelectedIndexChanged_System_Int32_" data-uid="DrawnUi.Controls.SkiaCarousel.OnSelectedIndexChanged(System.Int32)">
   OnSelectedIndexChanged(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1131"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1589"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5198,7 +5471,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_OnTemplatesAvailable" data-uid="DrawnUi.Controls.SkiaCarousel.OnTemplatesAvailable">
   OnTemplatesAvailable()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L333"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This might be called from background thread if we set InitializeTemplatesInBackgroundDelay true</p>
@@ -5221,11 +5494,38 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
 
 
+  <a id="DrawnUi_Controls_SkiaCarousel_OnTransitionChanged_" data-uid="DrawnUi.Controls.SkiaCarousel.OnTransitionChanged*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_OnTransitionChanged" data-uid="DrawnUi.Controls.SkiaCarousel.OnTransitionChanged">
+  OnTransitionChanged()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L774"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Invokes TransitionChanged event</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnTransitionChanged()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaCarousel_ProcessGestures_" data-uid="DrawnUi.Controls.SkiaCarousel.ProcessGestures*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Controls.SkiaCarousel.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1292"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1748"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5263,7 +5563,7 @@ Calculated as (for horizontal): CurrentPosition.X / SnapPoints.Last().X</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_RenderViewsList_DrawnUi_Draw_DrawingContext_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__" data-uid="DrawnUi.Controls.SkiaCarousel.RenderViewsList(DrawnUi.Draw.DrawingContext,System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})">
   RenderViewsList(DrawingContext, IEnumerable&lt;SkiaControl&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L366"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Use to render Absolute layout. Base method is not supporting templates, override it to implemen your logic.
@@ -5338,7 +5638,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ScrollToNearestAnchor_System_Numerics_Vector2_System_Numerics_Vector2_" data-uid="DrawnUi.Controls.SkiaCarousel.ScrollToNearestAnchor(System.Numerics.Vector2,System.Numerics.Vector2)">
   ScrollToNearestAnchor(Vector2, Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5371,7 +5671,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ScrollToOffset_System_Numerics_Vector2_System_Numerics_Vector2_System_Boolean_" data-uid="DrawnUi.Controls.SkiaCarousel.ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)">
   ScrollToOffset(Vector2, Vector2, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L514"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L788"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5407,11 +5707,50 @@ Returns number of drawn children.</p>
 
 
 
+  <a id="DrawnUi_Controls_SkiaCarousel_SelectNextAnchor_" data-uid="DrawnUi.Controls.SkiaCarousel.SelectNextAnchor*"></a>
+
+  <h3 id="DrawnUi_Controls_SkiaCarousel_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_" data-uid="DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)">
+  SelectNextAnchor(Vector2, Vector2)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Return an anchor depending on direction and strength of of the velocity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Vector2 SelectNextAnchor(Vector2 origin, Vector2 velocity)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>origin</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.vector2">Vector2</a></dt>
+    <dd></dd>
+    <dt><code>velocity</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.vector2">Vector2</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.vector2">Vector2</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_SkiaCarousel_SetupViewport_" data-uid="DrawnUi.Controls.SkiaCarousel.SetupViewport*"></a>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_SetupViewport" data-uid="DrawnUi.Controls.SkiaCarousel.SetupViewport">
   SetupViewport()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L758"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L1133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5437,7 +5776,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_UpdateReportedPosition" data-uid="DrawnUi.Controls.SkiaCarousel.UpdateReportedPosition">
   UpdateReportedPosition()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L293"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5466,7 +5805,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ItemAppearing" data-uid="DrawnUi.Controls.SkiaCarousel.ItemAppearing">
   ItemAppearing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L191"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5496,7 +5835,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_ItemDisappearing" data-uid="DrawnUi.Controls.SkiaCarousel.ItemDisappearing">
   ItemDisappearing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L193"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5526,7 +5865,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_SelectedIndexChanged" data-uid="DrawnUi.Controls.SkiaCarousel.SelectedIndexChanged">
   SelectedIndexChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L189"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5556,7 +5895,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Controls_SkiaCarousel_Stopped" data-uid="DrawnUi.Controls.SkiaCarousel.Stopped">
   Stopped
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs/#L196"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

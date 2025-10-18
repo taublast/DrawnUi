@@ -7,6 +7,7 @@
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
     xmlns:newsFeed="clr-namespace:DrawnUI.Tutorials.NewsFeed"
     xmlns:viewModels="clr-namespace:DrawnUI.Tutorials.NewsFeed.ViewModels"
+    xmlns:global="clr-namespace:"
     x:DataType="viewModels:NewsViewModel"
     Title="Recycled Cells Scroller"
     x:Name="ThisPage">
@@ -15,7 +16,7 @@
 
         <draw:Canvas
             BackgroundColor="Gainsboro"
-            Gestures="Enabled"
+            Gestures="Lock"
             HorizontalOptions="Fill"
             RenderingMode="Accelerated"
             Tag="Main"
@@ -31,12 +32,21 @@
                     Orientation="Vertical"
                     FrictionScrolled="0.5"
                     ChangeVelocityScrolled="1.35"
+
+                    RefreshEnabled="True"
+                    RefreshShowDistance="100"
+                    RefreshDistanceLimit="120"
+                    IsRefreshing="{Binding IsRefreshing}"
                     RefreshCommand="{Binding RefreshCommand}"
+
                     LoadMoreCommand="{Binding LoadMoreCommand}"
                     LoadMoreOffset="500"
-                    RefreshEnabled="True"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill">
+
+                    <draw:SkiaScroll.RefreshIndicator>
+                        <newsFeed:AppActivityIndicator UseCache="Operations"/>
+                    </draw:SkiaScroll.RefreshIndicator>
 
                     <draw:SkiaScroll.Header>
 
@@ -85,14 +95,14 @@
 
                 <!-- uncomment for FPS info -->
 
-                <!--<draw:SkiaLabelFps
+                <draw:SkiaLabelFps
                     Margin="0,0,4,24"
                     BackgroundColor="DarkRed"
                     HorizontalOptions="End"
                     Rotation="-45"
                     TextColor="White"
                     VerticalOptions="End"
-                    ZIndex="100"/>-->
+                    ZIndex="100"/>
 
             </draw:SkiaLayout>
 

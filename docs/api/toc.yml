@@ -81,6 +81,9 @@ items:
   - uid: DrawnUi.Controls.SkiaCarousel
     name: SkiaCarousel
     type: Class
+  - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    name: SkiaCarousel.SnapPoint
+    type: Class
   - uid: DrawnUi.Controls.SkiaDecoratedGrid
     name: SkiaDecoratedGrid
     type: Class
@@ -478,6 +481,9 @@ items:
   - uid: DrawnUi.Draw.ISkiaControl
     name: ISkiaControl
     type: Interface
+  - uid: DrawnUi.Draw.ISkiaDisposable
+    name: ISkiaDisposable
+    type: Interface
   - uid: DrawnUi.Draw.ISkiaDrawable
     name: ISkiaDrawable
     type: Interface
@@ -738,6 +744,9 @@ items:
     type: Class
   - uid: DrawnUi.Draw.SkiaButton
     name: SkiaButton
+    type: Class
+  - uid: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+    name: SkiaButton.ButtonElevationShadowEffect
     type: Class
   - uid: DrawnUi.Draw.SkiaButton.ButtonLabel
     name: SkiaButton.ButtonLabel
@@ -1069,6 +1078,9 @@ items:
   - uid: DrawnUi.Draw.UnderdampedSpringTimingVectorParameters
     name: UnderdampedSpringTimingVectorParameters
     type: Struct
+  - uid: DrawnUi.Draw.UnicodeBlock
+    name: UnicodeBlock
+    type: Enum
   - uid: DrawnUi.Draw.UsedGlyph
     name: UsedGlyph
     type: Struct

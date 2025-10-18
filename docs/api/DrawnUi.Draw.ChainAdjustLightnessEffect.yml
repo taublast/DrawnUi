@@ -81,6 +81,7 @@ items:
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
   extensionMethods:
+  - DrawnUi.Draw.ChainAdjustLightnessEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ChainAdjustLightnessEffect@)
   - DrawnUi.Draw.ChainAdjustLightnessEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
 - uid: DrawnUi.Draw.ChainAdjustLightnessEffect.ValueProperty
@@ -1261,6 +1262,59 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object.tostring
   - name: (
   - name: )
+- uid: DrawnUi.Draw.ChainAdjustLightnessEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ChainAdjustLightnessEffect@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<ChainAdjustLightnessEffect>(ChainAdjustLightnessEffect, out ChainAdjustLightnessEffect)
+  nameWithType: FluentExtensions.Assign<ChainAdjustLightnessEffect>(ChainAdjustLightnessEffect, out ChainAdjustLightnessEffect)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<DrawnUi.Draw.ChainAdjustLightnessEffect>(DrawnUi.Draw.ChainAdjustLightnessEffect, out DrawnUi.Draw.ChainAdjustLightnessEffect)
+  nameWithType.vb: FluentExtensions.Assign(Of ChainAdjustLightnessEffect)(ChainAdjustLightnessEffect, ChainAdjustLightnessEffect)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of DrawnUi.Draw.ChainAdjustLightnessEffect)(DrawnUi.Draw.ChainAdjustLightnessEffect, DrawnUi.Draw.ChainAdjustLightnessEffect)
+  name.vb: Assign(Of ChainAdjustLightnessEffect)(ChainAdjustLightnessEffect, ChainAdjustLightnessEffect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ChainAdjustLightnessEffect,DrawnUi.Draw.ChainAdjustLightnessEffect@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+    name: ChainAdjustLightnessEffect
+    href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+    name: ChainAdjustLightnessEffect
+    href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+    name: ChainAdjustLightnessEffect
+    href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ChainAdjustLightnessEffect,DrawnUi.Draw.ChainAdjustLightnessEffect@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+    name: ChainAdjustLightnessEffect
+    href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+    name: ChainAdjustLightnessEffect
+    href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+    name: ChainAdjustLightnessEffect
+    href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
+  - name: )
 - uid: DrawnUi.Draw.ChainAdjustLightnessEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   parent: DrawnUi.Draw.ThemeBindings
@@ -1452,6 +1506,52 @@ references:
     name: ComponentModel
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<T>(T, out T)
+  nameWithType: FluentExtensions.Assign<T>(T, out T)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<T>(T, out T)
+  nameWithType.vb: FluentExtensions.Assign(Of T)(T, T)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of T)(T, T)
+  name.vb: Assign(Of T)(T, T)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions
+  commentId: T:DrawnUi.Draw.FluentExtensions
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.FluentExtensions.html
+  name: FluentExtensions
+  nameWithType: FluentExtensions
+  fullName: DrawnUi.Draw.FluentExtensions
 - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   isExternal: true

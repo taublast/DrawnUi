@@ -74,7 +74,7 @@ public class TextSpan : Element, IDisposable //we subclassed Element to be able 
                 if (AutoFindFont && !_fontAutoSet && TypeFace != null)
                 {
                     FontDetectedWith = 0;
-                    var typeFace = SkiaFontManager.Manager.MatchCharacter(glyph.Symbol);
+                    var typeFace = SkiaFontManager.MatchCharacter(glyph.Symbol);
                     if (typeFace != null)
                     {
                         FontDetectedWith = glyph.Symbol;

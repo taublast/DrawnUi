@@ -109,7 +109,7 @@
         /// <param name="child"></param>
         public virtual void InvalidateByChild(SkiaControl child)
         {
-            DirtyChildrenTracker.Add(child);
+            TrackChildAsDirty(child);
 
             Invalidate();
         }
@@ -135,10 +135,10 @@
 
         protected HashSet<SkiaControl> DirtyChildrenInternal { get; set; } = new();
 
-        public virtual void UpdateByChild(SkiaControl control)
+        public virtual void UpdateByChild(SkiaControl child)
         {
             if (UsingCacheType == SkiaCacheType.ImageComposite)
-                DirtyChildrenTracker.Add(control);
+                TrackChildAsDirty(child);
 
             UpdateInternal();
         }

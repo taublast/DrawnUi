@@ -16,7 +16,9 @@ items:
   - DrawnUi.Draw.CachedObject.GetBitmap
   - DrawnUi.Draw.CachedObject.Id
   - DrawnUi.Draw.CachedObject.Image
+  - DrawnUi.Draw.CachedObject.IsAlive
   - DrawnUi.Draw.CachedObject.IsDisposed
+  - DrawnUi.Draw.CachedObject.LastDrawnAt
   - DrawnUi.Draw.CachedObject.Picture
   - DrawnUi.Draw.CachedObject.PreserveSourceFromDispose
   - DrawnUi.Draw.CachedObject.RecordingArea
@@ -45,11 +47,12 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: 'public class CachedObject : IDisposable'
-    content.vb: Public Class CachedObject Implements IDisposable
+    content: 'public class CachedObject : ISkiaDisposable, IDisposable'
+    content.vb: Public Class CachedObject Implements ISkiaDisposable, IDisposable
   inheritance:
   - System.Object
   implements:
+  - DrawnUi.Draw.ISkiaDisposable
   - System.IDisposable
   inheritedMembers:
   - System.Object.Equals(System.Object)
@@ -192,6 +195,33 @@ items:
       description: ''
     content.vb: Public Sub Draw(canvas As SKCanvas, destination As SKRect, paint As SKPaint)
   overload: DrawnUi.Draw.CachedObject.Draw*
+- uid: DrawnUi.Draw.CachedObject.LastDrawnAt
+  commentId: F:DrawnUi.Draw.CachedObject.LastDrawnAt
+  id: LastDrawnAt
+  parent: DrawnUi.Draw.CachedObject
+  langs:
+  - csharp
+  - vb
+  name: LastDrawnAt
+  nameWithType: CachedObject.LastDrawnAt
+  fullName: DrawnUi.Draw.CachedObject.LastDrawnAt
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LastDrawnAt
+    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    startLine: 72
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKRect LastDrawnAt
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public LastDrawnAt As SKRect
 - uid: DrawnUi.Draw.CachedObject.Draw(SkiaSharp.SKCanvas,System.Single,System.Single,SkiaSharp.SKPaint)
   commentId: M:DrawnUi.Draw.CachedObject.Draw(SkiaSharp.SKCanvas,System.Single,System.Single,SkiaSharp.SKPaint)
   id: Draw(SkiaSharp.SKCanvas,System.Single,System.Single,SkiaSharp.SKPaint)
@@ -210,7 +240,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 76
+    startLine: 81
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -254,7 +284,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 97
+    startLine: 104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -292,7 +322,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 105
+    startLine: 112
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -330,7 +360,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 114
+    startLine: 121
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -357,7 +387,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SurfaceIsRecycled
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 120
+    startLine: 127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -388,7 +418,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Picture
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 122
+    startLine: 129
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -417,7 +447,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 124
+    startLine: 131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -446,7 +476,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Bounds
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 126
+    startLine: 133
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -475,7 +505,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecordingArea
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 128
+    startLine: 135
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -504,7 +534,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 130
+    startLine: 137
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -533,7 +563,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 132
+    startLine: 139
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -563,7 +593,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 150
+    startLine: 159
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -592,7 +622,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 152
+    startLine: 161
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -621,7 +651,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreserveSourceFromDispose
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 154
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -650,7 +680,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetBitmap
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 156
+    startLine: 165
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -678,7 +708,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 161
+    startLine: 170
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -707,7 +737,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Children
     path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 163
+    startLine: 172
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -718,6 +748,38 @@ items:
       type: System.Collections.Generic.List{DrawnUi.Draw.VisualLayer}
     content.vb: Public Property Children As List(Of VisualLayer)
   overload: DrawnUi.Draw.CachedObject.Children*
+- uid: DrawnUi.Draw.CachedObject.IsAlive
+  commentId: P:DrawnUi.Draw.CachedObject.IsAlive
+  id: IsAlive
+  parent: DrawnUi.Draw.CachedObject
+  langs:
+  - csharp
+  - vb
+  name: IsAlive
+  nameWithType: CachedObject.IsAlive
+  fullName: DrawnUi.Draw.CachedObject.IsAlive
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsAlive
+    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    startLine: 174
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: public ObjectAliveType IsAlive { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ObjectAliveType
+    content.vb: Public Property IsAlive As ObjectAliveType
+  overload: DrawnUi.Draw.CachedObject.IsAlive*
+  implements:
+  - DrawnUi.Draw.ISkiaDisposable.IsAlive
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -752,6 +814,13 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
+- uid: DrawnUi.Draw.ISkiaDisposable
+  commentId: T:DrawnUi.Draw.ISkiaDisposable
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaDisposable.html
+  name: ISkiaDisposable
+  nameWithType: ISkiaDisposable
+  fullName: DrawnUi.Draw.ISkiaDisposable
 - uid: System.IDisposable
   commentId: T:System.IDisposable
   parent: System
@@ -1426,3 +1495,23 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: DrawnUi.Draw.CachedObject.IsAlive*
+  commentId: Overload:DrawnUi.Draw.CachedObject.IsAlive
+  href: DrawnUi.Draw.CachedObject.html#DrawnUi_Draw_CachedObject_IsAlive
+  name: IsAlive
+  nameWithType: CachedObject.IsAlive
+  fullName: DrawnUi.Draw.CachedObject.IsAlive
+- uid: DrawnUi.Draw.ISkiaDisposable.IsAlive
+  commentId: P:DrawnUi.Draw.ISkiaDisposable.IsAlive
+  parent: DrawnUi.Draw.ISkiaDisposable
+  href: DrawnUi.Draw.ISkiaDisposable.html#DrawnUi_Draw_ISkiaDisposable_IsAlive
+  name: IsAlive
+  nameWithType: ISkiaDisposable.IsAlive
+  fullName: DrawnUi.Draw.ISkiaDisposable.IsAlive
+- uid: DrawnUi.Draw.ObjectAliveType
+  commentId: T:DrawnUi.Draw.ObjectAliveType
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ObjectAliveType.html
+  name: ObjectAliveType
+  nameWithType: ObjectAliveType
+  fullName: DrawnUi.Draw.ObjectAliveType

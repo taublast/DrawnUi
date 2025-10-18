@@ -196,8 +196,7 @@ namespace DrawnUi.Controls
                 if (b is SkiaDrawer control)
                 {
                     control.IsOpenChanged?.Invoke(control, (bool)n);
-                    control.ApplyOptions();
-                    //Trace.WriteLine($"Drawer {(bool)n}");
+                    control.ApplyOptions(false);
                 }
             });
 
@@ -270,12 +269,19 @@ namespace DrawnUi.Controls
                 };
                 AnimatorRange = new(this)
                 {
-                    OnVectorUpdated = (value) => { ApplyPosition(value); },
-                    OnStop = () => { Stopped?.Invoke(this, CurrentPosition); }
+                    OnVectorUpdated = (
+                        value) =>
+                    {
+                        ApplyPosition(value);
+                    },
+                    OnStop = () =>
+                    {
+                        Stopped?.Invoke(this, CurrentPosition);
+                    }
                 };
             }
 
-            ApplyOptions();
+            ApplyOptions(true);
         }
 
         protected override void OnLayoutChanged()
@@ -411,7 +417,7 @@ namespace DrawnUi.Controls
             base.ApplyPosition(position);
         }
 
-        public override void ApplyOptions()
+        public override void ApplyOptions(bool initialize)
         {
             if (Parent == null)
                 return;
@@ -427,11 +433,26 @@ namespace DrawnUi.Controls
 
             if (ItemsSource != null)
             {
-                SnapPoints = new List<Vector2>(ItemsSource.Count) { new(0, 0), hideContent };
+                if (Direction == DrawerDirection.FromLeft || Direction == DrawerDirection.FromRight)
+                {
+                    SnapPoints = new List<Vector2>(ItemsSource.Count) { new(0, hideContent.Y), hideContent };
+                }
+                else
+                {
+                    SnapPoints = new List<Vector2>(ItemsSource.Count) { new(hideContent.X, 0), hideContent };
+                }
             }
             else
             {
-                SnapPoints = new List<Vector2>() { new(0, 0), hideContent };
+                
+                if (Direction == DrawerDirection.FromLeft || Direction == DrawerDirection.FromRight)
+                {
+                    SnapPoints = new List<Vector2>() { new(0, hideContent.Y), hideContent };
+                }
+                else
+                {
+                    SnapPoints = new List<Vector2>() { new(hideContent.X, 0), hideContent };
+                }
             }
 
             ContentOffsetBounds = GetContentOffsetBounds();

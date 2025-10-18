@@ -351,7 +351,7 @@ public partial class SkiaScroll
         if (args.Type == TouchActionResult.Wheel && !ZoomLocked)
         {
             IsUserFocused = true;
-            Debug.WriteLine($"Wheel: {args.Event.Wheel.Scale}");
+            //Debug.WriteLine($"Wheel: {args.Event.Wheel.Scale}");
             var zoomed = SetZoom(args.Event.Wheel.Scale);
             consumed = this;
         }
@@ -643,7 +643,7 @@ public partial class SkiaScroll
 
                 case TouchActionResult.Wheel:
 
-                    Debug.WriteLine($"Wheel {args.Event.Wheel.Delta}");
+                    //Debug.WriteLine($"Wheel {args.Event.Wheel.Delta}");
 
                     //just in case you might want to know where is the mouse cursor
                     var point = TranslateInputOffsetToPixels(args.Event.Wheel.Center, apply.ChildOffset);

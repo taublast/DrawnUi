@@ -1,6 +1,5 @@
 ﻿using System.Collections.Concurrent;
 using System.Resources;
-using HarfBuzzSharp;
 using SKBlendMode = SkiaSharp.SKBlendMode;
 using SKCanvas = SkiaSharp.SKCanvas;
 using SKClipOperation = SkiaSharp.SKClipOperation;
@@ -22,16 +21,58 @@ namespace DrawnUi.Draw
     public partial class SkiaControl :
         ISkiaGestureListener,
         IHasAfterEffects,
-        ISkiaControl
+        ISkiaControl, ISkiaDisposable
     {
         public SkiaControl()
         {
             Init();
         }
 
+        /// <summary>
+        /// For internat custom logic, use IsHovered for usual use.
+        /// </summary>
+        /// <param name="state"></param>
+        protected virtual void SetHover(bool state)
+        {
+            if (Superview is Canvas canvas)
+            {
+                if (state)
+                    canvas.HasHover = this;
+                else if (canvas.HasHover == this)
+                    canvas.HasHover = null;
+            }
+            else
+            {
+                OnHover(state);
+            }
+        }
+
+        public virtual bool OnHover(bool state)
+        {
+            return state;
+        }
+
         public virtual bool OnFocusChanged(bool focus)
         {
             return false;
+        }
+
+        public static readonly BindableProperty IsHoveredProperty = BindableProperty.Create(nameof(IsHovered),
+            typeof(bool),
+            typeof(SkiaControl),
+            false,
+            propertyChanged: (bindable, value, newValue) =>
+            {
+                if (bindable is SkiaControl control)
+                {
+                    control.SetHover((bool)newValue);
+                }
+            });
+
+        public bool IsHovered
+        {
+            get { return (bool)GetValue(IsHoveredProperty); }
+            set { SetValue(IsHoveredProperty, value); }
         }
 
         public VisualLayer? VisualLayer { get; set; }
@@ -351,18 +392,18 @@ namespace DrawnUi.Draw
 
         protected virtual void SetDefaultMinimumContentSize(double width, double height)
         {
-            if (width > 0 && WidthRequest<0)
+            if (width > 0 && WidthRequest < 0)
             {
                 if (this.MinimumWidthRequest < 0 && HorizontalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumWidthRequest < 0))
-                    this.MinimumWidthRequest = width;
+                    this.MinimumWidthRequest = width + Margins.HorizontalThickness;
             }
 
-            if (height > 0 && HeightRequest<0)
+            if (height > 0 && HeightRequest < 0)
             {
                 if (this.MinimumHeightRequest < 0 && VerticalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumHeightRequest < 0))
-                    this.MinimumHeightRequest = height;
+                    this.MinimumHeightRequest = height+Margins.VerticalThickness;
             }
         }
 
@@ -420,33 +461,6 @@ namespace DrawnUi.Draw
         /// <param name="transform"></param>
         public virtual void SetVisualTransform(VisualTransform transform)
         {
-        }
-
-        /// <summary>
-        /// Apply all postponed invalidation other logic that was postponed until
-        /// the first draw for optimization.
-        /// Use this for special code-behind cases, like tests etc,
-        /// if you cannot wait until the first Draw().
-        /// In this version this affects ItemsSource only.
-        /// </summary>
-        public void CommitInvalidations()
-        {
-            foreach (var invalidation in PostponedInvalidations)
-            {
-                invalidation.Value.Invoke();
-            }
-
-            PostponedInvalidations.Clear();
-        }
-
-        public virtual void SuperViewChanged()
-        {
-            if (Superview != null)
-            {
-                CommitInvalidations();
-                if (Super.Multithreaded && CanUseCacheDoubleBuffering)
-                    Update();
-            }
         }
 
         /// <summary>
@@ -790,10 +804,11 @@ namespace DrawnUi.Draw
         /// <param name="cancel"></param>
         /// <param name="applyEndValueOnStop"></param>
         /// <returns></returns>
-        public Task AnimateRangeAsync(Action<double> callback, double start, double end, double length = 250,
+        public Task AnimateRangeAsync(Action<double> callback,
+            double start, double end, double length = 250,
             Easing easing = null,
             CancellationToken cancel = default,
-            bool applyEndValueOnStop = false)
+            bool applyEndValueOnStop = false, int delayMs = 0)
         {
             RangeAnimator animator = null;
 
@@ -825,7 +840,7 @@ namespace DrawnUi.Draw
                         animator.Stop();
                     }
                 },
-                start, end, (uint)length, easing);
+                start, end, (uint)length, easing, delayMs);
 
             return tcs.Task;
         }
@@ -1084,12 +1099,12 @@ namespace DrawnUi.Draw
         {
             if (NeedAutoWidth && ContentSize.Units.Width > 0)
             {
-                widthRequestPts = ContentSize.Units.Width + Padding.Left + Padding.Right;
+                widthRequestPts = ContentSize.Units.Width + UsePadding.Left + UsePadding.Right;
             }
 
             if (NeedAutoHeight && ContentSize.Units.Height > 0)
             {
-                heightRequestPts = ContentSize.Units.Height + Padding.Top + Padding.Bottom;
+                heightRequestPts = ContentSize.Units.Height + UsePadding.Top + UsePadding.Bottom;
             }
 
             return new Size(widthRequestPts, heightRequestPts);
@@ -1352,7 +1367,8 @@ namespace DrawnUi.Draw
             typeof(bool), typeof(SkiaControl), false);
 
         /// <summary>
-        ///  If set to true will not not draw after VisualLayer is set and detected to be out of rendering bound. Useful for drawer contained elements and similar.
+        ///  If set to true will not draw after VisualLayer is set and detected to be out of rendering bound.
+        /// Useful for drawer contained elements and similar.
         /// </summary>
         public bool SkipRenderingOutOfBounds
         {
@@ -1854,7 +1870,7 @@ namespace DrawnUi.Draw
             nameof(AlignContentVertical),
             typeof(LayoutOptions),
             typeof(SkiaControl),
-            LayoutOptions.Start,
+            LayoutOptions.Center,
             propertyChanged: NeedInvalidateMeasure);
 
         public LayoutOptions AlignContentVertical
@@ -1867,7 +1883,7 @@ namespace DrawnUi.Draw
             nameof(AlignContentHorizontal),
             typeof(LayoutOptions),
             typeof(SkiaControl),
-            LayoutOptions.Start,
+            LayoutOptions.Center,
             propertyChanged: NeedInvalidateMeasure);
 
         public LayoutOptions AlignContentHorizontal
@@ -2591,14 +2607,15 @@ namespace DrawnUi.Draw
 
         public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding),
             typeof(Thickness),
-            typeof(SkiaControl), Thickness.Zero,
-            propertyChanged: NeedInvalidateMeasure);
+            typeof(SkiaControl), Thickness.Zero);
 
         public Thickness Padding
         {
             get { return (Thickness)GetValue(PaddingProperty); }
             set { SetValue(PaddingProperty, value); }
         }
+
+        public Thickness UsePadding { get; protected set; }
 
         public static readonly BindableProperty MarginProperty = BindableProperty.Create(nameof(Margin),
             typeof(Thickness),
@@ -2991,6 +3008,7 @@ namespace DrawnUi.Draw
         }
 
         public static TimeSpan DisposalDelay = TimeSpan.FromSeconds(3.5);
+
         public ObjectAliveType IsAlive { get; set; }
 
         public void DisposeObject()
@@ -3002,7 +3020,7 @@ namespace DrawnUi.Draw
         /// Dispose with needed delay. 
         /// </summary>
         /// <param name="disposable"></param>
-        public virtual void DisposeObject(IDisposable disposable)
+        public virtual void DisposeObject(IDisposable disposable, [CallerMemberName] string caller = null)
         {
             if (disposable != null)
             {
@@ -3019,7 +3037,7 @@ namespace DrawnUi.Draw
                 }
                 else
                 {
-                    if (disposable is SkiaControl skia)
+                    if (disposable is ISkiaDisposable skia)
                     {
                         skia.IsAlive = ObjectAliveType.BeingDisposed;
                     }
@@ -3029,14 +3047,14 @@ namespace DrawnUi.Draw
                         try
                         {
                             disposable?.Dispose();
-                            if (disposable is SkiaControl skia)
+                            if (disposable is ISkiaDisposable skia)
                             {
                                 skia.IsAlive = ObjectAliveType.Disposed;
                             }
                         }
                         catch (Exception e)
                         {
-                            Super.Log(e);
+                            Super.Log($"DisposeObject EXCEPTION from {caller} {e}");
                         }
                     });
                 }
@@ -3166,8 +3184,8 @@ namespace DrawnUi.Draw
 
         /// <summary>
         ///  destination in PIXELS, requests in UNITS. resulting Destination prop will be filed in PIXELS.
-        /// Not using Margins nor Padding
-        /// Children are responsible to apply Padding to their content and to apply Margin to destination when measuring and drawing
+        /// Not using Margins nor UsePadding
+        /// Children are responsible to apply UsePadding to their content and to apply Margin to destination when measuring and drawing
         /// </summary>
         /// <param name="destination">PIXELS</param>
         /// <param name="widthRequest">UNITS</param>
@@ -4609,10 +4627,10 @@ namespace DrawnUi.Draw
 
         public virtual SKRect GetMeasuringRectForChildren(float widthConstraint, float heightConstraint, double scale)
         {
-            var constraintLeft = (Padding.Left + Margins.Left) * scale;
-            var constraintRight = (Padding.Right + Margins.Right) * scale;
-            var constraintTop = (Padding.Top + Margins.Top) * scale;
-            var constraintBottom = (Padding.Bottom + Margins.Bottom) * scale;
+            var constraintLeft = (UsePadding.Left + Margins.Left) * scale;
+            var constraintRight = (UsePadding.Right + Margins.Right) * scale;
+            var constraintTop = (UsePadding.Top + Margins.Top) * scale;
+            var constraintBottom = (UsePadding.Bottom + Margins.Bottom) * scale;
 
             //SKRect rectForChild = new SKRect(0 + (float)constraintLeft,
             //    0 + (float)constraintTop,
@@ -4701,10 +4719,10 @@ namespace DrawnUi.Draw
 
         public SKRect GetDrawingRectForChildren(SKRect destination, double scale)
         {
-            var constraintLeft = (Padding.Left + Margins.Left) * scale;
-            var constraintRight = (Padding.Right + Margins.Right) * scale;
-            var constraintTop = (Padding.Top + Margins.Top) * scale;
-            var constraintBottom = (Padding.Bottom + Margins.Bottom) * scale;
+            var constraintLeft = (UsePadding.Left + Margins.Left) * scale;
+            var constraintRight = (UsePadding.Right + Margins.Right) * scale;
+            var constraintTop = (UsePadding.Top + Margins.Top) * scale;
+            var constraintBottom = (UsePadding.Bottom + Margins.Bottom) * scale;
 
 
             SKRect rectForChild = new SKRect(
@@ -5649,7 +5667,7 @@ namespace DrawnUi.Draw
                 bool willRender = true;
                 if (SkipRenderingOutOfBounds && DrawingRect != SKRect.Empty)
                 {
-                    if (!VisualLayer.HitBoxWithTransforms.Pixels.IntersectsWith(ctx.Destination))
+                    if (VisualLayer != null && !VisualLayer.HitBoxWithTransforms.Pixels.IntersectsWith(ctx.Destination))
                     {
                         willRender = false;
                     }
@@ -5780,12 +5798,13 @@ namespace DrawnUi.Draw
         /// if key is not null will replace existing if any to void running different action with same key in same frame.
         /// </summary>
         /// <param name="action"></param>
-        public void SafeAction(Action action, long key=-1)
+        public void SafeAction(Action action, long key = -1)
         {
             if (key < 0)
             {
                 key = LongKeyGenerator.Next();
             }
+
             var super = this.Superview;
             if (super != null)
             {
@@ -6054,7 +6073,7 @@ namespace DrawnUi.Draw
                 if (child != null)
                 {
                     child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
-                    bool willDraw = true;
+                    bool inTree = true;
                     if (child.CanDraw) //still visible 
                     {
                         if (IsRenderingWithComposition)
@@ -6065,7 +6084,10 @@ namespace DrawnUi.Draw
                             }
                             else
                             {
-                                willDraw = false;
+                                //todo investigate if this helps or just slows us down
+                                child.Arrange(context.Destination, child.SizeRequest.Width,
+                                    child.SizeRequest.Height,
+                                    context.Scale);
                             }
                         }
                         else
@@ -6073,7 +6095,7 @@ namespace DrawnUi.Draw
                             child.Render(context);
                         }
 
-                        if (willDraw)
+                        if (inTree)
                         {
                             tree.Add(new SkiaControlWithRect(child,
                                 context.Destination,
@@ -6090,7 +6112,7 @@ namespace DrawnUi.Draw
             }
 
             // Clear dirty tracking since we've processed all changes
-            DirtyChildrenTracker.Clear();
+            ClearDirtyChildren();
 
             SetRenderingTree(tree);
 
@@ -6249,23 +6271,30 @@ namespace DrawnUi.Draw
 
         protected virtual void UpdateInternal()
         {
-            if (IsDisposing || IsDisposed)
-                return;
-
-            if (UpdateLocks > 0)
+            try
             {
-                _neededUpdate = true;
-                return;
+                if (IsDisposing || IsDisposed)
+                    return;
+
+                if (UpdateLocks > 0)
+                {
+                    _neededUpdate = true;
+                    return;
+                }
+
+                _neededUpdate = false;
+
+                NeedUpdateFrontCache = true;
+                NeedUpdate = true;
+
+                if (!WillNotUpdateParent)
+                {
+                    Parent?.UpdateByChild(this);
+                }
             }
-
-            _neededUpdate = false;
-
-            NeedUpdateFrontCache = true;
-            NeedUpdate = true;
-
-            if (!WillNotUpdateParent)
+            catch (Exception e)
             {
-                Parent?.UpdateByChild(this);
+                Super.Log(e);
             }
         }
 
@@ -6492,10 +6521,10 @@ namespace DrawnUi.Draw
 
         public virtual Thickness GetAllMarginsInPixels(float scale)
         {
-            var constraintLeft = Math.Round((Margins.Left + Padding.Left) * scale);
-            var constraintRight = Math.Round((Margins.Right + Padding.Right) * scale);
-            var constraintTop = Math.Round((Margins.Top + Padding.Top) * scale);
-            var constraintBottom = Math.Round((Margins.Bottom + Padding.Bottom) * scale);
+            var constraintLeft = Math.Round((Margins.Left + UsePadding.Left) * scale);
+            var constraintRight = Math.Round((Margins.Right + UsePadding.Right) * scale);
+            var constraintTop = Math.Round((Margins.Top + UsePadding.Top) * scale);
+            var constraintBottom = Math.Round((Margins.Bottom + UsePadding.Bottom) * scale);
             return new(constraintLeft, constraintTop, constraintRight, constraintBottom);
         }
 
@@ -6667,6 +6696,8 @@ namespace DrawnUi.Draw
             }
             else
             {
+                CalculateMargins();
+                CalculateSizeRequest();
                 NeedMeasure = true;
             }
         }
@@ -6736,6 +6767,49 @@ namespace DrawnUi.Draw
 
         static object lockViews = new();
 
+        /// <summary>
+        /// Apply all postponed invalidation other logic that was postponed until
+        /// the first draw for optimization.
+        /// Use this for special code-behind cases, like tests etc,
+        /// if you cannot wait until the first Draw().
+        /// In this version this affects ItemsSource only.
+        /// </summary>
+        public void CommitInvalidations()
+        {
+            foreach (var invalidation in PostponedInvalidations)
+            {
+                invalidation.Value.Invoke();
+            }
+
+            PostponedInvalidations.Clear();
+        }
+
+        public virtual void SuperViewChanged()
+        {
+            if (Superview != null)
+            {
+                CommitInvalidations();
+
+                bool needKick = false;
+                _lastAnimatorManager = Superview;
+                while (PendingUnattachedAnimators.TryTake(out var animator))
+                {
+                    Superview.AddAnimator(animator);
+                    animator.Start();
+                    needKick = true;
+                }
+
+                if (Super.Multithreaded && CanUseCacheDoubleBuffering)
+                    Update();
+                else if (needKick)
+                {
+                    Repaint();
+                }
+            }
+        }
+
+        protected ConcurrentBag<ISkiaAnimator> PendingUnattachedAnimators = new();
+
         #region Animation
 
         //public async Task PlayRippleAnimationAsync(Color color, double x, double y, bool removePrevious = true)
@@ -6753,18 +6827,6 @@ namespace DrawnUi.Draw
         public IAnimatorsManager GetAnimatorsManager()
         {
             return GetTopParentView() as IAnimatorsManager;
-
-            //var parent = this.Parent;
-
-            //if (parent is IAnimatorsManager manager)
-            //{
-            //    return manager;
-            //}
-
-            //if (parent is SkiaControl control)
-            //    return control.GetAnimatorsManager();
-
-            //return null;
         }
 
         public bool RegisterAnimator(ISkiaAnimator animator)
@@ -6772,13 +6834,19 @@ namespace DrawnUi.Draw
             var top = GetAnimatorsManager();
             if (top != null)
             {
-                _lastAnimatorManager = top;
-                top.AddAnimator(animator);
-                Repaint();
+                RegisterAnimator(animator, top);
                 return true;
             }
 
+            PendingUnattachedAnimators.Add(animator);
             return false;
+        }
+
+        public void RegisterAnimator(ISkiaAnimator animator, IAnimatorsManager top)
+        {
+            _lastAnimatorManager = top;
+            top.AddAnimator(animator);
+            Repaint();
         }
 
         public void UnregisterAnimator(Guid uid)
@@ -7055,11 +7123,21 @@ namespace DrawnUi.Draw
             //base.OnChildAdded(child);
         }
 
+        public virtual void ClearDirtyChildren()
+        {
+            DirtyChildrenTracker.Clear();
+        }
+
+        public virtual void TrackChildAsDirty(SkiaControl child)
+        {
+            DirtyChildrenTracker.Add(child);
+        }
+
         public virtual void OnChildAdded(SkiaControl child)
         {
             if (UsingCacheType == SkiaCacheType.ImageComposite)
             {
-                DirtyChildrenTracker.Add(child);
+                TrackChildAsDirty(child);
             }
 
             OnChildrenChanged();
@@ -7069,7 +7147,7 @@ namespace DrawnUi.Draw
         {
             if (UsingCacheType == SkiaCacheType.ImageComposite)
             {
-                DirtyChildrenTracker.Add(child);
+                TrackChildAsDirty(child);
             }
 
             OnChildrenChanged();
@@ -7464,8 +7542,8 @@ namespace DrawnUi.Draw
                         aspectX = Math.Min(s1, s2);
                         aspectY = aspectX;
                     }
-                    break;
 
+                    break;
             }
 
             return (aspectX, aspectY);

@@ -101,7 +101,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SnappingLayout : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SnappingLayout : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
   </div>
 
 
@@ -143,6 +143,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGridLayout.html">ISkiaGridLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaLayout.html">ISkiaLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
@@ -198,13 +199,13 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackNonTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackNonTemplated(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaLayout.TrackChildAsDirty(SkiaControl)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackTemplated(SKRect, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnBeforeDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_DrawStack_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_">SkiaLayout.DrawStack(DrawingContext, LayoutStructure)</a>
@@ -783,6 +784,9 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
     </div>
     <div>
@@ -978,7 +982,19 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -1071,12 +1087,6 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -1110,7 +1120,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -1497,6 +1507,9 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1647,7 +1660,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -1983,9 +1996,6 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateRenderedNode_SkiaSharp_SKRect_System_Single_">SkiaControl.CreateRenderedNode(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Render_DrawnUi_Draw_DrawingContext_">SkiaControl.Render(DrawingContext)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Rendered">SkiaControl.Rendered</a>
     </div>
     <div>
@@ -2214,10 +2224,22 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -2263,6 +2285,12 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -3140,7 +3168,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_AnimatedProperty" data-uid="DrawnUi.Draw.SnappingLayout.AnimatedProperty">
   AnimatedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L349"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L367"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3200,7 +3228,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_AutoVelocityMultiplyPtsProperty" data-uid="DrawnUi.Draw.SnappingLayout.AutoVelocityMultiplyPtsProperty">
   AutoVelocityMultiplyPtsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L469"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L487"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3230,7 +3258,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_BouncesProperty" data-uid="DrawnUi.Draw.SnappingLayout.BouncesProperty">
   BouncesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L401"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L419"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3260,7 +3288,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_IgnoreWrongDirectionProperty" data-uid="DrawnUi.Draw.SnappingLayout.IgnoreWrongDirectionProperty">
   IgnoreWrongDirectionProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L385"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L403"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3290,7 +3318,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_InTransitionProperty" data-uid="DrawnUi.Draw.SnappingLayout.InTransitionProperty">
   InTransitionProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L426"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L444"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3320,7 +3348,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_RespondsToGesturesProperty" data-uid="DrawnUi.Draw.SnappingLayout.RespondsToGesturesProperty">
   RespondsToGesturesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L370"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L388"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3350,7 +3378,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_RubberDampingProperty" data-uid="DrawnUi.Draw.SnappingLayout.RubberDampingProperty">
   RubberDampingProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L454"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L472"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3380,7 +3408,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_RubberEffectProperty" data-uid="DrawnUi.Draw.SnappingLayout.RubberEffectProperty">
   RubberEffectProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L485"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L503"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3410,7 +3438,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_TransitionDirectionProperty" data-uid="DrawnUi.Draw.SnappingLayout.TransitionDirectionProperty">
   TransitionDirectionProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L414"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L432"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3475,7 +3503,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_Animated" data-uid="DrawnUi.Draw.SnappingLayout.Animated">
   Animated
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L355"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L373"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3506,7 +3534,7 @@ Class SnappingLayout  <a class="header-action link-secondary" title="View source
 
   <h3 id="DrawnUi_Draw_SnappingLayout_AutoVelocityMultiplyPts" data-uid="DrawnUi.Draw.SnappingLayout.AutoVelocityMultiplyPts">
   AutoVelocityMultiplyPts
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L479"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L497"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If velocity is near 0 define how much we multiply the auto-velocity used to animate snappoing point.
@@ -3539,7 +3567,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_Bounces" data-uid="DrawnUi.Draw.SnappingLayout.Bounces">
   Bounces
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L407"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L425"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3633,7 +3661,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_CurrentPosition" data-uid="DrawnUi.Draw.SnappingLayout.CurrentPosition">
   CurrentPosition
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L323"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L341"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3664,7 +3692,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_CurrentSnap" data-uid="DrawnUi.Draw.SnappingLayout.CurrentSnap">
   CurrentSnap
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L180"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3695,7 +3723,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_IgnoreWrongDirection" data-uid="DrawnUi.Draw.SnappingLayout.IgnoreWrongDirection">
   IgnoreWrongDirection
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L394"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L412"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will ignore gestures of the wrong direction, like if this Orientation is Horizontal will ignore gestures with vertical direction velocity</p>
@@ -3727,7 +3755,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_InTransition" data-uid="DrawnUi.Draw.SnappingLayout.InTransition">
   InTransition
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L440"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L458"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3758,7 +3786,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_RespondsToGestures" data-uid="DrawnUi.Draw.SnappingLayout.RespondsToGestures">
   RespondsToGestures
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L379"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L397"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Can be open/closed by gestures along with code-behind, default is true</p>
@@ -3790,7 +3818,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_RubberDamping" data-uid="DrawnUi.Draw.SnappingLayout.RubberDamping">
   RubberDamping
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L463"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L481"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If Bounce is enabled this basically controls how less the scroll will bounce when displaced from limit by finger or inertia. Default is 0.8.</p>
@@ -3822,7 +3850,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_RubberEffect" data-uid="DrawnUi.Draw.SnappingLayout.RubberEffect">
   RubberEffect
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L494"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L512"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If Bounce is enabled this basically controls how far from the limit can the scroll be elastically offset by finger or inertia. Default is 0.15.</p>
@@ -3948,7 +3976,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_TransitionDirection" data-uid="DrawnUi.Draw.SnappingLayout.TransitionDirection">
   TransitionDirection
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L420"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L438"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4013,18 +4041,23 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <a id="DrawnUi_Draw_SnappingLayout_ApplyOptions_" data-uid="DrawnUi.Draw.SnappingLayout.ApplyOptions*"></a>
 
-  <h3 id="DrawnUi_Draw_SnappingLayout_ApplyOptions" data-uid="DrawnUi.Draw.SnappingLayout.ApplyOptions">
-  ApplyOptions()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L344"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Draw_SnappingLayout_ApplyOptions_System_Boolean_" data-uid="DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)">
+  ApplyOptions(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L362"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void ApplyOptions()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void ApplyOptions(bool initialize)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>initialize</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -4041,7 +4074,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_ApplyPosition_System_Numerics_Vector2_" data-uid="DrawnUi.Draw.SnappingLayout.ApplyPosition(System.Numerics.Vector2)">
   ApplyPosition(Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L296"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L307"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4072,7 +4105,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_CheckTransitionEnded" data-uid="DrawnUi.Draw.SnappingLayout.CheckTransitionEnded">
   CheckTransitionEnded()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L316"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L334"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4256,7 +4289,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_GetAutoVelocity_System_Numerics_Vector2_" data-uid="DrawnUi.Draw.SnappingLayout.GetAutoVelocity(System.Numerics.Vector2)">
   GetAutoVelocity(Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>todo calc upon measured size + prop for speed</p>
@@ -4325,7 +4358,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_NeedApplyOptions_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_" data-uid="DrawnUi.Draw.SnappingLayout.NeedApplyOptions(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)">
   NeedApplyOptions(BindableObject, object, object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L362"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L380"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4360,7 +4393,7 @@ For example when in carousel you cancel the swipe and release finger..</p>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_OnTransitionChanged" data-uid="DrawnUi.Draw.SnappingLayout.OnTransitionChanged">
   OnTransitionChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L449"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L467"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invokes TransitionChanged event</p>
@@ -4411,6 +4444,37 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
 
 
+  <a id="DrawnUi_Draw_SnappingLayout_Render_" data-uid="DrawnUi.Draw.SnappingLayout.Render*"></a>
+
+  <h3 id="DrawnUi_Draw_SnappingLayout_Render_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)">
+  Render(DrawingContext)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L320"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Render(DrawingContext context)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>context</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SnappingLayout_ScrollToNearestAnchor_" data-uid="DrawnUi.Draw.SnappingLayout.ScrollToNearestAnchor*"></a>
 
   <h3 id="DrawnUi_Draw_SnappingLayout_ScrollToNearestAnchor_System_Numerics_Vector2_System_Numerics_Vector2_" data-uid="DrawnUi.Draw.SnappingLayout.ScrollToNearestAnchor(System.Numerics.Vector2,System.Numerics.Vector2)">
@@ -4448,7 +4512,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SnappingLayout_ScrollToOffset_System_Numerics_Vector2_System_Numerics_Vector2_System_Boolean_" data-uid="DrawnUi.Draw.SnappingLayout.ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)">
   ScrollToOffset(Vector2, Vector2, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L210"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4527,7 +4591,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SnappingLayout_SendScrolled" data-uid="DrawnUi.Draw.SnappingLayout.SendScrolled">
   SendScrolled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L309"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L327"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4553,7 +4617,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SnappingLayout_UpdateReportedPosition" data-uid="DrawnUi.Draw.SnappingLayout.UpdateReportedPosition">
   UpdateReportedPosition()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L335"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L353"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4582,7 +4646,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SnappingLayout_Scrolled" data-uid="DrawnUi.Draw.SnappingLayout.Scrolled">
   Scrolled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L314"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SnappingLayout.cs/#L332"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

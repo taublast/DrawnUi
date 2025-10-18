@@ -7,7 +7,7 @@ public interface IRefreshIndicator : IDrawnBase
     /// 
     /// </summary>
     /// <param name="ratio"></param>
-    void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit);
+    void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit, double ptsTrigger);
  
 
 }

@@ -19,7 +19,7 @@ public class RangeAnimator : SkiaValueAnimator
 
     object lockUpdate = new object();
 
-    public void Start(Action<double> callback, double start, double end, uint ms = 250, Easing easing = null)
+    public void Start(Action<double> callback, double start, double end, uint ms = 250, Easing easing = null, int delayMs=0)
     {
 
         lock (lockUpdate)
@@ -38,7 +38,7 @@ public class RangeAnimator : SkiaValueAnimator
             {
                 Easing = easing;
             }
-            base.Start();
+            base.Start(delayMs);
         }
     }
 

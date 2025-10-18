@@ -307,7 +307,7 @@ namespace DrawnUi.Draw
                 base.Paint(ctx);
 
                 var scale = ctx.Scale;
-                var rectForChildren = ContractPixelsRect(ctx.Destination, scale, Padding);
+                var rectForChildren = ContractPixelsRect(ctx.Destination, scale, UsePadding);
 
                 if (GliphsInvalidated)
                 {
@@ -359,7 +359,14 @@ namespace DrawnUi.Draw
                 if (blob != null)
                 {
                     //canvas.DrawText(blob, x, y, paint);
-                    canvas.DrawText(blob, (int)Math.Round(x), (int)Math.Round(y), paint);
+                    if (Super.FontSubPixelRendering)
+                    {
+                        canvas.DrawText(blob, (x), (y), paint);
+                    }
+                    else
+                    {
+                        canvas.DrawText(blob, (float)Math.Round(x), (float)Math.Round(y), paint);
+                    }
                 }
             }
 
@@ -1049,7 +1056,7 @@ namespace DrawnUi.Draw
                         if (AutoFont && Glyphs != null && Glyphs.Count > 0)
                         {
                             var first = Glyphs[0].Symbol;
-                            var matchedFace = SkiaFontManager.Manager.MatchCharacter(first);
+                            var matchedFace = SkiaFontManager.MatchCharacter(first);
                             if (matchedFace != null)
                             {
                                 needsShaping = SkiaLabel.UnicodeNeedsShaping(first);

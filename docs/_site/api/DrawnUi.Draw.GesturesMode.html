@@ -132,9 +132,13 @@ Enum GesturesMode  <a class="header-action link-secondary" title="View source" h
   
   <dd><p>Gestures attached</p>
 </dd>
-    <dt id="DrawnUi_Draw_GesturesMode_Lock"><code>Lock = 2</code></dt>
+    <dt id="DrawnUi_Draw_GesturesMode_Lock"><code>Lock = 3</code></dt>
   
-  <dd><p>Lock input for self, useful inside scroll view, panning controls like slider etc</p>
+  <dd><p>Full lock input for self, useful inside scroll view, panning controls like slider etc</p>
+</dd>
+    <dt id="DrawnUi_Draw_GesturesMode_SoftLock"><code>SoftLock = 2</code></dt>
+  
+  <dd><p>Smart lock for working inside native controls like scroll view to share gestures with it if panning not consumed by your controls.</p>
 </dd>
   </dl>
 

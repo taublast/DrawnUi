@@ -835,6 +835,14 @@ public partial class SkiaScroll
     }
 
     /// <summary>
+    /// Instant scroll to top
+    /// </summary>
+    public virtual void ResetPosition()
+    {
+        SetContentOffset(Vector2.Zero, false, false);
+    }
+
+    /// <summary>
     /// Easy-to-use helper around using a lower level ScrollTo function
     /// </summary>
     /// <param name="offset"></param>

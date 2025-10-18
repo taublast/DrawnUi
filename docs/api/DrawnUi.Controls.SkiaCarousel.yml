@@ -11,12 +11,13 @@ items:
   - DrawnUi.Controls.SkiaCarousel.AnimateVisibleChild(DrawnUi.Draw.SkiaControl,System.Numerics.Vector2)
   - DrawnUi.Controls.SkiaCarousel.ApplyDynamicSize(System.Int32)
   - DrawnUi.Controls.SkiaCarousel.ApplyIndex(System.Boolean)
-  - DrawnUi.Controls.SkiaCarousel.ApplyOptions
+  - DrawnUi.Controls.SkiaCarousel.ApplyOptions(System.Boolean)
   - DrawnUi.Controls.SkiaCarousel.ApplyPosition(System.Numerics.Vector2)
   - DrawnUi.Controls.SkiaCarousel.CalculateChildPosition(System.Numerics.Vector2,System.Int32,System.Int32)
   - DrawnUi.Controls.SkiaCarousel.CanRender
   - DrawnUi.Controls.SkiaCarousel.CellSize
   - DrawnUi.Controls.SkiaCarousel.CheckConstraints
+  - DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
   - DrawnUi.Controls.SkiaCarousel.ChildrenCount
   - DrawnUi.Controls.SkiaCarousel.ChildrenInitialized
   - DrawnUi.Controls.SkiaCarousel.ChildrenReady
@@ -26,9 +27,13 @@ items:
   - DrawnUi.Controls.SkiaCarousel.DynamicSize
   - DrawnUi.Controls.SkiaCarousel.DynamicSizeProperty
   - DrawnUi.Controls.SkiaCarousel.FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)
+  - DrawnUi.Controls.SkiaCarousel.FixIndex
+  - DrawnUi.Controls.SkiaCarousel.FixPosition
   - DrawnUi.Controls.SkiaCarousel.GetContentOffsetBounds
   - DrawnUi.Controls.SkiaCarousel.GetTemplatesPoolLimit
   - DrawnUi.Controls.SkiaCarousel.GetTemplatesPoolPrefill
+  - DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  - DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
   - DrawnUi.Controls.SkiaCarousel.GoNext
   - DrawnUi.Controls.SkiaCarousel.GoPrev
   - DrawnUi.Controls.SkiaCarousel.InitializeChildren
@@ -58,6 +63,7 @@ items:
   - DrawnUi.Controls.SkiaCarousel.OnScrollProgressChanged
   - DrawnUi.Controls.SkiaCarousel.OnSelectedIndexChanged(System.Int32)
   - DrawnUi.Controls.SkiaCarousel.OnTemplatesAvailable
+  - DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
   - DrawnUi.Controls.SkiaCarousel.PreloadNeighboors
   - DrawnUi.Controls.SkiaCarousel.PreloadNeighboorsProperty
   - DrawnUi.Controls.SkiaCarousel.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
@@ -68,13 +74,17 @@ items:
   - DrawnUi.Controls.SkiaCarousel.ScrollProgress
   - DrawnUi.Controls.SkiaCarousel.ScrollToNearestAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
   - DrawnUi.Controls.SkiaCarousel.ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)
+  - DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
   - DrawnUi.Controls.SkiaCarousel.SelectedIndex
   - DrawnUi.Controls.SkiaCarousel.SelectedIndexChanged
   - DrawnUi.Controls.SkiaCarousel.SelectedIndexProperty
   - DrawnUi.Controls.SkiaCarousel.SetupViewport
   - DrawnUi.Controls.SkiaCarousel.SidesOffset
   - DrawnUi.Controls.SkiaCarousel.SidesOffsetProperty
+  - DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
   - DrawnUi.Controls.SkiaCarousel.Stopped
+  - DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  - DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty
   - DrawnUi.Controls.SkiaCarousel.TransitionProgress
   - DrawnUi.Controls.SkiaCarousel.UpdateReportedPosition
   - DrawnUi.Controls.SkiaCarousel.VelocityAccumulator
@@ -107,8 +117,8 @@ items:
     Ideal for image galleries, tab interfaces, and any swipeable content display.
   example: []
   syntax:
-    content: 'public class SkiaCarousel : SnappingLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable'
-    content.vb: Public Class SkiaCarousel Inherits SnappingLayout Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
+    content: 'public class SkiaCarousel : SnappingLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable'
+    content.vb: Public Class SkiaCarousel Inherits SnappingLayout Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
@@ -138,6 +148,7 @@ items:
   - System.Collections.IEnumerable
   - DrawnUi.Draw.ISkiaGestureListener
   - DrawnUi.Draw.IHasAfterEffects
+  - DrawnUi.Draw.ISkiaDisposable
   - DrawnUi.Draw.ISkiaGridLayout
   - DrawnUi.Draw.ISkiaLayout
   - DrawnUi.Draw.ISkiaControl
@@ -158,7 +169,6 @@ items:
   - DrawnUi.Draw.SnappingLayout.Viewport
   - DrawnUi.Draw.SnappingLayout.SnapPoints
   - DrawnUi.Draw.SnappingLayout.FindNearestAnchor(System.Numerics.Vector2)
-  - DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
   - DrawnUi.Draw.SnappingLayout.SnapDistanceRatio
   - DrawnUi.Draw.SnappingLayout.CanAnimate
   - DrawnUi.Draw.SnappingLayout.ScrollLocked
@@ -166,9 +176,9 @@ items:
   - DrawnUi.Draw.SnappingLayout.AnimatorRange
   - DrawnUi.Draw.SnappingLayout.CurrentSnap
   - DrawnUi.Draw.SnappingLayout.GetAutoVelocity(System.Numerics.Vector2)
+  - DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SnappingLayout.SendScrolled
   - DrawnUi.Draw.SnappingLayout.Scrolled
-  - DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
   - DrawnUi.Draw.SnappingLayout.CurrentPosition
   - DrawnUi.Draw.SnappingLayout.AnimatedProperty
   - DrawnUi.Draw.SnappingLayout.Animated
@@ -183,7 +193,6 @@ items:
   - DrawnUi.Draw.SnappingLayout.TransitionDirection
   - DrawnUi.Draw.SnappingLayout.InTransitionProperty
   - DrawnUi.Draw.SnappingLayout.InTransition
-  - DrawnUi.Draw.SnappingLayout.OnTransitionChanged
   - DrawnUi.Draw.SnappingLayout.RubberDampingProperty
   - DrawnUi.Draw.SnappingLayout.RubberDamping
   - DrawnUi.Draw.SnappingLayout.AutoVelocityMultiplyPtsProperty
@@ -200,9 +209,9 @@ items:
   - DrawnUi.Draw.SkiaLayout.GetSizeKey(SkiaSharp.SKSize)
   - DrawnUi.Draw.SkiaLayout.MeasureStackLegacy(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackNonTemplated(SkiaSharp.SKRect,System.Single)
-  - DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  - DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   - DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   - DrawnUi.Draw.SkiaLayout.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaLayout.IsGestureForChild(DrawnUi.Draw.SkiaControlWithRect,SkiaSharp.SKPoint)
@@ -389,6 +398,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ClearColorProperty
   - DrawnUi.Draw.SkiaControl.ClearColor
   - DrawnUi.Draw.SkiaControl.OnPropertyChanged(System.String)
+  - DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.RemoveSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
@@ -454,7 +464,11 @@ items:
   - DrawnUi.Draw.SkiaControl.DirtyChildrenTracker
   - DrawnUi.Draw.SkiaControl.DirtyChildrenInternal
   - DrawnUi.Draw.SkiaControl.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  - DrawnUi.Draw.SkiaControl.IsHovered
   - DrawnUi.Draw.SkiaControl.VisualLayer
   - DrawnUi.Draw.SkiaControl.CachedImage
   - DrawnUi.Draw.SkiaControl.Left
@@ -485,8 +499,6 @@ items:
   - DrawnUi.Draw.SkiaControl.SetDefaultContentSize(System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.GenerateParentChain
   - DrawnUi.Draw.SkiaControl.SetVisualTransform(DrawnUi.Infrastructure.VisualTransform)
-  - DrawnUi.Draw.SkiaControl.CommitInvalidations
-  - DrawnUi.Draw.SkiaControl.SuperViewChanged
   - DrawnUi.Draw.SkiaControl.PostponeInvalidation(System.String,System.Action)
   - DrawnUi.Draw.SkiaControl.GetRenderingScaleFor(System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.GetRenderingScaleFor(System.Single)
@@ -498,7 +510,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PrintDebug(System.String)
   - DrawnUi.Draw.SkiaControl.DebugRenderingProperty
   - DrawnUi.Draw.SkiaControl.DebugRendering
-  - DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+  - DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
   - DrawnUi.Draw.SkiaControl.NotValidPoint
   - DrawnUi.Draw.SkiaControl.PointIsValid(SkiaSharp.SKPoint)
   - DrawnUi.Draw.SkiaControl.SizeRequest
@@ -626,6 +638,7 @@ items:
   - DrawnUi.Draw.SkiaControl.AdjustClipping
   - DrawnUi.Draw.SkiaControl.PaddingProperty
   - DrawnUi.Draw.SkiaControl.Padding
+  - DrawnUi.Draw.SkiaControl.UsePadding
   - DrawnUi.Draw.SkiaControl.MarginProperty
   - DrawnUi.Draw.SkiaControl.Margin
   - DrawnUi.Draw.SkiaControl.AddMarginTopProperty
@@ -676,7 +689,7 @@ items:
   - DrawnUi.Draw.SkiaControl.DisposalDelay
   - DrawnUi.Draw.SkiaControl.IsAlive
   - DrawnUi.Draw.SkiaControl.DisposeObject
-  - DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  - DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
   - DrawnUi.Draw.SkiaControl.OnSizeChanged
   - DrawnUi.Draw.SkiaControl.Clipping
   - DrawnUi.Draw.SkiaControl.Hero
@@ -788,7 +801,6 @@ items:
   - DrawnUi.Draw.SkiaControl.NodeAttached
   - DrawnUi.Draw.SkiaControl.FindRenderedNode(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.CreateRenderedNode(SkiaSharp.SKRect,System.Single)
-  - DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.Rendered
   - DrawnUi.Draw.SkiaControl.LockDraw
   - DrawnUi.Draw.SkiaControl.LockRenderObject
@@ -863,8 +875,12 @@ items:
   - DrawnUi.Draw.SkiaControl.InvalidateMeasure
   - DrawnUi.Draw.SkiaControl.NeedInvalidateViewport(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaControl.ItemTemplateChanged(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  - DrawnUi.Draw.SkiaControl.CommitInvalidations
+  - DrawnUi.Draw.SkiaControl.SuperViewChanged
+  - DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
   - DrawnUi.Draw.SkiaControl.GetAnimatorsManager
   - DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  - DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
   - DrawnUi.Draw.SkiaControl.UnregisterAnimator(System.Guid)
   - DrawnUi.Draw.SkiaControl.UnregisterAllAnimatorsByType(System.Type)
   - DrawnUi.Draw.SkiaControl.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
@@ -880,6 +896,8 @@ items:
   - DrawnUi.Draw.SkiaControl.ClearChildren
   - DrawnUi.Draw.SkiaControl.OnChildRemoved(Microsoft.Maui.Controls.Element,System.Int32)
   - DrawnUi.Draw.SkiaControl.OnChildAdded(Microsoft.Maui.Controls.Element)
+  - DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  - DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnChildRemoved(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnViewAttached
   - DrawnUi.Draw.SkiaControl.OnViewDetached
@@ -1309,7 +1327,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollToNearestAnchor
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 45
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1324,6 +1342,45 @@ items:
     content.vb: Public Overrides Sub ScrollToNearestAnchor(location As Vector2, velocity As Vector2)
   overridden: DrawnUi.Draw.SnappingLayout.ScrollToNearestAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
   overload: DrawnUi.Controls.SkiaCarousel.ScrollToNearestAnchor*
+- uid: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  commentId: M:DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  id: SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: SelectNextAnchor(Vector2, Vector2)
+  nameWithType: SkiaCarousel.SelectNextAnchor(Vector2, Vector2)
+  fullName: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2, System.Numerics.Vector2)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SelectNextAnchor
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 87
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Return an anchor depending on direction and strength of of the velocity
+  example: []
+  syntax:
+    content: public override Vector2 SelectNextAnchor(Vector2 origin, Vector2 velocity)
+    parameters:
+    - id: origin
+      type: System.Numerics.Vector2
+      description: ''
+    - id: velocity
+      type: System.Numerics.Vector2
+      description: ''
+    return:
+      type: System.Numerics.Vector2
+      description: ''
+    content.vb: Public Overrides Function SelectNextAnchor(origin As Vector2, velocity As Vector2) As Vector2
+  overridden: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  overload: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor*
 - uid: DrawnUi.Controls.SkiaCarousel.OnDisposing
   commentId: M:DrawnUi.Controls.SkiaCarousel.OnDisposing
   id: OnDisposing
@@ -1342,7 +1399,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 61
+    startLine: 176
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1371,7 +1428,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndexChanged
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 73
+    startLine: 188
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1398,7 +1455,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemAppearing
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 75
+    startLine: 190
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1425,7 +1482,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemDisappearing
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 77
+    startLine: 192
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1452,7 +1509,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stopped
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 80
+    startLine: 195
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1479,7 +1536,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemsVisibility
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 82
+    startLine: 197
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1508,7 +1565,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyPosition
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 123
+    startLine: 238
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1523,6 +1580,32 @@ items:
     content.vb: Public Overrides Sub ApplyPosition(currentPosition As Vector2)
   overridden: DrawnUi.Draw.SnappingLayout.ApplyPosition(System.Numerics.Vector2)
   overload: DrawnUi.Controls.SkiaCarousel.ApplyPosition*
+- uid: DrawnUi.Controls.SkiaCarousel.FixIndex
+  commentId: M:DrawnUi.Controls.SkiaCarousel.FixIndex
+  id: FixIndex
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: FixIndex()
+  nameWithType: SkiaCarousel.FixIndex()
+  fullName: DrawnUi.Controls.SkiaCarousel.FixIndex()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FixIndex
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 245
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public virtual void FixIndex()
+    content.vb: Public Overridable Sub FixIndex()
+  overload: DrawnUi.Controls.SkiaCarousel.FixIndex*
 - uid: DrawnUi.Controls.SkiaCarousel.ApplyIndex(System.Boolean)
   commentId: M:DrawnUi.Controls.SkiaCarousel.ApplyIndex(System.Boolean)
   id: ApplyIndex(System.Boolean)
@@ -1541,7 +1624,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 131
+    startLine: 263
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1573,7 +1656,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateReportedPosition
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 141
+    startLine: 292
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1601,7 +1684,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTemplatesAvailable
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 162
+    startLine: 332
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1630,7 +1713,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CanRender
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 169
+    startLine: 339
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1659,7 +1742,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenReady
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 180
+    startLine: 350
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1688,7 +1771,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScrollProgressChanged
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 191
+    startLine: 361
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1714,7 +1797,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderViewsList
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 195
+    startLine: 365
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1758,7 +1841,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollAmount
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 327
+    startLine: 497
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1789,7 +1872,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollProgress
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 348
+    startLine: 518
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1825,7 +1908,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastScrollProgress
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 363
+    startLine: 533
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1854,7 +1937,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TransitionProgress
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 365
+    startLine: 535
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1883,7 +1966,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptTemplate
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 388
+    startLine: 558
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1912,7 +1995,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateContentFromTemplate
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 420
+    startLine: 590
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1942,7 +2025,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnItemSourceChanged
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 464
+    startLine: 634
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1970,7 +2053,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateChildPosition
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 484
+    startLine: 657
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1990,6 +2073,63 @@ items:
   nameWithType.vb: SkiaCarousel.CalculateChildPosition(Vector2, Integer, Integer)
   fullName.vb: DrawnUi.Controls.SkiaCarousel.CalculateChildPosition(System.Numerics.Vector2, Integer, Integer)
   name.vb: CalculateChildPosition(Vector2, Integer, Integer)
+- uid: DrawnUi.Controls.SkiaCarousel.FixPosition
+  commentId: M:DrawnUi.Controls.SkiaCarousel.FixPosition
+  id: FixPosition
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: FixPosition()
+  nameWithType: SkiaCarousel.FixPosition()
+  fullName: DrawnUi.Controls.SkiaCarousel.FixPosition()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FixPosition
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 759
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Set true position if inside virtual for IsLooped
+  example: []
+  syntax:
+    content: protected virtual void FixPosition()
+    content.vb: Protected Overridable Sub FixPosition()
+  overload: DrawnUi.Controls.SkiaCarousel.FixPosition*
+- uid: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
+  commentId: M:DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
+  id: OnTransitionChanged
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: OnTransitionChanged()
+  nameWithType: SkiaCarousel.OnTransitionChanged()
+  fullName: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnTransitionChanged
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 773
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Invokes TransitionChanged event
+  example: []
+  syntax:
+    content: public override void OnTransitionChanged()
+    content.vb: Public Overrides Sub OnTransitionChanged()
+  overridden: DrawnUi.Draw.SnappingLayout.OnTransitionChanged
+  overload: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged*
 - uid: DrawnUi.Controls.SkiaCarousel.ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)
   commentId: M:DrawnUi.Controls.SkiaCarousel.ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)
   id: ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)
@@ -2008,7 +2148,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollToOffset
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 513
+    startLine: 787
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2032,16 +2172,16 @@ items:
   nameWithType.vb: SkiaCarousel.ScrollToOffset(Vector2, Vector2, Boolean)
   fullName.vb: DrawnUi.Controls.SkiaCarousel.ScrollToOffset(System.Numerics.Vector2, System.Numerics.Vector2, Boolean)
   name.vb: ScrollToOffset(Vector2, Vector2, Boolean)
-- uid: DrawnUi.Controls.SkiaCarousel.ApplyOptions
-  commentId: M:DrawnUi.Controls.SkiaCarousel.ApplyOptions
-  id: ApplyOptions
+- uid: DrawnUi.Controls.SkiaCarousel.ApplyOptions(System.Boolean)
+  commentId: M:DrawnUi.Controls.SkiaCarousel.ApplyOptions(System.Boolean)
+  id: ApplyOptions(System.Boolean)
   parent: DrawnUi.Controls.SkiaCarousel
   langs:
   - csharp
   - vb
-  name: ApplyOptions()
-  nameWithType: SkiaCarousel.ApplyOptions()
-  fullName: DrawnUi.Controls.SkiaCarousel.ApplyOptions()
+  name: ApplyOptions(bool)
+  nameWithType: SkiaCarousel.ApplyOptions(bool)
+  fullName: DrawnUi.Controls.SkiaCarousel.ApplyOptions(bool)
   type: Method
   source:
     remote:
@@ -2050,16 +2190,52 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyOptions
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 629
+    startLine: 977
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   example: []
   syntax:
-    content: public override void ApplyOptions()
-    content.vb: Public Overrides Sub ApplyOptions()
-  overridden: DrawnUi.Draw.SnappingLayout.ApplyOptions
+    content: public override void ApplyOptions(bool initialize)
+    parameters:
+    - id: initialize
+      type: System.Boolean
+    content.vb: Public Overrides Sub ApplyOptions(initialize As Boolean)
+  overridden: DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)
   overload: DrawnUi.Controls.SkiaCarousel.ApplyOptions*
+  nameWithType.vb: SkiaCarousel.ApplyOptions(Boolean)
+  fullName.vb: DrawnUi.Controls.SkiaCarousel.ApplyOptions(Boolean)
+  name.vb: ApplyOptions(Boolean)
+- uid: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
+  commentId: M:DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
+  id: CheckTransitionEnded
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: CheckTransitionEnded()
+  nameWithType: SkiaCarousel.CheckTransitionEnded()
+  fullName: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CheckTransitionEnded
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 994
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  example: []
+  syntax:
+    content: public override bool CheckTransitionEnded()
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function CheckTransitionEnded() As Boolean
+  overridden: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
+  overload: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded*
 - uid: DrawnUi.Controls.SkiaCarousel.GetContentOffsetBounds
   commentId: M:DrawnUi.Controls.SkiaCarousel.GetContentOffsetBounds
   id: GetContentOffsetBounds
@@ -2078,7 +2254,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetContentOffsetBounds
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 674
+    startLine: 1049
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2109,7 +2285,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckConstraints
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 730
+    startLine: 1105
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2135,7 +2311,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildAdded
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 740
+    startLine: 1115
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2166,7 +2342,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 750
+    startLine: 1125
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2194,7 +2370,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupViewport
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 757
+    startLine: 1132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2220,7 +2396,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenInitialized
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 787
+    startLine: 1162
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2247,7 +2423,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 791
+    startLine: 1166
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2276,7 +2452,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeChildren
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 813
+    startLine: 1188
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2304,7 +2480,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildrenInitialized
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 889
+    startLine: 1270
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2330,7 +2506,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CellSize
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 895
+    startLine: 1276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2359,7 +2535,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptChildren
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 900
+    startLine: 1281
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2387,7 +2563,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenCount
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 925
+    startLine: 1306
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2416,7 +2592,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplatesPoolLimit
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 939
+    startLine: 1320
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2446,7 +2622,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplatesPoolPrefill
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 948
+    startLine: 1329
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2458,6 +2634,67 @@ items:
     content.vb: Protected Overrides Function GetTemplatesPoolPrefill() As Integer
   overridden: DrawnUi.Draw.SkiaLayout.GetTemplatesPoolPrefill
   overload: DrawnUi.Controls.SkiaCarousel.GetTemplatesPoolPrefill*
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+  commentId: M:DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+  id: GetVirtualSnapPoints
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: GetVirtualSnapPoints()
+  nameWithType: SkiaCarousel.GetVirtualSnapPoints()
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetVirtualSnapPoints
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 1363
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected virtual List<SkiaCarousel.SnapPoint> GetVirtualSnapPoints()
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Controls.SkiaCarousel.SnapPoint}
+    content.vb: Protected Overridable Function GetVirtualSnapPoints() As List(Of SkiaCarousel.SnapPoint)
+  overload: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints*
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  commentId: M:DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  id: GetVirtualAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: GetVirtualAnchor(Vector2, Vector2)
+  nameWithType: SkiaCarousel.GetVirtualAnchor(Vector2, Vector2)
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2, System.Numerics.Vector2)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetVirtualAnchor
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 1386
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected virtual SkiaCarousel.SnapPoint GetVirtualAnchor(Vector2 current, Vector2 velocity)
+    parameters:
+    - id: current
+      type: System.Numerics.Vector2
+    - id: velocity
+      type: System.Numerics.Vector2
+    return:
+      type: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    content.vb: Protected Overridable Function GetVirtualAnchor(current As Vector2, velocity As Vector2) As SkiaCarousel.SnapPoint
+  overload: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor*
 - uid: DrawnUi.Controls.SkiaCarousel.FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)
   commentId: M:DrawnUi.Controls.SkiaCarousel.FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)
   id: FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)
@@ -2476,7 +2713,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindNearestAnchorInternal
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 975
+    startLine: 1392
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2493,6 +2730,93 @@ items:
     content.vb: Protected Overrides Function FindNearestAnchorInternal(current As Vector2, velocity As Vector2) As Vector2
   overridden: DrawnUi.Draw.SnappingLayout.FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)
   overload: DrawnUi.Controls.SkiaCarousel.FindNearestAnchorInternal*
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  commentId: P:DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  id: SnapPointsVirtual
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: SnapPointsVirtual
+  nameWithType: SkiaCarousel.SnapPointsVirtual
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SnapPointsVirtual
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 1415
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected List<SkiaCarousel.SnapPoint> SnapPointsVirtual { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Controls.SkiaCarousel.SnapPoint}
+    content.vb: Protected Property SnapPointsVirtual As List(Of SkiaCarousel.SnapPoint)
+  overload: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual*
+- uid: DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty
+  commentId: F:DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty
+  id: SwipeSpeedProperty
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: SwipeSpeedProperty
+  nameWithType: SkiaCarousel.SwipeSpeedProperty
+  fullName: DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SwipeSpeedProperty
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 1421
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public static readonly BindableProperty SwipeSpeedProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly SwipeSpeedProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  commentId: P:DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  id: SwipeSpeed
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: SwipeSpeed
+  nameWithType: SkiaCarousel.SwipeSpeed
+  fullName: DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SwipeSpeed
+    path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
+    startLine: 1430
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Used inside ScrollToOffset to control the speed
+  example: []
+  syntax:
+    content: public double SwipeSpeed { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property SwipeSpeed As Double
+  overload: DrawnUi.Controls.SkiaCarousel.SwipeSpeed*
 - uid: DrawnUi.Controls.SkiaCarousel.PreloadNeighboorsProperty
   commentId: F:DrawnUi.Controls.SkiaCarousel.PreloadNeighboorsProperty
   id: PreloadNeighboorsProperty
@@ -2511,7 +2835,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadNeighboorsProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 990
+    startLine: 1436
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2538,7 +2862,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadNeighboors
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 999
+    startLine: 1445
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2569,7 +2893,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DynamicSizeProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1005
+    startLine: 1451
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2596,7 +2920,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DynamicSize
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1016
+    startLine: 1462
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2632,7 +2956,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLoopedProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1023
+    startLine: 1469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2659,7 +2983,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLooped
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1032
+    startLine: 1478
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2690,7 +3014,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVerticalProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1039
+    startLine: 1485
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2717,7 +3041,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVertical
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1048
+    startLine: 1494
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2748,7 +3072,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDynamicSize
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1055
+    startLine: 1501
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2780,7 +3104,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SafeIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1095
+    startLine: 1541
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2814,7 +3138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoNext
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1100
+    startLine: 1546
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2840,7 +3164,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoPrev
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1110
+    startLine: 1562
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2866,7 +3190,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAtStart
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1120
+    startLine: 1578
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2895,7 +3219,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAtEnd
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1125
+    startLine: 1583
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2924,7 +3248,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSelectedIndexChanged
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1130
+    startLine: 1588
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2956,7 +3280,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinearSpeedMsProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1166
+    startLine: 1622
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2983,7 +3307,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinearSpeedMs
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1177
+    startLine: 1633
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3019,7 +3343,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1185
+    startLine: 1641
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3048,7 +3372,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndexProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1199
+    startLine: 1655
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3075,7 +3399,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1216
+    startLine: 1672
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3106,7 +3430,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenTotal
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1226
+    startLine: 1682
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3137,7 +3461,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenTotalProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1232
+    startLine: 1688
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3164,7 +3488,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRightToLeftProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1239
+    startLine: 1695
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3191,7 +3515,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRightToLeft
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1248
+    startLine: 1704
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3222,7 +3546,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SidesOffsetProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1254
+    startLine: 1710
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3249,7 +3573,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SidesOffset
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1263
+    startLine: 1719
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3280,7 +3604,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsUserFocused
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1282
+    startLine: 1738
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3309,7 +3633,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsUserPanning
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1283
+    startLine: 1739
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3338,7 +3662,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _panningOffset
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1285
+    startLine: 1741
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3365,7 +3689,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _panningStartOffset
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1286
+    startLine: 1742
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3392,7 +3716,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityAccumulator
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1289
+    startLine: 1745
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3421,7 +3745,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1291
+    startLine: 1747
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3756,6 +4080,13 @@ references:
   name: IHasAfterEffects
   nameWithType: IHasAfterEffects
   fullName: DrawnUi.Draw.IHasAfterEffects
+- uid: DrawnUi.Draw.ISkiaDisposable
+  commentId: T:DrawnUi.Draw.ISkiaDisposable
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaDisposable.html
+  name: ISkiaDisposable
+  nameWithType: ISkiaDisposable
+  fullName: DrawnUi.Draw.ISkiaDisposable
 - uid: DrawnUi.Draw.ISkiaGridLayout
   commentId: T:DrawnUi.Draw.ISkiaGridLayout
   parent: DrawnUi.Draw
@@ -4007,46 +4338,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
   - name: )
-- uid: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
-  commentId: M:DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
-  parent: DrawnUi.Draw.SnappingLayout
-  isExternal: true
-  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
-  name: SelectNextAnchor(Vector2, Vector2)
-  nameWithType: SnappingLayout.SelectNextAnchor(Vector2, Vector2)
-  fullName: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2, System.Numerics.Vector2)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
-    name: SelectNextAnchor
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
-  - name: (
-  - uid: System.Numerics.Vector2
-    name: Vector2
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
-  - name: ','
-  - name: " "
-  - uid: System.Numerics.Vector2
-    name: Vector2
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
-    name: SelectNextAnchor
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
-  - name: (
-  - uid: System.Numerics.Vector2
-    name: Vector2
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
-  - name: ','
-  - name: " "
-  - uid: System.Numerics.Vector2
-    name: Vector2
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
-  - name: )
 - uid: DrawnUi.Draw.SnappingLayout.SnapDistanceRatio
   commentId: P:DrawnUi.Draw.SnappingLayout.SnapDistanceRatio
   parent: DrawnUi.Draw.SnappingLayout
@@ -4117,6 +4408,31 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
   - name: )
+- uid: DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.SnappingLayout
+  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Render_DrawnUi_Draw_DrawingContext_
+  name: Render(DrawingContext)
+  nameWithType: SnappingLayout.Render(DrawingContext)
+  fullName: DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+    name: Render
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Render_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+    name: Render
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Render_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
 - uid: DrawnUi.Draw.SnappingLayout.SendScrolled
   commentId: M:DrawnUi.Draw.SnappingLayout.SendScrolled
   parent: DrawnUi.Draw.SnappingLayout
@@ -4143,25 +4459,6 @@ references:
   name: Scrolled
   nameWithType: SnappingLayout.Scrolled
   fullName: DrawnUi.Draw.SnappingLayout.Scrolled
-- uid: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
-  commentId: M:DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
-  parent: DrawnUi.Draw.SnappingLayout
-  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CheckTransitionEnded
-  name: CheckTransitionEnded()
-  nameWithType: SnappingLayout.CheckTransitionEnded()
-  fullName: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
-    name: CheckTransitionEnded
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CheckTransitionEnded
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
-    name: CheckTransitionEnded
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CheckTransitionEnded
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SnappingLayout.CurrentPosition
   commentId: P:DrawnUi.Draw.SnappingLayout.CurrentPosition
   parent: DrawnUi.Draw.SnappingLayout
@@ -4308,25 +4605,6 @@ references:
   name: InTransition
   nameWithType: SnappingLayout.InTransition
   fullName: DrawnUi.Draw.SnappingLayout.InTransition
-- uid: DrawnUi.Draw.SnappingLayout.OnTransitionChanged
-  commentId: M:DrawnUi.Draw.SnappingLayout.OnTransitionChanged
-  parent: DrawnUi.Draw.SnappingLayout
-  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_OnTransitionChanged
-  name: OnTransitionChanged()
-  nameWithType: SnappingLayout.OnTransitionChanged()
-  fullName: DrawnUi.Draw.SnappingLayout.OnTransitionChanged()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SnappingLayout.OnTransitionChanged
-    name: OnTransitionChanged
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_OnTransitionChanged
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SnappingLayout.OnTransitionChanged
-    name: OnTransitionChanged
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_OnTransitionChanged
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SnappingLayout.RubberDampingProperty
   commentId: F:DrawnUi.Draw.SnappingLayout.RubberDampingProperty
   parent: DrawnUi.Draw.SnappingLayout
@@ -4702,31 +4980,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  commentId: M:DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
-  name: TrackChildAsDirty(SkiaControl)
-  nameWithType: SkiaLayout.TrackChildAsDirty(SkiaControl)
-  fullName: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-    name: TrackChildAsDirty
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-    name: TrackChildAsDirty
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
   commentId: M:DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
   parent: DrawnUi.Draw.SkiaLayout
@@ -4810,6 +5063,69 @@ references:
   - uid: DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
     name: OnBeforeDrawingVisibleChildren
     href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  commentId: M:DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
+  name: OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List<ControlInStack>)
+  nameWithType: SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List<ControlInStack>)
+  fullName: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.LayoutStructure, System.Collections.Generic.List<DrawnUi.Draw.ControlInStack>)
+  nameWithType.vb: SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List(Of ControlInStack))
+  fullName.vb: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.LayoutStructure, System.Collections.Generic.List(Of DrawnUi.Draw.ControlInStack))
+  name.vb: OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List(Of ControlInStack))
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+    name: OnAfterDrawingVisibleChildren
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+    name: OnAfterDrawingVisibleChildren
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
@@ -8487,6 +8803,34 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_
+  name: OnPaddingSet(Thickness)
+  nameWithType: SkiaControl.OnPaddingSet(Thickness)
+  fullName: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+    name: OnPaddingSet
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+    name: OnPaddingSet
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   parent: DrawnUi.Draw.SkiaControl
@@ -9925,6 +10269,68 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_
+  name: SetHover(bool)
+  nameWithType: SkiaControl.SetHover(bool)
+  fullName: DrawnUi.Draw.SkiaControl.SetHover(bool)
+  nameWithType.vb: SkiaControl.SetHover(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetHover(Boolean)
+  name.vb: SetHover(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+    name: SetHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+    name: SetHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_
+  name: OnHover(bool)
+  nameWithType: SkiaControl.OnHover(bool)
+  fullName: DrawnUi.Draw.SkiaControl.OnHover(bool)
+  nameWithType.vb: SkiaControl.OnHover(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaControl.OnHover(Boolean)
+  name.vb: OnHover(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+    name: OnHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+    name: OnHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -9956,6 +10362,20 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty
+  name: IsHoveredProperty
+  nameWithType: SkiaControl.IsHoveredProperty
+  fullName: DrawnUi.Draw.SkiaControl.IsHoveredProperty
+- uid: DrawnUi.Draw.SkiaControl.IsHovered
+  commentId: P:DrawnUi.Draw.SkiaControl.IsHovered
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered
+  name: IsHovered
+  nameWithType: SkiaControl.IsHovered
+  fullName: DrawnUi.Draw.SkiaControl.IsHovered
 - uid: DrawnUi.Draw.SkiaControl.VisualLayer
   commentId: P:DrawnUi.Draw.SkiaControl.VisualLayer
   parent: DrawnUi.Draw.SkiaControl
@@ -10526,44 +10946,6 @@ references:
     name: VisualTransform
     href: DrawnUi.Infrastructure.VisualTransform.html
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
-  commentId: M:DrawnUi.Draw.SkiaControl.CommitInvalidations
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
-  name: CommitInvalidations()
-  nameWithType: SkiaControl.CommitInvalidations()
-  fullName: DrawnUi.Draw.SkiaControl.CommitInvalidations()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
-    name: CommitInvalidations
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
-    name: CommitInvalidations
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
-  - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
-  commentId: M:DrawnUi.Draw.SkiaControl.SuperViewChanged
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
-  name: SuperViewChanged()
-  nameWithType: SkiaControl.SuperViewChanged()
-  fullName: DrawnUi.Draw.SkiaControl.SuperViewChanged()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
-    name: SuperViewChanged
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
-    name: SuperViewChanged
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.PostponeInvalidation(System.String,System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.PostponeInvalidation(System.String,System.Action)
   parent: DrawnUi.Draw.SkiaControl
@@ -11111,21 +11493,21 @@ references:
   name: DebugRendering
   nameWithType: SkiaControl.DebugRendering
   fullName: DrawnUi.Draw.SkiaControl.DebugRendering
-- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_
-  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool)
-  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool)
-  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, System.Threading.CancellationToken, bool)
-  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, System.Threading.CancellationToken, Boolean)
-  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
+  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
+  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
+  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, System.Threading.CancellationToken, bool, int)
+  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, System.Threading.CancellationToken, Boolean, Integer)
+  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
     name: AnimateRangeAsync
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -11173,11 +11555,17 @@ references:
     name: bool
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
     name: AnimateRangeAsync
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -11227,6 +11615,12 @@ references:
     name: Boolean
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.NotValidPoint
   commentId: M:DrawnUi.Draw.SkiaControl.NotValidPoint
@@ -13538,6 +13932,13 @@ references:
   name: Padding
   nameWithType: SkiaControl.Padding
   fullName: DrawnUi.Draw.SkiaControl.Padding
+- uid: DrawnUi.Draw.SkiaControl.UsePadding
+  commentId: P:DrawnUi.Draw.SkiaControl.UsePadding
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding
+  name: UsePadding
+  nameWithType: SkiaControl.UsePadding
+  fullName: DrawnUi.Draw.SkiaControl.UsePadding
 - uid: DrawnUi.Draw.SkiaControl.MarginProperty
   commentId: F:DrawnUi.Draw.SkiaControl.MarginProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -14080,33 +14481,48 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject
   - name: (
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
-  commentId: M:DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+- uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
+  commentId: M:DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_
-  name: DisposeObject(IDisposable)
-  nameWithType: SkiaControl.DisposeObject(IDisposable)
-  fullName: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_
+  name: DisposeObject(IDisposable, string)
+  nameWithType: SkiaControl.DisposeObject(IDisposable, string)
+  fullName: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable, string)
+  nameWithType.vb: SkiaControl.DisposeObject(IDisposable, String)
+  fullName.vb: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable, String)
+  name.vb: DisposeObject(IDisposable, String)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.OnSizeChanged
   commentId: M:DrawnUi.Draw.SkiaControl.OnSizeChanged
@@ -17037,31 +17453,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
-  commentId: M:DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Render_DrawnUi_Draw_DrawingContext_
-  name: Render(DrawingContext)
-  nameWithType: SkiaControl.Render(DrawingContext)
-  fullName: DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
-    name: Render
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Render_DrawnUi_Draw_DrawingContext_
-  - name: (
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
-    name: Render
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Render_DrawnUi_Draw_DrawingContext_
-  - name: (
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.Rendered
   commentId: E:DrawnUi.Draw.SkiaControl.Rendered
   parent: DrawnUi.Draw.SkiaControl
@@ -18821,6 +19212,51 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
+  commentId: M:DrawnUi.Draw.SkiaControl.CommitInvalidations
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
+  name: CommitInvalidations()
+  nameWithType: SkiaControl.CommitInvalidations()
+  fullName: DrawnUi.Draw.SkiaControl.CommitInvalidations()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
+    name: CommitInvalidations
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
+    name: CommitInvalidations
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
+  commentId: M:DrawnUi.Draw.SkiaControl.SuperViewChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
+  name: SuperViewChanged()
+  nameWithType: SkiaControl.SuperViewChanged()
+  fullName: DrawnUi.Draw.SkiaControl.SuperViewChanged()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
+    name: SuperViewChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
+    name: SuperViewChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
+  commentId: F:DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators
+  name: PendingUnattachedAnimators
+  nameWithType: SkiaControl.PendingUnattachedAnimators
+  fullName: DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
 - uid: DrawnUi.Draw.SkiaControl.GetAnimatorsManager
   commentId: M:DrawnUi.Draw.SkiaControl.GetAnimatorsManager
   parent: DrawnUi.Draw.SkiaControl
@@ -18864,6 +19300,41 @@ references:
   - uid: DrawnUi.Draw.ISkiaAnimator
     name: ISkiaAnimator
     href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+  commentId: M:DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_
+  name: RegisterAnimator(ISkiaAnimator, IAnimatorsManager)
+  nameWithType: SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)
+  fullName: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator, DrawnUi.Draw.IAnimatorsManager)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+    name: RegisterAnimator
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.IAnimatorsManager
+    name: IAnimatorsManager
+    href: DrawnUi.Draw.IAnimatorsManager.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+    name: RegisterAnimator
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.IAnimatorsManager
+    name: IAnimatorsManager
+    href: DrawnUi.Draw.IAnimatorsManager.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.UnregisterAnimator(System.Guid)
   commentId: M:DrawnUi.Draw.SkiaControl.UnregisterAnimator(System.Guid)
@@ -19349,6 +19820,50 @@ references:
     name: Element
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  commentId: M:DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren
+  name: ClearDirtyChildren()
+  nameWithType: SkiaControl.ClearDirtyChildren()
+  fullName: DrawnUi.Draw.SkiaControl.ClearDirtyChildren()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+    name: ClearDirtyChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+    name: ClearDirtyChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
+  name: TrackChildAsDirty(SkiaControl)
+  nameWithType: SkiaControl.TrackChildAsDirty(SkiaControl)
+  fullName: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+    name: TrackChildAsDirty
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+    name: TrackChildAsDirty
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.OnChildRemoved(DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Draw.SkiaControl.OnChildRemoved(DrawnUi.Draw.SkiaControl)
@@ -34210,6 +34725,52 @@ references:
   name: ScrollToNearestAnchor
   nameWithType: SkiaCarousel.ScrollToNearestAnchor
   fullName: DrawnUi.Controls.SkiaCarousel.ScrollToNearestAnchor
+- uid: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  commentId: M:DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  parent: DrawnUi.Draw.SnappingLayout
+  isExternal: true
+  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
+  name: SelectNextAnchor(Vector2, Vector2)
+  nameWithType: SnappingLayout.SelectNextAnchor(Vector2, Vector2)
+  fullName: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2, System.Numerics.Vector2)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+    name: SelectNextAnchor
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
+  - name: (
+  - uid: System.Numerics.Vector2
+    name: Vector2
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  - name: ','
+  - name: " "
+  - uid: System.Numerics.Vector2
+    name: Vector2
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SnappingLayout.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+    name: SelectNextAnchor
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
+  - name: (
+  - uid: System.Numerics.Vector2
+    name: Vector2
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  - name: ','
+  - name: " "
+  - uid: System.Numerics.Vector2
+    name: Vector2
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.numerics.vector2
+  - name: )
+- uid: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SelectNextAnchor
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
+  name: SelectNextAnchor
+  nameWithType: SkiaCarousel.SelectNextAnchor
+  fullName: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor
 - uid: DrawnUi.Draw.SkiaLayout.OnDisposing
   commentId: M:DrawnUi.Draw.SkiaLayout.OnDisposing
   parent: DrawnUi.Draw.SkiaLayout
@@ -34491,6 +35052,12 @@ references:
   name: ApplyPosition
   nameWithType: SkiaCarousel.ApplyPosition
   fullName: DrawnUi.Controls.SkiaCarousel.ApplyPosition
+- uid: DrawnUi.Controls.SkiaCarousel.FixIndex*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.FixIndex
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_FixIndex
+  name: FixIndex
+  nameWithType: SkiaCarousel.FixIndex
+  fullName: DrawnUi.Controls.SkiaCarousel.FixIndex
 - uid: DrawnUi.Controls.SkiaCarousel.ApplyIndex*
   commentId: Overload:DrawnUi.Controls.SkiaCarousel.ApplyIndex
   href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_ApplyIndex_System_Boolean_
@@ -34869,6 +35436,37 @@ references:
   - name: " "
   - name: T3
   - name: )
+- uid: DrawnUi.Controls.SkiaCarousel.FixPosition*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.FixPosition
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_FixPosition
+  name: FixPosition
+  nameWithType: SkiaCarousel.FixPosition
+  fullName: DrawnUi.Controls.SkiaCarousel.FixPosition
+- uid: DrawnUi.Draw.SnappingLayout.OnTransitionChanged
+  commentId: M:DrawnUi.Draw.SnappingLayout.OnTransitionChanged
+  parent: DrawnUi.Draw.SnappingLayout
+  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_OnTransitionChanged
+  name: OnTransitionChanged()
+  nameWithType: SnappingLayout.OnTransitionChanged()
+  fullName: DrawnUi.Draw.SnappingLayout.OnTransitionChanged()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SnappingLayout.OnTransitionChanged
+    name: OnTransitionChanged
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_OnTransitionChanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SnappingLayout.OnTransitionChanged
+    name: OnTransitionChanged
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_OnTransitionChanged
+  - name: (
+  - name: )
+- uid: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_OnTransitionChanged
+  name: OnTransitionChanged
+  nameWithType: SkiaCarousel.OnTransitionChanged
+  fullName: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
 - uid: DrawnUi.Draw.SnappingLayout.ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)
   commentId: M:DrawnUi.Draw.SnappingLayout.ScrollToOffset(System.Numerics.Vector2,System.Numerics.Vector2,System.Boolean)
   parent: DrawnUi.Draw.SnappingLayout
@@ -34930,31 +35528,68 @@ references:
   name: ScrollToOffset
   nameWithType: SkiaCarousel.ScrollToOffset
   fullName: DrawnUi.Controls.SkiaCarousel.ScrollToOffset
-- uid: DrawnUi.Draw.SnappingLayout.ApplyOptions
-  commentId: M:DrawnUi.Draw.SnappingLayout.ApplyOptions
+- uid: DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)
+  commentId: M:DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)
   parent: DrawnUi.Draw.SnappingLayout
-  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions
-  name: ApplyOptions()
-  nameWithType: SnappingLayout.ApplyOptions()
-  fullName: DrawnUi.Draw.SnappingLayout.ApplyOptions()
+  isExternal: true
+  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions_System_Boolean_
+  name: ApplyOptions(bool)
+  nameWithType: SnappingLayout.ApplyOptions(bool)
+  fullName: DrawnUi.Draw.SnappingLayout.ApplyOptions(bool)
+  nameWithType.vb: SnappingLayout.ApplyOptions(Boolean)
+  fullName.vb: DrawnUi.Draw.SnappingLayout.ApplyOptions(Boolean)
+  name.vb: ApplyOptions(Boolean)
   spec.csharp:
-  - uid: DrawnUi.Draw.SnappingLayout.ApplyOptions
+  - uid: DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)
     name: ApplyOptions
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions_System_Boolean_
   - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SnappingLayout.ApplyOptions
+  - uid: DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)
     name: ApplyOptions
-    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions_System_Boolean_
   - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: DrawnUi.Controls.SkiaCarousel.ApplyOptions*
   commentId: Overload:DrawnUi.Controls.SkiaCarousel.ApplyOptions
-  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_ApplyOptions
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_ApplyOptions_System_Boolean_
   name: ApplyOptions
   nameWithType: SkiaCarousel.ApplyOptions
   fullName: DrawnUi.Controls.SkiaCarousel.ApplyOptions
+- uid: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
+  commentId: M:DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
+  parent: DrawnUi.Draw.SnappingLayout
+  href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CheckTransitionEnded
+  name: CheckTransitionEnded()
+  nameWithType: SnappingLayout.CheckTransitionEnded()
+  fullName: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
+    name: CheckTransitionEnded
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CheckTransitionEnded
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SnappingLayout.CheckTransitionEnded
+    name: CheckTransitionEnded
+    href: DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_CheckTransitionEnded
+  - name: (
+  - name: )
+- uid: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_CheckTransitionEnded
+  name: CheckTransitionEnded
+  nameWithType: SkiaCarousel.CheckTransitionEnded
+  fullName: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
 - uid: DrawnUi.Draw.SnappingLayout.GetContentOffsetBounds
   commentId: M:DrawnUi.Draw.SnappingLayout.GetContentOffsetBounds
   parent: DrawnUi.Draw.SnappingLayout
@@ -35156,6 +35791,110 @@ references:
   name: GetTemplatesPoolPrefill
   nameWithType: SkiaCarousel.GetTemplatesPoolPrefill
   fullName: DrawnUi.Controls.SkiaCarousel.GetTemplatesPoolPrefill
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GetVirtualSnapPoints
+  name: GetVirtualSnapPoints
+  nameWithType: SkiaCarousel.GetVirtualSnapPoints
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+- uid: System.Collections.Generic.List{DrawnUi.Controls.SkiaCarousel.SnapPoint}
+  commentId: T:System.Collections.Generic.List{DrawnUi.Controls.SkiaCarousel.SnapPoint}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<SkiaCarousel.SnapPoint>
+  nameWithType: List<SkiaCarousel.SnapPoint>
+  fullName: System.Collections.Generic.List<DrawnUi.Controls.SkiaCarousel.SnapPoint>
+  nameWithType.vb: List(Of SkiaCarousel.SnapPoint)
+  fullName.vb: System.Collections.Generic.List(Of DrawnUi.Controls.SkiaCarousel.SnapPoint)
+  name.vb: List(Of SkiaCarousel.SnapPoint)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Controls.SkiaCarousel
+    name: SkiaCarousel
+    href: DrawnUi.Controls.SkiaCarousel.html
+  - name: .
+  - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    name: SnapPoint
+    href: DrawnUi.Controls.SkiaCarousel.SnapPoint.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaCarousel
+    name: SkiaCarousel
+    href: DrawnUi.Controls.SkiaCarousel.html
+  - name: .
+  - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    name: SnapPoint
+    href: DrawnUi.Controls.SkiaCarousel.SnapPoint.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GetVirtualAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
+  name: GetVirtualAnchor
+  nameWithType: SkiaCarousel.GetVirtualAnchor
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+  commentId: T:DrawnUi.Controls.SkiaCarousel.SnapPoint
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.SkiaCarousel.html
+  name: SkiaCarousel.SnapPoint
+  nameWithType: SkiaCarousel.SnapPoint
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPoint
+  spec.csharp:
+  - uid: DrawnUi.Controls.SkiaCarousel
+    name: SkiaCarousel
+    href: DrawnUi.Controls.SkiaCarousel.html
+  - name: .
+  - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    name: SnapPoint
+    href: DrawnUi.Controls.SkiaCarousel.SnapPoint.html
+  spec.vb:
+  - uid: DrawnUi.Controls.SkiaCarousel
+    name: SkiaCarousel
+    href: DrawnUi.Controls.SkiaCarousel.html
+  - name: .
+  - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    name: SnapPoint
+    href: DrawnUi.Controls.SkiaCarousel.SnapPoint.html
 - uid: DrawnUi.Draw.SnappingLayout.FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)
   commentId: M:DrawnUi.Draw.SnappingLayout.FindNearestAnchorInternal(System.Numerics.Vector2,System.Numerics.Vector2)
   parent: DrawnUi.Draw.SnappingLayout
@@ -35202,6 +35941,12 @@ references:
   name: FindNearestAnchorInternal
   nameWithType: SkiaCarousel.FindNearestAnchorInternal
   fullName: DrawnUi.Controls.SkiaCarousel.FindNearestAnchorInternal
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SnapPointsVirtual
+  name: SnapPointsVirtual
+  nameWithType: SkiaCarousel.SnapPointsVirtual
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
 - uid: Microsoft.Maui.Controls.BindableProperty
   commentId: T:Microsoft.Maui.Controls.BindableProperty
   parent: Microsoft.Maui.Controls
@@ -35210,6 +35955,12 @@ references:
   name: BindableProperty
   nameWithType: BindableProperty
   fullName: Microsoft.Maui.Controls.BindableProperty
+- uid: DrawnUi.Controls.SkiaCarousel.SwipeSpeed*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SwipeSpeed
+  name: SwipeSpeed
+  nameWithType: SkiaCarousel.SwipeSpeed
+  fullName: DrawnUi.Controls.SkiaCarousel.SwipeSpeed
 - uid: DrawnUi.Controls.SkiaCarousel.PreloadNeighboors*
   commentId: Overload:DrawnUi.Controls.SkiaCarousel.PreloadNeighboors
   href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_PreloadNeighboors

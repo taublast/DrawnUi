@@ -10,13 +10,15 @@
 		<integer>2</integer>
 	</array>
   <key>NSCameraUsageDescription</key>
-  <string>Allow access to the camera</string>
+  <string>Allow access to the camcorder for the camera</string>
   <key>NSMicrophoneUsageDescription</key>
-  <string>Allow access to the microphone</string>
+  <string>Allow microphone access for the camera</string>
   <key>NSPhotoLibraryAddUsageDescription</key>
   <string>Allow access to the library to save photos</string>
   <key>NSPhotoLibraryUsageDescription</key>
   <string>Allow access to the library to save photos</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>To be able to geotag photos</string>
   <key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>

@@ -8,6 +8,7 @@ items:
   - DrawnUi.Draw.AddGestures.AnimationPressedProperty
   - DrawnUi.Draw.AddGestures.AnimationTappedProperty
   - DrawnUi.Draw.AddGestures.AttachedListeners
+  - DrawnUi.Draw.AddGestures.CommandDelayMs
   - DrawnUi.Draw.AddGestures.CommandLongPressingParameterProperty
   - DrawnUi.Draw.AddGestures.CommandLongPressingProperty
   - DrawnUi.Draw.AddGestures.CommandPressedProperty
@@ -71,6 +72,33 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: DrawnUi.Draw.AddGestures.CommandDelayMs
+  commentId: F:DrawnUi.Draw.AddGestures.CommandDelayMs
+  id: CommandDelayMs
+  parent: DrawnUi.Draw.AddGestures
+  langs:
+  - csharp
+  - vb
+  name: CommandDelayMs
+  nameWithType: AddGestures.CommandDelayMs
+  fullName: DrawnUi.Draw.AddGestures.CommandDelayMs
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CommandDelayMs
+    path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
+    startLine: 173
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static int CommandDelayMs
+    return:
+      type: System.Int32
+    content.vb: Public Shared CommandDelayMs As Integer
 - uid: DrawnUi.Draw.AddGestures.AttachedListeners
   commentId: F:DrawnUi.Draw.AddGestures.AttachedListeners
   id: AttachedListeners
@@ -89,7 +117,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachedListeners
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 189
+    startLine: 175
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -116,7 +144,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ManageRegistration
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 235
+    startLine: 220
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -145,7 +173,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsActive
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 262
+    startLine: 247
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -176,7 +204,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTappedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 279
+    startLine: 265
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -203,7 +231,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 287
+    startLine: 273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -234,7 +262,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 292
+    startLine: 278
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -265,7 +293,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTappedParameterProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 299
+    startLine: 285
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -292,7 +320,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandTappedParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 306
+    startLine: 292
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -323,7 +351,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandTappedParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 311
+    startLine: 297
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -357,7 +385,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLongPressingProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 318
+    startLine: 304
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -384,7 +412,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandLongPressing
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 326
+    startLine: 312
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -415,7 +443,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandLongPressing
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 331
+    startLine: 317
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -446,7 +474,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLongPressingParameterProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 338
+    startLine: 323
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -473,7 +501,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandLongPressingParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 345
+    startLine: 330
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -504,7 +532,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandLongPressingParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 350
+    startLine: 335
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -538,7 +566,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformViewProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 355
+    startLine: 340
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -565,7 +593,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTransformView
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 362
+    startLine: 347
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -596,7 +624,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTransformView
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 367
+    startLine: 352
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -630,7 +658,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimationTappedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 372
+    startLine: 359
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -657,7 +685,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimationTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 380
+    startLine: 367
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -688,7 +716,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimationTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 390
+    startLine: 378
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -719,7 +747,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandPressedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 395
+    startLine: 385
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -746,7 +774,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 403
+    startLine: 393
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -777,7 +805,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 408
+    startLine: 398
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -808,7 +836,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimationPressedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 415
+    startLine: 405
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -835,7 +863,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimationPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 423
+    startLine: 413
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -866,7 +894,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimationPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 428
+    startLine: 418
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -897,7 +925,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TouchEffectColorProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 433
+    startLine: 423
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -924,7 +952,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTouchEffectColor
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 440
+    startLine: 430
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -955,7 +983,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTouchEffectColor
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 451
+    startLine: 442
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -986,7 +1014,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LockPanningProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 457
+    startLine: 448
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1013,7 +1041,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetLockPanning
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 465
+    startLine: 456
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1044,7 +1072,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetLockPanning
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-    startLine: 470
+    startLine: 461
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1320,6 +1348,17 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
 - uid: System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.AddGestures.GestureListener}
   commentId: T:System.Collections.Generic.Dictionary{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.AddGestures.GestureListener}
   parent: System.Collections.Generic

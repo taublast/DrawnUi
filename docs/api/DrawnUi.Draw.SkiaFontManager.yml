@@ -6,12 +6,15 @@ items:
   parent: DrawnUi.Draw
   children:
   - DrawnUi.Draw.SkiaFontManager.CanRender(SkiaSharp.SKTypeface,System.Int32)
+  - DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
   - DrawnUi.Draw.SkiaFontManager.DefaultTypeface
+  - DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(System.Int32)
   - DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(System.String)
   - DrawnUi.Draw.SkiaFontManager.FontRegistrar
   - DrawnUi.Draw.SkiaFontManager.Fonts
   - DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,DrawnUi.Draw.FontWeight)
   - DrawnUi.Draw.SkiaFontManager.GetAlias(System.String,System.Int32)
+  - DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
   - DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames
   - DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.Reflection.Assembly,System.String)
   - DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceStream(System.String)
@@ -24,6 +27,7 @@ items:
   - DrawnUi.Draw.SkiaFontManager.Initialized
   - DrawnUi.Draw.SkiaFontManager.Instance
   - DrawnUi.Draw.SkiaFontManager.Manager
+  - DrawnUi.Draw.SkiaFontManager.MatchCharacter(System.Int32)
   - DrawnUi.Draw.SkiaFontManager.RegisterWeight(System.String,DrawnUi.Draw.FontWeight)
   - DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues(System.String)
   - DrawnUi.Draw.SkiaFontManager.ThrowIfFailedToCreateFont
@@ -41,7 +45,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaFontManager
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 5
+    startLine: 42
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -78,7 +82,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialized
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 11
+    startLine: 48
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -107,7 +111,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultTypeface
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 13
+    startLine: 50
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -136,7 +140,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialize
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 29
+    startLine: 63
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -162,7 +166,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ThrowIfFailedToCreateFont
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 71
+    startLine: 105
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -189,7 +193,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Manager
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 74
+    startLine: 108
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -200,6 +204,149 @@ items:
       type: SkiaSharp.SKFontManager
     content.vb: Public Shared ReadOnly Property Manager As SKFontManager
   overload: DrawnUi.Draw.SkiaFontManager.Manager*
+- uid: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(System.Int32)
+  id: DetectUnicodeBlock(System.Int32)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: DetectUnicodeBlock(int)
+  nameWithType: SkiaFontManager.DetectUnicodeBlock(int)
+  fullName: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DetectUnicodeBlock
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 134
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Detects the Unicode block category for a given code point.
+
+    This is cross-platform logic used to optimize font matching.
+  example: []
+  syntax:
+    content: public static UnicodeBlock DetectUnicodeBlock(int codePoint)
+    parameters:
+    - id: codePoint
+      type: System.Int32
+      description: Unicode code point
+    return:
+      type: DrawnUi.Draw.UnicodeBlock
+      description: Unicode block category
+    content.vb: Public Shared Function DetectUnicodeBlock(codePoint As Integer) As UnicodeBlock
+  overload: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock*
+  nameWithType.vb: SkiaFontManager.DetectUnicodeBlock(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(Integer)
+  name.vb: DetectUnicodeBlock(Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.MatchCharacter(System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaFontManager.MatchCharacter(System.Int32)
+  id: MatchCharacter(System.Int32)
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: MatchCharacter(int)
+  nameWithType: SkiaFontManager.MatchCharacter(int)
+  fullName: DrawnUi.Draw.SkiaFontManager.MatchCharacter(int)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MatchCharacter
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 187
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Matches a Unicode character to an appropriate typeface with caching.
+
+    This method is thread-safe and optimized for high-frequency calls.
+  example: []
+  syntax:
+    content: public static SKTypeface MatchCharacter(int character)
+    parameters:
+    - id: character
+      type: System.Int32
+      description: Unicode code point to match
+    return:
+      type: SkiaSharp.SKTypeface
+      description: SKTypeface that can render the character, or null if no match found
+    content.vb: Public Shared Function MatchCharacter(character As Integer) As SKTypeface
+  overload: DrawnUi.Draw.SkiaFontManager.MatchCharacter*
+  nameWithType.vb: SkiaFontManager.MatchCharacter(Integer)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.MatchCharacter(Integer)
+  name.vb: MatchCharacter(Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+  commentId: M:DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+  id: ClearCharacterCache
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: ClearCharacterCache()
+  nameWithType: SkiaFontManager.ClearCharacterCache()
+  fullName: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ClearCharacterCache
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 229
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Clears the character-to-typeface cache.
+
+    Call this if fonts are dynamically loaded/unloaded at runtime.
+  example: []
+  syntax:
+    content: public static void ClearCharacterCache()
+    content.vb: Public Shared Sub ClearCharacterCache()
+  overload: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache*
+- uid: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
+  id: GetCharacterCacheSize
+  parent: DrawnUi.Draw.SkiaFontManager
+  langs:
+  - csharp
+  - vb
+  name: GetCharacterCacheSize()
+  nameWithType: SkiaFontManager.GetCharacterCacheSize()
+  fullName: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCharacterCacheSize
+    path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
+    startLine: 237
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Gets the current size of the character cache for diagnostics.
+  example: []
+  syntax:
+    content: public static int GetCharacterCacheSize()
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function GetCharacterCacheSize() As Integer
+  overload: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize*
 - uid: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(System.String)
   commentId: M:DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(System.String)
   id: FindBestTypefaceForString(System.String)
@@ -218,7 +365,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindBestTypefaceForString
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 90
+    startLine: 247
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -252,7 +399,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CanRender
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 115
+    startLine: 274
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -288,7 +435,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToUnicodeValues
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 120
+    startLine: 279
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -322,7 +469,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFont
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 140
+    startLine: 298
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -356,7 +503,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterWeight
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 150
+    startLine: 308
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -390,7 +537,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRegisteredAlias
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 163
+    startLine: 321
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -426,7 +573,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFont
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 181
+    startLine: 339
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -462,7 +609,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetWeightEnum
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 205
+    startLine: 363
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -500,7 +647,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAlias
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 215
+    startLine: 373
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -536,7 +683,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAlias
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 223
+    startLine: 381
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -572,7 +719,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetEmbeddedResourceStream
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 238
+    startLine: 396
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -615,7 +762,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetEmbeddedResourceStream
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 243
+    startLine: 401
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -651,7 +798,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetEmbeddedResourceNames
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 275
+    startLine: 433
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -682,7 +829,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Instance
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 282
+    startLine: 440
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -711,7 +858,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Fonts
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 295
+    startLine: 453
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -740,7 +887,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FontRegistrar
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 298
+    startLine: 456
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -769,7 +916,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetEmbeededFont
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-    startLine: 311
+    startLine: 469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1197,6 +1344,48 @@ references:
   name: SKFontManager
   nameWithType: SKFontManager
   fullName: SkiaSharp.SKFontManager
+- uid: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_DetectUnicodeBlock_System_Int32_
+  name: DetectUnicodeBlock
+  nameWithType: SkiaFontManager.DetectUnicodeBlock
+  fullName: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Draw.UnicodeBlock
+  commentId: T:DrawnUi.Draw.UnicodeBlock
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.UnicodeBlock.html
+  name: UnicodeBlock
+  nameWithType: UnicodeBlock
+  fullName: DrawnUi.Draw.UnicodeBlock
+- uid: DrawnUi.Draw.SkiaFontManager.MatchCharacter*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.MatchCharacter
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_MatchCharacter_System_Int32_
+  name: MatchCharacter
+  nameWithType: SkiaFontManager.MatchCharacter
+  fullName: DrawnUi.Draw.SkiaFontManager.MatchCharacter
+- uid: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_ClearCharacterCache
+  name: ClearCharacterCache
+  nameWithType: SkiaFontManager.ClearCharacterCache
+  fullName: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+- uid: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize*
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
+  href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetCharacterCacheSize
+  name: GetCharacterCacheSize
+  nameWithType: SkiaFontManager.GetCharacterCacheSize
+  fullName: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
 - uid: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString*
   commentId: Overload:DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString
   href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_FindBestTypefaceForString_System_String_
@@ -1276,17 +1465,6 @@ references:
   name: CanRender
   nameWithType: SkiaFontManager.CanRender
   fullName: DrawnUi.Draw.SkiaFontManager.CanRender
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.int32
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
 - uid: DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues*
   commentId: Overload:DrawnUi.Draw.SkiaFontManager.StringToUnicodeValues
   href: DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_StringToUnicodeValues_System_String_

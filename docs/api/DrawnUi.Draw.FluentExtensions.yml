@@ -924,7 +924,7 @@ items:
   summary: Assigns the control to a variable and returns the control to continue the fluent chain
   example: []
   syntax:
-    content: 'public static T Assign<T>(this T control, out T variable) where T : SkiaControl'
+    content: 'public static T Assign<T>(this T control, out T variable) where T : BindableObject'
     parameters:
     - id: control
       type: '{T}'
@@ -938,7 +938,7 @@ items:
     return:
       type: '{T}'
       description: The control for chaining
-    content.vb: Public Shared Function Assign(Of T As SkiaControl)(control As T, variable As T) As T
+    content.vb: Public Shared Function Assign(Of T As BindableObject)(control As T, variable As T) As T
   overload: DrawnUi.Draw.FluentExtensions.Assign*
   nameWithType.vb: FluentExtensions.Assign(Of T)(T, T)
   fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of T)(T, T)

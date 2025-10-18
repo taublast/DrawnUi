@@ -4,10 +4,8 @@ using DrawnUi.Infrastructure.Enums;
 
 namespace DrawnUi.Views
 {
-
     public partial class DrawnView : IDrawnBase, IAnimatorsManager, IVisualTreeElement, IDisposeManager
     {
-
         public void DumpLayersTree(VisualLayer node, string prefix = "", bool isLast = true, int level = 0)
         {
             if (node == null)
@@ -136,15 +134,16 @@ namespace DrawnUi.Views
         /// <returns></returns>
         public virtual ScaledRect GetOnScreenVisibleArea(DrawingContext context, Vector2 inflateByPixels = default)
         {
-            var bounds = new SKRect(context.Destination.Left - inflateByPixels.X, context.Destination.Top - inflateByPixels.Y,
-                (int)(context.Destination.Right + inflateByPixels.X), (int)(context.Destination.Bottom + inflateByPixels.Y));
+            var bounds = new SKRect(context.Destination.Left - inflateByPixels.X,
+                context.Destination.Top - inflateByPixels.Y,
+                (int)(context.Destination.Right + inflateByPixels.X),
+                (int)(context.Destination.Bottom + inflateByPixels.Y));
 
             return ScaledRect.FromPixels(bounds, (float)RenderingScale);
         }
 
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {
-
             if (args.NewHandler == null || args.OldHandler != null)
             {
                 DestroySkiaView();
@@ -470,7 +469,7 @@ namespace DrawnUi.Views
         protected long LastFrameTimeNanos;
 
         public long mLastFrameTime { get; set; }
- 
+
 
         protected int ExecuteAnimators(long frameTime)
         {
@@ -665,10 +664,7 @@ namespace DrawnUi.Views
 
         private void OnNeedUpdate(object sender, EventArgs e)
         {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                UpdateGlobal();
-            });
+            MainThread.BeginInvokeOnMainThread(() => { UpdateGlobal(); });
         }
 
         protected virtual void UpdateGlobal()
@@ -764,7 +760,6 @@ namespace DrawnUi.Views
         /// </summary>
         protected void CreateSkiaView()
         {
-
             DestroySkiaView();
 
 #if ONPLATFORM
@@ -789,7 +784,6 @@ namespace DrawnUi.Views
 
         protected virtual void OnDestroyingVew()
         {
-
         }
 
         protected void DestroySkiaView()
@@ -1429,12 +1423,15 @@ namespace DrawnUi.Views
 
                     this.DrawingThreadId = Thread.CurrentThread.ManagedThreadId;
 
-                    if (!WasRendered)
+                    if (CanRender)
                     {
-                        WillFirstTimeDraw?.Invoke(this, args);
-                    }
+                        if (!WasRendered)
+                        {
+                            WillFirstTimeDraw?.Invoke(this, args);
+                        }
 
-                    WillDraw?.Invoke(this, null);
+                        WillDraw?.Invoke(this, null);
+                    }
 
                     var ctx = new DrawingContext(args, rect, RenderingScale, null);
                     Draw(ctx);
@@ -1443,10 +1440,30 @@ namespace DrawnUi.Views
                 {
                     OnFinalizeRendering();
 
-                    WasRendered = true;
+                    if (!WasRendered && CanRender)
+                    {
+                        WasRendered = true;
+                    }
                 }
 
                 return IsDirty;
+            }
+        }
+
+        /// <summary>
+        /// Underlying surface and engine are ready to render
+        /// </summary>
+        public bool CanRender
+        {
+            get
+            {
+                if (CanvasView == null || CanvasView.Surface == null || Handler == null)
+                    return false;
+                if (CanvasView.IsHardwareAccelerated)
+                {
+                    return CanvasView.Surface.Context != null;
+                }
+                return true;
             }
         }
 
@@ -1591,11 +1608,11 @@ namespace DrawnUi.Views
         public SKSurface CreateSurface(int width, int height, bool isGpu)
         {
             SKSurface surface = null;
-       
+
             if (isGpu)
             {
                 if (CanvasView is SkiaViewAccelerated accelerated
-                                                      && accelerated.GRContext != null)
+                    && accelerated.GRContext != null)
                 {
                     var cacheSurfaceInfo = new SKImageInfo(width, height);
                     surface = SKSurface.Create(accelerated.GRContext, true, cacheSurfaceInfo);
@@ -1625,7 +1642,7 @@ namespace DrawnUi.Views
 
         #region DISPOSE STUFF
 
-        public void DisposeObject(IDisposable resource)
+        public void DisposeObject(IDisposable resource, [CallerMemberName] string caller = null)
         {
             if (this.IsDisposed)
                 return;
@@ -1828,7 +1845,7 @@ namespace DrawnUi.Views
 
         #endregion
 
-        private VisualTreeHandler VisualTree;// = new();
+        private VisualTreeHandler VisualTree; // = new();
 
         protected virtual void Draw(DrawingContext context)
         {
@@ -2669,10 +2686,8 @@ namespace DrawnUi.Views
                             _wasBusy = true;
                         }
                     }
-
                 }
             }
-
         }
 
         protected override void OnParentSet()

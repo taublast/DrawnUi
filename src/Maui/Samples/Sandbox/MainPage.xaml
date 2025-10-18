@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <views:BasePageCodeBehind
     x:Class="MauiNet8.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -159,10 +160,10 @@
                                             TextStrokeColor="#99FF0000"
                                             WidthRequest="150">
                                             <draw:SkiaControl.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
-                                                    TargetType="draw:SkiaButton"
-                                                    Value="False">
+                                                <DataTrigger x:DataType="draw:SkiaButton"
+                                                             Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
+                                                             TargetType="draw:SkiaButton"
+                                                             Value="False">
                                                     <Setter Property="TextColor" Value="#ffffff" />
                                                     <Setter Property="TextStrokeColor" Value="#CCFF3333" />
                                                     <Setter Property="TranslationX" Value="0" />
@@ -178,6 +179,7 @@
                                                     </Setter>
                                                 </DataTrigger>
                                                 <DataTrigger
+                                                    x:DataType="draw:SkiaButton"
                                                     Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
                                                     TargetType="draw:SkiaButton"
                                                     Value="True">
@@ -195,6 +197,20 @@
                                                         </generic:List>
                                                     </Setter>
                                                 </DataTrigger>
+                                                <DataTrigger
+                                                    x:DataType="draw:SkiaButton"
+                                                    Binding="{Binding Source={RelativeSource Self}, Path=IsHovered}"
+                                                    TargetType="draw:SkiaButton"
+                                                    Value="False">
+                                                    <Setter Property="TextStrokeColor" Value="#99FF0000" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    x:DataType="draw:SkiaButton"
+                                                    Binding="{Binding Source={RelativeSource Self}, Path=IsHovered}"
+                                                    TargetType="draw:SkiaButton"
+                                                    Value="True">
+                                                    <Setter Property="TextStrokeColor" Value="#EEFFFFFF" />
+                                                </DataTrigger>
                                             </draw:SkiaControl.Triggers>
                                         </draw:SkiaButton>
 
@@ -208,7 +224,7 @@
 
                 </draw:SkiaScroll>
 
-            
+
                 <draw:SkiaLabelFps
                     Margin="0,0,4,24"
                     BackgroundColor="DarkRed"

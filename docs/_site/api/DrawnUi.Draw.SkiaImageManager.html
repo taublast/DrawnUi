@@ -227,6 +227,71 @@ Class SkiaImageManager  <a class="header-action link-secondary" title="View sour
 
 
 
+  <h3 id="DrawnUi_Draw_SkiaImageManager_EnableHttpRetry" data-uid="DrawnUi.Draw.SkiaImageManager.EnableHttpRetry">
+  EnableHttpRetry
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs/#L897"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Controls whether LoadImageFromInternetAsync should use retry logic.
+Default is true for iOS/Windows (where it's the fallback when Nuke/Glide is disabled),
+false for Android (uses Glide retry).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool EnableHttpRetry</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Draw_SkiaImageManager_HttpRetryMaxAttempts" data-uid="DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts">
+  HttpRetryMaxAttempts
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs/#L904"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Maximum number of retry attempts for HTTP image loading.
+Only applies when EnableHttpRetry is true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int HttpRetryMaxAttempts</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <h3 id="DrawnUi_Draw_SkiaImageManager_LoadLocalAsync" data-uid="DrawnUi.Draw.SkiaImageManager.LoadLocalAsync">
   LoadLocalAsync
   <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs/#L175"><i class="bi bi-code-slash"></i></a>
@@ -797,7 +862,7 @@ Class SkiaImageManager  <a class="header-action link-secondary" title="View sour
 
   <h3 id="DrawnUi_Draw_SkiaImageManager_LoadImageFromInternetAsync_Microsoft_Maui_Controls_UriImageSource_System_Threading_CancellationToken_" data-uid="DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)">
   LoadImageFromInternetAsync(UriImageSource, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs/#L889"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs/#L906"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

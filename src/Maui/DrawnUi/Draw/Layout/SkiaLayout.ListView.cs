@@ -2530,8 +2530,8 @@ public partial class SkiaLayout
     private float GetContentWidthForBackgroundMeasurement()
     {
         var scale = RenderingScale;
-        var constraintLeft = (Padding.Left + Margins.Left) * scale;
-        var constraintRight = (Padding.Right + Margins.Right) * scale;
+        var constraintLeft = (UsePadding.Left + Margins.Left) * scale;
+        var constraintRight = (UsePadding.Right + Margins.Right) * scale;
 
         return (float)Math.Round(MeasuredSize.Pixels.Width - (constraintRight + constraintLeft));
     }

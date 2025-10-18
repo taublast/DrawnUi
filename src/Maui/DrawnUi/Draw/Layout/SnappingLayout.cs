@@ -175,8 +175,19 @@ public class SnappingLayout : SkiaLayout
 
     protected RangeVectorAnimator AnimatorRange;
     private Vector2 _currentPosition;
+    private Vector2 currentSnap = new(-1, -1);
 
-    protected Vector2 CurrentSnap { get; set; } = new(-1, -1);
+    protected Vector2 CurrentSnap   
+    {
+        get => currentSnap;
+        set
+        {
+        if (value == currentSnap)
+            return;
+            //Debug.WriteLine($"[CurrentSnap] {value}");
+            currentSnap = value;
+        }
+    }
 
     /// <summary>
     /// todo calc upon measured size + prop for speed
@@ -301,9 +312,16 @@ public class SnappingLayout : SkiaLayout
 
         UpdateReportedPosition();
 
-        InTransition = !CheckTransitionEnded();
+
 
         SendScrolled();
+    }
+
+    public override void Render(DrawingContext context)
+    {
+        base.Render(context);
+
+        InTransition = !CheckTransitionEnded();
     }
 
     public virtual void SendScrolled()
@@ -328,7 +346,7 @@ public class SnappingLayout : SkiaLayout
             if (value.Equals(_currentPosition)) return;
             _currentPosition = value;
             OnPropertyChanged();
-            //Debug.WriteLine($"[X] {value.X:0.0}");
+            //Debug.WriteLine($"_____[CurrentPosition] {value}");
         }
     }
 
@@ -341,7 +359,7 @@ public class SnappingLayout : SkiaLayout
 
     #region PROPERTIES
 
-    public virtual void ApplyOptions()
+    public virtual void ApplyOptions(bool initialize)
     {
 
     }
@@ -363,7 +381,7 @@ public class SnappingLayout : SkiaLayout
     {
         if (bindable is SnappingLayout control)
         {
-            control.ApplyOptions();
+            control.ApplyOptions(false);
         }
     }
 
@@ -455,7 +473,7 @@ public class SnappingLayout : SkiaLayout
         nameof(RubberDamping),
         typeof(double),
         typeof(SnappingLayout),
-        0.8);
+        0.7);
 
     /// <summary>
     /// If Bounce is enabled this basically controls how less the scroll will bounce when displaced from limit by finger or inertia. Default is 0.8.

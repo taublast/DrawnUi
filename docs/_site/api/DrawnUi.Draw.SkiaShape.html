@@ -102,7 +102,7 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaShape : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaShape : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
   </div>
 
 
@@ -144,6 +144,7 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGridLayout.html">ISkiaGridLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaLayout.html">ISkiaLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
@@ -204,13 +205,13 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackNonTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackNonTemplated(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaLayout.TrackChildAsDirty(SkiaControl)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackTemplated(SKRect, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnBeforeDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_DrawStack_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_">SkiaLayout.DrawStack(DrawingContext, LayoutStructure)</a>
@@ -774,6 +775,9 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
     </div>
     <div>
@@ -969,7 +973,19 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -1062,12 +1078,6 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -1101,7 +1111,7 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -1488,6 +1498,9 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1638,7 +1651,7 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -2187,10 +2200,22 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -2239,6 +2264,12 @@ Class SkiaShape  <a class="header-action link-secondary" title="View source" hre
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -3197,7 +3228,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_ClipBackgroundColorProperty" data-uid="DrawnUi.Draw.SkiaShape.ClipBackgroundColorProperty">
   ClipBackgroundColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L185"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L188"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3257,7 +3288,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_LayoutChildrenProperty" data-uid="DrawnUi.Draw.SkiaShape.LayoutChildrenProperty">
   LayoutChildrenProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L267"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L270"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3287,7 +3318,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_PathDataProperty" data-uid="DrawnUi.Draw.SkiaShape.PathDataProperty">
   PathDataProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L62"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3317,7 +3348,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_PointsProperty" data-uid="DrawnUi.Draw.SkiaShape.PointsProperty">
   PointsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1332"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1341"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3347,7 +3378,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_ShadowsProperty" data-uid="DrawnUi.Draw.SkiaShape.ShadowsProperty">
   ShadowsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1285"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1294"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3377,7 +3408,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_SmoothPointsProperty" data-uid="DrawnUi.Draw.SkiaShape.SmoothPointsProperty">
   SmoothPointsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1418"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1427"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3407,7 +3438,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeBlendModeProperty" data-uid="DrawnUi.Draw.SkiaShape.StrokeBlendModeProperty">
   StrokeBlendModeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L296"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L299"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3437,7 +3468,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeCapProperty" data-uid="DrawnUi.Draw.SkiaShape.StrokeCapProperty">
   StrokeCapProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L238"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L241"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3497,7 +3528,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeGradientProperty" data-uid="DrawnUi.Draw.SkiaShape.StrokeGradientProperty">
   StrokeGradientProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3557,7 +3588,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeWidthProperty" data-uid="DrawnUi.Draw.SkiaShape.StrokeWidthProperty">
   StrokeWidthProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L211"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L214"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3587,7 +3618,7 @@ For complex shapes, use PathData or Points properties to define custom geometrie
 
   <h3 id="DrawnUi_Draw_SkiaShape_TypeProperty" data-uid="DrawnUi.Draw.SkiaShape.TypeProperty">
   TypeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L103"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3705,7 +3736,7 @@ including depth, light color, shadow color, and opacity.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_BorderWithPixels" data-uid="DrawnUi.Draw.SkiaShape.BorderWithPixels">
   BorderWithPixels
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L588"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L591"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3736,7 +3767,7 @@ including depth, light color, shadow color, and opacity.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_ClipBackgroundColor" data-uid="DrawnUi.Draw.SkiaShape.ClipBackgroundColor">
   ClipBackgroundColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L208"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets whether the background color is clipped out, allowing transparent areas with shadows.</p>
@@ -3822,7 +3853,7 @@ corners, just provide a single value.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_DrawPath" data-uid="DrawnUi.Draw.SkiaShape.DrawPath">
   DrawPath
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L606"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L609"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the parsed SKPath object created from the PathData property.</p>
@@ -3861,7 +3892,7 @@ to fit the shape's bounds.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_DrawPathAligned" data-uid="DrawnUi.Draw.SkiaShape.DrawPathAligned">
   DrawPathAligned
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L585"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L588"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3892,7 +3923,7 @@ to fit the shape's bounds.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_DrawPathResized" data-uid="DrawnUi.Draw.SkiaShape.DrawPathResized">
   DrawPathResized
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L584"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L587"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3923,7 +3954,7 @@ to fit the shape's bounds.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_DrawPathShape" data-uid="DrawnUi.Draw.SkiaShape.DrawPathShape">
   DrawPathShape
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L608"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L611"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3954,7 +3985,7 @@ to fit the shape's bounds.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_DrawRoundedRect" data-uid="DrawnUi.Draw.SkiaShape.DrawRoundedRect">
   DrawRoundedRect
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L620"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L623"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the rounded rectangle used for rendering when Type is Rectangle with CornerRadius.</p>
@@ -3992,7 +4023,7 @@ and corner radii based on the shape's properties.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_LayoutChildren" data-uid="DrawnUi.Draw.SkiaShape.LayoutChildren">
   LayoutChildren
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L290"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L293"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how child elements are arranged within the shape.</p>
@@ -4037,7 +4068,7 @@ complex UI components with custom shapes and internal layouts.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_MeasuredStrokeAwareChildrenSize" data-uid="DrawnUi.Draw.SkiaShape.MeasuredStrokeAwareChildrenSize">
   MeasuredStrokeAwareChildrenSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Available size for children content, accounting for padding and stroke</p>
@@ -4069,7 +4100,7 @@ complex UI components with custom shapes and internal layouts.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_MeasuredStrokeAwareClipSize" data-uid="DrawnUi.Draw.SkiaShape.MeasuredStrokeAwareClipSize">
   MeasuredStrokeAwareClipSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Area to use for clipping inside stroke</p>
@@ -4101,7 +4132,7 @@ complex UI components with custom shapes and internal layouts.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_MeasuredStrokeAwareSize" data-uid="DrawnUi.Draw.SkiaShape.MeasuredStrokeAwareSize">
   MeasuredStrokeAwareSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Size we must use to draw stroke to fit inside available destination</p>
@@ -4133,7 +4164,7 @@ complex UI components with custom shapes and internal layouts.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_PathData" data-uid="DrawnUi.Draw.SkiaShape.PathData">
   PathData
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For Type = Path, use the path markup syntax</p>
@@ -4181,7 +4212,7 @@ standard SVG path syntax, for example:
 
   <h3 id="DrawnUi_Draw_SkiaShape_Points" data-uid="DrawnUi.Draw.SkiaShape.Points">
   Points
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1346"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1355"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4213,7 +4244,7 @@ public IList&lt;SkiaPoint&gt; Points { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaShape_PolygonStar" data-uid="DrawnUi.Draw.SkiaShape.PolygonStar">
   PolygonStar
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1353"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1362"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4244,7 +4275,7 @@ public IList&lt;SkiaPoint&gt; Points { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaShape_RenderingPaint" data-uid="DrawnUi.Draw.SkiaShape.RenderingPaint">
   RenderingPaint
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L593"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L596"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4275,7 +4306,7 @@ public IList&lt;SkiaPoint&gt; Points { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaShape_Shadows" data-uid="DrawnUi.Draw.SkiaShape.Shadows">
   Shadows
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1301"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1310"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4306,7 +4337,7 @@ public IList&lt;SkiaPoint&gt; Points { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaShape_SmoothPoints" data-uid="DrawnUi.Draw.SkiaShape.SmoothPoints">
   SmoothPoints
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1448"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1457"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the smoothness level for Line and Polygon shapes.</p>
@@ -4351,7 +4382,7 @@ not produce expected results with arbitrary point configurations.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeBlendMode" data-uid="DrawnUi.Draw.SkiaShape.StrokeBlendMode">
   StrokeBlendMode
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L321"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L324"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the blend mode used when rendering the stroke.</p>
@@ -4399,7 +4430,7 @@ not produce expected results with arbitrary point configurations.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeCap" data-uid="DrawnUi.Draw.SkiaShape.StrokeCap">
   StrokeCap
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L264"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the cap style for stroke line ends and the join style for corners.</p>
@@ -4488,7 +4519,7 @@ not produce expected results with arbitrary point configurations.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeGradient" data-uid="DrawnUi.Draw.SkiaShape.StrokeGradient">
   StrokeGradient
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L160"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the gradient to be applied to the shape's stroke.</p>
@@ -4576,7 +4607,7 @@ StrokePath=&quot;3,1&quot; or StrokePath=&quot;5,2,1,2&quot;</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_StrokeWidth" data-uid="DrawnUi.Draw.SkiaShape.StrokeWidth">
   StrokeWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L232"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L235"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the width of the stroke (outline) in device-independent units.
@@ -4620,7 +4651,7 @@ If you set it negative it will be in PIXELS instead of point.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_Type" data-uid="DrawnUi.Draw.SkiaShape.Type">
   Type
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L124"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the type of shape to render.</p>
@@ -4666,7 +4697,7 @@ such as PathData for Path type or Points for Polygon/Line types.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_WillStroke" data-uid="DrawnUi.Draw.SkiaShape.WillStroke">
   WillStroke
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L383"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L386"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4701,7 +4732,7 @@ such as PathData for Path type or Points for Polygon/Line types.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_AddPaintArguments_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaShape.AddPaintArguments(DrawnUi.Draw.DrawingContext)">
   AddPaintArguments(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L907"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L910"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4764,7 +4795,7 @@ such as PathData for Path type or Points for Polygon/Line types.</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)">
   Arrange(SKRect, float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L550"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L553"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>destination in PIXELS, requests in UNITS. resulting Destination prop will be filed in PIXELS.
@@ -4806,7 +4837,7 @@ DrawUsingRenderObject wil call this among others..</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_CalculateClipSizeForStroke_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.CalculateClipSizeForStroke(SkiaSharp.SKRect,System.Single)">
   CalculateClipSizeForStroke(SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L438"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L441"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4844,7 +4875,7 @@ DrawUsingRenderObject wil call this among others..</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_CalculateContentSizeForStroke_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.CalculateContentSizeForStroke(SkiaSharp.SKRect,System.Single)">
   CalculateContentSizeForStroke(SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L425"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L428"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4882,7 +4913,7 @@ DrawUsingRenderObject wil call this among others..</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_CalculateShapeSizeForStroke_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.CalculateShapeSizeForStroke(SkiaSharp.SKRect,System.Single)">
   CalculateShapeSizeForStroke(SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L455"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L458"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4920,7 +4951,7 @@ DrawUsingRenderObject wil call this among others..</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_CalculateSizeForStroke_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.CalculateSizeForStroke(SkiaSharp.SKRect,System.Single)">
   CalculateSizeForStroke(SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L487"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L490"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4953,7 +4984,7 @@ DrawUsingRenderObject wil call this among others..</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_CalculateSizeForStrokeFromContent_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.CalculateSizeForStrokeFromContent(SkiaSharp.SKRect,System.Single)">
   CalculateSizeForStrokeFromContent(SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L523"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L526"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4991,7 +5022,7 @@ DrawUsingRenderObject wil call this among others..</p>
 
   <h3 id="DrawnUi_Draw_SkiaShape_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_" data-uid="DrawnUi.Draw.SkiaShape.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)">
   CreateClip(object, bool, SKPath)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L639"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L642"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Create this control clip for painting content.
@@ -5033,7 +5064,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_CreateStarPoints_System_Int32_System_Double_" data-uid="DrawnUi.Draw.SkiaShape.CreateStarPoints(System.Int32,System.Double)">
   CreateStarPoints(int, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1595"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1604"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5071,7 +5102,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_CreateStarPointsCrossed_System_Int32_" data-uid="DrawnUi.Draw.SkiaShape.CreateStarPointsCrossed(System.Int32)">
   CreateStarPointsCrossed(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1643"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1652"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5107,7 +5138,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetCompensatedStrokeWidth_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.GetCompensatedStrokeWidth(System.Single,System.Single)">
   GetCompensatedStrokeWidth(float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1701"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L1710"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Calculates compensated stroke width for curved shapes to fix antialiasing at rounded corners</p>
@@ -5149,7 +5180,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetContentSizeForAutosizeInPixels" data-uid="DrawnUi.Draw.SkiaShape.GetContentSizeForAutosizeInPixels">
   GetContentSizeForAutosizeInPixels()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L558"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L561"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Override this if you need to adjust the measured ContentSize for the parent to adapt to it. For example SkiaShape overrides this to expand by adding the needed size for stroke.</p>
@@ -5181,7 +5212,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetCorrectedBackgroundRadii_SkiaSharp_SKPoint___SkiaSharp_SKRect_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaShape.GetCorrectedBackgroundRadii(SkiaSharp.SKPoint[],SkiaSharp.SKRect,SkiaSharp.SKRect)">
   GetCorrectedBackgroundRadii(SKPoint[], SKRect, SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L775"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L778"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Calculates corrected corner radii for the background rectangle to maintain visual consistency with the stroke</p>
@@ -5226,7 +5257,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetDashArray_System_Double___System_Single_" data-uid="DrawnUi.Draw.SkiaShape.GetDashArray(System.Double[],System.Single)">
   GetDashArray(double[], float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L331"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L334"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5264,7 +5295,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetHalfStroke_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.GetHalfStroke(System.Single)">
   GetHalfStroke(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L388"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L391"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5300,7 +5331,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetInflationForStroke_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.GetInflationForStroke(System.Single)">
   GetInflationForStroke(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L415"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L418"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5336,7 +5367,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetSmallUnderStroke_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.GetSmallUnderStroke(System.Single)">
   GetSmallUnderStroke(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L397"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L400"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5372,7 +5403,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_GetStrokePixels_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.GetStrokePixels(System.Single)">
   GetStrokePixels(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L406"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L409"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5408,7 +5439,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_MapStrokeCapToStrokeJoin_SkiaSharp_SKStrokeCap_" data-uid="DrawnUi.Draw.SkiaShape.MapStrokeCapToStrokeJoin(SkiaSharp.SKStrokeCap)">
   MapStrokeCapToStrokeJoin(SKStrokeCap)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L888"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L891"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5444,7 +5475,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_MeasureContent_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaShape.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)">
   MeasureContent(IEnumerable&lt;SkiaControl&gt;, SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L574"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L577"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Measuring as absolute layout for passed children</p>
@@ -5485,7 +5516,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_OnDisposing" data-uid="DrawnUi.Draw.SkiaShape.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L624"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L627"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -5512,7 +5543,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_Paint_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaShape.Paint(DrawnUi.Draw.DrawingContext)">
   Paint(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L918"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L921"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is the main drawing routine you should override to draw something.
@@ -5546,7 +5577,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_PaintBackground_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKPoint___System_Single_SkiaSharp_SKPaint_" data-uid="DrawnUi.Draw.SkiaShape.PaintBackground(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKPoint[],System.Single,SkiaSharp.SKPaint)">
   PaintBackground(SkiaDrawingContext, SKRect, SKPoint[], float, SKPaint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L803"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L806"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5623,7 +5654,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_PaintWithShadows_DrawnUi_Draw_DrawingContext_System_Action_" data-uid="DrawnUi.Draw.SkiaShape.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)">
   PaintWithShadows(DrawingContext, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L902"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L905"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5656,7 +5687,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaShape_SetupType" data-uid="DrawnUi.Draw.SkiaShape.SetupType">
   SetupType()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L359"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/SkiaShape.cs/#L362"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

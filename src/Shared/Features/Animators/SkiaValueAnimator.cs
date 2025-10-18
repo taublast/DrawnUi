@@ -322,7 +322,7 @@ public class SkiaValueAnimator : AnimatorBase
         //System.Diagnostics.Debug.WriteLine($"[ANIM] START min {mMinValue:0.0} max {mMaxValue:0.0} cur {mValue:0.0}");
 
 
-        base.Start();
+        base.Start(delayMs);
     }
 
     #region EXTENSIONS

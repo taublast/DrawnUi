@@ -886,7 +886,65 @@ public partial class SkiaImageManager : IDisposable
 
     }
 
+    /// <summary>
+    /// Controls whether LoadImageFromInternetAsync should use retry logic.
+    /// Default is true for iOS/Windows (where it's the fallback when Nuke/Glide is disabled),
+    /// false for Android (uses Glide retry).
+    /// </summary>
+#if ANDROID
+    public static bool EnableHttpRetry = false;
+#else
+    public static bool EnableHttpRetry = true;
+#endif
+
+    /// <summary>
+    /// Maximum number of retry attempts for HTTP image loading.
+    /// Only applies when EnableHttpRetry is true.
+    /// </summary>
+    public static int HttpRetryMaxAttempts = 3;
+
     public static async Task<SKBitmap> LoadImageFromInternetAsync(UriImageSource uriSource, CancellationToken cancel)
+    {
+        if (!EnableHttpRetry)
+        {
+            // Fast path: no retry logic overhead
+            return await LoadImageFromInternetAsyncSingle(uriSource, cancel);
+        }
+
+        // Retry path: only for iOS or when explicitly enabled
+        for (int attempt = 0; attempt <= HttpRetryMaxAttempts; attempt++)
+        {
+            try
+            {
+                var result = await LoadImageFromInternetAsyncSingle(uriSource, cancel);
+                if (result != null)
+                    return result;
+
+                // Null result (non-success status) - retry if attempts remain
+                if (attempt < HttpRetryMaxAttempts)
+                {
+                    var delay = (int)Math.Pow(2, attempt) * 100; // 100ms, 200ms, 400ms
+                    TraceLog($"[HTTP-Retry] Failed to load {uriSource.Uri}, retrying in {delay}ms (attempt {attempt + 1}/{HttpRetryMaxAttempts})");
+                    await Task.Delay(delay, cancel);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancellation requested - propagate immediately without retry
+                throw;
+            }
+            catch (Exception ex) when (attempt < HttpRetryMaxAttempts)
+            {
+                var delay = (int)Math.Pow(2, attempt) * 100; // 100ms, 200ms, 400ms
+                TraceLog($"[HTTP-Retry] Exception loading {uriSource.Uri}: {ex.Message}, retrying in {delay}ms (attempt {attempt + 1}/{HttpRetryMaxAttempts})");
+                await Task.Delay(delay, cancel);
+            }
+        }
+
+        return null;
+    }
+
+    private static async Task<SKBitmap> LoadImageFromInternetAsyncSingle(UriImageSource uriSource, CancellationToken cancel)
     {
         using HttpClient client = Super.Services.CreateHttpClient();
         var response = await client.GetAsync(uriSource.Uri, cancel);

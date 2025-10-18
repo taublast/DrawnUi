@@ -55,6 +55,8 @@
 
 
     <ItemGroup>
+        <None Include="..\..\..\CLAUDE.md" Link="CLAUDE.md" />
+        <None Include="..\..\..\CONTRIBUTING.md" Link="CONTRIBUTING.md" />
         <None Include="..\..\..\icon128.png">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
@@ -69,21 +71,16 @@
         <!--parsing markdown text-->
         <!--cannot use due to .net runtime bug still being worked out to be fixed-->
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
+        <PackageReference Include="AppoMobi.Maui.Gestures" Version="1.11.1" />
+        <!--todo move used code here-->
+        <PackageReference Include="AppoMobi.Maui.Navigation" Version="1.9.3-pre" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
 
         <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
         <PackageReference Include="SkiaSharp.Skottie" Version="3.119.0" />
         <PackageReference Include="Svg.Skia" Version="3.0.3" />
 
-        <!--<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.116.1" />
-        <PackageReference Include="SkiaSharp.Skottie" Version="3.116.1" />
-        <PackageReference Include="Svg.Skia" Version="2.0.0.4" />-->
-      
-        <!--todo move used code here-->
-        <PackageReference Include="AppoMobi.Maui.Navigation" Version="1.9.3-pre" />
-
         <!--MIT open source-->
-        <PackageReference Include="AppoMobi.Maui.Gestures" Version="1.9.7" />
         <!--MIT open source .net helpers and extensions-->
         <PackageReference Include="AppoMobi.Specials" Version="9.0.3" />
         <!--caching bitmaps etc-->

@@ -38,7 +38,7 @@ items:
   - System.IDisposable
   inheritedMembers:
   - DrawnUi.Draw.RangeAnimator._callback
-  - DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
+  - DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
   - DrawnUi.Draw.RangeAnimator.Distance
   - DrawnUi.Draw.RangeAnimator.UpdateValue(System.Int64,System.Int64)
   - DrawnUi.Draw.RangeAnimator.TransformReportedValue(System.Int64)
@@ -235,21 +235,21 @@ references:
   name: _callback
   nameWithType: RangeAnimator._callback
   fullName: DrawnUi.Draw.RangeAnimator._callback
-- uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
-  commentId: M:DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
+- uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
+  commentId: M:DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
   parent: DrawnUi.Draw.RangeAnimator
   isExternal: true
-  href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_
-  name: Start(Action<double>, double, double, uint, Easing)
-  nameWithType: RangeAnimator.Start(Action<double>, double, double, uint, Easing)
-  fullName: DrawnUi.Draw.RangeAnimator.Start(System.Action<double>, double, double, uint, Microsoft.Maui.Easing)
-  nameWithType.vb: RangeAnimator.Start(Action(Of Double), Double, Double, UInteger, Easing)
-  fullName.vb: DrawnUi.Draw.RangeAnimator.Start(System.Action(Of Double), Double, Double, UInteger, Microsoft.Maui.Easing)
-  name.vb: Start(Action(Of Double), Double, Double, UInteger, Easing)
+  href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_System_Int32_
+  name: Start(Action<double>, double, double, uint, Easing, int)
+  nameWithType: RangeAnimator.Start(Action<double>, double, double, uint, Easing, int)
+  fullName: DrawnUi.Draw.RangeAnimator.Start(System.Action<double>, double, double, uint, Microsoft.Maui.Easing, int)
+  nameWithType.vb: RangeAnimator.Start(Action(Of Double), Double, Double, UInteger, Easing, Integer)
+  fullName.vb: DrawnUi.Draw.RangeAnimator.Start(System.Action(Of Double), Double, Double, UInteger, Microsoft.Maui.Easing, Integer)
+  name.vb: Start(Action(Of Double), Double, Double, UInteger, Easing, Integer)
   spec.csharp:
-  - uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
+  - uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
     name: Start
-    href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_
+    href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_System_Int32_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -285,11 +285,17 @@ references:
     name: Easing
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
+  - uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
     name: Start
-    href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_
+    href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_System_Int32_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -327,6 +333,12 @@ references:
     name: Easing
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
   - name: )
 - uid: DrawnUi.Draw.RangeAnimator.Distance
   commentId: P:DrawnUi.Draw.RangeAnimator.Distance

@@ -12,14 +12,8 @@ public static partial class AddGestures
     {
         public new string Tag
         {
-            get
-            {
-                return $"AddGestures:{_parent.Tag}";
-            }
-            set
-            {
-
-            }
+            get { return $"AddGestures:{_parent.Tag}"; }
+            set { }
         }
 
         public override bool CanDraw
@@ -39,6 +33,7 @@ public static partial class AddGestures
             {
                 return _parent.Superview;
             }
+
             return null;
         }
 
@@ -60,10 +55,7 @@ public static partial class AddGestures
 
         public override SKRect HitBoxAuto
         {
-            get
-            {
-                return _parent.HitBoxAuto;
-            }
+            get { return _parent.HitBoxAuto; }
         }
 
         public override SKPoint TranslateInputCoords(SKPoint childOffset, bool accountForCache = true)
@@ -71,7 +63,8 @@ public static partial class AddGestures
             return _parent.TranslateInputCoords(childOffset, accountForCache);
         }
 
-        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args,
+            GestureEventProcessingInfo apply)
         {
             if (_parent == null || !_parent.CanDraw)
                 return null;
@@ -93,27 +86,25 @@ public static partial class AddGestures
                     var parameter = GetCommandLongPressingParameter(_parent);
                     if (parameter == null)
                         parameter = _parent.BindingContext;
-                    command?.Execute(parameter);
+                    Tasks.StartDelayed(TimeSpan.FromMilliseconds(CommandDelayMs), () => { command?.Execute(parameter); });
                     return this;
                 }
             }
-            else
-          if (args.Type == TouchActionResult.Down)
+            else if (args.Type == TouchActionResult.Down)
             {
-
                 var anim = GetAnimationPressed(_parent);
                 PlayTouchAnimation(anim, args, apply);
 
                 var pressed = GetCommandPressed(_parent);
                 if (pressed != null)
                 {
-                    var parameter = _parent.BindingContext; ;
+                    var parameter = _parent.BindingContext;
+                    ;
                     pressed?.Execute(parameter);
                     //return this;
                 }
             }
-            else
-            if (args.Type == TouchActionResult.Tapped)
+            else if (args.Type == TouchActionResult.Tapped)
             {
                 var anim = GetAnimationTapped(_parent);
 
@@ -126,12 +117,11 @@ public static partial class AddGestures
                     //Trace.WriteLine($"[CommandTapped] ctx - {_parent.BindingContext} - {parameter}");
                     if (parameter == null)
                         parameter = _parent.BindingContext;
-                    command?.Execute(parameter);
+                    Tasks.StartDelayed(TimeSpan.FromMilliseconds(CommandDelayMs), () => { command?.Execute(parameter); });
                     return this;
                 }
             }
-            else
-            if (args.Type == TouchActionResult.Panning)
+            else if (args.Type == TouchActionResult.Panning)
             {
                 if (GetLockPanning(_parent))
                 {
@@ -143,14 +133,13 @@ public static partial class AddGestures
             return base.ProcessGestures(args, apply);
         }
 
-        public virtual bool OnFocusChanged(bool focus)
+        public virtual new bool OnFocusChanged(bool focus)
         {
             return false;
         }
 
-
-
-        public void PlayTouchAnimation(SkiaTouchAnimation anim, SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        public void PlayTouchAnimation(SkiaTouchAnimation anim, SkiaGesturesParameters args,
+            GestureEventProcessingInfo apply)
         {
             if (anim != SkiaTouchAnimation.None)
             {
@@ -169,23 +158,20 @@ public static partial class AddGestures
                     var color = GetTouchEffectColor(_parent);
                     if (anim == SkiaTouchAnimation.Ripple)
                     {
-                        var ptsInsideControl = hasEffects.GetOffsetInsideControlInPoints(args.Event.Location, apply.ChildOffset);
+                        var ptsInsideControl =
+                            hasEffects.GetOffsetInsideControlInPoints(args.Event.Location, apply.ChildOffset);
                         hasEffects.PlayRippleAnimation(color, ptsInsideControl.X, ptsInsideControl.Y);
                     }
-                    else
-                    if (anim == SkiaTouchAnimation.Shimmer)
+                    else if (anim == SkiaTouchAnimation.Shimmer)
                     {
                         hasEffects.PlayShimmerAnimation(color, 150, 33, 500);
                     }
                 }
             }
-
         }
-
-
-
     }
 
+    public static int CommandDelayMs = 6;
 
     public static Dictionary<SkiaControl, GestureListener> AttachedListeners = new();
 
@@ -228,7 +214,6 @@ public static partial class AddGestures
                         }
                     }
                 }
-
             }
         }
     }
@@ -269,11 +254,12 @@ public static partial class AddGestures
             var effect2 = GetAnimationPressed(control);
             var effect = GetAnimationTapped(control);
             var needAttach = command != null || pressed != null
-                             || effect != SkiaTouchAnimation.None
-                             || effect2 != SkiaTouchAnimation.None
-                             || GetCommandLongPressing(control) != null || GetLockPanning(control);
+                                             || effect != SkiaTouchAnimation.None
+                                             || effect2 != SkiaTouchAnimation.None
+                                             || GetCommandLongPressing(control) != null || GetLockPanning(control);
             return needAttach;
         }
+
         return false;
     }
 
@@ -335,7 +321,6 @@ public static partial class AddGestures
     }
 
 
-
     public static readonly BindableProperty CommandLongPressingParameterProperty =
         BindableProperty.CreateAttached(
             "CommandLongPressingParameter",
@@ -370,6 +355,8 @@ public static partial class AddGestures
         view.SetValue(TransformViewProperty, value);
     }
 
+    #region AnimationTapped
+
     public static readonly BindableProperty AnimationTappedProperty =
         BindableProperty.CreateAttached(
             "AnimationTapped",
@@ -385,6 +372,7 @@ public static partial class AddGestures
         {
             anim = skia.AnimationTapped;
         }
+
         return anim;
     }
 
@@ -392,6 +380,8 @@ public static partial class AddGestures
     {
         view.SetValue(AnimationTappedProperty, value);
     }
+
+    #endregion
 
     public static readonly BindableProperty CommandPressedProperty =
         BindableProperty.CreateAttached(
@@ -441,11 +431,12 @@ public static partial class AddGestures
     public static Color GetTouchEffectColor(BindableObject view)
     {
         var color = (Color)view.GetValue(TouchEffectColorProperty);
-        
+
         if (color == Colors.Transparent && view is SkiaControl skia)
         {
             color = skia.TouchEffectColor;
         }
+
         return color;
     }
 
@@ -472,5 +463,4 @@ public static partial class AddGestures
     {
         view.SetValue(LockPanningProperty, value);
     }
-
 }
