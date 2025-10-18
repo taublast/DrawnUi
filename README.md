@@ -43,7 +43,8 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 * Fixed cache type `OperationsFull`, god mode that records a larger area than your control, to pick up glow, shadows etc, everything that is out of the controls bounds. Limited by top canvas or by bounds of some cached parent if any.
 * Fixed `MinimumWidthRequest` and `MinimumHeightRequest` not applying margins.
 * `SkiaButton` uses `Padding` property for frame content, see Sandbox project Buttons example.
-* Fix animators sometimes not starting when created to early, including `SkiaLottie` one.
+* Fixed animators sometimes not starting when created to early, including `SkiaLottie` one.
+* Fixed `SkiaScroll` refresh mechanics, added refresh feature with `SkiaLottie` tinted indicator to News Feed Scroller tutorial code.
 * Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
   
 ## 💡 Hint of the Day
