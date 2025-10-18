@@ -150,7 +150,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             BackgroundColor = UseBackGroundColor,
             CornerRadius = 8, // iOS uses moderate corner radius
             HorizontalOptions = LayoutOptions.Fill,
-            IsClippedToBounds = true,
+            
             VerticalOptions = LayoutOptions.Fill,
             // Add subtle shadow for iOS style
             Shadows = new List<SkiaShadow>()
@@ -208,7 +208,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             BackgroundColor = UseBackGroundColor,
             CornerRadius = 4, // Material uses smaller corners
             HorizontalOptions = LayoutOptions.Fill,
-            IsClippedToBounds = true,
+            
             VerticalOptions = LayoutOptions.Fill,
             // Material shadows are more pronounced than iOS
             Shadows = new List<SkiaShadow>()
@@ -263,7 +263,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             Tag = "BtnShape",
             CornerRadius = 4,
             HorizontalOptions = LayoutOptions.Fill,
-            IsClippedToBounds = true,
+            
             VerticalOptions = LayoutOptions.Fill,
             Shadows = new List<SkiaShadow>()
             {
@@ -272,8 +272,8 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
                     X = 0,
                     Y = 1,
                     Blur = 1,
-                    Opacity = 1.2,
-                    Color = Colors.Red
+                    Opacity = 0.2,
+                    Color = Colors.Black
                 }
             }
         }.AssignParent(this);
@@ -591,7 +591,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
                 }
 
                 // Remove directly applied shadows
-                MainFrame.Shadows = null;
+                //MainFrame.Shadows = null;
             }
             else
             {
