@@ -396,14 +396,14 @@ namespace DrawnUi.Draw
             {
                 if (this.MinimumWidthRequest < 0 && HorizontalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumWidthRequest < 0))
-                    this.MinimumWidthRequest = width;
+                    this.MinimumWidthRequest = width + Margins.HorizontalThickness;
             }
 
             if (height > 0 && HeightRequest < 0)
             {
                 if (this.MinimumHeightRequest < 0 && VerticalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumHeightRequest < 0))
-                    this.MinimumHeightRequest = height;
+                    this.MinimumHeightRequest = height+Margins.VerticalThickness;
             }
         }
 
