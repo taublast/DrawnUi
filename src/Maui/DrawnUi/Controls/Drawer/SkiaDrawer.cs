@@ -197,7 +197,6 @@ namespace DrawnUi.Controls
                 {
                     control.IsOpenChanged?.Invoke(control, (bool)n);
                     control.ApplyOptions(false);
-                    //Trace.WriteLine($"Drawer {(bool)n}");
                 }
             });
 
@@ -270,8 +269,15 @@ namespace DrawnUi.Controls
                 };
                 AnimatorRange = new(this)
                 {
-                    OnVectorUpdated = (value) => { ApplyPosition(value); },
-                    OnStop = () => { Stopped?.Invoke(this, CurrentPosition); }
+                    OnVectorUpdated = (
+                        value) =>
+                    {
+                        ApplyPosition(value);
+                    },
+                    OnStop = () =>
+                    {
+                        Stopped?.Invoke(this, CurrentPosition);
+                    }
                 };
             }
 
@@ -427,11 +433,26 @@ namespace DrawnUi.Controls
 
             if (ItemsSource != null)
             {
-                SnapPoints = new List<Vector2>(ItemsSource.Count) { new(0, 0), hideContent };
+                if (Direction == DrawerDirection.FromLeft || Direction == DrawerDirection.FromRight)
+                {
+                    SnapPoints = new List<Vector2>(ItemsSource.Count) { new(0, hideContent.Y), hideContent };
+                }
+                else
+                {
+                    SnapPoints = new List<Vector2>(ItemsSource.Count) { new(hideContent.X, 0), hideContent };
+                }
             }
             else
             {
-                SnapPoints = new List<Vector2>() { new(0, 0), hideContent };
+                
+                if (Direction == DrawerDirection.FromLeft || Direction == DrawerDirection.FromRight)
+                {
+                    SnapPoints = new List<Vector2>() { new(0, hideContent.Y), hideContent };
+                }
+                else
+                {
+                    SnapPoints = new List<Vector2>() { new(hideContent.X, 0), hideContent };
+                }
             }
 
             ContentOffsetBounds = GetContentOffsetBounds();
@@ -598,7 +619,7 @@ namespace DrawnUi.Controls
                 return base.ProcessGestures(args, apply);
             }
 
-            if (TouchEffect.LogEnabled)
+            //if (TouchEffect.LogEnabled)
                 Super.Log($"[DRAWER] {this.Tag} Got {args.Type} touches {args.Event.NumberOfTouches}..");
 
             ISkiaGestureListener consumed = null;
