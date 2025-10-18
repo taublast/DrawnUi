@@ -3,7 +3,7 @@
     <!--For All Post-Build Stuff -->
 
     <PropertyGroup>
-        <Version>1.6.3.10</Version>
+        <Version>1.7.1.1</Version>
         <Authors>Nick Kovalsky aka AppoMobi and contributors</Authors>
         <Copyright>(c) AppoMobi and contributors 2023 - present day</Copyright>
         <PackageProjectUrl>https://github.com/taublast/DrawnUi</PackageProjectUrl>

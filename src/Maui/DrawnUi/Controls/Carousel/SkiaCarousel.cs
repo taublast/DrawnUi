@@ -1025,7 +1025,10 @@ public class SkiaCarousel : SnappingLayout
                 };
                 AnimatorRange = new(this)
                 {
-                    OnVectorUpdated = (value) => { ApplyPosition(value); },
+                    OnVectorUpdated = (value) =>
+                    {
+                        ApplyPosition(value);
+                    },
                     OnStop = () =>
                     {
                         if (!Bounces)

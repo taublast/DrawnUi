@@ -399,6 +399,7 @@
                                     <!--  Custom Gradient Button  -->
                                     <draw:SkiaButton
                                         x:Name="CustomButton"
+                                        Text="Custom Gradient"
                                         ApplyEffect="Ripple"
                                         TouchEffectColor="#ffffff"
                                         HeightRequest="56"
@@ -429,28 +430,25 @@
                                         </draw:SkiaShape>
 
                                         <draw:SkiaLayout
+                                            UseCache="Image"
                                             Tag="BtnWrapper"
-                                            Type="Row"
-                                            Spacing="12"
-                                            Padding="24,12"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center">
 
                                             <draw:SkiaSvg
-                                                Source="Resources/Raw/Svg/star.svg"
-                                                TintColor="White"
+                                                Source="Svg/dotnet_bot.svg"
                                                 WidthRequest="24"
                                                 HeightRequest="24"
                                                 LockRatio="1"
                                                 VerticalOptions="Center" />
 
-                                            <draw:SkiaLabel
+                                            <draw:SkiaRichLabel
                                                 Tag="BtnText"
-                                                Text="Custom Gradient"
+                                                Margin="34,0,0,0"
+                                                VerticalOptions="Center"
                                                 FontSize="18"
                                                 FontAttributes="Bold"
-                                                TextColor="White"
-                                                VerticalOptions="Center" />
+                                                TextColor="White" />
 
                                         </draw:SkiaLayout>
 
@@ -473,6 +471,7 @@
                             </draw:SkiaShape>
 
                         </draw:SkiaLayout>
+
                         <!--  SECTION: SIZES AND STATES  -->
                         <draw:SkiaLayout
                             Tag="Sizes"

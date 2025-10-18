@@ -619,7 +619,7 @@ namespace DrawnUi.Controls
                 return base.ProcessGestures(args, apply);
             }
 
-            //if (TouchEffect.LogEnabled)
+            if (TouchEffect.LogEnabled)
                 Super.Log($"[DRAWER] {this.Tag} Got {args.Type} touches {args.Event.NumberOfTouches}..");
 
             ISkiaGestureListener consumed = null;
