@@ -2,26 +2,25 @@
 ![License](https://img.shields.io/github/license/taublast/DrawnUi.svg)
 ![NuGet Version](https://img.shields.io/nuget/v/AppoMobi.Maui.DrawnUi.svg)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat)](https://github.com/taublast/drawnui/blob/master/CONTRIBUTING.md)
 
 [Docs and Samples](https://drawnui.net) 👈
 
-When you want to draw your app or game a Skia Canvas instead of using native controls this library solves it. 
+Rendering engine for .NET MAUI with gestures and animations and much more, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
 Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
-
-Rendering engine with a layout system, gestures and animations, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
 * To use inside a usual MAUI app, by wrapping drawn controls into `Canvas` views.
 * To create a totally drawn apps with just one `Canvas` as root view.
 * Drawn controls are totally virtual, no native views/handlers.
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
-* Free to use under the MIT license, a nuget package is available.
+* Free to use under the MIT license, nuget package available.
 
 ## Features
 
-* __Draw with helpers using SkiaSharp with hardware acceleration__
+* __Use virtual controls to draw your UI__
 * __Create your own animated pixel-perfect controls__
-* __Port existing native controls to be drawn__
+* __Port existing native controls to drawn__
 * __Design in XAML or code-behind__
 * __2D and 3D Transforms__
 * __Visual effects__ for every control, filters and shaders
@@ -34,13 +33,15 @@ Rendering engine with a layout system, gestures and animations, powered by [Skia
 
 ---
 
-## 🌱 What's new
 
-* `IsLooped` property implemented for `SkiaCarousel`, for never-ending scrolls, also added `SwipeSpeed` property.
-* `Gestures` property for `Canvas` new value `SoftLock` for smart working together inside native ScrollView. Note that using `Lock` value instead will totally prevent parent ScrollView to receive panning gestures.
+## 🆕 What's new
+
+* `IsLooped` property implemented for `SkiaCarousel` (Sandbox project carousel example updated), for never-ending scrolls, also added `SwipeSpeed` property.
+* `Gestures` property for `Canvas` has new value `SoftLock` for smart working together inside native ScrollView: You started your custom control panning (ex: SkiaCarousel) MAUI ScrollView will not scroll until you release. Note that using `Lock` value instead will totally prevent parent ScrollView to receive panning gestures. Using new `AppoMobi.Maui.Gestures` gestures nuget.
 * `SkiaLabel` subpixel rendering quality improved, note it can be can turned off with `Super.FontSubPixelRendering` static property.
 * Improved font auto-selection for unicode symbols on **Android** + **Apple** for `SkiaRichLabel` and related, all currency, Chinese etc symbols now properly displayed. Implemented platform agnostic caching for auto-find font.
-* `SkiaImage` fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
+* `SkiaImage` performance fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
+* `SkiaButton` uses `Padding` property for frame content, see Sandbox project Buttons example.
 * Fix animators sometimes not starting when created to early, including `SkiaLottie` one.
 * Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
   
@@ -65,6 +66,78 @@ public class BannerImage : SkiaImage
 
 ---
 
-[Docs and Samples](https://drawnui.net) 👈
+
+## Quick Start
+
+Install the package:
+```bash
+dotnet add package DrawnUi.Maui
+```
+
+Initialize in `MauiProgram.cs`:
+```csharp
+builder.UseDrawnUi();
+```
+
+Use in XAML:
+```xml
+<ContentPage xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw">
+    <draw:Canvas Gestures="Enabled">
+        <draw:SkiaLayout Type="Column" Spacing="16" Padding="32">
+            <draw:SkiaLabel Text="Hello DrawnUI" FontSize="24" />
+            <draw:SkiaButton Text="Click Me" Tapped="OnButtonClicked" />
+        </draw:SkiaLayout>
+    </draw:Canvas>
+</ContentPage>
+```
+
+Need more performance? Set canvas `RenderingMode` to `Accelerated`.
+
+See the [Getting Started Guide](https://drawnui.net/articles/getting-started.html) for details.
+
+Do not miss the [Tutorials Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Tutorials) on how to create your custom control, a recycled cells scroller and more.
+
+---
+
+## Sample Apps
+
+**Demo Projects:**
+- [Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo) - Navigation, recycled cells, camera integration
+- [Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox) - Playground and custom controls
+- [Shaders Carousel](https://github.com/taublast/ShadersCarousel/) - Advanced SkiaSharp v3 effects
+- [Space Shooter](https://github.com/taublast/Maui.Game.SpaceShooter/) - 2D Arcade Game Etude
+
+**Open-Source Published Apps:**
+- [Filters Camera](https://github.com/taublast/ShadersCamera) - Real-time camera filters ([AppStore](https://apps.apple.com/us/app/filters-camera/id6749823005), [Google Play](https://play.google.com/store/apps/details?id=com.appomobi.drawnui.shaderscam))
+- [Bricks Breaker](https://github.com/taublast/DrawnUi.Breakout) - 2D Arkanoid/Breakout arcade game ([AppStore](https://apps.apple.com/us/app/bricks-breaker/id6749823869), [Google Play](https://play.google.com/store/apps/details?id=com.appomobi.drawnui.breakout))
+
+---
 
 ___Please star ⭐ if you like it!___
+
+## FAQ
+
+**Q: What is the difference between DrawnUi and other drawn frameworks?**  
+A: It is not a framework but a library for .NET MAUI, to make creating drawn UI easy for everyone.
+
+**Q: Why use DrawnUI instead of native controls?**  
+A: Gives you complete control over rendering and appearance and can be much more performant for complex UIs. 
+
+**Q: Do I need to know SkiaSharp?**  
+A: No. Use the prebuilt controls and customize them. All controls are designed to be subclassed and most methods are virtual.
+
+**Q: Can I use XAML/code-behind?**  
+A: Yes, both XAML and code-behind are supported.
+
+**Q: Can I embed native MAUI controls?**  
+A: Yes, use `SkiaMauiElement` to wrap native controls like WebView inside your drawn UI.
+
+**Q: Can I embed drawn controls into my usual MAUI app?**  
+A: Yes, use `Canvas` to wrap drawn controls inside your MAUI UI.
+
+[Full FAQ](https://drawnui.net/articles/faq.html) • [Ask Questions](https://github.com/taublast/DrawnUi/discussions)
+
+---
+
+[Documentation](https://drawnui.net) • [Tutorials](https://drawnui.net/articles/tutorials.html) • [Controls Reference](https://drawnui.net/articles/controls/index.html) Under development
+
