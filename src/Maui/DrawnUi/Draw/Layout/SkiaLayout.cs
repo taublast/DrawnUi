@@ -368,6 +368,11 @@ namespace DrawnUi.Draw
             return ScaledRect.FromPixels(visible, RenderingScale);
         }
 
+        /// <summary>
+        /// Todo where is this used i forgot completely
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="cache"></param>
         public override void DrawRenderObject(DrawingContext context, CachedObject cache)
         {
             var visibleArea = GetOnScreenVisibleArea(context);
