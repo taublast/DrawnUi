@@ -64,6 +64,7 @@ public partial class SkiaControl
                             //recycle surface
                             ReturnSurface(kill.Surface);
                         }
+
                         kill.Surface = null;
                         //if (_renderObjectPrevious.Type == SkiaCacheType.ImageComposite)
                         //{
@@ -874,6 +875,7 @@ public partial class SkiaControl
                 if (UsingCacheType == SkiaCacheType.OperationsFull)
                 {
                     recordArea = context.Context.Canvas.LocalClipBounds;
+                    destination = recordArea;
                 }
 
                 //paint from cache
