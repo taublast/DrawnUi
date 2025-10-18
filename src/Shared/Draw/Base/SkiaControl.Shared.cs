@@ -21,7 +21,7 @@ namespace DrawnUi.Draw
     public partial class SkiaControl :
         ISkiaGestureListener,
         IHasAfterEffects,
-        ISkiaControl
+        ISkiaControl, ISkiaDisposable
     {
         public SkiaControl()
         {
@@ -3008,6 +3008,7 @@ namespace DrawnUi.Draw
         }
 
         public static TimeSpan DisposalDelay = TimeSpan.FromSeconds(3.5);
+
         public ObjectAliveType IsAlive { get; set; }
 
         public void DisposeObject()
@@ -3036,7 +3037,7 @@ namespace DrawnUi.Draw
                 }
                 else
                 {
-                    if (disposable is SkiaControl skia)
+                    if (disposable is ISkiaDisposable skia)
                     {
                         skia.IsAlive = ObjectAliveType.BeingDisposed;
                     }
@@ -3046,7 +3047,7 @@ namespace DrawnUi.Draw
                         try
                         {
                             disposable?.Dispose();
-                            if (disposable is SkiaControl skia)
+                            if (disposable is ISkiaDisposable skia)
                             {
                                 skia.IsAlive = ObjectAliveType.Disposed;
                             }
@@ -6072,7 +6073,7 @@ namespace DrawnUi.Draw
                 if (child != null)
                 {
                     child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
-                    bool willDraw = true;
+                    bool inTree = true;
                     if (child.CanDraw) //still visible 
                     {
                         if (IsRenderingWithComposition)
@@ -6083,7 +6084,10 @@ namespace DrawnUi.Draw
                             }
                             else
                             {
-                                willDraw = false;
+                                //todo investigate if this helps or just slows us down
+                                child.Arrange(context.Destination, child.SizeRequest.Width,
+                                    child.SizeRequest.Height,
+                                    context.Scale);
                             }
                         }
                         else
@@ -6091,7 +6095,7 @@ namespace DrawnUi.Draw
                             child.Render(context);
                         }
 
-                        if (willDraw)
+                        if (inTree)
                         {
                             tree.Add(new SkiaControlWithRect(child,
                                 context.Destination,
