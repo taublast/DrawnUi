@@ -11,9 +11,11 @@ items:
   - DrawnUi.Draw.SkiaImageManager.CanReload
   - DrawnUi.Draw.SkiaImageManager.CancelAll
   - DrawnUi.Draw.SkiaImageManager.Dispose
+  - DrawnUi.Draw.SkiaImageManager.EnableHttpRetry
   - DrawnUi.Draw.SkiaImageManager.GetFromCache(System.String)
   - DrawnUi.Draw.SkiaImageManager.GetFromCacheInternal(System.String)
   - DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource(Microsoft.Maui.Controls.ImageSource)
+  - DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts
   - DrawnUi.Draw.SkiaImageManager.Instance
   - DrawnUi.Draw.SkiaImageManager.IsDisposed
   - DrawnUi.Draw.SkiaImageManager.IsLoadingLocked
@@ -1014,6 +1016,72 @@ items:
   nameWithType.vb: SkiaImageManager.LoadFromFile(String, CancellationToken)
   fullName.vb: DrawnUi.Draw.SkiaImageManager.LoadFromFile(String, System.Threading.CancellationToken)
   name.vb: LoadFromFile(String, CancellationToken)
+- uid: DrawnUi.Draw.SkiaImageManager.EnableHttpRetry
+  commentId: F:DrawnUi.Draw.SkiaImageManager.EnableHttpRetry
+  id: EnableHttpRetry
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: EnableHttpRetry
+  nameWithType: SkiaImageManager.EnableHttpRetry
+  fullName: DrawnUi.Draw.SkiaImageManager.EnableHttpRetry
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: EnableHttpRetry
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 896
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Controls whether LoadImageFromInternetAsync should use retry logic.
+
+    Default is true for iOS/Windows (where it's the fallback when Nuke/Glide is disabled),
+
+    false for Android (uses Glide retry).
+  example: []
+  syntax:
+    content: public static bool EnableHttpRetry
+    return:
+      type: System.Boolean
+    content.vb: Public Shared EnableHttpRetry As Boolean
+- uid: DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts
+  commentId: F:DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts
+  id: HttpRetryMaxAttempts
+  parent: DrawnUi.Draw.SkiaImageManager
+  langs:
+  - csharp
+  - vb
+  name: HttpRetryMaxAttempts
+  nameWithType: SkiaImageManager.HttpRetryMaxAttempts
+  fullName: DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HttpRetryMaxAttempts
+    path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
+    startLine: 903
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Maximum number of retry attempts for HTTP image loading.
+
+    Only applies when EnableHttpRetry is true.
+  example: []
+  syntax:
+    content: public static int HttpRetryMaxAttempts
+    return:
+      type: System.Int32
+    content.vb: Public Shared HttpRetryMaxAttempts As Integer
 - uid: DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)
   commentId: M:DrawnUi.Draw.SkiaImageManager.LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)
   id: LoadImageFromInternetAsync(Microsoft.Maui.Controls.UriImageSource,System.Threading.CancellationToken)
@@ -1032,7 +1100,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageFromInternetAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 888
+    startLine: 905
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

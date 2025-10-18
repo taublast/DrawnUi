@@ -15,7 +15,7 @@ description: Hardware-accelerated rendering engine for .NET MAUI built on SkiaSh
       DrawnUI for .NET MAUI
     </h1>
     <p style="font-size: 1.4em; margin: 20px auto; opacity: 0.95; max-width: 680px;">
-      Build <strong>stunning cross-platform apps</strong> with hardware-accelerated SkiaSharp rendering
+      Hardware-accelerated <strong>rendering engine</strong> for .NET MAUI powered by SkiaSharp
     </p>
     <div class="hero-buttons" style="margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
       <a href="articles/getting-started.md" class="hero-btn hero-btn-primary" style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 15px rgba(37,99,235,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease; display: inline-block; min-width: 160px; text-align: center;">

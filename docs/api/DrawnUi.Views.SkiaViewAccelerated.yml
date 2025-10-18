@@ -267,6 +267,7 @@ items:
   - System.Object.ToString
   extensionMethods:
   - DrawnUi.Views.SkiaViewAccelerated.DrawnUi.Draw.FluentExtensions.AssignNative``1(DrawnUi.Views.SkiaViewAccelerated@)
+  - DrawnUi.Views.SkiaViewAccelerated.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Views.SkiaViewAccelerated@)
   - DrawnUi.Views.SkiaViewAccelerated.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   - Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.FindMauiContext(System.Boolean)
@@ -4076,6 +4077,59 @@ references:
     name: SkiaViewAccelerated
     href: DrawnUi.Views.SkiaViewAccelerated.html
   - name: )
+- uid: DrawnUi.Views.SkiaViewAccelerated.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Views.SkiaViewAccelerated@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<SkiaViewAccelerated>(SkiaViewAccelerated, out SkiaViewAccelerated)
+  nameWithType: FluentExtensions.Assign<SkiaViewAccelerated>(SkiaViewAccelerated, out SkiaViewAccelerated)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<DrawnUi.Views.SkiaViewAccelerated>(DrawnUi.Views.SkiaViewAccelerated, out DrawnUi.Views.SkiaViewAccelerated)
+  nameWithType.vb: FluentExtensions.Assign(Of SkiaViewAccelerated)(SkiaViewAccelerated, SkiaViewAccelerated)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of DrawnUi.Views.SkiaViewAccelerated)(DrawnUi.Views.SkiaViewAccelerated, DrawnUi.Views.SkiaViewAccelerated)
+  name.vb: Assign(Of SkiaViewAccelerated)(SkiaViewAccelerated, SkiaViewAccelerated)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Views.SkiaViewAccelerated,DrawnUi.Views.SkiaViewAccelerated@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - uid: DrawnUi.Views.SkiaViewAccelerated
+    name: SkiaViewAccelerated
+    href: DrawnUi.Views.SkiaViewAccelerated.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Views.SkiaViewAccelerated
+    name: SkiaViewAccelerated
+    href: DrawnUi.Views.SkiaViewAccelerated.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: DrawnUi.Views.SkiaViewAccelerated
+    name: SkiaViewAccelerated
+    href: DrawnUi.Views.SkiaViewAccelerated.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Views.SkiaViewAccelerated,DrawnUi.Views.SkiaViewAccelerated@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Views.SkiaViewAccelerated
+    name: SkiaViewAccelerated
+    href: DrawnUi.Views.SkiaViewAccelerated.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Views.SkiaViewAccelerated
+    name: SkiaViewAccelerated
+    href: DrawnUi.Views.SkiaViewAccelerated.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Views.SkiaViewAccelerated
+    name: SkiaViewAccelerated
+    href: DrawnUi.Views.SkiaViewAccelerated.html
+  - name: )
 - uid: DrawnUi.Views.SkiaViewAccelerated.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   parent: DrawnUi.Draw.ThemeBindings
@@ -4696,6 +4750,45 @@ references:
   name: FluentExtensions
   nameWithType: FluentExtensions
   fullName: DrawnUi.Draw.FluentExtensions
+- uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<T>(T, out T)
+  nameWithType: FluentExtensions.Assign<T>(T, out T)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<T>(T, out T)
+  nameWithType.vb: FluentExtensions.Assign(Of T)(T, T)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of T)(T, T)
+  name.vb: Assign(Of T)(T, T)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
 - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   isExternal: true

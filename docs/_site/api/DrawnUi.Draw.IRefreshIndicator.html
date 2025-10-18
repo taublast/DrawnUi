@@ -237,7 +237,7 @@ Interface IRefreshIndicator  <a class="header-action link-secondary" title="View
       <a class="xref" href="DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewsList">IDrawnBase.InvalidateViewsList()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_">IDrawnBase.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_">IDrawnBase.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable.dispose">IDisposable.Dispose()</a>
@@ -271,8 +271,8 @@ Interface IRefreshIndicator  <a class="header-action link-secondary" title="View
 
   <a id="DrawnUi_Draw_IRefreshIndicator_SetDragRatio_" data-uid="DrawnUi.Draw.IRefreshIndicator.SetDragRatio*"></a>
 
-  <h3 id="DrawnUi_Draw_IRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_" data-uid="DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)">
-  SetDragRatio(float, float, double)
+  <h3 id="DrawnUi_Draw_IRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_System_Double_" data-uid="DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)">
+  SetDragRatio(float, float, double, double)
   <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Internals/Interfaces/IRefreshIndicator.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -281,7 +281,7 @@ Interface IRefreshIndicator  <a class="header-action link-secondary" title="View
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit)</code></pre>
+    <pre><code class="lang-csharp hljs">void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit, double ptsTrigger)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -291,6 +291,8 @@ Interface IRefreshIndicator  <a class="header-action link-secondary" title="View
     <dt><code>ptsScrollOffset</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
     <dd></dd>
     <dt><code>ptsLimit</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>ptsTrigger</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
     <dd></dd>
   </dl>
 

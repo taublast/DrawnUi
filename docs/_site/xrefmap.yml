@@ -928,6 +928,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailable
   nameWithType: AnimatedFramesRenderer.PlayWhenAvailable
+- uid: DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded
+  name: PlayWhenAvailableIfNeeded()
+  href: api/DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_PlayWhenAvailableIfNeeded
+  commentId: M:DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded
+  fullName: DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded()
+  nameWithType: AnimatedFramesRenderer.PlayWhenAvailableIfNeeded()
+- uid: DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded*
+  name: PlayWhenAvailableIfNeeded
+  href: api/DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_PlayWhenAvailableIfNeeded_
+  commentId: Overload:DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded
+  isSpec: "True"
+  fullName: DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded
+  nameWithType: AnimatedFramesRenderer.PlayWhenAvailableIfNeeded
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.RenderFrame(DrawnUi.Draw.DrawingContext)
   name: RenderFrame(DrawingContext)
   href: api/DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer_RenderFrame_DrawnUi_Draw_DrawingContext_
@@ -2291,12 +2304,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaCarousel.ApplyIndex
   nameWithType: SkiaCarousel.ApplyIndex
-- uid: DrawnUi.Controls.SkiaCarousel.ApplyOptions
-  name: ApplyOptions()
-  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_ApplyOptions
-  commentId: M:DrawnUi.Controls.SkiaCarousel.ApplyOptions
-  fullName: DrawnUi.Controls.SkiaCarousel.ApplyOptions()
-  nameWithType: SkiaCarousel.ApplyOptions()
+- uid: DrawnUi.Controls.SkiaCarousel.ApplyOptions(System.Boolean)
+  name: ApplyOptions(bool)
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_ApplyOptions_System_Boolean_
+  commentId: M:DrawnUi.Controls.SkiaCarousel.ApplyOptions(System.Boolean)
+  name.vb: ApplyOptions(Boolean)
+  fullName: DrawnUi.Controls.SkiaCarousel.ApplyOptions(bool)
+  fullName.vb: DrawnUi.Controls.SkiaCarousel.ApplyOptions(Boolean)
+  nameWithType: SkiaCarousel.ApplyOptions(bool)
+  nameWithType.vb: SkiaCarousel.ApplyOptions(Boolean)
 - uid: DrawnUi.Controls.SkiaCarousel.ApplyOptions*
   name: ApplyOptions
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_ApplyOptions_
@@ -2372,6 +2388,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaCarousel.CheckConstraints
   nameWithType: SkiaCarousel.CheckConstraints
+- uid: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
+  name: CheckTransitionEnded()
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_CheckTransitionEnded
+  commentId: M:DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
+  fullName: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded()
+  nameWithType: SkiaCarousel.CheckTransitionEnded()
+- uid: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded*
+  name: CheckTransitionEnded
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_CheckTransitionEnded_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.CheckTransitionEnded
+  nameWithType: SkiaCarousel.CheckTransitionEnded
 - uid: DrawnUi.Controls.SkiaCarousel.ChildrenCount
   name: ChildrenCount
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_ChildrenCount
@@ -2468,6 +2497,32 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaCarousel.FindNearestAnchorInternal
   nameWithType: SkiaCarousel.FindNearestAnchorInternal
+- uid: DrawnUi.Controls.SkiaCarousel.FixIndex
+  name: FixIndex()
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_FixIndex
+  commentId: M:DrawnUi.Controls.SkiaCarousel.FixIndex
+  fullName: DrawnUi.Controls.SkiaCarousel.FixIndex()
+  nameWithType: SkiaCarousel.FixIndex()
+- uid: DrawnUi.Controls.SkiaCarousel.FixIndex*
+  name: FixIndex
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_FixIndex_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.FixIndex
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.FixIndex
+  nameWithType: SkiaCarousel.FixIndex
+- uid: DrawnUi.Controls.SkiaCarousel.FixPosition
+  name: FixPosition()
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_FixPosition
+  commentId: M:DrawnUi.Controls.SkiaCarousel.FixPosition
+  fullName: DrawnUi.Controls.SkiaCarousel.FixPosition()
+  nameWithType: SkiaCarousel.FixPosition()
+- uid: DrawnUi.Controls.SkiaCarousel.FixPosition*
+  name: FixPosition
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_FixPosition_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.FixPosition
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.FixPosition
+  nameWithType: SkiaCarousel.FixPosition
 - uid: DrawnUi.Controls.SkiaCarousel.GetContentOffsetBounds
   name: GetContentOffsetBounds()
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GetContentOffsetBounds
@@ -2507,6 +2562,32 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaCarousel.GetTemplatesPoolPrefill
   nameWithType: SkiaCarousel.GetTemplatesPoolPrefill
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  name: GetVirtualAnchor(Vector2, Vector2)
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GetVirtualAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
+  commentId: M:DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor(System.Numerics.Vector2, System.Numerics.Vector2)
+  nameWithType: SkiaCarousel.GetVirtualAnchor(Vector2, Vector2)
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor*
+  name: GetVirtualAnchor
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GetVirtualAnchor_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualAnchor
+  nameWithType: SkiaCarousel.GetVirtualAnchor
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+  name: GetVirtualSnapPoints()
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GetVirtualSnapPoints
+  commentId: M:DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints()
+  nameWithType: SkiaCarousel.GetVirtualSnapPoints()
+- uid: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints*
+  name: GetVirtualSnapPoints
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GetVirtualSnapPoints_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.GetVirtualSnapPoints
+  nameWithType: SkiaCarousel.GetVirtualSnapPoints
 - uid: DrawnUi.Controls.SkiaCarousel.GoNext
   name: GoNext()
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GoNext
@@ -2845,6 +2926,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaCarousel.OnTemplatesAvailable
   nameWithType: SkiaCarousel.OnTemplatesAvailable
+- uid: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
+  name: OnTransitionChanged()
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_OnTransitionChanged
+  commentId: M:DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
+  fullName: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged()
+  nameWithType: SkiaCarousel.OnTransitionChanged()
+- uid: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged*
+  name: OnTransitionChanged
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_OnTransitionChanged_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.OnTransitionChanged
+  nameWithType: SkiaCarousel.OnTransitionChanged
 - uid: DrawnUi.Controls.SkiaCarousel.PreloadNeighboors
   name: PreloadNeighboors
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_PreloadNeighboors
@@ -2974,6 +3068,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaCarousel.ScrollToOffset
   nameWithType: SkiaCarousel.ScrollToOffset
+- uid: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  name: SelectNextAnchor(Vector2, Vector2)
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SelectNextAnchor_System_Numerics_Vector2_System_Numerics_Vector2_
+  commentId: M:DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2,System.Numerics.Vector2)
+  fullName: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor(System.Numerics.Vector2, System.Numerics.Vector2)
+  nameWithType: SkiaCarousel.SelectNextAnchor(Vector2, Vector2)
+- uid: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor*
+  name: SelectNextAnchor
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SelectNextAnchor_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SelectNextAnchor
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.SelectNextAnchor
+  nameWithType: SkiaCarousel.SelectNextAnchor
 - uid: DrawnUi.Controls.SkiaCarousel.SelectedIndex
   name: SelectedIndex
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SelectedIndex
@@ -3031,12 +3138,76 @@ references:
   commentId: F:DrawnUi.Controls.SkiaCarousel.SidesOffsetProperty
   fullName: DrawnUi.Controls.SkiaCarousel.SidesOffsetProperty
   nameWithType: SkiaCarousel.SidesOffsetProperty
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+  name: SkiaCarousel.SnapPoint
+  href: api/DrawnUi.Controls.SkiaCarousel.SnapPoint.html
+  commentId: T:DrawnUi.Controls.SkiaCarousel.SnapPoint
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPoint
+  nameWithType: SkiaCarousel.SnapPoint
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPoint.Id
+  name: Id
+  href: api/DrawnUi.Controls.SkiaCarousel.SnapPoint.html#DrawnUi_Controls_SkiaCarousel_SnapPoint_Id
+  commentId: P:DrawnUi.Controls.SkiaCarousel.SnapPoint.Id
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPoint.Id
+  nameWithType: SkiaCarousel.SnapPoint.Id
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPoint.Id*
+  name: Id
+  href: api/DrawnUi.Controls.SkiaCarousel.SnapPoint.html#DrawnUi_Controls_SkiaCarousel_SnapPoint_Id_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SnapPoint.Id
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPoint.Id
+  nameWithType: SkiaCarousel.SnapPoint.Id
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPoint.Location
+  name: Location
+  href: api/DrawnUi.Controls.SkiaCarousel.SnapPoint.html#DrawnUi_Controls_SkiaCarousel_SnapPoint_Location
+  commentId: P:DrawnUi.Controls.SkiaCarousel.SnapPoint.Location
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPoint.Location
+  nameWithType: SkiaCarousel.SnapPoint.Location
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPoint.Location*
+  name: Location
+  href: api/DrawnUi.Controls.SkiaCarousel.SnapPoint.html#DrawnUi_Controls_SkiaCarousel_SnapPoint_Location_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SnapPoint.Location
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPoint.Location
+  nameWithType: SkiaCarousel.SnapPoint.Location
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  name: SnapPointsVirtual
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SnapPointsVirtual
+  commentId: P:DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  nameWithType: SkiaCarousel.SnapPointsVirtual
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual*
+  name: SnapPointsVirtual
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SnapPointsVirtual_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPointsVirtual
+  nameWithType: SkiaCarousel.SnapPointsVirtual
 - uid: DrawnUi.Controls.SkiaCarousel.Stopped
   name: Stopped
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_Stopped
   commentId: E:DrawnUi.Controls.SkiaCarousel.Stopped
   fullName: DrawnUi.Controls.SkiaCarousel.Stopped
   nameWithType: SkiaCarousel.Stopped
+- uid: DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  name: SwipeSpeed
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SwipeSpeed
+  commentId: P:DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  fullName: DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  nameWithType: SkiaCarousel.SwipeSpeed
+- uid: DrawnUi.Controls.SkiaCarousel.SwipeSpeed*
+  name: SwipeSpeed
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SwipeSpeed_
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  isSpec: "True"
+  fullName: DrawnUi.Controls.SkiaCarousel.SwipeSpeed
+  nameWithType: SkiaCarousel.SwipeSpeed
+- uid: DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty
+  name: SwipeSpeedProperty
+  href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_SwipeSpeedProperty
+  commentId: F:DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty
+  fullName: DrawnUi.Controls.SkiaCarousel.SwipeSpeedProperty
+  nameWithType: SkiaCarousel.SwipeSpeedProperty
 - uid: DrawnUi.Controls.SkiaCarousel.TransitionProgress
   name: TransitionProgress
   href: api/DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_TransitionProgress
@@ -3321,12 +3492,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Controls.SkiaDrawer.ApplyBindingContext
   nameWithType: SkiaDrawer.ApplyBindingContext
-- uid: DrawnUi.Controls.SkiaDrawer.ApplyOptions
-  name: ApplyOptions()
-  href: api/DrawnUi.Controls.SkiaDrawer.html#DrawnUi_Controls_SkiaDrawer_ApplyOptions
-  commentId: M:DrawnUi.Controls.SkiaDrawer.ApplyOptions
-  fullName: DrawnUi.Controls.SkiaDrawer.ApplyOptions()
-  nameWithType: SkiaDrawer.ApplyOptions()
+- uid: DrawnUi.Controls.SkiaDrawer.ApplyOptions(System.Boolean)
+  name: ApplyOptions(bool)
+  href: api/DrawnUi.Controls.SkiaDrawer.html#DrawnUi_Controls_SkiaDrawer_ApplyOptions_System_Boolean_
+  commentId: M:DrawnUi.Controls.SkiaDrawer.ApplyOptions(System.Boolean)
+  name.vb: ApplyOptions(Boolean)
+  fullName: DrawnUi.Controls.SkiaDrawer.ApplyOptions(bool)
+  fullName.vb: DrawnUi.Controls.SkiaDrawer.ApplyOptions(Boolean)
+  nameWithType: SkiaDrawer.ApplyOptions(bool)
+  nameWithType.vb: SkiaDrawer.ApplyOptions(Boolean)
 - uid: DrawnUi.Controls.SkiaDrawer.ApplyOptions*
   name: ApplyOptions
   href: api/DrawnUi.Controls.SkiaDrawer.html#DrawnUi_Controls_SkiaDrawer_ApplyOptions_
@@ -12751,6 +12925,12 @@ references:
   commentId: F:DrawnUi.Draw.AddGestures.AttachedListeners
   fullName: DrawnUi.Draw.AddGestures.AttachedListeners
   nameWithType: AddGestures.AttachedListeners
+- uid: DrawnUi.Draw.AddGestures.CommandDelayMs
+  name: CommandDelayMs
+  href: api/DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_CommandDelayMs
+  commentId: F:DrawnUi.Draw.AddGestures.CommandDelayMs
+  fullName: DrawnUi.Draw.AddGestures.CommandDelayMs
+  nameWithType: AddGestures.CommandDelayMs
 - uid: DrawnUi.Draw.AddGestures.CommandLongPressingParameterProperty
   name: CommandLongPressingParameterProperty
   href: api/DrawnUi.Draw.AddGestures.html#DrawnUi_Draw_AddGestures_CommandLongPressingParameterProperty
@@ -14568,6 +14748,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.CachedObject.Image
   nameWithType: CachedObject.Image
+- uid: DrawnUi.Draw.CachedObject.IsAlive
+  name: IsAlive
+  href: api/DrawnUi.Draw.CachedObject.html#DrawnUi_Draw_CachedObject_IsAlive
+  commentId: P:DrawnUi.Draw.CachedObject.IsAlive
+  fullName: DrawnUi.Draw.CachedObject.IsAlive
+  nameWithType: CachedObject.IsAlive
+- uid: DrawnUi.Draw.CachedObject.IsAlive*
+  name: IsAlive
+  href: api/DrawnUi.Draw.CachedObject.html#DrawnUi_Draw_CachedObject_IsAlive_
+  commentId: Overload:DrawnUi.Draw.CachedObject.IsAlive
+  isSpec: "True"
+  fullName: DrawnUi.Draw.CachedObject.IsAlive
+  nameWithType: CachedObject.IsAlive
 - uid: DrawnUi.Draw.CachedObject.IsDisposed
   name: IsDisposed
   href: api/DrawnUi.Draw.CachedObject.html#DrawnUi_Draw_CachedObject_IsDisposed
@@ -14581,6 +14774,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.CachedObject.IsDisposed
   nameWithType: CachedObject.IsDisposed
+- uid: DrawnUi.Draw.CachedObject.LastDrawnAt
+  name: LastDrawnAt
+  href: api/DrawnUi.Draw.CachedObject.html#DrawnUi_Draw_CachedObject_LastDrawnAt
+  commentId: F:DrawnUi.Draw.CachedObject.LastDrawnAt
+  fullName: DrawnUi.Draw.CachedObject.LastDrawnAt
+  nameWithType: CachedObject.LastDrawnAt
 - uid: DrawnUi.Draw.CachedObject.Picture
   name: Picture
   href: api/DrawnUi.Draw.CachedObject.html#DrawnUi_Draw_CachedObject_Picture
@@ -17978,6 +18177,28 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild
   nameWithType: DrawnExtensions.GetVelocityRatioForChild
+- uid: DrawnUi.Draw.DrawnExtensions.IsSameAs(System.String,System.String)
+  name: IsSameAs(string, string)
+  href: api/DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_IsSameAs_System_String_System_String_
+  commentId: M:DrawnUi.Draw.DrawnExtensions.IsSameAs(System.String,System.String)
+  name.vb: IsSameAs(String, String)
+  fullName: DrawnUi.Draw.DrawnExtensions.IsSameAs(string, string)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.IsSameAs(String, String)
+  nameWithType: DrawnExtensions.IsSameAs(string, string)
+  nameWithType.vb: DrawnExtensions.IsSameAs(String, String)
+- uid: DrawnUi.Draw.DrawnExtensions.IsSameAs(System.Uri,System.Uri)
+  name: IsSameAs(Uri, Uri)
+  href: api/DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_IsSameAs_System_Uri_System_Uri_
+  commentId: M:DrawnUi.Draw.DrawnExtensions.IsSameAs(System.Uri,System.Uri)
+  fullName: DrawnUi.Draw.DrawnExtensions.IsSameAs(System.Uri, System.Uri)
+  nameWithType: DrawnExtensions.IsSameAs(Uri, Uri)
+- uid: DrawnUi.Draw.DrawnExtensions.IsSameAs*
+  name: IsSameAs
+  href: api/DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_IsSameAs_
+  commentId: Overload:DrawnUi.Draw.DrawnExtensions.IsSameAs
+  isSpec: "True"
+  fullName: DrawnUi.Draw.DrawnExtensions.IsSameAs
+  nameWithType: DrawnExtensions.IsSameAs
 - uid: DrawnUi.Draw.DrawnExtensions.StartupSettings
   name: StartupSettings
   href: api/DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_StartupSettings
@@ -20384,6 +20605,12 @@ references:
   commentId: F:DrawnUi.Draw.GesturesMode.Lock
   fullName: DrawnUi.Draw.GesturesMode.Lock
   nameWithType: GesturesMode.Lock
+- uid: DrawnUi.Draw.GesturesMode.SoftLock
+  name: SoftLock
+  href: api/DrawnUi.Draw.GesturesMode.html#DrawnUi_Draw_GesturesMode_SoftLock
+  commentId: F:DrawnUi.Draw.GesturesMode.SoftLock
+  fullName: DrawnUi.Draw.GesturesMode.SoftLock
+  nameWithType: GesturesMode.SoftLock
 - uid: DrawnUi.Draw.GlowPosition
   name: GlowPosition
   href: api/DrawnUi.Draw.GlowPosition.html
@@ -20891,12 +21118,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.IDrawnBase.Destination
   nameWithType: IDrawnBase.Destination
-- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
-  name: DisposeObject(IDisposable)
-  href: api/DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
-  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
-  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
-  nameWithType: IDrawnBase.DisposeObject(IDisposable)
+- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
+  name: DisposeObject(IDisposable, string)
+  href: api/DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
+  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
+  name.vb: DisposeObject(IDisposable, String)
+  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, string)
+  fullName.vb: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, String)
+  nameWithType: IDrawnBase.DisposeObject(IDisposable, string)
+  nameWithType.vb: IDrawnBase.DisposeObject(IDisposable, String)
 - uid: DrawnUi.Draw.IDrawnBase.DisposeObject*
   name: DisposeObject
   href: api/DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_
@@ -21687,15 +21917,15 @@ references:
   commentId: T:DrawnUi.Draw.IRefreshIndicator
   fullName: DrawnUi.Draw.IRefreshIndicator
   nameWithType: IRefreshIndicator
-- uid: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  name: SetDragRatio(float, float, double)
-  href: api/DrawnUi.Draw.IRefreshIndicator.html#DrawnUi_Draw_IRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_
-  commentId: M:DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  name.vb: SetDragRatio(Single, Single, Double)
-  fullName: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(float, float, double)
-  fullName.vb: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(Single, Single, Double)
-  nameWithType: IRefreshIndicator.SetDragRatio(float, float, double)
-  nameWithType.vb: IRefreshIndicator.SetDragRatio(Single, Single, Double)
+- uid: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  name: SetDragRatio(float, float, double, double)
+  href: api/DrawnUi.Draw.IRefreshIndicator.html#DrawnUi_Draw_IRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_System_Double_
+  commentId: M:DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  name.vb: SetDragRatio(Single, Single, Double, Double)
+  fullName: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(float, float, double, double)
+  fullName.vb: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(Single, Single, Double, Double)
+  nameWithType: IRefreshIndicator.SetDragRatio(float, float, double, double)
+  nameWithType.vb: IRefreshIndicator.SetDragRatio(Single, Single, Double, Double)
 - uid: DrawnUi.Draw.IRefreshIndicator.SetDragRatio*
   name: SetDragRatio
   href: api/DrawnUi.Draw.IRefreshIndicator.html#DrawnUi_Draw_IRefreshIndicator_SetDragRatio_
@@ -22183,6 +22413,25 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.ISkiaControl.ZIndex
   nameWithType: ISkiaControl.ZIndex
+- uid: DrawnUi.Draw.ISkiaDisposable
+  name: ISkiaDisposable
+  href: api/DrawnUi.Draw.ISkiaDisposable.html
+  commentId: T:DrawnUi.Draw.ISkiaDisposable
+  fullName: DrawnUi.Draw.ISkiaDisposable
+  nameWithType: ISkiaDisposable
+- uid: DrawnUi.Draw.ISkiaDisposable.IsAlive
+  name: IsAlive
+  href: api/DrawnUi.Draw.ISkiaDisposable.html#DrawnUi_Draw_ISkiaDisposable_IsAlive
+  commentId: P:DrawnUi.Draw.ISkiaDisposable.IsAlive
+  fullName: DrawnUi.Draw.ISkiaDisposable.IsAlive
+  nameWithType: ISkiaDisposable.IsAlive
+- uid: DrawnUi.Draw.ISkiaDisposable.IsAlive*
+  name: IsAlive
+  href: api/DrawnUi.Draw.ISkiaDisposable.html#DrawnUi_Draw_ISkiaDisposable_IsAlive_
+  commentId: Overload:DrawnUi.Draw.ISkiaDisposable.IsAlive
+  isSpec: "True"
+  fullName: DrawnUi.Draw.ISkiaDisposable.IsAlive
+  nameWithType: ISkiaDisposable.IsAlive
 - uid: DrawnUi.Draw.ISkiaDrawable
   name: ISkiaDrawable
   href: api/DrawnUi.Draw.ISkiaDrawable.html
@@ -24286,15 +24535,31 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.LottieRefreshIndicator.OnVisibilityChanged
   nameWithType: LottieRefreshIndicator.OnVisibilityChanged
-- uid: DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  name: SetDragRatio(float, float, double)
-  href: api/DrawnUi.Draw.LottieRefreshIndicator.html#DrawnUi_Draw_LottieRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_
-  commentId: M:DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  name.vb: SetDragRatio(Single, Single, Double)
-  fullName: DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(float, float, double)
-  fullName.vb: DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(Single, Single, Double)
-  nameWithType: LottieRefreshIndicator.SetDragRatio(float, float, double)
-  nameWithType.vb: LottieRefreshIndicator.SetDragRatio(Single, Single, Double)
+- uid: DrawnUi.Draw.LottieRefreshIndicator.SetAnimationState(System.Boolean)
+  name: SetAnimationState(bool)
+  href: api/DrawnUi.Draw.LottieRefreshIndicator.html#DrawnUi_Draw_LottieRefreshIndicator_SetAnimationState_System_Boolean_
+  commentId: M:DrawnUi.Draw.LottieRefreshIndicator.SetAnimationState(System.Boolean)
+  name.vb: SetAnimationState(Boolean)
+  fullName: DrawnUi.Draw.LottieRefreshIndicator.SetAnimationState(bool)
+  fullName.vb: DrawnUi.Draw.LottieRefreshIndicator.SetAnimationState(Boolean)
+  nameWithType: LottieRefreshIndicator.SetAnimationState(bool)
+  nameWithType.vb: LottieRefreshIndicator.SetAnimationState(Boolean)
+- uid: DrawnUi.Draw.LottieRefreshIndicator.SetAnimationState*
+  name: SetAnimationState
+  href: api/DrawnUi.Draw.LottieRefreshIndicator.html#DrawnUi_Draw_LottieRefreshIndicator_SetAnimationState_
+  commentId: Overload:DrawnUi.Draw.LottieRefreshIndicator.SetAnimationState
+  isSpec: "True"
+  fullName: DrawnUi.Draw.LottieRefreshIndicator.SetAnimationState
+  nameWithType: LottieRefreshIndicator.SetAnimationState
+- uid: DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  name: SetDragRatio(float, float, double, double)
+  href: api/DrawnUi.Draw.LottieRefreshIndicator.html#DrawnUi_Draw_LottieRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_System_Double_
+  commentId: M:DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  name.vb: SetDragRatio(Single, Single, Double, Double)
+  fullName: DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(float, float, double, double)
+  fullName.vb: DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio(Single, Single, Double, Double)
+  nameWithType: LottieRefreshIndicator.SetDragRatio(float, float, double, double)
+  nameWithType.vb: LottieRefreshIndicator.SetDragRatio(Single, Single, Double, Double)
 - uid: DrawnUi.Draw.LottieRefreshIndicator.SetDragRatio*
   name: SetDragRatio
   href: api/DrawnUi.Draw.LottieRefreshIndicator.html#DrawnUi_Draw_LottieRefreshIndicator_SetDragRatio_
@@ -26217,15 +26482,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.RangeAnimator.Distance
   nameWithType: RangeAnimator.Distance
-- uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
-  name: Start(Action<double>, double, double, uint, Easing)
-  href: api/DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_
-  commentId: M:DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
-  name.vb: Start(Action(Of Double), Double, Double, UInteger, Easing)
-  fullName: DrawnUi.Draw.RangeAnimator.Start(System.Action<double>, double, double, uint, Microsoft.Maui.Easing)
-  fullName.vb: DrawnUi.Draw.RangeAnimator.Start(System.Action(Of Double), Double, Double, UInteger, Microsoft.Maui.Easing)
-  nameWithType: RangeAnimator.Start(Action<double>, double, double, uint, Easing)
-  nameWithType.vb: RangeAnimator.Start(Action(Of Double), Double, Double, UInteger, Easing)
+- uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
+  name: Start(Action<double>, double, double, uint, Easing, int)
+  href: api/DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_System_Int32_
+  commentId: M:DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
+  name.vb: Start(Action(Of Double), Double, Double, UInteger, Easing, Integer)
+  fullName: DrawnUi.Draw.RangeAnimator.Start(System.Action<double>, double, double, uint, Microsoft.Maui.Easing, int)
+  fullName.vb: DrawnUi.Draw.RangeAnimator.Start(System.Action(Of Double), Double, Double, UInteger, Microsoft.Maui.Easing, Integer)
+  nameWithType: RangeAnimator.Start(Action<double>, double, double, uint, Easing, int)
+  nameWithType.vb: RangeAnimator.Start(Action(Of Double), Double, Double, UInteger, Easing, Integer)
 - uid: DrawnUi.Draw.RangeAnimator.Start*
   name: Start
   href: api/DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_
@@ -26557,15 +26822,31 @@ references:
   commentId: F:DrawnUi.Draw.RefreshIndicator.OrientationProperty
   fullName: DrawnUi.Draw.RefreshIndicator.OrientationProperty
   nameWithType: RefreshIndicator.OrientationProperty
-- uid: DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  name: SetDragRatio(float, float, double)
-  href: api/DrawnUi.Draw.RefreshIndicator.html#DrawnUi_Draw_RefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_
-  commentId: M:DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  name.vb: SetDragRatio(Single, Single, Double)
-  fullName: DrawnUi.Draw.RefreshIndicator.SetDragRatio(float, float, double)
-  fullName.vb: DrawnUi.Draw.RefreshIndicator.SetDragRatio(Single, Single, Double)
-  nameWithType: RefreshIndicator.SetDragRatio(float, float, double)
-  nameWithType.vb: RefreshIndicator.SetDragRatio(Single, Single, Double)
+- uid: DrawnUi.Draw.RefreshIndicator.SetAnimationState(System.Boolean)
+  name: SetAnimationState(bool)
+  href: api/DrawnUi.Draw.RefreshIndicator.html#DrawnUi_Draw_RefreshIndicator_SetAnimationState_System_Boolean_
+  commentId: M:DrawnUi.Draw.RefreshIndicator.SetAnimationState(System.Boolean)
+  name.vb: SetAnimationState(Boolean)
+  fullName: DrawnUi.Draw.RefreshIndicator.SetAnimationState(bool)
+  fullName.vb: DrawnUi.Draw.RefreshIndicator.SetAnimationState(Boolean)
+  nameWithType: RefreshIndicator.SetAnimationState(bool)
+  nameWithType.vb: RefreshIndicator.SetAnimationState(Boolean)
+- uid: DrawnUi.Draw.RefreshIndicator.SetAnimationState*
+  name: SetAnimationState
+  href: api/DrawnUi.Draw.RefreshIndicator.html#DrawnUi_Draw_RefreshIndicator_SetAnimationState_
+  commentId: Overload:DrawnUi.Draw.RefreshIndicator.SetAnimationState
+  isSpec: "True"
+  fullName: DrawnUi.Draw.RefreshIndicator.SetAnimationState
+  nameWithType: RefreshIndicator.SetAnimationState
+- uid: DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  name: SetDragRatio(float, float, double, double)
+  href: api/DrawnUi.Draw.RefreshIndicator.html#DrawnUi_Draw_RefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_System_Double_
+  commentId: M:DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  name.vb: SetDragRatio(Single, Single, Double, Double)
+  fullName: DrawnUi.Draw.RefreshIndicator.SetDragRatio(float, float, double, double)
+  fullName.vb: DrawnUi.Draw.RefreshIndicator.SetDragRatio(Single, Single, Double, Double)
+  nameWithType: RefreshIndicator.SetDragRatio(float, float, double, double)
+  nameWithType.vb: RefreshIndicator.SetDragRatio(Single, Single, Double, Double)
 - uid: DrawnUi.Draw.RefreshIndicator.SetDragRatio*
   name: SetDragRatio
   href: api/DrawnUi.Draw.RefreshIndicator.html#DrawnUi_Draw_RefreshIndicator_SetDragRatio_
@@ -29793,6 +30074,12 @@ references:
   commentId: F:DrawnUi.Draw.SkiaButton.BevelTypeProperty
   fullName: DrawnUi.Draw.SkiaButton.BevelTypeProperty
   nameWithType: SkiaButton.BevelTypeProperty
+- uid: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+  name: SkiaButton.ButtonElevationShadowEffect
+  href: api/DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect.html
+  commentId: T:DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+  fullName: DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect
+  nameWithType: SkiaButton.ButtonElevationShadowEffect
 - uid: DrawnUi.Draw.SkiaButton.ButtonLabel
   name: SkiaButton.ButtonLabel
   href: api/DrawnUi.Draw.SkiaButton.ButtonLabel.html
@@ -29818,6 +30105,19 @@ references:
   fullName.vb: DrawnUi.Draw.SkiaButton.ButtonLabel.New
   nameWithType: SkiaButton.ButtonLabel.ButtonLabel
   nameWithType.vb: SkiaButton.ButtonLabel.New
+- uid: DrawnUi.Draw.SkiaButton.ButtonPadding
+  name: ButtonPadding
+  href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_ButtonPadding
+  commentId: P:DrawnUi.Draw.SkiaButton.ButtonPadding
+  fullName: DrawnUi.Draw.SkiaButton.ButtonPadding
+  nameWithType: SkiaButton.ButtonPadding
+- uid: DrawnUi.Draw.SkiaButton.ButtonPadding*
+  name: ButtonPadding
+  href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_ButtonPadding_
+  commentId: Overload:DrawnUi.Draw.SkiaButton.ButtonPadding
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaButton.ButtonPadding
+  nameWithType: SkiaButton.ButtonPadding
 - uid: DrawnUi.Draw.SkiaButton.ButtonStyle
   name: ButtonStyle
   href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_ButtonStyle
@@ -30017,6 +30317,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaButton.CreateDefaultStyleContent
   nameWithType: SkiaButton.CreateDefaultStyleContent
+- uid: DrawnUi.Draw.SkiaButton.CreateElevation
+  name: CreateElevation()
+  href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_CreateElevation
+  commentId: M:DrawnUi.Draw.SkiaButton.CreateElevation
+  fullName: DrawnUi.Draw.SkiaButton.CreateElevation()
+  nameWithType: SkiaButton.CreateElevation()
+- uid: DrawnUi.Draw.SkiaButton.CreateElevation*
+  name: CreateElevation
+  href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_CreateElevation_
+  commentId: Overload:DrawnUi.Draw.SkiaButton.CreateElevation
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaButton.CreateElevation
+  nameWithType: SkiaButton.CreateElevation
 - uid: DrawnUi.Draw.SkiaButton.CreateMaterialStyleContent
   name: CreateMaterialStyleContent()
   href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_CreateMaterialStyleContent
@@ -30256,6 +30569,12 @@ references:
   commentId: F:DrawnUi.Draw.SkiaButton.MainLabel
   fullName: DrawnUi.Draw.SkiaButton.MainLabel
   nameWithType: SkiaButton.MainLabel
+- uid: DrawnUi.Draw.SkiaButton.MainWrapper
+  name: MainWrapper
+  href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_MainWrapper
+  commentId: F:DrawnUi.Draw.SkiaButton.MainWrapper
+  fullName: DrawnUi.Draw.SkiaButton.MainWrapper
+  nameWithType: SkiaButton.MainWrapper
 - uid: DrawnUi.Draw.SkiaButton.OnButtonPropertyChanged(DrawnUi.Draw.SkiaButton,System.String)
   name: OnButtonPropertyChanged(SkiaButton, string)
   href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_OnButtonPropertyChanged_DrawnUi_Draw_SkiaButton_System_String_
@@ -30311,6 +30630,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaButton.OnDown
   nameWithType: SkiaButton.OnDown
+- uid: DrawnUi.Draw.SkiaButton.OnPaddingSet(Microsoft.Maui.Thickness)
+  name: OnPaddingSet(Thickness)
+  href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_OnPaddingSet_Microsoft_Maui_Thickness_
+  commentId: M:DrawnUi.Draw.SkiaButton.OnPaddingSet(Microsoft.Maui.Thickness)
+  fullName: DrawnUi.Draw.SkiaButton.OnPaddingSet(Microsoft.Maui.Thickness)
+  nameWithType: SkiaButton.OnPaddingSet(Thickness)
+- uid: DrawnUi.Draw.SkiaButton.OnPaddingSet*
+  name: OnPaddingSet
+  href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_OnPaddingSet_
+  commentId: Overload:DrawnUi.Draw.SkiaButton.OnPaddingSet
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaButton.OnPaddingSet
+  nameWithType: SkiaButton.OnPaddingSet
 - uid: DrawnUi.Draw.SkiaButton.OnPropertyChanged(System.String)
   name: OnPropertyChanged(string)
   href: api/DrawnUi.Draw.SkiaButton.html#DrawnUi_Draw_SkiaButton_OnPropertyChanged_System_String_
@@ -31341,15 +31673,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaControl.AnimateAsync
   nameWithType: SkiaControl.AnimateAsync
-- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
-  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool)
-  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_
-  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
-  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean)
-  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, System.Threading.CancellationToken, bool)
-  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, System.Threading.CancellationToken, Boolean)
-  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool)
-  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean)
+- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
+  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
+  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, System.Threading.CancellationToken, bool, int)
+  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, System.Threading.CancellationToken, Boolean, Integer)
+  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
+  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
 - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync*
   name: AnimateRangeAsync
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_
@@ -31963,6 +32295,19 @@ references:
   commentId: F:DrawnUi.Draw.SkiaControl.ClearColorProperty
   fullName: DrawnUi.Draw.SkiaControl.ClearColorProperty
   nameWithType: SkiaControl.ClearColorProperty
+- uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  name: ClearDirtyChildren()
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren
+  commentId: M:DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  fullName: DrawnUi.Draw.SkiaControl.ClearDirtyChildren()
+  nameWithType: SkiaControl.ClearDirtyChildren()
+- uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren*
+  name: ClearDirtyChildren
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  nameWithType: SkiaControl.ClearDirtyChildren
 - uid: DrawnUi.Draw.SkiaControl.ClearParent
   name: ClearParent()
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearParent
@@ -32825,12 +33170,15 @@ references:
   commentId: M:DrawnUi.Draw.SkiaControl.DisposeObject
   fullName: DrawnUi.Draw.SkiaControl.DisposeObject()
   nameWithType: SkiaControl.DisposeObject()
-- uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
-  name: DisposeObject(IDisposable)
-  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_
-  commentId: M:DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
-  fullName: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
-  nameWithType: SkiaControl.DisposeObject(IDisposable)
+- uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
+  name: DisposeObject(IDisposable, string)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_
+  commentId: M:DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
+  name.vb: DisposeObject(IDisposable, String)
+  fullName: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable, string)
+  fullName.vb: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable, String)
+  nameWithType: SkiaControl.DisposeObject(IDisposable, string)
+  nameWithType.vb: SkiaControl.DisposeObject(IDisposable, String)
 - uid: DrawnUi.Draw.SkiaControl.DisposeObject*
   name: DisposeObject
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_
@@ -34503,6 +34851,25 @@ references:
   commentId: F:DrawnUi.Draw.SkiaControl.IsGhostProperty
   fullName: DrawnUi.Draw.SkiaControl.IsGhostProperty
   nameWithType: SkiaControl.IsGhostProperty
+- uid: DrawnUi.Draw.SkiaControl.IsHovered
+  name: IsHovered
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered
+  commentId: P:DrawnUi.Draw.SkiaControl.IsHovered
+  fullName: DrawnUi.Draw.SkiaControl.IsHovered
+  nameWithType: SkiaControl.IsHovered
+- uid: DrawnUi.Draw.SkiaControl.IsHovered*
+  name: IsHovered
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.IsHovered
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.IsHovered
+  nameWithType: SkiaControl.IsHovered
+- uid: DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  name: IsHoveredProperty
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  fullName: DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  nameWithType: SkiaControl.IsHoveredProperty
 - uid: DrawnUi.Draw.SkiaControl.IsLayoutDirty
   name: IsLayoutDirty
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsLayoutDirty
@@ -35636,6 +36003,22 @@ references:
   commentId: F:DrawnUi.Draw.SkiaControl.OnGestures
   fullName: DrawnUi.Draw.SkiaControl.OnGestures
   nameWithType: SkiaControl.OnGestures
+- uid: DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+  name: OnHover(bool)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+  name.vb: OnHover(Boolean)
+  fullName: DrawnUi.Draw.SkiaControl.OnHover(bool)
+  fullName.vb: DrawnUi.Draw.SkiaControl.OnHover(Boolean)
+  nameWithType: SkiaControl.OnHover(bool)
+  nameWithType.vb: SkiaControl.OnHover(Boolean)
+- uid: DrawnUi.Draw.SkiaControl.OnHover*
+  name: OnHover
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.OnHover
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.OnHover
+  nameWithType: SkiaControl.OnHover
 - uid: DrawnUi.Draw.SkiaControl.OnItemTemplateChanged
   name: OnItemTemplateChanged()
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnItemTemplateChanged
@@ -35704,6 +36087,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaControl.OnMeasuring
   nameWithType: SkiaControl.OnMeasuring
+- uid: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  name: OnPaddingSet(Thickness)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_
+  commentId: M:DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  fullName: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  nameWithType: SkiaControl.OnPaddingSet(Thickness)
+- uid: DrawnUi.Draw.SkiaControl.OnPaddingSet*
+  name: OnPaddingSet
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.OnPaddingSet
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.OnPaddingSet
+  nameWithType: SkiaControl.OnPaddingSet
 - uid: DrawnUi.Draw.SkiaControl.OnParentChanged(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.IDrawnBase)
   name: OnParentChanged(IDrawnBase, IDrawnBase)
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnParentChanged_DrawnUi_Draw_IDrawnBase_DrawnUi_Draw_IDrawnBase_
@@ -36097,6 +36493,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaControl.PauseAllAnimators
   nameWithType: SkiaControl.PauseAllAnimators
+- uid: DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
+  name: PendingUnattachedAnimators
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators
+  commentId: F:DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
+  fullName: DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
+  nameWithType: SkiaControl.PendingUnattachedAnimators
 - uid: DrawnUi.Draw.SkiaControl.Perspective1
   name: Perspective1
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Perspective1
@@ -36413,6 +36815,12 @@ references:
   commentId: M:DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
   fullName: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
   nameWithType: SkiaControl.RegisterAnimator(ISkiaAnimator)
+- uid: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+  name: RegisterAnimator(ISkiaAnimator, IAnimatorsManager)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_
+  commentId: M:DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+  fullName: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator, DrawnUi.Draw.IAnimatorsManager)
+  nameWithType: SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)
 - uid: DrawnUi.Draw.SkiaControl.RegisterAnimator*
   name: RegisterAnimator
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_
@@ -36867,6 +37275,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaControl.SetDefaultMinimumContentSize
   nameWithType: SkiaControl.SetDefaultMinimumContentSize
+- uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  name: SetHover(bool)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_
+  commentId: M:DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  name.vb: SetHover(Boolean)
+  fullName: DrawnUi.Draw.SkiaControl.SetHover(bool)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetHover(Boolean)
+  nameWithType: SkiaControl.SetHover(bool)
+  nameWithType.vb: SkiaControl.SetHover(Boolean)
+- uid: DrawnUi.Draw.SkiaControl.SetHover*
+  name: SetHover
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.SetHover
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.SetHover
+  nameWithType: SkiaControl.SetHover
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   name: SetInheritedBindingContext(object)
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetInheritedBindingContext_System_Object_
@@ -37396,6 +37820,19 @@ references:
   commentId: F:DrawnUi.Draw.SkiaControl.TouchEffectColorProperty
   fullName: DrawnUi.Draw.SkiaControl.TouchEffectColorProperty
   nameWithType: SkiaControl.TouchEffectColorProperty
+- uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  name: TrackChildAsDirty(SkiaControl)
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
+  commentId: M:DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  fullName: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  nameWithType: SkiaControl.TrackChildAsDirty(SkiaControl)
+- uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty*
+  name: TrackChildAsDirty
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.TrackChildAsDirty
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.TrackChildAsDirty
+  nameWithType: SkiaControl.TrackChildAsDirty
 - uid: DrawnUi.Draw.SkiaControl.TransformPointToLocalSpace(SkiaSharp.SKPoint)
   name: TransformPointToLocalSpace(SKPoint)
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TransformPointToLocalSpace_SkiaSharp_SKPoint_
@@ -37698,6 +38135,19 @@ references:
   commentId: F:DrawnUi.Draw.SkiaControl.UseCacheProperty
   fullName: DrawnUi.Draw.SkiaControl.UseCacheProperty
   nameWithType: SkiaControl.UseCacheProperty
+- uid: DrawnUi.Draw.SkiaControl.UsePadding
+  name: UsePadding
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding
+  commentId: P:DrawnUi.Draw.SkiaControl.UsePadding
+  fullName: DrawnUi.Draw.SkiaControl.UsePadding
+  nameWithType: SkiaControl.UsePadding
+- uid: DrawnUi.Draw.SkiaControl.UsePadding*
+  name: UsePadding
+  href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding_
+  commentId: Overload:DrawnUi.Draw.SkiaControl.UsePadding
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaControl.UsePadding
+  nameWithType: SkiaControl.UsePadding
 - uid: DrawnUi.Draw.SkiaControl.UseRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect)
   name: UseRenderingObject(DrawingContext, SKRect)
   href: api/DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UseRenderingObject_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_
@@ -39535,6 +39985,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaFontManager.CanRender
   nameWithType: SkiaFontManager.CanRender
+- uid: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+  name: ClearCharacterCache()
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_ClearCharacterCache
+  commentId: M:DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+  fullName: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache()
+  nameWithType: SkiaFontManager.ClearCharacterCache()
+- uid: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache*
+  name: ClearCharacterCache
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_ClearCharacterCache_
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaFontManager.ClearCharacterCache
+  nameWithType: SkiaFontManager.ClearCharacterCache
 - uid: DrawnUi.Draw.SkiaFontManager.DefaultTypeface
   name: DefaultTypeface
   href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_DefaultTypeface
@@ -39548,6 +40011,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaFontManager.DefaultTypeface
   nameWithType: SkiaFontManager.DefaultTypeface
+- uid: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(System.Int32)
+  name: DetectUnicodeBlock(int)
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_DetectUnicodeBlock_System_Int32_
+  commentId: M:DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(System.Int32)
+  name.vb: DetectUnicodeBlock(Integer)
+  fullName: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(int)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock(Integer)
+  nameWithType: SkiaFontManager.DetectUnicodeBlock(int)
+  nameWithType.vb: SkiaFontManager.DetectUnicodeBlock(Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock*
+  name: DetectUnicodeBlock
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_DetectUnicodeBlock_
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaFontManager.DetectUnicodeBlock
+  nameWithType: SkiaFontManager.DetectUnicodeBlock
 - uid: DrawnUi.Draw.SkiaFontManager.FindBestTypefaceForString(System.String)
   name: FindBestTypefaceForString(string)
   href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_FindBestTypefaceForString_System_String_
@@ -39615,6 +40094,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaFontManager.GetAlias
   nameWithType: SkiaFontManager.GetAlias
+- uid: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
+  name: GetCharacterCacheSize()
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetCharacterCacheSize
+  commentId: M:DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
+  fullName: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize()
+  nameWithType: SkiaFontManager.GetCharacterCacheSize()
+- uid: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize*
+  name: GetCharacterCacheSize
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetCharacterCacheSize_
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaFontManager.GetCharacterCacheSize
+  nameWithType: SkiaFontManager.GetCharacterCacheSize
 - uid: DrawnUi.Draw.SkiaFontManager.GetEmbeddedResourceNames
   name: GetEmbeddedResourceNames()
   href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_GetEmbeddedResourceNames
@@ -39778,6 +40270,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaFontManager.Manager
   nameWithType: SkiaFontManager.Manager
+- uid: DrawnUi.Draw.SkiaFontManager.MatchCharacter(System.Int32)
+  name: MatchCharacter(int)
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_MatchCharacter_System_Int32_
+  commentId: M:DrawnUi.Draw.SkiaFontManager.MatchCharacter(System.Int32)
+  name.vb: MatchCharacter(Integer)
+  fullName: DrawnUi.Draw.SkiaFontManager.MatchCharacter(int)
+  fullName.vb: DrawnUi.Draw.SkiaFontManager.MatchCharacter(Integer)
+  nameWithType: SkiaFontManager.MatchCharacter(int)
+  nameWithType.vb: SkiaFontManager.MatchCharacter(Integer)
+- uid: DrawnUi.Draw.SkiaFontManager.MatchCharacter*
+  name: MatchCharacter
+  href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_MatchCharacter_
+  commentId: Overload:DrawnUi.Draw.SkiaFontManager.MatchCharacter
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaFontManager.MatchCharacter
+  nameWithType: SkiaFontManager.MatchCharacter
 - uid: DrawnUi.Draw.SkiaFontManager.RegisterWeight(System.String,DrawnUi.Draw.FontWeight)
   name: RegisterWeight(string, FontWeight)
   href: api/DrawnUi.Draw.SkiaFontManager.html#DrawnUi_Draw_SkiaFontManager_RegisterWeight_System_String_DrawnUi_Draw_FontWeight_
@@ -42751,6 +43259,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaImageManager.Dispose
   nameWithType: SkiaImageManager.Dispose
+- uid: DrawnUi.Draw.SkiaImageManager.EnableHttpRetry
+  name: EnableHttpRetry
+  href: api/DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_EnableHttpRetry
+  commentId: F:DrawnUi.Draw.SkiaImageManager.EnableHttpRetry
+  fullName: DrawnUi.Draw.SkiaImageManager.EnableHttpRetry
+  nameWithType: SkiaImageManager.EnableHttpRetry
 - uid: DrawnUi.Draw.SkiaImageManager.GetFromCache(System.String)
   name: GetFromCache(string)
   href: api/DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_GetFromCache_System_String_
@@ -42796,6 +43310,12 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaImageManager.GetUriFromImageSource
   nameWithType: SkiaImageManager.GetUriFromImageSource
+- uid: DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts
+  name: HttpRetryMaxAttempts
+  href: api/DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_HttpRetryMaxAttempts
+  commentId: F:DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts
+  fullName: DrawnUi.Draw.SkiaImageManager.HttpRetryMaxAttempts
+  nameWithType: SkiaImageManager.HttpRetryMaxAttempts
 - uid: DrawnUi.Draw.SkiaImageManager.Instance
   name: Instance
   href: api/DrawnUi.Draw.SkiaImageManager.html#DrawnUi_Draw_SkiaImageManager_Instance
@@ -47707,6 +48227,22 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.NeedMeasure
   nameWithType: SkiaLayout.NeedMeasure
+- uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  name: OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List<ControlInStack>)
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
+  commentId: M:DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  name.vb: OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List(Of ControlInStack))
+  fullName: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.LayoutStructure, System.Collections.Generic.List<DrawnUi.Draw.ControlInStack>)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.LayoutStructure, System.Collections.Generic.List(Of DrawnUi.Draw.ControlInStack))
+  nameWithType: SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List<ControlInStack>)
+  nameWithType.vb: SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List(Of ControlInStack))
+- uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren*
+  name: OnAfterDrawingVisibleChildren
+  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren
+  nameWithType: SkiaLayout.OnAfterDrawingVisibleChildren
 - uid: DrawnUi.Draw.SkiaLayout.OnAppeared
   name: OnAppeared()
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAppeared
@@ -49010,19 +49546,6 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaLayout.TotalMeasuredItems
   nameWithType: SkiaLayout.TotalMeasuredItems
-- uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  name: TrackChildAsDirty(SkiaControl)
-  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
-  commentId: M:DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  fullName: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  nameWithType: SkiaLayout.TrackChildAsDirty(SkiaControl)
-- uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty*
-  name: TrackChildAsDirty
-  href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_
-  commentId: Overload:DrawnUi.Draw.SkiaLayout.TrackChildAsDirty
-  isSpec: "True"
-  fullName: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty
-  nameWithType: SkiaLayout.TrackChildAsDirty
 - uid: DrawnUi.Draw.SkiaLayout.Type
   name: Type
   href: api/DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_Type
@@ -53039,6 +53562,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SkiaScroll.ResetPan
   nameWithType: SkiaScroll.ResetPan
+- uid: DrawnUi.Draw.SkiaScroll.ResetPosition
+  name: ResetPosition()
+  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ResetPosition
+  commentId: M:DrawnUi.Draw.SkiaScroll.ResetPosition
+  fullName: DrawnUi.Draw.SkiaScroll.ResetPosition()
+  nameWithType: SkiaScroll.ResetPosition()
+- uid: DrawnUi.Draw.SkiaScroll.ResetPosition*
+  name: ResetPosition
+  href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ResetPosition_
+  commentId: Overload:DrawnUi.Draw.SkiaScroll.ResetPosition
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SkiaScroll.ResetPosition
+  nameWithType: SkiaScroll.ResetPosition
 - uid: DrawnUi.Draw.SkiaScroll.ResetScrollPositionOnContentSizeChanged
   name: ResetScrollPositionOnContentSizeChanged
   href: api/DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_ResetScrollPositionOnContentSizeChanged
@@ -58959,12 +59495,15 @@ references:
   commentId: F:DrawnUi.Draw.SnappingLayout.AnimatorRange
   fullName: DrawnUi.Draw.SnappingLayout.AnimatorRange
   nameWithType: SnappingLayout.AnimatorRange
-- uid: DrawnUi.Draw.SnappingLayout.ApplyOptions
-  name: ApplyOptions()
-  href: api/DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions
-  commentId: M:DrawnUi.Draw.SnappingLayout.ApplyOptions
-  fullName: DrawnUi.Draw.SnappingLayout.ApplyOptions()
-  nameWithType: SnappingLayout.ApplyOptions()
+- uid: DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)
+  name: ApplyOptions(bool)
+  href: api/DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions_System_Boolean_
+  commentId: M:DrawnUi.Draw.SnappingLayout.ApplyOptions(System.Boolean)
+  name.vb: ApplyOptions(Boolean)
+  fullName: DrawnUi.Draw.SnappingLayout.ApplyOptions(bool)
+  fullName.vb: DrawnUi.Draw.SnappingLayout.ApplyOptions(Boolean)
+  nameWithType: SnappingLayout.ApplyOptions(bool)
+  nameWithType.vb: SnappingLayout.ApplyOptions(Boolean)
 - uid: DrawnUi.Draw.SnappingLayout.ApplyOptions*
   name: ApplyOptions
   href: api/DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ApplyOptions_
@@ -59252,6 +59791,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.SnappingLayout.OnWillDisposeWithChildren
   nameWithType: SnappingLayout.OnWillDisposeWithChildren
+- uid: DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+  name: Render(DrawingContext)
+  href: api/DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Render_DrawnUi_Draw_DrawingContext_
+  commentId: M:DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+  fullName: DrawnUi.Draw.SnappingLayout.Render(DrawnUi.Draw.DrawingContext)
+  nameWithType: SnappingLayout.Render(DrawingContext)
+- uid: DrawnUi.Draw.SnappingLayout.Render*
+  name: Render
+  href: api/DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Render_
+  commentId: Overload:DrawnUi.Draw.SnappingLayout.Render
+  isSpec: "True"
+  fullName: DrawnUi.Draw.SnappingLayout.Render
+  nameWithType: SnappingLayout.Render
 - uid: DrawnUi.Draw.SnappingLayout.RespondsToGestures
   name: RespondsToGestures
   href: api/DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_RespondsToGestures
@@ -62902,6 +63454,72 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Draw.UnderdampedSpringTimingVectorParameters.ValueAt
   nameWithType: UnderdampedSpringTimingVectorParameters.ValueAt
+- uid: DrawnUi.Draw.UnicodeBlock
+  name: UnicodeBlock
+  href: api/DrawnUi.Draw.UnicodeBlock.html
+  commentId: T:DrawnUi.Draw.UnicodeBlock
+  fullName: DrawnUi.Draw.UnicodeBlock
+  nameWithType: UnicodeBlock
+- uid: DrawnUi.Draw.UnicodeBlock.Arabic
+  name: Arabic
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Arabic
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Arabic
+  fullName: DrawnUi.Draw.UnicodeBlock.Arabic
+  nameWithType: UnicodeBlock.Arabic
+- uid: DrawnUi.Draw.UnicodeBlock.CJK
+  name: CJK
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_CJK
+  commentId: F:DrawnUi.Draw.UnicodeBlock.CJK
+  fullName: DrawnUi.Draw.UnicodeBlock.CJK
+  nameWithType: UnicodeBlock.CJK
+- uid: DrawnUi.Draw.UnicodeBlock.Currency
+  name: Currency
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Currency
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Currency
+  fullName: DrawnUi.Draw.UnicodeBlock.Currency
+  nameWithType: UnicodeBlock.Currency
+- uid: DrawnUi.Draw.UnicodeBlock.Cyrillic
+  name: Cyrillic
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Cyrillic
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Cyrillic
+  fullName: DrawnUi.Draw.UnicodeBlock.Cyrillic
+  nameWithType: UnicodeBlock.Cyrillic
+- uid: DrawnUi.Draw.UnicodeBlock.Emoji
+  name: Emoji
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Emoji
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Emoji
+  fullName: DrawnUi.Draw.UnicodeBlock.Emoji
+  nameWithType: UnicodeBlock.Emoji
+- uid: DrawnUi.Draw.UnicodeBlock.Hangul
+  name: Hangul
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Hangul
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Hangul
+  fullName: DrawnUi.Draw.UnicodeBlock.Hangul
+  nameWithType: UnicodeBlock.Hangul
+- uid: DrawnUi.Draw.UnicodeBlock.Japanese
+  name: Japanese
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Japanese
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Japanese
+  fullName: DrawnUi.Draw.UnicodeBlock.Japanese
+  nameWithType: UnicodeBlock.Japanese
+- uid: DrawnUi.Draw.UnicodeBlock.Latin
+  name: Latin
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Latin
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Latin
+  fullName: DrawnUi.Draw.UnicodeBlock.Latin
+  nameWithType: UnicodeBlock.Latin
+- uid: DrawnUi.Draw.UnicodeBlock.Math
+  name: Math
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Math
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Math
+  fullName: DrawnUi.Draw.UnicodeBlock.Math
+  nameWithType: UnicodeBlock.Math
+- uid: DrawnUi.Draw.UnicodeBlock.Unknown
+  name: Unknown
+  href: api/DrawnUi.Draw.UnicodeBlock.html#DrawnUi_Draw_UnicodeBlock_Unknown
+  commentId: F:DrawnUi.Draw.UnicodeBlock.Unknown
+  fullName: DrawnUi.Draw.UnicodeBlock.Unknown
+  nameWithType: UnicodeBlock.Unknown
 - uid: DrawnUi.Draw.UsedGlyph
   name: UsedGlyph
   href: api/DrawnUi.Draw.UsedGlyph.html
@@ -69454,6 +70072,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Views.Canvas.ArrangeOverride
   nameWithType: Canvas.ArrangeOverride
+- uid: DrawnUi.Views.Canvas.AttachedTouchEffect
+  name: AttachedTouchEffect
+  href: api/DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_AttachedTouchEffect
+  commentId: P:DrawnUi.Views.Canvas.AttachedTouchEffect
+  fullName: DrawnUi.Views.Canvas.AttachedTouchEffect
+  nameWithType: Canvas.AttachedTouchEffect
+- uid: DrawnUi.Views.Canvas.AttachedTouchEffect*
+  name: AttachedTouchEffect
+  href: api/DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_AttachedTouchEffect_
+  commentId: Overload:DrawnUi.Views.Canvas.AttachedTouchEffect
+  isSpec: "True"
+  fullName: DrawnUi.Views.Canvas.AttachedTouchEffect
+  nameWithType: Canvas.AttachedTouchEffect
 - uid: DrawnUi.Views.Canvas.BreakLine
   name: BreakLine()
   href: api/DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_BreakLine
@@ -69711,6 +70342,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Views.Canvas.HadInput
   nameWithType: Canvas.HadInput
+- uid: DrawnUi.Views.Canvas.HasHover
+  name: HasHover
+  href: api/DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_HasHover
+  commentId: P:DrawnUi.Views.Canvas.HasHover
+  fullName: DrawnUi.Views.Canvas.HasHover
+  nameWithType: Canvas.HasHover
+- uid: DrawnUi.Views.Canvas.HasHover*
+  name: HasHover
+  href: api/DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_HasHover_
+  commentId: Overload:DrawnUi.Views.Canvas.HasHover
+  isSpec: "True"
+  fullName: DrawnUi.Views.Canvas.HasHover
+  nameWithType: Canvas.HasHover
 - uid: DrawnUi.Views.Canvas.Invalidate
   name: Invalidate()
   href: api/DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_Invalidate
@@ -70359,6 +71003,19 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Views.DrawnView.CanDraw
   nameWithType: DrawnView.CanDraw
+- uid: DrawnUi.Views.DrawnView.CanRender
+  name: CanRender
+  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanRender
+  commentId: P:DrawnUi.Views.DrawnView.CanRender
+  fullName: DrawnUi.Views.DrawnView.CanRender
+  nameWithType: DrawnView.CanRender
+- uid: DrawnUi.Views.DrawnView.CanRender*
+  name: CanRender
+  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanRender_
+  commentId: Overload:DrawnUi.Views.DrawnView.CanRender
+  isSpec: "True"
+  fullName: DrawnUi.Views.DrawnView.CanRender
+  nameWithType: DrawnView.CanRender
 - uid: DrawnUi.Views.DrawnView.CanRenderOffScreen
   name: CanRenderOffScreen
   href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CanRenderOffScreen
@@ -70699,12 +71356,15 @@ references:
   isSpec: "True"
   fullName: DrawnUi.Views.DrawnView.DisposeManager
   nameWithType: DrawnView.DisposeManager
-- uid: DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable)
-  name: DisposeObject(IDisposable)
-  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisposeObject_System_IDisposable_
-  commentId: M:DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable)
-  fullName: DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable)
-  nameWithType: DrawnView.DisposeObject(IDisposable)
+- uid: DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable,System.String)
+  name: DisposeObject(IDisposable, string)
+  href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisposeObject_System_IDisposable_System_String_
+  commentId: M:DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable,System.String)
+  name.vb: DisposeObject(IDisposable, String)
+  fullName: DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable, string)
+  fullName.vb: DrawnUi.Views.DrawnView.DisposeObject(System.IDisposable, String)
+  nameWithType: DrawnView.DisposeObject(IDisposable, string)
+  nameWithType.vb: DrawnView.DisposeObject(IDisposable, String)
 - uid: DrawnUi.Views.DrawnView.DisposeObject*
   name: DisposeObject
   href: api/DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_DisposeObject_
@@ -72819,12 +73479,15 @@ references:
   commentId: T:DrawnUi.Views.IDisposeManager
   fullName: DrawnUi.Views.IDisposeManager
   nameWithType: IDisposeManager
-- uid: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable)
-  name: DisposeObject(IDisposable)
-  href: api/DrawnUi.Views.IDisposeManager.html#DrawnUi_Views_IDisposeManager_DisposeObject_System_IDisposable_
-  commentId: M:DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable)
-  fullName: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable)
-  nameWithType: IDisposeManager.DisposeObject(IDisposable)
+- uid: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable,System.String)
+  name: DisposeObject(IDisposable, string)
+  href: api/DrawnUi.Views.IDisposeManager.html#DrawnUi_Views_IDisposeManager_DisposeObject_System_IDisposable_System_String_
+  commentId: M:DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable,System.String)
+  name.vb: DisposeObject(IDisposable, String)
+  fullName: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable, string)
+  fullName.vb: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable, String)
+  nameWithType: IDisposeManager.DisposeObject(IDisposable, string)
+  nameWithType.vb: IDisposeManager.DisposeObject(IDisposable, String)
 - uid: DrawnUi.Views.IDisposeManager.DisposeObject*
   name: DisposeObject
   href: api/DrawnUi.Views.IDisposeManager.html#DrawnUi_Views_IDisposeManager_DisposeObject_

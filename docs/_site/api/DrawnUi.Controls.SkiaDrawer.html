@@ -102,7 +102,7 @@ Class SkiaDrawer  <a class="header-action link-secondary" title="View source" hr
 
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[ContentProperty(&quot;Content&quot;)]
-public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IDisposable, IVisibilityAware</code></pre>
+public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IDisposable, IVisibilityAware</code></pre>
   </div>
 
 
@@ -145,6 +145,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGridLayout.html">ISkiaGridLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaLayout.html">ISkiaLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
@@ -212,6 +213,9 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_ScrollToOffset_System_Numerics_Vector2_System_Numerics_Vector2_System_Boolean_">SnappingLayout.ScrollToOffset(Vector2, Vector2, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_Render_DrawnUi_Draw_DrawingContext_">SnappingLayout.Render(DrawingContext)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SnappingLayout.html#DrawnUi_Draw_SnappingLayout_SendScrolled">SnappingLayout.SendScrolled()</a>
@@ -313,13 +317,13 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackNonTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackNonTemplated(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaLayout.TrackChildAsDirty(SkiaControl)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackTemplated(SKRect, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnBeforeDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_DrawStack_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_">SkiaLayout.DrawStack(DrawingContext, LayoutStructure)</a>
@@ -877,6 +881,9 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
     </div>
     <div>
@@ -1072,7 +1079,19 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -1165,12 +1184,6 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -1204,7 +1217,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -1588,6 +1601,9 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1738,7 +1754,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -2074,9 +2090,6 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateRenderedNode_SkiaSharp_SKRect_System_Single_">SkiaControl.CreateRenderedNode(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Render_DrawnUi_Draw_DrawingContext_">SkiaControl.Render(DrawingContext)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Rendered">SkiaControl.Rendered</a>
     </div>
     <div>
@@ -2305,10 +2318,22 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -2354,6 +2379,12 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -3261,7 +3292,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_ChildWasTapped" data-uid="DrawnUi.Controls.SkiaDrawer.ChildWasTapped">
   ChildWasTapped
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L554"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L575"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3291,7 +3322,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_ContentProperty" data-uid="DrawnUi.Controls.SkiaDrawer.ContentProperty">
   ContentProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L209"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3411,7 +3442,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer__panningOffset" data-uid="DrawnUi.Controls.SkiaDrawer._panningOffset">
   _panningOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L550"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L571"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3478,7 +3509,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_AutoClose" data-uid="DrawnUi.Controls.SkiaDrawer.AutoClose">
   AutoClose
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L890"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L911"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3605,7 +3636,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_Content" data-uid="DrawnUi.Controls.SkiaDrawer.Content">
   Content
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L224"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L223"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3699,7 +3730,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_IsOpen" data-uid="DrawnUi.Controls.SkiaDrawer.IsOpen">
   IsOpen
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L203"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3730,7 +3761,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_IsUserFocused" data-uid="DrawnUi.Controls.SkiaDrawer.IsUserFocused">
   IsUserFocused
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L548"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L569"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3761,7 +3792,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_IsUserPanning" data-uid="DrawnUi.Controls.SkiaDrawer.IsUserPanning">
   IsUserPanning
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L549"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L570"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3792,7 +3823,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_VelocityAccumulator" data-uid="DrawnUi.Controls.SkiaDrawer.VelocityAccumulator">
   VelocityAccumulator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L552"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L573"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3852,18 +3883,23 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <a id="DrawnUi_Controls_SkiaDrawer_ApplyOptions_" data-uid="DrawnUi.Controls.SkiaDrawer.ApplyOptions*"></a>
 
-  <h3 id="DrawnUi_Controls_SkiaDrawer_ApplyOptions" data-uid="DrawnUi.Controls.SkiaDrawer.ApplyOptions">
-  ApplyOptions()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L414"><i class="bi bi-code-slash"></i></a>
+  <h3 id="DrawnUi_Controls_SkiaDrawer_ApplyOptions_System_Boolean_" data-uid="DrawnUi.Controls.SkiaDrawer.ApplyOptions(System.Boolean)">
+  ApplyOptions(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L420"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void ApplyOptions()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void ApplyOptions(bool initialize)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>initialize</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -3880,7 +3916,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_ApplyPosition_System_Numerics_Vector2_" data-uid="DrawnUi.Controls.SkiaDrawer.ApplyPosition(System.Numerics.Vector2)">
   ApplyPosition(Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L406"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L412"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3911,7 +3947,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_CheckNeedToSnap" data-uid="DrawnUi.Controls.SkiaDrawer.CheckNeedToSnap">
   CheckNeedToSnap()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L465"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L486"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3942,7 +3978,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_ClampOffsetWithRubberBand_System_Single_System_Single_" data-uid="DrawnUi.Controls.SkiaDrawer.ClampOffsetWithRubberBand(System.Single,System.Single)">
   ClampOffsetWithRubberBand(float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L898"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L919"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Called for manual finger panning</p>
@@ -3981,7 +4017,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_Close" data-uid="DrawnUi.Controls.SkiaDrawer.Close">
   Close()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L248"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4007,7 +4043,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_GetAutoVelocity_System_Numerics_Vector2_" data-uid="DrawnUi.Controls.SkiaDrawer.GetAutoVelocity(System.Numerics.Vector2)">
   GetAutoVelocity(Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L348"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L354"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>todo calc upon measured size + prop for speed</p>
@@ -4044,7 +4080,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_GetClosestSidePoint_SkiaSharp_SKPoint_SkiaSharp_SKRect_SkiaSharp_SKSize_" data-uid="DrawnUi.Controls.SkiaDrawer.GetClosestSidePoint(SkiaSharp.SKPoint,SkiaSharp.SKRect,SkiaSharp.SKSize)">
   GetClosestSidePoint(SKPoint, SKRect, SKSize)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L502"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L523"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This uses whole viewport size, do not use this for snapping</p>
@@ -4085,7 +4121,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_GetContentOffsetBounds" data-uid="DrawnUi.Controls.SkiaDrawer.GetContentOffsetBounds">
   GetContentOffsetBounds()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L366"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L372"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>There are the bounds the scroll offset can go to.. This are NOT the bounds of the whole content.</p>
@@ -4117,7 +4153,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_GetOffsetToHide" data-uid="DrawnUi.Controls.SkiaDrawer.GetOffsetToHide">
   GetOffsetToHide()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L301"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L307"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>In points</p>
@@ -4255,7 +4291,7 @@ public class SkiaDrawer : SnappingLayout, INotifyPropertyChanged, IEffectControl
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_OnLayoutChanged" data-uid="DrawnUi.Controls.SkiaDrawer.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L281"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L287"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4336,7 +4372,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_Open" data-uid="DrawnUi.Controls.SkiaDrawer.Open">
   Open()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L254"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L253"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4362,7 +4398,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_Paint_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Controls.SkiaDrawer.Paint(DrawnUi.Draw.DrawingContext)">
   Paint(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L446"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L467"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is the main drawing routine you should override to draw something.
@@ -4396,7 +4432,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Controls.SkiaDrawer.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L558"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L579"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4460,7 +4496,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_SetContent_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Controls.SkiaDrawer.SetContent(DrawnUi.Draw.SkiaControl)">
   SetContent(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L232"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L231"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4491,7 +4527,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_SetIsOpen" data-uid="DrawnUi.Controls.SkiaDrawer.SetIsOpen">
   SetIsOpen()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L473"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L494"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4517,7 +4553,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_SkiaDrawer_UpdateReportedPosition" data-uid="DrawnUi.Controls.SkiaDrawer.UpdateReportedPosition">
   UpdateReportedPosition()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L486"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Drawer/SkiaDrawer.cs/#L507"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

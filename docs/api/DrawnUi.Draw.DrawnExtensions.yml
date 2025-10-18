@@ -10,6 +10,8 @@ items:
   - DrawnUi.Draw.DrawnExtensions.AnimateRangeAsync(DrawnUi.Draw.SkiaControl,System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.DrawnExtensions.BackgroundColorToAsync(DrawnUi.Draw.SkiaControl,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.ISkiaControl)
+  - DrawnUi.Draw.DrawnExtensions.IsSameAs(System.String,System.String)
+  - DrawnUi.Draw.DrawnExtensions.IsSameAs(System.Uri,System.Uri)
   - DrawnUi.Draw.DrawnExtensions.StartupSettings
   - DrawnUi.Draw.DrawnExtensions.TextColorToAsync(DrawnUi.Draw.SkiaLabel,Microsoft.Maui.Graphics.Color,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
   - DrawnUi.Draw.DrawnExtensions.UseDrawnUi(Microsoft.Maui.Hosting.MauiAppBuilder,DrawnUi.Draw.DrawnUiStartupSettings)
@@ -356,6 +358,77 @@ items:
       type: System.ValueTuple{System.Single,System.Single}
     content.vb: Public Shared Function GetVelocityRatioForChild(container As IDrawnBase, control As ISkiaControl) As (RatioX As Single, RatioY As Single)
   overload: DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild*
+- uid: DrawnUi.Draw.DrawnExtensions.IsSameAs(System.String,System.String)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.IsSameAs(System.String,System.String)
+  id: IsSameAs(System.String,System.String)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.DrawnExtensions
+  langs:
+  - csharp
+  - vb
+  name: IsSameAs(string, string)
+  nameWithType: DrawnExtensions.IsSameAs(string, string)
+  fullName: DrawnUi.Draw.DrawnExtensions.IsSameAs(string, string)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsSameAs
+    path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+    startLine: 632
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool IsSameAs(this string strA, string strB)
+    parameters:
+    - id: strA
+      type: System.String
+    - id: strB
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsSameAs(strA As String, strB As String) As Boolean
+  overload: DrawnUi.Draw.DrawnExtensions.IsSameAs*
+  nameWithType.vb: DrawnExtensions.IsSameAs(String, String)
+  fullName.vb: DrawnUi.Draw.DrawnExtensions.IsSameAs(String, String)
+  name.vb: IsSameAs(String, String)
+- uid: DrawnUi.Draw.DrawnExtensions.IsSameAs(System.Uri,System.Uri)
+  commentId: M:DrawnUi.Draw.DrawnExtensions.IsSameAs(System.Uri,System.Uri)
+  id: IsSameAs(System.Uri,System.Uri)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.DrawnExtensions
+  langs:
+  - csharp
+  - vb
+  name: IsSameAs(Uri, Uri)
+  nameWithType: DrawnExtensions.IsSameAs(Uri, Uri)
+  fullName: DrawnUi.Draw.DrawnExtensions.IsSameAs(System.Uri, System.Uri)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsSameAs
+    path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
+    startLine: 637
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool IsSameAs(this Uri strA, Uri strB)
+    parameters:
+    - id: strA
+      type: System.Uri
+    - id: strB
+      type: System.Uri
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsSameAs(strA As Uri, strB As Uri) As Boolean
+  overload: DrawnUi.Draw.DrawnExtensions.IsSameAs*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -1096,3 +1169,28 @@ references:
   - name: " "
   - name: T2
   - name: )
+- uid: DrawnUi.Draw.DrawnExtensions.IsSameAs*
+  commentId: Overload:DrawnUi.Draw.DrawnExtensions.IsSameAs
+  href: DrawnUi.Draw.DrawnExtensions.html#DrawnUi_Draw_DrawnExtensions_IsSameAs_System_String_System_String_
+  name: IsSameAs
+  nameWithType: DrawnExtensions.IsSameAs
+  fullName: DrawnUi.Draw.DrawnExtensions.IsSameAs
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Uri
+  commentId: T:System.Uri
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uri
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri

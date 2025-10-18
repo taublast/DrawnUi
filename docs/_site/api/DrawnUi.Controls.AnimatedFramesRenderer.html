@@ -102,7 +102,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class AnimatedFramesRenderer : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated</code></pre>
+    <pre><code class="lang-csharp hljs">public class AnimatedFramesRenderer : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaDisposable, IDisposable</code></pre>
   </div>
 
 
@@ -145,9 +145,10 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></div>
-      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdatedWithContext.html">ICanBeUpdatedWithContext</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html">ICanBeUpdated</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     </dd>
   </dl>
 
@@ -237,6 +238,9 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
@@ -446,7 +450,19 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -542,12 +558,6 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -584,7 +594,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -974,6 +984,9 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1124,7 +1137,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -1733,10 +1746,22 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -1785,6 +1810,12 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -2638,7 +2669,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_AutoPlayProperty" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.AutoPlayProperty">
   AutoPlayProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L384"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L393"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2668,7 +2699,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_DefaultFrameProperty" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.DefaultFrameProperty">
   DefaultFrameProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L321"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L330"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2698,7 +2729,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_RepeatProperty" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.RepeatProperty">
   RepeatProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L358"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L367"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2728,7 +2759,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_SpeedRatioProperty" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.SpeedRatioProperty">
   SpeedRatioProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L341"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L350"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2854,7 +2885,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_AutoPlay" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.AutoPlay">
   AutoPlay
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L389"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L398"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2916,7 +2947,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_DefaultFrame" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.DefaultFrame">
   DefaultFrame
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L335"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L344"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Default is 0. If you set to -1 that would mean &quot;last frame&quot;.</p>
@@ -3041,7 +3072,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_Repeat" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.Repeat">
   Repeat
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L378"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L387"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><blockquote>
@@ -3075,7 +3106,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_SpeedRatio" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.SpeedRatio">
   SpeedRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L352"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L361"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3110,7 +3141,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_ApplyDefaultFrame" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.ApplyDefaultFrame">
   ApplyDefaultFrame()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L289"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L298"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3136,7 +3167,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_ApplySpeed" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.ApplySpeed">
   ApplySpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L285"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L294"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3162,7 +3193,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_CheckCanStartAnimator" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.CheckCanStartAnimator">
   CheckCanStartAnimator()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L210"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3193,7 +3224,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_GetAnimatorParent" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.GetAnimatorParent">
   GetAnimatorParent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L156"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3224,7 +3255,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_GetFrameAt_System_Single_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.GetFrameAt(System.Single)">
   GetFrameAt(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L258"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L267"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>ratio 0-1</p>
@@ -3261,7 +3292,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_GetSourceType_System_String_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.GetSourceType(System.String)">
   GetSourceType(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L69"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3297,7 +3328,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_InitializeAnimator" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.InitializeAnimator">
   InitializeAnimator()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L161"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3323,7 +3354,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnAnimatorInitializing" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnAnimatorInitializing">
   OnAnimatorInitializing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L198"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3349,7 +3380,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnAnimatorSeeking_System_Double_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnAnimatorSeeking(System.Double)">
   OnAnimatorSeeking(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L219"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3380,7 +3411,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnAnimatorStarting" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnAnimatorStarting">
   OnAnimatorStarting()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L215"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3406,7 +3437,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnAnimatorUpdated_System_Double_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnAnimatorUpdated(System.Double)">
   OnAnimatorUpdated(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L206"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Override this to react on animator running.</p>
@@ -3438,7 +3469,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnDisposing" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L282"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -3465,7 +3496,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnFinished" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnFinished">
   OnFinished()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L263"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L272"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3491,7 +3522,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnLayoutChanged" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L116"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3517,7 +3548,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnStarted" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnStarted">
   OnStarted()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L277"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3543,7 +3574,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnVisibilityChanged_System_Boolean_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnVisibilityChanged(System.Boolean)">
   OnVisibilityChanged(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L50"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>todo override for templated skialayout to use ViewsProvider</p>
@@ -3575,7 +3606,7 @@ Class AnimatedFramesRenderer  <a class="header-action link-secondary" title="Vie
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_OnWillDisposeWithChildren" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.OnWillDisposeWithChildren">
   OnWillDisposeWithChildren()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L300"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L309"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The OnDisposing might come with a delay to avoid disposing resources at use.
@@ -3603,7 +3634,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_Paint_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.Paint(DrawnUi.Draw.DrawingContext)">
   Paint(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L100"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is the main drawing routine you should override to draw something.
@@ -3637,7 +3668,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_PlayIfNeeded" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.PlayIfNeeded">
   PlayIfNeeded()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L127"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3659,11 +3690,37 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
 
 
+  <a id="DrawnUi_Controls_AnimatedFramesRenderer_PlayWhenAvailableIfNeeded_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded*"></a>
+
+  <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_PlayWhenAvailableIfNeeded" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.PlayWhenAvailableIfNeeded">
+  PlayWhenAvailableIfNeeded()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void PlayWhenAvailableIfNeeded()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Controls_AnimatedFramesRenderer_RenderFrame_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.RenderFrame*"></a>
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_RenderFrame_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.RenderFrame(DrawnUi.Draw.DrawingContext)">
   RenderFrame(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L112"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3694,7 +3751,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_Seek_System_Double_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.Seek(System.Double)">
   Seek(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L214"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L223"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3725,7 +3782,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_Start_System_Int32_" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.Start(System.Int32)">
   Start(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L228"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3756,7 +3813,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_Stop" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.Stop">
   Stop()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L246"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L255"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3785,7 +3842,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_Finished" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.Finished">
   Finished
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L313"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L322"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>All repeats completed</p>
@@ -3816,7 +3873,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Controls_AnimatedFramesRenderer_Started" data-uid="DrawnUi.Controls.AnimatedFramesRenderer.Started">
   Started
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L315"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs/#L324"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

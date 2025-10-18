@@ -101,7 +101,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaLayout : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaLayout : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
   </div>
 
 
@@ -142,6 +142,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGridLayout.html">ISkiaGridLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaLayout.html">ISkiaLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
@@ -254,6 +255,9 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
@@ -451,7 +455,19 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -544,12 +560,6 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -583,7 +593,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -970,6 +980,9 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1120,7 +1133,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -1687,10 +1700,22 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -1739,6 +1764,12 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -2766,7 +2797,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DynamicColumnsProperty" data-uid="DrawnUi.Draw.SkiaLayout.DynamicColumnsProperty">
   DynamicColumnsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L515"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L520"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2796,7 +2827,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_EmptyViewProperty" data-uid="DrawnUi.Draw.SkiaLayout.EmptyViewProperty">
   EmptyViewProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1383"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1388"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2886,7 +2917,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ItemTemplatePoolSizeProperty" data-uid="DrawnUi.Draw.SkiaLayout.ItemTemplatePoolSizeProperty">
   ItemTemplatePoolSizeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1350"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1355"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2916,7 +2947,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ItemsSourceProperty" data-uid="DrawnUi.Draw.SkiaLayout.ItemsSourceProperty">
   ItemsSourceProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1401"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1406"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2976,7 +3007,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_MeasureItemsStrategyProperty" data-uid="DrawnUi.Draw.SkiaLayout.MeasureItemsStrategyProperty">
   MeasureItemsStrategyProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1337"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1342"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3096,7 +3127,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ReserveTemplatesProperty" data-uid="DrawnUi.Draw.SkiaLayout.ReserveTemplatesProperty">
   ReserveTemplatesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1368"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1373"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3186,7 +3217,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_SplitAlignProperty" data-uid="DrawnUi.Draw.SkiaLayout.SplitAlignProperty">
   SplitAlignProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L484"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L489"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3216,7 +3247,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_SplitProperty" data-uid="DrawnUi.Draw.SkiaLayout.SplitProperty">
   SplitProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L468"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L473"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3246,7 +3277,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_SplitSpaceProperty" data-uid="DrawnUi.Draw.SkiaLayout.SplitSpaceProperty">
   SplitSpaceProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L499"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L504"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3336,7 +3367,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_TypeProperty" data-uid="DrawnUi.Draw.SkiaLayout.TypeProperty">
   TypeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1303"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1308"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3426,7 +3457,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_WillDrawFromFreshItemssSource" data-uid="DrawnUi.Draw.SkiaLayout.WillDrawFromFreshItemssSource">
   WillDrawFromFreshItemssSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1055"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1060"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3456,7 +3487,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_WillMeasureFromFreshItemssSource" data-uid="DrawnUi.Draw.SkiaLayout.WillMeasureFromFreshItemssSource">
   WillMeasureFromFreshItemssSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1056"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1061"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3486,7 +3517,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout__emptyView" data-uid="DrawnUi.Draw.SkiaLayout._emptyView">
   _emptyView
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L378"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L383"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3516,7 +3547,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout__lockTemplates" data-uid="DrawnUi.Draw.SkiaLayout._lockTemplates">
   _lockTemplates
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L899"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L904"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3546,7 +3577,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_lockMeasureLayout" data-uid="DrawnUi.Draw.SkiaLayout.lockMeasureLayout">
   lockMeasureLayout
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L815"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L820"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3576,7 +3607,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_templatesInvalidated" data-uid="DrawnUi.Draw.SkiaLayout.templatesInvalidated">
   templatesInvalidated
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L604"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L609"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3611,7 +3642,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ApplyNewItemsSource" data-uid="DrawnUi.Draw.SkiaLayout.ApplyNewItemsSource">
   ApplyNewItemsSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1459"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1464"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3673,7 +3704,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ChildrenFactory" data-uid="DrawnUi.Draw.SkiaLayout.ChildrenFactory">
   ChildrenFactory
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L465"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L470"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3799,7 +3830,7 @@ public ColumnDefinitionCollection ColumnDefinitions { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DebugString" data-uid="DrawnUi.Draw.SkiaLayout.DebugString">
   DebugString
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L445"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L450"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3896,7 +3927,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DynamicColumns" data-uid="DrawnUi.Draw.SkiaLayout.DynamicColumns">
   DynamicColumns
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L524"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L529"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If true, will not create additional columns to match SplitMax if there are less real columns, and take additional space for drawing</p>
@@ -3928,7 +3959,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_EmptyView" data-uid="DrawnUi.Draw.SkiaLayout.EmptyView">
   EmptyView
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1395"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1400"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4052,7 +4083,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_InvalidatedChildren" data-uid="DrawnUi.Draw.SkiaLayout.InvalidatedChildren">
   InvalidatedChildren
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1032"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1037"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will be modified by InvalidateByChild</p>
@@ -4084,7 +4115,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_InvalidatedChildrenInternal" data-uid="DrawnUi.Draw.SkiaLayout.InvalidatedChildrenInternal">
   InvalidatedChildrenInternal
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1012"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1017"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will use this when drawing</p>
@@ -4147,7 +4178,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_IsEmpty" data-uid="DrawnUi.Draw.SkiaLayout.IsEmpty">
   IsEmpty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L400"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L405"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4178,7 +4209,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_IsStack" data-uid="DrawnUi.Draw.SkiaLayout.IsStack">
   IsStack
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1298"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1303"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Column/Row/Stack</p>
@@ -4241,7 +4272,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ItemTemplatePoolSize" data-uid="DrawnUi.Draw.SkiaLayout.ItemTemplatePoolSize">
   ItemTemplatePoolSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1362"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1367"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Default is -1, the number od template instances will not be less than data collection count.
@@ -4276,7 +4307,7 @@ binding contexts will contasntly be changing triggering screen update.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ItemsSource" data-uid="DrawnUi.Draw.SkiaLayout.ItemsSource">
   ItemsSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1409"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1414"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4431,7 +4462,7 @@ binding contexts will contasntly be changing triggering screen update.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_MeasureItemsStrategy" data-uid="DrawnUi.Draw.SkiaLayout.MeasureItemsStrategy">
   MeasureItemsStrategy
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1344"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1349"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4591,7 +4622,7 @@ If set to true inside a SkiaScrollLooped will cause it to redraw constantly even
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ReserveTemplates" data-uid="DrawnUi.Draw.SkiaLayout.ReserveTemplates">
   ReserveTemplates
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1377"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1382"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For recycled cells: Default is 2, how many item templates above visible in viewport we must reserve in pool.</p>
@@ -4718,7 +4749,7 @@ public RowDefinitionCollection RowDefinitions { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_Split" data-uid="DrawnUi.Draw.SkiaLayout.Split">
   Split
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L478"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L483"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For Wrap number of columns/rows to split into, If 0 will use auto, if 1+ will have 1+ columns.</p>
@@ -4750,7 +4781,7 @@ public RowDefinitionCollection RowDefinitions { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_SplitAlign" data-uid="DrawnUi.Draw.SkiaLayout.SplitAlign">
   SplitAlign
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L493"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L498"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether should keep same column width among rows</p>
@@ -4782,7 +4813,7 @@ public RowDefinitionCollection RowDefinitions { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_SplitSpace" data-uid="DrawnUi.Draw.SkiaLayout.SplitSpace">
   SplitSpace
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L509"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L514"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How to distribute free space between children TODO</p>
@@ -4973,7 +5004,7 @@ public RowDefinitionCollection RowDefinitions { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_Type" data-uid="DrawnUi.Draw.SkiaLayout.Type">
   Type
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1308"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1313"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5004,7 +5035,7 @@ public RowDefinitionCollection RowDefinitions { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ViewportWasChanged" data-uid="DrawnUi.Draw.SkiaLayout.ViewportWasChanged">
   ViewportWasChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L534"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L539"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5106,7 +5137,7 @@ into its bounds for rendering controlled with Virtualisation.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ActualizeSubviews" data-uid="DrawnUi.Draw.SkiaLayout.ActualizeSubviews">
   ActualizeSubviews()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L613"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L618"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5159,7 +5190,7 @@ into its bounds for rendering controlled with Virtualisation.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ApplyIsEmpty_System_Boolean_" data-uid="DrawnUi.Draw.SkiaLayout.ApplyIsEmpty(System.Boolean)">
   ApplyIsEmpty(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L417"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L422"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5190,7 +5221,7 @@ into its bounds for rendering controlled with Virtualisation.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ApplyItemsSource" data-uid="DrawnUi.Draw.SkiaLayout.ApplyItemsSource">
   ApplyItemsSource()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1469"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1474"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invalidate and re-apply ItemsSource</p>
@@ -5217,7 +5248,7 @@ into its bounds for rendering controlled with Virtualisation.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ApplyMeasureResult" data-uid="DrawnUi.Draw.SkiaLayout.ApplyMeasureResult">
   ApplyMeasureResult()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L986"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L991"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Normally get a a Measure by parent then parent calls Draw and we can apply the measure result.
@@ -5383,7 +5414,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_CheckAndSetupIfEmpty" data-uid="DrawnUi.Draw.SkiaLayout.CheckAndSetupIfEmpty">
   CheckAndSetupIfEmpty()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L427"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L432"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5440,7 +5471,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_CreateTemplatesInBackground" data-uid="DrawnUi.Draw.SkiaLayout.CreateTemplatesInBackground">
   CreateTemplatesInBackground()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L675"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L680"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5471,7 +5502,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_Draw_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaLayout.Draw(DrawnUi.Draw.DrawingContext)">
   Draw(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1014"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1019"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5502,7 +5533,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DrawChild_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_ISkiaControl_" data-uid="DrawnUi.Draw.SkiaLayout.DrawChild(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.ISkiaControl)">
   DrawChild(DrawingContext, ISkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L536"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L541"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5616,10 +5647,10 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DrawRenderObject_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_CachedObject_" data-uid="DrawnUi.Draw.SkiaLayout.DrawRenderObject(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedObject)">
   DrawRenderObject(DrawingContext, CachedObject)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L371"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L376"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Drawing cache, applying clip and transforms as well</p>
+  <div class="markdown level1 summary"><p>Todo where is this used i forgot completely</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -5650,7 +5681,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DrawStack_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_" data-uid="DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)">
   DrawStack(DrawingContext, LayoutStructure)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L2032"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L2036"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Renders stack/wrap layout.
@@ -5690,7 +5721,7 @@ Returns number of drawn children.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DrawViews_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaLayout.DrawViews(DrawnUi.Draw.DrawingContext)">
   DrawViews(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1261"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base method will call RenderViewsList.
@@ -5728,7 +5759,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_GetCacheDebugInfo" data-uid="DrawnUi.Draw.SkiaLayout.GetCacheDebugInfo">
   GetCacheDebugInfo()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1879"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1884"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get debug information about cached views</p>
@@ -5798,7 +5829,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_GetChildIndexAt_SkiaSharp_SKPoint_" data-uid="DrawnUi.Draw.SkiaLayout.GetChildIndexAt(SkiaSharp.SKPoint)">
   GetChildIndexAt(SKPoint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1982"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1987"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The point here is the position inside parent, can be offscreen</p>
@@ -6242,7 +6273,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_GetTemplatesPoolLimit" data-uid="DrawnUi.Draw.SkiaLayout.GetTemplatesPoolLimit">
   GetTemplatesPoolLimit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L636"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L641"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6273,7 +6304,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_GetTemplatesPoolPrefill" data-uid="DrawnUi.Draw.SkiaLayout.GetTemplatesPoolPrefill">
   GetTemplatesPoolPrefill()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L622"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L627"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6304,7 +6335,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_GetVisibleChildIndexAt_SkiaSharp_SKPoint_" data-uid="DrawnUi.Draw.SkiaLayout.GetVisibleChildIndexAt(SkiaSharp.SKPoint)">
   GetVisibleChildIndexAt(SKPoint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1965"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1970"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The point here is the rendering location, always on screen</p>
@@ -6373,7 +6404,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_HandleCollectionChangeWithStructurePreservation_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.HandleCollectionChangeWithStructurePreservation(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   HandleCollectionChangeWithStructurePreservation(NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1578"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1583"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handles collection changes while preserving existing measurement structure</p>
@@ -6405,7 +6436,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_HandleStructurePreservingAdd_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.HandleStructurePreservingAdd(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   HandleStructurePreservingAdd(NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1696"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1701"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handles Add collection changes while preserving existing structure</p>
@@ -6437,7 +6468,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_HandleStructurePreservingMove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.HandleStructurePreservingMove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   HandleStructurePreservingMove(NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1817"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1822"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handles Move collection changes while preserving existing structure</p>
@@ -6469,7 +6500,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_HandleStructurePreservingRemove_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.HandleStructurePreservingRemove(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   HandleStructurePreservingRemove(NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1736"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1741"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handles Remove collection changes while preserving existing structure</p>
@@ -6501,7 +6532,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReplace_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReplace(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   HandleStructurePreservingReplace(NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1776"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1781"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handles Replace collection changes while preserving existing structure</p>
@@ -6533,7 +6564,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_HandleStructurePreservingReset_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.HandleStructurePreservingReset(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   HandleStructurePreservingReset(NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1841"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1846"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handles Reset collection changes while preserving existing structure</p>
@@ -6565,7 +6596,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_Invalidate" data-uid="DrawnUi.Draw.SkiaLayout.Invalidate">
   Invalidate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L665"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L670"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base calls InvalidateInternal and InvalidateParent</p>
@@ -6627,7 +6658,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_InvalidateByChild_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.SkiaLayout.InvalidateByChild(DrawnUi.Draw.SkiaControl)">
   InvalidateByChild(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1034"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1039"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>To be able to fast track dirty children</p>
@@ -6659,7 +6690,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_InvalidateInternal" data-uid="DrawnUi.Draw.SkiaLayout.InvalidateInternal">
   InvalidateInternal()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L597"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L602"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Soft invalidation, without requiring update. So next time we try to draw this one it will recalc everything.</p>
@@ -6686,7 +6717,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_InvalidateViewsList" data-uid="DrawnUi.Draw.SkiaLayout.InvalidateViewsList">
   InvalidateViewsList()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L606"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L611"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6826,7 +6857,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_MeasureAbsolute_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaLayout.MeasureAbsolute(SkiaSharp.SKRect,System.Single)">
   MeasureAbsolute(SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L692"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L697"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Measure children inside absolute layout</p>
@@ -6991,7 +7022,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_MeasureLayout_DrawnUi_Draw_MeasureRequest_System_Boolean_" data-uid="DrawnUi.Draw.SkiaLayout.MeasureLayout(DrawnUi.Draw.MeasureRequest,System.Boolean)">
   MeasureLayout(MeasureRequest, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L817"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L822"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7187,7 +7218,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_MeasureStackTemplated_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)">
   MeasureStackTemplated(SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L978"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L975"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Measuring column/row for templated for fastest way possible</p>
@@ -7261,11 +7292,47 @@ For MeasureVisible Only.</p>
 
 
 
+  <a id="DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_" data-uid="DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__" data-uid="DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})">
+  OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L2025"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Can be called by some layouts after they draw visible children</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnAfterDrawingVisibleChildren(DrawingContext ctx, LayoutStructure structure, List&lt;ControlInStack&gt; visibleElements)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>ctx</code> <a class="xref" href="DrawnUi.Draw.DrawingContext.html">DrawingContext</a></dt>
+    <dd></dd>
+    <dt><code>structure</code> <a class="xref" href="DrawnUi.Draw.LayoutStructure.html">LayoutStructure</a></dt>
+    <dd></dd>
+    <dt><code>visibleElements</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="DrawnUi.Draw.ControlInStack.html">ControlInStack</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaLayout_OnAppeared_" data-uid="DrawnUi.Draw.SkiaLayout.OnAppeared*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnAppeared" data-uid="DrawnUi.Draw.SkiaLayout.OnAppeared">
   OnAppeared()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1953"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1958"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This event can sometimes be called without prior OnAppearing</p>
@@ -7292,7 +7359,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnAppearing" data-uid="DrawnUi.Draw.SkiaLayout.OnAppearing">
   OnAppearing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1945"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1950"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This can sometimes be omitted,</p>
@@ -7319,7 +7386,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__" data-uid="DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})">
   OnBeforeDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L2020"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L2017"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Can be called by some layouts after they calculated the list of visible children to be drawn, but have not drawn them yet</p>
@@ -7355,7 +7422,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnChildrenChanged" data-uid="DrawnUi.Draw.SkiaLayout.OnChildrenChanged">
   OnChildrenChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L651"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L656"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Happens when child was added or removed, will call Invalidate() in base</p>
@@ -7382,7 +7449,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnDisappeared" data-uid="DrawnUi.Draw.SkiaLayout.OnDisappeared">
   OnDisappeared()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1957"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1962"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7408,7 +7475,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnDisappearing" data-uid="DrawnUi.Draw.SkiaLayout.OnDisappearing">
   OnDisappearing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1949"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1954"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7434,7 +7501,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnDisposing" data-uid="DrawnUi.Draw.SkiaLayout.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1129"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -7461,7 +7528,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnItemSourceChanged" data-uid="DrawnUi.Draw.SkiaLayout.OnItemSourceChanged">
   OnItemSourceChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1461"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1466"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7487,7 +7554,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnItemTemplateChanged" data-uid="DrawnUi.Draw.SkiaLayout.OnItemTemplateChanged">
   OnItemTemplateChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1453"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1458"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7513,7 +7580,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnItemsSourceCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.OnItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   OnItemsSourceCollectionChanged(object, NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1510"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1515"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Enhanced collection change handler with smart handling and fallback</p>
@@ -7547,7 +7614,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnLayoutChanged" data-uid="DrawnUi.Draw.SkiaLayout.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1938"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1943"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7573,7 +7640,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnLayoutReady" data-uid="DrawnUi.Draw.SkiaLayout.OnLayoutReady">
   OnLayoutReady()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1933"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1938"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Layout was changed with dimensions above zero. Rather a helper method, can you more generic OnLayoutChanged().</p>
@@ -7600,7 +7667,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnLoaded" data-uid="DrawnUi.Draw.SkiaLayout.OnLoaded">
   OnLoaded()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1961"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1966"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>IInsideViewport interface: loaded is called when the view is created, but not yet visible</p>
@@ -7627,7 +7694,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnMeasured" data-uid="DrawnUi.Draw.SkiaLayout.OnMeasured">
   OnMeasured()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L590"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L595"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7653,7 +7720,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnMeasuring_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)">
   OnMeasuring(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L908"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L913"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If you call this while measurement is in process (IsMeasuring==True) will return last measured value.</p>
@@ -7694,7 +7761,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_OnPrintDebug" data-uid="DrawnUi.Draw.SkiaLayout.OnPrintDebug">
   OnPrintDebug()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1911"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1916"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Enhanced debug printing</p>
@@ -7779,7 +7846,7 @@ For MeasureVisible Only.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_Paint_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaLayout.Paint(DrawnUi.Draw.DrawingContext)">
   Paint(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1058"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1063"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is the main drawing routine you should override to draw something.
@@ -7887,7 +7954,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLayout_RefreshAllViews" data-uid="DrawnUi.Draw.SkiaLayout.RefreshAllViews">
   RefreshAllViews()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1864"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1869"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Force a full refresh of all cached views (useful for debugging)</p>
@@ -7946,7 +8013,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Boolean_" data-uid="DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Boolean)">
   ReportChildVisibilityChanged(int, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1662"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1667"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Called by templated cells to report visibility changes.
@@ -7983,7 +8050,7 @@ This stages the visibility change to be applied during the next rendering cycle.
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ReportChildVisibilityChanged_System_Int32_System_Int32_System_Boolean_" data-uid="DrawnUi.Draw.SkiaLayout.ReportChildVisibilityChanged(System.Int32,System.Int32,System.Boolean)">
   ReportChildVisibilityChanged(int, int, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1674"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1679"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Called by templated cells to report visibility changes for multiple cells.
@@ -8085,7 +8152,7 @@ This stages the visibility change to be applied during the next rendering cycle.
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ResetScroll" data-uid="DrawnUi.Draw.SkiaLayout.ResetScroll">
   ResetScroll()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1486"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1491"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8111,7 +8178,7 @@ This stages the visibility change to be applied during the next rendering cycle.
 
   <h3 id="DrawnUi_Draw_SkiaLayout_SetChildren_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__" data-uid="DrawnUi.Draw.SkiaLayout.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})">
   SetChildren(IEnumerable&lt;SkiaControl&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L582"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L587"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8319,7 +8386,7 @@ This stages the visibility change to be applied during the next rendering cycle.
 
   <h3 id="DrawnUi_Draw_SkiaLayout_SetupViews" data-uid="DrawnUi.Draw.SkiaLayout.SetupViews">
   SetupViews()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L380"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L385"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8345,7 +8412,7 @@ This stages the visibility change to be applied during the next rendering cycle.
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ShouldPreserveStructureOnCollectionChange_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="DrawnUi.Draw.SkiaLayout.ShouldPreserveStructureOnCollectionChange(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
   ShouldPreserveStructureOnCollectionChange(NotifyCollectionChangedEventArgs)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1497"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1502"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Determines if collection changes should preserve existing measurement structure</p>
@@ -8420,7 +8487,7 @@ This prevents race conditions by considering background measurement progress.</p
 
   <h3 id="DrawnUi_Draw_SkiaLayout_StageStructureChange_DrawnUi_Draw_SkiaLayout_StructureChange_" data-uid="DrawnUi.Draw.SkiaLayout.StageStructureChange(DrawnUi.Draw.SkiaLayout.StructureChange)">
   StageStructureChange(StructureChange)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1633"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L1638"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stages a structure change for processing during rendering pipeline</p>
@@ -8434,37 +8501,6 @@ This prevents race conditions by considering background measurement progress.</p
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>change</code> <a class="xref" href="DrawnUi.Draw.SkiaLayout.html">SkiaLayout</a>.<a class="xref" href="DrawnUi.Draw.SkiaLayout.StructureChange.html">StructureChange</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_" data-uid="DrawnUi.Draw.SkiaLayout.TrackChildAsDirty*"></a>
-
-  <h3 id="DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)">
-  TrackChildAsDirty(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs/#L970"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void TrackChildAsDirty(SkiaControl child)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>child</code> <a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></dt>
     <dd></dd>
   </dl>
 
@@ -8547,7 +8583,7 @@ This prevents race conditions by considering background measurement progress.</p
 
   <h3 id="DrawnUi_Draw_SkiaLayout_IsEmptyChanged" data-uid="DrawnUi.Draw.SkiaLayout.IsEmptyChanged">
   IsEmptyChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L414"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.cs/#L419"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

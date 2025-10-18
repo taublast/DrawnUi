@@ -7,7 +7,7 @@ items:
   children:
   - DrawnUi.Draw.RangeAnimator.#ctor(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.RangeAnimator.Distance
-  - DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
+  - DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
   - DrawnUi.Draw.RangeAnimator.TransformReportedValue(System.Int64)
   - DrawnUi.Draw.RangeAnimator.UpdateValue(System.Int64,System.Int64)
   - DrawnUi.Draw.RangeAnimator._callback
@@ -156,16 +156,16 @@ items:
   nameWithType.vb: RangeAnimator.New(SkiaControl)
   fullName.vb: DrawnUi.Draw.RangeAnimator.New(DrawnUi.Draw.SkiaControl)
   name.vb: New(SkiaControl)
-- uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
-  commentId: M:DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
-  id: Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing)
+- uid: DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
+  commentId: M:DrawnUi.Draw.RangeAnimator.Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
+  id: Start(System.Action{System.Double},System.Double,System.Double,System.UInt32,Microsoft.Maui.Easing,System.Int32)
   parent: DrawnUi.Draw.RangeAnimator
   langs:
   - csharp
   - vb
-  name: Start(Action<double>, double, double, uint, Easing)
-  nameWithType: RangeAnimator.Start(Action<double>, double, double, uint, Easing)
-  fullName: DrawnUi.Draw.RangeAnimator.Start(System.Action<double>, double, double, uint, Microsoft.Maui.Easing)
+  name: Start(Action<double>, double, double, uint, Easing, int)
+  nameWithType: RangeAnimator.Start(Action<double>, double, double, uint, Easing, int)
+  fullName: DrawnUi.Draw.RangeAnimator.Start(System.Action<double>, double, double, uint, Microsoft.Maui.Easing, int)
   type: Method
   source:
     remote:
@@ -179,7 +179,7 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public void Start(Action<double> callback, double start, double end, uint ms = 250, Easing easing = null)
+    content: public void Start(Action<double> callback, double start, double end, uint ms = 250, Easing easing = null, int delayMs = 0)
     parameters:
     - id: callback
       type: System.Action{System.Double}
@@ -191,11 +191,13 @@ items:
       type: System.UInt32
     - id: easing
       type: Microsoft.Maui.Easing
-    content.vb: Public Sub Start(callback As Action(Of Double), start As Double, [end] As Double, ms As UInteger = 250, easing As Easing = Nothing)
+    - id: delayMs
+      type: System.Int32
+    content.vb: Public Sub Start(callback As Action(Of Double), start As Double, [end] As Double, ms As UInteger = 250, easing As Easing = Nothing, delayMs As Integer = 0)
   overload: DrawnUi.Draw.RangeAnimator.Start*
-  nameWithType.vb: RangeAnimator.Start(Action(Of Double), Double, Double, UInteger, Easing)
-  fullName.vb: DrawnUi.Draw.RangeAnimator.Start(System.Action(Of Double), Double, Double, UInteger, Microsoft.Maui.Easing)
-  name.vb: Start(Action(Of Double), Double, Double, UInteger, Easing)
+  nameWithType.vb: RangeAnimator.Start(Action(Of Double), Double, Double, UInteger, Easing, Integer)
+  fullName.vb: DrawnUi.Draw.RangeAnimator.Start(System.Action(Of Double), Double, Double, UInteger, Microsoft.Maui.Easing, Integer)
+  name.vb: Start(Action(Of Double), Double, Double, UInteger, Easing, Integer)
 - uid: DrawnUi.Draw.RangeAnimator.Distance
   commentId: P:DrawnUi.Draw.RangeAnimator.Distance
   id: Distance
@@ -1411,7 +1413,7 @@ references:
   fullName: DrawnUi.Draw.SkiaControl
 - uid: DrawnUi.Draw.RangeAnimator.Start*
   commentId: Overload:DrawnUi.Draw.RangeAnimator.Start
-  href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_
+  href: DrawnUi.Draw.RangeAnimator.html#DrawnUi_Draw_RangeAnimator_Start_System_Action_System_Double__System_Double_System_Double_System_UInt32_Microsoft_Maui_Easing_System_Int32_
   name: Start
   nameWithType: RangeAnimator.Start
   fullName: DrawnUi.Draw.RangeAnimator.Start
@@ -1445,6 +1447,17 @@ references:
   name: Easing
   nameWithType: Easing
   fullName: Microsoft.Maui.Easing
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
 - uid: Microsoft.Maui
   commentId: N:Microsoft.Maui
   isExternal: true

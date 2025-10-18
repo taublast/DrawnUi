@@ -101,7 +101,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaImage : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaImage : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaDisposable, IDisposable</code></pre>
   </div>
 
 
@@ -144,9 +144,10 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></div>
-      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdatedWithContext.html">ICanBeUpdatedWithContext</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html">ICanBeUpdated</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     </dd>
   </dl>
 
@@ -235,6 +236,9 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPropertyChanged_System_String_">SkiaControl.OnPropertyChanged(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
@@ -441,7 +445,19 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -531,12 +547,6 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -573,7 +583,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -966,6 +976,9 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1113,7 +1126,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -1710,10 +1723,22 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -1762,6 +1787,12 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -2679,7 +2710,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_AddEffectProperty" data-uid="DrawnUi.Draw.SkiaImage.AddEffectProperty">
   AddEffectProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L710"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L721"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2739,7 +2770,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_BlurProperty" data-uid="DrawnUi.Draw.SkiaImage.BlurProperty">
   BlurProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L827"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L838"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2769,7 +2800,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_BrightnessProperty" data-uid="DrawnUi.Draw.SkiaImage.BrightnessProperty">
   BrightnessProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L801"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L812"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2829,7 +2860,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ClipSource" data-uid="DrawnUi.Draw.SkiaImage.ClipSource">
   ClipSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1233"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2859,7 +2890,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ColorTintProperty" data-uid="DrawnUi.Draw.SkiaImage.ColorTintProperty">
   ColorTintProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L723"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L734"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2889,7 +2920,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ContrastProperty" data-uid="DrawnUi.Draw.SkiaImage.ContrastProperty">
   ContrastProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L788"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L799"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2919,7 +2950,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_DarkenProperty" data-uid="DrawnUi.Draw.SkiaImage.DarkenProperty">
   DarkenProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L762"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L773"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2949,7 +2980,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_DrawWhenEmptyProperty" data-uid="DrawnUi.Draw.SkiaImage.DrawWhenEmptyProperty">
   DrawWhenEmptyProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L961"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L972"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2979,7 +3010,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_EffectBlendModeProperty" data-uid="DrawnUi.Draw.SkiaImage.EffectBlendModeProperty">
   EffectBlendModeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L922"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L933"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3009,7 +3040,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_EndColorProperty" data-uid="DrawnUi.Draw.SkiaImage.EndColorProperty">
   EndColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L909"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L920"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3039,7 +3070,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_EraseChangedContentProperty" data-uid="DrawnUi.Draw.SkiaImage.EraseChangedContentProperty">
   EraseChangedContentProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L879"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L890"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3069,7 +3100,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_GammaProperty" data-uid="DrawnUi.Draw.SkiaImage.GammaProperty">
   GammaProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L814"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L825"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3129,7 +3160,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_HorizontalOffsetProperty" data-uid="DrawnUi.Draw.SkiaImage.HorizontalOffsetProperty">
   HorizontalOffsetProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L935"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L946"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3159,7 +3190,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ImageBitmapProperty" data-uid="DrawnUi.Draw.SkiaImage.ImageBitmapProperty">
   ImageBitmapProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L262"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3189,7 +3220,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ImagePaint" data-uid="DrawnUi.Draw.SkiaImage.ImagePaint">
   ImagePaint
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1073"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1084"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reusing this</p>
@@ -3220,7 +3251,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_InflateAmountProperty" data-uid="DrawnUi.Draw.SkiaImage.InflateAmountProperty">
   InflateAmountProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L853"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L864"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3250,7 +3281,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_LightenProperty" data-uid="DrawnUi.Draw.SkiaImage.LightenProperty">
   LightenProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L775"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L786"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3280,7 +3311,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_LoadSourceOnFirstDrawProperty" data-uid="DrawnUi.Draw.SkiaImage.LoadSourceOnFirstDrawProperty">
   LoadSourceOnFirstDrawProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L267"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L278"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3340,7 +3371,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_PaintColorFilter" data-uid="DrawnUi.Draw.SkiaImage.PaintColorFilter">
   PaintColorFilter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1086"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1097"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reusing this</p>
@@ -3371,7 +3402,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_PaintImageFilter" data-uid="DrawnUi.Draw.SkiaImage.PaintImageFilter">
   PaintImageFilter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1078"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1089"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reusing this</p>
@@ -3402,7 +3433,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_PreviewBase64Property" data-uid="DrawnUi.Draw.SkiaImage.PreviewBase64Property">
   PreviewBase64Property
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L327"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L338"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3432,7 +3463,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_RescaleSourceProperty" data-uid="DrawnUi.Draw.SkiaImage.RescaleSourceProperty">
   RescaleSourceProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L303"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L314"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3462,7 +3493,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_RescalingQualityProperty" data-uid="DrawnUi.Draw.SkiaImage.RescalingQualityProperty">
   RescalingQualityProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L298"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3492,7 +3523,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_SaturationProperty" data-uid="DrawnUi.Draw.SkiaImage.SaturationProperty">
   SaturationProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L840"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L851"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3522,7 +3553,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceProperty" data-uid="DrawnUi.Draw.SkiaImage.SourceProperty">
   SourceProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L248"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3552,7 +3583,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_SpriteHeightProperty" data-uid="DrawnUi.Draw.SkiaImage.SpriteHeightProperty">
   SpriteHeightProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L972"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L983"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3582,7 +3613,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_SpriteIndexProperty" data-uid="DrawnUi.Draw.SkiaImage.SpriteIndexProperty">
   SpriteIndexProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L996"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1007"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3612,7 +3643,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_SpriteWidthProperty" data-uid="DrawnUi.Draw.SkiaImage.SpriteWidthProperty">
   SpriteWidthProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L984"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L995"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3642,7 +3673,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_StartColorProperty" data-uid="DrawnUi.Draw.SkiaImage.StartColorProperty">
   StartColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L896"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L907"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3702,7 +3733,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_UseGradientProperty" data-uid="DrawnUi.Draw.SkiaImage.UseGradientProperty">
   UseGradientProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L866"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L877"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3762,7 +3793,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_VerticalOffsetProperty" data-uid="DrawnUi.Draw.SkiaImage.VerticalOffsetProperty">
   VerticalOffsetProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L948"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L959"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3792,7 +3823,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ZoomXProperty" data-uid="DrawnUi.Draw.SkiaImage.ZoomXProperty">
   ZoomXProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L736"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L747"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3822,7 +3853,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ZoomYProperty" data-uid="DrawnUi.Draw.SkiaImage.ZoomYProperty">
   ZoomYProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L749"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L760"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3857,7 +3888,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_AddEffect" data-uid="DrawnUi.Draw.SkiaImage.AddEffect">
   AddEffect
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L717"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L728"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3888,7 +3919,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ApplyNewSource" data-uid="DrawnUi.Draw.SkiaImage.ApplyNewSource">
   ApplyNewSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L403"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L414"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3951,7 +3982,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_AspectScale" data-uid="DrawnUi.Draw.SkiaImage.AspectScale">
   AspectScale
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1342"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1353"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3982,7 +4013,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_Blur" data-uid="DrawnUi.Draw.SkiaImage.Blur">
   Blur
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L834"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L845"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4013,7 +4044,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_Brightness" data-uid="DrawnUi.Draw.SkiaImage.Brightness">
   Brightness
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L808"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L819"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4076,7 +4107,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_CanDraw" data-uid="DrawnUi.Draw.SkiaImage.CanDraw">
   CanDraw
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1010"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1021"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4107,7 +4138,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ColorTint" data-uid="DrawnUi.Draw.SkiaImage.ColorTint">
   ColorTint
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L730"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L741"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4138,7 +4169,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_Contrast" data-uid="DrawnUi.Draw.SkiaImage.Contrast">
   Contrast
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L795"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L806"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4169,7 +4200,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_Darken" data-uid="DrawnUi.Draw.SkiaImage.Darken">
   Darken
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L769"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L780"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4200,7 +4231,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_DisplayRect" data-uid="DrawnUi.Draw.SkiaImage.DisplayRect">
   DisplayRect
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1539"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1550"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The viewport scaled source will be rendered into, can be different from the control output area.</p>
@@ -4232,7 +4263,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_DrawWhenEmpty" data-uid="DrawnUi.Draw.SkiaImage.DrawWhenEmpty">
   DrawWhenEmpty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L966"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L977"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4263,7 +4294,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_EffectBlendMode" data-uid="DrawnUi.Draw.SkiaImage.EffectBlendMode">
   EffectBlendMode
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L929"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L940"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4294,7 +4325,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_EndColor" data-uid="DrawnUi.Draw.SkiaImage.EndColor">
   EndColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L916"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L927"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4325,7 +4356,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_EraseChangedContent" data-uid="DrawnUi.Draw.SkiaImage.EraseChangedContent">
   EraseChangedContent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L890"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L901"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Should we erase the existing image when another Source is set but wasn't applied yet (not loaded yet)</p>
@@ -4357,7 +4388,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_Gamma" data-uid="DrawnUi.Draw.SkiaImage.Gamma">
   Gamma
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L821"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L832"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4388,7 +4419,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_HasError" data-uid="DrawnUi.Draw.SkiaImage.HasError">
   HasError
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1054"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1065"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4482,7 +4513,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_HorizontalOffset" data-uid="DrawnUi.Draw.SkiaImage.HorizontalOffset">
   HorizontalOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L942"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L953"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4513,7 +4544,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ImageBitmap" data-uid="DrawnUi.Draw.SkiaImage.ImageBitmap">
   ImageBitmap
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L272"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>this is the source loaded, doesn't reflect any effects or any other rendering properties</p>
@@ -4545,7 +4576,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_ImageSource" data-uid="DrawnUi.Draw.SkiaImage.ImageSource">
   ImageSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L690"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L701"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4576,7 +4607,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_InflateAmount" data-uid="DrawnUi.Draw.SkiaImage.InflateAmount">
   InflateAmount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L860"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L871"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4607,7 +4638,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_IsLoading" data-uid="DrawnUi.Draw.SkiaImage.IsLoading">
   IsLoading
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L440"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L451"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4638,7 +4669,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_LastSource" data-uid="DrawnUi.Draw.SkiaImage.LastSource">
   LastSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L688"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L699"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Last source that we where loading. Td be reused for reload..</p>
@@ -4670,7 +4701,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_Lighten" data-uid="DrawnUi.Draw.SkiaImage.Lighten">
   Lighten
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L782"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L793"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4701,7 +4732,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_LoadSource" data-uid="DrawnUi.Draw.SkiaImage.LoadSource">
   LoadSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L453"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L464"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4732,7 +4763,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_LoadSourceOnFirstDraw" data-uid="DrawnUi.Draw.SkiaImage.LoadSourceOnFirstDraw">
   LoadSourceOnFirstDraw
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L281"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L292"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Should the source be loaded on the first draw, useful for the first fast rendering of the screen and loading images after,
@@ -4799,7 +4830,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_NeedInvalidateColorFilter" data-uid="DrawnUi.Draw.SkiaImage.NeedInvalidateColorFilter">
   NeedInvalidateColorFilter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1095"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1106"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4830,7 +4861,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_NeedInvalidateImageFilter" data-uid="DrawnUi.Draw.SkiaImage.NeedInvalidateImageFilter">
   NeedInvalidateImageFilter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1088"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1099"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4861,7 +4892,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_PreviewBase64" data-uid="DrawnUi.Draw.SkiaImage.PreviewBase64">
   PreviewBase64
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L334"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L345"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If setting in code-behind must be set BEFORE you change the Source</p>
@@ -4893,7 +4924,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_RescaleSource" data-uid="DrawnUi.Draw.SkiaImage.RescaleSource">
   RescaleSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L313"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L324"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Should rescale source if output viewport size changed and RescalingQuality&gt;none. Default value is false.</p>
@@ -4925,7 +4956,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_RescalingQuality" data-uid="DrawnUi.Draw.SkiaImage.RescalingQuality">
   RescalingQuality
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L297"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L308"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Default value is Low.</p>
@@ -4957,7 +4988,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_Saturation" data-uid="DrawnUi.Draw.SkiaImage.Saturation">
   Saturation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L847"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L858"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4988,7 +5019,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_ScaledSource" data-uid="DrawnUi.Draw.SkiaImage.ScaledSource">
   ScaledSource
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1344"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1355"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5019,7 +5050,7 @@ Useful to set True for for SkiaCarousel cells etc..</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_Source" data-uid="DrawnUi.Draw.SkiaImage.Source">
   Source
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L254"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5051,7 +5082,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceHeight" data-uid="DrawnUi.Draw.SkiaImage.SourceHeight">
   SourceHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1711"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1722"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>From current set Source in points</p>
@@ -5083,7 +5114,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceImageSize" data-uid="DrawnUi.Draw.SkiaImage.SourceImageSize">
   SourceImageSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1542"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1553"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5114,7 +5145,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceWidth" data-uid="DrawnUi.Draw.SkiaImage.SourceWidth">
   SourceWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1706"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1717"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>From current set Source in points</p>
@@ -5146,7 +5177,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SpriteHeight" data-uid="DrawnUi.Draw.SkiaImage.SpriteHeight">
   SpriteHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L978"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L989"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5177,7 +5208,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SpriteIndex" data-uid="DrawnUi.Draw.SkiaImage.SpriteIndex">
   SpriteIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1002"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1013"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5208,7 +5239,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SpriteWidth" data-uid="DrawnUi.Draw.SkiaImage.SpriteWidth">
   SpriteWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L990"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1001"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5239,7 +5270,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_StartColor" data-uid="DrawnUi.Draw.SkiaImage.StartColor">
   StartColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L903"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L914"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5270,7 +5301,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_TextureScale" data-uid="DrawnUi.Draw.SkiaImage.TextureScale">
   TextureScale
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1541"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1552"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5332,7 +5363,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_UseGradient" data-uid="DrawnUi.Draw.SkiaImage.UseGradient">
   UseGradient
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L873"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L884"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5394,7 +5425,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_VerticalOffset" data-uid="DrawnUi.Draw.SkiaImage.VerticalOffset">
   VerticalOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L955"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L966"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5425,7 +5456,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_ZoomX" data-uid="DrawnUi.Draw.SkiaImage.ZoomX">
   ZoomX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L743"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L754"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5456,7 +5487,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_ZoomY" data-uid="DrawnUi.Draw.SkiaImage.ZoomY">
   ZoomY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L756"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L767"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5491,7 +5522,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_" data-uid="DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)">
   AvoidRemeasuring(MeasureRequest)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1577"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1588"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5527,7 +5558,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_CalculateDisplayRect_SkiaSharp_SKRect_System_Single_System_Single_DrawnUi_Draw_DrawImageAlignment_DrawnUi_Draw_DrawImageAlignment_" data-uid="DrawnUi.Draw.SkiaImage.CalculateDisplayRect(SkiaSharp.SKRect,System.Single,System.Single,DrawnUi.Draw.DrawImageAlignment,DrawnUi.Draw.DrawImageAlignment)">
   CalculateDisplayRect(SKRect, float, float, DrawImageAlignment, DrawImageAlignment)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1713"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1724"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5571,7 +5602,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_ClearBitmap" data-uid="DrawnUi.Draw.SkiaImage.ClearBitmap">
   ClearBitmap()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1025"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1036"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5597,7 +5628,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_Draw_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaImage.Draw(DrawnUi.Draw.DrawingContext)">
   Draw(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1300"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1311"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5628,7 +5659,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_DrawSource_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LoadedImageSource_DrawnUi_Draw_TransformAspect_DrawnUi_Draw_DrawImageAlignment_DrawnUi_Draw_DrawImageAlignment_SkiaSharp_SKPaint_" data-uid="DrawnUi.Draw.SkiaImage.DrawSource(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LoadedImageSource,DrawnUi.Draw.TransformAspect,DrawnUi.Draw.DrawImageAlignment,DrawnUi.Draw.DrawImageAlignment,SkiaSharp.SKPaint)">
   DrawSource(DrawingContext, LoadedImageSource, TransformAspect, DrawImageAlignment, DrawImageAlignment, SKPaint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1417"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1428"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Updated DrawSource with professional-quality resizing</p>
@@ -5670,7 +5701,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_" data-uid="DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)">
   DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1404"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1415"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5707,7 +5738,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_" data-uid="DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)">
   DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1409"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1420"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5776,7 +5807,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_GetSamplingOptions_SkiaSharp_SKFilterQuality_System_Boolean_" data-uid="DrawnUi.Draw.SkiaImage.GetSamplingOptions(SkiaSharp.SKFilterQuality,System.Boolean)">
   GetSamplingOptions(SKFilterQuality, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1386"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1397"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets sampling options based on quality level</p>
@@ -5818,7 +5849,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_Invalidate" data-uid="DrawnUi.Draw.SkiaImage.Invalidate">
   Invalidate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1241"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1252"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base calls InvalidateInternal and InvalidateParent</p>
@@ -5845,7 +5876,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_InvalidateColorFilter" data-uid="DrawnUi.Draw.SkiaImage.InvalidateColorFilter">
   InvalidateColorFilter()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1097"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1108"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5871,7 +5902,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_InvalidateImageFilter" data-uid="DrawnUi.Draw.SkiaImage.InvalidateImageFilter">
   InvalidateImageFilter()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1090"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1101"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5897,7 +5928,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_LoadImageManagedAsync_Microsoft_Maui_Controls_ImageSource_System_Threading_CancellationTokenSource_DrawnUi_Draw_LoadPriority_" data-uid="DrawnUi.Draw.SkiaImage.LoadImageManagedAsync(Microsoft.Maui.Controls.ImageSource,System.Threading.CancellationTokenSource,DrawnUi.Draw.LoadPriority)">
   LoadImageManagedAsync(ImageSource, CancellationTokenSource, LoadPriority)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L469"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L480"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5937,7 +5968,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_LoadSourceIfNeeded" data-uid="DrawnUi.Draw.SkiaImage.LoadSourceIfNeeded">
   LoadSourceIfNeeded()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1228"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1239"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5963,7 +5994,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnDisposing" data-uid="DrawnUi.Draw.SkiaImage.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1322"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1333"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -5990,7 +6021,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnError_System_String_" data-uid="DrawnUi.Draw.SkiaImage.OnError(System.String)">
   OnError(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1031"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1042"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6021,7 +6052,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnLayoutChanged" data-uid="DrawnUi.Draw.SkiaImage.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1312"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1323"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6047,7 +6078,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnMeasuring_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)">
   OnMeasuring(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1582"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1593"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Input in POINTS</p>
@@ -6114,7 +6145,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnSuccess_System_String_" data-uid="DrawnUi.Draw.SkiaImage.OnSuccess(System.String)">
   OnSuccess(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1037"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1048"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6145,7 +6176,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnWillDisposeWithChildren" data-uid="DrawnUi.Draw.SkiaImage.OnWillDisposeWithChildren">
   OnWillDisposeWithChildren()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L340"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L351"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The OnDisposing might come with a delay to avoid disposing resources at use.
@@ -6173,7 +6204,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SkiaImage_Paint_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaImage.Paint(DrawnUi.Draw.DrawingContext)">
   Paint(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1102"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1113"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is the main drawing routine you should override to draw something.
@@ -6207,7 +6238,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaImage_ReloadSource" data-uid="DrawnUi.Draw.SkiaImage.ReloadSource">
   ReloadSource()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L461"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L472"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6233,7 +6264,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetAspectScale_System_Int32_System_Int32_SkiaSharp_SKRect_DrawnUi_Draw_TransformAspect_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.SetAspectScale(System.Int32,System.Int32,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect,System.Single)">
   SetAspectScale(int, int, SKRect, TransformAspect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1544"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1555"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6272,7 +6303,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetBitmapInternal_SkiaSharp_SKBitmap_System_Boolean_" data-uid="DrawnUi.Draw.SkiaImage.SetBitmapInternal(SkiaSharp.SKBitmap,System.Boolean)">
   SetBitmapInternal(SKBitmap, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L422"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L433"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Use only if you know what to do, this internally just sets the new bitmap without any invalidations and not forcing an update.
@@ -6312,7 +6343,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetFromBase64_System_String_" data-uid="DrawnUi.Draw.SkiaImage.SetFromBase64(System.String)">
   SetFromBase64(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L391"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L402"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6380,7 +6411,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetImageInternal_SkiaSharp_SKImage_System_Boolean_" data-uid="DrawnUi.Draw.SkiaImage.SetImageInternal(SkiaSharp.SKImage,System.Boolean)">
   SetImageInternal(SKImage, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L430"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L441"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6418,7 +6449,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetImageSource_Microsoft_Maui_Controls_ImageSource_" data-uid="DrawnUi.Draw.SkiaImage.SetImageSource(Microsoft.Maui.Controls.ImageSource)">
   SetImageSource(ImageSource)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L475"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L486"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6449,7 +6480,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetMeasuredAsEmpty_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.SetMeasuredAsEmpty(System.Single)">
   SetMeasuredAsEmpty(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1556"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1567"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6485,7 +6516,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetSource_Microsoft_Maui_Controls_ImageSource_" data-uid="DrawnUi.Draw.SkiaImage.SetSource(Microsoft.Maui.Controls.ImageSource)">
   SetSource(ImageSource)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L357"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L368"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6516,7 +6547,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetSource_System_Func_System_Threading_CancellationToken_System_Threading_Tasks_Task_System_IO_Stream___" data-uid="DrawnUi.Draw.SkiaImage.SetSource(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{System.IO.Stream}})">
   SetSource(Func&lt;CancellationToken, Task&lt;Stream&gt;&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L351"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L362"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6547,7 +6578,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetSource_System_String_" data-uid="DrawnUi.Draw.SkiaImage.SetSource(System.String)">
   SetSource(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L367"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L378"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6578,7 +6609,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_StopLoading" data-uid="DrawnUi.Draw.SkiaImage.StopLoading">
   StopLoading()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L455"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L466"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6604,7 +6635,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SubscribeToCanReload" data-uid="DrawnUi.Draw.SkiaImage.SubscribeToCanReload">
   SubscribeToCanReload()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1043"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1054"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6630,7 +6661,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SwapSources_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.SwapSources(System.Single)">
   SwapSources(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1252"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1263"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>returns whether should abort pipeline</p>
@@ -6670,7 +6701,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_Cleared" data-uid="DrawnUi.Draw.SkiaImage.Cleared">
   Cleared
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L467"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L478"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6700,7 +6731,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_Error" data-uid="DrawnUi.Draw.SkiaImage.Error">
   Error
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1065"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1076"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6730,7 +6761,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_Success" data-uid="DrawnUi.Draw.SkiaImage.Success">
   Success
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1066"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1077"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

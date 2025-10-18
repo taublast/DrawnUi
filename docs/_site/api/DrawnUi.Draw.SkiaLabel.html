@@ -104,7 +104,7 @@ layout, and styling capabilities using SkiaSharp for rendering.</p>
 
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[ContentProperty(&quot;Spans&quot;)]
-public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, IHasAfterEffects, ISkiaControl, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaGestureListener, IText, ITextStyle</code></pre>
+public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, IHasAfterEffects, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaDisposable, IDisposable, ISkiaGestureListener, IText, ITextStyle</code></pre>
   </div>
 
 
@@ -146,9 +146,10 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IDrawnBase.html">IDrawnBase</a></div>
-      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdatedWithContext.html">ICanBeUpdatedWithContext</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html">ICanBeUpdated</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGestureListener.html">ISkiaGestureListener</a></div>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.itext">IText</a></div>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.itextstyle">ITextStyle</a></div>
@@ -237,6 +238,9 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearColor">SkiaControl.ClearColor</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_">SkiaControl.OnPaddingSet(Thickness)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AddSubView_DrawnUi_Draw_SkiaControl_">SkiaControl.AddSubView(SkiaControl)</a>
@@ -446,6 +450,18 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
     </div>
     <div>
@@ -536,12 +552,6 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -578,7 +588,7 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -968,6 +978,9 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1115,7 +1128,7 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -1709,10 +1722,22 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -1761,6 +1786,12 @@ public class SkiaLabel : SkiaControl, INotifyPropertyChanged, IEffectControlProv
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -2705,7 +2736,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_AutoFontProperty" data-uid="DrawnUi.Draw.SkiaLabel.AutoFontProperty">
   AutoFontProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2778"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2785"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2735,7 +2766,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_AutoSizeProperty" data-uid="DrawnUi.Draw.SkiaLabel.AutoSizeProperty">
   AutoSizeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2967"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2974"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2765,7 +2796,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_AutoSizeTextProperty" data-uid="DrawnUi.Draw.SkiaLabel.AutoSizeTextProperty">
   AutoSizeTextProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3001"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3008"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2795,7 +2826,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_CharacterSpacingProperty" data-uid="DrawnUi.Draw.SkiaLabel.CharacterSpacingProperty">
   CharacterSpacingProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3041"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3048"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2885,7 +2916,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DrawWhenEmptyProperty" data-uid="DrawnUi.Draw.SkiaLabel.DrawWhenEmptyProperty">
   DrawWhenEmptyProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2713"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2720"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2915,7 +2946,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowColorProperty" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowColorProperty">
   DropShadowColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3336"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3343"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2945,7 +2976,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowOffsetXProperty" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowOffsetXProperty">
   DropShadowOffsetXProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3376"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3383"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2975,7 +3006,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowOffsetYProperty" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowOffsetYProperty">
   DropShadowOffsetYProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3362"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3369"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3005,7 +3036,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowSizeProperty" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowSizeProperty">
   DropShadowSizeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3349"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3356"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3035,7 +3066,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FallbackCharacterProperty" data-uid="DrawnUi.Draw.SkiaLabel.FallbackCharacterProperty">
   FallbackCharacterProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3229"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3236"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3065,7 +3096,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontAttributesProperty" data-uid="DrawnUi.Draw.SkiaLabel.FontAttributesProperty">
   FontAttributesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2700"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2707"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3095,7 +3126,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontFamilyProperty" data-uid="DrawnUi.Draw.SkiaLabel.FontFamilyProperty">
   FontFamilyProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2892"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2899"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3125,7 +3156,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontSizeProperty" data-uid="DrawnUi.Draw.SkiaLabel.FontSizeProperty">
   FontSizeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3394"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3401"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3155,7 +3186,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontWeightProperty" data-uid="DrawnUi.Draw.SkiaLabel.FontWeightProperty">
   FontWeightProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2738"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2745"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3185,7 +3216,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FormatProperty" data-uid="DrawnUi.Draw.SkiaLabel.FormatProperty">
   FormatProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3215,7 +3246,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FormattedTextProperty" data-uid="DrawnUi.Draw.SkiaLabel.FormattedTextProperty">
   FormattedTextProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3086"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3093"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3245,7 +3276,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_GliphsInvalidated" data-uid="DrawnUi.Draw.SkiaLabel.GliphsInvalidated">
   GliphsInvalidated
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2542"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2549"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3275,7 +3306,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_GradientByLinesProperty" data-uid="DrawnUi.Draw.SkiaLabel.GradientByLinesProperty">
   GradientByLinesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3442"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3449"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3305,7 +3336,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_HorizontalTextAlignmentProperty" data-uid="DrawnUi.Draw.SkiaLabel.HorizontalTextAlignmentProperty">
   HorizontalTextAlignmentProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2806"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2813"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3335,7 +3366,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_KeepSpacesOnLineBreaksProperty" data-uid="DrawnUi.Draw.SkiaLabel.KeepSpacesOnLineBreaksProperty">
   KeepSpacesOnLineBreaksProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2724"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2731"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3365,7 +3396,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineBreakModeProperty" data-uid="DrawnUi.Draw.SkiaLabel.LineBreakModeProperty">
   LineBreakModeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3055"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3062"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3395,7 +3426,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineHeightProperty" data-uid="DrawnUi.Draw.SkiaLabel.LineHeightProperty">
   LineHeightProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2862"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2869"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3425,7 +3456,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineHeightUniformProperty" data-uid="DrawnUi.Draw.SkiaLabel.LineHeightUniformProperty">
   LineHeightUniformProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3257"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3264"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3455,7 +3486,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineSpacingProperty" data-uid="DrawnUi.Draw.SkiaLabel.LineSpacingProperty">
   LineSpacingProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3017"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3024"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3485,7 +3516,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LockSetup" data-uid="DrawnUi.Draw.SkiaLabel.LockSetup">
   LockSetup
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2544"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2551"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3515,7 +3546,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MaxLinesProperty" data-uid="DrawnUi.Draw.SkiaLabel.MaxLinesProperty">
   MaxLinesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2926"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2933"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3545,7 +3576,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MonoForDigitsProperty" data-uid="DrawnUi.Draw.SkiaLabel.MonoForDigitsProperty">
   MonoForDigitsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3244"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3251"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3575,7 +3606,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_PaintDeco" data-uid="DrawnUi.Draw.SkiaLabel.PaintDeco">
   PaintDeco
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2647"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2654"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3605,7 +3636,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_PaintDefault" data-uid="DrawnUi.Draw.SkiaLabel.PaintDefault">
   PaintDefault
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2641"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2648"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3635,7 +3666,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_PaintShadow" data-uid="DrawnUi.Draw.SkiaLabel.PaintShadow">
   PaintShadow
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2645"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2652"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3665,7 +3696,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_PaintStroke" data-uid="DrawnUi.Draw.SkiaLabel.PaintStroke">
   PaintStroke
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2643"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2650"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3695,7 +3726,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_ParagraphSpacingProperty" data-uid="DrawnUi.Draw.SkiaLabel.ParagraphSpacingProperty">
   ParagraphSpacingProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3027"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3034"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3725,7 +3756,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_RenderLimit" data-uid="DrawnUi.Draw.SkiaLabel.RenderLimit">
   RenderLimit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2686"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2693"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3755,7 +3786,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_SensorRotationProperty" data-uid="DrawnUi.Draw.SkiaLabel.SensorRotationProperty">
   SensorRotationProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2879"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2886"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3785,7 +3816,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_Shaper" data-uid="DrawnUi.Draw.SkiaLabel.Shaper">
   Shaper
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2659"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2666"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3815,7 +3846,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_StrokeColorProperty" data-uid="DrawnUi.Draw.SkiaLabel.StrokeColorProperty">
   StrokeColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3294"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3301"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3845,7 +3876,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_StrokeGradientProperty" data-uid="DrawnUi.Draw.SkiaLabel.StrokeGradientProperty">
   StrokeGradientProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3456"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3463"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3875,7 +3906,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_StrokeWidthProperty" data-uid="DrawnUi.Draw.SkiaLabel.StrokeWidthProperty">
   StrokeWidthProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3321"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3328"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3905,7 +3936,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TextColorProperty" data-uid="DrawnUi.Draw.SkiaLabel.TextColorProperty">
   TextColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3270"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3277"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3935,7 +3966,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TextProperty" data-uid="DrawnUi.Draw.SkiaLabel.TextProperty">
   TextProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3139"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3146"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3965,7 +3996,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TextTransformProperty" data-uid="DrawnUi.Draw.SkiaLabel.TextTransformProperty">
   TextTransformProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3145"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3152"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3995,7 +4026,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_Trail" data-uid="DrawnUi.Draw.SkiaLabel.Trail">
   Trail
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2695"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2702"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4025,7 +4056,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TypeFaceProperty" data-uid="DrawnUi.Draw.SkiaLabel.TypeFaceProperty">
   TypeFaceProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2793"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2800"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4055,7 +4086,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_VerticalTextAlignmentProperty" data-uid="DrawnUi.Draw.SkiaLabel.VerticalTextAlignmentProperty">
   VerticalTextAlignmentProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2835"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2842"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4085,7 +4116,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel__fontFamily" data-uid="DrawnUi.Draw.SkiaLabel._fontFamily">
   _fontFamily
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2546"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2553"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4145,7 +4176,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_charMonoWidthPixels" data-uid="DrawnUi.Draw.SkiaLabel.charMonoWidthPixels">
   charMonoWidthPixels
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2685"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2692"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4175,7 +4206,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_fontUnderline" data-uid="DrawnUi.Draw.SkiaLabel.fontUnderline">
   fontUnderline
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2687"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2694"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4210,7 +4241,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_AutoFont" data-uid="DrawnUi.Draw.SkiaLabel.AutoFont">
   AutoFont
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2787"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2794"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Find and set system font where the first glyph in text is present</p>
@@ -4242,7 +4273,7 @@ and intelligent rendering that only processes visible portions of text.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_AutoSize" data-uid="DrawnUi.Draw.SkiaLabel.AutoSize">
   AutoSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2995"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3002"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how the label automatically adjusts font size to fit available space.</p>
@@ -4294,7 +4325,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_AutoSizeText" data-uid="DrawnUi.Draw.SkiaLabel.AutoSizeText">
   AutoSizeText
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3011"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3018"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Can use this text for auto-sizing the font instead if the real Text</p>
@@ -4357,7 +4388,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_CharacterSpacing" data-uid="DrawnUi.Draw.SkiaLabel.CharacterSpacing">
   CharacterSpacing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3049"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3056"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This applies ONLY when CharByChar is enabled</p>
@@ -4389,7 +4420,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DrawWhenEmpty" data-uid="DrawnUi.Draw.SkiaLabel.DrawWhenEmpty">
   DrawWhenEmpty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2718"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2725"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4420,7 +4451,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowColor" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowColor">
   DropShadowColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3343"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3350"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4451,7 +4482,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowOffsetX" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowOffsetX">
   DropShadowOffsetX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3386"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3393"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>To make DropShadow act like shadow</p>
@@ -4483,7 +4514,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowOffsetY" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowOffsetY">
   DropShadowOffsetY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3370"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3377"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4514,7 +4545,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DropShadowSize" data-uid="DrawnUi.Draw.SkiaLabel.DropShadowSize">
   DropShadowSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3356"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3363"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4545,7 +4576,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FallbackCharacter" data-uid="DrawnUi.Draw.SkiaLabel.FallbackCharacter">
   FallbackCharacter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3238"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3245"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Character to show when glyph is not found in font</p>
@@ -4609,7 +4640,7 @@ changing text or container sizes.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontAttributes" data-uid="DrawnUi.Draw.SkiaLabel.FontAttributes">
   FontAttributes
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2706"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2713"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4641,7 +4672,7 @@ public FontAttributes FontAttributes { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontFamily" data-uid="DrawnUi.Draw.SkiaLabel.FontFamily">
   FontFamily
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2920"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2927"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the font family name used for rendering the text.</p>
@@ -4753,7 +4784,7 @@ public FontAttributes FontAttributes { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontSize" data-uid="DrawnUi.Draw.SkiaLabel.FontSize">
   FontSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3418"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3425"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the font size in device-independent units.</p>
@@ -4798,7 +4829,7 @@ public double FontSize { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FontWeight" data-uid="DrawnUi.Draw.SkiaLabel.FontWeight">
   FontWeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2772"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2779"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the weight (thickness) of the font.</p>
@@ -4852,7 +4883,7 @@ fonts.AddFont(&quot;Roboto-Bold.ttf&quot;, &quot;Roboto&quot;, FontWeight.Bold);
 
   <h3 id="DrawnUi_Draw_SkiaLabel_Format" data-uid="DrawnUi.Draw.SkiaLabel.Format">
   Format
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3105"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3112"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4883,7 +4914,7 @@ fonts.AddFont(&quot;Roboto-Bold.ttf&quot;, &quot;Roboto&quot;, FontWeight.Bold);
 
   <h3 id="DrawnUi_Draw_SkiaLabel_FormattedText" data-uid="DrawnUi.Draw.SkiaLabel.FormattedText">
   FormattedText
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3093"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3100"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4914,7 +4945,7 @@ fonts.AddFont(&quot;Roboto-Bold.ttf&quot;, &quot;Roboto&quot;, FontWeight.Bold);
 
   <h3 id="DrawnUi_Draw_SkiaLabel_GradientByLines" data-uid="DrawnUi.Draw.SkiaLabel.GradientByLines">
   GradientByLines
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3449"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3456"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4945,7 +4976,7 @@ fonts.AddFont(&quot;Roboto-Bold.ttf&quot;, &quot;Roboto&quot;, FontWeight.Bold);
 
   <h3 id="DrawnUi_Draw_SkiaLabel_HorizontalTextAlignment" data-uid="DrawnUi.Draw.SkiaLabel.HorizontalTextAlignment">
   HorizontalTextAlignment
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2829"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2836"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the horizontal alignment of text within the label.</p>
@@ -4991,7 +5022,7 @@ distributed text that spans the entire width of the label.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_KeepSpacesOnLineBreaks" data-uid="DrawnUi.Draw.SkiaLabel.KeepSpacesOnLineBreaks">
   KeepSpacesOnLineBreaks
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2731"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2738"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5022,7 +5053,7 @@ distributed text that spans the entire width of the label.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineBreakMode" data-uid="DrawnUi.Draw.SkiaLabel.LineBreakMode">
   LineBreakMode
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3080"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3087"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how text is handled when it exceeds the available width.</p>
@@ -5069,7 +5100,7 @@ For multi-line text, WordWrap is typically preferred.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineHeight" data-uid="DrawnUi.Draw.SkiaLabel.LineHeight">
   LineHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2873"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2880"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the line height as a multiple of the font size, multiplier of how much space will be allocated for a line.
@@ -5102,7 +5133,7 @@ Note that this is different from LineSpacing.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineHeightUniform" data-uid="DrawnUi.Draw.SkiaLabel.LineHeightUniform">
   LineHeightUniform
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3264"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3271"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Should we draw with the maximum line height when lines have different height.</p>
@@ -5134,7 +5165,7 @@ Note that this is different from LineSpacing.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LineSpacing" data-uid="DrawnUi.Draw.SkiaLabel.LineSpacing">
   LineSpacing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3021"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3028"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5165,7 +5196,7 @@ Note that this is different from LineSpacing.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MaxLines" data-uid="DrawnUi.Draw.SkiaLabel.MaxLines">
   MaxLines
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2948"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2955"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the maximum number of lines to display.</p>
@@ -5211,7 +5242,7 @@ where you want to show only a limited number of lines.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MonoForDigits" data-uid="DrawnUi.Draw.SkiaLabel.MonoForDigits">
   MonoForDigits
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3251"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3258"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The character to be taken for its width when want digits to simulate Mono, for example &quot;8&quot;, default is null.</p>
@@ -5243,7 +5274,7 @@ where you want to show only a limited number of lines.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_NeedSetText" data-uid="DrawnUi.Draw.SkiaLabel.NeedSetText">
   NeedSetText
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3172"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3179"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5274,7 +5305,7 @@ where you want to show only a limited number of lines.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_ParagraphSpacing" data-uid="DrawnUi.Draw.SkiaLabel.ParagraphSpacing">
   ParagraphSpacing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3035"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3042"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Default is 0.25</p>
@@ -5306,7 +5337,7 @@ where you want to show only a limited number of lines.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_SensorRotation" data-uid="DrawnUi.Draw.SkiaLabel.SensorRotation">
   SensorRotation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2886"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2893"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5337,7 +5368,7 @@ where you want to show only a limited number of lines.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_SpaceBetweenParagraphs" data-uid="DrawnUi.Draw.SkiaLabel.SpaceBetweenParagraphs">
   SpaceBetweenParagraphs
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2467"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2474"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>todo move this to some font info data block
@@ -5425,7 +5456,7 @@ the Text property, clear the Spans collection.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_StrokeColor" data-uid="DrawnUi.Draw.SkiaLabel.StrokeColor">
   StrokeColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3315"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3322"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the color of the text outline stroke.</p>
@@ -5468,7 +5499,7 @@ For the outline to be visible, both StrokeColor and StrokeWidth must be set.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_StrokeGradient" data-uid="DrawnUi.Draw.SkiaLabel.StrokeGradient">
   StrokeGradient
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3463"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3470"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5499,7 +5530,7 @@ For the outline to be visible, both StrokeColor and StrokeWidth must be set.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_StrokeWidth" data-uid="DrawnUi.Draw.SkiaLabel.StrokeWidth">
   StrokeWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3328"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3335"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5530,7 +5561,7 @@ For the outline to be visible, both StrokeColor and StrokeWidth must be set.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_Text" data-uid="DrawnUi.Draw.SkiaLabel.Text">
   Text
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3133"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3140"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the text content to be displayed by the label.</p>
@@ -5574,7 +5605,7 @@ multiple styles, use the Spans collection or FormattedText property instead.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TextColor" data-uid="DrawnUi.Draw.SkiaLabel.TextColor">
   TextColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3288"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3295"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the color used to display the text.</p>
@@ -5614,7 +5645,7 @@ You should explicitly set this to your desired text color.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TextInternal" data-uid="DrawnUi.Draw.SkiaLabel.TextInternal">
   TextInternal
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3227"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3234"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5645,7 +5676,7 @@ You should explicitly set this to your desired text color.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TextTransform" data-uid="DrawnUi.Draw.SkiaLabel.TextTransform">
   TextTransform
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3158"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5676,7 +5707,7 @@ You should explicitly set this to your desired text color.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TypeFace" data-uid="DrawnUi.Draw.SkiaLabel.TypeFace">
   TypeFace
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2800"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2807"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5707,7 +5738,7 @@ You should explicitly set this to your desired text color.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_VerticalTextAlignment" data-uid="DrawnUi.Draw.SkiaLabel.VerticalTextAlignment">
   VerticalTextAlignment
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2855"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2862"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the vertical alignment of text within the label.</p>
@@ -5781,7 +5812,7 @@ vertically within the available space.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_AreAllGlyphsAvailable_System_String_SkiaSharp_SKTypeface_" data-uid="DrawnUi.Draw.SkiaLabel.AreAllGlyphsAvailable(System.String,SkiaSharp.SKTypeface)">
   AreAllGlyphsAvailable(string, SKTypeface)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2178"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2185"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5846,7 +5877,7 @@ vertically within the available space.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_CutLineToFit_SkiaSharp_SKPaint_System_String_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.CutLineToFit(SkiaSharp.SKPaint,System.String,System.Single)">
   CutLineToFit(SKPaint, string, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2073"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2080"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5886,7 +5917,7 @@ vertically within the available space.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DecomposeText_System_String_SkiaSharp_SKPaint_SkiaSharp_SKPoint_System_Single_System_Single_System_Int32_System_Boolean_DrawnUi_Draw_TextSpan_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.DecomposeText(System.String,SkiaSharp.SKPaint,SkiaSharp.SKPoint,System.Single,System.Single,System.Int32,System.Boolean,DrawnUi.Draw.TextSpan,System.Single)">
   DecomposeText(string, SKPaint, SKPoint, float, float, int, bool, TextSpan, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L1417"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L1424"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5938,7 +5969,7 @@ vertically within the available space.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DrawCharacter_SkiaSharp_SKCanvas_System_Int32_System_Int32_System_ReadOnlySpan_System_Char__System_Single_System_Single_SkiaSharp_SKPaint_SkiaSharp_SKPaint_SkiaSharp_SKPaint_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.DrawCharacter(SkiaSharp.SKCanvas,System.Int32,System.Int32,System.ReadOnlySpan{System.Char},System.Single,System.Single,SkiaSharp.SKPaint,SkiaSharp.SKPaint,SkiaSharp.SKPaint,SkiaSharp.SKRect,System.Single)">
   DrawCharacter(SKCanvas, int, int, ReadOnlySpan&lt;char&gt;, float, float, SKPaint, SKPaint, SKPaint, SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L385"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L392"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is called when CharByChar is enabled
@@ -5991,7 +6022,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DrawLines_DrawnUi_Draw_DrawingContext_SkiaSharp_SKPaint_SkiaSharp_SKPoint_System_Collections_Generic_IEnumerable_DrawnUi_Draw_TextLine__" data-uid="DrawnUi.Draw.SkiaLabel.DrawLines(DrawnUi.Draw.DrawingContext,SkiaSharp.SKPaint,SkiaSharp.SKPoint,System.Collections.Generic.IEnumerable{DrawnUi.Draw.TextLine})">
   DrawLines(DrawingContext, SKPaint, SKPoint, IEnumerable&lt;TextLine&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L398"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L405"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6028,7 +6059,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DrawSpanDecorations_SkiaSharp_SKCanvas_DrawnUi_Draw_TextSpan_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.DrawSpanDecorations(SkiaSharp.SKCanvas,DrawnUi.Draw.TextSpan,System.Single,System.Single,System.Single)">
   DrawSpanDecorations(SKCanvas, TextSpan, float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L848"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L855"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6067,7 +6098,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DrawText_SkiaSharp_SKCanvas_System_Single_System_Single_System_ReadOnlySpan_System_Char__SkiaSharp_SKPaint_SkiaSharp_SKPaint_SkiaSharp_SKPaint_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.DrawText(SkiaSharp.SKCanvas,System.Single,System.Single,System.ReadOnlySpan{System.Char},SkiaSharp.SKPaint,SkiaSharp.SKPaint,SkiaSharp.SKPaint,System.Single)">
   DrawText(SKCanvas, float, float, ReadOnlySpan&lt;char&gt;, SKPaint, SKPaint, SKPaint, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L801"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L808"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6112,7 +6143,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_DrawText_SkiaSharp_SKCanvas_System_Single_System_Single_System_String_SkiaSharp_SKPaint_SkiaSharp_SKPaint_SkiaSharp_SKPaint_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.DrawText(SkiaSharp.SKCanvas,System.Single,System.Single,System.String,SkiaSharp.SKPaint,SkiaSharp.SKPaint,SkiaSharp.SKPaint,System.Single)">
   DrawText(SKCanvas, float, float, string, SKPaint, SKPaint, SKPaint, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L791"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L798"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If strokePaint==null will not stroke</p>
@@ -6158,7 +6189,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_GetGlyphs_System_String_SkiaSharp_SKTypeface_" data-uid="DrawnUi.Draw.SkiaLabel.GetGlyphs(System.String,SkiaSharp.SKTypeface)">
   GetGlyphs(string, SKTypeface)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2249"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6196,7 +6227,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_GetResultSize_SkiaSharp_HarfBuzz_SKShaper_Result_" data-uid="DrawnUi.Draw.SkiaLabel.GetResultSize(SkiaSharp.HarfBuzz.SKShaper.Result)">
   GetResultSize(Result)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2204"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2211"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6232,7 +6263,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_GetShapedText_SkiaSharp_HarfBuzz_SKShaper_System_String_System_Single_System_Single_SkiaSharp_SKPaint_" data-uid="DrawnUi.Draw.SkiaLabel.GetShapedText(SkiaSharp.HarfBuzz.SKShaper,System.String,System.Single,System.Single,SkiaSharp.SKPaint)">
   GetShapedText(SKShaper, string, float, float, SKPaint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2225"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2232"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6276,7 +6307,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_GetSpaceBetweenLines_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.GetSpaceBetweenLines(System.Single)">
   GetSpaceBetweenLines(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2472"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2479"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6339,7 +6370,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_InvalidateText" data-uid="DrawnUi.Draw.SkiaLabel.InvalidateText">
   InvalidateText()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3162"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3169"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6365,7 +6396,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_IsGlyphAlwaysAvailable_System_String_" data-uid="DrawnUi.Draw.SkiaLabel.IsGlyphAlwaysAvailable(System.String)">
   IsGlyphAlwaysAvailable(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2311"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2318"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6401,7 +6432,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LastNonSpaceIndex_System_String_" data-uid="DrawnUi.Draw.SkiaLabel.LastNonSpaceIndex(System.String)">
   LastNonSpaceIndex(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2163"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2170"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6437,7 +6468,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_LastNonSpaceIndexOptimized_System_ReadOnlySpan_System_Char__" data-uid="DrawnUi.Draw.SkiaLabel.LastNonSpaceIndexOptimized(System.ReadOnlySpan{System.Char})">
   LastNonSpaceIndexOptimized(ReadOnlySpan&lt;char&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L1287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L1294"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Optimized version of LastNonSpaceIndex that works with spans</p>
@@ -6474,7 +6505,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MeasureLineGlyphs_SkiaSharp_SKPaint_System_String_System_Boolean_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.MeasureLineGlyphs(SkiaSharp.SKPaint,System.String,System.Boolean,System.Single)">
   MeasureLineGlyphs(SKPaint, string, bool, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L1292"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L1299"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6516,7 +6547,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MeasureText_SkiaSharp_SKPaint_System_String_SkiaSharp_SKRect__" data-uid="DrawnUi.Draw.SkiaLabel.MeasureText(SkiaSharp.SKPaint,System.String,SkiaSharp.SKRect@)">
   MeasureText(SKPaint, string, ref SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2128"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2135"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns text taken size in pixels. Accounts paint transforms like skew etc.</p>
@@ -6552,7 +6583,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MeasureTextWidthWithAdvance_SkiaSharp_SKPaint_System_ReadOnlySpan_System_Char__" data-uid="DrawnUi.Draw.SkiaLabel.MeasureTextWidthWithAdvance(SkiaSharp.SKPaint,System.ReadOnlySpan{System.Char})">
   MeasureTextWidthWithAdvance(SKPaint, ReadOnlySpan&lt;char&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2121"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6590,7 +6621,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MeasureTextWidthWithAdvance_SkiaSharp_SKPaint_System_String_" data-uid="DrawnUi.Draw.SkiaLabel.MeasureTextWidthWithAdvance(SkiaSharp.SKPaint,System.String)">
   MeasureTextWidthWithAdvance(SKPaint, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2107"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2114"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6628,7 +6659,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_MergeSpansForLines_DrawnUi_Draw_TextSpan_DrawnUi_Draw_TextLine_DrawnUi_Draw_TextLine_" data-uid="DrawnUi.Draw.SkiaLabel.MergeSpansForLines(DrawnUi.Draw.TextSpan,DrawnUi.Draw.TextLine,DrawnUi.Draw.TextLine)">
   MergeSpansForLines(TextSpan, TextLine, TextLine)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2009"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2016"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6663,7 +6694,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_NeedUpdateFont_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_" data-uid="DrawnUi.Draw.SkiaLabel.NeedUpdateFont(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)">
   NeedUpdateFont(BindableObject, object, object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2607"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2614"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6698,7 +6729,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_NeedsRTL_System_String_" data-uid="DrawnUi.Draw.SkiaLabel.NeedsRTL(System.String)">
   NeedsRTL(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2394"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2401"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6761,7 +6792,7 @@ You can override it to apply custom effects to every letter</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_OnFocusChanged_System_Boolean_" data-uid="DrawnUi.Draw.SkiaLabel.OnFocusChanged(System.Boolean)">
   OnFocusChanged(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3507"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3514"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This will be called only for views registered at Superview.FocusedChild.
@@ -6799,7 +6830,7 @@ The view must return true of false to indicate if it accepts focus.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_OnFontUpdated" data-uid="DrawnUi.Draw.SkiaLabel.OnFontUpdated">
   OnFontUpdated()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2536"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2543"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A new TypeFace was set</p>
@@ -6853,7 +6884,7 @@ The view must return true of false to indicate if it accepts focus.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_OnMeasuring_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.OnMeasuring(System.Single,System.Single,System.Single)">
   OnMeasuring(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L999"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L1006"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Input in POINTS</p>
@@ -6953,7 +6984,7 @@ The view must return true of false to indicate if it accepts focus.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_OnSpanTapped_DrawnUi_Draw_TextSpan_" data-uid="DrawnUi.Draw.SkiaLabel.OnSpanTapped(DrawnUi.Draw.TextSpan)">
   OnSpanTapped(TextSpan)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3501"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3508"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Return null if you wish not to consume</p>
@@ -6990,7 +7021,7 @@ The view must return true of false to indicate if it accepts focus.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLabel_OnTextChanged" data-uid="DrawnUi.Draw.SkiaLabel.OnTextChanged">
   OnTextChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3164"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7078,7 +7109,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.SkiaLabel.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3513"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3520"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7116,7 +7147,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_ReplaceFont" data-uid="DrawnUi.Draw.SkiaLabel.ReplaceFont">
   ReplaceFont()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2581"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2588"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7142,7 +7173,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_ResetTextCalculations" data-uid="DrawnUi.Draw.SkiaLabel.ResetTextCalculations">
   ResetTextCalculations()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2488"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2495"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7168,7 +7199,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_SetTextInternal" data-uid="DrawnUi.Draw.SkiaLabel.SetTextInternal">
   SetTextInternal()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3181"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3188"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Aplies transforms etc</p>
@@ -7195,7 +7226,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_SetupBackgroundPaint_SkiaSharp_SKPaint_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaLabel.SetupBackgroundPaint(SkiaSharp.SKPaint,SkiaSharp.SKRect)">
   SetupBackgroundPaint(SKPaint, SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L949"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L956"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Overriding this to be able to control either control background is drawn (when background color is set) or gradient can be drawn over text</p>
@@ -7265,7 +7296,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_SetupShaper_SkiaSharp_SKTypeface_" data-uid="DrawnUi.Draw.SkiaLabel.SetupShaper(SkiaSharp.SKTypeface)">
   SetupShaper(SKTypeface)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2649"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2656"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7296,7 +7327,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_SpanPostDraw_SkiaSharp_SKCanvas_DrawnUi_Draw_TextSpan_SkiaSharp_SKRect_System_Single_" data-uid="DrawnUi.Draw.SkiaLabel.SpanPostDraw(SkiaSharp.SKCanvas,DrawnUi.Draw.TextSpan,SkiaSharp.SKRect,System.Single)">
   SpanPostDraw(SKCanvas, TextSpan, SKRect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L824"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L831"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7333,7 +7364,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_TextWasChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_" data-uid="DrawnUi.Draw.SkiaLabel.TextWasChanged(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)">
   TextWasChanged(BindableObject, object, object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3110"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L3117"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7401,7 +7432,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_UnicodeNeedsShaping_System_Int32_" data-uid="DrawnUi.Draw.SkiaLabel.UnicodeNeedsShaping(System.Int32)">
   UnicodeNeedsShaping(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2316"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2323"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7437,7 +7468,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaLabel_UpdateFont" data-uid="DrawnUi.Draw.SkiaLabel.UpdateFont">
   UpdateFont()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2548"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs/#L2555"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

@@ -104,7 +104,7 @@ Convention elements tags: BtnText, BtnShape.</p>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaButton : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable, ISkiaGestureListener</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaButton : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable, ISkiaGestureListener</code></pre>
   </div>
 
 
@@ -145,6 +145,7 @@ Convention elements tags: BtnText, BtnShape.</p>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.iview">IView</a>&gt;</div>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.IHasAfterEffects.html">IHasAfterEffects</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaDisposable.html">ISkiaDisposable</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaGridLayout.html">ISkiaGridLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaLayout.html">ISkiaLayout</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ISkiaControl.html">ISkiaControl</a></div>
@@ -194,13 +195,13 @@ Convention elements tags: BtnText, BtnShape.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackNonTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackNonTemplated(SKRect, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaLayout.TrackChildAsDirty(SkiaControl)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStackTemplated_SkiaSharp_SKRect_System_Single_">SkiaLayout.MeasureStackTemplated(SKRect, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnBeforeDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__">SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List&lt;ControlInStack&gt;)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_DrawStack_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_">SkiaLayout.DrawStack(DrawingContext, LayoutStructure)</a>
@@ -965,7 +966,19 @@ Convention elements tags: BtnText, BtnShape.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateByChild_DrawnUi_Draw_SkiaControl_">SkiaControl.UpdateByChild(SkiaControl)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_">SkiaControl.SetHover(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_">SkiaControl.OnHover(bool)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnFocusChanged_System_Boolean_">SkiaControl.OnFocusChanged(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty">SkiaControl.IsHoveredProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered">SkiaControl.IsHovered</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualLayer">SkiaControl.VisualLayer</a>
@@ -1055,12 +1068,6 @@ Convention elements tags: BtnText, BtnShape.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetVisualTransform_DrawnUi_Infrastructure_VisualTransform_">SkiaControl.SetVisualTransform(VisualTransform)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostponeInvalidation_System_String_System_Action_">SkiaControl.PostponeInvalidation(string, Action)</a>
     </div>
     <div>
@@ -1094,7 +1101,7 @@ Convention elements tags: BtnText, BtnShape.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DebugRendering">SkiaControl.DebugRendering</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_">SkiaControl.AnimateRangeAsync(Action&lt;double&gt;, double, double, double, Easing, CancellationToken, bool, int)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NotValidPoint">SkiaControl.NotValidPoint()</a>
@@ -1478,6 +1485,9 @@ Convention elements tags: BtnText, BtnShape.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Padding">SkiaControl.Padding</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding">SkiaControl.UsePadding</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MarginProperty">SkiaControl.MarginProperty</a>
     </div>
     <div>
@@ -1628,7 +1638,7 @@ Convention elements tags: BtnText, BtnShape.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject">SkiaControl.DisposeObject()</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_">SkiaControl.DisposeObject(IDisposable)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_">SkiaControl.DisposeObject(IDisposable, string)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnSizeChanged">SkiaControl.OnSizeChanged()</a>
@@ -2189,10 +2199,22 @@ Convention elements tags: BtnText, BtnShape.</p>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ItemTemplateChanged_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaControl.ItemTemplateChanged(BindableObject, object, object)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations">SkiaControl.CommitInvalidations()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged">SkiaControl.SuperViewChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators">SkiaControl.PendingUnattachedAnimators</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetAnimatorsManager">SkiaControl.GetAnimatorsManager()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_">SkiaControl.RegisterAnimator(ISkiaAnimator)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_">SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UnregisterAnimator_System_Guid_">SkiaControl.UnregisterAnimator(Guid)</a>
@@ -2241,6 +2263,12 @@ Convention elements tags: BtnText, BtnShape.</p>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_Microsoft_Maui_Controls_Element_">SkiaControl.OnChildAdded(Element)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren">SkiaControl.ClearDirtyChildren()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_">SkiaControl.TrackChildAsDirty(SkiaControl)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildAdded_DrawnUi_Draw_SkiaControl_">SkiaControl.OnChildAdded(SkiaControl)</a>
@@ -3119,7 +3147,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton__ctor" data-uid="DrawnUi.Draw.SkiaButton.#ctor">
   SkiaButton()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3145,7 +3173,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton__ctor_System_String_" data-uid="DrawnUi.Draw.SkiaButton.#ctor(System.String)">
   SkiaButton(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L16"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3179,7 +3207,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ApplyEffectProperty" data-uid="DrawnUi.Draw.SkiaButton.ApplyEffectProperty">
   ApplyEffectProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L999"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1097"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3269,7 +3297,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ButtonStyleProperty" data-uid="DrawnUi.Draw.SkiaButton.ButtonStyleProperty">
   ButtonStyleProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L798"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L896"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3299,7 +3327,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_Clicked" data-uid="DrawnUi.Draw.SkiaButton.Clicked">
   Clicked
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L717"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L815"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Occurs when the button is clicked/tapped (Tapped event).</p>
@@ -3330,7 +3358,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandLongPressingParameterProperty" data-uid="DrawnUi.Draw.SkiaButton.CommandLongPressingParameterProperty">
   CommandLongPressingParameterProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1043"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1141"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3360,7 +3388,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandLongPressingProperty" data-uid="DrawnUi.Draw.SkiaButton.CommandLongPressingProperty">
   CommandLongPressingProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1032"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3390,7 +3418,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandTappedParameterProperty" data-uid="DrawnUi.Draw.SkiaButton.CommandTappedParameterProperty">
   CommandTappedParameterProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1021"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1119"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3420,7 +3448,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandTappedProperty" data-uid="DrawnUi.Draw.SkiaButton.CommandTappedProperty">
   CommandTappedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1010"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1108"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3480,7 +3508,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_DelayCallbackMs" data-uid="DrawnUi.Draw.SkiaButton.DelayCallbackMs">
   DelayCallbackMs
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L697"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L795"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>You might want to pause to show effect before executing command. Default is 0.</p>
@@ -3511,7 +3539,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ElevationEnabledProperty" data-uid="DrawnUi.Draw.SkiaButton.ElevationEnabledProperty">
   ElevationEnabledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L830"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L928"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3541,7 +3569,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_FontFamilyProperty" data-uid="DrawnUi.Draw.SkiaButton.FontFamilyProperty">
   FontFamilyProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L894"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L992"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3571,7 +3599,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_FontSizeProperty" data-uid="DrawnUi.Draw.SkiaButton.FontSizeProperty">
   FontSizeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L881"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L979"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3601,7 +3629,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_IconPositionProperty" data-uid="DrawnUi.Draw.SkiaButton.IconPositionProperty">
   IconPositionProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L846"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L944"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3691,7 +3719,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_IsDisabledProperty" data-uid="DrawnUi.Draw.SkiaButton.IsDisabledProperty">
   IsDisabledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L907"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1005"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3721,7 +3749,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_IsPressedProperty" data-uid="DrawnUi.Draw.SkiaButton.IsPressedProperty">
   IsPressedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L919"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1017"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3751,7 +3779,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_LockPanningProperty" data-uid="DrawnUi.Draw.SkiaButton.LockPanningProperty">
   LockPanningProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L870"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L968"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3781,7 +3809,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_MainFrame" data-uid="DrawnUi.Draw.SkiaButton.MainFrame">
   MainFrame
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L375"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L455"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3811,7 +3839,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_MainLabel" data-uid="DrawnUi.Draw.SkiaButton.MainLabel">
   MainLabel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L374"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L454"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3839,9 +3867,39 @@ Convention elements tags: BtnText, BtnShape.</p>
 
 
 
+  <h3 id="DrawnUi_Draw_SkiaButton_MainWrapper" data-uid="DrawnUi.Draw.SkiaButton.MainWrapper">
+  MainWrapper
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L453"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SkiaLayout MainWrapper</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaLayout.html">SkiaLayout</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <h3 id="DrawnUi_Draw_SkiaButton_PanThreshold" data-uid="DrawnUi.Draw.SkiaButton.PanThreshold">
   PanThreshold
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L621"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L714"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3871,7 +3929,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_Pressed" data-uid="DrawnUi.Draw.SkiaButton.Pressed">
   Pressed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L727"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L825"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Occurs when the button is pressed (Down event).</p>
@@ -3902,7 +3960,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_Released" data-uid="DrawnUi.Draw.SkiaButton.Released">
   Released
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L722"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L820"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Occurs when the button is released (Up event).</p>
@@ -3933,7 +3991,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectAngleProperty" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectAngleProperty">
   ShimmerEffectAngleProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L962"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1060"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3963,7 +4021,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectColorProperty" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectColorProperty">
   ShimmerEffectColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L950"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1048"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3993,7 +4051,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectSpeedProperty" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectSpeedProperty">
   ShimmerEffectSpeedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L986"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1084"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4023,7 +4081,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectWidthProperty" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectWidthProperty">
   ShimmerEffectWidthProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L974"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1072"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4053,7 +4111,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_StrokeColorProperty" data-uid="DrawnUi.Draw.SkiaButton.StrokeColorProperty">
   StrokeColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1054"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1152"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4083,7 +4141,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_StrokeWidthProperty" data-uid="DrawnUi.Draw.SkiaButton.StrokeWidthProperty">
   StrokeWidthProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1067"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1165"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4113,7 +4171,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TextCaseProperty" data-uid="DrawnUi.Draw.SkiaButton.TextCaseProperty">
   TextCaseProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L814"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L912"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4143,7 +4201,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TextColorProperty" data-uid="DrawnUi.Draw.SkiaButton.TextColorProperty">
   TextColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1081"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1179"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4173,7 +4231,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TextProperty" data-uid="DrawnUi.Draw.SkiaButton.TextProperty">
   TextProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L935"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1033"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4203,7 +4261,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TextStrokeColorProperty" data-uid="DrawnUi.Draw.SkiaButton.TextStrokeColorProperty">
   TextStrokeColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1094"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1192"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4233,7 +4291,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton__lastDownPts" data-uid="DrawnUi.Draw.SkiaButton._lastDownPts">
   _lastDownPts
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1079"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1177"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4268,7 +4326,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ApplyEffect" data-uid="DrawnUi.Draw.SkiaButton.ApplyEffect">
   ApplyEffect
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1003"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1101"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4357,11 +4415,42 @@ Convention elements tags: BtnText, BtnShape.</p>
 
 
 
+  <a id="DrawnUi_Draw_SkiaButton_ButtonPadding_" data-uid="DrawnUi.Draw.SkiaButton.ButtonPadding*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaButton_ButtonPadding" data-uid="DrawnUi.Draw.SkiaButton.ButtonPadding">
+  ButtonPadding
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Thickness ButtonPadding { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaButton_ButtonStyle_" data-uid="DrawnUi.Draw.SkiaButton.ButtonStyle*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ButtonStyle" data-uid="DrawnUi.Draw.SkiaButton.ButtonStyle">
   ButtonStyle
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L808"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L906"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the style variant of the button (Contained, Outlined, or Text).</p>
@@ -4393,7 +4482,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandLongPressing" data-uid="DrawnUi.Draw.SkiaButton.CommandLongPressing">
   CommandLongPressing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1037"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1135"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4424,7 +4513,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandLongPressingParameter" data-uid="DrawnUi.Draw.SkiaButton.CommandLongPressingParameter">
   CommandLongPressingParameter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1048"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1146"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4455,7 +4544,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandTapped" data-uid="DrawnUi.Draw.SkiaButton.CommandTapped">
   CommandTapped
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1015"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1113"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4486,7 +4575,7 @@ Convention elements tags: BtnText, BtnShape.</p>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CommandTappedParameter" data-uid="DrawnUi.Draw.SkiaButton.CommandTappedParameter">
   CommandTappedParameter
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1026"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1124"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4549,7 +4638,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ElevationEnabled" data-uid="DrawnUi.Draw.SkiaButton.ElevationEnabled">
   ElevationEnabled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L840"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L938"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets whether the button has elevation (shadow effect).</p>
@@ -4581,7 +4670,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_FontFamily" data-uid="DrawnUi.Draw.SkiaButton.FontFamily">
   FontFamily
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L901"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L999"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4612,7 +4701,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_FontSize" data-uid="DrawnUi.Draw.SkiaButton.FontSize">
   FontSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L888"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L986"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4643,7 +4732,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_IconPosition" data-uid="DrawnUi.Draw.SkiaButton.IconPosition">
   IconPosition
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L856"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L954"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the position of the icon relative to the button text.</p>
@@ -4675,7 +4764,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_IsDisabled" data-uid="DrawnUi.Draw.SkiaButton.IsDisabled">
   IsDisabled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L913"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1011"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4706,7 +4795,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_IsPressed" data-uid="DrawnUi.Draw.SkiaButton.IsPressed">
   IsPressed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L929"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1027"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets whether the button is pressed, readonly.</p>
@@ -4738,7 +4827,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_LockPanning" data-uid="DrawnUi.Draw.SkiaButton.LockPanning">
   LockPanning
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L875"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L973"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4769,7 +4858,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectAngle" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectAngle">
   ShimmerEffectAngle
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L968"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1066"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4800,7 +4889,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectColor" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectColor">
   ShimmerEffectColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L956"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1054"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4831,7 +4920,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectSpeed" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectSpeed">
   ShimmerEffectSpeed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L992"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1090"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4862,7 +4951,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ShimmerEffectWidth" data-uid="DrawnUi.Draw.SkiaButton.ShimmerEffectWidth">
   ShimmerEffectWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L980"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1078"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4893,7 +4982,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_StrokeColor" data-uid="DrawnUi.Draw.SkiaButton.StrokeColor">
   StrokeColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1061"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1159"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4924,7 +5013,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_StrokeWidth" data-uid="DrawnUi.Draw.SkiaButton.StrokeWidth">
   StrokeWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1073"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1171"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4955,7 +5044,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_Text" data-uid="DrawnUi.Draw.SkiaButton.Text">
   Text
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L944"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1042"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Bind to your own content!</p>
@@ -4987,7 +5076,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TextCase" data-uid="DrawnUi.Draw.SkiaButton.TextCase">
   TextCase
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L824"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L922"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how the button text case is transformed (None, Uppercase, Lowercase).</p>
@@ -5019,7 +5108,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TextColor" data-uid="DrawnUi.Draw.SkiaButton.TextColor">
   TextColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1088"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1186"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5050,7 +5139,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TextStrokeColor" data-uid="DrawnUi.Draw.SkiaButton.TextStrokeColor">
   TextStrokeColor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1101"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1199"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5081,7 +5170,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TotalDown" data-uid="DrawnUi.Draw.SkiaButton.TotalDown">
   TotalDown
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L746"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L844"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5112,7 +5201,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_TotalTapped" data-uid="DrawnUi.Draw.SkiaButton.TotalTapped">
   TotalTapped
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L731"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L829"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5147,7 +5236,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ApplyProperties" data-uid="DrawnUi.Draw.SkiaButton.ApplyProperties">
   ApplyProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L397"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L482"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5173,7 +5262,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CreateClip_System_Object_System_Boolean_SkiaSharp_SKPath_" data-uid="DrawnUi.Draw.SkiaButton.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)">
   CreateClip(object, bool, SKPath)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L360"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L439"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clip effects with rounded rect of the frame inside</p>
@@ -5214,7 +5303,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CreateCupertinoStyleContent" data-uid="DrawnUi.Draw.SkiaButton.CreateCupertinoStyleContent">
   CreateCupertinoStyleContent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L104"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L131"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5240,7 +5329,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CreateDefaultContent" data-uid="DrawnUi.Draw.SkiaButton.CreateDefaultContent">
   CreateDefaultContent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5266,7 +5355,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CreateDefaultStyleContent" data-uid="DrawnUi.Draw.SkiaButton.CreateDefaultStyleContent">
   CreateDefaultStyleContent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L94"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5288,11 +5377,42 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
 
 
+  <a id="DrawnUi_Draw_SkiaButton_CreateElevation_" data-uid="DrawnUi.Draw.SkiaButton.CreateElevation*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaButton_CreateElevation" data-uid="DrawnUi.Draw.SkiaButton.CreateElevation">
+  CreateElevation()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L312"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual SkiaButton.ButtonElevationShadowEffect CreateElevation()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.SkiaButton.html">SkiaButton</a>.<a class="xref" href="DrawnUi.Draw.SkiaButton.ButtonElevationShadowEffect.html">ButtonElevationShadowEffect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaButton_CreateMaterialStyleContent_" data-uid="DrawnUi.Draw.SkiaButton.CreateMaterialStyleContent*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CreateMaterialStyleContent" data-uid="DrawnUi.Draw.SkiaButton.CreateMaterialStyleContent">
   CreateMaterialStyleContent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L189"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5318,7 +5438,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_CreateWindowsStyleContent" data-uid="DrawnUi.Draw.SkiaButton.CreateWindowsStyleContent">
   CreateWindowsStyleContent()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L246"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5344,7 +5464,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_FindViews" data-uid="DrawnUi.Draw.SkiaButton.FindViews">
   FindViews()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L384"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L464"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5370,7 +5490,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_IsInsideTapRegion_DrawnUi_Draw_SkiaGesturesParameters_" data-uid="DrawnUi.Draw.SkiaButton.IsInsideTapRegion(DrawnUi.Draw.SkiaGesturesParameters)">
   IsInsideTapRegion(SkiaGesturesParameters)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L234"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L301"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5406,7 +5526,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_OnButtonPropertyChanged_DrawnUi_Draw_SkiaButton_System_String_" data-uid="DrawnUi.Draw.SkiaButton.OnButtonPropertyChanged(DrawnUi.Draw.SkiaButton,System.String)">
   OnButtonPropertyChanged(SkiaButton, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L241"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L320"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5439,7 +5559,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_OnChildrenChanged" data-uid="DrawnUi.Draw.SkiaButton.OnChildrenChanged">
   OnChildrenChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L377"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L457"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Happens when child was added or removed, will call Invalidate() in base</p>
@@ -5466,7 +5586,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_OnDisposing" data-uid="DrawnUi.Draw.SkiaButton.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L699"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L797"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -5493,7 +5613,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_OnDown_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.SkiaButton.OnDown(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   OnDown(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L555"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L648"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5527,11 +5647,48 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
 
 
+  <a id="DrawnUi_Draw_SkiaButton_OnPaddingSet_" data-uid="DrawnUi.Draw.SkiaButton.OnPaddingSet*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaButton_OnPaddingSet_Microsoft_Maui_Thickness_" data-uid="DrawnUi.Draw.SkiaButton.OnPaddingSet(Microsoft.Maui.Thickness)">
+  OnPaddingSet(Thickness)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Can override this for custom controls to apply padding differently from the default way</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Thickness OnPaddingSet(Thickness padding)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>padding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness">Thickness</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaButton_OnPropertyChanged_" data-uid="DrawnUi.Draw.SkiaButton.OnPropertyChanged*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaButton_OnPropertyChanged_System_String_" data-uid="DrawnUi.Draw.SkiaButton.OnPropertyChanged(System.String)">
   OnPropertyChanged(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1115"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1215"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Method that is called when a bound property is changed.</p>
@@ -5564,7 +5721,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_OnTapped_DrawnUi_Draw_SkiaGesturesParameters_SkiaSharp_SKPoint_" data-uid="DrawnUi.Draw.SkiaButton.OnTapped(DrawnUi.Draw.SkiaGesturesParameters,SkiaSharp.SKPoint)">
   OnTapped(SkiaGesturesParameters, SKPoint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L589"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L682"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5602,7 +5759,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_OnUp_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.SkiaButton.OnUp(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   OnUp(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L584"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L677"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5635,7 +5792,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.SkiaButton.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L623"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L716"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5673,7 +5830,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_SetupBackgroundPaint_SkiaSharp_SKPaint_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaButton.SetupBackgroundPaint(SkiaSharp.SKPaint,SkiaSharp.SKRect)">
   SetupBackgroundPaint(SKPaint, SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1133"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L1240"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will never paint background, it's up to the button shape to do it.</p>
@@ -5715,7 +5872,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_Down" data-uid="DrawnUi.Draw.SkiaButton.Down">
   Down
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L711"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L809"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5745,7 +5902,7 @@ public CornerRadius CornerRadius { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaButton_Up" data-uid="DrawnUi.Draw.SkiaButton.Up">
   Up
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L710"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Controls/Button/SkiaButton.cs/#L808"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

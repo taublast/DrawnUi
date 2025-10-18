@@ -5,7 +5,7 @@ items:
   id: IRefreshIndicator
   parent: DrawnUi.Draw
   children:
-  - DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
+  - DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
   langs:
   - csharp
   - vb
@@ -69,23 +69,23 @@ items:
   - DrawnUi.Draw.IDrawnBase.InvalidateViewport
   - DrawnUi.Draw.IDrawnBase.Repaint
   - DrawnUi.Draw.IDrawnBase.InvalidateViewsList
-  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
   - System.IDisposable.Dispose
   - DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
   - DrawnUi.Draw.ICanBeUpdated.Update
   extensionMethods:
   - DrawnUi.Draw.IDrawnBase.DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.ISkiaControl)
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-- uid: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  commentId: M:DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double)
-  id: SetDragRatio(System.Single,System.Single,System.Double)
+- uid: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  commentId: M:DrawnUi.Draw.IRefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
+  id: SetDragRatio(System.Single,System.Single,System.Double,System.Double)
   parent: DrawnUi.Draw.IRefreshIndicator
   langs:
   - csharp
   - vb
-  name: SetDragRatio(float, float, double)
-  nameWithType: IRefreshIndicator.SetDragRatio(float, float, double)
-  fullName: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(float, float, double)
+  name: SetDragRatio(float, float, double, double)
+  nameWithType: IRefreshIndicator.SetDragRatio(float, float, double, double)
+  fullName: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(float, float, double, double)
   type: Method
   source:
     remote:
@@ -101,7 +101,7 @@ items:
   summary: 0 - 1 ratio between overscroll and RefreshShowDistance.1 means control must be totally shown.
   example: []
   syntax:
-    content: void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit)
+    content: void SetDragRatio(float ratio, float ptsScrollOffset, double ptsLimit, double ptsTrigger)
     parameters:
     - id: ratio
       type: System.Single
@@ -110,11 +110,13 @@ items:
       type: System.Single
     - id: ptsLimit
       type: System.Double
-    content.vb: Sub SetDragRatio(ratio As Single, ptsScrollOffset As Single, ptsLimit As Double)
+    - id: ptsTrigger
+      type: System.Double
+    content.vb: Sub SetDragRatio(ratio As Single, ptsScrollOffset As Single, ptsLimit As Double, ptsTrigger As Double)
   overload: DrawnUi.Draw.IRefreshIndicator.SetDragRatio*
-  nameWithType.vb: IRefreshIndicator.SetDragRatio(Single, Single, Double)
-  fullName.vb: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(Single, Single, Double)
-  name.vb: SetDragRatio(Single, Single, Double)
+  nameWithType.vb: IRefreshIndicator.SetDragRatio(Single, Single, Double, Double)
+  fullName.vb: DrawnUi.Draw.IRefreshIndicator.SetDragRatio(Single, Single, Double, Double)
+  name.vb: SetDragRatio(Single, Single, Double, Double)
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -789,33 +791,48 @@ references:
     href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewsList
   - name: (
   - name: )
-- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
-  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
+  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
   parent: DrawnUi.Draw.IDrawnBase
   isExternal: true
-  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
-  name: DisposeObject(IDisposable)
-  nameWithType: IDrawnBase.DisposeObject(IDisposable)
-  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
+  name: DisposeObject(IDisposable, string)
+  nameWithType: IDrawnBase.DisposeObject(IDisposable, string)
+  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, string)
+  nameWithType.vb: IDrawnBase.DisposeObject(IDisposable, String)
+  fullName.vb: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, String)
+  name.vb: DisposeObject(IDisposable, String)
   spec.csharp:
-  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
 - uid: System.IDisposable.Dispose
   commentId: M:System.IDisposable.Dispose
@@ -1070,7 +1087,7 @@ references:
     href: DrawnUi.Extensions.html
 - uid: DrawnUi.Draw.IRefreshIndicator.SetDragRatio*
   commentId: Overload:DrawnUi.Draw.IRefreshIndicator.SetDragRatio
-  href: DrawnUi.Draw.IRefreshIndicator.html#DrawnUi_Draw_IRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_
+  href: DrawnUi.Draw.IRefreshIndicator.html#DrawnUi_Draw_IRefreshIndicator_SetDragRatio_System_Single_System_Single_System_Double_System_Double_
   name: SetDragRatio
   nameWithType: IRefreshIndicator.SetDragRatio
   fullName: DrawnUi.Draw.IRefreshIndicator.SetDragRatio

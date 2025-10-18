@@ -73,11 +73,11 @@ items:
     content: >-
       [ContentProperty("ItemTemplate")]
 
-      public class SkiaSpinner : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
+      public class SkiaSpinner : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
     content.vb: >-
       <ContentProperty("ItemTemplate")>
 
-      Public Class SkiaSpinner Inherits SkiaLayout Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
+      Public Class SkiaSpinner Inherits SkiaLayout Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
@@ -106,6 +106,7 @@ items:
   - System.Collections.IEnumerable
   - DrawnUi.Draw.ISkiaGestureListener
   - DrawnUi.Draw.IHasAfterEffects
+  - DrawnUi.Draw.ISkiaDisposable
   - DrawnUi.Draw.ISkiaGridLayout
   - DrawnUi.Draw.ISkiaLayout
   - DrawnUi.Draw.ISkiaControl
@@ -127,9 +128,9 @@ items:
   - DrawnUi.Draw.SkiaLayout.GetSizeKey(SkiaSharp.SKSize)
   - DrawnUi.Draw.SkiaLayout.MeasureStackLegacy(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackNonTemplated(SkiaSharp.SKRect,System.Single)
-  - DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  - DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   - DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   - DrawnUi.Draw.SkiaLayout.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaLayout.IsGestureForChild(DrawnUi.Draw.SkiaControlWithRect,SkiaSharp.SKPoint)
@@ -319,6 +320,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ClearColorProperty
   - DrawnUi.Draw.SkiaControl.ClearColor
   - DrawnUi.Draw.SkiaControl.OnPropertyChanged(System.String)
+  - DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.RemoveSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
@@ -384,7 +386,11 @@ items:
   - DrawnUi.Draw.SkiaControl.DirtyChildrenTracker
   - DrawnUi.Draw.SkiaControl.DirtyChildrenInternal
   - DrawnUi.Draw.SkiaControl.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  - DrawnUi.Draw.SkiaControl.IsHovered
   - DrawnUi.Draw.SkiaControl.VisualLayer
   - DrawnUi.Draw.SkiaControl.CachedImage
   - DrawnUi.Draw.SkiaControl.Left
@@ -415,8 +421,6 @@ items:
   - DrawnUi.Draw.SkiaControl.SetDefaultContentSize(System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.GenerateParentChain
   - DrawnUi.Draw.SkiaControl.SetVisualTransform(DrawnUi.Infrastructure.VisualTransform)
-  - DrawnUi.Draw.SkiaControl.CommitInvalidations
-  - DrawnUi.Draw.SkiaControl.SuperViewChanged
   - DrawnUi.Draw.SkiaControl.PostponeInvalidation(System.String,System.Action)
   - DrawnUi.Draw.SkiaControl.GetRenderingScaleFor(System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.GetRenderingScaleFor(System.Single)
@@ -428,7 +432,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PrintDebug(System.String)
   - DrawnUi.Draw.SkiaControl.DebugRenderingProperty
   - DrawnUi.Draw.SkiaControl.DebugRendering
-  - DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+  - DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
   - DrawnUi.Draw.SkiaControl.NotValidPoint
   - DrawnUi.Draw.SkiaControl.PointIsValid(SkiaSharp.SKPoint)
   - DrawnUi.Draw.SkiaControl.SizeRequest
@@ -556,6 +560,7 @@ items:
   - DrawnUi.Draw.SkiaControl.AdjustClipping
   - DrawnUi.Draw.SkiaControl.PaddingProperty
   - DrawnUi.Draw.SkiaControl.Padding
+  - DrawnUi.Draw.SkiaControl.UsePadding
   - DrawnUi.Draw.SkiaControl.MarginProperty
   - DrawnUi.Draw.SkiaControl.Margin
   - DrawnUi.Draw.SkiaControl.AddMarginTopProperty
@@ -606,7 +611,7 @@ items:
   - DrawnUi.Draw.SkiaControl.DisposalDelay
   - DrawnUi.Draw.SkiaControl.IsAlive
   - DrawnUi.Draw.SkiaControl.DisposeObject
-  - DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  - DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
   - DrawnUi.Draw.SkiaControl.OnSizeChanged
   - DrawnUi.Draw.SkiaControl.Clipping
   - DrawnUi.Draw.SkiaControl.Hero
@@ -794,8 +799,12 @@ items:
   - DrawnUi.Draw.SkiaControl.NeedInvalidateViewport(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaControl.CreateContentFromTemplate
   - DrawnUi.Draw.SkiaControl.ItemTemplateChanged(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  - DrawnUi.Draw.SkiaControl.CommitInvalidations
+  - DrawnUi.Draw.SkiaControl.SuperViewChanged
+  - DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
   - DrawnUi.Draw.SkiaControl.GetAnimatorsManager
   - DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator)
+  - DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
   - DrawnUi.Draw.SkiaControl.UnregisterAnimator(System.Guid)
   - DrawnUi.Draw.SkiaControl.UnregisterAllAnimatorsByType(System.Type)
   - DrawnUi.Draw.SkiaControl.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
@@ -812,6 +821,8 @@ items:
   - DrawnUi.Draw.SkiaControl.ClearChildren
   - DrawnUi.Draw.SkiaControl.OnChildRemoved(Microsoft.Maui.Controls.Element,System.Int32)
   - DrawnUi.Draw.SkiaControl.OnChildAdded(Microsoft.Maui.Controls.Element)
+  - DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  - DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnChildAdded(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnChildRemoved(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnViewAttached
@@ -2656,6 +2667,13 @@ references:
   name: IHasAfterEffects
   nameWithType: IHasAfterEffects
   fullName: DrawnUi.Draw.IHasAfterEffects
+- uid: DrawnUi.Draw.ISkiaDisposable
+  commentId: T:DrawnUi.Draw.ISkiaDisposable
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaDisposable.html
+  name: ISkiaDisposable
+  nameWithType: ISkiaDisposable
+  fullName: DrawnUi.Draw.ISkiaDisposable
 - uid: DrawnUi.Draw.ISkiaGridLayout
   commentId: T:DrawnUi.Draw.ISkiaGridLayout
   parent: DrawnUi.Draw
@@ -3060,31 +3078,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  commentId: M:DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  parent: DrawnUi.Draw.SkiaLayout
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
-  name: TrackChildAsDirty(SkiaControl)
-  nameWithType: SkiaLayout.TrackChildAsDirty(SkiaControl)
-  fullName: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-    name: TrackChildAsDirty
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLayout.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
-    name: TrackChildAsDirty
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaControl
-    name: SkiaControl
-    href: DrawnUi.Draw.SkiaControl.html
-  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
   commentId: M:DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
   parent: DrawnUi.Draw.SkiaLayout
@@ -3168,6 +3161,69 @@ references:
   - uid: DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
     name: OnBeforeDrawingVisibleChildren
     href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnBeforeDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  commentId: M:DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
+  name: OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List<ControlInStack>)
+  nameWithType: SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List<ControlInStack>)
+  fullName: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.LayoutStructure, System.Collections.Generic.List<DrawnUi.Draw.ControlInStack>)
+  nameWithType.vb: SkiaLayout.OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List(Of ControlInStack))
+  fullName.vb: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.LayoutStructure, System.Collections.Generic.List(Of DrawnUi.Draw.ControlInStack))
+  name.vb: OnAfterDrawingVisibleChildren(DrawingContext, LayoutStructure, List(Of ControlInStack))
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+    name: OnAfterDrawingVisibleChildren
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+    name: OnAfterDrawingVisibleChildren
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnAfterDrawingVisibleChildren_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_System_Collections_Generic_List_DrawnUi_Draw_ControlInStack__
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
@@ -6878,6 +6934,34 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_
+  name: OnPaddingSet(Thickness)
+  nameWithType: SkiaControl.OnPaddingSet(Thickness)
+  fullName: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+    name: OnPaddingSet
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
+    name: OnPaddingSet
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnPaddingSet_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   parent: DrawnUi.Draw.SkiaControl
@@ -8316,6 +8400,68 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_
+  name: SetHover(bool)
+  nameWithType: SkiaControl.SetHover(bool)
+  fullName: DrawnUi.Draw.SkiaControl.SetHover(bool)
+  nameWithType.vb: SkiaControl.SetHover(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetHover(Boolean)
+  name.vb: SetHover(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+    name: SetHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
+    name: SetHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_
+  name: OnHover(bool)
+  nameWithType: SkiaControl.OnHover(bool)
+  fullName: DrawnUi.Draw.SkiaControl.OnHover(bool)
+  nameWithType.vb: SkiaControl.OnHover(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaControl.OnHover(Boolean)
+  name.vb: OnHover(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+    name: OnHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
+    name: OnHover
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnHover_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -8347,6 +8493,20 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.IsHoveredProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHoveredProperty
+  name: IsHoveredProperty
+  nameWithType: SkiaControl.IsHoveredProperty
+  fullName: DrawnUi.Draw.SkiaControl.IsHoveredProperty
+- uid: DrawnUi.Draw.SkiaControl.IsHovered
+  commentId: P:DrawnUi.Draw.SkiaControl.IsHovered
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsHovered
+  name: IsHovered
+  nameWithType: SkiaControl.IsHovered
+  fullName: DrawnUi.Draw.SkiaControl.IsHovered
 - uid: DrawnUi.Draw.SkiaControl.VisualLayer
   commentId: P:DrawnUi.Draw.SkiaControl.VisualLayer
   parent: DrawnUi.Draw.SkiaControl
@@ -8917,44 +9077,6 @@ references:
     name: VisualTransform
     href: DrawnUi.Infrastructure.VisualTransform.html
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
-  commentId: M:DrawnUi.Draw.SkiaControl.CommitInvalidations
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
-  name: CommitInvalidations()
-  nameWithType: SkiaControl.CommitInvalidations()
-  fullName: DrawnUi.Draw.SkiaControl.CommitInvalidations()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
-    name: CommitInvalidations
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
-    name: CommitInvalidations
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
-  - name: (
-  - name: )
-- uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
-  commentId: M:DrawnUi.Draw.SkiaControl.SuperViewChanged
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
-  name: SuperViewChanged()
-  nameWithType: SkiaControl.SuperViewChanged()
-  fullName: DrawnUi.Draw.SkiaControl.SuperViewChanged()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
-    name: SuperViewChanged
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
-    name: SuperViewChanged
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.PostponeInvalidation(System.String,System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.PostponeInvalidation(System.String,System.Action)
   parent: DrawnUi.Draw.SkiaControl
@@ -9502,21 +9624,21 @@ references:
   name: DebugRendering
   nameWithType: SkiaControl.DebugRendering
   fullName: DrawnUi.Draw.SkiaControl.DebugRendering
-- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_
-  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool)
-  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool)
-  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, System.Threading.CancellationToken, bool)
-  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, System.Threading.CancellationToken, Boolean)
-  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
+  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
+  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
+  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, System.Threading.CancellationToken, bool, int)
+  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
+  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, System.Threading.CancellationToken, Boolean, Integer)
+  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
     name: AnimateRangeAsync
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -9564,11 +9686,17 @@ references:
     name: bool
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean)
+  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
     name: AnimateRangeAsync
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -9618,6 +9746,12 @@ references:
     name: Boolean
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.NotValidPoint
   commentId: M:DrawnUi.Draw.SkiaControl.NotValidPoint
@@ -11929,6 +12063,13 @@ references:
   name: Padding
   nameWithType: SkiaControl.Padding
   fullName: DrawnUi.Draw.SkiaControl.Padding
+- uid: DrawnUi.Draw.SkiaControl.UsePadding
+  commentId: P:DrawnUi.Draw.SkiaControl.UsePadding
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsePadding
+  name: UsePadding
+  nameWithType: SkiaControl.UsePadding
+  fullName: DrawnUi.Draw.SkiaControl.UsePadding
 - uid: DrawnUi.Draw.SkiaControl.MarginProperty
   commentId: F:DrawnUi.Draw.SkiaControl.MarginProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -12471,33 +12612,48 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject
   - name: (
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
-  commentId: M:DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+- uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
+  commentId: M:DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_
-  name: DisposeObject(IDisposable)
-  nameWithType: SkiaControl.DisposeObject(IDisposable)
-  fullName: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_
+  name: DisposeObject(IDisposable, string)
+  nameWithType: SkiaControl.DisposeObject(IDisposable, string)
+  fullName: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable, string)
+  nameWithType.vb: SkiaControl.DisposeObject(IDisposable, String)
+  fullName.vb: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable, String)
+  name.vb: DisposeObject(IDisposable, String)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.SkiaControl.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.OnSizeChanged
   commentId: M:DrawnUi.Draw.SkiaControl.OnSizeChanged
@@ -17253,6 +17409,51 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
+  commentId: M:DrawnUi.Draw.SkiaControl.CommitInvalidations
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
+  name: CommitInvalidations()
+  nameWithType: SkiaControl.CommitInvalidations()
+  fullName: DrawnUi.Draw.SkiaControl.CommitInvalidations()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
+    name: CommitInvalidations
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CommitInvalidations
+    name: CommitInvalidations
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CommitInvalidations
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
+  commentId: M:DrawnUi.Draw.SkiaControl.SuperViewChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
+  name: SuperViewChanged()
+  nameWithType: SkiaControl.SuperViewChanged()
+  fullName: DrawnUi.Draw.SkiaControl.SuperViewChanged()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
+    name: SuperViewChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SuperViewChanged
+    name: SuperViewChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SuperViewChanged
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
+  commentId: F:DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PendingUnattachedAnimators
+  name: PendingUnattachedAnimators
+  nameWithType: SkiaControl.PendingUnattachedAnimators
+  fullName: DrawnUi.Draw.SkiaControl.PendingUnattachedAnimators
 - uid: DrawnUi.Draw.SkiaControl.GetAnimatorsManager
   commentId: M:DrawnUi.Draw.SkiaControl.GetAnimatorsManager
   parent: DrawnUi.Draw.SkiaControl
@@ -17296,6 +17497,41 @@ references:
   - uid: DrawnUi.Draw.ISkiaAnimator
     name: ISkiaAnimator
     href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+  commentId: M:DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_
+  name: RegisterAnimator(ISkiaAnimator, IAnimatorsManager)
+  nameWithType: SkiaControl.RegisterAnimator(ISkiaAnimator, IAnimatorsManager)
+  fullName: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator, DrawnUi.Draw.IAnimatorsManager)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+    name: RegisterAnimator
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.IAnimatorsManager
+    name: IAnimatorsManager
+    href: DrawnUi.Draw.IAnimatorsManager.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RegisterAnimator(DrawnUi.Draw.ISkiaAnimator,DrawnUi.Draw.IAnimatorsManager)
+    name: RegisterAnimator
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RegisterAnimator_DrawnUi_Draw_ISkiaAnimator_DrawnUi_Draw_IAnimatorsManager_
+  - name: (
+  - uid: DrawnUi.Draw.ISkiaAnimator
+    name: ISkiaAnimator
+    href: DrawnUi.Draw.ISkiaAnimator.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.IAnimatorsManager
+    name: IAnimatorsManager
+    href: DrawnUi.Draw.IAnimatorsManager.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.UnregisterAnimator(System.Guid)
   commentId: M:DrawnUi.Draw.SkiaControl.UnregisterAnimator(System.Guid)
@@ -17800,6 +18036,50 @@ references:
     name: Element
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  commentId: M:DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren
+  name: ClearDirtyChildren()
+  nameWithType: SkiaControl.ClearDirtyChildren()
+  fullName: DrawnUi.Draw.SkiaControl.ClearDirtyChildren()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+    name: ClearDirtyChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ClearDirtyChildren
+    name: ClearDirtyChildren
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClearDirtyChildren
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
+  name: TrackChildAsDirty(SkiaControl)
+  nameWithType: SkiaControl.TrackChildAsDirty(SkiaControl)
+  fullName: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+    name: TrackChildAsDirty
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.TrackChildAsDirty(DrawnUi.Draw.SkiaControl)
+    name: TrackChildAsDirty
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_TrackChildAsDirty_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.OnChildAdded(DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Draw.SkiaControl.OnChildAdded(DrawnUi.Draw.SkiaControl)

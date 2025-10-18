@@ -89,7 +89,7 @@ items:
   - DrawnUi.Draw.IDrawnBase.InvalidateViewport
   - DrawnUi.Draw.IDrawnBase.Repaint
   - DrawnUi.Draw.IDrawnBase.InvalidateViewsList
-  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
   - DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
   - DrawnUi.Draw.ICanBeUpdated.Update
   - DrawnUi.Draw.ILayoutInsideViewport.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
@@ -1196,33 +1196,48 @@ references:
     href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_InvalidateViewsList
   - name: (
   - name: )
-- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
-  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+- uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
+  commentId: M:DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
   parent: DrawnUi.Draw.IDrawnBase
   isExternal: true
-  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
-  name: DisposeObject(IDisposable)
-  nameWithType: IDrawnBase.DisposeObject(IDisposable)
-  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
+  name: DisposeObject(IDisposable, string)
+  nameWithType: IDrawnBase.DisposeObject(IDisposable, string)
+  fullName: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, string)
+  nameWithType.vb: IDrawnBase.DisposeObject(IDisposable, String)
+  fullName.vb: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable, String)
+  name.vb: DisposeObject(IDisposable, String)
   spec.csharp:
-  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable)
+  - uid: DrawnUi.Draw.IDrawnBase.DisposeObject(System.IDisposable,System.String)
     name: DisposeObject
-    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_
+    href: DrawnUi.Draw.IDrawnBase.html#DrawnUi_Draw_IDrawnBase_DisposeObject_System_IDisposable_System_String_
   - name: (
   - uid: System.IDisposable
     name: IDisposable
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
 - uid: DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext
   commentId: P:DrawnUi.Draw.ICanBeUpdatedWithContext.BindingContext

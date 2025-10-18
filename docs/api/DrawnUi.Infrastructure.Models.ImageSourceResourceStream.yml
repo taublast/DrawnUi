@@ -119,6 +119,7 @@ items:
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
   extensionMethods:
+  - DrawnUi.Infrastructure.Models.ImageSourceResourceStream.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Infrastructure.Models.ImageSourceResourceStream@)
   - DrawnUi.Infrastructure.Models.ImageSourceResourceStream.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   - Microsoft.Maui.Controls.Element.DrawnUi.Draw.StaticResourcesExtensions.FindParent``1
   - Microsoft.Maui.Controls.Element.DrawnUi.Extensions.InternalExtensions.FindMauiContext(System.Boolean)
@@ -2096,6 +2097,59 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object.tostring
   - name: (
   - name: )
+- uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Infrastructure.Models.ImageSourceResourceStream@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<ImageSourceResourceStream>(ImageSourceResourceStream, out ImageSourceResourceStream)
+  nameWithType: FluentExtensions.Assign<ImageSourceResourceStream>(ImageSourceResourceStream, out ImageSourceResourceStream)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<DrawnUi.Infrastructure.Models.ImageSourceResourceStream>(DrawnUi.Infrastructure.Models.ImageSourceResourceStream, out DrawnUi.Infrastructure.Models.ImageSourceResourceStream)
+  nameWithType.vb: FluentExtensions.Assign(Of ImageSourceResourceStream)(ImageSourceResourceStream, ImageSourceResourceStream)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of DrawnUi.Infrastructure.Models.ImageSourceResourceStream)(DrawnUi.Infrastructure.Models.ImageSourceResourceStream, DrawnUi.Infrastructure.Models.ImageSourceResourceStream)
+  name.vb: Assign(Of ImageSourceResourceStream)(ImageSourceResourceStream, ImageSourceResourceStream)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Infrastructure.Models.ImageSourceResourceStream,DrawnUi.Infrastructure.Models.ImageSourceResourceStream@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+    name: ImageSourceResourceStream
+    href: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+    name: ImageSourceResourceStream
+    href: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+    name: ImageSourceResourceStream
+    href: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Infrastructure.Models.ImageSourceResourceStream,DrawnUi.Infrastructure.Models.ImageSourceResourceStream@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+    name: ImageSourceResourceStream
+    href: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+    name: ImageSourceResourceStream
+    href: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream
+    name: ImageSourceResourceStream
+    href: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.html
+  - name: )
 - uid: DrawnUi.Infrastructure.Models.ImageSourceResourceStream.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   parent: DrawnUi.Draw.ThemeBindings
@@ -2424,6 +2478,52 @@ references:
     name: Maui
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+- uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<T>(T, out T)
+  nameWithType: FluentExtensions.Assign<T>(T, out T)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<T>(T, out T)
+  nameWithType.vb: FluentExtensions.Assign(Of T)(T, T)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of T)(T, T)
+  name.vb: Assign(Of T)(T, T)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions
+  commentId: T:DrawnUi.Draw.FluentExtensions
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.FluentExtensions.html
+  name: FluentExtensions
+  nameWithType: FluentExtensions
+  fullName: DrawnUi.Draw.FluentExtensions
 - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   isExternal: true

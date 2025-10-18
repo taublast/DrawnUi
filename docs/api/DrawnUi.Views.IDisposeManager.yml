@@ -5,7 +5,7 @@ items:
   id: IDisposeManager
   parent: DrawnUi.Views
   children:
-  - DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable)
+  - DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable,System.String)
   langs:
   - csharp
   - vb
@@ -29,16 +29,16 @@ items:
     content.vb: Public Interface IDisposeManager
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-- uid: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable)
-  commentId: M:DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable)
-  id: DisposeObject(System.IDisposable)
+- uid: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable,System.String)
+  commentId: M:DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable,System.String)
+  id: DisposeObject(System.IDisposable,System.String)
   parent: DrawnUi.Views.IDisposeManager
   langs:
   - csharp
   - vb
-  name: DisposeObject(IDisposable)
-  nameWithType: IDisposeManager.DisposeObject(IDisposable)
-  fullName: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable)
+  name: DisposeObject(IDisposable, string)
+  nameWithType: IDisposeManager.DisposeObject(IDisposable, string)
+  fullName: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable, string)
   type: Method
   source:
     remote:
@@ -52,12 +52,17 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
   syntax:
-    content: void DisposeObject(IDisposable disposable)
+    content: void DisposeObject(IDisposable disposable, string caller = null)
     parameters:
     - id: disposable
       type: System.IDisposable
-    content.vb: Sub DisposeObject(disposable As IDisposable)
+    - id: caller
+      type: System.String
+    content.vb: Sub DisposeObject(disposable As IDisposable, caller As String = Nothing)
   overload: DrawnUi.Views.IDisposeManager.DisposeObject*
+  nameWithType.vb: IDisposeManager.DisposeObject(IDisposable, String)
+  fullName.vb: DrawnUi.Views.IDisposeManager.DisposeObject(System.IDisposable, String)
+  name.vb: DisposeObject(IDisposable, String)
 references:
 - uid: DrawnUi.Views
   commentId: N:DrawnUi.Views
@@ -173,7 +178,7 @@ references:
     href: DrawnUi.Extensions.html
 - uid: DrawnUi.Views.IDisposeManager.DisposeObject*
   commentId: Overload:DrawnUi.Views.IDisposeManager.DisposeObject
-  href: DrawnUi.Views.IDisposeManager.html#DrawnUi_Views_IDisposeManager_DisposeObject_System_IDisposable_
+  href: DrawnUi.Views.IDisposeManager.html#DrawnUi_Views_IDisposeManager_DisposeObject_System_IDisposable_System_String_
   name: DisposeObject
   nameWithType: IDisposeManager.DisposeObject
   fullName: DrawnUi.Views.IDisposeManager.DisposeObject
@@ -185,6 +190,17 @@ references:
   name: IDisposable
   nameWithType: IDisposable
   fullName: System.IDisposable
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: System
   commentId: N:System
   isExternal: true

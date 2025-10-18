@@ -22,6 +22,7 @@ items:
   - DrawnUi.Controls.ScrollPickerLabelLayout
   - DrawnUi.Controls.ScrollPickerWheel
   - DrawnUi.Controls.SkiaCarousel
+  - DrawnUi.Controls.SkiaCarousel.SnapPoint
   - DrawnUi.Controls.SkiaDecoratedGrid
   - DrawnUi.Controls.SkiaDrawer
   - DrawnUi.Controls.SkiaDrawnCell
@@ -74,6 +75,29 @@ references:
   name: SkiaCarousel
   nameWithType: SkiaCarousel
   fullName: DrawnUi.Controls.SkiaCarousel
+- uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+  commentId: T:DrawnUi.Controls.SkiaCarousel.SnapPoint
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.SkiaCarousel.html
+  name: SkiaCarousel.SnapPoint
+  nameWithType: SkiaCarousel.SnapPoint
+  fullName: DrawnUi.Controls.SkiaCarousel.SnapPoint
+  spec.csharp:
+  - uid: DrawnUi.Controls.SkiaCarousel
+    name: SkiaCarousel
+    href: DrawnUi.Controls.SkiaCarousel.html
+  - name: .
+  - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    name: SnapPoint
+    href: DrawnUi.Controls.SkiaCarousel.SnapPoint.html
+  spec.vb:
+  - uid: DrawnUi.Controls.SkiaCarousel
+    name: SkiaCarousel
+    href: DrawnUi.Controls.SkiaCarousel.html
+  - name: .
+  - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
+    name: SnapPoint
+    href: DrawnUi.Controls.SkiaCarousel.SnapPoint.html
 - uid: DrawnUi.Controls.SkiaDrawnCell
   commentId: T:DrawnUi.Controls.SkiaDrawnCell
   parent: DrawnUi.Controls
