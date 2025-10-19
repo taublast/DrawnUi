@@ -738,14 +738,20 @@ public partial class SkiaCamera : SkiaControl
         var height = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
-        if (width >= height)
+        // Align encoder orientation with on-screen preview to avoid crop/zoom when switching modes
+        // Treat DeviceRotation 0/180 as portrait, 90/270 as landscape
+        var rot = DeviceRotation % 360;
+        bool portrait = (rot == 0 || rot == 180);
+        if (portrait && width >= height)
         {
-            var tmp = width;
-            width = height;
-            height = tmp;
+            var tmp = width; width = height; height = tmp;
+        }
+        else if (!portrait && height > width)
+        {
+            var tmp = width; width = height; height = tmp;
         }
 
-       _diagEncWidth = width; _diagEncHeight = height;
+        _diagEncWidth = width; _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
         await _captureVideoEncoder.StartAsync();
