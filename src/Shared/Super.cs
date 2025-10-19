@@ -416,6 +416,8 @@ public partial class Super
 
     static readonly Queue<Func<Task>> _offscreenCacheRenderingQueue = new(1024);
     private static bool _processingOffscrenRendering;
+    private static DeviceOrientation deviceOrientation;
+    private static int deviceRotation;
 
     public static void EnqueueBackgroundTask(Func<Task> asyncAction)
     {
@@ -440,5 +442,58 @@ public partial class Super
             await Task.Delay(1);
         }
 
+    }
+
+    public static event EventHandler<int> RotationChanged;
+
+    /// <summary>
+    /// Degrees
+    /// </summary>
+    public static int DeviceRotation
+    {
+        get => deviceRotation;
+        set
+        {
+            if (deviceRotation != value)
+            {
+                deviceRotation = value;
+                RotationChanged?.Invoke(null, value);
+            }
+        }
+    }
+
+    public static event EventHandler<DeviceOrientation> OrientationChanged;
+
+    public static DeviceOrientation DeviceOrientation
+    {
+        get => deviceOrientation;
+        set
+        {
+            if (deviceOrientation != value)
+            {
+                Debug.WriteLine($"[SUPER] {value}");
+                deviceOrientation = value;
+                OrientationChanged?.Invoke(null, value);
+            }
+        } 
+    }
+
+    public static int DeviceRotationSnap
+    {
+        get
+        {
+            switch (DeviceOrientation)
+            {
+                case DeviceOrientation.LandscapeLeft:
+                    return 270;
+                case DeviceOrientation.LandscapeRight:
+                    return 90;
+                case DeviceOrientation.PortraitUpsideDown:
+                    return 180;
+                case DeviceOrientation.Portrait:
+                default:
+                    return 0;
+            }
+        }
     }
 }

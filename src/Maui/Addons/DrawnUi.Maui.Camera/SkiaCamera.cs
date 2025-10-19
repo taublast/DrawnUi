@@ -52,7 +52,7 @@ public partial class SkiaCamera : SkiaControl
 
         if (Superview != null)
         {
-            Superview.DeviceRotationChanged -= DeviceRotationChanged;
+            Superview.OrientationChanged -= DeviceOrientationChanged;
         }
 
         if (NativeControl != null)
@@ -162,6 +162,12 @@ public partial class SkiaCamera : SkiaControl
         };
     }
 
+    protected override void CreateDefaultContent()
+    {
+        UpdateOrientationFromDevice();
+
+        base.CreateDefaultContent();
+    }
 
     public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
     {
@@ -309,29 +315,27 @@ public partial class SkiaCamera : SkiaControl
     /// <param name="reorient"></param>
     /// <param name="album"></param>
     /// <returns></returns>
-    public async Task<string> SaveToGalleryAsync(CapturedImage captured, bool reorient, string album = null)
+    public async Task<string> SaveToGalleryAsync(CapturedImage captured, string album = null)
     {
         var filename = GenerateJpgFileName();
 
-        var rotation = reorient ? captured.Rotation : 0;
+        await using var stream = CreateOutputStreamRotated(captured, false);
 
-        await using var stream = CreateOutputStreamRotated(captured, reorient);
-        if (stream != null)
-        {
+
             using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
 
             var filenameOutput = GenerateJpgFileName();
 
-            var path = await NativeControl.SaveJpgStreamToGallery(exifStream, filename, rotation,
+            var path = await NativeControl.SaveJpgStreamToGallery(exifStream, filename, 
                 captured.Meta, album);
 
             if (!string.IsNullOrEmpty(path))
             {
                 captured.Path = path;
-                Debug.WriteLine($"[SkiaCamera] saved photo: {filenameOutput}");
+                Debug.WriteLine($"[SkiaCamera] saved photo: {filenameOutput} exif orientation: {captured.Meta.Orientation}");
                 return path;
             }
-        }
+    
 
         Debug.WriteLine($"[SkiaCamera] failed to save photo");
         return null;
@@ -1209,7 +1213,6 @@ public partial class SkiaCamera : SkiaControl
         DisplayInfo = info;
     }
 
-
     public Stream CreateOutputStreamRotated(CapturedImage captured,
         bool reorient,
         SKEncodedImageFormat format = SKEncodedImageFormat.Jpeg,
@@ -1217,53 +1220,14 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
-            var rotated = Reorient();
-            var data = rotated.Encode(format, quality);
-            return data.AsStream();
-
-            SKBitmap Reorient()
+            SKBitmap skBitmap = SKBitmap.FromImage(captured.Image);
+            if (reorient)
             {
-                var bitmap = SKBitmap.FromImage(captured.Image);
-
-                if (!reorient)
-                    return bitmap;
-
-                SKBitmap rotated;
-
-                switch (captured.Rotation)
-                {
-                    case 180:
-                        using (var surface = new SKCanvas(bitmap))
-                        {
-                            surface.RotateDegrees(180, bitmap.Width / 2.0f, bitmap.Height / 2.0f);
-                            surface.DrawBitmap(bitmap.Copy(), 0, 0);
-                        }
-
-                        return bitmap;
-                    case 270:
-                        rotated = new SKBitmap(bitmap.Height, bitmap.Width);
-                        using (var surface = new SKCanvas(rotated))
-                        {
-                            surface.Translate(rotated.Width, 0);
-                            surface.RotateDegrees(90);
-                            surface.DrawBitmap(bitmap, 0, 0);
-                        }
-
-                        return rotated;
-                    case 90:
-                        rotated = new SKBitmap(bitmap.Height, bitmap.Width);
-                        using (var surface = new SKCanvas(rotated))
-                        {
-                            surface.Translate(0, rotated.Height);
-                            surface.RotateDegrees(270);
-                            surface.DrawBitmap(bitmap, 0, 0);
-                        }
-
-                        return rotated;
-                    default:
-                        return bitmap;
-                }
+                skBitmap = Reorient(skBitmap, captured.Rotation);
             }
+ 
+            var data = skBitmap.Encode(format, quality);
+            return data.AsStream();
         }
         catch (Exception e)
         {
@@ -1402,21 +1366,27 @@ public partial class SkiaCamera : SkiaControl
         if (Superview != null && !subscribed)
         {
             subscribed = true;
-            Superview.DeviceRotationChanged += DeviceRotationChanged;
+            Superview.OrientationChanged += DeviceOrientationChanged;
         }
 
         base.SuperViewChanged();
     }
 
-
-    private void DeviceRotationChanged(object sender, int orientation)
+    public virtual void UpdateOrientationFromDevice()
     {
-        var rotation = ((orientation + 45) / 90) * 90 % 360;
+        //var rotation = ((orientation + 45) / 90) * 90 % 360;
 
-        DeviceRotation = rotation;
+        DeviceRotation = Super.DeviceRotationSnap;
+
+        Debug.WriteLine($"[CAMERA] DeviceRotation: {DeviceRotation}");
     }
 
-    private int _DeviceRotation;
+    private void DeviceOrientationChanged(object sender, DeviceOrientation deviceOrientation)
+    {
+        UpdateOrientationFromDevice();
+    }
+
+    private int _DeviceRotation = -1;
 
     public int DeviceRotation
     {

@@ -1,4 +1,4 @@
-﻿namespace DrawnUi.Camera;
+﻿namespace DrawnUi.Draw;
 
 public enum DeviceOrientation
 {

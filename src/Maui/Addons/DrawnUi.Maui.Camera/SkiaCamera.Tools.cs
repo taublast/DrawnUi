@@ -128,6 +128,45 @@ public partial class SkiaCamera : SkiaControl
         return tcs.Task;
     }
 
+    public static SKBitmap Reorient(SKBitmap bitmap, int rotation)
+    {
+        SKBitmap rotated;
+
+        switch (rotation)
+        {
+            case 180:
+                using (var surface = new SKCanvas(bitmap))
+                {
+                    surface.RotateDegrees(180, bitmap.Width / 2.0f, bitmap.Height / 2.0f);
+                    surface.DrawBitmap(bitmap.Copy(), 0, 0);
+                }
+
+                return bitmap;
+            case 270:
+                rotated = new SKBitmap(bitmap.Height, bitmap.Width);
+                using (var surface = new SKCanvas(rotated))
+                {
+                    surface.Translate(rotated.Width, 0);
+                    surface.RotateDegrees(90);
+                    surface.DrawBitmap(bitmap, 0, 0);
+                }
+
+                return rotated;
+            case 90:
+                rotated = new SKBitmap(bitmap.Height, bitmap.Width);
+                using (var surface = new SKCanvas(rotated))
+                {
+                    surface.Translate(0, rotated.Height);
+                    surface.RotateDegrees(270);
+                    surface.DrawBitmap(bitmap, 0, 0);
+                }
+
+                return rotated;
+            default:
+                return bitmap;
+        }
+    }
+
 
     #region Measure Brightness
 

@@ -33,6 +33,11 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
         PaintSurface -= OnPaintingSurface;
     }
 
+    private void OnOrientationChanged(object sender, DeviceOrientation deviceOrientation)
+    {
+        Superview?.SetDeviceOrientation(deviceOrientation);
+    }
+
     protected override void OnHandlerChanging(HandlerChangingEventArgs args)
     {
         if (args.NewHandler == null)
@@ -53,7 +58,13 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
             PaintSurface -= OnPaintingSurface;
             PaintSurface += OnPaintingSurface;
 
+            Super.OrientationChanged += OnOrientationChanged;
+
             Superview?.ConnectedHandler();
+        }
+        else
+        {
+            Super.OrientationChanged -= OnOrientationChanged;
         }
     }
 

@@ -1,9 +1,10 @@
 using System.Diagnostics;
 using DrawnUi.Camera;
-using DrawnUi.Views;
 using DrawnUi.Controls;
+using DrawnUi.Views;
 using Sandbox.Views.Controls;
 using SkiaSharp;
+using TerraFX.Interop.Windows;
 
 namespace Sandbox.Views;
 
@@ -30,6 +31,14 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         }
 
         base.Dispose(isDisposing);
+    }
+
+    void ShowAlert(string title, string message)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            await DisplayAlert(title, message, "OK");
+        });
     }
 
     /// <summary>
@@ -454,15 +463,12 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
     private void OnCaptureFailed(object sender, Exception e)
     {
-        MainThread.BeginInvokeOnMainThread(async () =>
-        {
-            await DisplayAlert("Capture Failed", $"Failed to take picture: {e.Message}", "OK");
-        });
+        ShowAlert("Capture Failed", $"Failed to take picture: {e.Message}");
     }
 
     private void OnCameraError(object sender, string e)
     {
-        MainThread.BeginInvokeOnMainThread(async () => { await DisplayAlert("Camera Error", e, "OK"); });
+        ShowAlert("Camera Error", e);
     }
 
     private void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
@@ -478,17 +484,17 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
                 if (!string.IsNullOrEmpty(publicPath))
                 {
-                    await DisplayAlert("Success", "Video saved to gallery!", "OK");
+                    ShowAlert("Success", "Video saved to gallery!");
                     Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Failed to save video to gallery", "OK");
+                    ShowAlert("Error", "Failed to save video to gallery");
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Video save error: {ex.Message}", "OK");
+                ShowAlert("Error", $"Video save error: {ex.Message}");
                 Debug.WriteLine($"❌ Video save error: {ex}");
             }
         });
@@ -533,21 +539,21 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
         try
         {
-            // Save to gallery
-            var path = await CameraControl.SaveToGalleryAsync(_currentCapturedImage, true);
+            // Save to gallery, note we set reorient to false, because it should be handled by metadata in this case
+            var path = await CameraControl.SaveToGalleryAsync(_currentCapturedImage);
             if (!string.IsNullOrEmpty(path))
             {
-                await DisplayAlert("Success", $"Photo saved successfully!\nPath: {path}", "OK");
+                ShowAlert("Success", $"Photo saved successfully!\nPath: {path}");
                 HidePreviewOverlay();
             }
             else
             {
-                await DisplayAlert("Error", "Failed to save photo", "OK");
+                ShowAlert("Error", "Failed to save photo");
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Error saving photo: {ex.Message}", "OK");
+            ShowAlert("Error", $"Error saving photo: {ex.Message}");
         }
     }
 
@@ -572,13 +578,13 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             catch (NotImplementedException ex)
             {
                 Super.Log(ex);
-                await DisplayAlert("Not Implemented",
-                    $"Video recording is not yet implemented for this platform:\n{ex.Message}", "OK");
+                ShowAlert("Not Implemented",
+                    $"Video recording is not yet implemented for this platform:\n{ex.Message}");
             }
             catch (Exception ex)
             {
                 Super.Log(ex);
-                await DisplayAlert("Video Recording Error", $"Error: {ex.Message}", "OK");
+                ShowAlert("Video Recording Error", $"Error: {ex.Message}");
             }
         });
     }
@@ -607,19 +613,19 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             CameraControl.VideoQuality = VideoQuality.Manual;
                             CameraControl.VideoFormatIndex = selectedIndex;
 
-                            await DisplayAlert("Format Selected",
-                                $"Selected: {formats[selectedIndex].Description}", "OK");
+                            ShowAlert("Format Selected",
+                                $"Selected: {formats[selectedIndex].Description}");
                         }
                     }
                 }
                 else
                 {
-                    await DisplayAlert("No Formats", "No video formats available", "OK");
+                    ShowAlert("No Formats", "No video formats available");
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Error getting video formats: {ex.Message}", "OK");
+                ShowAlert("Error", $"Error getting video formats: {ex.Message}");
             }
         });
     }
@@ -661,12 +667,12 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 }
                 else
                 {
-                    await DisplayAlert("No Cameras", "No cameras available", "OK");
+                    ShowAlert("No Cameras", "No cameras available");
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Error getting cameras: {ex.Message}", "OK");
+                ShowAlert("Error", $"Error getting cameras: {ex.Message}");
             }
         });
     }

@@ -309,11 +309,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="album"></param>
     /// <returns></returns>
     public async Task<string> SaveJpgStreamToGallery(System.IO.Stream stream, string filename,
-        double rotation, Metadata meta, string album)
+        Metadata meta, string album)
     {
         if (Build.VERSION.SdkInt < BuildVersionCodes.Q)
         {
-            return await SaveJpgStreamToGalleryLegacy(stream, filename, rotation, meta, album);
+            return await SaveJpgStreamToGalleryLegacy(stream, filename, meta, album);
         }
 
         var sub = "Camera";
@@ -344,7 +344,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="album"></param>
     /// <returns></returns>
     public async Task<string> SaveJpgStreamToGalleryLegacy(System.IO.Stream stream, string filename,
-        double rotation, Metadata meta, string album)
+        Metadata meta, string album)
     {
         string fullFilename = System.IO.Path.Combine(GetOutputGalleryFolder(album).AbsolutePath, filename);
 

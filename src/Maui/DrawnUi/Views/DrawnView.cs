@@ -596,56 +596,32 @@ namespace DrawnUi.Views
             }
         }
 
-        private void OnMainDisplayInfoChanged(object sender, DisplayInfoChangedEventArgs e)
+        public void SetDeviceOrientation(DeviceOrientation value)
         {
-            switch (e.DisplayInfo.Rotation)
-            {
-                case Microsoft.Maui.Devices.DisplayRotation.Rotation90:
-                    DeviceRotation = 90;
-                    break;
-                case Microsoft.Maui.Devices.DisplayRotation.Rotation180:
-                    DeviceRotation = 180;
-                    break;
-                case Microsoft.Maui.Devices.DisplayRotation.Rotation270:
-                    DeviceRotation = 270;
-                    break;
-                case Microsoft.Maui.Devices.DisplayRotation.Rotation0:
-                default:
-                    DeviceRotation = 0;
-                    break;
-            }
-
-            if (Parent != null)
-                RenderingScale = (float)e.DisplayInfo.Density;
+            Orientation = value;
         }
 
-        public void SetDeviceOrientation(int rotation)
-        {
-            DeviceRotation = rotation;
-        }
+        public event EventHandler<DeviceOrientation> OrientationChanged;
 
-        public event EventHandler<int> DeviceRotationChanged;
-
-        public static readonly BindableProperty DisplayRotationProperty = BindableProperty.Create(
-            nameof(DeviceRotation),
-            typeof(int),
+        public static readonly BindableProperty OrientationProperty = BindableProperty.Create(
+            nameof(Orientation),
+            typeof(DeviceOrientation),
             typeof(DrawnView),
-            0,
+            DeviceOrientation.Unknown,
             propertyChanged: UpdateRotation);
 
         private static void UpdateRotation(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is DrawnView control)
             {
-                control.DeviceRotationChanged?.Invoke(control, (int)newvalue);
-                ;
+                control.OrientationChanged?.Invoke(control, (DeviceOrientation)newvalue);
             }
         }
 
-        public int DeviceRotation
+        public DeviceOrientation Orientation
         {
-            get { return (int)GetValue(DisplayRotationProperty); }
-            set { SetValue(DisplayRotationProperty, value); }
+            get { return (DeviceOrientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
         }
 
         //{
@@ -1529,8 +1505,6 @@ namespace DrawnUi.Views
 #if ONPLATFORM
             DisposePlatform();
 #endif
-
-            DeviceDisplay.Current.MainDisplayInfoChanged -= OnMainDisplayInfoChanged;
         }
 
         //public virtual void Render(SkiaDrawingContext context, SKRect destination, float scale,
