@@ -744,11 +744,14 @@ public partial class SkiaCamera : SkiaControl
         bool portrait = (rot == 0 || rot == 180);
         if (portrait && width >= height)
         {
-            var tmp = width; width = height; height = tmp;
+            var tmp = width;
+            width = height;
+            height = tmp;
         }
         else if (!portrait && height > width)
         {
-            var tmp = width; width = height; height = tmp;
+            var tmp = width;
+            width = height; height = tmp;
         }
 
         _diagEncWidth = width; _diagEncHeight = height;
