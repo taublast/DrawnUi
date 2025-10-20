@@ -46,13 +46,23 @@ namespace DrawnUi.Camera
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
 
-        public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
+        private int _deviceRotation = 0;
+
+        // Interface implementation - required by ICaptureVideoEncoder
+        public Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
+        {
+            return InitializeAsync(outputPath, width, height, frameRate, recordAudio, 0);
+        }
+
+        // Extended version with device rotation support
+        public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio, int deviceRotation)
         {
             _outputPath = outputPath;
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
             _recordAudio = recordAudio; // audio not handled in this first Apple iteration
+            _deviceRotation = deviceRotation;
 
             // Prepare output directory
             Directory.CreateDirectory(Path.GetDirectoryName(_outputPath));
@@ -78,6 +88,11 @@ namespace DrawnUi.Camera
             {
                 ExpectsMediaDataInRealTime = true
             };
+
+            // Set transform based on device rotation to ensure correct playback orientation
+            // This adds rotation metadata without re-encoding frames (zero performance cost)
+            _videoInput.Transform = GetTransformForRotation(_deviceRotation);
+
             if (!_writer.CanAddInput(_videoInput))
                 throw new InvalidOperationException("Cannot add video input to AVAssetWriter");
             _writer.AddInput(_videoInput);
@@ -91,6 +106,47 @@ namespace DrawnUi.Camera
                 });
 
             await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Creates a CGAffineTransform for the given device rotation.
+        /// This sets video metadata for proper playback orientation without re-encoding.
+        /// Includes proper translation to account for coordinate system changes after rotation.
+        /// </summary>
+        private CoreGraphics.CGAffineTransform GetTransformForRotation(int rotation)
+        {
+            var normalizedRotation = rotation % 360;
+            if (normalizedRotation < 0)
+                normalizedRotation += 360;
+
+            var transform = CoreGraphics.CGAffineTransform.MakeIdentity();
+
+            switch (normalizedRotation)
+            {
+                case 90:
+                    // Rotate 90° clockwise: rotate then translate
+                    transform = CoreGraphics.CGAffineTransform.MakeRotation((float)(Math.PI / 2));
+                    transform = CoreGraphics.CGAffineTransform.Translate(transform, 0, -_width);
+                    break;
+
+                case 180:
+                    // Rotate 180°: rotate then translate
+                    transform = CoreGraphics.CGAffineTransform.MakeRotation((float)Math.PI);
+                    transform = CoreGraphics.CGAffineTransform.Translate(transform, -_width, -_height);
+                    break;
+
+                case 270:
+                    // Rotate 270° clockwise (90° counter-clockwise): rotate then translate
+                    transform = CoreGraphics.CGAffineTransform.MakeRotation((float)(-Math.PI / 2));
+                    transform = CoreGraphics.CGAffineTransform.Translate(transform, -_height, 0);
+                    break;
+
+                default:
+                    // 0° - no rotation needed
+                    break;
+            }
+
+            return transform;
         }
 
         public Task StartAsync()

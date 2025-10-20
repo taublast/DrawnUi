@@ -446,6 +446,10 @@ public partial class SkiaCamera : SkiaControl
         IsBusy = true;
         IsRecordingVideo = true;
 
+        // Lock the current device rotation for the entire recording session
+        RecordingLockedRotation = DeviceRotation;
+        Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
         try
         {
             // Check if using capture video flow
@@ -463,6 +467,7 @@ public partial class SkiaCamera : SkiaControl
         {
             IsRecordingVideo = false;
             IsBusy = false;
+            RecordingLockedRotation = -1; // Reset on error
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -709,14 +714,27 @@ public partial class SkiaCamera : SkiaControl
 
                             canvas.DrawImage(img, rects.src, rects.dst);
 
-                            var frame = new DrawableFrame
+                            if (FrameProcessor != null || VideoDiagnosticsOn)
                             {
-                                Width = info.Width, Height = info.Height, Canvas = canvas, Time = elapsedLocal
-                            };
-                            FrameProcessor?.Invoke(frame);
+                                // Apply rotation based on device orientation
+                                var rotation = GetActiveRecordingRotation();
+                                canvas.Save();
+                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                var frame = new DrawableFrame
+                                {
+                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal
+                                };
+                                FrameProcessor?.Invoke(frame);
 
                             if (VideoDiagnosticsOn)
                                 DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                canvas.Restore();
+                            }
+
+
                         }
 
                         var __sw = System.Diagnostics.Stopwatch.StartNew();
@@ -793,12 +811,20 @@ public partial class SkiaCamera : SkiaControl
 
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
-        
+
         _diagEncWidth = (int)width;
         _diagEncHeight = (int)height;
         _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
 
-        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
+        if (_captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEncoder)
+        {
+            await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+        }
+        else
+        {
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        }
 
         await _captureVideoEncoder.StartAsync();
 
@@ -862,17 +888,27 @@ public partial class SkiaCamera : SkiaControl
                     canvas.DrawImage(previewImage, __rects1.src, __rects1.dst);
 
                     // Apply overlay
-                    if (FrameProcessor != null)
+                    if (FrameProcessor != null || VideoDiagnosticsOn)
                     {
+                        // Apply rotation based on device orientation
+                        var rotation = GetActiveRecordingRotation();
+                        canvas.Save();
+                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                         var frame = new DrawableFrame
                         {
-                            Width = info.Width, Height = info.Height, Canvas = canvas, Time = elapsed
+                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
                         };
                         FrameProcessor?.Invoke(frame);
-                    }
+
 
                     if (VideoDiagnosticsOn)
                         DrawDiagnostics(canvas, info.Width, info.Height);
+
+                        canvas.Restore();
+                    }
+
                 }
 
                 var __sw = System.Diagnostics.Stopwatch.StartNew();
@@ -908,14 +944,27 @@ public partial class SkiaCamera : SkiaControl
                             GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
                         canvas.DrawImage(previewImage, __rects2.src, __rects2.dst);
 
-                        var frame = new DrawableFrame
+                        if (FrameProcessor != null || VideoDiagnosticsOn)
                         {
-                            Width = info.Width, Height = info.Height, Canvas = canvas, Time = elapsed
-                        };
-                        FrameProcessor?.Invoke(frame);
+                            // Apply rotation based on device orientation
+                            var rotation = GetActiveRecordingRotation();
+                            canvas.Save();
+                            ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                            var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                            var frame = new DrawableFrame
+                            {
+                                Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                            };
+                            FrameProcessor?.Invoke(frame);
 
                         if (VideoDiagnosticsOn)
                             DrawDiagnostics(canvas, info.Width, info.Height);
+
+                            canvas.Restore();
+                        }
+
+
                     }
 
                     var __sw = System.Diagnostics.Stopwatch.StartNew();
@@ -951,21 +1000,25 @@ public partial class SkiaCamera : SkiaControl
 
                     canvas.DrawImage(previewImage, __rectsA.src, __rectsA.dst);
 
-                    if (FrameProcessor != null)
+                    if (FrameProcessor != null || VideoDiagnosticsOn)
                     {
-                        //todo rotate canvas and width,height upon orientation
+                        // Apply rotation based on device orientation
+                        var rotation = GetActiveRecordingRotation();
+                        var checkpoint = canvas.Save();
+                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
 
+                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                         var frame = new DrawableFrame
                         {
-                            Width = info.Width, Height = info.Height, Canvas = canvas, Time = elapsed
+                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
                         };
                         FrameProcessor?.Invoke(frame);
 
-                        //todo restore rotation
-                    }
+                        if (VideoDiagnosticsOn)
+                            DrawDiagnostics(canvas, info.Width, info.Height);
 
-                    if (VideoDiagnosticsOn)
-                        DrawDiagnostics(canvas, info.Width, info.Height);
+                        canvas.RestoreToCount(checkpoint);
+                    }
                 }
 
                 var __swA = System.Diagnostics.Stopwatch.StartNew();
@@ -997,11 +1050,19 @@ public partial class SkiaCamera : SkiaControl
 
             if (FrameProcessor != null)
             {
+                // Apply rotation based on device orientation
+                var rotation = GetActiveRecordingRotation();
+                cpuCanvas.Save();
+                ApplyCanvasRotation(cpuCanvas, previewBitmap.Width, previewBitmap.Height, rotation);
+
+                var (frameWidth, frameHeight) = GetRotatedDimensions(previewBitmap.Width, previewBitmap.Height, rotation);
                 var frame = new DrawableFrame
                 {
-                    Width = previewBitmap.Width, Height = previewBitmap.Height, Canvas = cpuCanvas, Time = elapsed
+                    Width = frameWidth, Height = frameHeight, Canvas = cpuCanvas, Time = elapsed
                 };
                 FrameProcessor?.Invoke(frame);
+
+                cpuCanvas.Restore();
             }
 
             if (VideoDiagnosticsOn)
@@ -1038,6 +1099,10 @@ public partial class SkiaCamera : SkiaControl
         Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}");
 
         IsRecordingVideo = false;
+
+        // Reset locked rotation
+        RecordingLockedRotation = -1;
+        Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
 
 #if ANDROID
         // Stop Android event-driven capture and restore normal preview behavior
@@ -1431,6 +1496,51 @@ public partial class SkiaCamera : SkiaControl
         return (src, dst);
     }
 
+    /// <summary>
+    /// Applies canvas rotation based on device orientation (0, 90, 180, 270 degrees)
+    /// </summary>
+    private static void ApplyCanvasRotation(SKCanvas canvas, int width, int height, int rotation)
+    {
+        var normalizedRotation = rotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
+
+        switch (normalizedRotation)
+        {
+            case 90:
+                // Rotate 90° clockwise: translate to bottom-left, then rotate
+                canvas.Translate(0, height);
+                canvas.RotateDegrees(-90);
+                break;
+            case 180:
+                canvas.Translate(width, height);
+                canvas.RotateDegrees(180);
+                break;
+            case 270:
+                // Rotate 270° clockwise (or 90° counter-clockwise): translate to top-right, then rotate
+                canvas.Translate(width, 0);
+                canvas.RotateDegrees(90);
+                break;
+            // case 0: no rotation needed
+        }
+    }
+
+    /// <summary>
+    /// Returns frame dimensions after rotation (swaps width/height for 90/270 degrees)
+    /// </summary>
+    private static (int width, int height) GetRotatedDimensions(int width, int height, int rotation)
+    {
+        var normalizedRotation = rotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
+
+        // Swap dimensions for 90 and 270 degree rotations
+        if (normalizedRotation == 90 || normalizedRotation == 270)
+            return (height, width);
+
+        return (width, height);
+    }
+
 
     public INativeCamera NativeControl;
 
@@ -1505,6 +1615,19 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    /// <summary>
+    /// Rotation locked when video recording started. Used throughout recording to ensure consistent orientation.
+    /// </summary>
+    protected int RecordingLockedRotation { get; private set; } = -1;
+
+    /// <summary>
+    /// Gets the rotation to use for video recording - returns locked rotation during recording, current rotation otherwise.
+    /// </summary>
+    protected int GetActiveRecordingRotation()
+    {
+        return IsRecordingVideo && RecordingLockedRotation >= 0 ? RecordingLockedRotation : DeviceRotation;
+    }
+
     object lockFrame = new();
 
     public bool FrameAquired { get; set; }
@@ -1538,17 +1661,25 @@ public partial class SkiaCamera : SkiaControl
                                 GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
                             canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
 
-                            if (FrameProcessor != null)
+                            if (FrameProcessor != null || VideoDiagnosticsOn)
                             {
+                                // Apply rotation based on device orientation
+                                var rotation = GetActiveRecordingRotation();
+                                canvas.Save();
+                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                                 var frame = new DrawableFrame
                                 {
-                                    Width = info.Width, Height = info.Height, Canvas = canvas, Time = elapsed
+                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
                                 };
                                 FrameProcessor?.Invoke(frame);
-                            }
 
                             if (VideoDiagnosticsOn)
                                 DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                canvas.Restore();
+                            }
                         }
 
                         var sw = System.Diagnostics.Stopwatch.StartNew();
