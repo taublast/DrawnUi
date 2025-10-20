@@ -72,7 +72,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Fill,
                         BackgroundColor = Colors.Black,
-                        CaptureMode = CaptureModeType.Video
+                        CaptureMode = CaptureModeType.Video,
+                        Aspect = TransformAspect.AspectFit
                     }
                     .Assign(out CameraControl)
                     .ObserveSelf((me, prop) =>

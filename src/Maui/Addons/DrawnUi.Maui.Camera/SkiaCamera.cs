@@ -3153,11 +3153,11 @@ public partial class SkiaCamera : SkiaControl
         nameof(Aspect),
         typeof(TransformAspect),
         typeof(SkiaImage),
-        TransformAspect.AspectCover,
+        TransformAspect.AspectFit,
         propertyChanged: NeedInvalidateMeasure);
 
     /// <summary>
-    /// Apspect to render image with, default is AspectCover.
+    /// Apspect to render image with, default is AspectFit.
     /// </summary>
     public TransformAspect Aspect
     {
