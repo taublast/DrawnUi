@@ -34,6 +34,7 @@
 
                     <!--  TITLE  -->
                     <draw:SkiaLabel
+                        UseCache="Operations"
                         FontSize="28"
                         FontAttributes="Bold"
                         Text="SkiaCarousel Demo"
@@ -42,6 +43,7 @@
 
                     <!--  CONTROLS  -->
                     <draw:SkiaLayout
+                        UseCache="Operations"
                         Type="Column"
                         Spacing="10"
                         HorizontalOptions="Center"
@@ -105,7 +107,7 @@
                         SwipeSpeed="{Binding SwipeSpeed}"
                         Tag="Carousel">
 
-                        <draw:SkiaLayout BackgroundColor="#e94560">
+                        <draw:SkiaLayout BackgroundColor="#e94560" UseCache="Operations">
                             <draw:SkiaLabel
                                 FontSize="60"
                                 FontAttributes="Bold"
@@ -115,7 +117,7 @@
                                 VerticalOptions="Center" />
                         </draw:SkiaLayout>
 
-                        <draw:SkiaLayout BackgroundColor="#0f3460">
+                        <draw:SkiaLayout BackgroundColor="#0f3460" UseCache="Operations">
                             <draw:SkiaLabel
                                 FontSize="60"
                                 FontAttributes="Bold"
@@ -125,7 +127,7 @@
                                 VerticalOptions="Center" />
                         </draw:SkiaLayout>
 
-                        <draw:SkiaLayout BackgroundColor="#533483">
+                        <draw:SkiaLayout BackgroundColor="#533483" UseCache="Operations">
                             <draw:SkiaLabel
                                 FontSize="60"
                                 FontAttributes="Bold"
@@ -135,7 +137,7 @@
                                 VerticalOptions="Center" />
                         </draw:SkiaLayout>
 
-                        <draw:SkiaLayout BackgroundColor="#a8df8e">
+                        <draw:SkiaLayout BackgroundColor="#a8df8e" UseCache="Operations">
                             <draw:SkiaLabel
                                 FontSize="60"
                                 FontAttributes="Bold"
@@ -149,6 +151,7 @@
 
                     <!--  INDICATORS  -->
                     <draw:SkiaLayout
+                        UseCache="Operations"
                         Type="Row"
                         Spacing="8"
                         HorizontalOptions="Center">
@@ -222,6 +225,7 @@
 
                     <!--  STATUS INFO  -->
                     <draw:SkiaLayout
+                        UseCache="Operations"
                         Type="Column"
                         Spacing="8"
                         HorizontalOptions="Center"
@@ -256,6 +260,7 @@
 
                     <!--  SWIPE SPEED CONTROL  -->
                     <draw:SkiaShape
+                        UseCache="Operations"
                         Type="Rectangle"
                         CornerRadius="12"
                         BackgroundColor="#16213e"
@@ -313,6 +318,7 @@
 
                     <!--  INFO BOX  -->
                     <draw:SkiaShape
+                        UseCache="Operations"
                         Type="Rectangle"
                         CornerRadius="12"
                         BackgroundColor="#0f3460"
