@@ -11,9 +11,9 @@ public partial class NewsCell : DrawnListCell
     {
         InitializeComponent();
 
-        DelayIncrementMs = 15;
+        DelayIncrementMs = 75;
         TimeAnimateMs = 150;
-        TimeWindowMs = 50;
+        TimeWindowMs = 100;
     }
 
     protected override void SetContent(object ctx)

@@ -85,7 +85,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                 new SkiaStack()
                 {
                     VerticalOptions = LayoutOptions.End,
-                    UseCache = SkiaCacheType.Operations,
+                    UseCache = SkiaCacheType.GPU,
                     BackgroundColor = Color.FromHex("#44000000"),
                     Spacing = 16,
                     Padding = 16,
@@ -284,6 +284,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
         return new SkiaLayer
         {
             IsVisible = false,
+            UseCache = SkiaCacheType.Image,
             BackgroundColor = Color.FromArgb("#CC000000"), // Semi-transparent black overlay
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
