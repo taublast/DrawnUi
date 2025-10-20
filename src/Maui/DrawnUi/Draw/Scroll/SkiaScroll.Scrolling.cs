@@ -161,7 +161,7 @@ public partial class SkiaScroll
 
             _animatorFlingX = new(this)
             {
-                UseInterpolator = true,
+//                UseInterpolator = true,
                 OnStart = () =>
                 {
                     //_isSnapping = false;
@@ -187,7 +187,7 @@ public partial class SkiaScroll
 
             _animatorFlingY = new(this)
             {
-                UseInterpolator = true,
+              //  UseInterpolator = true,
                 OnStart = () =>
                 {
                     IsAnimating = true;
