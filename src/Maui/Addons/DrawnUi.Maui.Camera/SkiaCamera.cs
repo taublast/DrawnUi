@@ -1685,7 +1685,7 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Rotation locked when video recording started. Used throughout recording to ensure consistent orientation.
     /// </summary>
-    protected int RecordingLockedRotation { get; private set; } = -1;
+    public int RecordingLockedRotation { get; private set; } = -1;
 
     /// <summary>
     /// Gets the rotation to use for video recording - returns locked rotation during recording, current rotation otherwise.

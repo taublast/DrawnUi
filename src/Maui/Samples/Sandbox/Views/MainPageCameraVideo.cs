@@ -65,7 +65,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                     {
                         VideoDiagnosticsOn = true,
                         RecordAudio = false,
-                        //UseCaptureVideoFlow = true, // Enable capture video flow for overlay recording
+                       UseCaptureVideoFlow = true, // Enable capture video flow for overlay recording
                         VideoQuality = VideoQuality.Standard, //change this or select manually in menu
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Fill,
