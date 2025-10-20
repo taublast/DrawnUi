@@ -183,6 +183,7 @@ public partial class SkiaCamera : SkiaControl
         return new SkiaImage()
         {
             LoadSourceOnFirstDraw = true,
+            UseCache = SkiaCacheType.GPU,
             RescalingQuality = SKFilterQuality.None,
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
