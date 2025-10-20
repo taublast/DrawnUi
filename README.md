@@ -35,17 +35,20 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ## 🆕 What's new
 
+* Sandbox and Tutorial projects UI cache tuned for max fps
+* `SkiaButton` uses `Padding` property for frame content, see Sandbox project Buttons example.
+* Fix cache performance `ImageDoubleBuffered`, improved cache `Image`
+* Fixed cache type `OperationsFull`, god mode that records a larger area than your control, to pick up glow, shadows etc, if you need to animate its destination cache one of the the parents so it uses its bounds instead of the top canvas.
+* Some animated controls now have `ImageDoubleBuffered` set as default (lottie and similar)
+* `SkiaImage` performance fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
 * `IsLooped` property implemented for `SkiaCarousel` (Sandbox project carousel example updated), for never-ending scrolls, also added `SwipeSpeed` property.
 * `Gestures` property for `Canvas` has new value `SoftLock` for smart working together inside native ScrollView: You started your custom control panning (ex: SkiaCarousel) MAUI ScrollView will not scroll until you release. Note that using `Lock` value instead will totally prevent parent ScrollView to receive panning gestures. Using new `AppoMobi.Maui.Gestures` gestures nuget.
 * `SkiaLabel` subpixel rendering quality improved, note it can be can turned off with `Super.FontSubPixelRendering` static property.
 * Improved font auto-selection for unicode symbols on **Android** + **Apple** for `SkiaRichLabel` and related, all currency, Chinese etc symbols now properly displayed. Implemented platform agnostic caching for auto-find font.
-* `SkiaImage` performance fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
-* Fixed cache type `OperationsFull`, god mode that records a larger area than your control, to pick up glow, shadows etc, everything that is out of the controls bounds. Limited by top canvas or by bounds of some cached parent if any.
 * Fixed `MinimumWidthRequest` and `MinimumHeightRequest` not applying margins.
-* `SkiaButton` uses `Padding` property for frame content, see Sandbox project Buttons example.
 * Fixed animators sometimes not starting when created to early, including `SkiaLottie` one.
 * Fixed `SkiaScroll` refresh mechanics, added refresh feature with `SkiaLottie` tinted indicator to News Feed Scroller tutorial code.
-* Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
+
   
 ## 💡 Hint of the Day
 
