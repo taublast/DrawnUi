@@ -648,7 +648,17 @@ public partial class SkiaCamera : SkiaControl
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
-        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+
+        // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
+        if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
+        {
+            await androidEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+        }
+        else
+        {
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        }
+
         await _captureVideoEncoder.StartAsync();
 
         // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
