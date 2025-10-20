@@ -28,10 +28,15 @@ namespace DrawnUi.Camera;
 /// </summary>
 public partial class SkiaCamera : SkiaControl
 {
+    /// <summary>
+    /// Camera controls cannot use double buffering cache for performance reasons
+    /// </summary>
     public override bool CanUseCacheDoubleBuffering => false;
-    public override bool WillClipBounds => true;
 
-    public bool VideoDiagnosticsOn = true;
+    /// <summary>
+    /// Camera preview will be clipped to the control bounds
+    /// </summary>
+    public override bool WillClipBounds => true;
 
     public SkiaCamera()
     {
@@ -40,6 +45,10 @@ public partial class SkiaCamera : SkiaControl
         Super.OnNativeAppPaused += Super_OnNativeAppPaused;
     }
 
+    /// <summary>
+    /// Camera control does not support update locking
+    /// </summary>
+    /// <param name="value">Lock state (ignored)</param>
     public override void LockUpdate(bool value)
     {
     }
@@ -114,14 +123,29 @@ public partial class SkiaCamera : SkiaControl
 
     #region EVENTS
 
+    /// <summary>
+    /// Raised when a still image is successfully captured
+    /// </summary>
     public event EventHandler<CapturedImage> CaptureSuccess;
 
+    /// <summary>
+    /// Raised when still image capture fails
+    /// </summary>
     public event EventHandler<Exception> CaptureFailed;
 
+    /// <summary>
+    /// Raised when a new preview image is set to the display
+    /// </summary>
     public event EventHandler<LoadedImageSource> NewPreviewSet;
 
+    /// <summary>
+    /// Raised when a camera error occurs
+    /// </summary>
     public event EventHandler<string> OnError;
 
+    /// <summary>
+    /// Raised when camera zoom level changes
+    /// </summary>
     public event EventHandler<double> Zoomed;
 
     internal void RaiseError(string error)
@@ -133,6 +157,9 @@ public partial class SkiaCamera : SkiaControl
 
     #region Display
 
+    /// <summary>
+    /// The SkiaImage control that displays the camera preview
+    /// </summary>
     public SkiaImage Display { get; protected set; }
 
     protected override void InvalidateMeasure()
@@ -189,6 +216,9 @@ public partial class SkiaCamera : SkiaControl
         DisplayReady?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Raised when the display control is ready for use
+    /// </summary>
     public event EventHandler DisplayReady;
 
     /// <summary>
@@ -434,8 +464,10 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Start video recording. Run this in background thread!
+    /// Locks the device rotation for the entire recording session.
+    /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Async task</returns>
     public async Task StartVideoRecording()
     {
         if (IsBusy || IsRecordingVideo)
@@ -1098,9 +1130,11 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Stop video recording
+    /// Stop video recording and finalize the video file.
+    /// Resets the locked rotation and restores normal preview behavior.
+    /// The video file path will be provided through the VideoRecordingSuccess event.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Async task</returns>
     public async Task StopVideoRecording()
     {
         if (!IsRecordingVideo)
@@ -1347,14 +1381,18 @@ public partial class SkiaCamera : SkiaControl
 
     #region METHODS
 
+    /// <summary>
+    /// Stops the camera by setting IsOn to false
+    /// </summary>
     public virtual void Stop()
     {
         IsOn = false;
     }
 
     /// <summary>
-    /// Stops the camera
+    /// Stops the camera immediately and releases native camera resources
     /// </summary>
+    /// <param name="force">If true, forces immediate stop regardless of state</param>
     public virtual void StopInternal(bool force = false)
     {
         if (IsDisposing || IsDisposed)
@@ -1388,6 +1426,14 @@ public partial class SkiaCamera : SkiaControl
         DisplayInfo = info;
     }
 
+    /// <summary>
+    /// Creates an output stream from a captured image with optional rotation correction
+    /// </summary>
+    /// <param name="captured">The captured image to encode</param>
+    /// <param name="reorient">If true, applies rotation correction before encoding</param>
+    /// <param name="format">Output image format (default: JPEG)</param>
+    /// <param name="quality">Encoding quality 0-100 (default: 90)</param>
+    /// <returns>Stream containing the encoded image</returns>
     public Stream CreateOutputStreamRotated(CapturedImage captured,
         bool reorient,
         SKEncodedImageFormat format = SKEncodedImageFormat.Jpeg,
@@ -1583,6 +1629,10 @@ public partial class SkiaCamera : SkiaControl
 
     bool subscribed;
 
+    /// <summary>
+    /// Called when the superview (parent container) changes.
+    /// Subscribes to orientation change events from the superview.
+    /// </summary>
     public override void SuperViewChanged()
     {
         if (Superview != null && !subscribed)
@@ -1594,6 +1644,9 @@ public partial class SkiaCamera : SkiaControl
         base.SuperViewChanged();
     }
 
+    /// <summary>
+    /// Updates the camera orientation from the current device rotation
+    /// </summary>
     public virtual void UpdateOrientationFromDevice()
     {
         //var rotation = ((orientation + 45) / 90) * 90 % 360;
@@ -1610,6 +1663,10 @@ public partial class SkiaCamera : SkiaControl
 
     private int _DeviceRotation = -1;
 
+    /// <summary>
+    /// Gets or sets the current device rotation in degrees (0, 90, 180, 270).
+    /// Automatically applies the orientation to the native camera when changed.
+    /// </summary>
     public int DeviceRotation
     {
         get { return _DeviceRotation; }
@@ -1640,8 +1697,15 @@ public partial class SkiaCamera : SkiaControl
 
     object lockFrame = new();
 
+    /// <summary>
+    /// Gets or sets whether a new camera frame has been acquired and is ready for display
+    /// </summary>
     public bool FrameAquired { get; set; }
 
+    /// <summary>
+    /// Updates the camera preview display. Called when a new frame is available from the native camera.
+    /// Handles frame submission for video capture flow if recording is active.
+    /// </summary>
     public virtual void UpdatePreview()
     {
         FrameAquired = false;
@@ -1716,7 +1780,14 @@ public partial class SkiaCamera : SkiaControl
 #endif
     }
 
+    /// <summary>
+    /// Gets the SKSurface used for frame rendering operations
+    /// </summary>
     public SKSurface FrameSurface { get; protected set; }
+
+    /// <summary>
+    /// Gets the image info for the frame surface
+    /// </summary>
     public SKImageInfo FrameSurfaceInfo { get; protected set; }
 
     //public bool AllocatedFrameSurface(int width, int height)
@@ -1823,6 +1894,10 @@ public partial class SkiaCamera : SkiaControl
     #endregion
 
 #if (!ANDROID && !IOS && !MACCATALYST && !WINDOWS && !TIZEN)
+    /// <summary>
+    /// Gets a bitmap of the current preview frame (not implemented on this platform)
+    /// </summary>
+    /// <returns>Preview bitmap</returns>
     public SKBitmap GetPreviewBitmap()
     {
         throw new NotImplementedException();
@@ -1834,6 +1909,10 @@ public partial class SkiaCamera : SkiaControl
 
     bool lockStartup;
 
+    /// <summary>
+    /// Starts the camera by setting IsOn to true.
+    /// The actual camera initialization and permission handling happens automatically.
+    /// </summary>
     public virtual void Start()
     {
         IsOn = true; //haha
@@ -1851,6 +1930,9 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether a permissions error occurred
+    /// </summary>
     public bool PermissionsError { get; set; }
 
     /// <summary>
@@ -1957,6 +2039,9 @@ public partial class SkiaCamera : SkiaControl
 
     private bool _PermissionsWarning;
 
+    /// <summary>
+    /// Gets or sets whether a permissions warning is active (permissions need to be granted)
+    /// </summary>
     public bool PermissionsWarning
     {
         get { return _PermissionsWarning; }
@@ -1970,11 +2055,19 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-
+    /// <summary>
+    /// Represents a queued picture waiting to be processed
+    /// </summary>
     public class CameraQueuedPictured
     {
+        /// <summary>
+        /// Gets or sets the filename for this queued picture
+        /// </summary>
         public string Filename { get; set; }
 
+        /// <summary>
+        /// Gets or sets the sensor rotation angle in degrees
+        /// </summary>
         public double SensorRotation { get; set; }
 
         /// <summary>
@@ -1983,6 +2076,9 @@ public partial class SkiaCamera : SkiaControl
         public bool Processed { get; set; }
     }
 
+    /// <summary>
+    /// Queue for managing pictures waiting to be processed
+    /// </summary>
     public class CameraPicturesQueue : Queue<CameraQueuedPictured>
     {
     }
@@ -1990,6 +2086,9 @@ public partial class SkiaCamera : SkiaControl
 
     private bool _IsTakingPhoto;
 
+    /// <summary>
+    /// Gets whether the camera is currently taking a still photo
+    /// </summary>
     public bool IsTakingPhoto
     {
         get { return _IsTakingPhoto; }
@@ -2003,7 +2102,9 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-
+    /// <summary>
+    /// Gets the queue of pictures waiting to be processed
+    /// </summary>
     public CameraPicturesQueue PicturesQueue { get; } = new CameraPicturesQueue();
 
 
@@ -2013,9 +2114,16 @@ public partial class SkiaCamera : SkiaControl
 
     private static DateTime lastTimeChecked = DateTime.MinValue;
 
+    /// <summary>
+    /// Gets whether camera permissions have been granted
+    /// </summary>
     public static bool PermissionsGranted { get; protected set; }
 
-
+    /// <summary>
+    /// Checks gallery/camera permissions and invokes the appropriate callback
+    /// </summary>
+    /// <param name="granted">Action to invoke if permissions are granted</param>
+    /// <param name="notGranted">Action to invoke if permissions are denied</param>
     public static void CheckGalleryPermissions(Action granted, Action notGranted)
     {
         if (lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
@@ -2438,6 +2546,11 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(CaptureCustomFolderProperty, value); }
     }
 
+    public CameraPosition Facing
+    {
+        get { return (CameraPosition)GetValue(FacingProperty); }
+        set { SetValue(FacingProperty, value); }
+    }
 
     public static readonly BindableProperty FacingProperty = BindableProperty.Create(
         nameof(Facing),
@@ -2510,11 +2623,22 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    public CameraPosition Facing
+
+    /// <summary>
+    /// Enables video recording diagnostics rendering over video
+    /// </summary>
+    public bool VideoDiagnosticsOn
     {
-        get { return (CameraPosition)GetValue(FacingProperty); }
-        set { SetValue(FacingProperty, value); }
+        get { return (bool)GetValue(VideoDiagnosticsOnProperty); }
+        set { SetValue(VideoDiagnosticsOnProperty, value); }
     }
+
+    public static readonly BindableProperty VideoDiagnosticsOnProperty = BindableProperty.Create(
+        nameof(VideoDiagnosticsOn),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false, propertyChanged: NeedRestart);
+
 
     public static readonly BindableProperty CameraIndexProperty = BindableProperty.Create(
         nameof(CameraIndex),
