@@ -251,7 +251,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         CameraControl.UseCaptureVideoFlow = true; // Enable capture video flow
         CameraControl.VideoQuality = VideoQuality.High;
 
-        CameraControl.FrameProcessor = (canvas, imageInfo, timestamp) =>
+        CameraControl.FrameProcessor = (frame) =>
         {
             // Simple text overlay for testing
             using var paint = new SKPaint
@@ -259,21 +259,20 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 Color = SKColors.White,
                 TextSize = 48,
                 IsAntialias = true,
-                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold)
             };
 
             // Draw "LIVE" text at top left
-            canvas.DrawText("LIVE", 50, 100, paint);
+            frame.Canvas.DrawText("LIVE", 50, 100, paint);
 
             // Draw timestamp at top left (below LIVE)
-            canvas.DrawText($"{timestamp:mm\\:ss}", 50, 160, paint);
+            frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, paint);
 
             // Draw a simple border around the frame
             using var borderPaint = new SKPaint
             {
                 Color = SKColors.Red, Style = SKPaintStyle.Stroke, StrokeWidth = 4, IsAntialias = true
             };
-            canvas.DrawRect(10, 10, imageInfo.Width - 20, imageInfo.Height - 20, borderPaint);
+            frame.Canvas.DrawRect(10, 10, frame.Width - 20, frame.Height - 20, borderPaint);
         };
 
         // Setup camera event handlers

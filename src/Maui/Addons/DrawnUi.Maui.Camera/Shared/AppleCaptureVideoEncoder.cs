@@ -120,7 +120,7 @@ namespace DrawnUi.Camera
         /// <summary>
         /// Begin a GPU frame for overlay composition. Returns a canvas bound to the encoder's surface.
         /// </summary>
-        public IDisposable BeginFrame(TimeSpan timestamp, out SKCanvas canvas, out SKImageInfo info)
+        public IDisposable BeginFrame(TimeSpan timestamp, out SKCanvas canvas, out SKImageInfo info, int orientation)
         {
             lock (_frameLock)
             {
