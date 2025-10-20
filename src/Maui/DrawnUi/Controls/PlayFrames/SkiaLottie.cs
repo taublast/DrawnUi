@@ -13,6 +13,11 @@ namespace DrawnUi.Controls;
 
 public class SkiaLottie : AnimatedFramesRenderer
 {
+    public SkiaLottie()
+    {
+        UseCache = SkiaCacheType.ImageDoubleBuffered;
+    }
+
     /// <summary>
     ///     To avoid reloading same files multiple times..
     /// </summary>

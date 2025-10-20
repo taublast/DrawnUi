@@ -4,6 +4,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using static DrawnUi.Views.SkiaViewAccelerated;
 using Canvas = Android.Graphics.Canvas;
 using Context = Android.Content.Context;
 using Platform = Microsoft.Maui.ApplicationModel.Platform;
@@ -12,7 +13,6 @@ namespace DrawnUi.Draw;
 
 public partial class Super
 {
-
     public static Android.App.Activity MainActivity { get; set; }
 
     private static FrameCallback _frameCallback;
@@ -41,9 +41,10 @@ public partial class Super
         catch
         {
         }
+
         return ret;
     }
-    
+
     public static void Init(Android.App.Activity activity)
     {
         Initialized = true;
@@ -68,6 +69,16 @@ public partial class Super
 
         bool isRendering = false;
         object lockFrane = new();
+
+        _orientationListener = new OrientationListener(Android.Hardware.SensorDelay.Normal);
+        if (_orientationListener.CanDetectOrientation())
+        {
+            _orientationListener.Enable();
+        }
+        else
+        {
+            Super.Log("Failed to start detecting Orientation");
+        }
 
         InitShared();
 
@@ -112,7 +123,6 @@ public partial class Super
 
                 await Task.Delay(100);
             }
-
         });
 
         ExecAfterInit?.Invoke(null, EventArgs.Empty);
@@ -145,11 +155,9 @@ public partial class Super
             if (contentView != null)
                 contentView.SetOnApplyWindowInsetsListener(_insetsListener);
         }
-
     }
 
     static InsetsListener _insetsListener;
-
 
 
     public class InsetsListener : Java.Lang.Object, Android.Views.View.IOnApplyWindowInsetsListener
@@ -180,13 +188,13 @@ public partial class Super
                     insets.SystemWindowInsetBottom
                 );
             }
+
             return _returnInsets;
         }
     }
 
     public static int GetNavigationHeight(Context context)
     {
-
         int statusBarHeight = 0, totalHeight = 0, contentHeight = 0;
         int resourceId = context.Resources.GetIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0)
@@ -201,7 +209,6 @@ public partial class Super
 
     public static int GetStatusBarHeight(Context context)
     {
-
         int statusBarHeight = 0, totalHeight = 0, contentHeight = 0;
         int resourceId = context.Resources.GetIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0)
@@ -241,10 +248,7 @@ public partial class Super
 
         if (activity == null)
         {
-            ExecAfterInit += (s, a) =>
-            {
-                SetNavigationBarColor(colorBar, colorSeparator, darkStatusBarTint);
-            };
+            ExecAfterInit += (s, a) => { SetNavigationBarColor(colorBar, colorSeparator, darkStatusBarTint); };
             return;
         }
 
@@ -295,14 +299,12 @@ public partial class Super
 
                 if (Build.VERSION.SdkInt > (BuildVersionCodes)26)
                 {
-
                     // Fetch the current flags.
                     var lFlags = activity.Window.DecorView.SystemUiVisibility;
                     // Update the SystemUiVisibility dependening on whether we want a Light or Dark theme.
                     activity.Window.DecorView.SystemUiVisibility =
                         lFlags | (StatusBarVisibility)SystemUiFlags.LightNavigationBar;
                 }
-
             }
         }
     }
@@ -324,7 +326,8 @@ public partial class Super
                     if (windowInsetsController != null)
                     {
                         windowInsetsController.Hide(AndroidX.Core.View.WindowInsetsCompat.Type.StatusBars());
-                        windowInsetsController.SystemBarsBehavior = AndroidX.Core.View.WindowInsetsControllerCompat.BehaviorShowTransientBarsBySwipe;
+                        windowInsetsController.SystemBarsBehavior = AndroidX.Core.View.WindowInsetsControllerCompat
+                            .BehaviorShowTransientBarsBySwipe;
                     }
                 }
                 else
@@ -347,8 +350,6 @@ public partial class Super
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-          
-
             var activity = Platform.CurrentActivity as AndroidX.AppCompat.App.AppCompatActivity;
             if (activity?.Window != null)
             {
@@ -375,15 +376,11 @@ public partial class Super
     {
         if (Build.VERSION.SdkInt > Android.OS.BuildVersionCodes.M)
         {
-
             var activity = Platform.CurrentActivity;
 
             if (activity == null)
             {
-                ExecAfterInit += (s, a) =>
-                {
-                    SetWhiteTextStatusBar();
-                };
+                ExecAfterInit += (s, a) => { SetWhiteTextStatusBar(); };
                 return;
             }
 
@@ -406,10 +403,7 @@ public partial class Super
 
             if (activity == null)
             {
-                ExecAfterInit += (s, a) =>
-                {
-                    SetBlackTextStatusBar();
-                };
+                ExecAfterInit += (s, a) => { SetBlackTextStatusBar(); };
                 return;
             }
 
@@ -435,7 +429,6 @@ public partial class Super
         {
             _callback?.Invoke(frameTimeNanos);
         }
-
     }
 
     /// <summary>
@@ -455,7 +448,6 @@ public partial class Super
         {
             Super.Log(e);
         }
-
     }
 
     /// <summary>
@@ -492,9 +484,9 @@ public partial class Super
             view.BuildDrawingCache(true);
 
             using (var screenshot = Bitmap.CreateBitmap(
-                view.Width,
-                view.Height,
-                Bitmap.Config.Argb8888))
+                       view.Width,
+                       view.Height,
+                       Bitmap.Config.Argb8888))
             {
                 var canvas = new Canvas(screenshot);
 
@@ -520,7 +512,6 @@ public partial class Super
         {
             try
             {
-
                 if (!helper.Error)
                 {
                     using (var stream = new MemoryStream())
@@ -529,7 +520,6 @@ public partial class Super
                         buffer = stream.ToArray();
                     }
                 }
-
             }
             catch (Exception e)
             {
@@ -552,8 +542,6 @@ public partial class Super
 
     public class ScreenshotHelper : Java.Lang.Object, PixelCopy.IOnPixelCopyFinishedListener
     {
-
-
         public void OnPixelCopyFinished(int copyResult)
         {
             var stop = true;
@@ -625,7 +613,6 @@ public partial class Super
                 Console.WriteLine(e);
                 Task.Run(StopBackgroundThread);
             }
-
         }
 
         private Android.Views.View _view;
@@ -646,23 +633,18 @@ public partial class Super
 
             base.Dispose();
         }
-
     }
-
-
 
     #endregion
 
     private static bool _keepScreenOn;
+
     /// <summary>
     /// Prevents display from auto-turning off  Everytime you set this the setting will be applied.
     /// </summary>
     public static bool KeepScreenOn
     {
-        get
-        {
-            return _keepScreenOn;
-        }
+        get { return _keepScreenOn; }
         set
         {
             if (value)
@@ -673,7 +655,56 @@ public partial class Super
             {
                 Platform.CurrentActivity.Window.ClearFlags(WindowManagerFlags.KeepScreenOn);
             }
+
             _keepScreenOn = value;
         }
     }
+
+    #region Device Orientation
+
+    static OrientationListener _orientationListener;
+
+    public class OrientationListener : Android.Views.OrientationEventListener
+    {
+        public OrientationListener(IntPtr javaReference, Android.Runtime.JniHandleOwnership transfer) : base(
+            javaReference, transfer)
+        {
+        }
+
+        public OrientationListener(Android.Content.Context context) : base(context)
+        {
+        }
+
+        public OrientationListener(Android.Hardware.SensorDelay rate) : base(Platform.AppContext, rate)
+        {
+        }
+
+        public override void OnOrientationChanged(int degrees)
+        {
+            var rotation = ((degrees + 45) / 90) % 4;
+
+            var deviceOrientation = rotation * 90;
+
+            if (deviceOrientation == 90)
+            {
+                DeviceOrientation = DeviceOrientation.LandscapeRight;
+            }
+            else if (deviceOrientation == 270)
+            {
+                DeviceOrientation = DeviceOrientation.LandscapeLeft;
+            }
+            else if (deviceOrientation == 180)
+            {
+                DeviceOrientation = DeviceOrientation.PortraitUpsideDown;
+            }
+            else
+            {
+                DeviceOrientation = DeviceOrientation.Portrait;
+            }
+        }
+
+
+    }
+
+    #endregion
 }

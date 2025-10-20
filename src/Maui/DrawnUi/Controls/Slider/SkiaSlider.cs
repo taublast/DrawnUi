@@ -6,6 +6,12 @@ namespace DrawnUi.Draw;
  
 public class SkiaSlider : SkiaLayout
 {
+    public SkiaSlider()
+    {
+        
+        UseCache = SkiaCacheType.ImageDoubleBuffered;
+    }
+
     #region DEFAULT CONTENT
 
     protected override void CreateDefaultContent()

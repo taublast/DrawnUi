@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using AppoMobi.Maui.Navigation;
+using DrawnUi.Maui.Navigation;
 using Microsoft.Extensions.Logging;
 
 namespace DrawnUi.Controls

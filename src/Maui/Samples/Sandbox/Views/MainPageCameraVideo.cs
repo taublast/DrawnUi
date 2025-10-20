@@ -8,7 +8,7 @@ using TerraFX.Interop.Windows;
 
 namespace Sandbox.Views;
 
-public class CameraTestPage : BasePageReloadable, IDisposable
+public class MainPageCameraVideo : BasePageReloadable, IDisposable
 {
     private SkiaCamera CameraControl;
     private SkiaButton _takePictureButton;
@@ -35,10 +35,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
     void ShowAlert(string title, string message)
     {
-        MainThread.BeginInvokeOnMainThread(async () =>
-        {
-            await DisplayAlert(title, message, "OK");
-        });
+        MainThread.BeginInvokeOnMainThread(async () => { await DisplayAlert(title, message, "OK"); });
     }
 
     /// <summary>
@@ -51,24 +48,25 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         CreateContent();
     }
 
-    public CameraTestPage()
+    public MainPageCameraVideo()
     {
         Title = "SkiaCamera Test";
     }
 
     private void CreateContent()
     {
-        var mainStack = new SkiaStack
+        var mainStack = new SkiaLayer
         {
-            Spacing = 16,
-            Padding = 16,
-            HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             Children =
             {
                 // Camera preview
                 new SkiaCamera()
                     {
+                        VideoDiagnosticsOn = true,
+                        RecordAudio = false,
+                       UseCaptureVideoFlow = true, // Enable capture video flow for overlay recording
+                        VideoQuality = VideoQuality.Standard, //change this or select manually in menu
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Fill,
                         BackgroundColor = Colors.Black,
@@ -84,131 +82,142 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             UpdateStatusText();
                         }
                     }),
-
-                // Status label
-                new SkiaLabel("Camera Status: Off")
-                    {
-                        FontSize = 14,
-                        TextColor = Colors.Gray,
-                        HorizontalOptions = LayoutOptions.Center,
-                        UseCache = SkiaCacheType.Operations
-                    }
-                    .Assign(out _statusLabel),
-
-                // Controls row
-                new SkiaRow
+                new SkiaStack()
                 {
-                    Spacing = 8,
-                    HorizontalOptions = LayoutOptions.Center,
-                    Children =
-                    {
-                        // Take Picture button
-                        new SkiaButton("Take Picture")
-                            {
-                                BackgroundColor = Colors.Blue,
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image
-                            }
-                            .Assign(out _takePictureButton)
-                            .OnTapped(async me => { await TakePictureAsync(); })
-                            .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
-                            {
-                                me.IsEnabled = CameraControl.State == CameraState.On;
-                                me.Opacity = me.IsEnabled ? 1.0 : 0.5;
-                            }),
-
-                        // Flash control button
-                        new SkiaButton("Flash: Off")
-                            {
-                                BackgroundColor = Colors.Orange,
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image
-                            }
-                            .Assign(out _flashButton)
-                            .OnTapped(me => { ToggleFlash(); })
-                            .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode),
-                                me => { me.Text = $"Flash: {CameraControl.FlashMode}"; }),
-
-                        // Camera selection button
-                        new SkiaButton("📷 Camera")
-                            {
-                                BackgroundColor = Colors.Teal,
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image
-                            }
-                            .Assign(out _cameraSelectButton)
-                            .OnTapped(async me => { await SelectCamera(); })
-                    }
-                },
-
-                // Start/Stop camera row
-                new SkiaRow
-                {
-                    Spacing = 8,
-                    HorizontalOptions = LayoutOptions.Center,
-                    Children =
-                    {
-                        new SkiaButton("Start Camera")
-                            {
-                                BackgroundColor = Colors.Green,
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image
-                            }
-                            .OnTapped(me => { CameraControl.IsOn = true; }),
-                        new SkiaButton("Stop Camera")
-                            {
-                                BackgroundColor = Colors.Red,
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image
-                            }
-                            .OnTapped(me => { CameraControl.IsOn = false; })
-                    }
-                },
-
-                // Video recording row
-                new SkiaRow
-                {
+                    VerticalOptions = LayoutOptions.End,
+                    UseCache = SkiaCacheType.GPU,
+                    BackgroundColor = Color.FromHex("#44000000"),
                     Spacing = 16,
-                    HorizontalOptions = LayoutOptions.Center,
+                    Padding = 16,
                     Children =
                     {
-                        new SkiaButton("🎥 Record")
+                        // Status label
+                        new SkiaLabel("Camera Status: Off")
                             {
-                                BackgroundColor = Colors.Purple,
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image
+                                FontSize = 14,
+                                TextColor = Colors.Gray,
+                                HorizontalOptions = LayoutOptions.Center,
+                                UseCache = SkiaCacheType.Operations
                             }
-                            .Assign(out _videoRecordButton)
-                            .OnTapped(async me => { await ToggleVideoRecording(); })
-                            .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                            .Assign(out _statusLabel),
+
+                        // Controls row
+                        new SkiaRow
+                        {
+                            Spacing = 8,
+                            HorizontalOptions = LayoutOptions.Center,
+                            Children =
                             {
-                                if (CameraControl.IsRecordingVideo)
-                                {
-                                    me.Text = "🛑 Stop (00:00)";
-                                    me.BackgroundColor = Colors.Red;
-                                }
-                                else
-                                {
-                                    me.Text = "🎥 Record";
-                                    me.BackgroundColor = Colors.Purple;
-                                }
-                            }),
-                        new SkiaButton("📹 Formats")
-                            {
-                                BackgroundColor = Colors.DarkSlateBlue,
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image
+                                // Take Picture button
+                                new SkiaButton("Take Picture")
+                                    {
+                                        BackgroundColor = Colors.Blue,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _takePictureButton)
+                                    .OnTapped(async me => { await TakePictureAsync(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
+                                    {
+                                        me.IsEnabled = CameraControl.State == CameraState.On;
+                                        me.Opacity = me.IsEnabled ? 1.0 : 0.5;
+                                    }),
+
+                                // Flash control button
+                                new SkiaButton("Flash: Off")
+                                    {
+                                        BackgroundColor = Colors.Orange,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _flashButton)
+                                    .OnTapped(me => { ToggleFlash(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode),
+                                        me => { me.Text = $"Flash: {CameraControl.FlashMode}"; }),
+
+                                // Camera selection button
+                                new SkiaButton("📷 Camera")
+                                    {
+                                        BackgroundColor = Colors.Teal,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _cameraSelectButton)
+                                    .OnTapped(async me => { await SelectCamera(); })
                             }
-                            .OnTapped(async me => { await ShowVideoFormatPicker(); })
+                        },
+
+                        // Start/Stop camera row
+                        new SkiaRow
+                        {
+                            Spacing = 8,
+                            HorizontalOptions = LayoutOptions.Center,
+                            Children =
+                            {
+                                new SkiaButton("Start Camera")
+                                    {
+                                        BackgroundColor = Colors.Green,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .OnTapped(me => { CameraControl.IsOn = true; }),
+                                new SkiaButton("Stop Camera")
+                                    {
+                                        BackgroundColor = Colors.Red,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .OnTapped(me => { CameraControl.IsOn = false; })
+                            }
+                        },
+
+                        // Video recording row
+                        new SkiaRow
+                        {
+                            Spacing = 16,
+                            HorizontalOptions = LayoutOptions.Center,
+                            Children =
+                            {
+                                new SkiaButton("🎥 Record")
+                                    {
+                                        BackgroundColor = Colors.Purple,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _videoRecordButton)
+                                    .OnTapped(async me => { await ToggleVideoRecording(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                                    {
+                                        if (CameraControl.IsRecordingVideo)
+                                        {
+                                            me.Text = "🛑 Stop (00:00)";
+                                            me.BackgroundColor = Colors.Red;
+                                        }
+                                        else
+                                        {
+                                            me.Text = "🎥 Record";
+                                            me.BackgroundColor = Colors.Purple;
+                                        }
+                                    }),
+                                new SkiaButton("📹 Formats")
+                                    {
+                                        BackgroundColor = Colors.DarkSlateBlue,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .OnTapped(async me => { await ShowVideoFormatPicker(); })
+                            }
+                        },
                     }
-                }
+                },
+                new ButtonToRoot()
             }
         };
 
@@ -247,20 +256,10 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
         Content = Canvas;
 
-        // Configure camera for capture video flow testing
-        CameraControl.RecordAudio = false; // Test with audio recording
-        CameraControl.UseCaptureVideoFlow = true; // Enable capture video flow
-        CameraControl.VideoQuality = VideoQuality.High;
-
         CameraControl.FrameProcessor = (frame) =>
         {
             // Simple text overlay for testing
-            using var paint = new SKPaint
-            {
-                Color = SKColors.White,
-                TextSize = 48,
-                IsAntialias = true,
-            };
+            using var paint = new SKPaint { Color = SKColors.White, TextSize = 48, IsAntialias = true, };
 
             // Draw "LIVE" text at top left
             frame.Canvas.DrawText("LIVE", 50, 100, paint);
@@ -285,6 +284,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         return new SkiaLayer
         {
             IsVisible = false,
+            UseCache = SkiaCacheType.Image,
             BackgroundColor = Color.FromArgb("#CC000000"), // Semi-transparent black overlay
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
@@ -480,11 +480,11 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
 
                 // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
-                var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
+                var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "DrawnUI");
 
                 if (!string.IsNullOrEmpty(publicPath))
                 {
-                    ShowAlert("Success", "Video saved to gallery!");
+                    ShowAlert("Success", $"Video saved to gallery! At: {publicPath}");
                     Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
                 }
                 else

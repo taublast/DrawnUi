@@ -3024,6 +3024,11 @@ namespace DrawnUi.Draw
         {
             if (disposable != null)
             {
+                if (disposable is ISkiaDisposable willBe)
+                {
+                    willBe.IsAlive = ObjectAliveType.BeingDisposed;
+                }
+
                 if (Superview is DrawnView view)
                 {
                     try

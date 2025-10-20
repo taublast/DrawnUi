@@ -22,6 +22,7 @@ namespace DrawnUi.Camera
         private int _height;
         private int _frameRate;
         private bool _recordAudio;
+        private int _deviceRotation = 0;
 
         private MediaCodec _videoCodec;
         private MediaMuxer _muxer;
@@ -53,13 +54,21 @@ namespace DrawnUi.Camera
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
 
-        public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
+        // Interface implementation - required by ICaptureVideoEncoder
+        public Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
+        {
+            return InitializeAsync(outputPath, width, height, frameRate, recordAudio, 0);
+        }
+
+        // Extended version with device rotation support
+        public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio, int deviceRotation)
         {
             _outputPath = outputPath;
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
-            System.Diagnostics.Debug.WriteLine($"[ENC INIT] {_width}x{_height}@{_frameRate} output={_outputPath} recordAudio={recordAudio}");
+            _deviceRotation = deviceRotation;
+            System.Diagnostics.Debug.WriteLine($"[ENC INIT] {_width}x{_height}@{_frameRate} rotation={_deviceRotation}° output={_outputPath} recordAudio={recordAudio}");
 
             _recordAudio = recordAudio; // not handled in this first Android step
 
@@ -79,6 +88,10 @@ namespace DrawnUi.Camera
             // Ensure directory exists
             Directory.CreateDirectory(Path.GetDirectoryName(_outputPath));
             _muxer = new MediaMuxer(_outputPath, MuxerOutputType.Mpeg4);
+
+            // Set orientation hint for proper video playback (zero performance cost, metadata only)
+            // This tells video players how to rotate the video for display
+            _muxer.SetOrientationHint(_deviceRotation);
 
             _videoCodec.Start();
 

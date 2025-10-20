@@ -5,6 +5,12 @@
     /// </summary>
     public class AnimatedFramesRenderer : SkiaControl
     {
+
+        public AnimatedFramesRenderer()
+        {
+
+        }
+
         private bool _delayedPlay;
         private bool _wasLayout;
         protected bool WasPlayingBeforeVisibilityChanged;

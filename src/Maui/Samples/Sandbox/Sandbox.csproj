@@ -61,6 +61,8 @@
 
   <ItemGroup>
 
+    <None Remove="NUL" />
+
     <None Remove="Resources\Fonts\Orbitron-Black.ttf" />
 
     <None Remove="Resources\Fonts\Orbitron-Bold.ttf" />

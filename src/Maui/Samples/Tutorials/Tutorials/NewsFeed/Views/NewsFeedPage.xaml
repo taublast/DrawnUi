@@ -7,7 +7,6 @@
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
     xmlns:newsFeed="clr-namespace:DrawnUI.Tutorials.NewsFeed"
     xmlns:viewModels="clr-namespace:DrawnUI.Tutorials.NewsFeed.ViewModels"
-    xmlns:global="clr-namespace:"
     x:DataType="viewModels:NewsViewModel"
     Title="Recycled Cells Scroller"
     x:Name="ThisPage">
@@ -60,7 +59,7 @@
 
                     <draw:SkiaScroll.Footer>
 
-                        <draw:SkiaLayer HeightRequest="50" />
+                        <draw:SkiaLayer HeightRequest="50"/>
 
                     </draw:SkiaScroll.Footer>
 

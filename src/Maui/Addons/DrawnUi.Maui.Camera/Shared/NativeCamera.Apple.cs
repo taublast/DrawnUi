@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using AppoMobi.Specials;
 using AVFoundation;
 using CoreFoundation;
@@ -62,7 +63,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private UIDeviceOrientation _deviceOrientation;
     private AVCaptureVideoOrientation _videoOrientation;
     private UIImageOrientation _imageOrientation;
-    private NSObject _orientationObserver;
+ 
 
     public Rotation CurrentRotation { get; private set; } = Rotation.rotate0Degrees;
 
@@ -83,10 +84,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         _session = new AVCaptureSession();
         _videoDataOutput = new AVCaptureVideoDataOutput();
         _videoDataOutputQueue = new DispatchQueue("VideoDataOutput", false);
-
-        SetupOrientationObserver();
-
-
     }
 
 
@@ -143,50 +140,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    private void SetupOrientationObserver()
-    {
-        // Initialize orientation values
-        _uiOrientation = UIApplication.SharedApplication.StatusBarOrientation;
-        _deviceOrientation = UIDevice.CurrentDevice.Orientation;
-        _videoOrientation = AVCaptureVideoOrientation.Portrait;
 
-        System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Initial orientations - UI: {_uiOrientation}, Device: {_deviceOrientation}, Video: {_videoOrientation}");
 
-        // Set up orientation change observer
-        _orientationObserver = NSNotificationCenter.DefaultCenter.AddObserver(
-            UIDevice.OrientationDidChangeNotification,
-            (notification) =>
-            {
-                System.Diagnostics.Debug.WriteLine($"[CAMERA ORIENTATION] Device orientation changed notification received");
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    UpdateOrientationFromMainThread();
-                    // Also update the SkiaCamera's DeviceRotation to ensure both systems are in sync
-                    var deviceOrientation = UIDevice.CurrentDevice.Orientation;
-                    var rotation = 0;
-                    switch (deviceOrientation)
-                    {
-                        case UIDeviceOrientation.Portrait:
-                            rotation = 0;
-                            break;
-                        case UIDeviceOrientation.LandscapeLeft:
-                            rotation = 90;
-                            break;
-                        case UIDeviceOrientation.PortraitUpsideDown:
-                            rotation = 180;
-                            break;
-                        case UIDeviceOrientation.LandscapeRight:
-                            rotation = 270;
-                            break;
-                        default:
-                            rotation = 0;
-                            break;
-                    }
-                    System.Diagnostics.Debug.WriteLine($"[CAMERA ORIENTATION] Setting SkiaCamera DeviceRotation to {rotation} degrees");
-                    FormsControl.DeviceRotation = rotation;
-                });
-            });
-    }
 
     object lockSetup = new();
 
@@ -1072,13 +1027,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var orientation = metaData["Orientation"].ToString().ToInteger();
                 var props = image.Properties;
 
-//#if DEBUG
-//                var exif = image.Properties.Exif;
-//                foreach (var key in exif.Dictionary.Keys)
-//                {
-//                    Debug.WriteLine($"{key}: {exif.Dictionary[key]}");
-//                }
-//#endif
+                //#if DEBUG
+                //                var exif = image.Properties.Exif;
+                //                foreach (var key in exif.Dictionary.Keys)
+                //                {
+                //                    Debug.WriteLine($"{key}: {exif.Dictionary[key]}");
+                //                }
+                //#endif
+
+                using var uiImage = UIImage.LoadFromData(jpegData);
+                var skImage = uiImage.ToSKImage();
 
                 var rotation = 0;
                 bool flipHorizontal, flipVertical; //unused
@@ -1111,8 +1069,18 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         break;
                 }
 
-                using var uiImage = UIImage.LoadFromData(jpegData);
-                var skImage = uiImage.ToSKImage();
+                SKBitmap skBitmap = SKBitmap.FromImage(skImage);
+
+                var nonRotated = skBitmap;
+
+                skBitmap = SkiaCamera.Reorient(skBitmap, rotation);
+
+                if (nonRotated != skBitmap)
+                {
+                    nonRotated.Dispose();
+                    skImage.Dispose();
+                    skImage = SKImage.FromBitmap(skBitmap);
+                }
 
                 var capturedImage = new CapturedImage()
                 {
@@ -1122,6 +1090,24 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     Rotation = rotation,
                     Meta = Metadata.CreateMetadataFromProperties(props, metaData)
                 };
+
+                switch (FormsControl.DeviceRotation)
+                {
+                    case 90:
+                        FormsControl.CameraDevice.Meta.Orientation = 6;
+                        break;
+                    case 270:
+                        FormsControl.CameraDevice.Meta.Orientation = 8;
+                        break;
+                    case 180:
+                        FormsControl.CameraDevice.Meta.Orientation = 3;
+                        break;
+                    default:
+                        FormsControl.CameraDevice.Meta.Orientation = 1;
+                        break;
+                }
+
+                capturedImage.Meta.Orientation = FormsControl.CameraDevice.Meta.Orientation;
 
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
@@ -1206,7 +1192,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// <param name="meta">Image metadata</param>
     /// <param name="album">Album name (optional)</param>
     /// <returns>assets-library:// URL to reference the saved photo</returns>
-    public async Task<string> SaveJpgStreamToGallery(Stream stream, string filename, double cameraSavedRotation, Metadata meta, string album)
+    public async Task<string> SaveJpgStreamToGallery(Stream stream, string filename, Metadata meta, string album)
     {
         try
         {
@@ -1638,10 +1624,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 _videoOrientation = videoConnection.VideoOrientation;
             }
 
-            CurrentRotation = GetRotation(
-                _uiOrientation,
-                _videoOrientation,
-                _deviceInput?.Device?.Position ?? AVCaptureDevicePosition.Back);
+                CurrentRotation = GetRotation(
+                    _uiOrientation,
+                    _videoOrientation,
+                    _deviceInput?.Device?.Position ?? AVCaptureDevicePosition.Back);
 
             switch (_uiOrientation)
             {
@@ -1854,14 +1840,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             {
                 _latestRawFrame?.Dispose();
                 _latestRawFrame = null;
-            }
-
-            // Clean up orientation observer
-            if (_orientationObserver != null)
-            {
-                NSNotificationCenter.DefaultCenter.RemoveObserver(_orientationObserver);
-                _orientationObserver?.Dispose();
-                _orientationObserver = null;
             }
         }
 
@@ -2183,6 +2161,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             var videoPath = Path.Combine(documentsPath, fileName);
             _currentVideoUrl = NSUrl.FromFilename(videoPath);
 
+            // Set video orientation on the capture connection to ensure correct playback orientation
+            var videoConnection = _movieFileOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
+            if (videoConnection != null && videoConnection.SupportsVideoOrientation)
+            {
+                // Map device rotation to AVCaptureVideoOrientation
+                var orientation = DeviceRotationToVideoOrientation(FormsControl.DeviceRotation);
+                videoConnection.VideoOrientation = orientation;
+                Debug.WriteLine($"[NativeCamera.Apple] Set video orientation to: {orientation} (DeviceRotation: {FormsControl.DeviceRotation})");
+            }
+
             // Start recording
             _movieFileOutput.StartRecordingToOutputFile(_currentVideoUrl, this);
 
@@ -2208,6 +2196,25 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             CleanupMovieFileOutput();
             VideoRecordingFailed?.Invoke(ex);
         }
+    }
+
+    /// <summary>
+    /// Converts device rotation (degrees) to AVCaptureVideoOrientation
+    /// </summary>
+    private AVCaptureVideoOrientation DeviceRotationToVideoOrientation(int deviceRotation)
+    {
+        var normalizedRotation = deviceRotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
+
+        return normalizedRotation switch
+        {
+            0 => AVCaptureVideoOrientation.Portrait,
+            90 => AVCaptureVideoOrientation.LandscapeRight,
+            180 => AVCaptureVideoOrientation.PortraitUpsideDown,
+            270 => AVCaptureVideoOrientation.LandscapeLeft,
+            _ => AVCaptureVideoOrientation.Portrait
+        };
     }
 
     /// <summary>

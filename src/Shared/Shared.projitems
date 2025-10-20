@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Cache\SkiaCacheType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Cache\SkiaRenderObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\AutoSizeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\DeviceOrientation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\DirectionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\DoubleViewTransitionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Internals\Enums\DrawImageAlignment.cs" />

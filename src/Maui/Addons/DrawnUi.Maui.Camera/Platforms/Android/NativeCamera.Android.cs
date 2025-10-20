@@ -309,11 +309,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="album"></param>
     /// <returns></returns>
     public async Task<string> SaveJpgStreamToGallery(System.IO.Stream stream, string filename,
-        double rotation, Metadata meta, string album)
+        Metadata meta, string album)
     {
         if (Build.VERSION.SdkInt < BuildVersionCodes.Q)
         {
-            return await SaveJpgStreamToGalleryLegacy(stream, filename, rotation, meta, album);
+            return await SaveJpgStreamToGalleryLegacy(stream, filename, meta, album);
         }
 
         var sub = "Camera";
@@ -344,7 +344,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="album"></param>
     /// <returns></returns>
     public async Task<string> SaveJpgStreamToGalleryLegacy(System.IO.Stream stream, string filename,
-        double rotation, Metadata meta, string album)
+        Metadata meta, string album)
     {
         string fullFilename = System.IO.Path.Combine(GetOutputGalleryFolder(album).AbsolutePath, filename);
 
@@ -2189,13 +2189,35 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         _mediaRecorder.SetOutputFile(_currentVideoFile);
 
-        // Set orientation
-        _mediaRecorder.SetOrientationHint(SensorOrientation);
+        // Set orientation hint - native recording uses camera's native format (already landscape 1280x720)
+        // So we need to compensate: if device is landscape but video is already landscape, don't rotate
+        // The custom capture flow swaps encoder dims, but native recording doesn't
+        var deviceRotation = FormsControl?.RecordingLockedRotation ?? 0;
+        bool deviceIsLandscape = (deviceRotation == 90 || deviceRotation == 270);
+        bool videoIsLandscape = (profile.VideoFrameWidth > profile.VideoFrameHeight);
+
+        int orientationHint;
+        if (deviceIsLandscape && videoIsLandscape)
+        {
+            // Device is landscape, video is landscape - already correct orientation, no rotation needed
+            orientationHint = 0;
+        }
+        else if (!deviceIsLandscape && !videoIsLandscape)
+        {
+            // Device is portrait, video is portrait - already correct, no rotation
+            orientationHint = 0;
+        }
+        else
+        {
+            // Orientations don't match, apply device rotation
+            orientationHint = deviceRotation;
+        }
+
+        _mediaRecorder.SetOrientationHint(orientationHint);
 
         // Prepare MediaRecorder
         _mediaRecorder.Prepare();
 
-        Log.Debug(TAG, $"MediaRecorder setup complete. Output: {_currentVideoFile}");
     }
 
     /// <summary>
@@ -2422,8 +2444,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         try
         {
-            Log.Debug(TAG, "Starting video recording...");
-
             // Stop current preview
             CaptureSession.StopRepeating();
 
@@ -2475,7 +2495,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             _progressTimer = new System.Threading.Timer(OnProgressTimer, null,
                 TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
 
-            Log.Debug(TAG, "Video recording started successfully");
         }
         catch (Exception ex)
         {
@@ -2496,8 +2515,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         try
         {
-            Log.Debug(TAG, "Stopping video recording...");
-
             // Stop progress timer
             _progressTimer?.Dispose();
             _progressTimer = null;
@@ -2512,8 +2529,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // Get file info
             var fileInfo = new Java.IO.File(_currentVideoFile);
             var fileSizeBytes = fileInfo.Length();
-
-            Log.Debug(TAG, $"Video recording stopped. Duration: {duration:mm\\:ss}, Size: {fileSizeBytes / (1024 * 1024):F1} MB");
 
             // Create captured video object
             var capturedVideo = new CapturedVideo
@@ -2660,11 +2675,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             {
                 var columnIndex = cursor.GetColumnIndexOrThrow(MediaStore.Video.Media.InterfaceConsts.Data);
                 var galleryPath = cursor.GetString(columnIndex);
-                Log.Debug(TAG, $"Video saved to gallery: {galleryPath}");
+                Debug.WriteLine(TAG, $"Video saved to gallery: {galleryPath}");
                 return galleryPath;
             }
 
-            Log.Debug(TAG, $"Video saved to gallery with URI: {uri}");
+            Debug.WriteLine(TAG, $"Video saved to gallery with URI: {uri}");
             return uri.ToString();
         }
         catch (Exception ex)
@@ -2715,8 +2730,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 // Start repeating request for video recording
                 var captureRequest = _owner.mPreviewRequestBuilder.Build();
                 session.SetRepeatingRequest(captureRequest, null, _owner.mBackgroundHandler);
-
-                Log.Debug(NativeCamera.TAG, "Video capture session configured and recording started");
             }
             catch (Exception ex)
             {

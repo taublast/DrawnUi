@@ -1601,8 +1601,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
-    public async Task<string> SaveJpgStreamToGallery(Stream stream, string filename,
-        double rotation, Metadata meta, string album)
+    public async Task<string> SaveJpgStreamToGallery(Stream stream, string filename, Metadata meta, string album)
     {
         try
         {

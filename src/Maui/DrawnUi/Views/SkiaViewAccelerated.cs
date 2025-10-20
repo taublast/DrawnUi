@@ -20,30 +20,7 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 
 #if ANDROID
 
-    private MyOrientationListener _orientationListener;
 
-    public class MyOrientationListener : Android.Views.OrientationEventListener
-    {
-        private SkiaViewAccelerated _owner;
-
-        public MyOrientationListener(IntPtr javaReference, Android.Runtime.JniHandleOwnership transfer) : base(javaReference, transfer)
-        {
-        }
-
-        public MyOrientationListener(Android.Content.Context context) : base(context)
-        {
-        }
-
-        public MyOrientationListener(SkiaViewAccelerated parent, Android.Hardware.SensorDelay rate) : base(Platform.AppContext, rate)
-        {
-            _owner = parent;
-        }
-
-        public override void OnOrientationChanged(int rotation)
-        {
-            _owner.Superview?.SetDeviceOrientation(rotation);
-        }
-    }
 
 
 #endif
@@ -53,17 +30,6 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         if (args.NewHandler == null)
         {
             PaintSurface -= OnPaintingSurface;
-
-#if ANDROID
-
-            if (_orientationListener != null)
-            {
-                _orientationListener.Disable();
-                _orientationListener.Dispose();
-                _orientationListener = null;
-            }
-
-#endif
             Superview?.DisconnectedHandler();
         }
 
@@ -79,40 +45,20 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
             PaintSurface -= OnPaintingSurface;
             PaintSurface += OnPaintingSurface;
 
-#if ANDROID
-
-            var renderer = Handler;// as SkiaSharp.Views.Maui.Controls.Compatibility.SKGLViewRenderer;
-                                   //var nativeView = renderer.Control as SkiaSharp.Views.Android.SKGLTextureView;
-                                   //var renderer = Handler as SkiaSharp.Views.Maui.Handlers.SKGLViewHandler;
-                                   //var nativeView = renderer.PlatformView as SkiaSharp.Views.Android.SKGLTextureView;
-
-            _orientationListener = new MyOrientationListener(this, Android.Hardware.SensorDelay.Normal);
-            if (_orientationListener.CanDetectOrientation())
-                _orientationListener.Enable();
-
-#elif IOS
-
-            if (DeviceInfo.Current.DeviceType != DeviceType.Virtual)
-            {
-                //var renderer = Handler as SKMetalViewRenderer;
-                //var nativeView = renderer.Control as SkiaSharp.Views.iOS.SKMetalView;
-            }
-            else
-            {
-                TestApple();
-                //var renderer = Handler as SkiaSharp.Views.Maui.Controls.Compatibility.SKGLViewRenderer;
-                //var nativeView = renderer.Control as SkiaSharp.Views.iOS.SKGLView;
-            }
-
-            //#elif MACCATALYST
-
-            //            var renderer = Handler as SKMetalViewRenderer;
-            //            var nativeView = renderer.Control as SkiaSharp.Views.iOS.SKMetalView;
-
-#endif
+            Super.OrientationChanged += OnOrientationChanged;
 
             Superview?.ConnectedHandler();
         }
+
+        else
+        {
+            Super.OrientationChanged -= OnOrientationChanged;
+        }
+    }
+
+    private void OnOrientationChanged(object sender, DeviceOrientation deviceOrientation)
+    {
+        Superview?.SetDeviceOrientation(deviceOrientation);
     }
 
     public DrawnView Superview { get; protected set; }

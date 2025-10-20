@@ -60,6 +60,7 @@ namespace DrawnUI.Tutorials.CustomButton
                         {
                             new SkiaMediaImage()
                             {
+                                UseCache = SkiaCacheType.None, // we will cache the whole button as doublebuffered
                                 VerticalOptions = LayoutOptions.Center,
                                 WidthRequest = 40, //add your property to customize
                                 Aspect = TransformAspect.AspectFit

@@ -1072,6 +1072,8 @@ public SkiaImageEffect Effect { get; set; }       // Real-time simple color filt
 public bool IsRecordingVideo { get; }             // Recording state (read-only)
 public VideoQuality VideoQuality { get; set; }   // Video quality preset
 public int VideoFormatIndex { get; set; }         // Manual format index
+public bool UseCaptureVideoFlow { get; set; }     // Enable frame-by-frame capture mode
+public Action<DrawableFrame> FrameProcessor { get; set; } // Frame processing callback
 
 // Zoom & Limits
 public double Zoom { get; set; }                  // Current zoom level
@@ -1473,6 +1475,152 @@ camera.RecordAudio = true;   // Record videos with audio
 - **Android**: Conditional MediaRecorder audio source and encoder setup
 - **iOS/macOS**: Conditional AVCaptureDeviceInput for audio with proper cleanup
 - **Windows**: MediaEncodingProfile audio removal when disabled
+
+#### Capture Video Flow (Advanced)
+
+SkiaCamera provides a **frame-by-frame video recording system** with real-time processing capabilities through `UseCaptureVideoFlow`. This allows you to process each camera frame before encoding, enabling watermarks, overlays, filters, and custom effects applied directly to the video output.
+
+**Key Features:**
+- **Real-time frame processing** with GPU acceleration
+- **Custom drawing** on each frame via `FrameProcessor` callback
+- **Dual recording modes**: Native recording (default) vs. Capture flow (frame-by-frame)
+- **Cross-platform support** (Windows, Android, iOS/macOS)
+- **Hardware encoding** when available
+- **Rotation locking** during recording for consistent output
+
+**Basic Usage:**
+
+```csharp
+var camera = new SkiaCamera
+{
+    // Enable capture video flow
+    UseCaptureVideoFlow = true,
+
+    // Standard video properties work the same
+    VideoQuality = VideoQuality.High,
+    RecordAudio = true,
+
+    // Frame processor callback for custom rendering
+    FrameProcessor = (frame) =>
+    {
+        // Draw watermark on each video frame
+        using var paint = new SKPaint
+        {
+            Color = SKColors.White.WithAlpha(128),
+            TextSize = 48,
+            IsAntialias = true
+        };
+
+        frame.Canvas.DrawText("LIVE", 50, 100, paint);
+        frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, paint);
+
+        // Draw timestamp
+        var timestamp = frame.Time.ToString(@"hh\:mm\:ss");
+        frame.Canvas.DrawText(timestamp, 50, 180, paint);
+    }
+};
+
+// Same video recording API as native mode
+await camera.StartVideoRecording();
+await Task.Delay(10000); // Record for 10 seconds
+await camera.StopVideoRecording();
+```
+
+**DrawableFrame Properties:**
+
+The `FrameProcessor` callback receives a `DrawableFrame` object with:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Canvas` | `SKCanvas` | SkiaSharp canvas for drawing on the frame |
+| `Width` | `int` | Frame width in pixels |
+| `Height` | `int` | Frame height in pixels |
+| `Time` | `TimeSpan` | Elapsed time since recording started |
+
+**Capture Video Flow Properties:**
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `UseCaptureVideoFlow` | `bool` | `false` | Enable frame-by-frame capture mode |
+| `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each frame |
+| `RecordAudio` | `bool` | `false` | Include audio in recording |
+| `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset |
+| `VideoFormatIndex` | `int` | `0` | Manual format selection (when VideoQuality = Manual) |
+
+**Advanced Example: Multi-Layer Overlay**
+
+```csharp
+camera.FrameProcessor = (frame) =>
+{
+    var canvas = frame.Canvas;
+    var width = frame.Width;
+    var height = frame.Height;
+    var time = frame.Time;
+
+    // Draw semi-transparent overlay rectangle
+    using var rectPaint = new SKPaint
+    {
+        Color = SKColors.Black.WithAlpha(100),
+        Style = SKPaintStyle.Fill
+    };
+    canvas.DrawRect(new SKRect(0, height - 120, width, height), rectPaint);
+
+    // Draw recording indicator
+    using var circlePaint = new SKPaint { Color = SKColors.Red };
+    canvas.DrawCircle(30, height - 80, 10, circlePaint);
+
+    // Draw timestamp
+    using var textPaint = new SKPaint
+    {
+        Color = SKColors.White,
+        TextSize = 36,
+        IsAntialias = true,
+        Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold)
+    };
+    canvas.DrawText($"REC {time:hh\\:mm\\:ss}", 60, height - 65, textPaint);
+
+    // Draw custom logo/watermark (from SKBitmap)
+    if (_watermarkBitmap != null)
+    {
+        var logoRect = new SKRect(width - 200, 20, width - 20, 100);
+        canvas.DrawBitmap(_watermarkBitmap, logoRect);
+    }
+};
+```
+
+**Platform Implementation Details:**
+
+| Platform | Encoder | GPU Support | Hardware Encoding |
+|----------|---------|-------------|-------------------|
+| **Windows** | Media Foundation (H.264/HEVC) | ✅ D3D11 textures | ✅ Hardware MFT |
+| **Android** | MediaCodec (H.264/HEVC) | ✅ Surface input | ✅ Hardware codec |
+| **iOS/macOS** | AVAssetWriter (H.264/HEVC) | ✅ Metal textures | ✅ Hardware encoder |
+
+**Performance Considerations:**
+
+- **GPU-first rendering**: All frame composition happens on GPU when possible
+- **Zero-copy encoding**: Frames passed directly to hardware encoder without CPU readback
+- **Frame dropping**: Automatic frame dropping when processing can't keep up with camera FPS
+- **Memory efficiency**: Single-frame-in-flight policy prevents memory bloat
+- **Rotation locking**: Device rotation is locked during recording for consistent output
+
+**Use Cases:**
+
+1. **Watermarking**: Apply logo/branding to videos
+2. **Telemetry overlays**: Display real-time data (speed, location, sensor readings)
+3. **Filters/Effects**: Apply custom color grading, vintage effects, artistic filters
+4. **Annotations**: Draw shapes, arrows, text annotations
+5. **Multi-source composition**: Combine camera with other visual elements
+6. **Diagnostics**: Add performance metrics, debug information
+
+**Important Notes:**
+
+- When `UseCaptureVideoFlow = true`, the frame processor MUST be set for recording to work
+- Frame processing happens in real-time at the target video FPS (typically 30fps)
+- Keep `FrameProcessor` code efficient to avoid frame drops
+- The same `StartVideoRecording()` / `StopVideoRecording()` API works for both modes
+- All existing video events (`VideoRecordingSuccess`, `VideoRecordingFailed`, `VideoRecordingProgress`) work the same
+- Preview continues uninterrupted during recording in both modes
 
 #### Video Recording UI Integration
 

@@ -26,6 +26,8 @@ public class SkiaGif : AnimatedFramesRenderer
 
         ApplyAspect();
 
+        UseCache = SkiaCacheType.ImageDoubleBuffered;
+
         Display.SetParent(this);
     }
 

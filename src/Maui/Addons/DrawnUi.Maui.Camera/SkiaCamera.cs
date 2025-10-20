@@ -28,9 +28,15 @@ namespace DrawnUi.Camera;
 /// </summary>
 public partial class SkiaCamera : SkiaControl
 {
+    /// <summary>
+    /// Camera controls cannot use double buffering cache for performance reasons
+    /// </summary>
     public override bool CanUseCacheDoubleBuffering => false;
-    public override bool WillClipBounds => true;
 
+    /// <summary>
+    /// Camera preview will be clipped to the control bounds
+    /// </summary>
+    public override bool WillClipBounds => true;
 
     public SkiaCamera()
     {
@@ -39,6 +45,10 @@ public partial class SkiaCamera : SkiaControl
         Super.OnNativeAppPaused += Super_OnNativeAppPaused;
     }
 
+    /// <summary>
+    /// Camera control does not support update locking
+    /// </summary>
+    /// <param name="value">Lock state (ignored)</param>
     public override void LockUpdate(bool value)
     {
     }
@@ -52,7 +62,7 @@ public partial class SkiaCamera : SkiaControl
 
         if (Superview != null)
         {
-            Superview.DeviceRotationChanged -= DeviceRotationChanged;
+            Superview.OrientationChanged -= DeviceOrientationChanged;
         }
 
         if (NativeControl != null)
@@ -113,14 +123,29 @@ public partial class SkiaCamera : SkiaControl
 
     #region EVENTS
 
+    /// <summary>
+    /// Raised when a still image is successfully captured
+    /// </summary>
     public event EventHandler<CapturedImage> CaptureSuccess;
 
+    /// <summary>
+    /// Raised when still image capture fails
+    /// </summary>
     public event EventHandler<Exception> CaptureFailed;
 
+    /// <summary>
+    /// Raised when a new preview image is set to the display
+    /// </summary>
     public event EventHandler<LoadedImageSource> NewPreviewSet;
 
+    /// <summary>
+    /// Raised when a camera error occurs
+    /// </summary>
     public event EventHandler<string> OnError;
 
+    /// <summary>
+    /// Raised when camera zoom level changes
+    /// </summary>
     public event EventHandler<double> Zoomed;
 
     internal void RaiseError(string error)
@@ -132,6 +157,9 @@ public partial class SkiaCamera : SkiaControl
 
     #region Display
 
+    /// <summary>
+    /// The SkiaImage control that displays the camera preview
+    /// </summary>
     public SkiaImage Display { get; protected set; }
 
     protected override void InvalidateMeasure()
@@ -140,6 +168,7 @@ public partial class SkiaCamera : SkiaControl
         {
             LayoutDisplay();
         }
+
         base.InvalidateMeasure();
     }
 
@@ -154,7 +183,7 @@ public partial class SkiaCamera : SkiaControl
         return new SkiaImage()
         {
             LoadSourceOnFirstDraw = true,
-
+            UseCache = SkiaCacheType.GPU,
             RescalingQuality = SKFilterQuality.None,
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
@@ -162,6 +191,12 @@ public partial class SkiaCamera : SkiaControl
         };
     }
 
+    protected override void CreateDefaultContent()
+    {
+        UpdateOrientationFromDevice();
+
+        base.CreateDefaultContent();
+    }
 
     public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
     {
@@ -182,6 +217,9 @@ public partial class SkiaCamera : SkiaControl
         DisplayReady?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Raised when the display control is ready for use
+    /// </summary>
     public event EventHandler DisplayReady;
 
     /// <summary>
@@ -309,29 +347,28 @@ public partial class SkiaCamera : SkiaControl
     /// <param name="reorient"></param>
     /// <param name="album"></param>
     /// <returns></returns>
-    public async Task<string> SaveToGalleryAsync(CapturedImage captured, bool reorient, string album = null)
+    public async Task<string> SaveToGalleryAsync(CapturedImage captured, string album = null)
     {
         var filename = GenerateJpgFileName();
 
-        var rotation = reorient ? captured.Rotation : 0;
+        await using var stream = CreateOutputStreamRotated(captured, false);
 
-        await using var stream = CreateOutputStreamRotated(captured, reorient);
-        if (stream != null)
+
+        using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
+
+        var filenameOutput = GenerateJpgFileName();
+
+        var path = await NativeControl.SaveJpgStreamToGallery(exifStream, filename,
+            captured.Meta, album);
+
+        if (!string.IsNullOrEmpty(path))
         {
-            using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
-
-            var filenameOutput = GenerateJpgFileName();
-
-            var path = await NativeControl.SaveJpgStreamToGallery(exifStream, filename, rotation,
-                captured.Meta, album);
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                captured.Path = path;
-                Debug.WriteLine($"[SkiaCamera] saved photo: {filenameOutput}");
-                return path;
-            }
+            captured.Path = path;
+            Debug.WriteLine(
+                $"[SkiaCamera] saved photo: {filenameOutput} exif orientation: {captured.Meta.Orientation}");
+            return path;
         }
+
 
         Debug.WriteLine($"[SkiaCamera] failed to save photo");
         return null;
@@ -428,8 +465,10 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Start video recording. Run this in background thread!
+    /// Locks the device rotation for the entire recording session.
+    /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Async task</returns>
     public async Task StartVideoRecording()
     {
         if (IsBusy || IsRecordingVideo)
@@ -439,6 +478,10 @@ public partial class SkiaCamera : SkiaControl
 
         IsBusy = true;
         IsRecordingVideo = true;
+
+        // Lock the current device rotation for the entire recording session
+        RecordingLockedRotation = DeviceRotation;
+        Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
         try
         {
@@ -457,6 +500,7 @@ public partial class SkiaCamera : SkiaControl
         {
             IsRecordingVideo = false;
             IsBusy = false;
+            RecordingLockedRotation = -1; // Reset on error
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -487,10 +531,7 @@ public partial class SkiaCamera : SkiaControl
 
         NativeControl.VideoRecordingProgress = duration =>
         {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                OnVideoRecordingProgress(duration);
-            });
+            MainThread.BeginInvokeOnMainThread(() => { OnVideoRecordingProgress(duration); });
         };
 
 #if ONPLATFORM
@@ -516,7 +557,8 @@ public partial class SkiaCamera : SkiaControl
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
         // Initialize encoder with current settings (follow camera defaults)
-        _diagEncWidth = width; _diagEncHeight = height;
+        _diagEncWidth = width;
+        _diagEncHeight = height;
         _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
 
@@ -544,8 +586,13 @@ public partial class SkiaCamera : SkiaControl
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
-                try { MainThread.BeginInvokeOnMainThread(() => UpdatePreview()); }
-                catch { }
+                try
+                {
+                    MainThread.BeginInvokeOnMainThread(() => UpdatePreview());
+                }
+                catch
+                {
+                }
             };
             _winEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
         }
@@ -567,21 +614,30 @@ public partial class SkiaCamera : SkiaControl
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
-                try { SafeAction(() => UpdatePreview()); }
-                catch { }
+                try
+                {
+                    SafeAction(() => UpdatePreview());
+                }
+                catch
+                {
+                }
             };
             _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
         }
 
         // Output path in app's Movies dir
         var ctx = Android.App.Application.Context;
-        var moviesDir = ctx.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies)?.AbsolutePath ?? ctx.FilesDir?.AbsolutePath ?? ".";
+        var moviesDir =
+            ctx.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies)?.AbsolutePath ??
+            ctx.FilesDir?.AbsolutePath ?? ".";
         var outputPath = Path.Combine(moviesDir, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
 
         // Use camera-reported format if available; else fall back to preview size or 1280x720
         var currentFormat = NativeControl?.GetCurrentVideoFormat();
-        var width = currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
-        var height = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
+        var width =
+            currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
+        var height =
+            currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
         // IMPORTANT: Align encoder orientation with the live preview to avoid instant crop/"zoom" when recording starts.
@@ -603,20 +659,39 @@ public partial class SkiaCamera : SkiaControl
                 // If preview is rotated (portrait logical orientation), make encoder portrait too
                 if (previewRotated && width >= height)
                 {
-                    var tmp = width; width = height; height = tmp;
+                    var tmp = width;
+                    width = height;
+                    height = tmp;
                 }
                 // If preview is not rotated but encoder is portrait, make encoder landscape to match
                 else if (!previewRotated && height > width)
                 {
-                    var tmp = width; width = height; height = tmp;
+                    var tmp = width;
+                    width = height;
+                    height = tmp;
                 }
             }
         }
-        catch { }
-        System.Diagnostics.Debug.WriteLine($"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={encWBefore}x{encHBefore} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
-        _diagEncWidth = width; _diagEncHeight = height;
+        catch
+        {
+        }
+
+        System.Diagnostics.Debug.WriteLine(
+            $"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={encWBefore}x{encHBefore} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
+        _diagEncWidth = width;
+        _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
-        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+
+        // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
+        if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
+        {
+            await androidEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+        }
+        else
+        {
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        }
+
         await _captureVideoEncoder.StartAsync();
 
         // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
@@ -633,7 +708,7 @@ public partial class SkiaCamera : SkiaControl
         _targetFps = fps;
 
         // Event-driven capture on Android: drive encoder from camera preview callback
-            int diagCounter = 0;
+        int diagCounter = 0;
 
         if (NativeControl is NativeCamera androidCam)
         {
@@ -676,11 +751,33 @@ public partial class SkiaCamera : SkiaControl
                                 return;
 
                             var rects = GetAspectFillRects(img.Width, img.Height, info.Width, info.Height);
-                            if ((diagCounter++ % 30) == 0)
-                                System.Diagnostics.Debug.WriteLine($"[CAPTURE-DRAW] src={img.Width}x{img.Height} dst={info.Width}x{info.Height} srcRect=({rects.src.Left},{rects.src.Top},{rects.src.Right},{rects.src.Bottom}) dstRect=({rects.dst.Left},{rects.dst.Top},{rects.dst.Right},{rects.dst.Bottom})");
+                            //if ((diagCounter++ % 30) == 0)
+
+                            //    System.Diagnostics.Debug.WriteLine($"[CAPTURE-DRAW] src={img.Width}x{img.Height} dst={info.Width}x{info.Height} srcRect=({rects.src.Left},{rects.src.Top},{rects.src.Right},{rects.src.Bottom}) dstRect=({rects.dst.Left},{rects.dst.Top},{rects.dst.Right},{rects.dst.Bottom})");
+
                             canvas.DrawImage(img, rects.src, rects.dst);
-                            FrameProcessor?.Invoke(canvas, info, elapsedLocal);
-                            DrawDiagnostics(canvas, info);
+
+                            if (FrameProcessor != null || VideoDiagnosticsOn)
+                            {
+                                // Apply rotation based on device orientation
+                                var rotation = GetActiveRecordingRotation();
+                                canvas.Save();
+                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                var frame = new DrawableFrame
+                                {
+                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal
+                                };
+                                FrameProcessor?.Invoke(frame);
+
+                            if (VideoDiagnosticsOn)
+                                DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                canvas.Restore();
+                            }
+
+
                         }
 
                         var __sw = System.Diagnostics.Stopwatch.StartNew();
@@ -698,7 +795,9 @@ public partial class SkiaCamera : SkiaControl
                         System.Threading.Volatile.Write(ref _androidFrameGate, 0);
                     }
                 }
-                catch { }
+                catch
+                {
+                }
             };
 
             androidCam.PreviewCaptureSuccess = _androidPreviewHandler;
@@ -719,7 +818,13 @@ public partial class SkiaCamera : SkiaControl
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
-                try { SafeAction(() => UpdatePreview()); } catch { }
+                try
+                {
+                    SafeAction(() => UpdatePreview());
+                }
+                catch
+                {
+                }
             };
             _appleEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
         }
@@ -728,28 +833,42 @@ public partial class SkiaCamera : SkiaControl
         var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         var outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
 
-        // Use camera format if available; fallback to preview size or 1280x720
-        var currentFormat = NativeControl?.GetCurrentVideoFormat();
-        var width = currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
-        var height = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
-        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
-
-        // Align encoder orientation with on-screen preview to avoid crop/zoom when switching modes
         // Treat DeviceRotation 0/180 as portrait, 90/270 as landscape
         var rot = DeviceRotation % 360;
         bool portrait = (rot == 0 || rot == 180);
-        if (portrait && width >= height)
+
+        // Use camera format if available; fallback to preview size or 1280x720
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+
+        // on ios video format is defined for landscape width x height
+        // so our width/height are swapped below to orient resulting video.
+
+        var width = (int)PreviewSize.Height;
+        var height = (int)PreviewSize.Width;
+
+        if (currentFormat != null)
         {
-            var tmp = width; width = height; height = tmp;
-        }
-        else if (!portrait && height > width)
-        {
-            var tmp = width; width = height; height = tmp;
+            width = currentFormat.Height;
+            height = currentFormat.Width;
         }
 
-        _diagEncWidth = width; _diagEncHeight = height;
-        _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
-        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+
+        _diagEncWidth = (int)width;
+        _diagEncHeight = (int)height;
+        _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
+
+        // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
+        if (_captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEncoder)
+        {
+            await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+        }
+        else
+        {
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        }
+
         await _captureVideoEncoder.StartAsync();
 
         _captureVideoStartTime = DateTime.Now;
@@ -771,7 +890,8 @@ public partial class SkiaCamera : SkiaControl
         // Start frame capture timer for Apple (drive encoder frames)
         _frameCaptureTimer?.Dispose();
         var periodMs = Math.Max(1, (int)Math.Round(1000.0 / Math.Max(1, fps)));
-        _frameCaptureTimer = new System.Threading.Timer(CaptureFrame, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(periodMs));
+        _frameCaptureTimer =
+            new System.Threading.Timer(CaptureFrame, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(periodMs));
 #else
         throw new NotSupportedException("Capture video flow is currently only supported on Windows, Android and Apple");
 #endif
@@ -811,10 +931,27 @@ public partial class SkiaCamera : SkiaControl
                     canvas.DrawImage(previewImage, __rects1.src, __rects1.dst);
 
                     // Apply overlay
-                    FrameProcessor?.Invoke(canvas, info, elapsed);
+                    if (FrameProcessor != null || VideoDiagnosticsOn)
+                    {
+                        // Apply rotation based on device orientation
+                        var rotation = GetActiveRecordingRotation();
+                        canvas.Save();
+                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
 
-                    // Diagnostics overlay
-                    DrawDiagnostics(canvas, info);
+                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                        var frame = new DrawableFrame
+                        {
+                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                        };
+                        FrameProcessor?.Invoke(frame);
+
+
+                    if (VideoDiagnosticsOn)
+                        DrawDiagnostics(canvas, info.Width, info.Height);
+
+                        canvas.Restore();
+                    }
+
                 }
 
                 var __sw = System.Diagnostics.Stopwatch.StartNew();
@@ -834,6 +971,7 @@ public partial class SkiaCamera : SkiaControl
                     System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
                     return;
                 }
+
                 try
                 {
                     using var previewImage = NativeControl?.GetPreviewImage();
@@ -845,10 +983,31 @@ public partial class SkiaCamera : SkiaControl
 
                     using (droidEnc.BeginFrame(elapsed, out var canvas, out var info))
                     {
-                        var __rects2 = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                        var __rects2 =
+                            GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
                         canvas.DrawImage(previewImage, __rects2.src, __rects2.dst);
-                        FrameProcessor?.Invoke(canvas, info, elapsed);
-                        DrawDiagnostics(canvas, info);
+
+                        if (FrameProcessor != null || VideoDiagnosticsOn)
+                        {
+                            // Apply rotation based on device orientation
+                            var rotation = GetActiveRecordingRotation();
+                            canvas.Save();
+                            ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                            var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                            var frame = new DrawableFrame
+                            {
+                                Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                            };
+                            FrameProcessor?.Invoke(frame);
+
+                        if (VideoDiagnosticsOn)
+                            DrawDiagnostics(canvas, info.Width, info.Height);
+
+                            canvas.Restore();
+                        }
+
+
                     }
 
                     var __sw = System.Diagnostics.Stopwatch.StartNew();
@@ -878,12 +1037,31 @@ public partial class SkiaCamera : SkiaControl
                     return;
                 }
 
-                using (appleEnc.BeginFrame(elapsed, out var canvas, out var info))
+                using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation))
                 {
                     var __rectsA = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+
                     canvas.DrawImage(previewImage, __rectsA.src, __rectsA.dst);
-                    FrameProcessor?.Invoke(canvas, info, elapsed);
-                    DrawDiagnostics(canvas, info);
+
+                    if (FrameProcessor != null || VideoDiagnosticsOn)
+                    {
+                        // Apply rotation based on device orientation
+                        var rotation = GetActiveRecordingRotation();
+                        var checkpoint = canvas.Save();
+                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                        var frame = new DrawableFrame
+                        {
+                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                        };
+                        FrameProcessor?.Invoke(frame);
+
+                        if (VideoDiagnosticsOn)
+                            DrawDiagnostics(canvas, info.Width, info.Height);
+
+                        canvas.RestoreToCount(checkpoint);
+                    }
                 }
 
                 var __swA = System.Diagnostics.Stopwatch.StartNew();
@@ -896,6 +1074,7 @@ public partial class SkiaCamera : SkiaControl
 #endif
 
             // Fallback (non-Windows/Android or encoder without GPU path): CPU composition
+            /*
             using var previewImage2 = NativeControl?.GetPreviewImage();
             if (previewImage2 == null)
             {
@@ -914,14 +1093,24 @@ public partial class SkiaCamera : SkiaControl
 
             if (FrameProcessor != null)
             {
-                var imageInfo = new SKImageInfo(previewBitmap.Width, previewBitmap.Height);
-                FrameProcessor(cpuCanvas, imageInfo, elapsed);
-                DrawDiagnostics(cpuCanvas, imageInfo);
+                // Apply rotation based on device orientation
+                var rotation = GetActiveRecordingRotation();
+                cpuCanvas.Save();
+                ApplyCanvasRotation(cpuCanvas, previewBitmap.Width, previewBitmap.Height, rotation);
+
+                var (frameWidth, frameHeight) = GetRotatedDimensions(previewBitmap.Width, previewBitmap.Height, rotation);
+                var frame = new DrawableFrame
+                {
+                    Width = frameWidth, Height = frameHeight, Canvas = cpuCanvas, Time = elapsed
+                };
+                FrameProcessor?.Invoke(frame);
+
+                cpuCanvas.Restore();
             }
-            else
+
+            if (VideoDiagnosticsOn)
             {
-                var imageInfo = new SKImageInfo(previewBitmap.Width, previewBitmap.Height);
-                DrawDiagnostics(cpuCanvas, imageInfo);
+                DrawDiagnostics(cpuCanvas, previewBitmap.Width, previewBitmap.Height);
             }
 
             var __sw2 = System.Diagnostics.Stopwatch.StartNew();
@@ -929,6 +1118,7 @@ public partial class SkiaCamera : SkiaControl
             __sw2.Stop();
             _diagLastSubmitMs = __sw2.Elapsed.TotalMilliseconds;
             System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+            */
         }
         catch (Exception ex)
         {
@@ -941,9 +1131,11 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Stop video recording
+    /// Stop video recording and finalize the video file.
+    /// Resets the locked rotation and restores normal preview behavior.
+    /// The video file path will be provided through the VideoRecordingSuccess event.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Async task</returns>
     public async Task StopVideoRecording()
     {
         if (!IsRecordingVideo)
@@ -953,20 +1145,27 @@ public partial class SkiaCamera : SkiaControl
 
         IsRecordingVideo = false;
 
+        // Reset locked rotation
+        RecordingLockedRotation = -1;
+        Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
+
 #if ANDROID
-            // Stop Android event-driven capture and restore normal preview behavior
-            try
+        // Stop Android event-driven capture and restore normal preview behavior
+        try
+        {
+            if (NativeControl is NativeCamera androidCam)
             {
-                if (NativeControl is NativeCamera androidCam)
-                {
-                    androidCam.PreviewCaptureSuccess = null;
-                }
+                androidCam.PreviewCaptureSuccess = null;
             }
-            catch { }
-            UseRecordingFramesForPreview = false;
+        }
+        catch
+        {
+        }
+
+        UseRecordingFramesForPreview = false;
 #endif
-            try
-            {
+        try
+        {
             // Check if using capture video flow
             if (_captureVideoEncoder != null)
             {
@@ -1003,11 +1202,17 @@ public partial class SkiaCamera : SkiaControl
 #endif
 
 #if ANDROID
-                // Detach Android mirror event
-                if (encoder is AndroidCaptureVideoEncoder _droidEncPrev)
+            // Detach Android mirror event
+            if (encoder is AndroidCaptureVideoEncoder _droidEncPrev)
+            {
+                try
                 {
-                    try { _droidEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler; } catch { }
+                    _droidEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler;
                 }
+                catch
+                {
+                }
+            }
 #endif
 
             // Get local reference to encoder before clearing field to prevent disposal race
@@ -1019,7 +1224,13 @@ public partial class SkiaCamera : SkiaControl
             UseRecordingFramesForPreview = false;
             if (encoder is WindowsCaptureVideoEncoder _winEncPrev)
             {
-                try { _winEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler; } catch { }
+                try
+                {
+                    _winEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+                }
+                catch
+                {
+                }
             }
 #endif
 
@@ -1060,7 +1271,8 @@ public partial class SkiaCamera : SkiaControl
     /// <returns>Gallery path if successful, null if failed</returns>
     public async Task<string> SaveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null)
     {
-        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) || !File.Exists(capturedVideo.FilePath))
+        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) ||
+            !File.Exists(capturedVideo.FilePath))
             return null;
 
         try
@@ -1086,9 +1298,11 @@ public partial class SkiaCamera : SkiaControl
     /// <param name="album">Optional album name</param>
     /// <param name="deleteOriginal">Whether to delete the original file after successful move (default true)</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    public async Task<string> MoveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null, bool deleteOriginal = true)
+    public async Task<string> MoveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null,
+        bool deleteOriginal = true)
     {
-        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) || !File.Exists(capturedVideo.FilePath))
+        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) ||
+            !File.Exists(capturedVideo.FilePath))
             return null;
 
         try
@@ -1155,7 +1369,7 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Internal method to get available cameras with caching
     /// </summary>
-    protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal(bool refresh=false)
+    protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal(bool refresh = false)
     {
 #if ONPLATFORM
         return await GetAvailableCamerasPlatform(refresh);
@@ -1168,14 +1382,18 @@ public partial class SkiaCamera : SkiaControl
 
     #region METHODS
 
+    /// <summary>
+    /// Stops the camera by setting IsOn to false
+    /// </summary>
     public virtual void Stop()
     {
         IsOn = false;
     }
 
     /// <summary>
-    /// Stops the camera
+    /// Stops the camera immediately and releases native camera resources
     /// </summary>
+    /// <param name="force">If true, forces immediate stop regardless of state</param>
     public virtual void StopInternal(bool force = false)
     {
         if (IsDisposing || IsDisposed)
@@ -1209,7 +1427,14 @@ public partial class SkiaCamera : SkiaControl
         DisplayInfo = info;
     }
 
-
+    /// <summary>
+    /// Creates an output stream from a captured image with optional rotation correction
+    /// </summary>
+    /// <param name="captured">The captured image to encode</param>
+    /// <param name="reorient">If true, applies rotation correction before encoding</param>
+    /// <param name="format">Output image format (default: JPEG)</param>
+    /// <param name="quality">Encoding quality 0-100 (default: 90)</param>
+    /// <returns>Stream containing the encoded image</returns>
     public Stream CreateOutputStreamRotated(CapturedImage captured,
         bool reorient,
         SKEncodedImageFormat format = SKEncodedImageFormat.Jpeg,
@@ -1217,53 +1442,14 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
-            var rotated = Reorient();
-            var data = rotated.Encode(format, quality);
-            return data.AsStream();
-
-            SKBitmap Reorient()
+            SKBitmap skBitmap = SKBitmap.FromImage(captured.Image);
+            if (reorient)
             {
-                var bitmap = SKBitmap.FromImage(captured.Image);
-
-                if (!reorient)
-                    return bitmap;
-
-                SKBitmap rotated;
-
-                switch (captured.Rotation)
-                {
-                    case 180:
-                        using (var surface = new SKCanvas(bitmap))
-                        {
-                            surface.RotateDegrees(180, bitmap.Width / 2.0f, bitmap.Height / 2.0f);
-                            surface.DrawBitmap(bitmap.Copy(), 0, 0);
-                        }
-
-                        return bitmap;
-                    case 270:
-                        rotated = new SKBitmap(bitmap.Height, bitmap.Width);
-                        using (var surface = new SKCanvas(rotated))
-                        {
-                            surface.Translate(rotated.Width, 0);
-                            surface.RotateDegrees(90);
-                            surface.DrawBitmap(bitmap, 0, 0);
-                        }
-
-                        return rotated;
-                    case 90:
-                        rotated = new SKBitmap(bitmap.Height, bitmap.Width);
-                        using (var surface = new SKCanvas(rotated))
-                        {
-                            surface.Translate(0, rotated.Height);
-                            surface.RotateDegrees(270);
-                            surface.DrawBitmap(bitmap, 0, 0);
-                        }
-
-                        return rotated;
-                    default:
-                        return bitmap;
-                }
+                skBitmap = Reorient(skBitmap, captured.Rotation);
             }
+
+            var data = skBitmap.Encode(format, quality);
+            return data.AsStream();
         }
         catch (Exception e)
         {
@@ -1285,7 +1471,9 @@ public partial class SkiaCamera : SkiaControl
     {
         CaptureFailed?.Invoke(this, ex);
     }
+
     private int _frameInFlight = 0;
+
     /// <summary>
     /// Enable on-screen diagnostics overlay (effective FPS, dropped frames, last submit ms)
     /// during capture video flow to validate performance.
@@ -1300,7 +1488,7 @@ public partial class SkiaCamera : SkiaControl
     private int _diagEncWidth = 0, _diagEncHeight = 0;
     private long _diagBitrate = 0;
 
-    private void DrawDiagnostics(SKCanvas canvas, SKImageInfo info)
+    private void DrawDiagnostics(SKCanvas canvas, int width, int height)
     {
         if (!EnableCaptureDiagnostics || canvas == null)
             return;
@@ -1317,13 +1505,17 @@ public partial class SkiaCamera : SkiaControl
             : $"bitrate: {mbps:F1} Mbps";
 
         using var bgPaint = new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
-        using var textPaint = new SKPaint { Color = SKColors.White, IsAntialias = true, TextSize = Math.Max(14, info.Width / 60f) };
+        using var textPaint = new SKPaint
+        {
+            Color = SKColors.White, IsAntialias = true, TextSize = Math.Max(14, width / 60f)
+        };
 
         var pad = 8f;
         var y1 = pad + textPaint.TextSize;
         var y2 = y1 + textPaint.TextSize + 4f;
         var y3 = y2 + textPaint.TextSize + 4f;
-        var maxTextWidth = Math.Max(textPaint.MeasureText(line1), Math.Max(textPaint.MeasureText(line2), textPaint.MeasureText(line3)));
+        var maxTextWidth = Math.Max(textPaint.MeasureText(line1),
+            Math.Max(textPaint.MeasureText(line2), textPaint.MeasureText(line3)));
         var rect = new SKRect(pad, pad, pad + maxTextWidth + pad, y3 + pad);
 
         canvas.Save();
@@ -1334,34 +1526,77 @@ public partial class SkiaCamera : SkiaControl
         canvas.Restore();
     }
 
-        private static (SKRect src, SKRect dst) GetAspectFillRects(int srcW, int srcH, int dstW, int dstH)
-        {
-            var dst = new SKRect(0, 0, dstW, dstH);
-            if (srcW <= 0 || srcH <= 0 || dstW <= 0 || dstH <= 0)
-                return (new SKRect(0, 0, srcW, srcH), dst);
+    private static (SKRect src, SKRect dst) GetAspectFillRects(int srcW, int srcH, int dstW, int dstH)
+    {
+        var dst = new SKRect(0, 0, dstW, dstH);
+        if (srcW <= 0 || srcH <= 0 || dstW <= 0 || dstH <= 0)
+            return (new SKRect(0, 0, srcW, srcH), dst);
 
-            float srcAR = (float)srcW / srcH;
-            float dstAR = (float)dstW / dstH;
-            SKRect src;
-            if (srcAR > dstAR)
-            {
-                // Crop width
-                float newW = srcH * dstAR;
-                float left = (srcW - newW) * 0.5f;
-                src = new SKRect(left, 0, left + newW, srcH);
-            }
-            else
-            {
-                // Crop height
-                float newH = srcW / dstAR;
-                float top = (srcH - newH) * 0.5f;
-                src = new SKRect(0, top, srcW, top + newH);
-            }
-            return (src, dst);
+        float srcAR = (float)srcW / srcH;
+        float dstAR = (float)dstW / dstH;
+        SKRect src;
+        if (srcAR > dstAR)
+        {
+            // Crop width
+            float newW = srcH * dstAR;
+            float left = (srcW - newW) * 0.5f;
+            src = new SKRect(left, 0, left + newW, srcH);
+        }
+        else
+        {
+            // Crop height
+            float newH = srcW / dstAR;
+            float top = (srcH - newH) * 0.5f;
+            src = new SKRect(0, top, srcW, top + newH);
         }
 
+        return (src, dst);
+    }
 
+    /// <summary>
+    /// Applies canvas rotation based on device orientation (0, 90, 180, 270 degrees)
+    /// </summary>
+    private static void ApplyCanvasRotation(SKCanvas canvas, int width, int height, int rotation)
+    {
+        var normalizedRotation = rotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
 
+        switch (normalizedRotation)
+        {
+            case 90:
+                // Rotate 90° clockwise: translate to bottom-left, then rotate
+                canvas.Translate(0, height);
+                canvas.RotateDegrees(-90);
+                break;
+            case 180:
+                canvas.Translate(width, height);
+                canvas.RotateDegrees(180);
+                break;
+            case 270:
+                // Rotate 270° clockwise (or 90° counter-clockwise): translate to top-right, then rotate
+                canvas.Translate(width, 0);
+                canvas.RotateDegrees(90);
+                break;
+            // case 0: no rotation needed
+        }
+    }
+
+    /// <summary>
+    /// Returns frame dimensions after rotation (swaps width/height for 90/270 degrees)
+    /// </summary>
+    private static (int width, int height) GetRotatedDimensions(int width, int height, int rotation)
+    {
+        var normalizedRotation = rotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
+
+        // Swap dimensions for 90 and 270 degree rotations
+        if (normalizedRotation == 90 || normalizedRotation == 270)
+            return (height, width);
+
+        return (width, height);
+    }
 
 
     public INativeCamera NativeControl;
@@ -1373,11 +1608,9 @@ public partial class SkiaCamera : SkiaControl
     private bool _useWindowsPreviewDrivenCapture;
 #endif
 #if WINDOWS || ANDROID || IOS || MACCATALYST
-        private EventHandler _encoderPreviewInvalidateHandler;
+    private EventHandler _encoderPreviewInvalidateHandler;
 #endif
     private DateTime? _capturePtsBaseTime; // base timestamp for PTS (from first captured frame)
-
-
 
 
 #if ANDROID
@@ -1397,27 +1630,44 @@ public partial class SkiaCamera : SkiaControl
 
     bool subscribed;
 
+    /// <summary>
+    /// Called when the superview (parent container) changes.
+    /// Subscribes to orientation change events from the superview.
+    /// </summary>
     public override void SuperViewChanged()
     {
         if (Superview != null && !subscribed)
         {
             subscribed = true;
-            Superview.DeviceRotationChanged += DeviceRotationChanged;
+            Superview.OrientationChanged += DeviceOrientationChanged;
         }
 
         base.SuperViewChanged();
     }
 
-
-    private void DeviceRotationChanged(object sender, int orientation)
+    /// <summary>
+    /// Updates the camera orientation from the current device rotation
+    /// </summary>
+    public virtual void UpdateOrientationFromDevice()
     {
-        var rotation = ((orientation + 45) / 90) * 90 % 360;
+        //var rotation = ((orientation + 45) / 90) * 90 % 360;
 
-        DeviceRotation = rotation;
+        DeviceRotation = Super.DeviceRotationSnap;
+
+        Debug.WriteLine($"[CAMERA] DeviceRotation: {DeviceRotation}");
     }
 
-    private int _DeviceRotation;
+    private void DeviceOrientationChanged(object sender, DeviceOrientation deviceOrientation)
+    {
+        UpdateOrientationFromDevice();
+    }
 
+    private int _DeviceRotation = -1;
+
+    /// <summary>
+    /// Gets or sets the current device rotation in degrees (0, 90, 180, 270).
+    /// Automatically applies the orientation to the native camera when changed.
+    /// </summary>
     public int DeviceRotation
     {
         get { return _DeviceRotation; }
@@ -1433,19 +1683,40 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    /// <summary>
+    /// Rotation locked when video recording started. Used throughout recording to ensure consistent orientation.
+    /// </summary>
+    public int RecordingLockedRotation { get; private set; } = -1;
+
+    /// <summary>
+    /// Gets the rotation to use for video recording - returns locked rotation during recording, current rotation otherwise.
+    /// </summary>
+    protected int GetActiveRecordingRotation()
+    {
+        return IsRecordingVideo && RecordingLockedRotation >= 0 ? RecordingLockedRotation : DeviceRotation;
+    }
+
     object lockFrame = new();
 
+    /// <summary>
+    /// Gets or sets whether a new camera frame has been acquired and is ready for display
+    /// </summary>
     public bool FrameAquired { get; set; }
 
+    /// <summary>
+    /// Updates the camera preview display. Called when a new frame is available from the native camera.
+    /// Handles frame submission for video capture flow if recording is active.
+    /// </summary>
     public virtual void UpdatePreview()
     {
         FrameAquired = false;
-        NeedUpdate=false;
+        NeedUpdate = false;
         Update();
 
 #if WINDOWS
         // If using capture video flow and preview-driven capture, submit frames in real-time with the preview
-        if (_useWindowsPreviewDrivenCapture && IsRecordingVideo && _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
+        if (_useWindowsPreviewDrivenCapture && IsRecordingVideo &&
+            _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
             // One frame in flight policy: drop if busy
             //if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) == 0)
@@ -1461,10 +1732,29 @@ public partial class SkiaCamera : SkiaControl
 
                         using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
                         {
-                            var __rects3 = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                            var __rects3 =
+                                GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
                             canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
-                            FrameProcessor?.Invoke(canvas, info, elapsed);
-                            DrawDiagnostics(canvas, info);
+
+                            if (FrameProcessor != null || VideoDiagnosticsOn)
+                            {
+                                // Apply rotation based on device orientation
+                                var rotation = GetActiveRecordingRotation();
+                                canvas.Save();
+                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                var frame = new DrawableFrame
+                                {
+                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                                };
+                                FrameProcessor?.Invoke(frame);
+
+                            if (VideoDiagnosticsOn)
+                                DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                canvas.Restore();
+                            }
                         }
 
                         var sw = System.Diagnostics.Stopwatch.StartNew();
@@ -1491,7 +1781,14 @@ public partial class SkiaCamera : SkiaControl
 #endif
     }
 
+    /// <summary>
+    /// Gets the SKSurface used for frame rendering operations
+    /// </summary>
     public SKSurface FrameSurface { get; protected set; }
+
+    /// <summary>
+    /// Gets the image info for the frame surface
+    /// </summary>
     public SKImageInfo FrameSurfaceInfo { get; protected set; }
 
     //public bool AllocatedFrameSurface(int width, int height)
@@ -1531,7 +1828,8 @@ public partial class SkiaCamera : SkiaControl
             return null;
 
 #if WINDOWS
-        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
+        if (IsRecordingVideo && UseRecordingFramesForPreview &&
+            _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
             // Only show frames that were actually composed for recording.
             // If none is available yet, return null so the previous displayed frame stays,
@@ -1543,7 +1841,8 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif ANDROID
         // While recording on Android, mirror the composed encoder frames into the preview (no second camera feed)
-        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
+        if (IsRecordingVideo && UseRecordingFramesForPreview &&
+            _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
             if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
                 return img; // renderer takes ownership and must dispose
@@ -1551,7 +1850,8 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif IOS || MACCATALYST
         // While recording on Apple, mirror the composed encoder frames into the preview
-        if (IsRecordingVideo && UseRecordingFramesForPreview && _captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
+        if (IsRecordingVideo && UseRecordingFramesForPreview &&
+            _captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
         {
             if (appleEnc.TryAcquirePreviewImage(out var img) && img != null)
                 return img; // renderer takes ownership and must dispose
@@ -1595,6 +1895,10 @@ public partial class SkiaCamera : SkiaControl
     #endregion
 
 #if (!ANDROID && !IOS && !MACCATALYST && !WINDOWS && !TIZEN)
+    /// <summary>
+    /// Gets a bitmap of the current preview frame (not implemented on this platform)
+    /// </summary>
+    /// <returns>Preview bitmap</returns>
     public SKBitmap GetPreviewBitmap()
     {
         throw new NotImplementedException();
@@ -1606,6 +1910,10 @@ public partial class SkiaCamera : SkiaControl
 
     bool lockStartup;
 
+    /// <summary>
+    /// Starts the camera by setting IsOn to true.
+    /// The actual camera initialization and permission handling happens automatically.
+    /// </summary>
     public virtual void Start()
     {
         IsOn = true; //haha
@@ -1623,6 +1931,9 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    /// <summary>
+    /// Gets or sets whether a permissions error occurred
+    /// </summary>
     public bool PermissionsError { get; set; }
 
     /// <summary>
@@ -1729,6 +2040,9 @@ public partial class SkiaCamera : SkiaControl
 
     private bool _PermissionsWarning;
 
+    /// <summary>
+    /// Gets or sets whether a permissions warning is active (permissions need to be granted)
+    /// </summary>
     public bool PermissionsWarning
     {
         get { return _PermissionsWarning; }
@@ -1742,11 +2056,19 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-
+    /// <summary>
+    /// Represents a queued picture waiting to be processed
+    /// </summary>
     public class CameraQueuedPictured
     {
+        /// <summary>
+        /// Gets or sets the filename for this queued picture
+        /// </summary>
         public string Filename { get; set; }
 
+        /// <summary>
+        /// Gets or sets the sensor rotation angle in degrees
+        /// </summary>
         public double SensorRotation { get; set; }
 
         /// <summary>
@@ -1755,15 +2077,19 @@ public partial class SkiaCamera : SkiaControl
         public bool Processed { get; set; }
     }
 
+    /// <summary>
+    /// Queue for managing pictures waiting to be processed
+    /// </summary>
     public class CameraPicturesQueue : Queue<CameraQueuedPictured>
     {
     }
 
 
-
-
     private bool _IsTakingPhoto;
 
+    /// <summary>
+    /// Gets whether the camera is currently taking a still photo
+    /// </summary>
     public bool IsTakingPhoto
     {
         get { return _IsTakingPhoto; }
@@ -1777,7 +2103,9 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-
+    /// <summary>
+    /// Gets the queue of pictures waiting to be processed
+    /// </summary>
     public CameraPicturesQueue PicturesQueue { get; } = new CameraPicturesQueue();
 
 
@@ -1787,9 +2115,16 @@ public partial class SkiaCamera : SkiaControl
 
     private static DateTime lastTimeChecked = DateTime.MinValue;
 
+    /// <summary>
+    /// Gets whether camera permissions have been granted
+    /// </summary>
     public static bool PermissionsGranted { get; protected set; }
 
-
+    /// <summary>
+    /// Checks gallery/camera permissions and invokes the appropriate callback
+    /// </summary>
+    /// <param name="granted">Action to invoke if permissions are granted</param>
+    /// <param name="notGranted">Action to invoke if permissions are denied</param>
     public static void CheckGalleryPermissions(Action granted, Action notGranted)
     {
         if (lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
@@ -2212,6 +2547,11 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(CaptureCustomFolderProperty, value); }
     }
 
+    public CameraPosition Facing
+    {
+        get { return (CameraPosition)GetValue(FacingProperty); }
+        set { SetValue(FacingProperty, value); }
+    }
 
     public static readonly BindableProperty FacingProperty = BindableProperty.Create(
         nameof(Facing),
@@ -2265,13 +2605,10 @@ public partial class SkiaCamera : SkiaControl
             if (control.IsOn)
             {
 #if ONPLATFORM
-                control.SafeAction(async () =>
-                {
-                    control.UpdatePreviewFormatForAspectRatio();
-                }, LongKeyGenerator.EncodeSemantic("cam_restart"));
+                control.SafeAction(async () => { control.UpdatePreviewFormatForAspectRatio(); },
+                    LongKeyGenerator.EncodeSemantic("cam_restart"));
 
 #endif
-
             }
             //else
             //{
@@ -2287,11 +2624,22 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    public CameraPosition Facing
+
+    /// <summary>
+    /// Enables video recording diagnostics rendering over video, works when UseCaptureVideoFlow is set to true only.
+    /// </summary>
+    public bool VideoDiagnosticsOn
     {
-        get { return (CameraPosition)GetValue(FacingProperty); }
-        set { SetValue(FacingProperty, value); }
+        get { return (bool)GetValue(VideoDiagnosticsOnProperty); }
+        set { SetValue(VideoDiagnosticsOnProperty, value); }
     }
+
+    public static readonly BindableProperty VideoDiagnosticsOnProperty = BindableProperty.Create(
+        nameof(VideoDiagnosticsOn),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false, propertyChanged: NeedRestart);
+
 
     public static readonly BindableProperty CameraIndexProperty = BindableProperty.Create(
         nameof(CameraIndex),
@@ -2459,7 +2807,6 @@ public partial class SkiaCamera : SkiaControl
     }
 
 
-
     /// <summary>
     /// Controls which stream/aspect the live preview should match.
     /// Still: preview matches still-capture aspect. Video: preview matches intended video recording aspect.
@@ -2533,21 +2880,21 @@ public partial class SkiaCamera : SkiaControl
     /// Only used when UseCaptureVideoFlow is true.
     /// Parameters: SKCanvas (for drawing), SKImageInfo (frame info), TimeSpan (recording timestamp)
     /// </summary>
-    public Action<SKCanvas, SKImageInfo, TimeSpan> FrameProcessor { get; set; }
+    public Action<DrawableFrame> FrameProcessor { get; set; }
 
     #endregion
 
-        /// <summary>
-        /// Whether to mirror composed recording frames to the on-screen preview during capture video flow.
-        /// Set this to true to see overlays exactly as recorded; set to false to avoid any mirroring overhead.
-        /// </summary>
-        public bool MirrorRecordingToPreview { get; set; } = true;
+    /// <summary>
+    /// Whether to mirror composed recording frames to the on-screen preview during capture video flow.
+    /// Set this to true to see overlays exactly as recorded; set to false to avoid any mirroring overhead.
+    /// </summary>
+    public bool MirrorRecordingToPreview { get; set; } = true;
 
-        /// <summary>
-        /// While recording, show exactly the frames being composed for the encoder as the on-screen preview.
-        /// This avoids stutter by not relying on a separate preview feed. Controlled by MirrorRecordingToPreview.
-        /// </summary>
-        public bool UseRecordingFramesForPreview { get; set; } = true;
+    /// <summary>
+    /// While recording, show exactly the frames being composed for the encoder as the on-screen preview.
+    /// This avoids stutter by not relying on a separate preview feed. Controlled by MirrorRecordingToPreview.
+    /// </summary>
+    public bool UseRecordingFramesForPreview { get; set; } = true;
 
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(
@@ -2884,7 +3231,7 @@ public partial class SkiaCamera : SkiaControl
         {
             Display.Aspect = this.Aspect;
 
-            Display.ScaleX = this.IsMirrored ?  -1 : 1;
+            Display.ScaleX = this.IsMirrored ? -1 : 1;
         }
     }
 
@@ -2931,11 +3278,11 @@ public partial class SkiaCamera : SkiaControl
         nameof(Aspect),
         typeof(TransformAspect),
         typeof(SkiaImage),
-        TransformAspect.AspectCover,
+        TransformAspect.AspectFit,
         propertyChanged: NeedInvalidateMeasure);
 
     /// <summary>
-    /// Apspect to render image with, default is AspectCover.
+    /// Apspect to render image with, default is AspectFit.
     /// </summary>
     public TransformAspect Aspect
     {
