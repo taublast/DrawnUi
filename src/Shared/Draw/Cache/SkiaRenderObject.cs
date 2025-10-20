@@ -151,6 +151,7 @@ public class CachedObject : ISkiaDisposable
                 Picture?.Dispose();
                 Image?.Dispose(); // todo crash was here
             }
+ 
             Surface = null;
             Picture = null;
             Image = null;

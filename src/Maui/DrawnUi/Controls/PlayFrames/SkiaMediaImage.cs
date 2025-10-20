@@ -3,6 +3,11 @@ namespace DrawnUi.Controls;
 
 public class SkiaMediaImage : SkiaImage
 {
+    public SkiaMediaImage()
+    {
+        UseCache = SkiaCacheType.ImageDoubleBuffered;
+    }
+
     //public override bool CanUseCacheDoubleBuffering => false;
 
     protected override void OnLayoutChanged()

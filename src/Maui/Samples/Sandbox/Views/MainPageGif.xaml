@@ -33,7 +33,7 @@
                     Spacing="20"
                     Tag="SkiaStack"
                     Type="Column"
-                    UseCache="None">
+                    UseCache="Operations">
 
                     <draw:SkiaRichLabel
                         Margin="16,0"
@@ -43,7 +43,7 @@
                         HorizontalTextAlignment="Center"
                         Text="`SkiaMediaImage` (at the top) is a subclassed `SkiaImage` for displaying any kind of images, while `SkiaGif` (the second control) is a dedicated lightweight GIF-player."
                         TextColor="White"
-                        UseCache="Operations" />
+                        UseCache="Image" />
 
                     <!--<draw:SkiaImage Source="Images/8.jpg" HeightRequest="100" WidthRequest="100" 
                                     Aspect="AspectFitFill"
@@ -58,6 +58,7 @@
                                     HorizontalOptions="Center" />-->
 
                     <draw:SkiaButton
+                        UseCache="OperationsFull"
                         ControlStyle="Cupertino"
                         HeightRequest="38"
                         HorizontalOptions="Center"
@@ -66,11 +67,13 @@
                         WidthRequest="200" />
 
                     <draw:SkiaMediaImage
+                        UseCache="ImageDoubleBuffered"
                         IsVisible="{Binding Visibility}" 
                         HorizontalOptions="Fill"
                         Source="Anims/look.webp" />
 
                     <draw:SkiaGif
+                        UseCache="ImageDoubleBuffered"
                         BackgroundColor="Gainsboro"
                         HorizontalOptions="Fill"
                         Repeat="-1"

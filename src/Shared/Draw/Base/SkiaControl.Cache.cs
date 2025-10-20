@@ -131,7 +131,7 @@ public partial class SkiaControl
                     if (_renderObject != null) //if we already have something in actual cache then
                     {
                         if (UsesCacheDoubleBuffering
-                            //|| UsingCacheType == SkiaCacheType.Image //to just reuse same surface
+                            || UsingCacheType == SkiaCacheType.Image //to just reuse same surface
                             || UsingCacheType == SkiaCacheType.ImageComposite)
                         {
                             RenderObjectPrevious = _renderObject; //send it to back for special cases
@@ -394,6 +394,8 @@ public partial class SkiaControl
                     {
                         return null; //would be unexpected
                     }
+
+                    reuseSurfaceFrom.PreserveSourceFromDispose=true; //we will dispose that source in this new object
 
                     if (usingCacheType != SkiaCacheType.ImageComposite)
                         surface.Canvas.Clear();
@@ -894,7 +896,10 @@ public partial class SkiaControl
                             //will be executed on background thread in parallel
                             var oldObject = RenderObjectPreparing;
                             RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
-                                (ctx) => { PaintWithEffects(ctx); });
+                                (ctx) =>
+                                {
+                                    PaintWithEffects(ctx);
+                                });
                             RenderObject = RenderObjectPreparing;
                             _renderObjectPreparing = null;
 
@@ -1031,6 +1036,16 @@ public partial class SkiaControl
         if (UsesCacheDoubleBuffering)
         {
             oldObject = RenderObject;
+        }
+        else
+        if (UsingCacheType == SkiaCacheType.ImageComposite || UsingCacheType == SkiaCacheType.Image)
+        {
+            oldObject = RenderObjectPrevious;
+        }
+
+        if (oldObject is ISkiaDisposable reused && reused.IsAlive != ObjectAliveType.Alive)
+        {
+            oldObject = null;
         }
 
         var created = CreateRenderingObject(context, recordingArea, oldObject, UsingCacheType, action);

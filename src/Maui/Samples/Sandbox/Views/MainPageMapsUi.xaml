@@ -33,7 +33,7 @@
                 <Style x:Key="SkiaStyleControlContainer" TargetType="draw:SkiaLayout">
                     <Setter Property="HeightRequest" Value="44" />
                     <Setter Property="HorizontalOptions" Value="Fill" />
-                    <Setter Property="UseCache" Value="Image" />
+                    <Setter Property="UseCache" Value="ImageDoubleBuffered" />
                 </Style>
 
             </ResourceDictionary>
@@ -101,7 +101,7 @@
                 HorizontalOptions="Fill"
                 IsOpen="{Binding IsOpen}"
                 Tag="Drawer"
-                UseCache="ImageComposite"
+                UseCache="None"
                 VerticalOptions="End"
                 ZIndex="1">
 
@@ -131,7 +131,7 @@
 
                     </draw:SkiaShape>
 
-                    <!--  CONTENT  -->
+                    <!--  CONTENT  cache ImageComposite-->
                     <draw:SkiaLayout
                         Padding="24,16"
                         AddMarginTop="{Binding DrawerHeaderSize}"
