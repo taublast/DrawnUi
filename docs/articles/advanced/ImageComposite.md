@@ -1,12 +1,18 @@
 # ImageComposite Cache Notes
 
-`SkiaCacheType.ImageComposite` is a caching strategy that enables partial cache updates by erasing and redrawing only dirty regions while preserving unchanged areas. This provides performance for complex layouts where only specific children change while others remain static.
+`SkiaCacheType.ImageComposite` is a caching strategy that enables partial cache updates 
+by erasing and redrawing only dirty regions while preserving unchanged areas. 
+This provides performance for complex layouts where only specific children change 
+while others remain static.
 
-`RenderObjectPrevious` is replaced on every draw as a wrapper but it reuses same surface as the previous one was using, erasing/drawing only dirty areas on that surface.
+`RenderObjectPrevious` is replaced on every draw as a wrapper but it reuses same surface 
+as the previous one was using, erasing/drawing only dirty areas on that surface.
 
-When something changes inside `UseRenderingObject` we would return false, also we would check if `RenderObjectPreviousNeedsUpdate` then kill `RenderObjectPrevious` inside.
+When something changes inside `UseRenderingObject` we would return false, 
+also we would check if `RenderObjectPreviousNeedsUpdate` then kill `RenderObjectPrevious` inside.
 
-Upon exiting `UseRenderingObject` we create a new `RenderObject` but the used surface would come from `RenderObjectPrevious` if existing.
+Upon exiting `UseRenderingObject` we create a new `RenderObject` but the used surface 
+would come from `RenderObjectPrevious` if existing.
 
 ## Implicated Methods
 
