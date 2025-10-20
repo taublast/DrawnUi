@@ -2161,6 +2161,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             var videoPath = Path.Combine(documentsPath, fileName);
             _currentVideoUrl = NSUrl.FromFilename(videoPath);
 
+            // Set video orientation on the capture connection to ensure correct playback orientation
+            var videoConnection = _movieFileOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
+            if (videoConnection != null && videoConnection.SupportsVideoOrientation)
+            {
+                // Map device rotation to AVCaptureVideoOrientation
+                var orientation = DeviceRotationToVideoOrientation(FormsControl.DeviceRotation);
+                videoConnection.VideoOrientation = orientation;
+                Debug.WriteLine($"[NativeCamera.Apple] Set video orientation to: {orientation} (DeviceRotation: {FormsControl.DeviceRotation})");
+            }
+
             // Start recording
             _movieFileOutput.StartRecordingToOutputFile(_currentVideoUrl, this);
 
@@ -2186,6 +2196,25 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             CleanupMovieFileOutput();
             VideoRecordingFailed?.Invoke(ex);
         }
+    }
+
+    /// <summary>
+    /// Converts device rotation (degrees) to AVCaptureVideoOrientation
+    /// </summary>
+    private AVCaptureVideoOrientation DeviceRotationToVideoOrientation(int deviceRotation)
+    {
+        var normalizedRotation = deviceRotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
+
+        return normalizedRotation switch
+        {
+            0 => AVCaptureVideoOrientation.Portrait,
+            90 => AVCaptureVideoOrientation.LandscapeRight,
+            180 => AVCaptureVideoOrientation.PortraitUpsideDown,
+            270 => AVCaptureVideoOrientation.LandscapeLeft,
+            _ => AVCaptureVideoOrientation.Portrait
+        };
     }
 
     /// <summary>
