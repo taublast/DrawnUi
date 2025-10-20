@@ -118,9 +118,10 @@
                         </draw:SkiaLayout>
 
                         <!--  CUPERTINO  -->
-                        <draw:SkiaLayout ExpandDirtyRegion="1">
+                        <draw:SkiaLayout UseCache="Operations">
 
                             <draw:SkiaShape
+                                UseCache="Operations"
                                 AddMarginTop="10"
                                 CornerRadius="12"
                                 HorizontalOptions="Fill"
@@ -129,13 +130,14 @@
                                 VerticalOptions="Fill" />
 
                             <draw:SkiaLabel
+                                UseCache="Operations"
                                 Margin="16,0,0,0"
                                 Padding="4,0"
                                 BackgroundColor="WhiteSmoke"
                                 Text="Cupertino" />
 
                             <draw:SkiaLayout
-                                Margin="20"
+                                Padding="20"
                                 AddMarginTop="14"
                                 DynamicColumns="True"
                                 Spacing="12"
@@ -143,20 +145,23 @@
                                 SplitAlign="True"
                                 Tag="Radio2"
                                 Type="Wrap"
-                                UseCache="ImageComposite">
+                                UseCache="Operations">
 
-                                <draw:SkiaSwitch ControlStyle="Cupertino" VerticalOptions="Center" />
-                                <draw:SkiaCheckbox ControlStyle="Cupertino" VerticalOptions="Center" />
-                                <draw:SkiaButton ControlStyle="Cupertino" Text="Button" />
+                                <draw:SkiaSwitch ControlStyle="Cupertino" VerticalOptions="Center" UseCache="OperationsFull"/>
+
+                                <draw:SkiaCheckbox ControlStyle="Cupertino" VerticalOptions="Center" UseCache="OperationsFull"/>
+
+                                <draw:SkiaButton ControlStyle="Cupertino" Text="Button" UseCache="OperationsFull"/>
 
                             </draw:SkiaLayout>
 
                         </draw:SkiaLayout>
 
                         <!--  MATERIAL  -->
-                        <draw:SkiaLayout ExpandDirtyRegion="1">
+                        <draw:SkiaLayout ExpandDirtyRegion="1" UseCache="Operations">
 
                             <draw:SkiaShape
+                                UseCache="Operations"
                                 AddMarginTop="10"
                                 CornerRadius="12"
                                 HorizontalOptions="Fill"
@@ -165,13 +170,14 @@
                                 VerticalOptions="Fill" />
 
                             <draw:SkiaLabel
+                                UseCache="Operations"
                                 Margin="16,0,0,0"
                                 Padding="4,0"
                                 BackgroundColor="WhiteSmoke"
                                 Text="Material" />
 
                             <draw:SkiaLayout
-                                Margin="20"
+                                Padding="20"
                                 AddMarginTop="14"
                                 DynamicColumns="True"
                                 Spacing="12"
@@ -179,18 +185,18 @@
                                 SplitAlign="True"
                                 Tag="Radio2"
                                 Type="Wrap"
-                                UseCache="ImageComposite">
+                                UseCache="Operations">
 
-                                <draw:SkiaSwitch ControlStyle="Material" VerticalOptions="Center" />
-                                <draw:SkiaCheckbox ControlStyle="Material" VerticalOptions="Center" />
-                                <draw:SkiaButton ControlStyle="Material" Text="Button" />
+                                <draw:SkiaSwitch ControlStyle="Material" VerticalOptions="Center" UseCache="OperationsFull" />
+                                <draw:SkiaCheckbox ControlStyle="Material" VerticalOptions="Center" UseCache="OperationsFull" />
+                                <draw:SkiaButton ControlStyle="Material" Text="Button" UseCache="OperationsFull" />
 
                             </draw:SkiaLayout>
 
                         </draw:SkiaLayout>
 
                         <!--  WINDOWS  -->
-                        <draw:SkiaLayout ExpandDirtyRegion="1">
+                        <draw:SkiaLayout ExpandDirtyRegion="1" UseCache="Operations">
 
                             <draw:SkiaShape
                                 AddMarginTop="10"
@@ -198,16 +204,18 @@
                                 HorizontalOptions="Fill"
                                 StrokeColor="Black"
                                 StrokeWidth="1.0"
+                                UseCache="Operations"
                                 VerticalOptions="Fill" />
 
                             <draw:SkiaLabel
+                                UseCache="Operations"
                                 Margin="16,0,0,0"
                                 Padding="4,0"
                                 BackgroundColor="WhiteSmoke"
                                 Text="Windows" />
 
                             <draw:SkiaLayout
-                                Margin="20"
+                                Padding="20"
                                 AddMarginTop="14"
                                 DynamicColumns="True"
                                 Spacing="12"
@@ -215,11 +223,11 @@
                                 SplitAlign="True"
                                 Tag="Radio2"
                                 Type="Wrap"
-                                UseCache="ImageComposite">
+                                UseCache="Operations">
 
-                                <draw:SkiaSwitch ControlStyle="Windows" VerticalOptions="Center" />
-                                <draw:SkiaCheckbox ControlStyle="Windows" VerticalOptions="Center" />
-                                <draw:SkiaButton ControlStyle="Windows" Text="Button" />
+                                <draw:SkiaSwitch ControlStyle="Windows" VerticalOptions="Center" UseCache="OperationsFull"/>
+                                <draw:SkiaCheckbox ControlStyle="Windows" VerticalOptions="Center" UseCache="OperationsFull"/>
+                                <draw:SkiaButton ControlStyle="Windows" Text="Button" UseCache="OperationsFull"/>
 
                             </draw:SkiaLayout>
 
