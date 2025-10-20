@@ -1,4 +1,4 @@
-﻿namespace AppoMobi.Maui.Navigation;
+﻿namespace DrawnUi.Maui.Navigation;
 
 public class MenuPageItem : BindableObject
 {

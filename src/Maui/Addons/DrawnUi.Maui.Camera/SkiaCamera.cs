@@ -2625,7 +2625,7 @@ public partial class SkiaCamera : SkiaControl
 
 
     /// <summary>
-    /// Enables video recording diagnostics rendering over video
+    /// Enables video recording diagnostics rendering over video, works when UseCaptureVideoFlow is set to true only.
     /// </summary>
     public bool VideoDiagnosticsOn
     {
