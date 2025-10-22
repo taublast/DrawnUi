@@ -28,6 +28,9 @@ namespace DrawnUi.Draw
             Init();
         }
 
+        public new event EventHandler Loaded;
+        public new event EventHandler Unloaded;
+        
         /// <summary>
         /// For internat custom logic, use IsHovered for usual use.
         /// </summary>
@@ -2814,6 +2817,9 @@ namespace DrawnUi.Draw
             0.0,
             propertyChanged: NeedDraw);
 
+        /// <summary>
+        /// For Arc: start angle
+        /// </summary>
         public double Value1
         {
             get { return (double)GetValue(Value1Property); }
@@ -2825,6 +2831,9 @@ namespace DrawnUi.Draw
             0.0,
             propertyChanged: NeedDraw);
 
+        /// <summary>
+        /// For Arc: sweep angle
+        /// </summary>
         public double Value2
         {
             get { return (double)GetValue(Value2Property); }
@@ -4486,6 +4495,8 @@ namespace DrawnUi.Draw
                 }
 
                 CreateDefaultContent();
+
+                OnLifecycleStateChanged(ControlLifecycleState.Initialized);
             }
         }
 
@@ -5021,6 +5032,8 @@ namespace DrawnUi.Draw
             if (_isDisposed)
                 return;
 
+            OnLifecycleStateChanged(ControlLifecycleState.Destroyed);
+            
             if (!disposing)
             {
                 _isDisposed = true;
@@ -5096,7 +5109,26 @@ namespace DrawnUi.Draw
                 EffectsGestureProcessors = null;
                 EffectPostRenderer = null;
             });
+
+
         }
+
+        protected virtual void OnLifecycleStateChanged(ControlLifecycleState state)
+        {
+            LifecycleState = state;
+                
+            switch (state)
+            {
+                case ControlLifecycleState.Initialized:
+                    Loaded?.Invoke(this, EventArgs.Empty);
+                    break;
+                case ControlLifecycleState.Destroyed:
+                    Unloaded?.Invoke(this, EventArgs.Empty);
+                    break;
+            }
+        }
+
+        public ControlLifecycleState LifecycleState { get; protected set; }
 
         /// <summary>
         /// Releases unmanaged resources before the object is reclaimed by garbage collection.
