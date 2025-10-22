@@ -41,8 +41,12 @@ public class MyLayoutListener : Java.Lang.Object, ViewTreeObserver.IOnGlobalLayo
 
     private double KeyboardSize(global::Android.Views.View rootView)
     {
+        
         try
         {
+            if (rootView == null)
+                return 0;
+
             var rectangle = new Android.Graphics.Rect();
             //var decorView = Platform.CurrentActivity.Window.DecorView;
             //if (decorView is not null)
