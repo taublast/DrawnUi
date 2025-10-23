@@ -4,8 +4,6 @@
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat)](https://github.com/taublast/drawnui/blob/master/CONTRIBUTING.md)
 
-[Docs and Samples](https://drawnui.net) 👈
-
 Rendering engine for .NET MAUI with gestures and animations and much more, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
 Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
