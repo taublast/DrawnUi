@@ -1039,7 +1039,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var skImage = uiImage.ToSKImage();
 
                 var rotation = 0;
-                bool flipHorizontal, flipVertical; //unused
+                bool flipHorizontal=false;
+                bool flipVertical = false;
+                
                 switch (orientation)
                 {
                     case 1:
@@ -1055,17 +1057,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         break;
                     case 5:
                         rotation = 270;
-                        flipHorizontal = true;
                         break;
                     case 6:
-                        rotation = 270;
+                        rotation = 90;
                         break;
                     case 7:
-                        rotation = 90;
+                        rotation = 270;
                         flipHorizontal = true;
                         break;
                     case 8:
                         rotation = 90;
+                        flipHorizontal = true;
                         break;
                 }
 
@@ -1073,7 +1075,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 var nonRotated = skBitmap;
 
-                skBitmap = SkiaCamera.Reorient(skBitmap, rotation);
+                skBitmap = SkiaCamera.Reorient(skBitmap, rotation, flipHorizontal, flipVertical);
 
                 if (nonRotated != skBitmap)
                 {

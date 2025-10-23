@@ -67,6 +67,8 @@ public partial class SkiaCamera : SkiaControl
         Debug.WriteLine("[SkiaCameraWindows] Creating native camera...");
         NativeControl = new NativeCamera(this);
         Debug.WriteLine("[SkiaCameraWindows] Native camera created");
+
+        NativeControl?.ApplyDeviceOrientation(DeviceRotation);
     }
 
     protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)

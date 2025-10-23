@@ -128,7 +128,7 @@ public partial class SkiaCamera : SkiaControl
         return tcs.Task;
     }
 
-    public static SKBitmap Reorient(SKBitmap bitmap, int rotation)
+    public static SKBitmap Reorient(SKBitmap bitmap, int rotation, bool flipHorizontal = false, bool flipVertical = false)
     {
         SKBitmap rotated;
 
@@ -138,6 +138,10 @@ public partial class SkiaCamera : SkiaControl
                 using (var surface = new SKCanvas(bitmap))
                 {
                     surface.RotateDegrees(180, bitmap.Width / 2.0f, bitmap.Height / 2.0f);
+                    if (flipHorizontal || flipVertical)
+                    {
+                        surface.Scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1, bitmap.Width / 2.0f, bitmap.Height / 2.0f);
+                    }
                     surface.DrawBitmap(bitmap.Copy(), 0, 0);
                 }
 
@@ -146,8 +150,12 @@ public partial class SkiaCamera : SkiaControl
                 rotated = new SKBitmap(bitmap.Height, bitmap.Width);
                 using (var surface = new SKCanvas(rotated))
                 {
-                    surface.Translate(rotated.Width, 0);
-                    surface.RotateDegrees(90);
+                    surface.Translate(0, rotated.Height);
+                    surface.RotateDegrees(270);
+                    if (flipHorizontal || flipVertical)
+                    {
+                        surface.Scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1, rotated.Width / 2.0f, rotated.Height / 2.0f);
+                    }
                     surface.DrawBitmap(bitmap, 0, 0);
                 }
 
@@ -156,13 +164,27 @@ public partial class SkiaCamera : SkiaControl
                 rotated = new SKBitmap(bitmap.Height, bitmap.Width);
                 using (var surface = new SKCanvas(rotated))
                 {
-                    surface.Translate(0, rotated.Height);
-                    surface.RotateDegrees(270);
+                    surface.Translate(rotated.Width, 0);
+                    surface.RotateDegrees(90);
+                    if (flipHorizontal || flipVertical)
+                    {
+                        surface.Scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1, rotated.Width / 2.0f, rotated.Height / 2.0f);
+                    }
                     surface.DrawBitmap(bitmap, 0, 0);
                 }
 
                 return rotated;
             default:
+                if (flipHorizontal || flipVertical)
+                {
+                    rotated = new SKBitmap(bitmap.Width, bitmap.Height);
+                    using (var surface = new SKCanvas(rotated))
+                    {
+                        surface.Scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1, bitmap.Width / 2.0f, bitmap.Height / 2.0f);
+                        surface.DrawBitmap(bitmap, 0, 0);
+                    }
+                    return rotated;
+                }
                 return bitmap;
         }
     }

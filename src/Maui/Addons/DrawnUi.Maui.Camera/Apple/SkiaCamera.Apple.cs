@@ -1,5 +1,6 @@
 ﻿#if IOS || MACCATALYST
 
+using DrawnUi.Maui.Navigation;
 using Foundation;
 using UIKit;
 using Photos;
@@ -332,6 +333,8 @@ public partial class SkiaCamera
             return;
 
         NativeControl = new NativeCamera(this);
+
+        NativeControl?.ApplyDeviceOrientation(DeviceRotation);
     }
 
     protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)

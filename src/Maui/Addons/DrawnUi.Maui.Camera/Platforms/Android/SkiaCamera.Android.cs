@@ -119,9 +119,7 @@ public partial class SkiaCamera
 
         NativeControl = new NativeCamera(this);
 
-        //OnUpdateOrientation(null, null);
-
-        //SubscribeToNativeControl();
+        NativeControl?.ApplyDeviceOrientation(DeviceRotation);
     }
 
     protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
