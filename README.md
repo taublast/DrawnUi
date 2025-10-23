@@ -107,10 +107,11 @@ Do not miss the [Tutorials Project](https://github.com/taublast/DrawnUi.Maui/tre
 ## Sample Apps
 
 **Demo Projects:**
-- [Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo) - Navigation, recycled cells, camera integration
-- [Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox) - Playground and custom controls
+- [Tutorials Project](https://github.com/taublast/DrawnUi/tree/main/src/Maui/Samples/Tutorials) - First steps, custom control, recycled cells scroller..
+- [Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox) - Custom controls, camera, maps..
 - [Shaders Carousel](https://github.com/taublast/ShadersCarousel/) - Advanced SkiaSharp v3 effects
 - [Space Shooter](https://github.com/taublast/Maui.Game.SpaceShooter/) - 2D Arcade Game Etude
+- [Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo) - navigation and other
 
 **Open-Source Published Apps:**
 - [Filters Camera](https://github.com/taublast/ShadersCamera) - Real-time camera filters ([AppStore](https://apps.apple.com/us/app/filters-camera/id6749823005), [Google Play](https://play.google.com/store/apps/details?id=com.appomobi.drawnui.shaderscam))
