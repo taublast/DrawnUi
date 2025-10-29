@@ -655,7 +655,11 @@ namespace DrawnUi.Views
         /// <summary>
         /// Underlying drawn views need measurement
         /// </summary>
-        protected bool NeedMeasureDrawn { get; set; } = true;
+        protected bool NeedMeasureDrawn
+        {
+            get;
+            set;
+        } = true;
 
         /// <summary>
         /// Invoked when IsHiddenInViewTree changes
@@ -1289,7 +1293,7 @@ namespace DrawnUi.Views
         protected ScaledSize SetMeasured(float width, float height, float scale)
         {
             NeedMeasure = false;
-            NeedMeasureDrawn = true;
+
 
             if (!double.IsNaN(height))
             {
@@ -1310,6 +1314,11 @@ namespace DrawnUi.Views
                 width = -1;
                 //Width = width;
             }
+
+            var measuredSize = ScaledSize.FromUnits(width, height, scale);
+
+            if (measuredSize.Units != MeasuredSize.Units)
+                NeedMeasureDrawn = true;
 
             MeasuredSize = ScaledSize.FromUnits(width, height, scale);
 
