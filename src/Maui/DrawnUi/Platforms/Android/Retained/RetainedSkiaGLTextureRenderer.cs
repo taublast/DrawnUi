@@ -61,25 +61,25 @@ namespace DrawnUi
 
         public override void OnDrawFrame()
         {
-            if (context == null)
+            if (Context == null)
             {
                 var glInterface = GRGlInterface.Create();
-                context = GRContext.CreateGl(glInterface);
+                Context = GRContext.CreateGl(glInterface);
             }
 
-            if (renderTarget == null || lastSize != newSize || !renderTarget.IsValid)
+            if (renderTarget == null || LastSize != NewSize || !renderTarget.IsValid)
             {
-                lastSize = newSize;
+                LastSize = NewSize;
 
                 var buffer = new int[3];
                 GLES20.GlGetIntegerv(GLES20.GlFramebufferBinding, buffer, 0);
                 GLES20.GlGetIntegerv(GLES20.GlStencilBits, buffer, 1);
                 GLES20.GlGetIntegerv(GLES20.GlSamples, buffer, 2);
                 var samples = buffer[2];
-                var maxSamples = context.GetMaxSurfaceSampleCount(colorType);
+                var maxSamples = Context.GetMaxSurfaceSampleCount(colorType);
                 if (samples > maxSamples)
                     samples = maxSamples;
-                glInfo = new GRGlFramebufferInfo((uint)buffer[0], colorType.ToGlSizedFormat());
+                GlInfo = new GRGlFramebufferInfo((uint)buffer[0], colorType.ToGlSizedFormat());
 
                 if (_retainedSurface != null)
                 {
@@ -92,14 +92,14 @@ namespace DrawnUi
                 }
 
                 renderTarget?.Dispose();
-                renderTarget = new GRBackendRenderTarget(newSize.Width, newSize.Height, samples, buffer[1], glInfo);
+                renderTarget = new GRBackendRenderTarget(NewSize.Width, NewSize.Height, samples, buffer[1], GlInfo);
 
                 _needsFullRedraw = true;
             }
 
             if (_retainedSurface == null)
             {
-                _retainedSurface = SKSurface.Create(context, renderTarget, surfaceOrigin, colorType);
+                _retainedSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
                 _needsFullRedraw = true;
             }
 
@@ -114,7 +114,7 @@ namespace DrawnUi
                 OnPaintSurface(e);
             }
 
-            using (var framebufferSurface = SKSurface.Create(context, renderTarget, surfaceOrigin, colorType))
+            using (var framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType))
             {
                 using (var image = _retainedSurface.Snapshot())
                 {
@@ -125,7 +125,7 @@ namespace DrawnUi
                 framebufferSurface.Flush();
             }
 
-            context.Flush();
+            Context.Flush();
             _needsFullRedraw = false;
 
             _frameCounter++;

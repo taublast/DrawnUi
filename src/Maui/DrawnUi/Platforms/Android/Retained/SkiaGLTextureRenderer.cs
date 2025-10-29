@@ -7,15 +7,15 @@ public abstract partial class SkiaGLTextureRenderer : Java.Lang.Object, SkiaGLTe
 {
     protected const SKColorType colorType = SKColorType.Rgba8888;
     protected const GRSurfaceOrigin surfaceOrigin = GRSurfaceOrigin.BottomLeft;
-    protected GRContext context;
-    protected GRGlFramebufferInfo glInfo;
+    protected GRContext Context;
+    protected GRGlFramebufferInfo GlInfo;
     protected GRBackendRenderTarget renderTarget;
-    private SKSurface surface;
-    private SKCanvas canvas;
-    protected SKSizeI lastSize;
-    protected SKSizeI newSize;
-    public SKSize CanvasSize => lastSize;
-    public GRContext GRContext => context;
+    protected SKSurface Surface;
+    protected SKCanvas Canvas;
+    protected SKSizeI LastSize;
+    protected SKSizeI NewSize;
+    public SKSize CanvasSize => LastSize;
+    public GRContext GRContext => Context;
 
     protected virtual void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
     {
@@ -27,17 +27,17 @@ public abstract partial class SkiaGLTextureRenderer : Java.Lang.Object, SkiaGLTe
         //GLES10.GlClear(GLES10.GlColorBufferBit | GLES10.GlDepthBufferBit | GLES10.GlStencilBufferBit);
 
         // create the contexts if not done already
-        if (context == null)
+        if (Context == null)
         {
             var glInterface = GRGlInterface.Create();
-            context = GRContext.CreateGl(glInterface);
+            Context = GRContext.CreateGl(glInterface);
         }
 
         // manage the drawing surface
-        if (renderTarget == null || lastSize != newSize || !renderTarget.IsValid)
+        if (renderTarget == null || LastSize != NewSize || !renderTarget.IsValid)
         {
             // create or update the dimensions
-            lastSize = newSize;
+            LastSize = NewSize;
 
             // read the info from the buffer
             var buffer = new int[3];
@@ -45,43 +45,43 @@ public abstract partial class SkiaGLTextureRenderer : Java.Lang.Object, SkiaGLTe
             GLES20.GlGetIntegerv(GLES20.GlStencilBits, buffer, 1);
             GLES20.GlGetIntegerv(GLES20.GlSamples, buffer, 2);
             var samples = buffer[2];
-            var maxSamples = context.GetMaxSurfaceSampleCount(colorType);
+            var maxSamples = Context.GetMaxSurfaceSampleCount(colorType);
             if (samples > maxSamples)
                 samples = maxSamples;
-            glInfo = new GRGlFramebufferInfo((uint)buffer[0], colorType.ToGlSizedFormat());
+            GlInfo = new GRGlFramebufferInfo((uint)buffer[0], colorType.ToGlSizedFormat());
 
             // destroy the old surface
-            surface?.Dispose();
-            surface = null;
-            canvas = null;
+            Surface?.Dispose();
+            Surface = null;
+            Canvas = null;
 
             // re-create the render target
             renderTarget?.Dispose();
-            renderTarget = new GRBackendRenderTarget(newSize.Width, newSize.Height, samples, buffer[1], glInfo);
+            renderTarget = new GRBackendRenderTarget(NewSize.Width, NewSize.Height, samples, buffer[1], GlInfo);
         }
 
         // create the surface
-        if (surface == null)
+        if (Surface == null)
         {
-            surface = SKSurface.Create(context, renderTarget, surfaceOrigin, colorType);
+            Surface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
         }
 
-        if (surface != null)
+        if (Surface != null)
         {
-            canvas = surface.Canvas;
+            Canvas = Surface.Canvas;
         }
 
-        if (canvas != null)
+        if (Canvas != null)
         {
-            var restore = canvas.Save();
+            var restore = Canvas.Save();
 
-            var e = new SKPaintGLSurfaceEventArgs(surface, renderTarget, surfaceOrigin, colorType);
+            var e = new SKPaintGLSurfaceEventArgs(Surface, renderTarget, surfaceOrigin, colorType);
             OnPaintSurface(e);
 
-            canvas.RestoreToCount(restore);
+            Canvas.RestoreToCount(restore);
 
-            canvas.Flush();
-            context.Flush();
+            Canvas.Flush();
+            Context.Flush();
         }
     }
 
@@ -90,13 +90,13 @@ public abstract partial class SkiaGLTextureRenderer : Java.Lang.Object, SkiaGLTe
         GLES20.GlViewport(0, 0, width, height);
 
         // get the new surface size
-        newSize = new SKSizeI(width, height);
+        NewSize = new SKSizeI(width, height);
     }
 
     public void OnSurfaceCreated(EGLConfig config)
     {
         // Create the context and resources
-        if (context != null)
+        if (Context != null)
         {
             FreeContext();
         }
@@ -119,11 +119,11 @@ public abstract partial class SkiaGLTextureRenderer : Java.Lang.Object, SkiaGLTe
 
     private void FreeContext()
     {
-        surface?.Dispose();
-        surface = null;
+        Surface?.Dispose();
+        Surface = null;
         renderTarget?.Dispose();
         renderTarget = null;
-        context?.Dispose();
-        context = null;
+        Context?.Dispose();
+        Context = null;
     }
 }
