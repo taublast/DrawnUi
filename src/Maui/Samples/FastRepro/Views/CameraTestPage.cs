@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using AppoMobi.Specials;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
 using DrawnUi.Views;
@@ -58,14 +59,14 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
     private void CreateContent()
     {
-        var mainStack = new SkiaStack
+        var mainStack = new SkiaGrid
         {
-            Spacing = 16,
-            Padding = 16,
+            RowSpacing = 16,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             Children =
             {
+
                 // Camera preview
                 new SkiaCamera()
                     {
@@ -85,7 +86,13 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                         }
                     }),
 
-                // Status label
+                new SkiaStack()
+                {
+                    UseCache = SkiaCacheType.Operations,
+                    Spacing = 16,
+                    Children =
+                    {
+                                    // Status label
                 new SkiaLabel("Camera Status: Off")
                     {
                         FontSize = 14,
@@ -209,8 +216,10 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             .OnTapped(async me => { await ShowVideoFormatPicker(); })
                     }
                 }
+                    }
+                }.WithRow(1),
             }
-        };
+        }.WithRowDefinitions("*, Auto");
 
         // Create preview overlay (initially hidden)
         _previewOverlay = CreatePreviewOverlay();
@@ -243,9 +252,20 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             RenderingMode = RenderingModeType.Accelerated, Gestures = GesturesMode.Enabled, Content = rootLayer,
         };
 
-        Canvas.WillFirstTimeDraw += (sender, context) => { CameraControl.IsOn = true; };
+        Canvas.WillFirstTimeDraw += (sender, context) =>
+        {
+            Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
+            {
+                CameraControl.IsOn = true;
+            }); 
+        };
 
-        Content = Canvas;
+        Content = new Grid() //due to maui layout specifics we are forced to use a Grid as root wrapper
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Children = { Canvas }
+        };
 
         // Configure camera for capture video flow testing
         CameraControl.RecordAudio = false; // Test with audio recording
