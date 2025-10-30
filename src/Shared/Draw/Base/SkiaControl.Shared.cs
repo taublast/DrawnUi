@@ -28,8 +28,15 @@ namespace DrawnUi.Draw
             Init();
         }
 
-        public new event EventHandler Loaded;
-        public new event EventHandler Unloaded;
+        /// <summary>
+        /// Lifecycle event
+        /// </summary>
+        public event EventHandler Initialized;
+
+        /// <summary>
+        /// Lifecycle event
+        /// </summary>
+        public event EventHandler Destroyed;
         
         /// <summary>
         /// For internat custom logic, use IsHovered for usual use.
@@ -5032,13 +5039,16 @@ namespace DrawnUi.Draw
             if (_isDisposed)
                 return;
 
-            OnLifecycleStateChanged(ControlLifecycleState.Destroyed);
-            
             if (!disposing)
             {
                 _isDisposed = true;
+                LifecycleState = ControlLifecycleState.Destroyed; //cannot call virtual functions from destructor
+                IsDisposed = true;
+                _renderObject = null;
                 return;
             }
+
+            OnLifecycleStateChanged(ControlLifecycleState.Destroyed);
 
             OnWillDisposeWithChildren();
 
@@ -5109,8 +5119,6 @@ namespace DrawnUi.Draw
                 EffectsGestureProcessors = null;
                 EffectPostRenderer = null;
             });
-
-
         }
 
         protected virtual void OnLifecycleStateChanged(ControlLifecycleState state)
@@ -5120,10 +5128,10 @@ namespace DrawnUi.Draw
             switch (state)
             {
                 case ControlLifecycleState.Initialized:
-                    Loaded?.Invoke(this, EventArgs.Empty);
+                    Initialized?.Invoke(this, EventArgs.Empty);
                     break;
                 case ControlLifecycleState.Destroyed:
-                    Unloaded?.Invoke(this, EventArgs.Empty);
+                    Destroyed?.Invoke(this, EventArgs.Empty);
                     break;
             }
         }
@@ -5846,6 +5854,24 @@ namespace DrawnUi.Draw
             if (super != null)
             {
                 Superview.PostponeExecutionBeforeDraw(() => { action(); }, key);
+                Repaint();
+            }
+            else
+            {
+                action();
+            }
+        }
+
+        /// <summary>
+        /// Will be executed after canvas has finished drawing current frame. Useful when you need to account for all calculations and drawings to be finished.
+        /// </summary>
+        /// <param name="action"></param>
+        public void PostDrawAction(Action action)
+        {
+            var super = this.Superview;
+            if (super != null)
+            {
+                Superview.PostponeExecutionAfterDraw(() => { action(); });
                 Repaint();
             }
             else
@@ -7398,16 +7424,23 @@ namespace DrawnUi.Draw
 
         protected void AddOrRemoveView(SkiaControl subView, bool add)
         {
-            if (subView != null)
+            try
             {
-                if (add)
+                if (subView != null)
                 {
-                    AddSubView(subView);
+                    if (add)
+                    {
+                        AddSubView(subView);
+                    }
+                    else
+                    {
+                        RemoveSubView(subView);
+                    }
                 }
-                else
-                {
-                    RemoveSubView(subView);
-                }
+            }
+            catch (Exception e)
+            {
+                Super.Log(e);
             }
         }
 
