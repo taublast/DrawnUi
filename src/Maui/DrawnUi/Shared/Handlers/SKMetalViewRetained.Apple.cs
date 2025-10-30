@@ -40,6 +40,10 @@ namespace DrawnUi.Views
         private bool _needsFullRedraw = true; // For initial frame or size change
         private GCHandle _queuePin;
 
+        // CPU Pre-rendering optimization
+        private SKImage _preRenderedImage;
+        private bool _preRenderingAttempted;
+
         /// <summary>
         /// Gets a value indicating whether the view is using manual refresh mode.
         /// </summary>
@@ -98,7 +102,7 @@ namespace DrawnUi.Views
             _device = Device ?? MTLDevice.SystemDefault;
             if (_device == null)
             {
-                Console.WriteLine("Metal is not supported on this device.");
+                Super.Log("Metal is not supported on this device.");
                 return;
             }
 
@@ -139,11 +143,29 @@ namespace DrawnUi.Views
             _queuePin = GCHandle.Alloc(_backendContext.Queue, GCHandleType.Pinned);
         }
 
+        //public override void LayoutSubviews()
+        //{
+        //    base.LayoutSubviews();
+
+        //    // Update canvas size from frame
+        //    var frameSize = Frame.Size.ToSKSize();
+        //    if (frameSize.Width > 0 && frameSize.Height > 0)
+        //    {
+        //        _canvasSize = frameSize;
+        //        // Try CPU pre-rendering when layout is established
+        //        TryCpuPreRendering();
+        //    }
+        //}
+
         void IMTKViewDelegate.DrawableSizeWillChange(MTKView view, CGSize size)
         {
             var newSize = size.ToSKSize();
 
             _canvasSize = newSize;
+
+            // Try CPU pre-rendering now that we have correct dimensions
+            TryCpuPreRendering();
+
             PrepareNewTexture();
 
             if (ManualRefresh)
@@ -170,6 +192,9 @@ namespace DrawnUi.Views
                 _firstFrame = false;
             }
 
+            // Try CPU pre-rendering if not attempted yet
+            TryCpuPreRendering();
+
             // Get current texture (snapshot to avoid changes during rendering)
             IMTLTexture textureToUse;
             lock (_textureSwapLock)
@@ -188,26 +213,58 @@ namespace DrawnUi.Views
                 }
             }
 
-            // Create Metal texture info
+            // Create Metal texture info and render target (shared by both paths)
             var metalInfo = new GRMtlTextureInfo(textureToUse);
-            // Create render target
             using var renderTarget = new GRBackendRenderTarget(
                 (int)_canvasSize.Width,
                 (int)_canvasSize.Height,
                 1, // Sample count must be 1 for render targets
                 metalInfo);
 
-            // Create surface from the render target
-            using var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-            using var canvas = surface.Canvas;
+            // FAST FIRST FRAME: Use CPU pre-rendered image if available
+            if (_preRenderedImage != null)
+            {
+                try
+                {
+                    // Fast blit: Just draw pre-rendered image to texture
+                    using (var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888))
+                    {
+                        surface.Canvas.DrawImage(_preRenderedImage, 0, 0);
+                        surface.Flush();
+                    }
 
-            // Pass surface to user for incremental updates
-            var e = new SKPaintMetalSurfaceEventArgs(surface, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-            OnPaintSurface(e);
+                    _context.Flush();
 
-            //canvas.Flush();
-            surface.Flush();
-            _context.Flush();
+                    // Dispose pre-rendered image and clear reference
+                    _preRenderedImage.Dispose();
+                    _preRenderedImage = null;
+
+                    //Debug.WriteLine("[SKMetalView] First frame: Used CPU pre-rendered image (fast blit)");
+                }
+                catch (Exception ex)
+                {
+                    Super.Log($"[SKMetalView] Fast blit failed: {ex.Message}");
+                    // If fast path fails, dispose and fall through to normal rendering
+                    _preRenderedImage?.Dispose();
+                    _preRenderedImage = null;
+                }
+            }
+
+            // NORMAL RENDERING PATH (skip if fast path succeeded)
+            if (_preRenderedImage == null)
+            {
+                // Create surface from the render target
+                using var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                using var canvas = surface.Canvas;
+
+                // Pass surface to user for incremental updates
+                var e = new SKPaintMetalSurfaceEventArgs(surface, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                OnPaintSurface(e);
+
+                //canvas.Flush();
+                surface.Flush();
+                _context.Flush();
+            }
 
             // Copy retained texture to screen
             using var commandBuffer = _backendContext.Queue.CommandBuffer();
@@ -269,6 +326,70 @@ namespace DrawnUi.Views
             }
         }
 
+        /// <summary>
+        /// CPU PRE-RENDERING OPTIMIZATION
+        /// Performs initial rendering on CPU surface before Metal initializes
+        /// This eliminates blank canvas during view initialization
+        /// </summary>
+        private void TryCpuPreRendering()
+        {
+            // Skip if already attempted
+            if (_preRenderingAttempted)
+                return;
+
+            // Skip if dimensions not available yet
+            if (_canvasSize.Width <= 0 || _canvasSize.Height <= 0)
+            {
+                Console.WriteLine($"[SKMetalView] TryCpuPreRendering - Skipped, invalid dimensions ({_canvasSize.Width}x{_canvasSize.Height})");
+                return;
+            }
+
+            _preRenderingAttempted = true;
+
+            try
+            {
+                var imageInfo = new SKImageInfo((int)_canvasSize.Width, (int)_canvasSize.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                using var softSurface = SKSurface.Create(imageInfo);
+
+                if (softSurface != null)
+                {
+                    Console.WriteLine($"[SKMetalView] TryCpuPreRendering - CPU pre-rendering ({_canvasSize.Width}x{_canvasSize.Height})");
+
+                    using (new SKAutoCanvasRestore(softSurface.Canvas, true))
+                    {
+                        // Create dummy renderTarget for CPU rendering (won't be used but required by constructor)
+                        // Use a fake Metal texture info
+                        var dummyMtlInfo = new GRMtlTextureInfo(IntPtr.Zero);
+                        using var dummyRenderTarget = new GRBackendRenderTarget(
+                            (int)_canvasSize.Width,
+                            (int)_canvasSize.Height,
+                            1,
+                            dummyMtlInfo);
+
+                        var e = new SKPaintMetalSurfaceEventArgs(
+                            softSurface,
+                            dummyRenderTarget,
+                            GRSurfaceOrigin.TopLeft,
+                            SKColorType.Bgra8888
+                        );
+
+                        OnPaintSurface(e);
+                    }
+
+                    // Capture pre-rendered result for fast first Metal frame
+                    _preRenderedImage = softSurface.Snapshot();
+                    Console.WriteLine($"[SKMetalView] TryCpuPreRendering - CPU pre-render complete, snapshot captured");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[SKMetalView] TryCpuPreRendering - CPU pre-render failed: {ex.Message}");
+                // Dispose if we still have reference
+                _preRenderedImage?.Dispose();
+                _preRenderedImage = null;
+            }
+        }
+
         public event EventHandler<SKPaintMetalSurfaceEventArgs> PaintSurface;
 
         /// <summary>
@@ -291,6 +412,10 @@ namespace DrawnUi.Views
         {
             if (disposing)
             {
+                // Safety: Dispose pre-rendered image if never used
+                _preRenderedImage?.Dispose();
+                _preRenderedImage = null;
+
                 lock (_textureSwapLock)
                 {
                     if (_queuePin.IsAllocated)
