@@ -16,9 +16,9 @@ public class SkiaSpinner : SkiaLayout
         CreateUi();
     }
 
-    protected override void Dispose(bool disposing)
+    public override void OnWillDisposeWithChildren()
     {
-        base.Dispose(disposing);
+        base.OnWillDisposeWithChildren();
 
         _rangeAnimator?.Dispose();
         _flingAnimator?.Dispose();
