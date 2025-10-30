@@ -26,7 +26,7 @@ namespace DrawnUi
             {
                 while (_cleanupRunning)
                 {
-                    await Task.Delay(100);
+                    await Task.Delay(200);
                     CleanupTrashBag();
                 }
             });
@@ -165,7 +165,6 @@ namespace DrawnUi
 
                 _needsFullRedraw = false;
                 _frameCounter++;
-
             }
             catch (Exception e)
             {

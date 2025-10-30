@@ -717,6 +717,18 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
                 while (true)
                 {
+                    if (requestRender && haveEglContext && haveEglSurface && IsReadyToDraw())
+                    {
+                        requestRender = false;
+                        if (textureViewWeakRef.TryGetTarget(out SkiaGLTextureView view))
+                        {
+                            view.renderer.OnDrawFrame();
+                        }
+                        eglHelper.Swap();
+
+                        consecutiveSurfaceFailures = 0;
+                        continue;
+                    }
                     lock (threadManager)
                     {
                         while (true)

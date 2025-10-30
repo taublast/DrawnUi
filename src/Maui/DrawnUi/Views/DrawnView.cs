@@ -1635,7 +1635,7 @@ namespace DrawnUi.Views
             DisposeManager.EnqueueDisposable(resource, FrameNumber);
         }
 
-        protected DisposableManager DisposeManager { get; } = new(2);
+        protected DisposableManager DisposeManager { get; } = new(3);
 
         public readonly struct TimedDisposable : IDisposable
         {
