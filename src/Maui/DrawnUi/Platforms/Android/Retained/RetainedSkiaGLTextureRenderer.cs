@@ -67,6 +67,7 @@ namespace DrawnUi
                 Context = GRContext.CreateGl(glInterface);
             }
 
+            // SHARED: Ensure renderTarget is ready (used by both fast and normal paths)
             if (renderTarget == null || LastSize != NewSize || !renderTarget.IsValid)
             {
                 LastSize = NewSize;
@@ -81,6 +82,7 @@ namespace DrawnUi
                     samples = maxSamples;
                 GlInfo = new GRGlFramebufferInfo((uint)buffer[0], colorType.ToGlSizedFormat());
 
+                // Dispose old retained surface if exists (for normal rendering path)
                 if (_retainedSurface != null)
                 {
                     _trashBag.Add(new SurfaceTrashItem
@@ -97,6 +99,41 @@ namespace DrawnUi
                 _needsFullRedraw = true;
             }
 
+            // FAST FIRST FRAME: Use CPU pre-rendered image if available
+            if (PreRenderedImage != null)
+            {
+                try
+                {
+                    // Fast blit: Just draw pre-rendered image to framebuffer
+                    using (var framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType))
+                    {
+                        framebufferSurface.Canvas.DrawImage(PreRenderedImage, 0, 0);
+                        framebufferSurface.Canvas.Flush();
+                        framebufferSurface.Flush();
+                    }
+
+                    Context.Flush();
+
+                    // Dispose pre-rendered image and clear reference
+                    PreRenderedImage.Dispose();
+                    PreRenderedImage = null;
+
+                    _frameCounter++;
+
+                    System.Diagnostics.Debug.WriteLine("[RetainedRenderer] First frame: Used CPU pre-rendered image (fast blit)");
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Super.Log(ex);
+                    // If fast path fails, dispose and fall through to normal rendering
+                    PreRenderedImage?.Dispose();
+                    PreRenderedImage = null;
+                }
+            }
+
+            // NORMAL RENDERING PATH
+
             if (_retainedSurface == null)
             {
                 _retainedSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
@@ -108,27 +145,32 @@ namespace DrawnUi
                 _retainedSurface.Canvas.Clear(SKColors.Transparent);
             }
 
-            using (new SKAutoCanvasRestore(_retainedSurface.Canvas, true))
+            try
             {
-                var e = new SKPaintGLSurfaceEventArgs(_retainedSurface, renderTarget, surfaceOrigin, colorType);
-                OnPaintSurface(e);
-            }
-
-            using (var framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType))
-            {
-                using (var image = _retainedSurface.Snapshot())
+                using (new SKAutoCanvasRestore(_retainedSurface.Canvas, true))
                 {
-                    framebufferSurface.Canvas.DrawImage(image, 0, 0);
+                    var e = new SKPaintGLSurfaceEventArgs(_retainedSurface, renderTarget, surfaceOrigin, colorType);
+                    OnPaintSurface(e);
                 }
+
+                using var framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
+
+                using var image = _retainedSurface.Snapshot();
+                framebufferSurface.Canvas.DrawImage(image, 0, 0);
 
                 framebufferSurface.Canvas.Flush();
                 framebufferSurface.Flush();
+
+                Context.Flush();
+
+                _needsFullRedraw = false;
+                _frameCounter++;
+
             }
-
-            Context.Flush();
-            _needsFullRedraw = false;
-
-            _frameCounter++;
+            catch (Exception e)
+            {
+                Super.Log(e);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -137,6 +179,10 @@ namespace DrawnUi
             {
                 _cleanupRunning = false;
                 _cleanupTask?.Wait(TimeSpan.FromSeconds(1));
+
+                // Dispose pre-rendered image if never used
+                PreRenderedImage?.Dispose();
+                PreRenderedImage = null;
 
                 _retainedSurface?.Dispose();
                 _retainedSurface = null;

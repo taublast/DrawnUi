@@ -16,8 +16,9 @@ public abstract partial class SkiaGLTextureRenderer : Java.Lang.Object, SkiaGLTe
     protected SKSizeI NewSize;
     public SKSize CanvasSize => LastSize;
     public GRContext GRContext => Context;
+    public SKImage PreRenderedImage { get; set; }
 
-    protected virtual void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
+    public virtual void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
     {
     }
 

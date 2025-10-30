@@ -994,7 +994,9 @@ namespace DrawnUi.Views
             }
             else if (propertyName == nameof(IsVisible))
             {
-                if (IsVisible)
+                NeedCheckParentVisibility = true;
+
+                //if (IsVisible)
                     Update();
             }
         }
@@ -1124,7 +1126,6 @@ namespace DrawnUi.Views
             return this.Parent == null && destination.Width == width && destination.Height == height;
         }
 
-        //-------------------------------------------------------------
         /// <summary>
         ///  destination in PIXELS, requests in UNITS. resulting Destination prop will be filed in PIXELS.
         /// </summary>
@@ -1134,7 +1135,6 @@ namespace DrawnUi.Views
         /// <param name="scale"></param>
         public SKRect CalculateLayout(SKRect destination, double widthRequest,
                 double heightRequest, double scale = 1.0)
-            //-------------------------------------------------------------
         {
             var scaledOffsetMargin = 0;
 
@@ -1508,7 +1508,7 @@ namespace DrawnUi.Views
         {
             if (_visibilityParent != null)
             {
-                _visibilityParent.PropertyChanged -= OnParentVisibilityCheck;
+                //_visibilityParent.PropertyChanged -= OnParentVisibilityCheck;
             }
 
 #if ONPLATFORM
@@ -2105,7 +2105,7 @@ namespace DrawnUi.Views
         {
             get
             {
-                var canRenderOffScreen = !IsHiddenInViewTree || CanRenderOffScreen;
+                var canRenderOffScreen = true;// !IsHiddenInViewTree || CanRenderOffScreen;
                 return CanvasView != null && !IsDisposed && IsVisible && Handler != null && canRenderOffScreen;
             }
         }
@@ -2117,12 +2117,20 @@ namespace DrawnUi.Views
         public bool IsHiddenInViewTree
         {
             get { return _stopRendering; }
-            protected set
+            set
             {
                 if (value != _stopRendering)
                 {
                     _stopRendering = value;
                     OnCanRenderChanged(!value);
+                    if (value)
+                    {
+                        Debug.WriteLine($"[DrawnView] INactive {Tag}");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[DrawnView] ACTIVE {Tag}");
+                    }
                 }
             }
         }
@@ -2686,10 +2694,15 @@ namespace DrawnUi.Views
 
         private void OnParentVisibilityCheck(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(IsVisible))
+            if (e.PropertyName == nameof(IsVisible))// || e.PropertyName == nameof(Frame) || e.PropertyName == nameof(Parent))
             {
                 _visibilityParent.PropertyChanged -= OnParentVisibilityCheck;
                 NeedCheckParentVisibility = true;
+
+                //Debug.WriteLine($"[DrawnView OnParentVisibilityCheck {Tag}]");
+#if IOS || MACCATALYST
+                Update();
+#endif
             }
         }
 
@@ -2697,7 +2710,7 @@ namespace DrawnUi.Views
         {
             if (element != null)
             {
-                if (!element.IsVisible)
+                //if (!element.IsVisible)
                 {
                     if (element is not DrawnView)
                     {
@@ -2709,7 +2722,19 @@ namespace DrawnUi.Views
                         element.PropertyChanged += OnParentVisibilityCheck;
                     }
 
-                    return false;
+                    if (!element.IsVisible)
+                        return false;
+                }
+
+                if (this != element)
+                {
+                    if (element.Frame.Width >= 0 && element.Frame.Height >= 0)
+                    {
+                        //if (!this.Frame.IntersectsWith(element.Frame))
+                        //{
+                        //    return false;
+                        //}
+                    }
                 }
 
                 if (element.Parent is VisualElement visualParent)
