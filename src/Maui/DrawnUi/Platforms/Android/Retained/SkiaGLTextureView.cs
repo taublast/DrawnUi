@@ -1211,6 +1211,11 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
     private class GLThreadManager
     {
+        // P1-A Optimization: Global cache for GL driver info across all instances
+        private static bool? _cachedMultipleContextsSupport;
+        private static string _cachedDriverSignature;
+        private static readonly object _driverCacheLock = new object();
+
         private bool glesVersionCheckComplete;
         private int glesVersion;
         private bool glesDriverCheckComplete;
@@ -1295,17 +1300,44 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
                 if (!glesDriverCheckComplete)
                 {
                     CheckGLESVersion();
-                    var renderer = GLES10.GlGetString(GLES10.GlRenderer);
-                    if (glesVersion < EglHelper.GLES_20)
+
+                    // P1-A Optimization: Check cache first to avoid expensive GL driver query
+                    lock (_driverCacheLock)
                     {
-                        multipleGLESContextsAllowed = !renderer.StartsWith(EglHelper.MSM7K_RENDERER_PREFIX);
-                        Monitor.PulseAll(this);
+                        // Get minimal info to create driver signature
+                        var renderer = GLES10.GlGetString(GLES10.GlRenderer);
+                        var version = GLES10.GlGetString(GLES10.GlVersion);
+                        var signature = $"{renderer}_{version}";
+
+                        // Check if we have cached result for this driver
+                        if (_cachedDriverSignature == signature && _cachedMultipleContextsSupport.HasValue)
+                        {
+                            // Cache hit - reuse cached result
+                            multipleGLESContextsAllowed = _cachedMultipleContextsSupport.Value;
+                            limitedGLESContexts = !multipleGLESContextsAllowed;
+
+                            LogDebug(
+                                $"[GLThreadManager] CheckGLDriver (CACHED): renderer = '{renderer}' multipleContextsAllowed = '{multipleGLESContextsAllowed}' mLimitedGLESContexts = '{limitedGLESContexts}'");
+                        }
+                        else
+                        {
+                            // Cache miss - perform full driver check
+                            if (glesVersion < EglHelper.GLES_20)
+                            {
+                                multipleGLESContextsAllowed = !renderer.StartsWith(EglHelper.MSM7K_RENDERER_PREFIX);
+                                Monitor.PulseAll(this);
+                            }
+
+                            limitedGLESContexts = !multipleGLESContextsAllowed;
+
+                            // Store result in cache for future instances
+                            _cachedMultipleContextsSupport = multipleGLESContextsAllowed;
+                            _cachedDriverSignature = signature;
+
+                            LogDebug(
+                                $"[GLThreadManager] CheckGLDriver (NEW): renderer = '{renderer}' multipleContextsAllowed = '{multipleGLESContextsAllowed}' mLimitedGLESContexts = '{limitedGLESContexts}'");
+                        }
                     }
-
-                    limitedGLESContexts = !multipleGLESContextsAllowed;
-
-                    LogDebug(
-                        $"[GLThreadManager] CheckGLDriver: renderer = '{renderer}' multipleContextsAllowed = '{multipleGLESContextsAllowed}' mLimitedGLESContexts = '{limitedGLESContexts}'");
 
                     glesDriverCheckComplete = true;
                 }
