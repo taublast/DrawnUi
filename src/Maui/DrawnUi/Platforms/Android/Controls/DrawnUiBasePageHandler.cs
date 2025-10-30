@@ -5,7 +5,7 @@ namespace DrawnUi.Controls;
 
 public class DrawnUiBasePageHandler : PageHandler
 {
-    private MyLayoutListener _keyboardShowObserver;
+    private KeyboardLayoutListener _keyboardShowObserver;
 
     private void UnregisterForKeyboardNotifications()
     {
@@ -24,7 +24,7 @@ public class DrawnUiBasePageHandler : PageHandler
                 //var rootView = Platform.CurrentActivity.Window.DecorView;
                 var rootView = platformView;
 
-                _keyboardShowObserver = new MyLayoutListener(rootView, control);
+                _keyboardShowObserver = new KeyboardLayoutListener(rootView, control);
             }
     }
 
