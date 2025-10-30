@@ -102,7 +102,7 @@ namespace DrawnUi.Draw
         /// <param name="view">The control to attach paint logic to</param>
         /// <param name="action">Paint logic to run</param>
         /// <returns>The control for chaining</returns>
-        public static T OnPaint<T>(this T view, Action<T, DrawingContext> action) where T : SkiaControl
+        public static T WhenPaint<T>(this T view, Action<T, DrawingContext> action) where T : SkiaControl
         {
             view.ExecuteOnPaint[Guid.NewGuid().ToString()] = (control, ctx) => { action.Invoke((T)control, ctx); };
             return view;
@@ -117,7 +117,7 @@ namespace DrawnUi.Draw
         /// <param name="callback">Callback to execute when BindingContext is set</param>
         /// <param name="propertyFilter">Optional property filter</param>
         /// <returns>The control for chaining</returns>
-        public static T OnBindingContextSet<T>(
+        public static T WhenBindingContextSet<T>(
             this T control,
             Action<T, object> callback,
             string[] propertyFilter = null)
@@ -130,6 +130,36 @@ namespace DrawnUi.Draw
             }
 
             control.ApplyingBindingContext += thisHandler;
+
+            string subscriptionKey = $"ACTX_{control.GetHashCode()}_{Guid.NewGuid()}";
+            control.ExecuteUponDisposal[subscriptionKey] = () => { control.ApplyingBindingContext -= thisHandler; };
+
+            return control;
+        }
+
+        /// <summary>
+        /// Triggers after a new ItemsSource was set or an observable collection of an existing one was changed for a SkiaLayout
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="control"></param>
+        /// <param name="callback"></param>
+        /// <param name="propertyFilter"></param>
+        /// <returns></returns>
+        public static T WhenItemsSourceChangesApplied<T>(
+            this T control,
+            Action<T> callback,
+            string[] propertyFilter = null)
+            where T : SkiaLayout
+        {
+            void handler(object? sender, EventArgs args)
+            {
+                callback?.Invoke(control);
+            }
+
+            control.ItemsSourceChangesApplied += handler;
+
+            string subscriptionKey = $"WSCA_{control.GetHashCode()}_{Guid.NewGuid()}";
+            control.ExecuteUponDisposal[subscriptionKey] = () => { control.ItemsSourceChangesApplied -= handler; };
 
             return control;
         }
