@@ -26,6 +26,11 @@ public class Canvas : DrawnView, IGestureListener
     //    DumpDebug();
     //}
 
+    public virtual void LayoutVisibilityChanged()
+    {
+
+    }
+
     public override void SetChildren(IEnumerable<SkiaControl> views)
     {
         //do not use subviews as we are using Content property for this control
@@ -148,51 +153,60 @@ public class Canvas : DrawnView, IGestureListener
     {
         lock (lockMeasure)
         {
-            //Debug.WriteLine($"[Canvas] Measure for {widthConstraint} {heightConstraint}");
 
-            //we need this for NET 9, where we might have `heightConstraint` Infinity
-            //while `HeightRequest` was defined to exact value
-            if (!double.IsFinite(heightConstraint) && double.IsFinite(HeightRequest))
+            try
             {
-                heightConstraint = HeightRequest;
+                //Debug.WriteLine($"[Canvas] Measure for {widthConstraint} {heightConstraint}");
+
+                //we need this for NET 9, where we might have `heightConstraint` Infinity
+                //while `HeightRequest` was defined to exact value
+                if (!double.IsFinite(heightConstraint) && double.IsFinite(HeightRequest))
+                {
+                    heightConstraint = HeightRequest;
+                }
+
+                if (!double.IsFinite(widthConstraint) && double.IsFinite(WidthRequest))
+                {
+                    widthConstraint = WidthRequest;
+                }
+
+
+                if (!this.NeedMeasure && _lastMeasureConstraints.Width == widthConstraint &&
+                    _lastMeasureConstraints.Height == heightConstraint)
+                {
+                    return _lastMeasureResult;
+                }
+
+                //we are going to receive the size NOT reduced by Maui margins
+                Size ret;
+
+                ret = base.MeasureOverride(widthConstraint, heightConstraint);
+
+                if (NeedAutoSize)
+                {
+                    var measured = AdaptSizeToContentIfNeeded(widthConstraint, heightConstraint, NeedMeasure);
+
+                    if (double.IsFinite(measured.Width))
+                        ret.Width = Math.Ceiling(measured.Width);
+
+                    if (double.IsFinite(measured.Height))
+                        ret.Height = Math.Ceiling(measured.Height);
+                }
+
+                _lastMeasureConstraints = new(widthConstraint, heightConstraint);
+                _lastMeasureResult = ret;
+
+                NeedMeasure = false;
+                Update();
+
+                return ret;
+            }
+            finally
+            {
+                NeedCheckParentVisibility = true;
             }
 
-            if (!double.IsFinite(widthConstraint) && double.IsFinite(WidthRequest))
-            {
-                widthConstraint = WidthRequest;
-            }
 
-
-            if (!this.NeedMeasure && _lastMeasureConstraints.Width == widthConstraint &&
-                _lastMeasureConstraints.Height == heightConstraint)
-            {
-                return _lastMeasureResult;
-            }
-
-            //we are going to receive the size NOT reduced by Maui margins
-            Size ret;
-            NeedCheckParentVisibility = true;
-
-            ret = base.MeasureOverride(widthConstraint, heightConstraint);
-
-            if (NeedAutoSize)
-            {
-                var measured = AdaptSizeToContentIfNeeded(widthConstraint, heightConstraint, NeedMeasure);
-
-                if (double.IsFinite(measured.Width))
-                    ret.Width = Math.Ceiling(measured.Width);
-
-                if (double.IsFinite(measured.Height))
-                    ret.Height = Math.Ceiling(measured.Height);
-            }
-
-            _lastMeasureConstraints = new(widthConstraint, heightConstraint);
-            _lastMeasureResult = ret;
-
-            NeedMeasure = false;
-            Update();
-
-            return ret;
         }
     }
 
@@ -406,7 +420,29 @@ public class Canvas : DrawnView, IGestureListener
     {
         base.OnHandlerChanged();
 
-        OnGesturesAttachChanged();
+        if (Handler != null)
+        {
+            OnGesturesAttachChanged();
+
+#if WINDOWS || ANDROID
+            InitFrameworkPlatform(true);
+#endif
+        }
+    }
+
+    protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+    {
+        if (args.NewHandler == null)
+        {
+            DetachGestures();
+        }
+
+#if WINDOWS || ANDROID
+        if (args.NewHandler == null)
+            InitFrameworkPlatform(false);
+#endif
+
+        base.OnHandlerChanging(args);
     }
 
     #region GESTURES
@@ -966,7 +1002,10 @@ public class Canvas : DrawnView, IGestureListener
     {
         var animation = new ShimmerAnimator(this)
         {
-            Color = color.ToSKColor(), ShimmerWidth = shimmerWidth, ShimmerAngle = shimmerAngle, Speed = speedMs
+            Color = color.ToSKColor(),
+            ShimmerWidth = shimmerWidth,
+            ShimmerAngle = shimmerAngle,
+            Speed = speedMs
         };
         animation.Start();
     }
@@ -1134,9 +1173,10 @@ public class Canvas : DrawnView, IGestureListener
                     if (_debugIsDown)
                     {
                         using (SKPaint paint = new SKPaint
-                               {
-                                   Style = SKPaintStyle.StrokeAndFill, Color = GesturesDebugColor.ToSKColor()
-                               })
+                        {
+                            Style = SKPaintStyle.StrokeAndFill,
+                            Color = GesturesDebugColor.ToSKColor()
+                        })
                         {
                             var circleRadius = 10f * RenderingScale; //half size
                             this.CanvasView.Surface.Canvas.DrawCircle(_PressedPosition.X, _PressedPosition.Y,
@@ -1171,9 +1211,10 @@ public class Canvas : DrawnView, IGestureListener
                     if (_debugIsDown)
                     {
                         using (SKPaint paint = new SKPaint
-                               {
-                                   Style = SKPaintStyle.StrokeAndFill, Color = GesturesDebugColor.ToSKColor()
-                               })
+                        {
+                            Style = SKPaintStyle.StrokeAndFill,
+                            Color = GesturesDebugColor.ToSKColor()
+                        })
                         {
                             var circleRadius = 10f * RenderingScale; //half size
                             this.CanvasView.Surface.Canvas.DrawCircle(_PressedPosition.X, _PressedPosition.Y,
