@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Handlers;
 using UIKit;
+using Metal;
 
 namespace DrawnUi.Views
 {
@@ -10,12 +11,32 @@ namespace DrawnUi.Views
     {
         private PaintSurfaceProxy? paintSurfaceProxy;
 
-        protected override SKMetalViewRetained CreatePlatformView() =>
-            new MauiSkMetalViewRetained
+        // P3-iOS Optimization: Shared Metal device across all views
+        private static IMTLDevice? _sharedMetalDevice;
+        private static readonly object _deviceLock = new object();
+
+        protected override SKMetalViewRetained CreatePlatformView()
+        {
+            // P3-iOS Optimization: Create/reuse shared Metal device
+            lock (_deviceLock)
+            {
+                if (_sharedMetalDevice == null)
+                {
+                    _sharedMetalDevice = MTLDevice.SystemDefault;
+                    if (_sharedMetalDevice == null)
+                    {
+                        throw new InvalidOperationException("Failed to create Metal device");
+                    }
+                }
+            }
+
+            return new MauiSkMetalViewRetained
             {
                 BackgroundColor = UIColor.Clear,
                 Opaque = false,
+                Device = _sharedMetalDevice // Reuse shared device
             };
+        }
 
 
         protected override void ConnectHandler(SKMetalViewRetained platformView)
@@ -59,8 +80,17 @@ namespace DrawnUi.Views
             if (handler?.PlatformView == null)
                 return;
 
-            handler.PlatformView.Paused = !view.HasRenderLoop;
-            handler.PlatformView.EnableSetNeedsDisplay = !view.HasRenderLoop;
+            // P1-Cross Optimization: Start paused until first frame for better initialization
+            if (handler.PlatformView is MauiSkMetalViewRetained metalView && !metalView.HasRenderedFirstFrame)
+            {
+                handler.PlatformView.Paused = true;
+                handler.PlatformView.EnableSetNeedsDisplay = true;
+            }
+            else
+            {
+                handler.PlatformView.Paused = !view.HasRenderLoop;
+                handler.PlatformView.EnableSetNeedsDisplay = !view.HasRenderLoop;
+            }
         }
 
         public static void MapEnableTouchEvents(SKGLViewHandlerRetained handler, ISKGLView view)
@@ -74,8 +104,17 @@ namespace DrawnUi.Views
         {
             public bool IgnorePixelScaling { get; set; }
 
+            // P1-Cross Optimization: Track first frame render for initialization
+            public bool HasRenderedFirstFrame { get; set; }
+
             protected override void OnPaintSurface(SkiaSharp.Views.iOS.SKPaintMetalSurfaceEventArgs e)
             {
+                // P1-Cross Optimization: Mark first frame as rendered
+                if (!HasRenderedFirstFrame)
+                {
+                    HasRenderedFirstFrame = true;
+                }
+
                 if (IgnorePixelScaling)
                 {
                     var userVisibleSize = new SKSizeI((int)Bounds.Width, (int)Bounds.Height);
