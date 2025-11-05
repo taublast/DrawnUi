@@ -87,10 +87,16 @@
         <article data-uid="">
 <h1 id="imagecomposite-cache-notes">ImageComposite Cache Notes</h1>
 
-<p><code>SkiaCacheType.ImageComposite</code> is a caching strategy that enables partial cache updates by erasing and redrawing only dirty regions while preserving unchanged areas. This provides performance for complex layouts where only specific children change while others remain static.</p>
-<p><code>RenderObjectPrevious</code> is replaced on every draw as a wrapper but it reuses same surface as the previous one was using, erasing/drawing only dirty areas on that surface.</p>
-<p>When something changes inside <code>UseRenderingObject</code> we would return false, also we would check if <code>RenderObjectPreviousNeedsUpdate</code> then kill <code>RenderObjectPrevious</code> inside.</p>
-<p>Upon exiting <code>UseRenderingObject</code> we create a new <code>RenderObject</code> but the used surface would come from <code>RenderObjectPrevious</code> if existing.</p>
+<p><code>SkiaCacheType.ImageComposite</code> is a caching strategy that enables partial cache updates
+by erasing and redrawing only dirty regions while preserving unchanged areas.
+This provides performance for complex layouts where only specific children change
+while others remain static.</p>
+<p><code>RenderObjectPrevious</code> is replaced on every draw as a wrapper but it reuses same surface
+as the previous one was using, erasing/drawing only dirty areas on that surface.</p>
+<p>When something changes inside <code>UseRenderingObject</code> we would return false,
+also we would check if <code>RenderObjectPreviousNeedsUpdate</code> then kill <code>RenderObjectPrevious</code> inside.</p>
+<p>Upon exiting <code>UseRenderingObject</code> we create a new <code>RenderObject</code> but the used surface
+would come from <code>RenderObjectPrevious</code> if existing.</p>
 <h2 id="implicated-methods">Implicated Methods</h2>
 <h3 id="invalidating">Invalidating</h3>
 <ul>

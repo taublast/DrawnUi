@@ -1437,6 +1437,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ControlLifecycleState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ControlLifecycleState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ControlLifecycleState",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.ControlTappedEventArgs.yml",
       "output": {
         ".html": {
@@ -1559,6 +1573,20 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Draw.DescendingZIndexGestureListenerComparer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.DeviceOrientation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.DeviceOrientation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.DeviceOrientation",
       "Summary": null
     },
     {
@@ -5987,6 +6015,76 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Maui.Navigation.DeviceRotation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Maui.Navigation.DeviceRotation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Maui.Navigation.DeviceRotation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Maui.Navigation.IndexArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Maui.Navigation.IndexArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Maui.Navigation.IndexArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Maui.Navigation.MenuPageItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Maui.Navigation.MenuPageItem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Maui.Navigation.MenuPageItem",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Maui.Navigation.RotationEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Maui.Navigation.RotationEventArgs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Maui.Navigation.RotationEventArgs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Maui.Navigation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Maui.Navigation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Maui.Navigation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Models.DefinitionInfo.yml",
       "output": {
         ".html": {
@@ -6137,7 +6235,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Views.DisposableManager",
-      "Summary": "<p sourcefile=\"api/DrawnUi.Views.DisposableManager.yml\" sourcestartlinenumber=\"1\">Manages delayed disposal of IDisposable objects based on frame count</p>\n"
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -6235,6 +6333,20 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Views.IDisposeManager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.SKAutoCanvasRestoreFixed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.SKAutoCanvasRestoreFixed.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.SKAutoCanvasRestoreFixed",
       "Summary": null
     },
     {

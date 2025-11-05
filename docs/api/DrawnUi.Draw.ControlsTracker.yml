@@ -25,11 +25,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlsTracker
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -62,11 +62,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: _dic
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -89,11 +89,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Sorted
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -118,11 +118,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: _isDirty
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -145,11 +145,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -171,11 +171,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HasItems
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -200,11 +200,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmpty
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -229,11 +229,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui
@@ -258,11 +258,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetList
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -286,11 +286,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Add
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 39
   assemblies:
   - DrawnUi.Maui
@@ -315,11 +315,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Remove
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 49
   assemblies:
   - DrawnUi.Maui
@@ -344,11 +344,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlsTracker.cs
+      path: src/Shared/Internals/Models/ControlsTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
-    path: ../src/Shared/Draw/Internals/Models/ControlsTracker.cs
+    path: ../src/Shared/Internals/Models/ControlsTracker.cs
     startLine: 60
   assemblies:
   - DrawnUi.Maui

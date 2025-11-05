@@ -19,11 +19,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+      path: src/Shared/Internals/Models/DrawnUiStartupSettings.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawnUiStartupSettings
-    path: ../src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+    path: ../src/Shared/Internals/Models/DrawnUiStartupSettings.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+      path: src/Shared/Internals/Models/DrawnUiStartupSettings.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Logger
-    path: ../src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+    path: ../src/Shared/Internals/Models/DrawnUiStartupSettings.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -87,11 +87,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+      path: src/Shared/Internals/Models/DrawnUiStartupSettings.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DesktopWindow
-    path: ../src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+    path: ../src/Shared/Internals/Models/DrawnUiStartupSettings.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -118,11 +118,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+      path: src/Shared/Internals/Models/DrawnUiStartupSettings.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MobileIsFullscreen
-    path: ../src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+    path: ../src/Shared/Internals/Models/DrawnUiStartupSettings.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -149,11 +149,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+      path: src/Shared/Internals/Models/DrawnUiStartupSettings.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: UseDesktopKeyboard
-    path: ../src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+    path: ../src/Shared/Internals/Models/DrawnUiStartupSettings.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -180,11 +180,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+      path: src/Shared/Internals/Models/DrawnUiStartupSettings.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Startup
-    path: ../src/Shared/Draw/Internals/Models/DrawnUiStartupSettings.cs
+    path: ../src/Shared/Internals/Models/DrawnUiStartupSettings.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui

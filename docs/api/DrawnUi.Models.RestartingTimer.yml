@@ -23,11 +23,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RestartingTimer
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 79
   assemblies:
   - DrawnUi.Maui
@@ -62,11 +62,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRunning
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 84
   assemblies:
   - DrawnUi.Maui
@@ -93,11 +93,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Kick
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 91
   assemblies:
   - DrawnUi.Maui
@@ -124,11 +124,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 113
   assemblies:
   - DrawnUi.Maui
@@ -162,11 +162,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 125
   assemblies:
   - DrawnUi.Maui
@@ -200,11 +200,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Restart
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 135
   assemblies:
   - DrawnUi.Maui
@@ -228,11 +228,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 144
   assemblies:
   - DrawnUi.Maui
@@ -256,11 +256,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 159
   assemblies:
   - DrawnUi.Maui
@@ -284,11 +284,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: disposed
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 170
   assemblies:
   - DrawnUi.Maui
@@ -311,11 +311,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+      path: src/Shared/Internals/Helpers/RestartingTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Shared/Draw/Internals/Helpers/RestartingTimer.cs
+    path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
     startLine: 175
   assemblies:
   - DrawnUi.Maui

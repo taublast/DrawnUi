@@ -30,11 +30,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaShadow
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -93,11 +93,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -122,11 +122,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Attach
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -151,11 +151,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Dettach
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -177,11 +177,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -206,11 +206,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OpacityProperty
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -233,11 +233,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 36
   assemblies:
   - DrawnUi.Maui
@@ -262,11 +262,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorProperty
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 43
   assemblies:
   - DrawnUi.Maui
@@ -289,11 +289,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Color
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 46
   assemblies:
   - DrawnUi.Maui
@@ -318,11 +318,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: XProperty
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 52
   assemblies:
   - DrawnUi.Maui
@@ -345,11 +345,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: X
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 55
   assemblies:
   - DrawnUi.Maui
@@ -374,11 +374,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: YProperty
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 61
   assemblies:
   - DrawnUi.Maui
@@ -401,11 +401,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Y
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 64
   assemblies:
   - DrawnUi.Maui
@@ -430,11 +430,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BlurProperty
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 70
   assemblies:
   - DrawnUi.Maui
@@ -457,11 +457,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Blur
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 73
   assemblies:
   - DrawnUi.Maui
@@ -486,11 +486,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowOnlyProperty
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 79
   assemblies:
   - DrawnUi.Maui
@@ -513,11 +513,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaShadow.cs
+      path: src/Shared/Internals/Models/SkiaShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowOnly
-    path: ../src/Shared/Draw/SkiaShadow.cs
+    path: ../src/Shared/Internals/Models/SkiaShadow.cs
     startLine: 82
   assemblies:
   - DrawnUi.Maui

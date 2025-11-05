@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+      path: src/Shared/Internals/Interfaces/IWithContent.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IWithContent
-    path: ../src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+    path: ../src/Shared/Internals/Interfaces/IWithContent.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -43,11 +43,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+      path: src/Shared/Internals/Interfaces/IWithContent.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
-    path: ../src/Shared/Draw/Internals/Interfaces/IWithContent.cs
+    path: ../src/Shared/Internals/Interfaces/IWithContent.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui

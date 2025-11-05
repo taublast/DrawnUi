@@ -17,11 +17,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      path: src/Shared/Internals/Enums/SpaceDistribution.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SpaceDistribution
-    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    path: ../src/Shared/Internals/Enums/SpaceDistribution.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      path: src/Shared/Internals/Enums/SpaceDistribution.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    path: ../src/Shared/Internals/Enums/SpaceDistribution.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -70,11 +70,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      path: src/Shared/Internals/Enums/SpaceDistribution.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Auto
-    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    path: ../src/Shared/Internals/Enums/SpaceDistribution.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -98,11 +98,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+      path: src/Shared/Internals/Enums/SpaceDistribution.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Full
-    path: ../src/Shared/Draw/Internals/Enums/SpaceDistribution.cs
+    path: ../src/Shared/Internals/Enums/SpaceDistribution.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui

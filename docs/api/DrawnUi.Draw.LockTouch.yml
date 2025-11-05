@@ -19,11 +19,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LockTouch.cs
+      path: src/Shared/Internals/Enums/LockTouch.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LockTouch
-    path: ../src/Shared/Draw/Internals/Enums/LockTouch.cs
+    path: ../src/Shared/Internals/Enums/LockTouch.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -46,11 +46,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LockTouch.cs
+      path: src/Shared/Internals/Enums/LockTouch.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
-    path: ../src/Shared/Draw/Internals/Enums/LockTouch.cs
+    path: ../src/Shared/Internals/Enums/LockTouch.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -72,11 +72,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LockTouch.cs
+      path: src/Shared/Internals/Enums/LockTouch.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Enabled
-    path: ../src/Shared/Draw/Internals/Enums/LockTouch.cs
+    path: ../src/Shared/Internals/Enums/LockTouch.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -100,11 +100,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LockTouch.cs
+      path: src/Shared/Internals/Enums/LockTouch.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PassNone
-    path: ../src/Shared/Draw/Internals/Enums/LockTouch.cs
+    path: ../src/Shared/Internals/Enums/LockTouch.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -128,11 +128,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LockTouch.cs
+      path: src/Shared/Internals/Enums/LockTouch.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PassTap
-    path: ../src/Shared/Draw/Internals/Enums/LockTouch.cs
+    path: ../src/Shared/Internals/Enums/LockTouch.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -156,11 +156,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LockTouch.cs
+      path: src/Shared/Internals/Enums/LockTouch.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PassTapAndLongPress
-    path: ../src/Shared/Draw/Internals/Enums/LockTouch.cs
+    path: ../src/Shared/Internals/Enums/LockTouch.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui

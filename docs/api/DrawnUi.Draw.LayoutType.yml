@@ -19,11 +19,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LayoutType.cs
+      path: src/Shared/Internals/Enums/LayoutType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutType
-    path: ../src/Shared/Draw/Internals/Enums/LayoutType.cs
+    path: ../src/Shared/Internals/Enums/LayoutType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -46,11 +46,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LayoutType.cs
+      path: src/Shared/Internals/Enums/LayoutType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Absolute
-    path: ../src/Shared/Draw/Internals/Enums/LayoutType.cs
+    path: ../src/Shared/Internals/Enums/LayoutType.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -74,11 +74,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LayoutType.cs
+      path: src/Shared/Internals/Enums/LayoutType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Column
-    path: ../src/Shared/Draw/Internals/Enums/LayoutType.cs
+    path: ../src/Shared/Internals/Enums/LayoutType.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -102,11 +102,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LayoutType.cs
+      path: src/Shared/Internals/Enums/LayoutType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Row
-    path: ../src/Shared/Draw/Internals/Enums/LayoutType.cs
+    path: ../src/Shared/Internals/Enums/LayoutType.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -130,11 +130,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LayoutType.cs
+      path: src/Shared/Internals/Enums/LayoutType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Wrap
-    path: ../src/Shared/Draw/Internals/Enums/LayoutType.cs
+    path: ../src/Shared/Internals/Enums/LayoutType.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -158,11 +158,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/LayoutType.cs
+      path: src/Shared/Internals/Enums/LayoutType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Grid
-    path: ../src/Shared/Draw/Internals/Enums/LayoutType.cs
+    path: ../src/Shared/Internals/Enums/LayoutType.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui

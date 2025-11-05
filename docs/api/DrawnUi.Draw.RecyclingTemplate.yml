@@ -16,11 +16,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+      path: src/Shared/Internals/Enums/RecyclingTemplate.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RecyclingTemplate
-    path: ../src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+    path: ../src/Shared/Internals/Enums/RecyclingTemplate.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -43,11 +43,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+      path: src/Shared/Internals/Enums/RecyclingTemplate.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Enabled
-    path: ../src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+    path: ../src/Shared/Internals/Enums/RecyclingTemplate.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -69,11 +69,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+      path: src/Shared/Internals/Enums/RecyclingTemplate.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
-    path: ../src/Shared/Draw/Internals/Enums/RecyclingTemplate.cs
+    path: ../src/Shared/Internals/Enums/RecyclingTemplate.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui

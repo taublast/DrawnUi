@@ -26,11 +26,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LimitedQueue
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -68,11 +68,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -99,11 +99,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToArray
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -129,11 +129,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToList
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -159,11 +159,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -188,11 +188,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAutoRemovingItem
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -219,11 +219,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -251,11 +251,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Push
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 34
   assemblies:
   - DrawnUi.Maui
@@ -282,11 +282,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLocked
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 47
   assemblies:
   - DrawnUi.Maui
@@ -313,11 +313,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Lock
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 55
   assemblies:
   - DrawnUi.Maui
@@ -341,11 +341,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Unlock
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 60
   assemblies:
   - DrawnUi.Maui
@@ -369,11 +369,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Pop
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 65
   assemblies:
   - DrawnUi.Maui
@@ -399,11 +399,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedQueue.cs
+      path: src/Shared/Internals/Models/LimitedQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
-    path: ../src/Shared/Draw/Internals/Models/LimitedQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedQueue.cs
     startLine: 72
   assemblies:
   - DrawnUi.Maui

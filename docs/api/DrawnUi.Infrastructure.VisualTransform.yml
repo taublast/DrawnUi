@@ -24,11 +24,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: VisualTransform
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -63,11 +63,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -92,11 +92,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Frame
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -121,11 +121,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -150,11 +150,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
@@ -179,11 +179,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Rotation
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -208,11 +208,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Translation
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -239,11 +239,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 30
   assemblies:
   - DrawnUi.Maui
@@ -270,11 +270,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Logs
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 32
   assemblies:
   - DrawnUi.Maui
@@ -299,11 +299,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderedNodes
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 34
   assemblies:
   - DrawnUi.Maui
@@ -328,11 +328,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/VisualTransform.cs
+      path: src/Shared/Internals/Models/VisualTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToNative
-    path: ../src/Shared/Draw/Internals/Models/VisualTransform.cs
+    path: ../src/Shared/Internals/Models/VisualTransform.cs
     startLine: 43
   assemblies:
   - DrawnUi.Maui

@@ -22,11 +22,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SortedGestureListeners
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -59,11 +59,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: _dic
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -86,11 +86,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Sorted
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -115,11 +115,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: _isDirty
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -142,11 +142,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetListeners
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -170,11 +170,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Add
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -199,11 +199,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Remove
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 33
   assemblies:
   - DrawnUi.Maui
@@ -228,11 +228,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 44
   assemblies:
   - DrawnUi.Maui
@@ -254,11 +254,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+      path: src/Shared/Internals/Models/SortedGestureListeners.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
-    path: ../src/Shared/Draw/Internals/Models/SortedGestureListeners.cs
+    path: ../src/Shared/Internals/Models/SortedGestureListeners.cs
     startLine: 53
   assemblies:
   - DrawnUi.Maui

@@ -22,11 +22,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureRequest
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -83,11 +83,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -119,11 +119,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -157,11 +157,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSame
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -186,11 +186,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -215,11 +215,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthRequest
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui
@@ -244,11 +244,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightRequest
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -273,11 +273,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasureRequest.cs
+      path: src/Shared/Internals/Models/MeasureRequest.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
-    path: ../src/Shared/Draw/Internals/Models/MeasureRequest.cs
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui

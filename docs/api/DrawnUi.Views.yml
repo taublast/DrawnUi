@@ -14,6 +14,7 @@ items:
   - DrawnUi.Views.DrawnView.OffscreenCommand
   - DrawnUi.Views.DrawnView.TimedDisposable
   - DrawnUi.Views.IDisposeManager
+  - DrawnUi.Views.SKAutoCanvasRestoreFixed
   - DrawnUi.Views.SkiaView
   - DrawnUi.Views.SkiaViewAccelerated
   - DrawnUi.Views.SurfaceCacheManager
@@ -161,6 +162,12 @@ references:
   - uid: DrawnUi.Views.DrawnView.FocusedItemChangedArgs
     name: FocusedItemChangedArgs
     href: DrawnUi.Views.DrawnView.FocusedItemChangedArgs.html
+- uid: DrawnUi.Views.SKAutoCanvasRestoreFixed
+  commentId: T:DrawnUi.Views.SKAutoCanvasRestoreFixed
+  href: DrawnUi.Views.SKAutoCanvasRestoreFixed.html
+  name: SKAutoCanvasRestoreFixed
+  nameWithType: SKAutoCanvasRestoreFixed
+  fullName: DrawnUi.Views.SKAutoCanvasRestoreFixed
 - uid: DrawnUi.Views.SkiaView
   commentId: T:DrawnUi.Views.SkiaView
   href: DrawnUi.Views.SkiaView.html

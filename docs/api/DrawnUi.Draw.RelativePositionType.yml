@@ -18,11 +18,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+      path: src/Shared/Internals/Enums/RelativePositionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RelativePositionType
-    path: ../src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+    path: ../src/Shared/Internals/Enums/RelativePositionType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -45,11 +45,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+      path: src/Shared/Internals/Enums/RelativePositionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+    path: ../src/Shared/Internals/Enums/RelativePositionType.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -71,11 +71,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+      path: src/Shared/Internals/Enums/RelativePositionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+    path: ../src/Shared/Internals/Enums/RelativePositionType.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -97,11 +97,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+      path: src/Shared/Internals/Enums/RelativePositionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Center
-    path: ../src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+    path: ../src/Shared/Internals/Enums/RelativePositionType.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -123,11 +123,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+      path: src/Shared/Internals/Enums/RelativePositionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: End
-    path: ../src/Shared/Draw/Internals/Enums/RelativePositionType.cs
+    path: ../src/Shared/Internals/Enums/RelativePositionType.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui

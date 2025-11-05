@@ -20,11 +20,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/GridSpan.cs
+      path: src/Shared/Internals/Models/GridSpan.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GridSpan
-    path: ../src/Shared/Draw/Internals/Models/GridSpan.cs
+    path: ../src/Shared/Internals/Models/GridSpan.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/GridSpan.cs
+      path: src/Shared/Internals/Models/GridSpan.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Shared/Draw/Internals/Models/GridSpan.cs
+    path: ../src/Shared/Internals/Models/GridSpan.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -86,11 +86,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/GridSpan.cs
+      path: src/Shared/Internals/Models/GridSpan.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
-    path: ../src/Shared/Draw/Internals/Models/GridSpan.cs
+    path: ../src/Shared/Internals/Models/GridSpan.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -115,11 +115,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/GridSpan.cs
+      path: src/Shared/Internals/Models/GridSpan.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsColumn
-    path: ../src/Shared/Draw/Internals/Models/GridSpan.cs
+    path: ../src/Shared/Internals/Models/GridSpan.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -144,11 +144,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/GridSpan.cs
+      path: src/Shared/Internals/Models/GridSpan.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Requested
-    path: ../src/Shared/Draw/Internals/Models/GridSpan.cs
+    path: ../src/Shared/Internals/Models/GridSpan.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -173,11 +173,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/GridSpan.cs
+      path: src/Shared/Internals/Models/GridSpan.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Key
-    path: ../src/Shared/Draw/Internals/Models/GridSpan.cs
+    path: ../src/Shared/Internals/Models/GridSpan.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -202,11 +202,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/GridSpan.cs
+      path: src/Shared/Internals/Models/GridSpan.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/GridSpan.cs
+    path: ../src/Shared/Internals/Models/GridSpan.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui

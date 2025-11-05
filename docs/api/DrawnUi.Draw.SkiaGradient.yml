@@ -42,11 +42,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGradient
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -106,11 +106,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -135,11 +135,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -168,11 +168,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FromBrush
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -199,11 +199,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LinearGradientAngleToPoints
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 59
   assemblies:
   - DrawnUi.Maui
@@ -233,11 +233,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: AngleProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 112
   assemblies:
   - DrawnUi.Maui
@@ -260,11 +260,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Angle
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 119
   assemblies:
   - DrawnUi.Maui
@@ -289,11 +289,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 137
   assemblies:
   - DrawnUi.Maui
@@ -316,11 +316,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 140
   assemblies:
   - DrawnUi.Maui
@@ -345,11 +345,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BlendModeProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 146
   assemblies:
   - DrawnUi.Maui
@@ -372,11 +372,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BlendMode
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 150
   assemblies:
   - DrawnUi.Maui
@@ -401,11 +401,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TileModeProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 156
   assemblies:
   - DrawnUi.Maui
@@ -428,11 +428,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TileMode
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 159
   assemblies:
   - DrawnUi.Maui
@@ -457,11 +457,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LightProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 166
   assemblies:
   - DrawnUi.Maui
@@ -484,11 +484,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Light
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 168
   assemblies:
   - DrawnUi.Maui
@@ -513,11 +513,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OpacityProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 174
   assemblies:
   - DrawnUi.Maui
@@ -540,11 +540,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 178
   assemblies:
   - DrawnUi.Maui
@@ -569,11 +569,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: StartXRatioProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 184
   assemblies:
   - DrawnUi.Maui
@@ -596,11 +596,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: StartXRatio
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 186
   assemblies:
   - DrawnUi.Maui
@@ -625,11 +625,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: StartYRatioProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 192
   assemblies:
   - DrawnUi.Maui
@@ -652,11 +652,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: StartYRatio
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 194
   assemblies:
   - DrawnUi.Maui
@@ -681,11 +681,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: EndXRatioProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 200
   assemblies:
   - DrawnUi.Maui
@@ -708,11 +708,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: EndXRatio
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 202
   assemblies:
   - DrawnUi.Maui
@@ -737,11 +737,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: EndYRatioProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 208
   assemblies:
   - DrawnUi.Maui
@@ -764,11 +764,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: EndYRatio
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 210
   assemblies:
   - DrawnUi.Maui
@@ -793,11 +793,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorsProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 219
   assemblies:
   - DrawnUi.Maui
@@ -820,11 +820,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Colors
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 234
   assemblies:
   - DrawnUi.Maui
@@ -849,11 +849,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorPositionsProperty
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 279
   assemblies:
   - DrawnUi.Maui
@@ -876,11 +876,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaGradient.cs
+      path: src/Shared/Internals/Models/SkiaGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorPositions
-    path: ../src/Shared/Draw/SkiaGradient.cs
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
     startLine: 294
   assemblies:
   - DrawnUi.Maui

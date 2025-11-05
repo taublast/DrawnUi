@@ -20,11 +20,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      path: src/Shared/Internals/Enums/GradientType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GradientType
-    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    path: ../src/Shared/Internals/Enums/GradientType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -47,11 +47,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      path: src/Shared/Internals/Enums/GradientType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    path: ../src/Shared/Internals/Enums/GradientType.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -73,11 +73,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      path: src/Shared/Internals/Enums/GradientType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Linear
-    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    path: ../src/Shared/Internals/Enums/GradientType.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -99,11 +99,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      path: src/Shared/Internals/Enums/GradientType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Circular
-    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    path: ../src/Shared/Internals/Enums/GradientType.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -125,11 +125,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      path: src/Shared/Internals/Enums/GradientType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Oval
-    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    path: ../src/Shared/Internals/Enums/GradientType.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -151,11 +151,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      path: src/Shared/Internals/Enums/GradientType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Sweep
-    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    path: ../src/Shared/Internals/Enums/GradientType.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -177,11 +177,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/GradientType.cs
+      path: src/Shared/Internals/Enums/GradientType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Conical
-    path: ../src/Shared/Draw/Internals/Enums/GradientType.cs
+    path: ../src/Shared/Internals/Enums/GradientType.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui

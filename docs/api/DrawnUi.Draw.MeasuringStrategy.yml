@@ -17,11 +17,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+      path: src/Shared/Internals/Enums/MeasuringStrategy.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuringStrategy
-    path: ../src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+    path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+      path: src/Shared/Internals/Enums/MeasuringStrategy.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureAll
-    path: ../src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+    path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -72,11 +72,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+      path: src/Shared/Internals/Enums/MeasuringStrategy.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureFirst
-    path: ../src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+    path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -100,11 +100,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+      path: src/Shared/Internals/Enums/MeasuringStrategy.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureVisible
-    path: ../src/Shared/Draw/Internals/Enums/MeasuringStrategy.cs
+    path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui

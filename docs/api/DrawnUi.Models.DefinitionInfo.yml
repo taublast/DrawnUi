@@ -21,11 +21,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DefinitionInfo
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -58,11 +58,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Size
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -87,11 +87,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -119,11 +119,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAuto
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -148,11 +148,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsStar
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -177,11 +177,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAbsolute
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui
@@ -206,11 +206,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GridLength
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -235,11 +235,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+      path: src/Shared/Internals/Models/DefinitionInfo.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/DefinitionInfo.cs
+    path: ../src/Shared/Internals/Models/DefinitionInfo.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui

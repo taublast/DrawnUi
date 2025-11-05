@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IRefreshIndicator.cs
+      path: src/Shared/Internals/Interfaces/IRefreshIndicator.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IRefreshIndicator
-    path: ../src/Shared/Draw/Internals/Interfaces/IRefreshIndicator.cs
+    path: ../src/Shared/Internals/Interfaces/IRefreshIndicator.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -89,11 +89,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IRefreshIndicator.cs
+      path: src/Shared/Internals/Interfaces/IRefreshIndicator.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SetDragRatio
-    path: ../src/Shared/Draw/Internals/Interfaces/IRefreshIndicator.cs
+    path: ../src/Shared/Internals/Interfaces/IRefreshIndicator.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui

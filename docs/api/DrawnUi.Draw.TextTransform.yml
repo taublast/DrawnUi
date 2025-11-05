@@ -19,11 +19,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/TextTransform.cs
+      path: src/Shared/Internals/Enums/TextTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TextTransform
-    path: ../src/Shared/Draw/Internals/Enums/TextTransform.cs
+    path: ../src/Shared/Internals/Enums/TextTransform.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -46,11 +46,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/TextTransform.cs
+      path: src/Shared/Internals/Enums/TextTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Internals/Enums/TextTransform.cs
+    path: ../src/Shared/Internals/Enums/TextTransform.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -72,11 +72,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/TextTransform.cs
+      path: src/Shared/Internals/Enums/TextTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Lowercase
-    path: ../src/Shared/Draw/Internals/Enums/TextTransform.cs
+    path: ../src/Shared/Internals/Enums/TextTransform.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -98,11 +98,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/TextTransform.cs
+      path: src/Shared/Internals/Enums/TextTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Uppercase
-    path: ../src/Shared/Draw/Internals/Enums/TextTransform.cs
+    path: ../src/Shared/Internals/Enums/TextTransform.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -124,11 +124,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/TextTransform.cs
+      path: src/Shared/Internals/Enums/TextTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Titlecase
-    path: ../src/Shared/Draw/Internals/Enums/TextTransform.cs
+    path: ../src/Shared/Internals/Enums/TextTransform.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -152,11 +152,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/TextTransform.cs
+      path: src/Shared/Internals/Enums/TextTransform.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Phrasecase
-    path: ../src/Shared/Draw/Internals/Enums/TextTransform.cs
+    path: ../src/Shared/Internals/Enums/TextTransform.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui

@@ -16,11 +16,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedGradient.cs
+      path: src/Shared/Internals/Models/CachedGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedGradient
-    path: ../src/Shared/Draw/Internals/Models/CachedGradient.cs
+    path: ../src/Shared/Internals/Models/CachedGradient.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -59,11 +59,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedGradient.cs
+      path: src/Shared/Internals/Models/CachedGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Gradient
-    path: ../src/Shared/Draw/Internals/Models/CachedGradient.cs
+    path: ../src/Shared/Internals/Models/CachedGradient.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -88,11 +88,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedGradient.cs
+      path: src/Shared/Internals/Models/CachedGradient.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
-    path: ../src/Shared/Draw/Internals/Models/CachedGradient.cs
+    path: ../src/Shared/Internals/Models/CachedGradient.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui

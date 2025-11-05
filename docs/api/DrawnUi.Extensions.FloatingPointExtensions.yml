@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      path: src/Shared/Internals/Extensions/PointExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FloatingPointExtensions
-    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    path: ../src/Shared/Internals/Extensions/PointExtensions.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      path: src/Shared/Internals/Extensions/PointExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Project
-    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    path: ../src/Shared/Internals/Extensions/PointExtensions.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -91,11 +91,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      path: src/Shared/Internals/Extensions/PointExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLess
-    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    path: ../src/Shared/Internals/Extensions/PointExtensions.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -130,11 +130,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      path: src/Shared/Internals/Extensions/PointExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGreater
-    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    path: ../src/Shared/Internals/Extensions/PointExtensions.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -169,11 +169,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+      path: src/Shared/Internals/Extensions/PointExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEqual
-    path: ../src/Shared/Draw/Internals/Extensions/PointExtensions.cs
+    path: ../src/Shared/Internals/Extensions/PointExtensions.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui

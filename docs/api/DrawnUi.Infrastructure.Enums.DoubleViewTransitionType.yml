@@ -18,11 +18,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DoubleViewTransitionType
-    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -45,11 +45,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectLeftTab
-    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -71,11 +71,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectRightTab
-    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -97,11 +97,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Push
-    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -123,11 +123,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+      path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Pop
-    path: ../src/Shared/Draw/Internals/Enums/DoubleViewTransitionType.cs
+    path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui

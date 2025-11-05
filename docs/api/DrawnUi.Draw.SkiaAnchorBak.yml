@@ -23,11 +23,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaAnchorBak
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -50,11 +50,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TopLeft
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -76,11 +76,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TopRight
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -102,11 +102,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TopMiddle
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -128,11 +128,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomLeft
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -154,11 +154,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomRight
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -180,11 +180,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomMiddle
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -206,11 +206,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftMiddle
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -232,11 +232,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RightMiddle
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -258,11 +258,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+      path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Middle
-    path: ../src/Shared/Draw/Internals/Enums/SkiaAnchorBak.cs
+    path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui

@@ -90,7 +90,7 @@
 
 
   <h1 id="DrawnUi_Draw_SkiaCacheType" data-uid="DrawnUi.Draw.SkiaCacheType" class="text-break">
-Enum SkiaCacheType  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Cache/SkiaCacheType.cs/#L4"><i class="bi bi-code-slash"></i></a>
+Enum SkiaCacheType  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Internals/Enums/SkiaCacheType.cs/#L4"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -157,7 +157,7 @@ Do not use this when dropping shadows or with other effects, better use Bitmap.<
 </dd>
     <dt id="DrawnUi_Draw_SkiaCacheType_OperationsFull"><code>OperationsFull = 2</code></dt>
   
-  <dd><p>EXPERIMENTAL! May be bugged. Create and reuse SKPicture all over the canvas ignoring clipping.
+  <dd><p>This records operations out of the controls destination, up to canvas limits. If you would need to offset cache later (ex: animate inside scroll) you must cache parent (ex: with simple Operations) to record this one within virtual parent canvas.
 Try this first for labels, svg etc.
 Do not use this when dropping shadows or with other effects, better use Bitmap.</p>
 </dd>
@@ -168,7 +168,7 @@ Do not use this when dropping shadows or with other effects, better use Bitmap.<
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Draw/Cache/SkiaCacheType.cs/#L4" class="edit-link">Edit this page</a>
+          <a href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Internals/Enums/SkiaCacheType.cs/#L4" class="edit-link">Edit this page</a>
         </div>
 
 

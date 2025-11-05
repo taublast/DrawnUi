@@ -5,6 +5,7 @@ items:
   id: AnimatedFramesRenderer
   parent: DrawnUi.Controls
   children:
+  - DrawnUi.Controls.AnimatedFramesRenderer.#ctor
   - DrawnUi.Controls.AnimatedFramesRenderer.Animator
   - DrawnUi.Controls.AnimatedFramesRenderer.ApplyDefaultFrame
   - DrawnUi.Controls.AnimatedFramesRenderer.ApplySpeed
@@ -135,12 +136,15 @@ items:
   - DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.UpdatePlatformShadow
   - DrawnUi.Draw.SkiaControl.PlatformShadow
   - DrawnUi.Draw.SkiaControl.HasPlatformClip
   - DrawnUi.Draw.SkiaControl.GetDensity
+  - DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  - DrawnUi.Draw.SkiaControl.AutoCache
   - DrawnUi.Draw.SkiaControl.UseCacheProperty
   - DrawnUi.Draw.SkiaControl.UseCache
   - DrawnUi.Draw.SkiaControl.AllowCachingProperty
@@ -198,10 +202,13 @@ items:
   - DrawnUi.Draw.SkiaControl.InvalidatedParent
   - DrawnUi.Draw.SkiaControl.InvalidateParent
   - DrawnUi.Draw.SkiaControl.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.RenderingInvalidated
   - DrawnUi.Draw.SkiaControl.InvalidateViewport
   - DrawnUi.Draw.SkiaControl.DirtyChildrenTracker
   - DrawnUi.Draw.SkiaControl.DirtyChildrenInternal
   - DrawnUi.Draw.SkiaControl.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.Initialized
+  - DrawnUi.Draw.SkiaControl.Destroyed
   - DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
@@ -219,6 +226,10 @@ items:
   - DrawnUi.Draw.SkiaControl.ClipWith
   - DrawnUi.Draw.SkiaControl.ChildrenProperty
   - DrawnUi.Draw.SkiaControl.Children
+  - DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  - DrawnUi.Draw.SkiaControl.Virtualisation
+  - DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  - DrawnUi.Draw.SkiaControl.VirtualisationInflated
   - DrawnUi.Draw.SkiaControl.DefaultBlendMode
   - DrawnUi.Draw.SkiaControl.IsVisibleInViewTree
   - DrawnUi.Draw.SkiaControl.GetPositionOnCanvasInPoints
@@ -533,6 +544,8 @@ items:
   - DrawnUi.Draw.SkiaControl.ExecuteOnPaint
   - DrawnUi.Draw.SkiaControl.ThrowIfDisposed
   - DrawnUi.Draw.SkiaControl.Dispose(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  - DrawnUi.Draw.SkiaControl.LifecycleState
   - DrawnUi.Draw.SkiaControl.Dispose
   - DrawnUi.Draw.SkiaControl.PaintErase
   - DrawnUi.Draw.SkiaControl.GetNanoseconds
@@ -552,6 +565,7 @@ items:
   - DrawnUi.Draw.SkiaControl.FindRenderedNode(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.CreateRenderedNode(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaControl.RenderCount
   - DrawnUi.Draw.SkiaControl.Rendered
   - DrawnUi.Draw.SkiaControl.LockDraw
   - DrawnUi.Draw.SkiaControl.LockRenderObject
@@ -581,6 +595,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
   - DrawnUi.Draw.SkiaControl.NeedMeasure
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
@@ -605,6 +620,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
   - DrawnUi.Draw.SkiaControl.UpdateInternal
+  - DrawnUi.Draw.SkiaControl.UpdatedRendering
   - DrawnUi.Draw.SkiaControl.Update
   - DrawnUi.Draw.SkiaControl.Updated
   - DrawnUi.Draw.SkiaControl.StreamFromString(System.String)
@@ -891,15 +907,15 @@ items:
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Controls.AnimatedFramesRenderer},System.String[])
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.String},System.String[])
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.AnimatedFramesRenderer},System.String[])
-  - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer})
-  - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.ControlTappedEventArgs})
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer})
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32)
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.StartX``1
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.StartY``1
+  - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
+  - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WhenPaint``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(Microsoft.Maui.Graphics.Color)
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WithCache``1(DrawnUi.Draw.SkiaCacheType)
   - DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(System.Int32)
@@ -937,6 +953,35 @@ items:
   - Microsoft.Maui.Controls.VisualElement.DrawnUi.Draw.StaticResourcesExtensions.GetAllWithMyselfParents
   - Microsoft.Maui.IView.DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Controls.AnimatedFramesRenderer.#ctor
+  commentId: M:DrawnUi.Controls.AnimatedFramesRenderer.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Controls.AnimatedFramesRenderer
+  langs:
+  - csharp
+  - vb
+  name: AnimatedFramesRenderer()
+  nameWithType: AnimatedFramesRenderer.AnimatedFramesRenderer()
+  fullName: DrawnUi.Controls.AnimatedFramesRenderer.AnimatedFramesRenderer()
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public AnimatedFramesRenderer()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Controls.AnimatedFramesRenderer.#ctor*
+  nameWithType.vb: AnimatedFramesRenderer.New()
+  fullName.vb: DrawnUi.Controls.AnimatedFramesRenderer.New()
+  name.vb: New()
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.WasPlayingBeforeVisibilityChanged
   commentId: F:DrawnUi.Controls.AnimatedFramesRenderer.WasPlayingBeforeVisibilityChanged
   id: WasPlayingBeforeVisibilityChanged
@@ -955,7 +1000,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WasPlayingBeforeVisibilityChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 9
+    startLine: 15
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -982,7 +1027,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WasStarted
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 10
+    startLine: 16
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1009,7 +1054,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Animator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 11
+    startLine: 17
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1038,7 +1083,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayWhenAvailable
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 12
+    startLine: 18
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1067,7 +1112,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CanPlay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 14
+    startLine: 20
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1096,7 +1141,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPlaying
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 19
+    startLine: 25
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1125,7 +1170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsStandalone
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 32
+    startLine: 38
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1154,7 +1199,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayWhenAvailableIfNeeded
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 34
+    startLine: 40
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1180,7 +1225,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnVisibilityChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 49
+    startLine: 55
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1216,7 +1261,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSourceType
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 68
+    startLine: 74
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1250,7 +1295,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 99
+    startLine: 105
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1288,7 +1333,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 111
+    startLine: 117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1317,10 +1362,11 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 115
+    startLine: 121
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
+  summary: DrawingRect size changed
   example: []
   syntax:
     content: protected override void OnLayoutChanged()
@@ -1345,7 +1391,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayIfNeeded
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 126
+    startLine: 132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1371,7 +1417,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimatorParent
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 155
+    startLine: 161
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1399,7 +1445,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 160
+    startLine: 166
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1425,7 +1471,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorInitializing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 197
+    startLine: 204
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1451,7 +1497,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorUpdated
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 205
+    startLine: 212
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1486,7 +1532,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckCanStartAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 209
+    startLine: 216
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1514,7 +1560,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorStarting
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 214
+    startLine: 221
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1540,7 +1586,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorSeeking
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 218
+    startLine: 225
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1572,7 +1618,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Seek
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 222
+    startLine: 229
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1604,7 +1650,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 227
+    startLine: 234
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1636,7 +1682,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 254
+    startLine: 261
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1662,7 +1708,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrameAt
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 266
+    startLine: 273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1699,7 +1745,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFinished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 271
+    startLine: 278
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1725,7 +1771,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStarted
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 276
+    startLine: 283
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1751,7 +1797,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 281
+    startLine: 288
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1780,7 +1826,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 293
+    startLine: 300
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1806,7 +1852,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 297
+    startLine: 304
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1832,7 +1878,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWillDisposeWithChildren
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 308
+    startLine: 315
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1864,7 +1910,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Finished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 321
+    startLine: 328
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1893,7 +1939,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Started
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 323
+    startLine: 330
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1920,7 +1966,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 329
+    startLine: 336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1947,7 +1993,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 343
+    startLine: 350
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1978,7 +2024,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatioProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 349
+    startLine: 356
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2005,7 +2051,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatio
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 360
+    startLine: 367
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2034,7 +2080,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RepeatProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 366
+    startLine: 373
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2061,7 +2107,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Repeat
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 386
+    startLine: 393
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2092,7 +2138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlayProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 392
+    startLine: 399
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2119,7 +2165,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-    startLine: 397
+    startLine: 404
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3056,6 +3102,25 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  name: OnLayoutPositionChanged()
+  nameWithType: SkiaControl.OnLayoutPositionChanged()
+  fullName: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+    name: OnLayoutPositionChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+    name: OnLayoutPositionChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   parent: DrawnUi.Draw.SkiaControl
@@ -3211,6 +3276,20 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetDensity
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCacheProperty
+  name: AutoCacheProperty
+  nameWithType: SkiaControl.AutoCacheProperty
+  fullName: DrawnUi.Draw.SkiaControl.AutoCacheProperty
+- uid: DrawnUi.Draw.SkiaControl.AutoCache
+  commentId: P:DrawnUi.Draw.SkiaControl.AutoCache
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCache
+  name: AutoCache
+  nameWithType: SkiaControl.AutoCache
+  fullName: DrawnUi.Draw.SkiaControl.AutoCache
 - uid: DrawnUi.Draw.SkiaControl.UseCacheProperty
   commentId: F:DrawnUi.Draw.SkiaControl.UseCacheProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -4456,6 +4535,13 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.RenderingInvalidated
+  commentId: F:DrawnUi.Draw.SkiaControl.RenderingInvalidated
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderingInvalidated
+  name: RenderingInvalidated
+  nameWithType: SkiaControl.RenderingInvalidated
+  fullName: DrawnUi.Draw.SkiaControl.RenderingInvalidated
 - uid: DrawnUi.Draw.SkiaControl.InvalidateViewport
   commentId: M:DrawnUi.Draw.SkiaControl.InvalidateViewport
   parent: DrawnUi.Draw.SkiaControl
@@ -4514,6 +4600,20 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.Initialized
+  commentId: E:DrawnUi.Draw.SkiaControl.Initialized
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Initialized
+  name: Initialized
+  nameWithType: SkiaControl.Initialized
+  fullName: DrawnUi.Draw.SkiaControl.Initialized
+- uid: DrawnUi.Draw.SkiaControl.Destroyed
+  commentId: E:DrawnUi.Draw.SkiaControl.Destroyed
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Destroyed
+  name: Destroyed
+  nameWithType: SkiaControl.Destroyed
+  fullName: DrawnUi.Draw.SkiaControl.Destroyed
 - uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -4705,6 +4805,34 @@ references:
   name: Children
   nameWithType: SkiaControl.Children
   fullName: DrawnUi.Draw.SkiaControl.Children
+- uid: DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualizationProperty
+  name: VirtualizationProperty
+  nameWithType: SkiaControl.VirtualizationProperty
+  fullName: DrawnUi.Draw.SkiaControl.VirtualizationProperty
+- uid: DrawnUi.Draw.SkiaControl.Virtualisation
+  commentId: P:DrawnUi.Draw.SkiaControl.Virtualisation
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Virtualisation
+  name: Virtualisation
+  nameWithType: SkiaControl.Virtualisation
+  fullName: DrawnUi.Draw.SkiaControl.Virtualisation
+- uid: DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualisationInflatedProperty
+  name: VirtualisationInflatedProperty
+  nameWithType: SkiaControl.VirtualisationInflatedProperty
+  fullName: DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+- uid: DrawnUi.Draw.SkiaControl.VirtualisationInflated
+  commentId: P:DrawnUi.Draw.SkiaControl.VirtualisationInflated
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualisationInflated
+  name: VirtualisationInflated
+  nameWithType: SkiaControl.VirtualisationInflated
+  fullName: DrawnUi.Draw.SkiaControl.VirtualisationInflated
 - uid: DrawnUi.Draw.SkiaControl.DefaultBlendMode
   commentId: F:DrawnUi.Draw.SkiaControl.DefaultBlendMode
   parent: DrawnUi.Draw.SkiaControl
@@ -11721,6 +11849,38 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  name: OnLifecycleStateChanged(ControlLifecycleState)
+  nameWithType: SkiaControl.OnLifecycleStateChanged(ControlLifecycleState)
+  fullName: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+    name: OnLifecycleStateChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  - name: (
+  - uid: DrawnUi.Draw.ControlLifecycleState
+    name: ControlLifecycleState
+    href: DrawnUi.Draw.ControlLifecycleState.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+    name: OnLifecycleStateChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  - name: (
+  - uid: DrawnUi.Draw.ControlLifecycleState
+    name: ControlLifecycleState
+    href: DrawnUi.Draw.ControlLifecycleState.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.LifecycleState
+  commentId: P:DrawnUi.Draw.SkiaControl.LifecycleState
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_LifecycleState
+  name: LifecycleState
+  nameWithType: SkiaControl.LifecycleState
+  fullName: DrawnUi.Draw.SkiaControl.LifecycleState
 - uid: DrawnUi.Draw.SkiaControl.Dispose
   commentId: M:DrawnUi.Draw.SkiaControl.Dispose
   parent: DrawnUi.Draw.SkiaControl
@@ -12142,6 +12302,13 @@ references:
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.RenderCount
+  commentId: F:DrawnUi.Draw.SkiaControl.RenderCount
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderCount
+  name: RenderCount
+  nameWithType: SkiaControl.RenderCount
+  fullName: DrawnUi.Draw.SkiaControl.RenderCount
 - uid: DrawnUi.Draw.SkiaControl.Rendered
   commentId: E:DrawnUi.Draw.SkiaControl.Rendered
   parent: DrawnUi.Draw.SkiaControl
@@ -12841,6 +13008,34 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  commentId: M:DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  name: PostDrawAction(Action)
+  nameWithType: SkiaControl.PostDrawAction(Action)
+  fullName: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+    name: PostDrawAction
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  - name: (
+  - uid: System.Action
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+    name: PostDrawAction
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  - name: (
+  - uid: System.Action
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.NeedRemeasuring
   commentId: F:DrawnUi.Draw.SkiaControl.NeedRemeasuring
   parent: DrawnUi.Draw.SkiaControl
@@ -13271,6 +13466,13 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateInternal
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.UpdatedRendering
+  commentId: F:DrawnUi.Draw.SkiaControl.UpdatedRendering
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedRendering
+  name: UpdatedRendering
+  nameWithType: SkiaControl.UpdatedRendering
+  fullName: DrawnUi.Draw.SkiaControl.UpdatedRendering
 - uid: DrawnUi.Draw.SkiaControl.Update
   commentId: M:DrawnUi.Draw.SkiaControl.Update
   parent: DrawnUi.Draw.SkiaControl
@@ -21082,99 +21284,6 @@ references:
   - name: (
   - name: )
   - name: )
-- uid: DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  parent: DrawnUi.Draw.FluentExtensions
-  definition: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  name: OnBindingContextSet<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, object>, string[])
-  nameWithType: FluentExtensions.OnBindingContextSet<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, object>, string[])
-  fullName: DrawnUi.Draw.FluentExtensions.OnBindingContextSet<DrawnUi.Controls.AnimatedFramesRenderer>(DrawnUi.Controls.AnimatedFramesRenderer, System.Action<DrawnUi.Controls.AnimatedFramesRenderer, object>, string[])
-  nameWithType.vb: FluentExtensions.OnBindingContextSet(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, Object), String())
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnBindingContextSet(Of DrawnUi.Controls.AnimatedFramesRenderer)(DrawnUi.Controls.AnimatedFramesRenderer, System.Action(Of DrawnUi.Controls.AnimatedFramesRenderer, Object), String())
-  name.vb: OnBindingContextSet(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, Object), String())
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: <
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: '>'
-  - name: (
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: '>'
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: '['
-  - name: ']'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: )
-  - name: (
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: (
-  - name: )
-  - name: )
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   parent: DrawnUi.Draw.FluentExtensions
@@ -21238,81 +21347,6 @@ references:
   - uid: DrawnUi.Controls.AnimatedFramesRenderer
     name: AnimatedFramesRenderer
     href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: )
-  - name: )
-- uid: DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  parent: DrawnUi.Draw.FluentExtensions
-  definition: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  name: OnPaint<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, DrawingContext>)
-  nameWithType: FluentExtensions.OnPaint<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, DrawingContext>)
-  fullName: DrawnUi.Draw.FluentExtensions.OnPaint<DrawnUi.Controls.AnimatedFramesRenderer>(DrawnUi.Controls.AnimatedFramesRenderer, System.Action<DrawnUi.Controls.AnimatedFramesRenderer, DrawnUi.Draw.DrawingContext>)
-  nameWithType.vb: FluentExtensions.OnPaint(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, DrawingContext))
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnPaint(Of DrawnUi.Controls.AnimatedFramesRenderer)(DrawnUi.Controls.AnimatedFramesRenderer, System.Action(Of DrawnUi.Controls.AnimatedFramesRenderer, DrawnUi.Draw.DrawingContext))
-  name.vb: OnPaint(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, DrawingContext))
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: <
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: '>'
-  - name: (
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: '>'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: )
-  - name: (
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.AnimatedFramesRenderer
-    name: AnimatedFramesRenderer
-    href: DrawnUi.Controls.AnimatedFramesRenderer.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.ControlTappedEventArgs})
@@ -21690,6 +21724,174 @@ references:
   - uid: DrawnUi.Controls.AnimatedFramesRenderer
     name: AnimatedFramesRenderer
     href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: )
+- uid: DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  name: WhenBindingContextSet<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, object>, string[])
+  nameWithType: FluentExtensions.WhenBindingContextSet<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, object>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet<DrawnUi.Controls.AnimatedFramesRenderer>(DrawnUi.Controls.AnimatedFramesRenderer, System.Action<DrawnUi.Controls.AnimatedFramesRenderer, object>, string[])
+  nameWithType.vb: FluentExtensions.WhenBindingContextSet(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, Object), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet(Of DrawnUi.Controls.AnimatedFramesRenderer)(DrawnUi.Controls.AnimatedFramesRenderer, System.Action(Of DrawnUi.Controls.AnimatedFramesRenderer, Object), String())
+  name.vb: WhenBindingContextSet(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, Object), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: <
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WhenPaint``1(System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  name: WhenPaint<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, DrawingContext>)
+  nameWithType: FluentExtensions.WhenPaint<AnimatedFramesRenderer>(AnimatedFramesRenderer, Action<AnimatedFramesRenderer, DrawingContext>)
+  fullName: DrawnUi.Draw.FluentExtensions.WhenPaint<DrawnUi.Controls.AnimatedFramesRenderer>(DrawnUi.Controls.AnimatedFramesRenderer, System.Action<DrawnUi.Controls.AnimatedFramesRenderer, DrawnUi.Draw.DrawingContext>)
+  nameWithType.vb: FluentExtensions.WhenPaint(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, DrawingContext))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenPaint(Of DrawnUi.Controls.AnimatedFramesRenderer)(DrawnUi.Controls.AnimatedFramesRenderer, System.Action(Of DrawnUi.Controls.AnimatedFramesRenderer, DrawnUi.Draw.DrawingContext))
+  name.vb: WhenPaint(Of AnimatedFramesRenderer)(AnimatedFramesRenderer, Action(Of AnimatedFramesRenderer, DrawingContext))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: <
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(DrawnUi.Controls.AnimatedFramesRenderer,System.Action{DrawnUi.Controls.AnimatedFramesRenderer,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.AnimatedFramesRenderer
+    name: AnimatedFramesRenderer
+    href: DrawnUi.Controls.AnimatedFramesRenderer.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
   - name: )
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(Microsoft.Maui.Graphics.Color)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
@@ -26098,86 +26300,6 @@ references:
   - name: (
   - name: )
   - name: )
-- uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  isExternal: true
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  name: OnBindingContextSet<T>(T, Action<T, object>, string[])
-  nameWithType: FluentExtensions.OnBindingContextSet<T>(T, Action<T, object>, string[])
-  fullName: DrawnUi.Draw.FluentExtensions.OnBindingContextSet<T>(T, System.Action<T, object>, string[])
-  nameWithType.vb: FluentExtensions.OnBindingContextSet(Of T)(T, Action(Of T, Object), String())
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnBindingContextSet(Of T)(T, System.Action(Of T, Object), String())
-  name.vb: OnBindingContextSet(Of T)(T, Action(Of T, Object), String())
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: <
-  - name: T
-  - name: '>'
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: '>'
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: '['
-  - name: ']'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: (
-  - name: )
-  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   isExternal: true
@@ -26228,68 +26350,6 @@ references:
   - name: Of
   - name: " "
   - name: T
-  - name: )
-  - name: )
-- uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  isExternal: true
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  name: OnPaint<T>(T, Action<T, DrawingContext>)
-  nameWithType: FluentExtensions.OnPaint<T>(T, Action<T, DrawingContext>)
-  fullName: DrawnUi.Draw.FluentExtensions.OnPaint<T>(T, System.Action<T, DrawnUi.Draw.DrawingContext>)
-  nameWithType.vb: FluentExtensions.OnPaint(Of T)(T, Action(Of T, DrawingContext))
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnPaint(Of T)(T, System.Action(Of T, DrawnUi.Draw.DrawingContext))
-  name.vb: OnPaint(Of T)(T, Action(Of T, DrawingContext))
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: <
-  - name: T
-  - name: '>'
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: '>'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
@@ -26603,6 +26663,148 @@ references:
   - name: )
   - name: (
   - name: T
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  name: WhenBindingContextSet<T>(T, Action<T, object>, string[])
+  nameWithType: FluentExtensions.WhenBindingContextSet<T>(T, Action<T, object>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet<T>(T, System.Action<T, object>, string[])
+  nameWithType.vb: FluentExtensions.WhenBindingContextSet(Of T)(T, Action(Of T, Object), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet(Of T)(T, System.Action(Of T, Object), String())
+  name.vb: WhenBindingContextSet(Of T)(T, Action(Of T, Object), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  name: WhenPaint<T>(T, Action<T, DrawingContext>)
+  nameWithType: FluentExtensions.WhenPaint<T>(T, Action<T, DrawingContext>)
+  fullName: DrawnUi.Draw.FluentExtensions.WhenPaint<T>(T, System.Action<T, DrawnUi.Draw.DrawingContext>)
+  nameWithType.vb: FluentExtensions.WhenPaint(Of T)(T, Action(Of T, DrawingContext))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenPaint(Of T)(T, System.Action(Of T, DrawnUi.Draw.DrawingContext))
+  name.vb: WhenPaint(Of T)(T, Action(Of T, DrawingContext))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
@@ -28489,6 +28691,15 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: DrawnUi.Controls.AnimatedFramesRenderer.#ctor*
+  commentId: Overload:DrawnUi.Controls.AnimatedFramesRenderer.#ctor
+  href: DrawnUi.Controls.AnimatedFramesRenderer.html#DrawnUi_Controls_AnimatedFramesRenderer__ctor
+  name: AnimatedFramesRenderer
+  nameWithType: AnimatedFramesRenderer.AnimatedFramesRenderer
+  fullName: DrawnUi.Controls.AnimatedFramesRenderer.AnimatedFramesRenderer
+  nameWithType.vb: AnimatedFramesRenderer.New
+  fullName.vb: DrawnUi.Controls.AnimatedFramesRenderer.New
+  name.vb: New
 - uid: System.Boolean
   commentId: T:System.Boolean
   parent: System

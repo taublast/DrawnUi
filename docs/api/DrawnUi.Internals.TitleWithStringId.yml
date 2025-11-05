@@ -16,11 +16,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/TitleWithStringId.cs
+      path: src/Shared/Internals/Models/TitleWithStringId.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TitleWithStringId
-    path: ../src/Shared/Draw/Internals/Models/TitleWithStringId.cs
+    path: ../src/Shared/Internals/Models/TitleWithStringId.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -59,11 +59,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/TitleWithStringId.cs
+      path: src/Shared/Internals/Models/TitleWithStringId.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
-    path: ../src/Shared/Draw/Internals/Models/TitleWithStringId.cs
+    path: ../src/Shared/Internals/Models/TitleWithStringId.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -91,11 +91,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/TitleWithStringId.cs
+      path: src/Shared/Internals/Models/TitleWithStringId.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Title
-    path: ../src/Shared/Draw/Internals/Models/TitleWithStringId.cs
+    path: ../src/Shared/Internals/Models/TitleWithStringId.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui

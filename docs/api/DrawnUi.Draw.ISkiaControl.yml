@@ -32,11 +32,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaControl
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -106,11 +106,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: VisualLayer
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -135,11 +135,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -164,11 +164,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Margin
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -193,11 +193,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Padding
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -222,11 +222,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SetParent
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -251,11 +251,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGhost
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -282,11 +282,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clipping
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -311,11 +311,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndex
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -340,11 +340,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OptionalOnBeforeDrawing
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui
@@ -366,11 +366,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnBeforeMeasure
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -392,11 +392,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Arrange
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -430,11 +430,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -459,11 +459,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderedAtDestination
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 31
   assemblies:
   - DrawnUi.Maui
@@ -488,11 +488,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 33
   assemblies:
   - DrawnUi.Maui
@@ -520,11 +520,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Measure
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 42
   assemblies:
   - DrawnUi.Maui
@@ -566,11 +566,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalOptions
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 44
   assemblies:
   - DrawnUi.Maui
@@ -595,11 +595,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalOptions
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 46
   assemblies:
   - DrawnUi.Maui
@@ -624,11 +624,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+      path: src/Shared/Internals/Interfaces/ISkiaControl.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CanDraw
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaControl.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
     startLine: 48
   assemblies:
   - DrawnUi.Maui

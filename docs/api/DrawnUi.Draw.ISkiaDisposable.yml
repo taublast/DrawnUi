@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDisposable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDisposable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaDisposable
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDisposable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDisposable.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDisposable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDisposable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAlive
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDisposable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDisposable.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui

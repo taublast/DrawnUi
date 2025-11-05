@@ -23,11 +23,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeight
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -50,11 +50,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Thin
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -78,11 +78,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ExtraLight
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -106,11 +106,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Light
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -134,11 +134,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Regular
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -162,11 +162,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Medium
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -190,11 +190,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SemiBold
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 32
   assemblies:
   - DrawnUi.Maui
@@ -218,11 +218,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Bold
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 37
   assemblies:
   - DrawnUi.Maui
@@ -246,11 +246,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ExtraBold
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 42
   assemblies:
   - DrawnUi.Maui
@@ -274,11 +274,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/FontWeight.cs
+      path: src/Shared/Internals/Enums/FontWeight.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Black
-    path: ../src/Shared/Draw/Internals/Enums/FontWeight.cs
+    path: ../src/Shared/Internals/Enums/FontWeight.cs
     startLine: 47
   assemblies:
   - DrawnUi.Maui

@@ -18,11 +18,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+      path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaTouchResultContext
-    path: ../src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+    path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -52,11 +52,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+      path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Context
-    path: ../src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+    path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -81,11 +81,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+      path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
-    path: ../src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+    path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -110,11 +110,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+      path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TouchArgs
-    path: ../src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+    path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -139,11 +139,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+      path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TouchAction
-    path: ../src/Shared/Draw/Internals/Models/SkiaTouchResultContext.cs
+    path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui

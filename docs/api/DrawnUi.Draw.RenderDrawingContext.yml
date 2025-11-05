@@ -14,11 +14,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderDrawingContext
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 155
   assemblies:
   - DrawnUi.Maui

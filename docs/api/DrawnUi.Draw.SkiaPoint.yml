@@ -20,11 +20,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/SkiaPoint.cs
+      path: src/Shared/Internals/Models/SkiaPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaPoint
-    path: ../src/Shared/Draw/SkiaPoint.cs
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -83,11 +83,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/SkiaPoint.cs
+      path: src/Shared/Internals/Models/SkiaPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/SkiaPoint.cs
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -112,11 +112,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/SkiaPoint.cs
+      path: src/Shared/Internals/Models/SkiaPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/SkiaPoint.cs
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -146,11 +146,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaPoint.cs
+      path: src/Shared/Internals/Models/SkiaPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: XProperty
-    path: ../src/Shared/Draw/SkiaPoint.cs
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -173,11 +173,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaPoint.cs
+      path: src/Shared/Internals/Models/SkiaPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: X
-    path: ../src/Shared/Draw/SkiaPoint.cs
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -202,11 +202,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaPoint.cs
+      path: src/Shared/Internals/Models/SkiaPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: YProperty
-    path: ../src/Shared/Draw/SkiaPoint.cs
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
     startLine: 28
   assemblies:
   - DrawnUi.Maui
@@ -229,11 +229,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/SkiaPoint.cs
+      path: src/Shared/Internals/Models/SkiaPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Y
-    path: ../src/Shared/Draw/SkiaPoint.cs
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
     startLine: 35
   assemblies:
   - DrawnUi.Maui

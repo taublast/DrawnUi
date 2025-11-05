@@ -17,11 +17,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+      path: src/Shared/Internals/Models/PointIsInsideResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PointIsInsideResult
-    path: ../src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+    path: ../src/Shared/Internals/Models/PointIsInsideResult.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+      path: src/Shared/Internals/Models/PointIsInsideResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsInside
-    path: ../src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+    path: ../src/Shared/Internals/Models/PointIsInsideResult.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -85,11 +85,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+      path: src/Shared/Internals/Models/PointIsInsideResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Point
-    path: ../src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+    path: ../src/Shared/Internals/Models/PointIsInsideResult.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -114,11 +114,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+      path: src/Shared/Internals/Models/PointIsInsideResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Area
-    path: ../src/Shared/Draw/Internals/Models/PointIsInsideResult.cs
+    path: ../src/Shared/Internals/Models/PointIsInsideResult.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui

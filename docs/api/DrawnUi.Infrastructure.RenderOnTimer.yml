@@ -16,11 +16,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/RenderOnTimer.cs
+      path: src/Shared/Internals/Models/RenderOnTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderOnTimer
-    path: ../src/Shared/Draw/Internals/Models/RenderOnTimer.cs
+    path: ../src/Shared/Internals/Models/RenderOnTimer.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -53,11 +53,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/RenderOnTimer.cs
+      path: src/Shared/Internals/Models/RenderOnTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsActive
-    path: ../src/Shared/Draw/Internals/Models/RenderOnTimer.cs
+    path: ../src/Shared/Internals/Models/RenderOnTimer.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -82,11 +82,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/RenderOnTimer.cs
+      path: src/Shared/Internals/Models/RenderOnTimer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Shared/Draw/Internals/Models/RenderOnTimer.cs
+    path: ../src/Shared/Internals/Models/RenderOnTimer.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui

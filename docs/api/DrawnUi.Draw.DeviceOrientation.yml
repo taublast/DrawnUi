@@ -1,0 +1,339 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.DeviceOrientation
+  commentId: T:DrawnUi.Draw.DeviceOrientation
+  id: DeviceOrientation
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.DeviceOrientation.FaceDown
+  - DrawnUi.Draw.DeviceOrientation.FaceUp
+  - DrawnUi.Draw.DeviceOrientation.LandscapeLeft
+  - DrawnUi.Draw.DeviceOrientation.LandscapeRight
+  - DrawnUi.Draw.DeviceOrientation.Portrait
+  - DrawnUi.Draw.DeviceOrientation.PortraitUpsideDown
+  - DrawnUi.Draw.DeviceOrientation.Unknown
+  langs:
+  - csharp
+  - vb
+  name: DeviceOrientation
+  nameWithType: DeviceOrientation
+  fullName: DrawnUi.Draw.DeviceOrientation
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DeviceOrientation
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public enum DeviceOrientation
+    content.vb: Public Enum DeviceOrientation
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.DeviceOrientation.Unknown
+  commentId: F:DrawnUi.Draw.DeviceOrientation.Unknown
+  id: Unknown
+  parent: DrawnUi.Draw.DeviceOrientation
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: DeviceOrientation.Unknown
+  fullName: DrawnUi.Draw.DeviceOrientation.Unknown
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Unknown
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Unknown = 0
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+- uid: DrawnUi.Draw.DeviceOrientation.Portrait
+  commentId: F:DrawnUi.Draw.DeviceOrientation.Portrait
+  id: Portrait
+  parent: DrawnUi.Draw.DeviceOrientation
+  langs:
+  - csharp
+  - vb
+  name: Portrait
+  nameWithType: DeviceOrientation.Portrait
+  fullName: DrawnUi.Draw.DeviceOrientation.Portrait
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Portrait
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: Portrait = 1
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+- uid: DrawnUi.Draw.DeviceOrientation.PortraitUpsideDown
+  commentId: F:DrawnUi.Draw.DeviceOrientation.PortraitUpsideDown
+  id: PortraitUpsideDown
+  parent: DrawnUi.Draw.DeviceOrientation
+  langs:
+  - csharp
+  - vb
+  name: PortraitUpsideDown
+  nameWithType: DeviceOrientation.PortraitUpsideDown
+  fullName: DrawnUi.Draw.DeviceOrientation.PortraitUpsideDown
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PortraitUpsideDown
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: PortraitUpsideDown = 2
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+- uid: DrawnUi.Draw.DeviceOrientation.LandscapeLeft
+  commentId: F:DrawnUi.Draw.DeviceOrientation.LandscapeLeft
+  id: LandscapeLeft
+  parent: DrawnUi.Draw.DeviceOrientation
+  langs:
+  - csharp
+  - vb
+  name: LandscapeLeft
+  nameWithType: DeviceOrientation.LandscapeLeft
+  fullName: DrawnUi.Draw.DeviceOrientation.LandscapeLeft
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LandscapeLeft
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LandscapeLeft = 3
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+- uid: DrawnUi.Draw.DeviceOrientation.LandscapeRight
+  commentId: F:DrawnUi.Draw.DeviceOrientation.LandscapeRight
+  id: LandscapeRight
+  parent: DrawnUi.Draw.DeviceOrientation
+  langs:
+  - csharp
+  - vb
+  name: LandscapeRight
+  nameWithType: DeviceOrientation.LandscapeRight
+  fullName: DrawnUi.Draw.DeviceOrientation.LandscapeRight
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: LandscapeRight
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: LandscapeRight = 4
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+- uid: DrawnUi.Draw.DeviceOrientation.FaceUp
+  commentId: F:DrawnUi.Draw.DeviceOrientation.FaceUp
+  id: FaceUp
+  parent: DrawnUi.Draw.DeviceOrientation
+  langs:
+  - csharp
+  - vb
+  name: FaceUp
+  nameWithType: DeviceOrientation.FaceUp
+  fullName: DrawnUi.Draw.DeviceOrientation.FaceUp
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FaceUp
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: FaceUp = 5
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+- uid: DrawnUi.Draw.DeviceOrientation.FaceDown
+  commentId: F:DrawnUi.Draw.DeviceOrientation.FaceDown
+  id: FaceDown
+  parent: DrawnUi.Draw.DeviceOrientation
+  langs:
+  - csharp
+  - vb
+  name: FaceDown
+  nameWithType: DeviceOrientation.FaceDown
+  fullName: DrawnUi.Draw.DeviceOrientation.FaceDown
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/DeviceOrientation.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FaceDown
+    path: ../src/Shared/Internals/Enums/DeviceOrientation.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: FaceDown = 6
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.DeviceOrientation
+  commentId: T:DrawnUi.Draw.DeviceOrientation
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DeviceOrientation.html
+  name: DeviceOrientation
+  nameWithType: DeviceOrientation
+  fullName: DrawnUi.Draw.DeviceOrientation

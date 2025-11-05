@@ -17,11 +17,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaLayer
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -109,11 +109,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LayerPaintArgs
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -140,11 +140,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HasValidSnapshot
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -171,11 +171,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawLayerImage
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayer.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui

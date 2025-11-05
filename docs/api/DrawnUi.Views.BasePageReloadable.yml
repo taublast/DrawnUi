@@ -11,6 +11,7 @@ items:
   - DrawnUi.Views.BasePageReloadable.Dispose
   - DrawnUi.Views.BasePageReloadable.Dispose(System.Boolean)
   - DrawnUi.Views.BasePageReloadable.IsDisposed
+  - DrawnUi.Views.BasePageReloadable.OnHandlerChanged
   - DrawnUi.Views.BasePageReloadable.ReloadUi(System.Type[])
   langs:
   - csharp
@@ -256,7 +257,6 @@ items:
   - Microsoft.Maui.Controls.Element.OnParentChanging(Microsoft.Maui.Controls.ParentChangingEventArgs)
   - Microsoft.Maui.Controls.Element.OnParentChanged
   - Microsoft.Maui.Controls.Element.OnHandlerChanging(Microsoft.Maui.Controls.HandlerChangingEventArgs)
-  - Microsoft.Maui.Controls.Element.OnHandlerChanged
   - Microsoft.Maui.Controls.Element.MapAutomationPropertiesIsInAccessibleTree(Microsoft.Maui.IElementHandler,Microsoft.Maui.Controls.Element)
   - Microsoft.Maui.Controls.Element.MapAutomationPropertiesExcludedWithChildren(Microsoft.Maui.IElementHandler,Microsoft.Maui.Controls.Element)
   - Microsoft.Maui.Controls.Element.AutomationId
@@ -338,6 +338,36 @@ items:
   nameWithType.vb: BasePageReloadable.New()
   fullName.vb: DrawnUi.Views.BasePageReloadable.New()
   name.vb: New()
+- uid: DrawnUi.Views.BasePageReloadable.OnHandlerChanged
+  commentId: M:DrawnUi.Views.BasePageReloadable.OnHandlerChanged
+  id: OnHandlerChanged
+  parent: DrawnUi.Views.BasePageReloadable
+  langs:
+  - csharp
+  - vb
+  name: OnHandlerChanged()
+  nameWithType: BasePageReloadable.OnHandlerChanged()
+  fullName: DrawnUi.Views.BasePageReloadable.OnHandlerChanged()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnHandlerChanged
+    path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  summary: When overridden in a derived class, should raise the <xref href="Microsoft.Maui.Controls.Element.HandlerChanged" data-throw-if-not-resolved="false"></xref> event.
+  remarks: It is the implementor's responsibility to raise the <xref href="Microsoft.Maui.Controls.Element.HandlerChanged" data-throw-if-not-resolved="false"></xref> event.
+  example: []
+  syntax:
+    content: protected override void OnHandlerChanged()
+    content.vb: Protected Overrides Sub OnHandlerChanged()
+  overridden: Microsoft.Maui.Controls.Element.OnHandlerChanged
+  overload: DrawnUi.Views.BasePageReloadable.OnHandlerChanged*
 - uid: DrawnUi.Views.BasePageReloadable.CountReloads
   commentId: P:DrawnUi.Views.BasePageReloadable.CountReloads
   id: CountReloads
@@ -356,7 +386,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CountReloads
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 28
+    startLine: 41
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -385,7 +415,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadUi
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 34
+    startLine: 47
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -420,7 +450,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Build
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 46
+    startLine: 59
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -448,7 +478,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 51
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -478,7 +508,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 57
+    startLine: 70
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -507,7 +537,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 59
+    startLine: 72
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3994,28 +4024,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.handlerchangingeventargs
   - name: )
-- uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
-  commentId: M:Microsoft.Maui.Controls.Element.OnHandlerChanged
-  parent: Microsoft.Maui.Controls.Element
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
-  name: OnHandlerChanged()
-  nameWithType: Element.OnHandlerChanged()
-  fullName: Microsoft.Maui.Controls.Element.OnHandlerChanged()
-  spec.csharp:
-  - uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
-    name: OnHandlerChanged
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
-    name: OnHandlerChanged
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
-  - name: (
-  - name: )
 - uid: Microsoft.Maui.Controls.Element.MapAutomationPropertiesIsInAccessibleTree(Microsoft.Maui.IElementHandler,Microsoft.Maui.Controls.Element)
   commentId: M:Microsoft.Maui.Controls.Element.MapAutomationPropertiesIsInAccessibleTree(Microsoft.Maui.IElementHandler,Microsoft.Maui.Controls.Element)
   parent: Microsoft.Maui.Controls.Element
@@ -5883,6 +5891,34 @@ references:
   nameWithType.vb: BasePageReloadable.New
   fullName.vb: DrawnUi.Views.BasePageReloadable.New
   name.vb: New
+- uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
+  commentId: M:Microsoft.Maui.Controls.Element.OnHandlerChanged
+  parent: Microsoft.Maui.Controls.Element
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
+  name: OnHandlerChanged()
+  nameWithType: Element.OnHandlerChanged()
+  fullName: Microsoft.Maui.Controls.Element.OnHandlerChanged()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
+    name: OnHandlerChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
+    name: OnHandlerChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
+  - name: (
+  - name: )
+- uid: DrawnUi.Views.BasePageReloadable.OnHandlerChanged*
+  commentId: Overload:DrawnUi.Views.BasePageReloadable.OnHandlerChanged
+  href: DrawnUi.Views.BasePageReloadable.html#DrawnUi_Views_BasePageReloadable_OnHandlerChanged
+  name: OnHandlerChanged
+  nameWithType: BasePageReloadable.OnHandlerChanged
+  fullName: DrawnUi.Views.BasePageReloadable.OnHandlerChanged
 - uid: DrawnUi.Views.BasePageReloadable.CountReloads*
   commentId: Overload:DrawnUi.Views.BasePageReloadable.CountReloads
   href: DrawnUi.Views.BasePageReloadable.html#DrawnUi_Views_BasePageReloadable_CountReloads

@@ -1,0 +1,75 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Maui.Navigation
+  commentId: N:DrawnUi.Maui.Navigation
+  id: DrawnUi.Maui.Navigation
+  children:
+  - DrawnUi.Maui.Navigation.DeviceRotation
+  - DrawnUi.Maui.Navigation.IndexArgs
+  - DrawnUi.Maui.Navigation.MenuPageItem
+  - DrawnUi.Maui.Navigation.RotationEventArgs
+  langs:
+  - csharp
+  - vb
+  name: DrawnUi.Maui.Navigation
+  nameWithType: DrawnUi.Maui.Navigation
+  fullName: DrawnUi.Maui.Navigation
+  type: Namespace
+  assemblies:
+  - DrawnUi.Maui
+references:
+- uid: DrawnUi.Maui.Navigation.DeviceRotation
+  commentId: T:DrawnUi.Maui.Navigation.DeviceRotation
+  parent: DrawnUi.Maui.Navigation
+  href: DrawnUi.Maui.Navigation.DeviceRotation.html
+  name: DeviceRotation
+  nameWithType: DeviceRotation
+  fullName: DrawnUi.Maui.Navigation.DeviceRotation
+- uid: DrawnUi.Maui.Navigation.IndexArgs
+  commentId: T:DrawnUi.Maui.Navigation.IndexArgs
+  href: DrawnUi.Maui.Navigation.IndexArgs.html
+  name: IndexArgs
+  nameWithType: IndexArgs
+  fullName: DrawnUi.Maui.Navigation.IndexArgs
+- uid: DrawnUi.Maui.Navigation.MenuPageItem
+  commentId: T:DrawnUi.Maui.Navigation.MenuPageItem
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  name: MenuPageItem
+  nameWithType: MenuPageItem
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem
+- uid: DrawnUi.Maui.Navigation.RotationEventArgs
+  commentId: T:DrawnUi.Maui.Navigation.RotationEventArgs
+  href: DrawnUi.Maui.Navigation.RotationEventArgs.html
+  name: RotationEventArgs
+  nameWithType: RotationEventArgs
+  fullName: DrawnUi.Maui.Navigation.RotationEventArgs
+- uid: DrawnUi.Maui.Navigation
+  commentId: N:DrawnUi.Maui.Navigation
+  href: DrawnUi.html
+  name: DrawnUi.Maui.Navigation
+  nameWithType: DrawnUi.Maui.Navigation
+  fullName: DrawnUi.Maui.Navigation
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Maui
+    name: Maui
+    href: DrawnUi.Maui.html
+  - name: .
+  - uid: DrawnUi.Maui.Navigation
+    name: Navigation
+    href: DrawnUi.Maui.Navigation.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Maui
+    name: Maui
+    href: DrawnUi.Maui.html
+  - name: .
+  - uid: DrawnUi.Maui.Navigation
+    name: Navigation
+    href: DrawnUi.Maui.Navigation.html

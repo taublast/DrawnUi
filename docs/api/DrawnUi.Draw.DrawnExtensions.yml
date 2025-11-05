@@ -128,7 +128,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddFont
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 451
+    startLine: 458
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -169,7 +169,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddFont
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 461
+    startLine: 468
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -210,7 +210,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimateRangeAsync
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 475
+    startLine: 482
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -257,7 +257,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundColorToAsync
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 511
+    startLine: 518
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -300,7 +300,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColorToAsync
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 557
+    startLine: 564
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -343,7 +343,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVelocityRatioForChild
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 604
+    startLine: 611
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -377,7 +377,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSameAs
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 632
+    startLine: 639
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -414,7 +414,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSameAs
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-    startLine: 637
+    startLine: 644
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

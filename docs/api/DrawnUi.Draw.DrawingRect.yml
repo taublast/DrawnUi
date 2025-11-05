@@ -40,11 +40,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingRect
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 3
   assemblies:
   - DrawnUi.Maui
@@ -75,11 +75,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -104,11 +104,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -142,11 +142,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Offset
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -176,11 +176,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Set
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -214,11 +214,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 35
   assemblies:
   - DrawnUi.Maui
@@ -248,11 +248,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 41
   assemblies:
   - DrawnUi.Maui
@@ -280,11 +280,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Left
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 49
   assemblies:
   - DrawnUi.Maui
@@ -309,11 +309,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Top
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 50
   assemblies:
   - DrawnUi.Maui
@@ -338,11 +338,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Right
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 51
   assemblies:
   - DrawnUi.Maui
@@ -367,11 +367,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Bottom
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 52
   assemblies:
   - DrawnUi.Maui
@@ -396,11 +396,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 54
   assemblies:
   - DrawnUi.Maui
@@ -425,11 +425,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 65
   assemblies:
   - DrawnUi.Maui
@@ -454,11 +454,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MidY
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 77
   assemblies:
   - DrawnUi.Maui
@@ -483,11 +483,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MidX
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 85
   assemblies:
   - DrawnUi.Maui
@@ -512,11 +512,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 93
   assemblies:
   - DrawnUi.Maui
@@ -543,11 +543,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 99
   assemblies:
   - DrawnUi.Maui
@@ -574,11 +574,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 105
   assemblies:
   - DrawnUi.Maui
@@ -614,11 +614,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Contains
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 111
   assemblies:
   - DrawnUi.Maui
@@ -650,11 +650,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Contains
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 117
   assemblies:
   - DrawnUi.Maui
@@ -681,11 +681,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToSkia
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 123
   assemblies:
   - DrawnUi.Maui
@@ -709,11 +709,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToRect
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 128
   assemblies:
   - DrawnUi.Maui
@@ -737,11 +737,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 133
   assemblies:
   - DrawnUi.Maui
@@ -766,11 +766,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 135
   assemblies:
   - DrawnUi.Maui
@@ -794,11 +794,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Compare
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 140
   assemblies:
   - DrawnUi.Maui
@@ -825,11 +825,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Equals
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 159
   assemblies:
   - DrawnUi.Maui
@@ -864,11 +864,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Rectangle.cs
+      path: src/Shared/Internals/Models/Rectangle.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHashCode
-    path: ../src/Shared/Draw/Internals/Models/Rectangle.cs
+    path: ../src/Shared/Internals/Models/Rectangle.cs
     startLine: 172
   assemblies:
   - DrawnUi.Maui

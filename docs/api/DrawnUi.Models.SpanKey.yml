@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SpanKey.cs
+      path: src/Shared/Internals/Models/SpanKey.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanKey
-    path: ../src/Shared/Draw/Internals/Models/SpanKey.cs
+    path: ../src/Shared/Internals/Models/SpanKey.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SpanKey.cs
+      path: src/Shared/Internals/Models/SpanKey.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/SpanKey.cs
+    path: ../src/Shared/Internals/Models/SpanKey.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -93,11 +93,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SpanKey.cs
+      path: src/Shared/Internals/Models/SpanKey.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Shared/Draw/Internals/Models/SpanKey.cs
+    path: ../src/Shared/Internals/Models/SpanKey.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -122,11 +122,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SpanKey.cs
+      path: src/Shared/Internals/Models/SpanKey.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
-    path: ../src/Shared/Draw/Internals/Models/SpanKey.cs
+    path: ../src/Shared/Internals/Models/SpanKey.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -151,11 +151,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SpanKey.cs
+      path: src/Shared/Internals/Models/SpanKey.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsColumn
-    path: ../src/Shared/Draw/Internals/Models/SpanKey.cs
+    path: ../src/Shared/Internals/Models/SpanKey.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui

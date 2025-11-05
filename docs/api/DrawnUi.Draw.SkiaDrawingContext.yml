@@ -27,11 +27,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaDrawingContext
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 173
   assemblies:
   - DrawnUi.Maui
@@ -66,11 +66,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Canvas
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 175
   assemblies:
   - DrawnUi.Maui
@@ -95,11 +95,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 176
   assemblies:
   - DrawnUi.Maui
@@ -124,11 +124,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 177
   assemblies:
   - DrawnUi.Maui
@@ -153,11 +153,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 178
   assemblies:
   - DrawnUi.Maui
@@ -182,11 +182,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTimeNanos
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 179
   assemblies:
   - DrawnUi.Maui
@@ -211,11 +211,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Superview
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 180
   assemblies:
   - DrawnUi.Maui
@@ -240,11 +240,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVirtual
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 185
   assemblies:
   - DrawnUi.Maui
@@ -271,11 +271,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRecycled
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 190
   assemblies:
   - DrawnUi.Maui
@@ -302,11 +302,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 192
   assemblies:
   - DrawnUi.Maui
@@ -330,11 +330,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateForRecordingImage
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 205
   assemblies:
   - DrawnUi.Maui
@@ -363,11 +363,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateForRecordingOperations
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 219
   assemblies:
   - DrawnUi.Maui
@@ -396,11 +396,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceDensity
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 233
   assemblies:
   - DrawnUi.Maui
@@ -425,11 +425,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DrawingContext.cs
+      path: src/Shared/Internals/Models/DrawingContext.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Services
-    path: ../src/Shared/Draw/Internals/Models/DrawingContext.cs
+    path: ../src/Shared/Internals/Models/DrawingContext.cs
     startLine: 241
   assemblies:
   - DrawnUi.Maui

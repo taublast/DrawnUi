@@ -21,7 +21,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorEqualityComparer
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 683
+    startLine: 688
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -60,7 +60,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Equals
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 687
+    startLine: 692
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -100,7 +100,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHashCode
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 695
+    startLine: 700
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

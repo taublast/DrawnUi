@@ -25,11 +25,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaGestureListener
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -52,11 +52,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSkiaGestureEvent
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -91,11 +91,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InputTransparent
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -120,11 +120,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LockFocus
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -149,11 +149,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BlockGesturesBelow
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -178,11 +178,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CanDraw
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -207,11 +207,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui
@@ -236,11 +236,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Uid
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -265,11 +265,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndex
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -294,11 +294,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GestureListenerRegistrationTime
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -323,11 +323,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFocusChanged
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 38
   assemblies:
   - DrawnUi.Maui
@@ -364,11 +364,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HitIsInside
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGestureListener.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGestureListener.cs
     startLine: 40
   assemblies:
   - DrawnUi.Maui

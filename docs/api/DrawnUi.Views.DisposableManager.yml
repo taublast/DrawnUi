@@ -24,12 +24,10 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposableManager
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 13
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
-  summary: Manages delayed disposal of IDisposable objects based on frame count
-  example: []
   syntax:
     content: 'public class DisposableManager : IDisposable'
     content.vb: Public Class DisposableManager Implements IDisposable
@@ -65,7 +63,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 43
+    startLine: 44
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -100,7 +98,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueueDisposable
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 57
+    startLine: 58
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -138,7 +136,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeDisposables
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 71
+    startLine: 72
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -176,7 +174,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 107
+    startLine: 108
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -206,7 +204,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PendingDisposalCount
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 147
+    startLine: 148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

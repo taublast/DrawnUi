@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IBindingContextDebuggable.cs
+      path: src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IBindingContextDebuggable
-    path: ../src/Shared/Draw/Internals/Interfaces/IBindingContextDebuggable.cs
+    path: ../src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -42,11 +42,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IBindingContextDebuggable.cs
+      path: src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDebuggable
-    path: ../src/Shared/Draw/Internals/Interfaces/IBindingContextDebuggable.cs
+    path: ../src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui

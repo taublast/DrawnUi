@@ -23,11 +23,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ShapeType
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -50,11 +50,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Rectangle
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -78,11 +78,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Circle
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -104,11 +104,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Ellipse
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -130,11 +130,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Arc
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -156,11 +156,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Squricle
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
@@ -184,11 +184,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Path
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui
@@ -212,11 +212,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Polygon
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -240,11 +240,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Line
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 34
   assemblies:
   - DrawnUi.Maui
@@ -268,11 +268,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/ShapeType.cs
+      path: src/Shared/Internals/Enums/ShapeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Custom
-    path: ../src/Shared/Draw/Internals/Enums/ShapeType.cs
+    path: ../src/Shared/Internals/Enums/ShapeType.cs
     startLine: 39
   assemblies:
   - DrawnUi.Maui

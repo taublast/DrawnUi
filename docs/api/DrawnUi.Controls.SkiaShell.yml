@@ -531,7 +531,7 @@ items:
   syntax:
     content: protected override void OnHandlerChanged()
     content.vb: Protected Overrides Sub OnHandlerChanged()
-  overridden: Microsoft.Maui.Controls.Element.OnHandlerChanged
+  overridden: DrawnUi.Views.BasePageReloadable.OnHandlerChanged
   overload: DrawnUi.Controls.SkiaShell.OnHandlerChanged*
 - uid: DrawnUi.Controls.SkiaShell.FrozenLayers
   commentId: P:DrawnUi.Controls.SkiaShell.FrozenLayers
@@ -4854,7 +4854,7 @@ items:
   syntax:
     content: public event EventHandler<RotationEventArgs> OnRotation
     return:
-      type: System.EventHandler{AppoMobi.Maui.Navigation.RotationEventArgs}
+      type: System.EventHandler{DrawnUi.Maui.Navigation.RotationEventArgs}
     content.vb: Public Event OnRotation As EventHandler(Of RotationEventArgs)
 - uid: DrawnUi.Controls.SkiaShell.TabReselected
   commentId: E:DrawnUi.Controls.SkiaShell.TabReselected
@@ -4881,7 +4881,7 @@ items:
   syntax:
     content: public event EventHandler<IndexArgs> TabReselected
     return:
-      type: System.EventHandler{AppoMobi.Maui.Navigation.IndexArgs}
+      type: System.EventHandler{DrawnUi.Maui.Navigation.IndexArgs}
     content.vb: Public Event TabReselected As EventHandler(Of IndexArgs)
 - uid: DrawnUi.Controls.SkiaShell.MenuItems
   commentId: P:DrawnUi.Controls.SkiaShell.MenuItems
@@ -4909,7 +4909,7 @@ items:
     content: public ObservableCollection<MenuPageItem> MenuItems { get; }
     parameters: []
     return:
-      type: System.Collections.ObjectModel.ObservableCollection{AppoMobi.Maui.Navigation.MenuPageItem}
+      type: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Maui.Navigation.MenuPageItem}
     content.vb: Public ReadOnly Property MenuItems As ObservableCollection(Of MenuPageItem)
   overload: DrawnUi.Controls.SkiaShell.MenuItems*
 - uid: DrawnUi.Controls.SkiaShell.Buffer
@@ -10444,26 +10444,23 @@ references:
   name: OnDisposing
   nameWithType: SkiaShell.OnDisposing
   fullName: DrawnUi.Controls.SkiaShell.OnDisposing
-- uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
-  commentId: M:Microsoft.Maui.Controls.Element.OnHandlerChanged
-  parent: Microsoft.Maui.Controls.Element
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
+- uid: DrawnUi.Views.BasePageReloadable.OnHandlerChanged
+  commentId: M:DrawnUi.Views.BasePageReloadable.OnHandlerChanged
+  parent: DrawnUi.Views.BasePageReloadable
+  href: DrawnUi.Views.BasePageReloadable.html#DrawnUi_Views_BasePageReloadable_OnHandlerChanged
   name: OnHandlerChanged()
-  nameWithType: Element.OnHandlerChanged()
-  fullName: Microsoft.Maui.Controls.Element.OnHandlerChanged()
+  nameWithType: BasePageReloadable.OnHandlerChanged()
+  fullName: DrawnUi.Views.BasePageReloadable.OnHandlerChanged()
   spec.csharp:
-  - uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
+  - uid: DrawnUi.Views.BasePageReloadable.OnHandlerChanged
     name: OnHandlerChanged
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
+    href: DrawnUi.Views.BasePageReloadable.html#DrawnUi_Views_BasePageReloadable_OnHandlerChanged
   - name: (
   - name: )
   spec.vb:
-  - uid: Microsoft.Maui.Controls.Element.OnHandlerChanged
+  - uid: DrawnUi.Views.BasePageReloadable.OnHandlerChanged
     name: OnHandlerChanged
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged
+    href: DrawnUi.Views.BasePageReloadable.html#DrawnUi_Views_BasePageReloadable_OnHandlerChanged
   - name: (
   - name: )
 - uid: DrawnUi.Controls.SkiaShell.OnHandlerChanged*
@@ -12362,16 +12359,16 @@ references:
   name: StatusBarHeight
   nameWithType: SkiaShell.StatusBarHeight
   fullName: DrawnUi.Controls.SkiaShell.StatusBarHeight
-- uid: System.EventHandler{AppoMobi.Maui.Navigation.RotationEventArgs}
-  commentId: T:System.EventHandler{AppoMobi.Maui.Navigation.RotationEventArgs}
+- uid: System.EventHandler{DrawnUi.Maui.Navigation.RotationEventArgs}
+  commentId: T:System.EventHandler{DrawnUi.Maui.Navigation.RotationEventArgs}
   parent: System
   definition: System.EventHandler`1
   href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
   name: EventHandler<RotationEventArgs>
   nameWithType: EventHandler<RotationEventArgs>
-  fullName: System.EventHandler<AppoMobi.Maui.Navigation.RotationEventArgs>
+  fullName: System.EventHandler<DrawnUi.Maui.Navigation.RotationEventArgs>
   nameWithType.vb: EventHandler(Of RotationEventArgs)
-  fullName.vb: System.EventHandler(Of AppoMobi.Maui.Navigation.RotationEventArgs)
+  fullName.vb: System.EventHandler(Of DrawnUi.Maui.Navigation.RotationEventArgs)
   name.vb: EventHandler(Of RotationEventArgs)
   spec.csharp:
   - uid: System.EventHandler`1
@@ -12379,9 +12376,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
   - name: <
-  - uid: AppoMobi.Maui.Navigation.RotationEventArgs
+  - uid: DrawnUi.Maui.Navigation.RotationEventArgs
     name: RotationEventArgs
-    isExternal: true
+    href: DrawnUi.Maui.Navigation.RotationEventArgs.html
   - name: '>'
   spec.vb:
   - uid: System.EventHandler`1
@@ -12391,20 +12388,20 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: AppoMobi.Maui.Navigation.RotationEventArgs
+  - uid: DrawnUi.Maui.Navigation.RotationEventArgs
     name: RotationEventArgs
-    isExternal: true
+    href: DrawnUi.Maui.Navigation.RotationEventArgs.html
   - name: )
-- uid: System.EventHandler{AppoMobi.Maui.Navigation.IndexArgs}
-  commentId: T:System.EventHandler{AppoMobi.Maui.Navigation.IndexArgs}
+- uid: System.EventHandler{DrawnUi.Maui.Navigation.IndexArgs}
+  commentId: T:System.EventHandler{DrawnUi.Maui.Navigation.IndexArgs}
   parent: System
   definition: System.EventHandler`1
   href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
   name: EventHandler<IndexArgs>
   nameWithType: EventHandler<IndexArgs>
-  fullName: System.EventHandler<AppoMobi.Maui.Navigation.IndexArgs>
+  fullName: System.EventHandler<DrawnUi.Maui.Navigation.IndexArgs>
   nameWithType.vb: EventHandler(Of IndexArgs)
-  fullName.vb: System.EventHandler(Of AppoMobi.Maui.Navigation.IndexArgs)
+  fullName.vb: System.EventHandler(Of DrawnUi.Maui.Navigation.IndexArgs)
   name.vb: EventHandler(Of IndexArgs)
   spec.csharp:
   - uid: System.EventHandler`1
@@ -12412,9 +12409,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
   - name: <
-  - uid: AppoMobi.Maui.Navigation.IndexArgs
+  - uid: DrawnUi.Maui.Navigation.IndexArgs
     name: IndexArgs
-    isExternal: true
+    href: DrawnUi.Maui.Navigation.IndexArgs.html
   - name: '>'
   spec.vb:
   - uid: System.EventHandler`1
@@ -12424,9 +12421,9 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: AppoMobi.Maui.Navigation.IndexArgs
+  - uid: DrawnUi.Maui.Navigation.IndexArgs
     name: IndexArgs
-    isExternal: true
+    href: DrawnUi.Maui.Navigation.IndexArgs.html
   - name: )
 - uid: DrawnUi.Controls.SkiaShell.MenuItems*
   commentId: Overload:DrawnUi.Controls.SkiaShell.MenuItems
@@ -12434,16 +12431,16 @@ references:
   name: MenuItems
   nameWithType: SkiaShell.MenuItems
   fullName: DrawnUi.Controls.SkiaShell.MenuItems
-- uid: System.Collections.ObjectModel.ObservableCollection{AppoMobi.Maui.Navigation.MenuPageItem}
-  commentId: T:System.Collections.ObjectModel.ObservableCollection{AppoMobi.Maui.Navigation.MenuPageItem}
+- uid: System.Collections.ObjectModel.ObservableCollection{DrawnUi.Maui.Navigation.MenuPageItem}
+  commentId: T:System.Collections.ObjectModel.ObservableCollection{DrawnUi.Maui.Navigation.MenuPageItem}
   parent: System.Collections.ObjectModel
   definition: System.Collections.ObjectModel.ObservableCollection`1
   href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
   name: ObservableCollection<MenuPageItem>
   nameWithType: ObservableCollection<MenuPageItem>
-  fullName: System.Collections.ObjectModel.ObservableCollection<AppoMobi.Maui.Navigation.MenuPageItem>
+  fullName: System.Collections.ObjectModel.ObservableCollection<DrawnUi.Maui.Navigation.MenuPageItem>
   nameWithType.vb: ObservableCollection(Of MenuPageItem)
-  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of AppoMobi.Maui.Navigation.MenuPageItem)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of DrawnUi.Maui.Navigation.MenuPageItem)
   name.vb: ObservableCollection(Of MenuPageItem)
   spec.csharp:
   - uid: System.Collections.ObjectModel.ObservableCollection`1
@@ -12451,9 +12448,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
   - name: <
-  - uid: AppoMobi.Maui.Navigation.MenuPageItem
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
     name: MenuPageItem
-    isExternal: true
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
   - name: '>'
   spec.vb:
   - uid: System.Collections.ObjectModel.ObservableCollection`1
@@ -12463,9 +12460,9 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: AppoMobi.Maui.Navigation.MenuPageItem
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
     name: MenuPageItem
-    isExternal: true
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
   - name: )
 - uid: System.Collections.ObjectModel.ObservableCollection`1
   commentId: T:System.Collections.ObjectModel.ObservableCollection`1

@@ -17,11 +17,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+      path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaSharpView
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+      path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -80,11 +80,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+      path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SignalFrame
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -112,11 +112,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+      path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CanvasSize
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaSharpView.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui

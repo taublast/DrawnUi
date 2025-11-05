@@ -19,11 +19,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IDefinesViewport
-    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -46,11 +46,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Viewport
-    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -75,11 +75,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateVisibleIndex
-    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -101,11 +101,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TrackIndexPosition
-    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -130,11 +130,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollTo
-    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -168,11 +168,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+      path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateByChild
-    path: ../src/Shared/Draw/Internals/Interfaces/IDefinesViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui

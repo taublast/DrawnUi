@@ -24,11 +24,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaGridLayout
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -128,11 +128,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultColumnDefinition
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -157,11 +157,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultRowDefinition
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -186,11 +186,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RowDefinitions
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -217,11 +217,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnDefinitions
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -248,11 +248,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RowSpacing
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -279,11 +279,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnSpacing
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -310,11 +310,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRow
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 34
   assemblies:
   - DrawnUi.Maui
@@ -345,11 +345,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRowSpan
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 41
   assemblies:
   - DrawnUi.Maui
@@ -380,11 +380,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumn
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 48
   assemblies:
   - DrawnUi.Maui
@@ -415,11 +415,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumnSpan
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaGridLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
     startLine: 55
   assemblies:
   - DrawnUi.Maui

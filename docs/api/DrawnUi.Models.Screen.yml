@@ -23,11 +23,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Screen
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -144,11 +144,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomInset
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -173,11 +173,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TopInset
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -202,11 +202,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftInset
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 34
   assemblies:
   - DrawnUi.Maui
@@ -231,11 +231,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RightInset
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 48
   assemblies:
   - DrawnUi.Maui
@@ -260,11 +260,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Density
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 62
   assemblies:
   - DrawnUi.Maui
@@ -289,11 +289,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthDip
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 81
   assemblies:
   - DrawnUi.Maui
@@ -318,11 +318,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Screen.cs
+      path: src/Shared/Internals/Helpers/Screen.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightDip
-    path: ../src/Shared/Draw/Internals/Helpers/Screen.cs
+    path: ../src/Shared/Internals/Helpers/Screen.cs
     startLine: 95
   assemblies:
   - DrawnUi.Maui

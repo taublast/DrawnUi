@@ -30,11 +30,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaImageEffect
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -83,11 +83,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BlackAndWhite
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -109,11 +109,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Pastel
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -135,11 +135,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Tint
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -163,11 +163,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Darken
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -189,11 +189,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Lighten
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -215,11 +215,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Grayscale
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -241,11 +241,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Sepia
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -267,11 +267,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InvertColors
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -293,11 +293,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Contrast
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -319,11 +319,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Saturation
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -345,11 +345,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Brightness
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
@@ -371,11 +371,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Gamma
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -397,11 +397,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TSL
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -423,11 +423,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HSL
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -449,11 +449,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+      path: src/Shared/Internals/Enums/SkiaImageEffect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Custom
-    path: ../src/Shared/Draw/Internals/Enums/SkiaImageEffect.cs
+    path: ../src/Shared/Internals/Enums/SkiaImageEffect.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui

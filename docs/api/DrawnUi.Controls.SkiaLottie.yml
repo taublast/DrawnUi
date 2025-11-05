@@ -5,6 +5,7 @@ items:
   id: SkiaLottie
   parent: DrawnUi.Controls
   children:
+  - DrawnUi.Controls.SkiaLottie.#ctor
   - DrawnUi.Controls.SkiaLottie.Animation
   - DrawnUi.Controls.SkiaLottie.ApplyDefaultFrame
   - DrawnUi.Controls.SkiaLottie.ApplyIsOnWhenNotPlaying
@@ -165,12 +166,15 @@ items:
   - DrawnUi.Draw.SkiaControl.OnPaddingSet(Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.RemoveSubView(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.UpdatePlatformShadow
   - DrawnUi.Draw.SkiaControl.PlatformShadow
   - DrawnUi.Draw.SkiaControl.HasPlatformClip
   - DrawnUi.Draw.SkiaControl.GetDensity
+  - DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  - DrawnUi.Draw.SkiaControl.AutoCache
   - DrawnUi.Draw.SkiaControl.UseCacheProperty
   - DrawnUi.Draw.SkiaControl.UseCache
   - DrawnUi.Draw.SkiaControl.AllowCachingProperty
@@ -228,10 +232,13 @@ items:
   - DrawnUi.Draw.SkiaControl.InvalidatedParent
   - DrawnUi.Draw.SkiaControl.InvalidateParent
   - DrawnUi.Draw.SkiaControl.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.RenderingInvalidated
   - DrawnUi.Draw.SkiaControl.InvalidateViewport
   - DrawnUi.Draw.SkiaControl.DirtyChildrenTracker
   - DrawnUi.Draw.SkiaControl.DirtyChildrenInternal
   - DrawnUi.Draw.SkiaControl.UpdateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.Initialized
+  - DrawnUi.Draw.SkiaControl.Destroyed
   - DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
@@ -249,6 +256,10 @@ items:
   - DrawnUi.Draw.SkiaControl.ClipWith
   - DrawnUi.Draw.SkiaControl.ChildrenProperty
   - DrawnUi.Draw.SkiaControl.Children
+  - DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  - DrawnUi.Draw.SkiaControl.Virtualisation
+  - DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  - DrawnUi.Draw.SkiaControl.VirtualisationInflated
   - DrawnUi.Draw.SkiaControl.DefaultBlendMode
   - DrawnUi.Draw.SkiaControl.IsVisibleInViewTree
   - DrawnUi.Draw.SkiaControl.GetPositionOnCanvasInPoints
@@ -563,6 +574,8 @@ items:
   - DrawnUi.Draw.SkiaControl.ExecuteOnPaint
   - DrawnUi.Draw.SkiaControl.ThrowIfDisposed
   - DrawnUi.Draw.SkiaControl.Dispose(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  - DrawnUi.Draw.SkiaControl.LifecycleState
   - DrawnUi.Draw.SkiaControl.Dispose
   - DrawnUi.Draw.SkiaControl.PaintErase
   - DrawnUi.Draw.SkiaControl.GetNanoseconds
@@ -582,6 +595,7 @@ items:
   - DrawnUi.Draw.SkiaControl.FindRenderedNode(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.CreateRenderedNode(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaControl.RenderCount
   - DrawnUi.Draw.SkiaControl.Rendered
   - DrawnUi.Draw.SkiaControl.LockDraw
   - DrawnUi.Draw.SkiaControl.LockRenderObject
@@ -611,6 +625,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
   - DrawnUi.Draw.SkiaControl.NeedMeasure
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
@@ -635,6 +650,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
   - DrawnUi.Draw.SkiaControl.UpdateInternal
+  - DrawnUi.Draw.SkiaControl.UpdatedRendering
   - DrawnUi.Draw.SkiaControl.Update
   - DrawnUi.Draw.SkiaControl.Updated
   - DrawnUi.Draw.SkiaControl.StreamFromString(System.String)
@@ -921,15 +937,15 @@ items:
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Controls.SkiaLottie},System.String[])
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.SkiaLottie,System.String},System.String[])
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.SkiaLottie},System.String[])
-  - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.SkiaLottie})
-  - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.ControlTappedEventArgs})
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaLottie})
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32)
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.StartX``1
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.StartY``1
+  - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
+  - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WhenPaint``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(Microsoft.Maui.Graphics.Color)
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WithCache``1(DrawnUi.Draw.SkiaCacheType)
   - DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(System.Int32)
@@ -967,6 +983,35 @@ items:
   - Microsoft.Maui.Controls.VisualElement.DrawnUi.Draw.StaticResourcesExtensions.GetAllWithMyselfParents
   - Microsoft.Maui.IView.DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Controls.SkiaLottie.#ctor
+  commentId: M:DrawnUi.Controls.SkiaLottie.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Controls.SkiaLottie
+  langs:
+  - csharp
+  - vb
+  name: SkiaLottie()
+  nameWithType: SkiaLottie.SkiaLottie()
+  fullName: DrawnUi.Controls.SkiaLottie.SkiaLottie()
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
+    startLine: 15
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public SkiaLottie()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Controls.SkiaLottie.#ctor*
+  nameWithType.vb: SkiaLottie.New()
+  fullName.vb: DrawnUi.Controls.SkiaLottie.New()
+  name.vb: New()
 - uid: DrawnUi.Controls.SkiaLottie.CachedAnimations
   commentId: F:DrawnUi.Controls.SkiaLottie.CachedAnimations
   id: CachedAnimations
@@ -985,7 +1030,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedAnimations
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 18
+    startLine: 23
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1014,7 +1059,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 20
+    startLine: 25
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1042,7 +1087,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFinished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 27
+    startLine: 32
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1070,7 +1115,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SeekToDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 34
+    startLine: 39
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1096,10 +1141,11 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 56
+    startLine: 61
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
+  summary: DrawingRect size changed
   example: []
   syntax:
     content: protected override void OnLayoutChanged()
@@ -1124,7 +1170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorSeeking
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 71
+    startLine: 76
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1158,7 +1204,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 86
+    startLine: 91
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1186,7 +1232,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Animation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 127
+    startLine: 132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1215,7 +1261,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIsOnWhenNotPlayingProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 141
+    startLine: 146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1242,7 +1288,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIsOnWhenNotPlaying
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 152
+    startLine: 157
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1278,7 +1324,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOnProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 158
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1305,7 +1351,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOn
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 169
+    startLine: 174
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1343,7 +1389,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameWhenOnProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 175
+    startLine: 180
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1370,7 +1416,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameWhenOn
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 185
+    startLine: 190
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1401,7 +1447,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTintProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 191
+    startLine: 196
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1428,7 +1474,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 202
+    startLine: 207
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1464,7 +1510,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorsProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 211
+    startLine: 216
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1491,7 +1537,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Colors
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 226
+    startLine: 231
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1520,7 +1566,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 271
+    startLine: 276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1547,7 +1593,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 283
+    startLine: 288
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1583,7 +1629,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 289
+    startLine: 294
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1614,7 +1660,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadLocalJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 302
+    startLine: 307
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1648,7 +1694,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 336
+    startLine: 341
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1686,7 +1732,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 404
+    startLine: 409
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1720,7 +1766,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StreamFromResourceUrl
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 431
+    startLine: 436
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1756,7 +1802,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnJsonLoaded
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 462
+    startLine: 467
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1797,7 +1843,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadAnimationFromJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 472
+    startLine: 477
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1835,7 +1881,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 491
+    startLine: 496
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1869,7 +1915,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 538
+    startLine: 543
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1898,7 +1944,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorUpdated
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 554
+    startLine: 559
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1934,7 +1980,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 565
+    startLine: 570
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1962,7 +2008,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorInitializing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 578
+    startLine: 583
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1990,7 +2036,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckCanStartAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 591
+    startLine: 596
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2020,7 +2066,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorStarting
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 596
+    startLine: 601
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2048,7 +2094,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToStart
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 601
+    startLine: 606
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2074,7 +2120,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToEnd
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 610
+    startLine: 615
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2100,7 +2146,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 621
+    startLine: 626
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2126,7 +2172,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 706
+    startLine: 711
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2153,7 +2199,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyTint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 708
+    startLine: 713
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2189,7 +2235,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindColorProperties
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 763
+    startLine: 768
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2223,7 +2269,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToRGBHexString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 798
+    startLine: 803
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2254,7 +2300,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToHexString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 806
+    startLine: 811
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2285,7 +2331,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToArrayString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 816
+    startLine: 821
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2316,7 +2362,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToXamarinColorFromHex
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 826
+    startLine: 831
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2350,7 +2396,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToXamarinColor
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 855
+    startLine: 860
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2384,7 +2430,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 873
+    startLine: 878
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2415,7 +2461,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateSaturation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 889
+    startLine: 894
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3774,6 +3820,25 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  name: OnLayoutPositionChanged()
+  nameWithType: SkiaControl.OnLayoutPositionChanged()
+  fullName: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+    name: OnLayoutPositionChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+    name: OnLayoutPositionChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   parent: DrawnUi.Draw.SkiaControl
@@ -3929,6 +3994,20 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetDensity
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCacheProperty
+  name: AutoCacheProperty
+  nameWithType: SkiaControl.AutoCacheProperty
+  fullName: DrawnUi.Draw.SkiaControl.AutoCacheProperty
+- uid: DrawnUi.Draw.SkiaControl.AutoCache
+  commentId: P:DrawnUi.Draw.SkiaControl.AutoCache
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCache
+  name: AutoCache
+  nameWithType: SkiaControl.AutoCache
+  fullName: DrawnUi.Draw.SkiaControl.AutoCache
 - uid: DrawnUi.Draw.SkiaControl.UseCacheProperty
   commentId: F:DrawnUi.Draw.SkiaControl.UseCacheProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -5174,6 +5253,13 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.RenderingInvalidated
+  commentId: F:DrawnUi.Draw.SkiaControl.RenderingInvalidated
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderingInvalidated
+  name: RenderingInvalidated
+  nameWithType: SkiaControl.RenderingInvalidated
+  fullName: DrawnUi.Draw.SkiaControl.RenderingInvalidated
 - uid: DrawnUi.Draw.SkiaControl.InvalidateViewport
   commentId: M:DrawnUi.Draw.SkiaControl.InvalidateViewport
   parent: DrawnUi.Draw.SkiaControl
@@ -5232,6 +5318,20 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.Initialized
+  commentId: E:DrawnUi.Draw.SkiaControl.Initialized
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Initialized
+  name: Initialized
+  nameWithType: SkiaControl.Initialized
+  fullName: DrawnUi.Draw.SkiaControl.Initialized
+- uid: DrawnUi.Draw.SkiaControl.Destroyed
+  commentId: E:DrawnUi.Draw.SkiaControl.Destroyed
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Destroyed
+  name: Destroyed
+  nameWithType: SkiaControl.Destroyed
+  fullName: DrawnUi.Draw.SkiaControl.Destroyed
 - uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -5423,6 +5523,34 @@ references:
   name: Children
   nameWithType: SkiaControl.Children
   fullName: DrawnUi.Draw.SkiaControl.Children
+- uid: DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualizationProperty
+  name: VirtualizationProperty
+  nameWithType: SkiaControl.VirtualizationProperty
+  fullName: DrawnUi.Draw.SkiaControl.VirtualizationProperty
+- uid: DrawnUi.Draw.SkiaControl.Virtualisation
+  commentId: P:DrawnUi.Draw.SkiaControl.Virtualisation
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Virtualisation
+  name: Virtualisation
+  nameWithType: SkiaControl.Virtualisation
+  fullName: DrawnUi.Draw.SkiaControl.Virtualisation
+- uid: DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualisationInflatedProperty
+  name: VirtualisationInflatedProperty
+  nameWithType: SkiaControl.VirtualisationInflatedProperty
+  fullName: DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+- uid: DrawnUi.Draw.SkiaControl.VirtualisationInflated
+  commentId: P:DrawnUi.Draw.SkiaControl.VirtualisationInflated
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualisationInflated
+  name: VirtualisationInflated
+  nameWithType: SkiaControl.VirtualisationInflated
+  fullName: DrawnUi.Draw.SkiaControl.VirtualisationInflated
 - uid: DrawnUi.Draw.SkiaControl.DefaultBlendMode
   commentId: F:DrawnUi.Draw.SkiaControl.DefaultBlendMode
   parent: DrawnUi.Draw.SkiaControl
@@ -12439,6 +12567,38 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  name: OnLifecycleStateChanged(ControlLifecycleState)
+  nameWithType: SkiaControl.OnLifecycleStateChanged(ControlLifecycleState)
+  fullName: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+    name: OnLifecycleStateChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  - name: (
+  - uid: DrawnUi.Draw.ControlLifecycleState
+    name: ControlLifecycleState
+    href: DrawnUi.Draw.ControlLifecycleState.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+    name: OnLifecycleStateChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  - name: (
+  - uid: DrawnUi.Draw.ControlLifecycleState
+    name: ControlLifecycleState
+    href: DrawnUi.Draw.ControlLifecycleState.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.LifecycleState
+  commentId: P:DrawnUi.Draw.SkiaControl.LifecycleState
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_LifecycleState
+  name: LifecycleState
+  nameWithType: SkiaControl.LifecycleState
+  fullName: DrawnUi.Draw.SkiaControl.LifecycleState
 - uid: DrawnUi.Draw.SkiaControl.Dispose
   commentId: M:DrawnUi.Draw.SkiaControl.Dispose
   parent: DrawnUi.Draw.SkiaControl
@@ -12860,6 +13020,13 @@ references:
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.RenderCount
+  commentId: F:DrawnUi.Draw.SkiaControl.RenderCount
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderCount
+  name: RenderCount
+  nameWithType: SkiaControl.RenderCount
+  fullName: DrawnUi.Draw.SkiaControl.RenderCount
 - uid: DrawnUi.Draw.SkiaControl.Rendered
   commentId: E:DrawnUi.Draw.SkiaControl.Rendered
   parent: DrawnUi.Draw.SkiaControl
@@ -13559,6 +13726,34 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  commentId: M:DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  name: PostDrawAction(Action)
+  nameWithType: SkiaControl.PostDrawAction(Action)
+  fullName: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+    name: PostDrawAction
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  - name: (
+  - uid: System.Action
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+    name: PostDrawAction
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  - name: (
+  - uid: System.Action
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.NeedRemeasuring
   commentId: F:DrawnUi.Draw.SkiaControl.NeedRemeasuring
   parent: DrawnUi.Draw.SkiaControl
@@ -13989,6 +14184,13 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateInternal
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.UpdatedRendering
+  commentId: F:DrawnUi.Draw.SkiaControl.UpdatedRendering
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedRendering
+  name: UpdatedRendering
+  nameWithType: SkiaControl.UpdatedRendering
+  fullName: DrawnUi.Draw.SkiaControl.UpdatedRendering
 - uid: DrawnUi.Draw.SkiaControl.Update
   commentId: M:DrawnUi.Draw.SkiaControl.Update
   parent: DrawnUi.Draw.SkiaControl
@@ -21800,99 +22002,6 @@ references:
   - name: (
   - name: )
   - name: )
-- uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  parent: DrawnUi.Draw.FluentExtensions
-  definition: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  name: OnBindingContextSet<SkiaLottie>(SkiaLottie, Action<SkiaLottie, object>, string[])
-  nameWithType: FluentExtensions.OnBindingContextSet<SkiaLottie>(SkiaLottie, Action<SkiaLottie, object>, string[])
-  fullName: DrawnUi.Draw.FluentExtensions.OnBindingContextSet<DrawnUi.Controls.SkiaLottie>(DrawnUi.Controls.SkiaLottie, System.Action<DrawnUi.Controls.SkiaLottie, object>, string[])
-  nameWithType.vb: FluentExtensions.OnBindingContextSet(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, Object), String())
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnBindingContextSet(Of DrawnUi.Controls.SkiaLottie)(DrawnUi.Controls.SkiaLottie, System.Action(Of DrawnUi.Controls.SkiaLottie, Object), String())
-  name.vb: OnBindingContextSet(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, Object), String())
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: <
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: '>'
-  - name: (
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: '>'
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: '['
-  - name: ']'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: )
-  - name: (
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: (
-  - name: )
-  - name: )
 - uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.SkiaLottie})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   parent: DrawnUi.Draw.FluentExtensions
@@ -21956,81 +22065,6 @@ references:
   - uid: DrawnUi.Controls.SkiaLottie
     name: SkiaLottie
     href: DrawnUi.Controls.SkiaLottie.html
-  - name: )
-  - name: )
-- uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  parent: DrawnUi.Draw.FluentExtensions
-  definition: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  name: OnPaint<SkiaLottie>(SkiaLottie, Action<SkiaLottie, DrawingContext>)
-  nameWithType: FluentExtensions.OnPaint<SkiaLottie>(SkiaLottie, Action<SkiaLottie, DrawingContext>)
-  fullName: DrawnUi.Draw.FluentExtensions.OnPaint<DrawnUi.Controls.SkiaLottie>(DrawnUi.Controls.SkiaLottie, System.Action<DrawnUi.Controls.SkiaLottie, DrawnUi.Draw.DrawingContext>)
-  nameWithType.vb: FluentExtensions.OnPaint(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, DrawingContext))
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnPaint(Of DrawnUi.Controls.SkiaLottie)(DrawnUi.Controls.SkiaLottie, System.Action(Of DrawnUi.Controls.SkiaLottie, DrawnUi.Draw.DrawingContext))
-  name.vb: OnPaint(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, DrawingContext))
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: <
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: '>'
-  - name: (
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: '>'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: )
-  - name: (
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Controls.SkiaLottie
-    name: SkiaLottie
-    href: DrawnUi.Controls.SkiaLottie.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
 - uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.ControlTappedEventArgs})
@@ -22408,6 +22442,174 @@ references:
   - uid: DrawnUi.Controls.SkiaLottie
     name: SkiaLottie
     href: DrawnUi.Controls.SkiaLottie.html
+  - name: )
+- uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  name: WhenBindingContextSet<SkiaLottie>(SkiaLottie, Action<SkiaLottie, object>, string[])
+  nameWithType: FluentExtensions.WhenBindingContextSet<SkiaLottie>(SkiaLottie, Action<SkiaLottie, object>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet<DrawnUi.Controls.SkiaLottie>(DrawnUi.Controls.SkiaLottie, System.Action<DrawnUi.Controls.SkiaLottie, object>, string[])
+  nameWithType.vb: FluentExtensions.WhenBindingContextSet(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, Object), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet(Of DrawnUi.Controls.SkiaLottie)(DrawnUi.Controls.SkiaLottie, System.Action(Of DrawnUi.Controls.SkiaLottie, Object), String())
+  name.vb: WhenBindingContextSet(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, Object), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: <
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WhenPaint``1(System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  name: WhenPaint<SkiaLottie>(SkiaLottie, Action<SkiaLottie, DrawingContext>)
+  nameWithType: FluentExtensions.WhenPaint<SkiaLottie>(SkiaLottie, Action<SkiaLottie, DrawingContext>)
+  fullName: DrawnUi.Draw.FluentExtensions.WhenPaint<DrawnUi.Controls.SkiaLottie>(DrawnUi.Controls.SkiaLottie, System.Action<DrawnUi.Controls.SkiaLottie, DrawnUi.Draw.DrawingContext>)
+  nameWithType.vb: FluentExtensions.WhenPaint(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, DrawingContext))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenPaint(Of DrawnUi.Controls.SkiaLottie)(DrawnUi.Controls.SkiaLottie, System.Action(Of DrawnUi.Controls.SkiaLottie, DrawnUi.Draw.DrawingContext))
+  name.vb: WhenPaint(Of SkiaLottie)(SkiaLottie, Action(Of SkiaLottie, DrawingContext))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: <
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(DrawnUi.Controls.SkiaLottie,System.Action{DrawnUi.Controls.SkiaLottie,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaLottie
+    name: SkiaLottie
+    href: DrawnUi.Controls.SkiaLottie.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
   - name: )
 - uid: DrawnUi.Controls.SkiaLottie.DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(Microsoft.Maui.Graphics.Color)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
@@ -26816,86 +27018,6 @@ references:
   - name: (
   - name: )
   - name: )
-- uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  isExternal: true
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  name: OnBindingContextSet<T>(T, Action<T, object>, string[])
-  nameWithType: FluentExtensions.OnBindingContextSet<T>(T, Action<T, object>, string[])
-  fullName: DrawnUi.Draw.FluentExtensions.OnBindingContextSet<T>(T, System.Action<T, object>, string[])
-  nameWithType.vb: FluentExtensions.OnBindingContextSet(Of T)(T, Action(Of T, Object), String())
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnBindingContextSet(Of T)(T, System.Action(Of T, Object), String())
-  name.vb: OnBindingContextSet(Of T)(T, Action(Of T, Object), String())
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: <
-  - name: T
-  - name: '>'
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: '>'
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: '['
-  - name: ']'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: (
-  - name: )
-  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   isExternal: true
@@ -26946,68 +27068,6 @@ references:
   - name: Of
   - name: " "
   - name: T
-  - name: )
-  - name: )
-- uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  isExternal: true
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  name: OnPaint<T>(T, Action<T, DrawingContext>)
-  nameWithType: FluentExtensions.OnPaint<T>(T, Action<T, DrawingContext>)
-  fullName: DrawnUi.Draw.FluentExtensions.OnPaint<T>(T, System.Action<T, DrawnUi.Draw.DrawingContext>)
-  nameWithType.vb: FluentExtensions.OnPaint(Of T)(T, Action(Of T, DrawingContext))
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnPaint(Of T)(T, System.Action(Of T, DrawnUi.Draw.DrawingContext))
-  name.vb: OnPaint(Of T)(T, Action(Of T, DrawingContext))
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: <
-  - name: T
-  - name: '>'
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: '>'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
@@ -27321,6 +27381,148 @@ references:
   - name: )
   - name: (
   - name: T
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  name: WhenBindingContextSet<T>(T, Action<T, object>, string[])
+  nameWithType: FluentExtensions.WhenBindingContextSet<T>(T, Action<T, object>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet<T>(T, System.Action<T, object>, string[])
+  nameWithType.vb: FluentExtensions.WhenBindingContextSet(Of T)(T, Action(Of T, Object), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet(Of T)(T, System.Action(Of T, Object), String())
+  name.vb: WhenBindingContextSet(Of T)(T, Action(Of T, Object), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  name: WhenPaint<T>(T, Action<T, DrawingContext>)
+  nameWithType: FluentExtensions.WhenPaint<T>(T, Action<T, DrawingContext>)
+  fullName: DrawnUi.Draw.FluentExtensions.WhenPaint<T>(T, System.Action<T, DrawnUi.Draw.DrawingContext>)
+  nameWithType.vb: FluentExtensions.WhenPaint(Of T)(T, Action(Of T, DrawingContext))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenPaint(Of T)(T, System.Action(Of T, DrawnUi.Draw.DrawingContext))
+  name.vb: WhenPaint(Of T)(T, Action(Of T, DrawingContext))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
@@ -29207,6 +29409,15 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: DrawnUi.Controls.SkiaLottie.#ctor*
+  commentId: Overload:DrawnUi.Controls.SkiaLottie.#ctor
+  href: DrawnUi.Controls.SkiaLottie.html#DrawnUi_Controls_SkiaLottie__ctor
+  name: SkiaLottie
+  nameWithType: SkiaLottie.SkiaLottie
+  fullName: DrawnUi.Controls.SkiaLottie.SkiaLottie
+  nameWithType.vb: SkiaLottie.New
+  fullName.vb: DrawnUi.Controls.SkiaLottie.New
+  name.vb: New
 - uid: System.Collections.Concurrent.ConcurrentDictionary{System.String,System.String}
   commentId: T:System.Collections.Concurrent.ConcurrentDictionary{System.String,System.String}
   parent: System.Collections.Concurrent

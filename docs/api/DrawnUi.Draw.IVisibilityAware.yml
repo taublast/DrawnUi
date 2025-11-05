@@ -18,11 +18,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+      path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IVisibilityAware
-    path: ../src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+    path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -45,11 +45,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+      path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppearing
-    path: ../src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+    path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -73,11 +73,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+      path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppeared
-    path: ../src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+    path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -101,11 +101,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+      path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappeared
-    path: ../src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+    path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -127,11 +127,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+      path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappearing
-    path: ../src/Shared/Draw/Internals/Interfaces/IVisibilityAware.cs
+    path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
