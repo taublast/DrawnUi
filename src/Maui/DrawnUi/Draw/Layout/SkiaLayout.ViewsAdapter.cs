@@ -747,7 +747,7 @@ public class ViewsAdapter : IDisposable
                 {
                     if (_parent.IsTemplated)
                     {
-                        lock (lockVisible)
+                        //lock (lockVisible)
                         {
                             if (template == null && !isMeasuring &&
                                 _cellsInUseViews.TryGetValue(index, out SkiaControl ready))

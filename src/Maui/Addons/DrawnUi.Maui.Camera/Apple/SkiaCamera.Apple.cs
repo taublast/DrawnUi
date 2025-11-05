@@ -424,20 +424,6 @@ public partial class SkiaCamera
                 // Get formats from the native camera's predefined formats method
                 formats = native.GetPredefinedVideoFormats();
             }
-            
-            // If no formats found, provide fallback formats
-            if (formats.Count == 0)
-            {
-                formats.AddRange(new[]
-                {
-                    new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
-                    new VideoFormat { Width = 1920, Height = 1080, FrameRate = 60, Codec = "H.264", BitRate = 12000000, FormatId = "1080p60" },
-                    new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
-                    new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 7500000, FormatId = "720p60" },
-                    new VideoFormat { Width = 3840, Height = 2160, FrameRate = 30, Codec = "H.264", BitRate = 25000000, FormatId = "2160p30" },
-                    new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2000000, FormatId = "480p30" }
-                });
-            }
         }
         catch (Exception ex)
         {

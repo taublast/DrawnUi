@@ -111,8 +111,17 @@
         {
             TrackChildAsDirty(child);
 
+            if (NeedMeasure && RenderingInvalidated == RenderCount)
+            {
+                return;
+            }
+
+            RenderingInvalidated = RenderCount;
+
             Invalidate();
         }
+
+        protected long RenderingInvalidated;
 
         /// <summary>
         /// Indicated that wants to be re-measured without invalidating cache

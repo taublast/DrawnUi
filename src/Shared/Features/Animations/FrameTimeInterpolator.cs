@@ -78,6 +78,52 @@ public class FrameTimeInterpolator
     /// Calculates the delta time for the current frame based on performance monitoring
     /// and the target FPS
     /// </summary>
+    /// <param name="actualDeltaTime">The actual delta time since last frame in seconds</param>
+    /// <returns>The delta time to use for game updates</returns>
+    public float GetDeltaTimeFromDelta(float actualDeltaTime)
+    {
+        // First frame or reset
+        if (_frameTimeHistory == null)
+        {
+            InitializeManager(0);
+            return _currentTimeStep;
+        }
+
+        // Add to frame history
+        AddToFrameTimeHistory(actualDeltaTime);
+
+        // Calculate minimum frame time threshold (target FPS minus buffer)
+        float minFrameTimeThreshold = 1f / (_targetFps - _fpsBuffer);
+
+        // Determine if we're skipping frames
+        if (actualDeltaTime < minFrameTimeThreshold)
+        {
+            // Performance is good, use the constant time step based on target FPS
+            LastFrameStep = _currentTimeStep;
+            IsSkippingFrames = false;
+        }
+        else
+        {
+            // Performance is below target minus buffer, use actual frame time
+            LastFrameStep = actualDeltaTime;
+            IsSkippingFrames = true;
+
+            if (!IsSkippingFrames)
+            {
+                System.Diagnostics.Debug.WriteLine($"Frame rate below {_targetFps - _fpsBuffer} FPS. Using actual delta: {actualDeltaTime:F4}s");
+            }
+        }
+
+        // Monitor quality settings
+        UpdateQualitySettings();
+
+        return LastFrameStep;
+    }
+
+    /// <summary>
+    /// Calculates the delta time for the current frame based on performance monitoring
+    /// and the target FPS
+    /// </summary>
     /// <param name="currentFrameTime">The current frame time from the game loop</param>
     /// <returns>The delta time to use for game updates</returns>
     public float GetDeltaTime(float currentFrameTime)

@@ -161,7 +161,7 @@ public partial class SkiaScroll
 
             _animatorFlingX = new(this)
             {
-//                UseInterpolator = true,
+                UseInterpolator = true,
                 OnStart = () =>
                 {
                     //_isSnapping = false;
@@ -187,7 +187,7 @@ public partial class SkiaScroll
 
             _animatorFlingY = new(this)
             {
-              //  UseInterpolator = true,
+                UseInterpolator = true,
                 OnStart = () =>
                 {
                     IsAnimating = true;
@@ -897,7 +897,7 @@ public partial class SkiaScroll
         // Standard scroll to bottom using measured content
         if (Orientation == ScrollOrientation.Vertical)
         {
-            ScrollTo(InternalViewportOffset.Units.X, _scrollMinY, maxTimeSecs, true);
+            ScrollTo(InternalViewportOffset.Units.X, -ContentSize.Pixels.Height, maxTimeSecs, true);
         }
         else if (Orientation == ScrollOrientation.Horizontal)
         {

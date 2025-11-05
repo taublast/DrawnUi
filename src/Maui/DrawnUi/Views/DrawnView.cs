@@ -1834,6 +1834,8 @@ namespace DrawnUi.Views
         {
             ++FrameNumber;
 
+            //Debug.WriteLine($"DRAW {Tag}");
+
             DisposeManager.DisposeDisposables(FrameNumber);
 
             //Debug.WriteLine($"[DRAW] {Tag}");
@@ -1908,6 +1910,7 @@ namespace DrawnUi.Views
                     else //usual one, still working fine
                     */
                     {
+               
                         foreach (var child in children)
                         {
                             child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
@@ -1921,7 +1924,7 @@ namespace DrawnUi.Views
                                 child.Render(context.WithDestination(rectForChild));
                             }
                         }
-
+                        
                         dirtyChilrenProcessing = true;
 
                         //todo for retained mode!!!

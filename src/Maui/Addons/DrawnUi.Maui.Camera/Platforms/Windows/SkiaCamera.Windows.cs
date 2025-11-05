@@ -203,15 +203,11 @@ public partial class SkiaCamera : SkiaControl
 
         try
         {
-            // TODO: Implement video formats detection for Windows
-            // For now, provide common video formats as placeholders
-            formats.AddRange(new[]
+            if (NativeControl is NativeCamera native)
             {
-                new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
-                new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
-                new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 8000000, FormatId = "720p60" },
-                new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2000000, FormatId = "480p30" }
-            });
+                // Get formats from the native camera's predefined formats method
+                formats = native.GetPredefinedVideoFormats();
+            }
         }
         catch (Exception ex)
         {

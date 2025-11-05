@@ -12,6 +12,21 @@ public partial class SkiaControl
 {
     private readonly LimitedQueue<Action> _offscreenCacheRenderingQueue = new(1);
 
+    public static readonly BindableProperty AutoCacheProperty = BindableProperty.Create(nameof(AutoCache),
+        typeof(bool),
+        typeof(SkiaControl),
+        false,
+        propertyChanged: NeedDraw);
+
+    /// <summary>
+    /// Control will be responsible for controlling cache instead of using UseCache property.
+    /// </summary>
+    public bool AutoCache
+    {
+        get { return (bool)GetValue(AutoCacheProperty); }
+        set { SetValue(AutoCacheProperty, value); }
+    }
+
     public static readonly BindableProperty UseCacheProperty = BindableProperty.Create(nameof(UseCache),
         typeof(SkiaCacheType),
         typeof(SkiaControl),

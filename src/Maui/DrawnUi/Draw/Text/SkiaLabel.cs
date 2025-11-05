@@ -1005,14 +1005,14 @@ namespace DrawnUi.Draw
 
         public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
         {
-            lock (LockSetup)
+            if (IsMeasuring || !CanDraw || widthConstraint < 0 || heightConstraint < 0)
             {
                 // If measuring in a background context, or control can't draw, or constraints are invalid, return cached
-                if (IsMeasuring || !CanDraw || widthConstraint < 0 || heightConstraint < 0)
-                {
-                    return MeasuredSize;
-                }
+                return MeasuredSize;
+            }
 
+            lock (LockSetup) //avid crash if double buffering
+            {
                 IsMeasuring = true;
 
                 try

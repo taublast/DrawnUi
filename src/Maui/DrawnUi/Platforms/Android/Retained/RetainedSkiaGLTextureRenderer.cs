@@ -7,6 +7,7 @@ namespace DrawnUi
     public class RetainedSkiaGLTextureRenderer : SkiaGLTextureRenderer
     {
         private SKSurface _retainedSurface;
+        private SKSurface _framebufferSurface; // Reuse instead of creating each frame
         private bool _needsFullRedraw = true;
         private readonly ConcurrentBag<SurfaceTrashItem> _trashBag = new();
         private bool _cleanupRunning;
@@ -82,7 +83,7 @@ namespace DrawnUi
                     samples = maxSamples;
                 GlInfo = new GRGlFramebufferInfo((uint)buffer[0], colorType.ToGlSizedFormat());
 
-                // Dispose old retained surface if exists (for normal rendering path)
+                // Dispose old surfaces if exists
                 if (_retainedSurface != null)
                 {
                     _trashBag.Add(new SurfaceTrashItem
@@ -91,6 +92,16 @@ namespace DrawnUi
                         FrameCount = _frameCounter
                     });
                     _retainedSurface = null;
+                }
+
+                if (_framebufferSurface != null)
+                {
+                    _trashBag.Add(new SurfaceTrashItem
+                    {
+                        Surface = _framebufferSurface,
+                        FrameCount = _frameCounter
+                    });
+                    _framebufferSurface = null;
                 }
 
                 renderTarget?.Dispose();
@@ -104,13 +115,16 @@ namespace DrawnUi
             {
                 try
                 {
-                    // Fast blit: Just draw pre-rendered image to framebuffer
-                    using (var framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType))
+                    // Create framebuffer surface if needed
+                    if (_framebufferSurface == null)
                     {
-                        framebufferSurface.Canvas.DrawImage(PreRenderedImage, 0, 0);
-                        framebufferSurface.Canvas.Flush();
-                        framebufferSurface.Flush();
+                        _framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
                     }
+
+                    // Fast blit: Just draw pre-rendered image to framebuffer
+                    _framebufferSurface.Canvas.DrawImage(PreRenderedImage, 0, 0);
+                    _framebufferSurface.Canvas.Flush();
+                    _framebufferSurface.Flush();
 
                     Context.Flush();
 
@@ -140,6 +154,11 @@ namespace DrawnUi
                 _needsFullRedraw = true;
             }
 
+            if (_framebufferSurface == null)
+            {
+                _framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
+            }
+
             if (_needsFullRedraw)
             {
                 _retainedSurface.Canvas.Clear(SKColors.Transparent);
@@ -147,19 +166,18 @@ namespace DrawnUi
 
             try
             {
-                using (new SKAutoCanvasRestore(_retainedSurface.Canvas, true))
+                using (new SKAutoCanvasRestoreFixed(_retainedSurface.Canvas, true))
                 {
                     var e = new SKPaintGLSurfaceEventArgs(_retainedSurface, renderTarget, surfaceOrigin, colorType);
                     OnPaintSurface(e);
                 }
 
-                using var framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
-
+                // Reuse framebuffer surface instead of creating new one each frame
                 using var image = _retainedSurface.Snapshot();
-                framebufferSurface.Canvas.DrawImage(image, 0, 0);
+                _framebufferSurface.Canvas.DrawImage(image, 0, 0);
 
-                framebufferSurface.Canvas.Flush();
-                framebufferSurface.Flush();
+                _framebufferSurface.Canvas.Flush();
+                _framebufferSurface.Flush();
 
                 Context.Flush();
 
@@ -185,6 +203,9 @@ namespace DrawnUi
 
                 _retainedSurface?.Dispose();
                 _retainedSurface = null;
+
+                _framebufferSurface?.Dispose();
+                _framebufferSurface = null;
 
                 while (_trashBag.TryTake(out var item))
                 {

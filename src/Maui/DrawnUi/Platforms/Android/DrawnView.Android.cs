@@ -11,6 +11,10 @@ namespace DrawnUi.Views
 
         private bool IsElementVisibleInParentChain(View element)
         {
+            // Safety: Check if view is attached to window before checking visibility
+            if (element == null || element.WindowToken == null)
+                return false;
+
             if (element.Visibility != ViewStates.Visible ||
                 element.Width <= 0 ||
                 element.Height <= 0)
@@ -84,7 +88,8 @@ namespace DrawnUi.Views
 
             public override void OnGlobalLayout()
             {
-                if (Control != null)
+                // Safety: Check if control is not disposed AND view is still attached to window
+                if (Control != null && View != null && View.WindowToken != null)
                 {
                     Control.NeedCheckParentVisibility = true;
                 }
@@ -146,6 +151,13 @@ namespace DrawnUi.Views
             NeedCheckParentVisibility = false;
 
             if (Handler?.PlatformView is not View platformView)
+            {
+                IsHiddenInViewTree = true;
+                return;
+            }
+
+            // Safety: Don't check visibility if view is detached from window
+            if (platformView.WindowToken == null)
             {
                 IsHiddenInViewTree = true;
                 return;
@@ -274,7 +286,7 @@ namespace DrawnUi.Views
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool CheckCanDraw()
         {
-            return //!OrderedDraw
+            return 
 
                 CanvasView != null && this.Handler != null && this.Handler.PlatformView != null
                //&& !CanvasView.IsDrawing

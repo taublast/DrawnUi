@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.2.0
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11116.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}"
 EndProject
@@ -91,11 +91,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorials", "..\src\Maui\Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameTemplate", "..\src\Maui\Samples\GameTemplate\GameTemplate.csproj", "{50581392-AB0E-5E19-2D2F-3EA4409BC9A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures.csproj", "{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Navigation", "..\..\AppoMobi.Maui.Navigation\src\AppoMobi.Maui.Navigation.csproj", "{C01814D5-7D9C-D175-FB39-4E85A8DE3047}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GesturesTester", "..\..\AppoMobi.Maui.Gestures\dev\GesturesTester\GesturesTester.csproj", "{D48E1DB4-747E-A7BE-5632-7A9857EFA9AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfingApp", "..\..\SurfingApp\src\SurfingApp\SurfingApp.csproj", "{0607D36D-F5E9-8651-B27B-6080507D9878}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -187,10 +187,6 @@ Global
 		{50581392-AB0E-5E19-2D2F-3EA4409BC9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50581392-AB0E-5E19-2D2F-3EA4409BC9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50581392-AB0E-5E19-2D2F-3EA4409BC9A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C01814D5-7D9C-D175-FB39-4E85A8DE3047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C01814D5-7D9C-D175-FB39-4E85A8DE3047}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C01814D5-7D9C-D175-FB39-4E85A8DE3047}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -199,6 +195,12 @@ Global
 		{D48E1DB4-747E-A7BE-5632-7A9857EFA9AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D48E1DB4-747E-A7BE-5632-7A9857EFA9AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D48E1DB4-747E-A7BE-5632-7A9857EFA9AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0607D36D-F5E9-8651-B27B-6080507D9878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0607D36D-F5E9-8651-B27B-6080507D9878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0607D36D-F5E9-8651-B27B-6080507D9878}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0607D36D-F5E9-8651-B27B-6080507D9878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0607D36D-F5E9-8651-B27B-6080507D9878}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0607D36D-F5E9-8651-B27B-6080507D9878}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,6 +225,7 @@ Global
 		{991D6033-78C9-5E0A-7D5A-6A8D48CAFD1F} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{50581392-AB0E-5E19-2D2F-3EA4409BC9A1} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{D48E1DB4-747E-A7BE-5632-7A9857EFA9AB} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
+		{0607D36D-F5E9-8651-B27B-6080507D9878} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}

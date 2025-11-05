@@ -1,7 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using CoreAnimation;
+using CoreGraphics;
 using Foundation;
 using Microsoft.Maui.Handlers;
+using UIKit;
 
 namespace DrawnUi.Views;
 
@@ -17,39 +19,157 @@ public partial class DrawnView
     public void CheckElementVisibility(VisualElement element)
     {
         NeedCheckParentVisibility = false;
+
+        //Debug.WriteLine($"[DrawnView] CheckElementVisibility for {Tag} ");
+
+        if (Handler?.PlatformView == null || !IsVisible)
+        {
+            IsHiddenInViewTree = true;
+            return;
+        }
+
+#if NONE
+        if (Handler != null && Handler.PlatformView is DrawnUi.Controls.VisibilityAwarePlatformView native)
+        {
+            native.CheckVisibility();
+        }
+#else
         IsHiddenInViewTree = !GetIsVisibleWithParent(this);
-
-        //if (element != null)
-        //{
-        //    //WARNING this must be called form UI thread only!
-
-        //    if (element.Handler != null)
-        //    {
-        //        if (element.Handler.PlatformView is UIKit.UIView iosView)
-        //        {
-        //            if (iosView.Hidden)
-        //            {
-        //                IsHiddenInViewTree = true;
-        //                return;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (element.GetVisualElementWindow() == null)
-        //        {
-        //            IsHiddenInViewTree = true;
-        //            return;
-        //        }
-        //    }
-
-
-
-        //}
-
-
-        //IsHiddenInViewTree = false;
+        //IsHiddenInViewTree = !IsElementVisibleInParentChain(Handler?.PlatformView as UIView);
+#endif
     }
+
+    #region native check
+
+    private bool _wasVisible = true;
+    private bool _checkVisibility;
+    private DateTime _visibilityChangedTime;
+    private readonly TimeSpan _visibilityCheckDelay = TimeSpan.FromSeconds(0.1);
+
+ 
+
+    /// <summary>
+    /// Check if element is visible through entire parent chain
+    /// </summary>
+    private bool IsElementVisibleInParentChain(UIView element)
+    {
+        //Debug.WriteLine($"[DrawnView] check {Tag}");
+
+        // Quick checks first
+        if (element.Hidden ||
+            element.Alpha <= 0 ||
+            element.Frame.Width <= 0 ||
+            element.Frame.Height <= 0)
+        {
+            return false;
+        }
+
+        // Start with element bounds in its own coordinate space
+        var currentBounds = new CGRect(0, 0, element.Frame.Width, element.Frame.Height);
+        UIView current = element;
+
+        // Walk up parent chain
+        while (current.Superview != null)
+        {
+            UIView parent = current.Superview;
+
+            // Check parent visibility
+            if (parent.Hidden ||
+                parent.Alpha <= 0 ||
+                parent.Frame.Width <= 0 ||
+                parent.Frame.Height <= 0)
+            {
+                return false;
+            }
+
+            try
+            {
+                // Convert current bounds to parent's coordinate system
+                var transformedBounds = current.ConvertRectToView(currentBounds, parent);
+
+                // Parent's bounds in its own coordinate space
+                var parentBounds = new CGRect(0, 0, parent.Frame.Width, parent.Frame.Height);
+
+                // Check if element is clipped by parent's ClipsToBounds
+                if (parent.ClipsToBounds || parent is UIScrollView)
+                {
+                    if (!AreRectanglesIntersecting(transformedBounds, parentBounds))
+                    {
+                        return false;
+                    }
+                }
+
+                // Special handling for UIScrollView
+                if (parent is UIScrollView scrollView)
+                {
+                    var visibleBounds = new CGRect(
+                        scrollView.ContentOffset.X,
+                        scrollView.ContentOffset.Y,
+                        scrollView.Frame.Width,
+                        scrollView.Frame.Height
+                    );
+
+                    var contentBounds = current.ConvertRectToView(currentBounds, scrollView);
+
+                    if (!AreRectanglesIntersecting(contentBounds, visibleBounds))
+                    {
+                        return false;
+                    }
+                }
+
+                currentBounds = transformedBounds;
+                current = parent;
+            }
+            catch
+            {
+                // Elements not properly connected
+                return false;
+            }
+        }
+
+        // Check if we're in a window
+        return current.Window != null || current as UIWindow != null;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool AreRectanglesIntersecting(CGRect rect1, CGRect rect2)
+    {
+        return rect1.Left < rect2.Right &&
+               rect1.Right > rect2.Left &&
+               rect1.Top < rect2.Bottom &&
+               rect1.Bottom > rect2.Top;
+    }
+
+    public virtual void OnLayoutChanged()
+    {
+        _checkVisibility = true;
+        _visibilityChangedTime = DateTime.UtcNow;
+
+        CheckElementVisibility(this);
+    }
+
+    private void OnChangesDetected()
+    {
+        if (!_checkVisibility)
+            return;
+
+        var delay = DateTime.UtcNow - _visibilityChangedTime;
+        if (delay < _visibilityCheckDelay)
+            return;
+
+        if (Handler?.PlatformView is UIView view)
+        {
+            _checkVisibility = false;
+
+            var hide = !IsElementVisibleInParentChain(view);
+            if (hide != IsHiddenInViewTree)
+            {
+                IsHiddenInViewTree = hide;
+            }
+        }
+    }
+
+    #endregion
 
     protected virtual void OnSizeChanged()
     {

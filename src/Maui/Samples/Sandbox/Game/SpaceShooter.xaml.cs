@@ -52,7 +52,7 @@ public partial class SpaceShooter : MauiGame
 
     public SpaceShooter()
     {
-        MauiGame.FrameInterpolatorDisabled=true;
+        //MauiGame.FrameInterpolatorDisabled=true;
 
         InitializeComponent();
 

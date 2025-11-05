@@ -12,15 +12,15 @@ namespace DrawnUi.Controls
             return false;
         }
 
-        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
-        {
-            var consumed = base.ProcessGestures(args, apply);
-            if (consumed == null && (args.Type != TouchActionResult.Up || args.Type != TouchActionResult.Tapped))
-            {
-                consumed = this;
-            }
-            return consumed;
-        }
+        //public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        //{
+        //    var consumed = base.ProcessGestures(args, apply);
+        //    if (consumed == null && (args.Type != TouchActionResult.Up || args.Type != TouchActionResult.Tapped))
+        //    {
+        //        consumed = this;
+        //    }
+        //    return consumed;
+        //}
 
         public string DebugWheel => ItemsWrapper?.DebugString;
 
@@ -81,16 +81,16 @@ namespace DrawnUi.Controls
             set { SetValue(FadeProperty, value); }
         }
 
-        public static readonly BindableProperty LoopProperty = BindableProperty.Create(
-            nameof(Loop),
+        public static readonly BindableProperty IsLoopedProperty = BindableProperty.Create(
+            nameof(IsLooped),
             typeof(bool),
             typeof(SkiaWheelScroll),
             false, propertyChanged: NeedInvalidateMeasure);
 
-        public bool Loop
+        public bool IsLooped
         {
-            get { return (bool)GetValue(LoopProperty); }
-            set { SetValue(LoopProperty, value); }
+            get { return (bool)GetValue(IsLoopedProperty); }
+            set { SetValue(IsLoopedProperty, value); }
         }
 
         public static readonly BindableProperty LinesColorProperty = BindableProperty.Create(
@@ -263,9 +263,24 @@ namespace DrawnUi.Controls
             }
         }
 
+        protected override void OnLayoutPositionChanged()
+        {
+            base.OnLayoutPositionChanged();
+
+            Debug.WriteLine($"[PICKER] OnLayoutPositionChanged {DrawingRect}");
+
+            ApplyVisibleItemCount();
+
+            //todo can inittialize templates, reserve etc..
+
+            InitializeWheelPosition();
+        }
+
         protected override void OnLayoutChanged()
         {
             base.OnLayoutChanged();
+
+            Debug.WriteLine($"[PICKER] OnLayoutChanged {DrawingRect}");
 
             ApplyVisibleItemCount();
 
@@ -278,6 +293,9 @@ namespace DrawnUi.Controls
         {
             if (ItemsWrapper!=null && CellsPool != null && DrawingRect.Height > 1)
             {
+
+                Debug.WriteLine($"[PICKER] at {context.Destination} with {DrawingRect}");
+
                 var logicalIndexes = new int[CellsCount + 2];
                 int startingIndex = this.GetIndexAtScrollOffset(this.WheelScrollingOffset, false, false) - this.VisibleCellsCountHalf;
 
@@ -620,7 +638,7 @@ namespace DrawnUi.Controls
 
             // Find nearest item to this predicted position
             int predictedIndex;
-            if (!Loop)
+            if (!IsLooped)
             {
                 // First, get the unconstrained index
                 predictedIndex = GetIndexAtScrollOffset(predictedWheelY, false, true);
@@ -736,7 +754,7 @@ namespace DrawnUi.Controls
             int logicalIndex = GetIndexAtCellPosition(physicalIndex);
 
             // For non-circular wheels, ensure we're within bounds
-            if (!Loop && ItemsWrapper?.ItemsSource != null)
+            if (!IsLooped && ItemsWrapper?.ItemsSource != null)
             {
                 logicalIndex = Math.Max(0, Math.Min(logicalIndex, ItemsWrapper.ItemsSource.Count - 1));
             }
@@ -763,7 +781,7 @@ namespace DrawnUi.Controls
             //System.Diagnostics.Debug.WriteLine($"[WHEEL] Updated SelectedIndex to {logicalIndex} from physicalIndex={physicalIndex}, WheelY={WheelScrollingOffset}");
 
             //todo re-enable !!!
-            if (Loop && Math.Abs(physicalIndex - LoopedOffset) > LoopedOffsetHalf)
+            if (IsLooped && Math.Abs(physicalIndex - LoopedOffset) > LoopedOffsetHalf)
             {
                 // Reset to a position near 10000
                 var wheelY = GetScrollOffsetForIndex(LoopedOffset + (logicalIndex % ItemsSourceCount));
@@ -774,7 +792,7 @@ namespace DrawnUi.Controls
 
         void SetupClampBounds()
         {
-            if (!Loop)
+            if (!IsLooped)
             {
                 var index = 0;
                 if (!IsIndexValid(index))
@@ -796,7 +814,7 @@ namespace DrawnUi.Controls
                 return false;
 
             // Ensure index is within bounds
-            if (!Loop)
+            if (!IsLooped)
             {
                 index = Math.Max(0, Math.Min(index, ItemsSourceCount - 1));
             }
@@ -807,14 +825,14 @@ namespace DrawnUi.Controls
             }
 
             // Convert to physical index for circular wheels
-            int useIndex = Loop ? LoopedOffset + index : index;
+            int useIndex = IsLooped ? LoopedOffset + index : index;
 
             float targetY = GetScrollOffsetForIndex(useIndex);
 
             ViewportOffsetY = -targetY / RenderingScale;
 
             // Align clamping baseline only for non-loop mode
-            if (!Loop && index == 0)
+            if (!IsLooped && index == 0)
             {
                 _zeroOffset = -targetY / RenderingScale;
             }
@@ -827,7 +845,7 @@ namespace DrawnUi.Controls
             // In loop mode we do not translate clamping with _zeroOffset.
             // That translation is only meaningful for non-loop wheels, where index 0
             // is anchored to one physical end. Loop has no ends; avoid skewing bounds.
-            if (Loop)
+            if (IsLooped)
             {
                 return base.ClampOffset(x, y, contentOffsetBounds, strict);
             }
@@ -859,7 +877,7 @@ namespace DrawnUi.Controls
             return;
 
             // Only needed for circular wheels
-            if (!Loop || SelectedIndex == -1)
+            if (!IsLooped || SelectedIndex == -1)
                 return;
 
             // Use the developer-set SelectedIndex
@@ -885,7 +903,7 @@ namespace DrawnUi.Controls
                 int positions = index - currentIndex;
 
                 // For circular wheels, find the shortest path
-                if (Loop && Math.Abs(positions) > ItemsSourceCount / 2)
+                if (IsLooped && Math.Abs(positions) > ItemsSourceCount / 2)
                 {
                     positions = positions > 0
                         ? positions - ItemsSourceCount
@@ -893,7 +911,7 @@ namespace DrawnUi.Controls
                 }
 
                 // Calculate current and target physical positions
-                int currentPhysical = Loop
+                int currentPhysical = IsLooped
                     ? LoopedOffset + (currentIndex % ItemsSourceCount)
                     : currentIndex;
 
@@ -981,7 +999,7 @@ namespace DrawnUi.Controls
                 (int)Math.Round((double)(y / (ItemHeight + UseSpacing)))
                 : (int)Math.Floor((double)(y / (ItemHeight + this.UseSpacing)))) - VisibleCellsCountHalf;
 
-            if (checkBounds && !Loop)
+            if (checkBounds && !IsLooped)
             {
                 if (num >= logicalRows)
                 {
@@ -999,7 +1017,7 @@ namespace DrawnUi.Controls
 
         public int GetCellPositionForIndex(int index)
         {
-            if (!Loop)
+            if (!IsLooped)
             {
                 return index;
             }
@@ -1012,7 +1030,7 @@ namespace DrawnUi.Controls
 
         public int GetIndexAtCellPosition(int position)
         {
-            if (!Loop)
+            if (!IsLooped)
             {
                 return position;
             }

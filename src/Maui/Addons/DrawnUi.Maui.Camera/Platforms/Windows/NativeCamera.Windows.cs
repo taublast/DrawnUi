@@ -1125,6 +1125,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             var selectedResolution = FormsControl.PhotoQuality switch
             {
                 CaptureQuality.Max => availableResolutions.First(), // Highest resolution
+                CaptureQuality.High => availableResolutions.Skip(availableResolutions.Count / 5).First(), // ~20% down the list
                 CaptureQuality.Medium => availableResolutions.Skip(availableResolutions.Count / 3).First(), // ~66% down the list
                 CaptureQuality.Low => availableResolutions.Skip(2 * availableResolutions.Count / 3).First(), // ~33% down the list
                 CaptureQuality.Preview => availableResolutions.LastOrDefault(r => r.Width >= 640 && r.Height >= 480)
@@ -1703,7 +1704,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// <summary>
     /// Gets predefined video formats for Windows platform
     /// </summary>
-    private List<VideoFormat> GetPredefinedVideoFormats()
+    public List<VideoFormat> GetPredefinedVideoFormats()
     {
         return new List<VideoFormat>
         {

@@ -52,6 +52,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     {
         thisWeakRef = new WeakReference<SkiaGLTextureView>(this);
 
+        SetLayerType(LayerType.Hardware, null);
         SurfaceTextureListener = this;
         AddOnLayoutChangeListener(this);
     }
@@ -146,7 +147,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
             {
                 LogDebug($"TryCpuPreRendering - CPU pre-rendering ({_width}x{_height})");
 
-                using (new SKAutoCanvasRestore(softSurface.Canvas, true))
+                using (new SKAutoCanvasRestoreFixed(softSurface.Canvas, true))
                 {
                     // Create dummy renderTarget for CPU rendering (won't be used but required by constructor)
                     var glInfo = new GRGlFramebufferInfo(0, SKColorType.Rgba8888.ToGlSizedFormat());

@@ -170,6 +170,7 @@
             {
                 Animator = new RangeAnimator(GetAnimatorParent())
                 {
+                    UseInterpolator = true,
                     OnUpdated = OnAnimatorUpdated,
                     OnStart = () =>
                     {

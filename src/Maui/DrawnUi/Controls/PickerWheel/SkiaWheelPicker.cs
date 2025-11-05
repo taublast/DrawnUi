@@ -34,7 +34,7 @@ namespace DrawnUi.Controls
                 {
                     //todo properties
                     LinesColor = this.LinesColor,
-                    Loop = false,
+                    IsLooped = false,
                     FadeStrength = 1.5f,
                     Margin = new(0, 10, 0, 10),
                     Bounces = true,

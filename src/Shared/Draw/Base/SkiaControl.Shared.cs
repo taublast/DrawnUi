@@ -199,6 +199,43 @@ namespace DrawnUi.Draw
             set => SetValue(ChildrenProperty, value);
         }
 
+
+        public static readonly BindableProperty VirtualizationProperty = BindableProperty.Create(
+            nameof(Virtualisation),
+            typeof(VirtualisationType),
+            typeof(SkiaControl),
+            VirtualisationType.Enabled,
+            propertyChanged: NeedInvalidateMeasure);
+
+        /// <summary>
+        /// Default is Enabled, children get the visible viewport area for rendering and can virtualize.
+        /// </summary>
+        public VirtualisationType Virtualisation
+        {
+            get { return (VirtualisationType)GetValue(VirtualizationProperty); }
+            set { SetValue(VirtualizationProperty, value); }
+        }
+
+        public static readonly BindableProperty VirtualisationInflatedProperty = BindableProperty.Create(
+            nameof(VirtualisationInflated),
+            typeof(double),
+            typeof(SkiaControl),
+            0.0,
+            propertyChanged: NeedInvalidateMeasure);
+
+        /// <summary>
+        /// How much of the hidden content out of visible bounds should be considered visible for rendering,
+        /// default is 0 pts.
+        /// Basically how much should be expand in every direction of the visible area prior to checking if content falls
+        /// into its bounds for rendering controlled with Virtualisation.
+        /// </summary>
+        public double VirtualisationInflated
+        {
+            get { return (double)GetValue(VirtualisationInflatedProperty); }
+            set { SetValue(VirtualisationInflatedProperty, value); }
+        }
+
+
         protected static SKBlendMode DefaultBlendMode = SKBlendMode.SrcOver;
 
         public virtual bool IsVisibleInViewTree()
@@ -3991,6 +4028,11 @@ namespace DrawnUi.Draw
                 OnDrawingSizeChanged();
                 layoutChanged = true;
             }
+            else
+            if (oldDrawingRect.Left != DrawingRect.Left || oldDrawingRect.Top != DrawingRect.Top)
+            {
+                OnLayoutPositionChanged();
+            }
 
             if (layoutChanged)
                 OnLayoutChanged();
@@ -5382,8 +5424,12 @@ namespace DrawnUi.Draw
 
             Rendered?.Invoke(this, EventArgs.Empty);
 
+            RenderCount++;
+
             IsRendering = false;
         }
+
+        protected long RenderCount;
 
         public event EventHandler Rendered;
 
@@ -6363,6 +6409,7 @@ namespace DrawnUi.Draw
 
         private int _updatedFromThread;
         private volatile bool _neededUpdate;
+        protected long UpdatedRendering;
 
         /// <summary>
         /// Main method to invalidate cache and invoke rendering
@@ -6379,13 +6426,20 @@ namespace DrawnUi.Draw
                 Super.Log($"[SkiaControl] will Update {this}");
             }
 
+            Updated?.Invoke(this, null);
+
+            if (NeedUpdate && UpdatedRendering == RenderCount)
+            {
+                return;
+            }
+
             _updatedFromThread = Thread.CurrentThread.ManagedThreadId;
+
+            UpdatedRendering = RenderCount;
 
             InvalidateCache();
 
             UpdateInternal();
-
-            Updated?.Invoke(this, null);
         }
 
         /// <summary>

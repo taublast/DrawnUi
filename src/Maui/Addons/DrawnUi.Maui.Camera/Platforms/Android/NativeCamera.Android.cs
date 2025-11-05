@@ -41,10 +41,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     // Camera configuration constants
 
-    // Max preview width that is guaranteed by Camera2 API
+    // Max preview dimensions
     public int MaxPreviewWidth = 800;
-
-    // Max preview height that is guaranteed by Camera2 API
     public int MaxPreviewHeight = 800;
 
     // Still capture formats - same pattern as Apple implementation
@@ -740,6 +738,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         Size optimalSize = null;
         double minDiffRatio = double.MaxValue;
 
+        // First pass: find best aspect match within max dimensions
         foreach (Size size in choices)
         {
             int width = size.Width;
@@ -758,6 +757,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             }
         }
 
+        // Second pass: if no good aspect match, find any size with closest aspect within max dimensions
         if (optimalSize == null)
         {
             foreach (Size size in choices)
@@ -778,10 +778,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         if (optimalSize == null)
         {
-            Super.Log("Couldn't find any suitable preview size");
+            Debug.WriteLine($"[ChooseOptimalSize] Couldn't find any suitable preview size within {maxWidth}x{maxHeight}");
             return choices[0];
         }
 
+        Debug.WriteLine($"[ChooseOptimalSize] Selected {optimalSize.Width}x{optimalSize.Height}");
         return optimalSize;
     }
 
@@ -939,26 +940,22 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     //camera width
 
+                    // Camera preview sizes are always in sensor orientation (typically landscape)
+                    bool rotated = (SensorOrientation != 0 && SensorOrientation != 180);
 
-                    var maxPreviewWidth = displaySize.X + allowPreviewOverflow;
-                    var maxPreviewHeight = displaySize.Y + allowPreviewOverflow;
+                    int maxPreviewWidth, maxPreviewHeight;
 
-                    bool rotated = false;
-
-                    if (SensorOrientation != 0 && SensorOrientation != 180)
+                    if (rotated)
                     {
-                        rotated = true;
-                        maxPreviewWidth = displaySize.Y + allowPreviewOverflow;
-                        maxPreviewHeight = displaySize.X + allowPreviewOverflow;
+                        // Landscape sensor: allow wider preview sizes to match camera native format
+                        // Use 1.78 ratio (16:9) with max height of 1024 -> width can be up to 1820
+                        maxPreviewWidth = MaxPreviewHeight * 2; // Allow up to 2:1 aspect ratio
+                        maxPreviewHeight = MaxPreviewWidth;     // Height limited to 1024
                     }
-
-                    if (maxPreviewWidth > MaxPreviewWidth)
+                    else
                     {
+                        // Portrait sensor: use standard limits
                         maxPreviewWidth = MaxPreviewWidth;
-                    }
-
-                    if (maxPreviewHeight > MaxPreviewHeight)
-                    {
                         maxPreviewHeight = MaxPreviewHeight;
                     }
 
@@ -1010,6 +1007,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     {
                         case CaptureQuality.Max:
                             selectedSize = validSizes.First();
+                            break;
+
+                        case CaptureQuality.High:
+                            selectedSize = SelectFormatByQuality(validSizes, 0.2);
                             break;
 
                         case CaptureQuality.Medium:
@@ -1733,29 +1734,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
 
-    /*
-    private int GetJpegOrientation()
-    {
-        int sensorOrientation = mRotateTexture;
-
-        var deviceOrientation = 0;
-
-        // Round device orientation to a multiple of 90
-        deviceOrientation = (deviceOrientation + 45) / 90 * 90;
-
-        // Reverse device orientation for front-facing cameras
-        boolean facingFront = c.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_FRONT;
-        if (facingFront) deviceOrientation = -deviceOrientation;
-
-        // Calculate desired JPEG orientation relative to camera orientation to make
-        // the image upright relative to the device orientation
-        int jpegOrientation = (sensorOrientation + deviceOrientation + 360) % 360;
-
-        return jpegOrientation;
-    }
-    */
-
-
     public void StopCapturingStillImage()
     {
         try
@@ -2199,8 +2177,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         int orientationHint;
         if (deviceIsLandscape && videoIsLandscape)
         {
-            // Device is landscape, video is landscape - already correct orientation, no rotation needed
-            orientationHint = 0;
+            // Selfie camera sensor is opposite to back camera, needs 180° rotation in landscape
+            orientationHint = (FormsControl.Facing == CameraPosition.Selfie) ? 180 : 0;
         }
         else if (!deviceIsLandscape && !videoIsLandscape)
         {

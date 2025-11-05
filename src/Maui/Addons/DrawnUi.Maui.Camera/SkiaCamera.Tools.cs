@@ -150,12 +150,12 @@ public partial class SkiaCamera : SkiaControl
                 rotated = new SKBitmap(bitmap.Height, bitmap.Width);
                 using (var surface = new SKCanvas(rotated))
                 {
-                    surface.Translate(0, rotated.Height);
-                    surface.RotateDegrees(270);
                     if (flipHorizontal || flipVertical)
                     {
                         surface.Scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1, rotated.Width / 2.0f, rotated.Height / 2.0f);
                     }
+                    surface.Translate(0, rotated.Height);
+                    surface.RotateDegrees(270);
                     surface.DrawBitmap(bitmap, 0, 0);
                 }
 
@@ -164,12 +164,12 @@ public partial class SkiaCamera : SkiaControl
                 rotated = new SKBitmap(bitmap.Height, bitmap.Width);
                 using (var surface = new SKCanvas(rotated))
                 {
-                    surface.Translate(rotated.Width, 0);
-                    surface.RotateDegrees(90);
                     if (flipHorizontal || flipVertical)
                     {
                         surface.Scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1, rotated.Width / 2.0f, rotated.Height / 2.0f);
                     }
+                    surface.Translate(rotated.Width, 0);
+                    surface.RotateDegrees(90);
                     surface.DrawBitmap(bitmap, 0, 0);
                 }
 

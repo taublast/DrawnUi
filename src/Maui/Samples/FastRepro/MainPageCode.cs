@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using AppoMobi.Specials;
 using DrawnUi.Controls;
+using DrawnUi.Draw;
+using DrawnUi.Infrastructure.Enums;
 using DrawnUi.Views;
 using Sandbox.Resources;
 using Sandbox.Views.Controls;
-using System.ComponentModel;
-using AppoMobi.Specials;
-using DrawnUi.Draw;
 
 namespace Sandbox
 {
@@ -34,56 +36,39 @@ namespace Sandbox
 
             BindingContext = this;
 
-
             Canvas = new Canvas()
             {
                 RenderingMode = RenderingModeType.Accelerated,
-                Gestures = GesturesMode.Enabled,
+                UpdateMode = UpdateMode.Dynamic,
+                //Gestures = GesturesMode.Enabled,
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
-                BackgroundColor = Colors.DarkSlateBlue,
                 Content =
-                    new SkiaStack()
+                    new SkiaLayout()
                     {
-                        Spacing = 0,
                         VerticalOptions = LayoutOptions.Fill,
+                        HorizontalOptions = LayoutOptions.Fill,
                         Children =
                         {
-                            new SkiaScroll()
+                            new RenderSceneOptimized(),
+#if DEBUG
+                            new SkiaLabelFps()
                             {
-                                BackgroundColor = Colors.White,
-                                HorizontalOptions = LayoutOptions.Fill,
-                                Content = new SkiaStack()
-                                {
-                                    MinimumWidthRequest = 200,
-                                    UseCache = SkiaCacheType.Operations,
-                                    Spacing = 0,
-                                    Children =
-                                    {
-                                        new SkiaStack()
-                                        {
-                                            Padding = 10,
-                                            Children =
-                                            {
-                                                new SkiaButton("Hello World")
-                                                {
-                                                    BackgroundColor = Colors.Red,
-                                                    ControlStyle =
-                                                        PrebuiltControlStyle.Windows,
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
+                                Margin = new(0, 0, 4, 24),
+                                VerticalOptions = LayoutOptions.End,
+                                HorizontalOptions = LayoutOptions.End,
+                                Rotation = -45,
+                                BackgroundColor = Colors.DarkRed,
+                                TextColor = Colors.White,
+                                ZIndex = 110,
                             }
+#endif
                         }
                     }
             };
 
             Content = new Grid() //due to maui layout specifics we are forced to use a Grid as root wrapper
             {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill,
                 Children = { Canvas }
             };
         }

@@ -90,7 +90,7 @@ namespace DrawnUi.Gaming
 
             // Use stable time
             if (!MauiGame.FrameInterpolatorDisabled)
-                deltaSeconds = FrameTimeInterpolator.GetDeltaTime(deltaSeconds);
+                deltaSeconds = FrameTimeInterpolator.GetDeltaTimeFromDelta(deltaSeconds);
 
             LastFrameTimeNanos = frameTimeNanos;
 

@@ -24,6 +24,8 @@ public partial class SkiaCamera
         Zoomed?.Invoke(this, value);
     }
 
+    private bool orderedRestart = false;
+    
     /// <summary>
     /// Updates preview format to match current capture format aspect ratio.
     /// Android implementation: Restarts camera session to apply new format selection.
@@ -32,8 +34,13 @@ public partial class SkiaCamera
     {
         if (NativeControl is NativeCamera androidCamera)
         {
+            if (orderedRestart)
+                return;
+            
             System.Diagnostics.Debug.WriteLine("[SkiaCameraAndroid] Updating preview format for aspect ratio match");
 
+            orderedRestart = true;
+                
             // Android's ChooseOptimalSize() automatically matches aspect ratios during setup
             // We need to restart the camera session to apply the new capture format
             Task.Run(async () =>
@@ -50,11 +57,17 @@ public partial class SkiaCamera
                     // with the new capture format as aspect ratio target
                     androidCamera.Start();
 
-                    System.Diagnostics.Debug.WriteLine("[SkiaCameraAndroid] Camera session restarted for format change");
+                    System.Diagnostics.Debug.WriteLine(
+                        "[SkiaCameraAndroid] Camera session restarted for format change");
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"[SkiaCameraAndroid] Error updating preview format: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[SkiaCameraAndroid] Error updating preview format: {ex.Message}");
+                }
+                finally
+                {
+                    orderedRestart = false;
                 }
             });
         }
@@ -199,18 +212,6 @@ public partial class SkiaCamera
             {
                 // Get formats from the native camera's predefined formats method
                 formats = native.GetPredefinedVideoFormats();
-            }
-            
-            // If no formats found, provide fallback formats
-            if (formats.Count == 0)
-            {
-                formats.AddRange(new[]
-                {
-                    new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
-                    new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
-                    new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 8000000, FormatId = "720p60" },
-                    new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2000000, FormatId = "480p30" }
-                });
             }
         }
         catch (Exception ex)
